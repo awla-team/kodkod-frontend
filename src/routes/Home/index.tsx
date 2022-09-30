@@ -10,7 +10,7 @@ const Home: React.FC = () => {
       <h1>¡Bienvenido a <span>kodkod</span>!</h1>
       <h3 className="mb-3">Completa misiones, sube de nivel y diviertete</h3>
       <div>
-        <Button className="me-2" variant="contained" size="large">
+        <Button className="me-2" variant="contained" size="large" color="primary">
           ¿Qué es kodkod?
         </Button>        
       </div>

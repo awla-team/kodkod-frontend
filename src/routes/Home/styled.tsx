@@ -1,9 +1,7 @@
-import styled, { ThemeProps } from 'styled-components';
-import { CustomTheme } from '../../global.interfaces';
+import styled, { ThemeProps, DefaultTheme } from 'styled-components';
 
 export const HomeContainer = styled.div`
-  font-family: "Arista 2.0";
-  color: ${(props: ThemeProps<CustomTheme>) => props.theme.titleColor};
+  font-family: "Arista 2.0";  
 
   img {
     height: 260px;
@@ -12,11 +10,13 @@ export const HomeContainer = styled.div`
   h1 {
     font-size: 48px;    
     span {
-      color: ${(props: ThemeProps<CustomTheme>) => props.theme.highlightColor};
+      color: ${(props: ThemeProps<DefaultTheme>) => props.theme.palette.primary.main};
     }
   }
 
-  button {
+`;
+
+/* button {
     font-family: "Montserrat";
     font-size: 18px;
     text-transform: none;
@@ -26,5 +26,4 @@ export const HomeContainer = styled.div`
     background-color: #68bbd4;
     border: 1px solid #68bbd4;
     border-width: 1px;   
-  }
-`;
+  }*/
