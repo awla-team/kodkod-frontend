@@ -3,16 +3,17 @@ import { createTheme } from "@mui/material";
 const theme = createTheme({
   palette: {
     primary: {      
-      main: '#3AB4F2',
+      main: '#53a8b6',
+      dark: '#000072',
       contrastText: '#fff',
     },
     secondary: {
       main: '#326eb3'
     }
   },
-  typography: {
+  typography: {    
     fontFamily: [
-      'Montserrat',
+      'Quicksand',
       '-apple-system',
       'BlinkMacSystemFont',
       '"Segoe UI"',

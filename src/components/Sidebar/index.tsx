@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { SidebarLinkContainer, SidebarContainer, LogoContainer, LinkList } from './styled';
 import logo from './../../assets/images/logo.png';
 import home from './../../assets/images/home.png';
-import missions from './../../assets/images/missions.png';
+import adventures from './../../assets/images/adventures.png';
 import ranking from './../../assets/images/ranking.png';
 
 
@@ -16,9 +16,9 @@ const routes: Route[] = [
     path: '/',
   },
   {
-    title: 'Misiones',
-    img: missions,
-    path: '/misiones',
+    title: 'Aventuras',
+    img: adventures,
+    path: '/aventuras',
   },
   {
     title: 'Clasificación',
