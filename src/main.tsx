@@ -9,6 +9,7 @@ import App from './App';
 import Home from './routes/Home';
 import './index.css';
 import Adventures from './routes/Adventures';
+import Adventure from './routes/Adventures/Adventure';
 
 const router = createBrowserRouter([
   {
@@ -20,8 +21,12 @@ const router = createBrowserRouter([
         element: <Home />
       },
       {
-        path: '/aventuras',
-        element: <Adventures />
+        path: 'aventuras',
+        element: <Adventures />,        
+      },      
+      {
+        path: 'aventuras/:adventureId',
+        element: <Adventure />
       },
     ]
   },

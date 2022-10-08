@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Button, Paper } from '@mui/material';
 
 export const HeaderContainer = styled.div`
-  background: rgba(255, 255, 255, 0);  
+  background: #fff;  
   width: 100%;
   height: 100px;
   padding: 4px 36px;

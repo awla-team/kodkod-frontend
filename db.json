@@ -1,0 +1,52 @@
+{
+    "adventures": [
+        {
+            "id": 0,
+            "title": "Con la recompensa en mente",
+            "weeksDuration": 4,
+            "thumbnail": "/src/assets/images/adventure1.png",
+            "banner": "/src/assets/images/adventure1-banner.png",
+            "category": "Cognition",
+            "skills": {
+                "metacognition": 3,
+                "comunication": 2
+            }
+        },
+        {
+            "id": 1,
+            "title": "Un futuro proyecto",
+            "weeksDuration": 3,
+            "thumbnail": "/src/assets/images/adventure2.png",
+            "banner": "/src/assets/images/adventure1-banner.png",
+            "category": "Socioemotional",
+            "skills": {
+                "personalDevelopment": 3,
+                "citizenship": 2
+            }
+        },
+        {
+            "id": 2,
+            "title": "¿Quién robó el mono dorado?",
+            "weeksDuration": 3,
+            "thumbnail": "/src/assets/images/adventure3.png",
+            "banner": "/src/assets/images/adventure1-banner.png",
+            "category": "Cognition",
+            "skills": {
+                "criticalThinking": 3,
+                "creativity": 2
+            }
+        },
+        {
+            "id": 3,
+            "title": "El bosque infinito",
+            "weeksDuration": 3,
+            "thumbnail": "/src/assets/images/adventure4.png",
+            "banner": "/src/assets/images/adventure1-banner.png",
+            "category": "Socioemotional",
+            "skills": {
+                "collaboration": 3,
+                "creativity": 2
+            }
+        }
+    ]    
+}

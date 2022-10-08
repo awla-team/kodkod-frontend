@@ -16,20 +16,9 @@ const App: React.FC = () => {
           <div className="app-main-container d-flex flex-column flex-fill">
             <Header />
             <div className="app-content container">
-              <div className="app-background-container">
-                {/*<BackgroundBlue className="bg-left" />
-                <BackgroundPink className="bg-right" />*/}
+              <div className="app-background-container">                
               </div>
-              <Outlet />
-              {/*<Routes>
-                <Route index element={<Home />} />
-                <Route path="misiones">
-                  <Route index element={<Missions />} />
-                  <Route path=":id" element={<EditMission />} />
-                  <Route path="nueva-mision" element={<AddMission />} />
-                </Route>
-                <Route path="clasificacion" element={<Badges />} />
-              </Routes>*/}
+              <Outlet />            
             </div>
           </div>      
         </div>      

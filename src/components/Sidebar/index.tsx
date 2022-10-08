@@ -7,8 +7,6 @@ import home from './../../assets/images/home.png';
 import adventures from './../../assets/images/adventures.png';
 import ranking from './../../assets/images/ranking.png';
 
-
-
 const routes: Route[] = [
   {
     title: 'Inicio',

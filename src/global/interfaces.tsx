@@ -19,3 +19,36 @@ declare module '@mui/material/styles' {
 declare module 'styled-components' {
     export interface DefaultTheme extends Theme {}
 }
+
+export interface IAdventure {
+    id: number;  
+    title: string;
+    weeksDuration: number;
+    thumbnail: string;
+    banner: string;
+    category: string;
+    skills: {
+      metacognition?: number;
+      comunication?: number;
+      personalDevelopment?: number;
+      citizenship?: number;
+      collaboration?: number;
+      criticalThinking?: number;
+      creativity?: number;
+    };
+};
+  
+export interface ISkill {
+    text: string;
+    img: string;
+}
+  
+export interface ISkillsMap {
+    metacognition: ISkill;
+    comunication: ISkill;
+    personalDevelopment: ISkill;
+    citizenship: ISkill;
+    collaboration: ISkill;
+    criticalThinking: ISkill;
+    creativity: ISkill;
+}
