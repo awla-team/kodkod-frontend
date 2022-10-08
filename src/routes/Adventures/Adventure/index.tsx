@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { getAdventure } from "../../../services/adventures";
 import { IAdventure } from "../../../global/interfaces";
-import { Button, Chip } from "@mui/material";
+import { Button, Chip, Typography } from "@mui/material";
 import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import SkillPoints from "../../../components/SkillPoints";
 
@@ -45,8 +45,8 @@ const Adventure: React.FC = () => {
             <div className="mb-3">
               <Chip color="info" label="Previsualización" />
             </div>
-            <div >
-              <h2><b>{adventure.title}</b></h2>
+            <div className="mb-2">
+              <Typography variant="h3" component="h2" fontWeight="bold">{adventure.title}</Typography>
             </div>
             <div className="d-flex">
               {Object.entries(adventure.skills).map((entry) => (
