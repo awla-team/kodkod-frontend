@@ -23,10 +23,12 @@ declare module 'styled-components' {
 export interface IAdventure {
     id: number;  
     title: string;
-    weeksDuration: number;
+    stagesDuration: number;
     thumbnail: string;
     banner: string;
     category: string;
+    overview: string;
+    expectedResults: string[];
     skills: {
       metacognition?: number;
       comunication?: number;

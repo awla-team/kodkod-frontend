@@ -1,66 +1,77 @@
-import React, { useState, useEffect} from "react";
-import styled from "styled-components";
+import React, { useContext } from "react";
 import { useParams } from "react-router-dom";
-import { getAdventure } from "../../../services/adventures";
-import { IAdventure } from "../../../global/interfaces";
-import { Button, Chip, Typography } from "@mui/material";
+import { Tabs, Tab, Button, Chip, Typography } from "@mui/material";
 import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import SkillPoints from "../../../components/SkillPoints";
+import { AdventureContainer, AdventureBanner } from "./styled";
+import OverviewTab from "../OverviewTab";
+import AdventureProvider, { AdventureContext } from "./provider";
 
-const AdventureContainer = styled.div`
-  position: relative;
-  margin-top: 36px;
-  color: #fff;
-  .adventure-banner {
-    box-shadow: inset 10px 10px 300px 40px #000;
-    position: absolute;    
-    border-radius: 16px;
-    top: 0;
-    left: 0;
-    z-index: -1;    
-    filter: brightness(0.7);
-  }
-`;
+const renderTab = (tab: number) => {
+  switch(tab) {
+    case 0:
+      return <OverviewTab />;
+    default:
+      return <OverviewTab />;
+  };
+};
+
+const AdventureWithProvider: React.FC = () => {
+  const { adventureId } = useParams();
+
+  return (
+    <AdventureProvider adventureId={adventureId}>
+      <Adventure />
+    </AdventureProvider>
+  );
+};
 
 const Adventure: React.FC = () => {
-  const [adventure, setAdventure] = useState<IAdventure>();
-  const { adventureId } = useParams();  
+  const { adventure } = useContext(AdventureContext);
+  const [selectedTab, setSelectedTab] = React.useState<number>(0);
 
-  useEffect(() => {
-    if (adventureId) {
-      getAdventure(adventureId)
-      .then(({ data }) => setAdventure(data))
-      .catch((e) => console.log(e))
-    }    
-  }, [adventureId]);
+  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => setSelectedTab(newValue);
 
   return (
     <div>
       {adventure ? (
         <AdventureContainer>
-          <div className="d-flex flex-column p-lg-5">
-            <div className="mb-5">
+          <AdventureBanner className="d-flex flex-column p-lg-5 mb-4" backgroundImg={adventure.banner}>            
+            <div className="mb-4">
               <Button color="info" startIcon={<ChevronLeftRoundedIcon />}>Volver a Aventuras</Button>
             </div>            
-            <div className="mb-3">
-              <Chip color="info" label="Previsualización" />
-            </div>
             <div className="mb-2">
+              <Chip color="info" label="Estás viendo una previsualización" />
+            </div>
+            <div className="mb-3">
               <Typography variant="h3" component="h2" fontWeight="bold">{adventure.title}</Typography>
             </div>
-            <div className="d-flex">
+            <div className="d-flex mb-1">
               {Object.entries(adventure.skills).map((entry) => (
                 <div key={`${adventure.id}-${entry[0]}`} className="me-4">
                   <SkillPoints skill={entry[0]} points={entry[1]} />
                 </div>                
               ))}
             </div>
-            <img className="adventure-banner" src={adventure.banner} />
-          </div>          
+            <div className="mb-4">
+              <Typography fontWeight="bold">{`Aventura de ${adventure.stagesDuration} etapas`}</Typography>
+            </div>
+            <div>
+              <Button color="primary" size="large" variant="contained">Iniciar aventura</Button>
+            </div>            
+          </AdventureBanner>
+          <Tabs value={selectedTab} onChange={handleTabChange}>
+            <Tab label="Resumen" />
+            <Tab label="Misiones" />
+            <Tab label="Recompensas" />
+          </Tabs>
+          <div className="py-4 px-3">
+            {renderTab(selectedTab)}
+          </div>
         </AdventureContainer>
       ) : null}
     </div>
   );
 };
 
-export default Adventure;
+export default AdventureWithProvider;
