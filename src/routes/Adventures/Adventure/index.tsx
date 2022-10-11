@@ -1,16 +1,19 @@
 import React, { useContext } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Tabs, Tab, Button, Chip, Typography } from "@mui/material";
 import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import SkillPoints from "../../../components/SkillPoints";
 import { AdventureContainer, AdventureBanner } from "./styled";
 import OverviewTab from "../OverviewTab";
+import MissionsTab from "../MissionsTab";
 import AdventureProvider, { AdventureContext } from "./provider";
 
 const renderTab = (tab: number) => {
   switch(tab) {
     case 0:
       return <OverviewTab />;
+    case 1:
+      return <MissionsTab />;
     default:
       return <OverviewTab />;
   };
@@ -38,10 +41,12 @@ const Adventure: React.FC = () => {
         <AdventureContainer>
           <AdventureBanner className="d-flex flex-column p-lg-5 mb-4" backgroundImg={adventure.banner}>            
             <div className="mb-4">
-              <Button color="info" startIcon={<ChevronLeftRoundedIcon />}>Volver a Aventuras</Button>
+              <Link to="/aventuras">
+                <Button color="info" startIcon={<ChevronLeftRoundedIcon />}>Volver a Aventuras</Button>
+              </Link>              
             </div>            
             <div className="mb-2">
-              <Chip color="info" label="Estás viendo una previsualización" />
+              <Chip color="info" label="Previsualización" />
             </div>
             <div className="mb-3">
               <Typography variant="h3" component="h2" fontWeight="bold">{adventure.title}</Typography>
@@ -65,7 +70,7 @@ const Adventure: React.FC = () => {
             <Tab label="Misiones" />
             <Tab label="Recompensas" />
           </Tabs>
-          <div className="py-4 px-3">
+          <div className="py-3 px-3">
             {renderTab(selectedTab)}
           </div>
         </AdventureContainer>

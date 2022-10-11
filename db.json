@@ -16,7 +16,7 @@
             "skills": {
                 "metacognition": 3,
                 "comunication": 2
-            }
+            }        
         },
         {
             "id": 1,
@@ -72,5 +72,33 @@
                 "creativity": 2
             }
         }
-    ]    
+    ],
+    "stages": [
+        {
+            "id": 0,
+            "adventureId": 0,
+            "index": 1,
+            "title": "Inicia el entrenamiento",            
+            "icon": "/src/assets/images/stage-1.png"
+        },
+        {
+            "id": 1,
+            "adventureId": 0,
+            "index": 2,
+            "title": "Ruta fijada",            
+            "icon": "/src/assets/images/stage-2.png"
+        },{
+            "id": 2,
+            "adventureId": 0,
+            "index": 3,
+            "title": "Más allá de los límites",            
+            "icon": "/src/assets/images/stage-3.png"
+        },{
+            "id": 3,
+            "adventureId": 0,
+            "index": 4,
+            "title": "Una gran recompensa",            
+            "icon": "/src/assets/images/stage-4.png"
+        }
+    ]
 }

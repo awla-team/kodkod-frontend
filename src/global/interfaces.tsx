@@ -38,6 +38,15 @@ export interface IAdventure {
       criticalThinking?: number;
       creativity?: number;
     };
+    stages?: IStage[];
+};
+
+export interface IStage {
+    id: number;
+    adventureId: number;
+    index: number;
+    title: string;
+    icon: string;
 };
   
 export interface ISkill {
