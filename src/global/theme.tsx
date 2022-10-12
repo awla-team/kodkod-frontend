@@ -34,10 +34,19 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: '24px',          
-        }
-      }
-    }
-  }
+        },
+      },
+    },
+    MuiChip: {
+      styleOverrides: {
+        root: {
+          '&.MuiChip-colorInfo': {
+            border: '1px solid lightgray',
+          },
+        },
+      },
+    },
+  },
 }); 
 
 export default theme;

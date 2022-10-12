@@ -1,4 +1,4 @@
-import { Dialog, Modal, Typography } from "@mui/material";
+import { Chip, Dialog, Modal, Typography } from "@mui/material";
 import React, { useContext, useState, useEffect, Fragment } from "react";
 import MissionCard from "../../../../components/MissionCard";
 import StageIcon from "../../../../components/StageIcon";
@@ -30,16 +30,18 @@ const MissionsTab: React.FC = () => {
       {adventure?.stages && shownStage ? (
         <div>
           <div className="d-flex align-items-center justify-content-between">
-            <div className="d-flex align-items-center">
-              <div className="me-3">
-                <StageIcon selected icon={shownStage.icon} />
-              </div>            
-              <div className="d-flex flex-column justify-content-center">
-                <Typography>{`Etapa ${shownStage.index}`}</Typography>
-                <Typography variant="h4" fontWeight="bold">{shownStage.title}</Typography>
-              </div>
-            </div>        
-            <div className="d-flex">
+            <div>
+              <div className="d-flex align-items-center">
+                <div className="me-3">
+                  <StageIcon selected icon={shownStage.icon} />
+                </div>
+                <div className="d-flex flex-column justify-content-center">
+                  <Typography className="me-2">{`Etapa ${shownStage.index}`}</Typography>
+                  <Typography variant="h4" fontWeight="bold">{shownStage.title}</Typography>
+                </div>
+              </div>  
+            </div>
+            <div className="d-flex">            
               {adventure?.stages?.map((stage, i) => (
                 <Fragment key={`${adventure.id}-${stage.id}`}>
                   <StagesStepper className="d-flex flex-column align-items-center" role="button" onClick={() => handleStageChange(stage)}>
@@ -51,7 +53,8 @@ const MissionsTab: React.FC = () => {
               ))}
             </div>
           </div>
-          <div className="d-flex flex-wrap justify-content-center mt-4 px-5">
+          <Typography fontWeight="bold" className="ms-5 mt-4">Los códigos QR no se muestran en el modo de previsualización. Apreta el botón "Iniciar Aventura" para trabajar las misiones con tus estudiantes.</Typography>
+          <div className="d-flex flex-wrap justify-content-center mt-2 px-5">          
             {missionsByStage[shownStage.id]?.map((mission) => (
               <div className="col-6 p-2" role="button" onClick={() => handleSelectMission(mission)}>
                 <MissionCard title={mission.title} description={mission.description} qr={mission.qr} points={20} icon={mission.skill?.icon || ''} color={mission.skill?.color || '#000'} />

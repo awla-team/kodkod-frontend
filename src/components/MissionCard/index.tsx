@@ -42,7 +42,7 @@ const PointsContainer = styled.div`
   }
 `;
 
-const QRContainer = styled.div`  
+const QRContainer = styled.div`
   img {
     height: 160px;
     width: 160px;
@@ -74,7 +74,7 @@ const MissionCard: React.FC<IMissionCardProps> = ({ title, description, qr, poin
         <img src={kodcoinIcon} />
       </PointsContainer>
     </div>
-    <QRContainer>
+    <QRContainer className="qr-container">
       <img src={qr} />
     </QRContainer>
   </MissionCardContainer>
