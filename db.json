@@ -340,5 +340,115 @@
             "qr": "/src/assets/images/qr-example.png",
             "skillId": 5
         }
+    ],
+    "rewards": [
+        {
+            "id": 0,
+            "adventureId": 0,
+            "title": "Power Up",
+            "description": "1 décima en tu próxima prueba",
+            "requiredPoints": 50,
+            "icon": "/src/assets/images/reward-single-1.png",
+            "type": "single"
+        },
+        {
+            "id": 1,
+            "adventureId": 0,
+            "title": "Cronoreloj",
+            "description": "Sal de clases 5 minutos antes",
+            "requiredPoints": 100,
+            "icon": "/src/assets/images/reward-single-2.png",
+            "type": "single"
+        },
+        {
+            "id": 2,
+            "adventureId": 0,
+            "title": "Cambio de cuerpo",
+            "description": "Puedes sentarte en cualquier puesto durante la clase",
+            "requiredPoints": 150,
+            "icon": "/src/assets/images/reward-single-3.png",
+            "type": "single"
+        },
+        {
+            "id": 3,
+            "adventureId": 0,
+            "title": "Ralentizador de tiempo",
+            "description": "Tienes 1 día adicional para entregar una tarea",
+            "requiredPoints": 200,
+            "icon": "/src/assets/images/reward-single-4.png",
+            "type": "single"
+        },
+        {
+            "id": 4,
+            "adventureId": 0,
+            "title": "Stella Star",
+            "description": "1 anotación positiva",
+            "requiredPoints": 250,
+            "icon": "/src/assets/images/reward-single-5.png",
+            "type": "single"
+        },
+        {
+            "id": 5,
+            "adventureId": 0,
+            "title": "Mega Power Up",
+            "description": "3 décimas para tu próxima prueba",
+            "requiredPoints": 300,
+            "icon": "/src/assets/images/reward-single-6.png",
+            "type": "single"
+        },
+        {
+            "id": 6,
+            "adventureId": 0,
+            "title": "Amigo fiel",
+            "description": "Realiza una prueba en parejas durante 20 minutos",
+            "requiredPoints": 350,
+            "icon": "/src/assets/images/reward-single-7.png",
+            "type": "single"
+        },
+        {
+            "id": 7,
+            "adventureId": 0,
+            "title": "Aquí no ha pasado nada",
+            "description": "Puedes eliminar tu peor nota de procesos",
+            "requiredPoints": 350,
+            "icon": "/src/assets/images/reward-single-8.png",
+            "type": "single"
+        },
+        {
+            "id": 8,
+            "adventureId": 0,
+            "title": "Bomba de tiempo",
+            "description": "Tod@s tienen 1 día adicional para entregar una tarea",
+            "requiredPoints": 2000,
+            "icon": "/src/assets/images/reward-course-1.png",
+            "type": "course"
+        },
+        {
+            "id": 9,
+            "adventureId": 0,
+            "title": "Hechizo de revueltijo",
+            "description": "Tod@s pueden cambiar de puesto durante una clase",
+            "requiredPoints": 4000,
+            "icon": "/src/assets/images/reward-course-2.png",
+            "type": "course"
+        },
+        {
+            "id": 10,
+            "adventureId": 0,
+            "title": "Mega Stella Star",
+            "description": "Todo el curso obtiene una anotación positiva",
+            "requiredPoints": 6500,
+            "icon": "/src/assets/images/reward-course-3.png",
+            "type": "course"
+        },
+        {
+            "id": 11,
+            "adventureId": 0,
+            "title": "Hechizo de invocación",
+            "description": "Tod@s pueden realizar una prueba en parejas ",
+            "requiredPoints": 8500,
+            "icon": "/src/assets/images/reward-course-4.png",
+            "type": "course"
+        }
     ]
 }

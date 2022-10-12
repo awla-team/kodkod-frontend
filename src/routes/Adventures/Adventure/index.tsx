@@ -6,6 +6,7 @@ import SkillPoints from "../../../components/SkillPoints";
 import { AdventureContainer, AdventureBanner } from "./styled";
 import OverviewTab from "./OverviewTab";
 import MissionsTab from "./MissionsTab";
+import RewardsTab from "./RewardsTab";
 import AdventureProvider, { AdventureContext } from "./provider";
 
 const renderTab = (tab: number) => {
@@ -14,6 +15,8 @@ const renderTab = (tab: number) => {
       return <OverviewTab />;
     case 1:
       return <MissionsTab />;
+    case 2:
+      return <RewardsTab />;
     default:
       return <OverviewTab />;
   };

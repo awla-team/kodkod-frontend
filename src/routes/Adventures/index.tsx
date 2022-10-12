@@ -24,7 +24,7 @@ const Adventures: React.FC = () => {
         <h2>Empieza una aventura &#128640;</h2>
         <p>Una aventura es una serie de misiones planificadas que el estudiante debe completar para desarrollar habilidades específicas. ¡Escoge una aventura y desafía a tus estudiantes!</p>        
         <div className="mb-4"> 
-          <SectionSubtitle filled lineColor={theme.palette.primary.light} textColor="white">Habilidades cognitivas</SectionSubtitle>
+          <SectionSubtitle filled lineColor={theme.palette.primary.main} textColor="white">Habilidades cognitivas</SectionSubtitle>
           <div className="row my-3">
             {adventures.filter((adventure: IAdventure) => adventure.category === 'Cognition').map((adventure: IAdventure) => (
               <div key={adventure.id} className="col-4 col-lg-3 d-flex justify-content-center">

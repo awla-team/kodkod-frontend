@@ -66,4 +66,13 @@ export interface IMission {
     skillId: number;
     skill?: ISkill;
   };
-  
+
+export interface IReward {
+    id: number;
+    adventureId: number;
+    title: string;
+    description: string;
+    requiredPoints: number;
+    icon: string;
+    type: string;
+};

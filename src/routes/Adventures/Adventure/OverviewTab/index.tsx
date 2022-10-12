@@ -10,11 +10,11 @@ const OverviewTab: React.FC = () => {
   return (
     <div>
       <div className="mb-4"> 
-        <SectionSubtitle lineColor={theme.palette.primary.light} textColor={theme.palette.primary.dark}>Resumen de la aventura</SectionSubtitle>
+        <SectionSubtitle lineColor={theme.palette.primary.dark} textColor={theme.palette.primary.dark}>Resumen de la aventura</SectionSubtitle>
         <Typography>{adventure?.overview}</Typography>
       </div>
       <div className="mb-4"> 
-        <SectionSubtitle lineColor={theme.palette.primary.light} textColor={theme.palette.primary.dark}>Resultados esperados</SectionSubtitle>
+        <SectionSubtitle lineColor={theme.palette.primary.dark} textColor={theme.palette.primary.dark}>Resultados esperados</SectionSubtitle>
         <ul>
           {adventure?.expectedResults.map((result, i) => <Typography key={i} className="mb-1" component="li">{result}</Typography>)}
         </ul>
