@@ -16,8 +16,6 @@ const App: React.FC = () => {
           <div className="app-main-container d-flex flex-column flex-fill">
             <Header />
             <div className="app-content container">
-              <div className="app-background-container">                
-              </div>
               <Outlet />            
             </div>
           </div>      

@@ -16,7 +16,7 @@ const Adventures: React.FC = () => {
     getAdventures()
     .then(({ data }) => setAdventures(data))
     .catch((e) => console.log(e))
-  }, []);    
+  }, []);
     
   return (
     <AdventuresContainer>
@@ -35,8 +35,8 @@ const Adventures: React.FC = () => {
                     img={adventure.thumbnail}
                     info={(
                       <div>
-                        {Object.entries(adventure.skills).map((entry) => (                                                    
-                          <SkillPoints key={`${adventure.id}-${entry[0]}`} skill={entry[0]} points={entry[1]} />
+                        {adventure?.adventureSkills?.map((skill) => (                                                    
+                          <SkillPoints key={`${adventure.id}-${skill.skillId}`} skillId={skill.skillId} points={skill.points} />
                         ))}
                       </div>
                     )}
@@ -58,8 +58,8 @@ const Adventures: React.FC = () => {
                     img={adventure.thumbnail}
                     info={(
                       <div>
-                        {Object.entries(adventure.skills).map((entry) => (                                                    
-                          <SkillPoints key={`${adventure.id}-${entry[0]}`} skill={entry[0]} points={entry[1]} />
+                        {adventure?.adventureSkills?.map((skill) => (                                                    
+                          <SkillPoints key={`${adventure.id}-${skill.skillId}`} skillId={skill.skillId} points={skill.points} />
                         ))}
                       </div>
                     )}

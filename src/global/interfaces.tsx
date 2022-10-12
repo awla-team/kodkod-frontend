@@ -20,6 +20,21 @@ declare module 'styled-components' {
     export interface DefaultTheme extends Theme {}
 }
 
+export interface ISkill {
+    id: string;
+    title: string;
+    icon: string;
+    color: string;
+}
+
+export interface IAdventureSkill {
+    id: number;
+    adventureId: number;
+    skillId: number;
+    points: number;
+    skill?: ISkill;
+};
+
 export interface IAdventure {
     id: number;  
     title: string;
@@ -28,16 +43,8 @@ export interface IAdventure {
     banner: string;
     category: string;
     overview: string;
-    expectedResults: string[];
-    skills: {
-      metacognition?: number;
-      comunication?: number;
-      personalDevelopment?: number;
-      citizenship?: number;
-      collaboration?: number;
-      criticalThinking?: number;
-      creativity?: number;
-    };
+    expectedResults: string[];    
+    adventureSkills?: IAdventureSkill[];
     stages?: IStage[];
 };
 
@@ -48,18 +55,15 @@ export interface IStage {
     title: string;
     icon: string;
 };
+
+export interface IMission {
+    id: string;
+    stageId: string;
+    title: string;
+    description: string;
+    points: number;
+    qr: string;
+    skillId: number;
+    skill?: ISkill;
+  };
   
-export interface ISkill {
-    text: string;
-    img: string;
-}
-  
-export interface ISkillsMap {
-    metacognition: ISkill;
-    comunication: ISkill;
-    personalDevelopment: ISkill;
-    citizenship: ISkill;
-    collaboration: ISkill;
-    criticalThinking: ISkill;
-    creativity: ISkill;
-}

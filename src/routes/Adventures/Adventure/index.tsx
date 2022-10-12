@@ -4,8 +4,8 @@ import { Tabs, Tab, Button, Chip, Typography } from "@mui/material";
 import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import SkillPoints from "../../../components/SkillPoints";
 import { AdventureContainer, AdventureBanner } from "./styled";
-import OverviewTab from "../OverviewTab";
-import MissionsTab from "../MissionsTab";
+import OverviewTab from "./OverviewTab";
+import MissionsTab from "./MissionsTab";
 import AdventureProvider, { AdventureContext } from "./provider";
 
 const renderTab = (tab: number) => {
@@ -52,9 +52,9 @@ const Adventure: React.FC = () => {
               <Typography variant="h3" component="h2" fontWeight="bold">{adventure.title}</Typography>
             </div>
             <div className="d-flex mb-1">
-              {Object.entries(adventure.skills).map((entry) => (
-                <div key={`${adventure.id}-${entry[0]}`} className="me-4">
-                  <SkillPoints skill={entry[0]} points={entry[1]} />
+              {adventure?.adventureSkills?.map((skill) => (
+                <div className="me-4" key={`${adventure.id}-${skill.skillId}`}>
+                  <SkillPoints skillId={skill.skillId} points={skill.points} />
                 </div>                
               ))}
             </div>

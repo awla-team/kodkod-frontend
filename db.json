@@ -1,4 +1,110 @@
 {
+    "skills": [
+        {
+            "id": 0,
+            "title": "Metacognición",
+            "icon": "/src/assets/images/icon-metacognition.png",
+            "color": "#F962BB"
+        },
+        {
+            "id": 1,
+            "title": "Comunicación",
+            "icon": "/src/assets/images/icon-communication.png",
+            "color": "#FF4F4F"
+        },
+        {
+            "id": 2,
+            "title": "Crecimiento personal",
+            "icon": "/src/assets/images/icon-personal-development.png",
+            "color": "#E1CA52"
+        },
+        {
+            "id": 3,
+            "title": "Ciudadanía",
+            "icon": "/src/assets/images/icon-citizenship.png",
+            "color": "#F99862"
+        },
+        {
+            "id": 4,
+            "title": "Pensamiento crítico",
+            "icon": "/src/assets/images/icon-critical-thinking.png",
+            "color": "#4650AC"
+        },
+        {
+            "id": 5,
+            "title": "Creatividad",
+            "icon": "/src/assets/images/icon-creativity.png",
+            "color": "#6CCB3E"
+        },
+        {
+            "id": 6,
+            "title": "Colaboración",
+            "icon": "/src/assets/images/icon-collaboration.png",
+            "color": "#E78124"
+        },
+        {
+            "id": 7,
+            "title": "Liderazgo",
+            "icon": "/src/assets/images/icon-leadership.png",
+            "color": "#62CCF9"
+        },
+        {
+            "id": 8,
+            "title": "Responsabilidad social",
+            "icon": "/src/assets/images/icon-social-responsability.png",
+            "color": "#7B5B3D"
+        }
+    ],
+    "adventureSkills": [
+        {
+            "id": 0,
+            "adventureId": 0,
+            "skillId": 0,
+            "points": 3
+        },
+        {
+            "id": 1,
+            "adventureId": 0,
+            "skillId": 1,
+            "points": 2
+        },
+        {
+            "id": 2,
+            "adventureId": 1,
+            "skillId": 2,
+            "points": 3
+        },
+        {
+            "id": 3,
+            "adventureId": 1,
+            "skillId": 3,
+            "points": 2
+        },
+        {
+            "id": 4,
+            "adventureId": 2,
+            "skillId": 4,
+            "points": 3
+        },
+        {
+            "id": 5,
+            "adventureId": 2,
+            "skillId": 5,
+            "points": 2
+        },
+        {
+            "id": 6,
+            "adventureId": 3,
+            "skillId": 6,
+            "points": 3
+        },
+        {
+            "id": 7,
+            "adventureId": 3,
+            "skillId": 5,
+            "points": 2
+        }
+    ],
     "adventures": [
         {
             "id": 0,
@@ -13,10 +119,7 @@
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
             ],
-            "skills": {
-                "metacognition": 3,
-                "comunication": 2
-            }        
+            "adventureSkillsId": 0
         },
         {
             "id": 1,
@@ -31,10 +134,7 @@
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
             ],
-            "skills": {
-                "personalDevelopment": 3,
-                "citizenship": 2
-            }
+            "adventureSkillsId": 1
         },
         {
             "id": 2,
@@ -49,10 +149,7 @@
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
             ],
-            "skills": {
-                "criticalThinking": 3,
-                "creativity": 2
-            }
+            "adventureSkillsId": 2
         },
         {
             "id": 3,
@@ -67,10 +164,7 @@
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
             ],
-            "skills": {
-                "collaboration": 3,
-                "creativity": 2
-            }
+            "adventureSkillsId": 3
         }
     ],
     "stages": [
@@ -99,6 +193,152 @@
             "index": 4,
             "title": "Una gran recompensa",            
             "icon": "/src/assets/images/stage-4.png"
+        }
+    ],
+    "missions": [
+        {
+            "id": 0,
+            "stageId": 0,
+            "title": "Viaje provechoso",
+            "description": "Anotar en el cuaderno 3 aprendizajes que hayas hecho esta semana.",
+            "points": 20,
+            "qr": "/src/assets/images/qr-example.png",
+            "skillId": 0
+        },
+        {
+            "id": 1,
+            "stageId": 0,
+            "title": "Sherlock",
+            "description": "Investigar un dato curioso del contenido o tema de la clase.",
+            "points": 20,
+            "qr": "/src/assets/images/qr-example.png",
+            "skillId": 0
+        },
+        {
+            "id": 2,
+            "stageId": 0,
+            "title": "Cornellshop",
+            "description": "Tomar apuntes de lo estudiado en clases utilizando el método Cornell.",
+            "points": 20,
+            "qr": "/src/assets/images/qr-example.png",
+            "skillId": 0
+        },
+        {
+            "id": 3,
+            "stageId": 0,
+            "title": "Fragmentos de memoria",
+            "description": "Presentar brevemente los contenidos vistos la clase anterior.",
+            "points": 20,
+            "qr": "/src/assets/images/qr-example.png",
+            "skillId": 0
+        },
+        {
+            "id": 4,
+            "stageId": 0,
+            "title": "El poder de las palabras",
+            "description": "Leer voluntariamente y en voz alta un texto de la clase.",
+            "points": 20,
+            "qr": "/src/assets/images/qr-example.png",
+            "skillId": 1
+        },
+        {
+            "id": 5,
+            "stageId": 1,
+            "title": "Poeta arrepentid@",
+            "description": "Escribe un poema en el que cada verso comience con la palabra perdón.",
+            "points": 50,
+            "qr": "/src/assets/images/qr-example.png",
+            "skillId": 5
+        },
+        {
+            "id": 6,
+            "stageId": 1,
+            "title": "Tod@s para un@",
+            "description": "Ayuda a una compañera a revisar y mejorar su trabajo.",
+            "points": 50,
+            "qr": "/src/assets/images/qr-example.png",
+            "skillId": 6
+        },
+        {
+            "id": 7,
+            "stageId": 1,
+            "title": "Sherlock II",
+            "description": "Investigar un dato curioso del contenido o tema de la clase.",
+            "points": 40,
+            "qr": "/src/assets/images/qr-example.png",
+            "skillId": 0
+        },
+        {
+            "id": 8,
+            "stageId": 1,
+            "title": "Siempre atent@",
+            "description": "Escribe al final de cada clase de la semana un aprendizaje que hayas obtenido.",
+            "points": 60,
+            "qr": "/src/assets/images/qr-example.png",
+            "skillId": 0
+        },
+        {
+            "id": 9,
+            "stageId": 1,
+            "title": "Lo primero es lo primero",
+            "description": "Planifica tu trabajo en diferentes etapas y distribuye las tareas en la semana para aprovechar conscientemente el tiempo en clases.",
+            "points": 40,
+            "qr": "/src/assets/images/qr-example.png",
+            "skillId": 0
+        },
+        {
+            "id": 10,
+            "stageId": 1,
+            "title": "#DedicaTuLibro",
+            "description": "Regala un libro con dedicatoria a las internas del Centro Penitenciario Femenino de Temuco.",
+            "points": 40,
+            "qr": "/src/assets/images/qr-example.png",
+            "skillId": 1
+        },
+        {
+            "id": 11,
+            "stageId": 2,
+            "title": "Fragmentos de memoria II",
+            "description": "Presentar brevemente los contenidos vistos la clase anterior.",
+            "points": 20,
+            "qr": "/src/assets/images/qr-example.png",
+            "skillId": 0
+        },
+        {
+            "id": 12,
+            "stageId": 2,
+            "title": "Desconectar para conectar II",
+            "description": "Utiliza tu teléfono móvil solo cuando la docente lo solicite.",
+            "points": 20,
+            "qr": "/src/assets/images/qr-example.png",
+            "skillId": 8
+        },
+        {
+            "id": 13,
+            "stageId": 2,
+            "title": "Que corra la voz",
+            "description": "Leer voluntariamente y en voz alta un texto de la clase.",
+            "points": 20,
+            "qr": "/src/assets/images/qr-example.png",
+            "skillId": 1
+        },
+        {
+            "id": 14,
+            "stageId": 2,
+            "title": "En el blanco",
+            "description": "Identificar la idea principal de un texto.",
+            "points": 20,
+            "qr": "/src/assets/images/qr-example.png",
+            "skillId": 0
+        },
+        {
+            "id": 15,
+            "stageId": 2,
+            "title": "Mirar, pensar, hacer",
+            "description": "Investiga qué es un Haiku y escribe uno en tu cuaderno.",
+            "points": 20,
+            "qr": "/src/assets/images/qr-example.png",
+            "skillId": 5
         }
     ]
 }

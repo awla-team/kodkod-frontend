@@ -14,3 +14,7 @@
 .app-content {
   height: 100%;
 }
+
+.app-content > div {
+  padding-bottom: 48px;
+}

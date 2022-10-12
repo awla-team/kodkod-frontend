@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { Typography } from "@mui/material";
-import SectionSubtitle from "../../../components/SectionSubtitle";
-import theme from "../../../global/theme";
-import { AdventureContext } from "../Adventure/provider";
+import SectionSubtitle from "../../../../components/SectionSubtitle";
+import theme from "../../../../global/theme";
+import { AdventureContext } from "../../Adventure/provider";
 
 const OverviewTab: React.FC = () => {
   const { adventure } = useContext(AdventureContext);  

@@ -1,4 +1,4 @@
 export interface ISkillPointsProps {
-    skill: string;
+    skillId: number;
     points: number;
 };
