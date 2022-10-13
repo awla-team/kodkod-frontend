@@ -23,9 +23,6 @@ export const MissionsListContainer = styled.div`
     &:hover {
       outline: 2px solid black;
     }
-    .qr-container {
-      filter: blur(7px);
-    }
   }
 
   .stage-icon-container {
@@ -40,8 +37,5 @@ export const StagesStepper = styled.div`
 export const MissionDialog = styled(Dialog)`
   .mission-card {
     transform: scale(2);
-    .qr-container {
-      filter: blur(7px);
-    }
   }
 `;
