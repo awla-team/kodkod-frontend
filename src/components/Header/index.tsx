@@ -1,18 +1,26 @@
-import React, { useState, Fragment } from 'react';
-import { User, UserInfoProps } from './interfaces';
-import { Menu, MenuItem, Avatar } from '@mui/material';
-import { HeaderContainer, UserInfoButton } from './styled';
-import avatar from './../../assets/images/avatar.png';
+import React from "react";
+// import { User, UserInfoProps } from "./interfaces";
+// import { Menu, MenuItem, Avatar } from "@mui/material";
+import { HeaderContainer /* , UserInfoButton */ } from "./styled";
+// import avatar from "./../../assets/images/avatar.png";
 
-const user: User = {
+const Header: React.FC = () => (
+  <HeaderContainer className="d-flex justify-content-end align-items-center">
+    {/* <UserInfo user={user} /> */}
+  </HeaderContainer>
+);
+
+export default Header;
+
+/* const user: User = {
   id: 1,
   avatar,
   first_name: 'Juan',
   last_name: 'Pérez',
   role: 'Profesor',
-};
+}; */
 
-const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
+/* const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const handleClick = (event: React.SyntheticEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);  
@@ -51,12 +59,4 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
       ) : null}
     </Fragment>
   );
-};
-
-const Header: React.FC = () => (
-  <HeaderContainer className="d-flex justify-content-end align-items-center">    
-    <UserInfo user={user} />
-  </HeaderContainer>
-);
-
-export default Header;
+}; */
