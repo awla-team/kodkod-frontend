@@ -24,8 +24,8 @@ export const SidebarLinkContainer = styled.div`
     justify-content: center;
     background-color: #5ea9c0;
     border-radius: 100%;
-    width: 68px;
-    height: 68px;
+    width: 58px;
+    height: 58px;
     padding: 8px;
     transition: all 0.3s ease;
   }
@@ -44,7 +44,7 @@ export const SidebarLinkContainer = styled.div`
   &.active {
     a > div {
       background-color: white;
-      box-shadow: 0 0 16px 4px #68bcd5, 0 0 16px 2px #68bcd5;
+      box-shadow: 0 0 16px 2px #68bcd5, 0 0 8px 2px #68bcd5;
     }
     span {
       font-size: 16px;

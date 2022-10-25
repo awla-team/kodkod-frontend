@@ -1,12 +1,6 @@
 import { Route } from "./interfaces";
-import { Link } from "react-router-dom";
-import { SidebarContainer, LogoContainer, LinkList } from "./styled";
-import logo from "./../../assets/images/logo.png";
-import home from "./../../assets/images/home.png";
-import adventures from "./../../assets/images/adventures.png";
-import ranking from "./../../assets/images/ranking.png";
+import { SidebarContainer, LinkList } from "./styled";
 import SidebarLink from "./SidebarLink";
-import UserInfo from "./UserInfo";
 import avatar from "./../../assets/images/avatar.png";
 import { User } from "./UserInfo/interfaces";
 import {
@@ -14,6 +8,8 @@ import {
   AddCourseButtonContainer,
 } from "./AddCourseButton/styled";
 import AddIcon from "@mui/icons-material/Add";
+import UserInfo from "./UserInfo";
+import { Divider } from "@mui/material";
 
 const routes: Route[] = [
   {
@@ -22,7 +18,7 @@ const routes: Route[] = [
     path: "/",
   },
   {
-    title: "8° A",
+    title: "8° Med",
     img: "",
     path: "/aventuras",
   },
@@ -34,27 +30,27 @@ const routes: Route[] = [
   {
     title: "3° Medio",
     img: "",
-    path: "/7b",
+    path: "/7c",
   },
   {
     title: "4° Medio",
     img: "",
-    path: "/7b",
+    path: "/7v",
   },
   {
-    title: "5° Medio",
+    title: "5° Z",
     img: "",
-    path: "/7b",
+    path: "/7n",
   },
   {
-    title: "6° Medio",
+    title: "5° j",
     img: "",
-    path: "/7b",
+    path: "/7m",
   },
   {
-    title: "7° Medio",
+    title: "5° ñ",
     img: "",
-    path: "/7b",
+    path: "/7i",
   },
 ];
 
@@ -69,12 +65,8 @@ const user: User = {
 const Sidebar = () => (
   <SidebarContainer>
     <UserInfo user={user} />
-    {/* <LogoContainer>
-      <Link to="/">
-        <img className="w-100" src={logo} alt="kodkod logo" />
-      </Link>
-    </LogoContainer> */}
-    <h6 className="text-center fw-bold p-0 mt-4 mb-2">Cursos</h6>
+    <Divider className="w-75 mb-1" color="#DE4CE1" />
+    <h6 className="text-center fw-bold p-0 mt-4 mb-2">Tus cursos</h6>
     <LinkList>
       {routes.map((route) => (
         <SidebarLink key={route.title} route={route} />
@@ -85,6 +77,7 @@ const Sidebar = () => (
         <AddIcon />
       </AddCourseButton>
     </AddCourseButtonContainer>
+    {/* <SignOutButton variant="text" color="primary" fullWidth>Cerrar sesión</SignOutButton> */}
   </SidebarContainer>
 );
 

@@ -1,15 +1,19 @@
+import { Button } from "@mui/material";
 import styled from "styled-components";
 
 export const UserInfoContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   width: 100%;
-  align-items: center;
+`;
+
+export const UserInfoButton = styled(Button)`
+  && {
+    padding: 16px 0px;
+    border-radius: 0px;
+  }
 
   div {
-    width: 100%;
-    align-items: center;
-
     span:first-child {
       background-color: #605cf6;
       padding: 2px 8px;
@@ -18,7 +22,6 @@ export const UserInfoContainer = styled.div`
       font-size: 14px;
       font-family: "Arista 2.0";
       color: #fff;
-      
     }
     span:last-child {
       color: gray;
@@ -27,8 +30,8 @@ export const UserInfoContainer = styled.div`
   }
 
   img {
-    width: 64px;
-    height: 64px;
+    width: 72px;
+    height: 72px;
     margin-bottom: 8px;
   }
 `;

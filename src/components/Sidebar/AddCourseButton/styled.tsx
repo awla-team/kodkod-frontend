@@ -5,7 +5,7 @@ export const AddCourseButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
-  padding: 16px 0px;
+  padding: 8px 0px;
 `;
 
 export const AddCourseButton = styled(Fab)`
