@@ -6,6 +6,7 @@ import theme from "./global/theme";
 import "./App.css";
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
+import ModuleProvider from "./components/providers/ModuleProvider";
 
 const App: React.FC = () => {
   return (
@@ -14,10 +15,12 @@ const App: React.FC = () => {
         <div className="app-container d-flex">
           <Sidebar />
           <div className="app-main-container d-flex flex-column flex-fill">
-            <Header />
-            <div className="app-content container">
+            {/* <ModuleProvider> */}
+            {/* <Header /> */}
+            <div className="app-content w-100">
               <Outlet />
             </div>
+            {/* </ModuleProvider> */}
           </div>
         </div>
       </StyledThemeProvider>

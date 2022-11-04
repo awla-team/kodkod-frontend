@@ -15,7 +15,7 @@ const routes: Route[] = [
   {
     title: "7° B",
     img: "",
-    path: "/",
+    path: "/7b",
   },
   {
     title: "8° Med",
@@ -25,7 +25,7 @@ const routes: Route[] = [
   {
     title: "2° Medio",
     img: "",
-    path: "/7b",
+    path: "/7aaa",
   },
   {
     title: "3° Medio",
