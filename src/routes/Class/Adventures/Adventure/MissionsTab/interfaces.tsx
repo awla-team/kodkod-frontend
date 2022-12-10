@@ -1,4 +1,4 @@
-import { IMission } from "../../../../global/interfaces";
+import { IMission } from "global/interfaces";
 
 export interface IMissionsByStage {
     [index: number]: IMission[];

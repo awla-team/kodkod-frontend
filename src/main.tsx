@@ -1,34 +1,49 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import App from "./App";
-import Home from "./routes/Home";
+import App from "App";
+import Class from "routes/Class";
+import Adventures from "routes/Class/Adventures";
+import Adventure from "routes/Class/Adventures/Adventure";
+import Board from "routes/Class/Board";
+import Points from "routes/Class/Points";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
-import Adventures from "./routes/Adventures";
-import Adventure from "./routes/Adventures/Adventure";
 
-const router = createBrowserRouter([
+export const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
       {
-        path: "/7b",
-        element: <Home />,
+        element: (
+          <div className="d-flex justify-content-center align-items-center w-100 h-100">
+            <h1 className="text-center">Selecciona un curso</h1>
+          </div>
+        ),
+        index: true,
       },
       {
-        path: "aventuras",
-        element: <Adventures />,
-      },
-      {
-        path: "aventuras/:adventureId",
-        element: <Adventure />,
-      },
-      {
-        path: "*",
-        // TODO: create 404 view
-        element: <h1>Esta pagina no existe papito</h1>,
+        path: "cursos/:classId",
+        element: <Class />,
+        children: [
+          {
+            path: "tablero",
+            element: <Board />,
+          },
+          {
+            path: "aventuras",
+            element: <Adventures />,
+          },
+          {
+            path: "aventuras/:adventureId",
+            element: <Adventure />,
+          },
+          {
+            path: "puntajes",
+            element: <Points />,
+          },
+        ],
       },
     ],
   },

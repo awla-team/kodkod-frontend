@@ -1,5 +1,7 @@
-import { Route } from "../interfaces";
+import { To } from "react-router-dom";
 
 export interface SidebarLinkProps {
-  route: Route;
+  linkId: string | number;
+  linkTitle: string;
+  linkRoute: To;
 }

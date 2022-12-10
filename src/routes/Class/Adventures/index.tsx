@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { IAdventure } from "global/interfaces";
 import { Link } from "react-router-dom";
-import { AdventuresContainer } from "./styled";
-import ViewContainer from "../../components/ViewContainer";
-import SectionSubtitle from "../../components/SectionSubtitle";
-import theme from "../../global/theme";
-import AdventureCard from "../../components/AdventureCard";
-import { IAdventure } from "../../global/interfaces";
-import { getAdventures } from "../../services/adventures";
-import SkillPoints from "../../components/SkillPoints";
+import theme from "global/theme";
+import { getAdventures } from "services/adventures";
+import AdventureCard from "components/AdventureCard";
+import SectionSubtitle from "components/SectionSubtitle";
+import SkillPoints from "components/SkillPoints";
+import ViewContainer from "components/ViewContainer";
 
 const Adventures: React.FC = () => {
   const [adventures, setAdventures] = useState([]);

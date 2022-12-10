@@ -1,10 +1,4 @@
-export interface User {
-  id: number;
-  avatar: string;
-  first_name: string;
-  last_name: string;
-  role: string;
-}
+import { User } from "services/users/interfaces";
 
 export interface UserInfoProps {
   user: User;
