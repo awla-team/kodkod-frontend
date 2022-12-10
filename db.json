@@ -453,6 +453,18 @@
       "type": "course"
     }
   ],
-  "classes": [{ "id": 1 }, { "id": 1 }, { "id": 1 }, { "id": 1 }],
-  "levels": []
+  "classes": [
+    { "id": 0, "userId": 1, "title": "7°B", "img": "" },
+    { "id": 1, "userId": 1, "title": "8°B", "img": "" },
+    { "id": 2, "userId": 1, "title": "6°B", "img": "" },
+    { "id": 3, "userId": 1, "title": "5°B", "img": "" }
+  ],
+  "users": [
+    {
+      "id": 0,
+      "first_name": "Juan",
+      "last_name": "Pérez",
+      "role": "Profesor"
+    }
+  ]
 }
