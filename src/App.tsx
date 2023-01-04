@@ -43,16 +43,16 @@ const App: React.FC = () => {
       </ThemeWrapper>
     );
 
-  if (fetching === FetchStatus.Error)
-    return (
-      <ThemeWrapper>
-        <div className="app-container d-flex">
-          <div className="d-flex w-100 h-100 justify-content-center align-items-center">
-            <h1>Hubo un error</h1>
-          </div>
-        </div>
-      </ThemeWrapper>
-    );
+  // if (fetching === FetchStatus.Error)
+  //   return (
+  //     <ThemeWrapper>
+  //       <div className="app-container d-flex">
+  //         <div className="d-flex w-100 h-100 justify-content-center align-items-center">
+  //           <h1>Hubo un error</h1>
+  //         </div>
+  //       </div>
+  //     </ThemeWrapper>
+  //   );
 
   // On fetching success
   return (
