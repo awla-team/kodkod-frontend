@@ -8,8 +8,34 @@ on:
       - closed
 
 jobs:
+  build:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Actions checkout
+        uses: actions/checkout@v3
+
+      - name: Node.js ${{ matrix.node-version }} setup
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+
+      - name: Installing dependencies
+        run: npx yarn install
+
+      - name: Building
+        run: npx yarn build
+
+      - name: Saving build
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist
+
   deploy:
     if: github.event.pull_request.merged == true
+    needs: Build
     runs-on: ubuntu-latest
     steps:
       - name: Actions checkout
