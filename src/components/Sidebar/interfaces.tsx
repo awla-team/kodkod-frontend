@@ -1,4 +1,4 @@
-import { Class } from "services/classes/interfaces";
+import { ClassInterface } from "services/classes/interfaces";
 
 export interface Route {
   title: string;
@@ -7,5 +7,5 @@ export interface Route {
 }
 
 export interface SidebarProps {
-  classes?: Class[];
+  classes?: ClassInterface[];
 }
