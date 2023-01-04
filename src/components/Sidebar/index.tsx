@@ -1,52 +1,38 @@
-import React from 'react';
-import { Route, SidebarLinkProps } from './interfaces';
-import { Link, useLocation } from "react-router-dom";
-import { SidebarLinkContainer, SidebarContainer, LogoContainer, LinkList } from './styled';
-import logo from './../../assets/images/logo.png';
-import home from './../../assets/images/home.png';
-import adventures from './../../assets/images/adventures.png';
-import ranking from './../../assets/images/ranking.png';
+import { FC } from "react";
+import { SidebarProps } from "./interfaces";
+import { SidebarContainer, LinkList } from "./styled";
+import SidebarLink from "./SidebarLink";
+import AddIcon from "@mui/icons-material/Add";
+import UserInfo from "./UserInfo";
+import { Divider } from "@mui/material";
+import { ClassInterface } from "services/classes/interfaces";
+import { TEST_USER } from "services/users";
+import {
+  AddCourseButton,
+  AddCourseButtonContainer,
+} from "./AddCourseButton/styled";
 
-const routes: Route[] = [
-  {
-    title: 'Inicio',
-    img: home,
-    path: '/',
-  },
-  {
-    title: 'Aventuras',
-    img: adventures,
-    path: '/aventuras',
-  },
-  {
-    title: 'Clasificación',
-    img: ranking,
-    path: '/clasificacion',
-  },
-];
-
-const SidebarLink: React.FC<SidebarLinkProps> = ({ route }) => {
-  const location = useLocation();
-  return (
-      <SidebarLinkContainer className={location.pathname === route.path ? 'active' : ''}>
-        <Link to={route.path} className="d-flex flex-column align-items-center justify-content-center">
-          <img src={route.img} alt={route.title} />
-          <span>{route.title}</span>
-        </Link>
-      </SidebarLinkContainer>
-  );
-};
-
-const Sidebar = () => (
+const Sidebar: FC<SidebarProps> = ({ classes }) => (
   <SidebarContainer>
-    <LogoContainer>
-      <Link to="/">
-        <img className="w-100" src={logo} alt="kodkod logo" />
-      </Link>
-    </LogoContainer>
+    <UserInfo user={TEST_USER} />
+    <Divider className="w-75 mb-1" color="#DE4CE1" />
+    <h6 className="text-center fw-bold p-0 mt-4 mb-2">Tus cursos</h6>
     <LinkList>
-      {routes.map((route) => <SidebarLink key={route.title} route={route} />)}
+      {classes?.map?.((teacherClass: ClassInterface) => (
+        <SidebarLink
+          key={teacherClass.id}
+          linkId={teacherClass.id}
+          linkTitle={teacherClass.title}
+          linkRoute={`cursos/${teacherClass.id}/tablero`}
+        />
+      ))}
     </LinkList>
+    <AddCourseButtonContainer>
+      <AddCourseButton color="secondary">
+        <AddIcon />
+      </AddCourseButton>
+    </AddCourseButtonContainer>
+    {/* <SignOutButton variant="text" color="primary" fullWidth>Cerrar sesión</SignOutButton> */}
   </SidebarContainer>
 );
 
