@@ -15,10 +15,10 @@ jobs:
       matrix:
         node-version: [16.x]
     steps:
-      - name: Actions checkout
+      - name: Build actions checkout
         uses: actions/checkout@v3
 
-      - name: Using Node.js ${{ matrix.node-version }}
+      - name: Node.js ${{ matrix.node-version }} setup
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build]
     steps:
-      - name: Actions checkout
+      - name: Deploy actions checkout
         uses: actions/checkout@v1
 
       - name: Configure AWS Credentials
@@ -46,4 +46,6 @@ jobs:
 
       - name: Deploy to S3 bucket
         run: aws s3 sync dist s3://${{ secrets.DEVELOPMENT_DNS }}
-        # run: aws cloudfront create-invalidation --distribution-id ${{ secrets.DEV_DISTRIBUTION_ID }} --paths "/*"
+
+      - name: Clear distribution cache
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.DEV_DISTRIBUTION_ID }} --paths "/*"
