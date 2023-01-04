@@ -1,7 +1,10 @@
 name: Kodkod frontend deploy
 
 on:
-  ["pull_request", "push"]:
+  push:
+    branches:
+      - development
+  pull_request:
     branches:
       - development
 
