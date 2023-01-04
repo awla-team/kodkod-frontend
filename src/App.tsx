@@ -15,7 +15,13 @@ import { FetchStatus } from "global/enums";
 import "./App.css";
 
 const App: React.FC = () => {
-  const [classes, setClasses] = useState<ClassInterface[]>([]);
+  // TODO: remove this fake data when integration with backend is completed
+  const [classes, setClasses] = useState<ClassInterface[]>([
+    { id: 0, userId: 1, title: "7°B", img: "" },
+    { id: 1, userId: 1, title: "8°B", img: "" },
+    { id: 2, userId: 1, title: "6°B", img: "" },
+    { id: 3, userId: 1, title: "5°B", img: "" },
+  ]);
   const [fetching, setFetching] = useState<FetchStatus>(FetchStatus.Idle);
 
   useEffect(() => {
