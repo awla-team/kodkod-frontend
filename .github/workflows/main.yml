@@ -41,18 +41,6 @@ jobs:
       - name: Actions checkout
         uses: actions/checkout@v3
 
-      - name: Node.js ${{ matrix.node-version }} setup
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: "npm"
-
-      - name: Installing dependencies
-        run: npx yarn install
-
-      - name: Building
-        run: npx yarn build
-
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
