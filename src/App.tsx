@@ -49,6 +49,7 @@ const App: React.FC = () => {
       </ThemeWrapper>
     );
 
+  // TODO: uncomment this when integration with backend is completed
   // if (fetching === FetchStatus.Error)
   //   return (
   //     <ThemeWrapper>
