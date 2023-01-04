@@ -33,9 +33,9 @@ jobs:
           name: dist
           path: dist
 
-  deploy:
+  deploy-dev:
     if: github.event.pull_request.merged == true
-    needs: Build
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Actions checkout
