@@ -1,8 +1,6 @@
 import styled from "styled-components";
 
 export const SidebarLinkContainer = styled.div`
-  height: 76px;
-
   a {
     text-decoration: none;
   }
@@ -14,7 +12,7 @@ export const SidebarLinkContainer = styled.div`
   span {
     transition: all 0.2s ease;
     font-weight: bold;
-    color: white;
+    color: #BDBDBD;
     font-size: 14px;
   }
 
@@ -22,18 +20,19 @@ export const SidebarLinkContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #5ea9c0;
+    background-color: #fff;
     border-radius: 100%;
     width: 58px;
     height: 58px;
     padding: 8px;
     transition: all 0.3s ease;
+    border: 2px solid #BDBDBD;
   }
 
   // On hover
   &:hover {
     a > div {
-      filter: brightness(80%);
+      filter: brightness(92%);
     }
     img {
       width: 50px;
@@ -43,12 +42,12 @@ export const SidebarLinkContainer = styled.div`
   // On active
   &.active {
     a > div {
-      background-color: white;
-      box-shadow: 0 0 16px 2px #68bcd5, 0 0 8px 2px #68bcd5;
+      background-color: ${(props) => props.theme.palette.primary.light};
+      border: 2px solid ${(props) => props.theme.palette.primary.main};
     }
     span {
       font-size: 16px;
-      color: #68bcd5;
+      color: ${(props) => props.theme.palette.primary.main};
     }
     img {
       background: transparent;

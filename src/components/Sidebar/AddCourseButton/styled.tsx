@@ -5,7 +5,6 @@ export const AddCourseButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
-  padding: 8px 0px;
 `;
 
 export const AddCourseButton = styled(Fab)`
@@ -14,5 +13,6 @@ export const AddCourseButton = styled(Fab)`
     font-size: 24px;
     font-weight: normal;
     min-height: 56px;
+    box-shadow: none;
   }
 `;

@@ -22,9 +22,8 @@ const LinkList = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
   width: 100%;
-  height: 100%;
   padding: 16px 0px;
   overflow-y: auto;
 `;

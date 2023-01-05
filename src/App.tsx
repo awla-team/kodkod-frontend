@@ -67,7 +67,7 @@ const App: React.FC = () => {
       <div className="app-container d-flex">
         <Sidebar classes={classes} />
         <div className="app-main-container d-flex flex-column flex-fill">
-          <div className="app-content w-100">
+          <div className="app-content container">
             <Outlet />
           </div>
         </div>
