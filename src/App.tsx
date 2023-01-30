@@ -68,7 +68,7 @@ const App: React.FC = () => {
         <Sidebar classes={classes} />
         <div className="app-main-container d-flex flex-column flex-fill">
           <div className="app-content container">
-            <Outlet />
+            <Outlet context={{classes}}/>
           </div>
         </div>
       </div>

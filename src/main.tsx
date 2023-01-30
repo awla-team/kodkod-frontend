@@ -9,6 +9,7 @@ import Board from "routes/Class/Board";
 import Points from "routes/Class/Points";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
+import HomePage from "./components/HomePage";
 
 export const router = createBrowserRouter([
   {
@@ -16,11 +17,7 @@ export const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        element: (
-          <div className="d-flex justify-content-center align-items-center w-100 h-100">
-            <h1 className="text-center">Selecciona un curso</h1>
-          </div>
-        ),
+        element: <HomePage />,
         index: true,
       },
       {
