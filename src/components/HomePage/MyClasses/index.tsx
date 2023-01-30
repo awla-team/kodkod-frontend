@@ -7,7 +7,7 @@ import { useMemo, Fragment } from "react";
 
 const MyClasses: FC<MyClassesProps> = ({ classes }: MyClassesProps) => {
   const classesData = useMemo(() => {
-    const totalLevel = [...new Set(classes.map((res) => res.level))];
+    const totalLevel = [...new Set(classes.map((res) => res.level))].sort();
     return totalLevel.map((classLevel) => ({
       level: classLevel,
       classes: classes.filter((classData) => classLevel === classData.level),
@@ -51,7 +51,8 @@ export default MyClasses;
 const MyClassesContainer = styled(Box)`
   display: flex;
   flex-direction: column;
-  margin-block-start: 4rem;
+  margin-block-start: 3rem;
+  padding-block: 1rem;
 
   & a {
     color: #000;
