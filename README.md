@@ -7,6 +7,9 @@ Install dependencies:
 Run project:
 > yarn dev
 
+Run JSON server:
+> json-server --watch db.json --delay 500
+
 ## Stack
 * React.js + TypeScript
 * Vite
