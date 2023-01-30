@@ -1,7 +1,9 @@
 export interface ClassInterface {
   [index: string]: any;
+
   id: number;
   userId: number;
-  title: string;
+  alias: string;
   img?: string;
+  level: number;
 }

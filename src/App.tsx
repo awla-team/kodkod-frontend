@@ -16,12 +16,7 @@ import "./App.css";
 
 const App: React.FC = () => {
   // TODO: remove this fake data when integration with backend is completed
-  const [classes, setClasses] = useState<ClassInterface[]>([
-    { id: 0, userId: 1, title: "7°B", img: "" },
-    { id: 1, userId: 1, title: "8°B", img: "" },
-    { id: 2, userId: 1, title: "6°B", img: "" },
-    { id: 3, userId: 1, title: "5°B", img: "" },
-  ]);
+  const [classes, setClasses] = useState<ClassInterface[]>([]);
   const [fetching, setFetching] = useState<FetchStatus>(FetchStatus.Idle);
 
   useEffect(() => {
@@ -68,7 +63,7 @@ const App: React.FC = () => {
         <Sidebar classes={classes} />
         <div className="app-main-container d-flex flex-column flex-fill">
           <div className="app-content container">
-            <Outlet />
+            <Outlet context={{ classes }} />
           </div>
         </div>
       </div>

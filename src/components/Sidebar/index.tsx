@@ -22,7 +22,7 @@ const Sidebar: FC<SidebarProps> = ({ classes }) => (
         <SidebarLink
           key={teacherClass.id}
           linkId={teacherClass.id}
-          linkTitle={teacherClass.title}
+          linkTitle={teacherClass.alias}
           linkRoute={`cursos/${teacherClass.id}/tablero`}
         />
       ))}
