@@ -3,26 +3,45 @@ import styled from "styled-components";
 import { Box } from "@mui/material";
 import { MyClassesProps } from "./interfaces";
 import { Link as RouterLink } from "react-router-dom";
+import { useMemo, Fragment } from "react";
 
 const MyClasses: FC<MyClassesProps> = ({ classes }: MyClassesProps) => {
+  const classesData = useMemo(() => {
+    const totalLevel = [...new Set(classes.map((res) => res.level))];
+    return totalLevel.map((classLevel) => ({
+      level: classLevel,
+      classes: classes.filter((classData) => classLevel === classData.level),
+    }));
+  }, [classes]);
   return (
     <MyClassesContainer>
       <h1 className={"header__text"}>My classes</h1>
-      <div className={"class__level"}>
-        <span className={"class__level__text"}>3° Medio</span>
-      </div>
-      <div className={"class__level__cards__container"}>
-        {classes.map((teacherClass, index) => {
-          return (
-            <RouterLink key={index} to={`cursos/${teacherClass.id}/tablero`}>
-              <div className={"class__level__card"}>
-                <h1 className={"header__text"}>{teacherClass.title}</h1>
-                <span className={"class__status"}>No ongoing adventures</span>
-              </div>
-            </RouterLink>
-          );
-        })}
-      </div>
+      {classesData.map(({ level, ...rest }, index) => {
+        return (
+          <Fragment key={index}>
+            <div className={"class__level"}>
+              <span className={"class__level__text"}>{`${level}° Medio`}</span>
+            </div>
+            <div className={"class__level__cards__container"}>
+              {rest.classes.map((teacherClass, _index) => {
+                return (
+                  <RouterLink
+                    key={`${_index}-${index}`}
+                    to={`cursos/${teacherClass.id}/tablero`}
+                  >
+                    <div className={"class__level__card"}>
+                      <h1 className={"header__text"}>{teacherClass.alias}</h1>
+                      <span className={"class__status"}>
+                        No ongoing adventures
+                      </span>
+                    </div>
+                  </RouterLink>
+                );
+              })}
+            </div>
+          </Fragment>
+        );
+      })}
     </MyClassesContainer>
   );
 };

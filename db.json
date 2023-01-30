@@ -454,10 +454,41 @@
     }
   ],
   "classes": [
-    { "id": 0, "userId": 1, "title": "7°B", "img": "" },
-    { "id": 1, "userId": 1, "title": "8°B", "img": "" },
-    { "id": 2, "userId": 1, "title": "6°B", "img": "" },
-    { "id": 3, "userId": 1, "title": "5°B", "img": "" }
+    {
+      "id": 0,
+      "userId": 1,
+      "alias": "7°B",
+      "img": "",
+      "level": 7
+    },
+    {
+      "id": 1,
+      "userId": 1,
+      "alias": "8°B",
+      "img": "",
+      "level": 8
+    },
+    {
+      "id": 1,
+      "userId": 1,
+      "alias": "8°B",
+      "img": "",
+      "level": 8
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "alias": "6°B",
+      "img": "",
+      "level": 6
+    },
+    {
+      "id": 3,
+      "userId": 1,
+      "alias": "5°B",
+      "img": "",
+      "level": 5
+    }
   ],
   "users": [
     {
