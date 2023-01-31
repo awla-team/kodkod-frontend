@@ -51,7 +51,11 @@ const CreateClassModal: FC<CreateClassModalProps> = ({ open, onClose }) => {
     formikHelpers: FormikHelpers<FormInitialState>
   ) => {
     try {
-      const data = await createClass({ ...values, userId: 1 });
+      const data = await createClass({
+        ...values,
+        userId: 1,
+        level: values.level as number,
+      });
       onClose("success");
       Toaster("success", `You successfully added the ${values.alias} class.`);
     } catch (e: any) {
