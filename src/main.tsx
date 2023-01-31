@@ -8,6 +8,8 @@ import Adventure from "routes/Class/Adventures/Adventure";
 import Board from "routes/Class/Board";
 import Points from "routes/Class/Points";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 import "./index.css";
 import HomePage from "./components/HomePage";
 
@@ -48,6 +50,7 @@ export const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
+    <ToastContainer />
     <RouterProvider router={router} />
   </React.StrictMode>
 );

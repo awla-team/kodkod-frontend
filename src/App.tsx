@@ -22,8 +22,7 @@ const App: React.FC = () => {
   const [fetching, setFetching] = useState<FetchStatus>(FetchStatus.Idle);
   const [open, setOpen] = useState<boolean>(false);
 
-  useEffect(() => {
-    setFetching(FetchStatus.Pending);
+  const getClassesData = () => {
     getClassesByTeacherId(TEST_USER.id)
       .then((response: AxiosResponse) => response?.data)
       .then((classes: ClassInterface[]) => {
@@ -34,13 +33,20 @@ const App: React.FC = () => {
         setFetching(FetchStatus.Error);
         console.log(error);
       });
+  };
+
+  useEffect(() => {
+    setFetching(FetchStatus.Pending);
+    getClassesData();
   }, []);
 
   const handleClose = (
-    e: MouseEvent<HTMLButtonElement>,
-    reason: "backdropClick" | "escapeKeyDown"
+    reason: "backdropClick" | "escapeKeyDown" | "success"
   ) => {
     if (reason !== "backdropClick") setOpen(false);
+    if (reason === "success") {
+      getClassesData();
+    }
   };
 
   if (fetching === FetchStatus.Idle || fetching === FetchStatus.Pending)
@@ -68,13 +74,13 @@ const App: React.FC = () => {
 
   // On fetching success
 
-  const handleOpenModal= () =>{
-    setOpen(true)
-  }
+  const handleOpenModal = () => {
+    setOpen(true);
+  };
   return (
     <ThemeWrapper>
       <div className="app-container d-flex">
-        <Sidebar classes={classes} handleOpenModal={handleOpenModal}/>
+        <Sidebar classes={classes} handleOpenModal={handleOpenModal} />
         <div className="app-main-container d-flex flex-column flex-fill">
           <div className="app-content container">
             <Outlet context={{ classes, handleOpenModal }} />

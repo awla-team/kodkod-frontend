@@ -13,7 +13,8 @@ import * as Styled from "./styled";
 import { Formik, Form, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import { useState } from "react";
-import { DialogBox } from "./styled";
+import { createClass } from "services/classes";
+import Toaster from "utils/Toster";
 
 const CreateClassModal: FC<CreateClassModalProps> = ({ open, onClose }) => {
   const [initialState, setInitialState] = useState<FormInitialState>({
@@ -45,24 +46,30 @@ const CreateClassModal: FC<CreateClassModalProps> = ({ open, onClose }) => {
     }
   };
 
-  const handleSubmit = (
-    value: FormInitialState,
+  const handleSubmit = async (
+    values: FormInitialState,
     formikHelpers: FormikHelpers<FormInitialState>
-  ) => {};
+  ) => {
+    try {
+      const data = await createClass({ ...values, userId: 1 });
+      onClose("success");
+      Toaster("success", `You successfully added the ${values.alias} class.`);
+    } catch (e: any) {
+      Toaster("error", e.message);
+    } finally {
+      formikHelpers.setSubmitting(false);
+    }
+  };
   return (
     <Styled.DialogBox
       open={open}
-      onClose={onClose}
       fullWidth={true}
       maxWidth={"sm"}
       scroll={"body"}
       disableEscapeKeyDown
     >
       <Styled.DialogBoxTitle>
-        <IconButton
-          color={"inherit"}
-          onClick={(e) => onClose(e, "escapeKeyDown")}
-        >
+        <IconButton color={"inherit"} onClick={() => onClose("escapeKeyDown")}>
           <CloseIcon />
         </IconButton>
       </Styled.DialogBoxTitle>
@@ -81,6 +88,7 @@ const CreateClassModal: FC<CreateClassModalProps> = ({ open, onClose }) => {
             errors,
             submitCount,
             setFieldValue,
+            isSubmitting,
           }) => {
             return (
               <Form onSubmit={handleSubmit}>
@@ -142,7 +150,11 @@ const CreateClassModal: FC<CreateClassModalProps> = ({ open, onClose }) => {
                     />
                   </FormControl>
                   <Styled.DialogFormActions>
-                    <Button type={"submit"} variant={"contained"}>
+                    <Button
+                      disabled={isSubmitting}
+                      type={"submit"}
+                      variant={"contained"}
+                    >
                       Add class
                     </Button>
                   </Styled.DialogFormActions>

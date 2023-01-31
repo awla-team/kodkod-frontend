@@ -1,3 +1,5 @@
+import { FormInitialState } from "components/Modals/CreateClassModal/interfaces";
+
 export interface ClassInterface {
   [index: string]: any;
 
@@ -6,4 +8,8 @@ export interface ClassInterface {
   alias: string;
   img?: string;
   level: number;
+}
+
+export interface CreateClassBody extends FormInitialState {
+  userId:number
 }
