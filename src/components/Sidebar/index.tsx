@@ -12,7 +12,7 @@ import {
   AddCourseButtonContainer,
 } from "./AddCourseButton/styled";
 
-const Sidebar: FC<SidebarProps> = ({ classes }) => (
+const Sidebar: FC<SidebarProps> = ({ classes, handleOpenModal }) => (
   <SidebarContainer>
     <UserInfo user={TEST_USER} />
     <Divider className="w-75 mb-1" color="#DE4CE1" />
@@ -27,7 +27,7 @@ const Sidebar: FC<SidebarProps> = ({ classes }) => (
         />
       ))}
     </LinkList>
-    <AddCourseButtonContainer>
+    <AddCourseButtonContainer onClick={() => handleOpenModal()}>
       <AddCourseButton color="primary">
         <AddIcon />
       </AddCourseButton>

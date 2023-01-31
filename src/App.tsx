@@ -13,11 +13,14 @@ import { AxiosResponse } from "axios";
 import { TEST_USER } from "services/users";
 import { FetchStatus } from "global/enums";
 import "./App.css";
+import CreateClassModal from "./components/Modals";
+import type { MouseEvent } from "react";
 
 const App: React.FC = () => {
   // TODO: remove this fake data when integration with backend is completed
   const [classes, setClasses] = useState<ClassInterface[]>([]);
   const [fetching, setFetching] = useState<FetchStatus>(FetchStatus.Idle);
+  const [open, setOpen] = useState<boolean>(false);
 
   useEffect(() => {
     setFetching(FetchStatus.Pending);
@@ -32,6 +35,13 @@ const App: React.FC = () => {
         console.log(error);
       });
   }, []);
+
+  const handleClose = (
+    e: MouseEvent<HTMLButtonElement>,
+    reason: "backdropClick" | "escapeKeyDown"
+  ) => {
+    if (reason !== "backdropClick") setOpen(false);
+  };
 
   if (fetching === FetchStatus.Idle || fetching === FetchStatus.Pending)
     return (
@@ -57,15 +67,20 @@ const App: React.FC = () => {
   //   );
 
   // On fetching success
+
+  const handleOpenModal= () =>{
+    setOpen(true)
+  }
   return (
     <ThemeWrapper>
       <div className="app-container d-flex">
-        <Sidebar classes={classes} />
+        <Sidebar classes={classes} handleOpenModal={handleOpenModal}/>
         <div className="app-main-container d-flex flex-column flex-fill">
           <div className="app-content container">
-            <Outlet context={{ classes }} />
+            <Outlet context={{ classes, handleOpenModal }} />
           </div>
         </div>
+        <CreateClassModal open={open} onClose={handleClose} />
       </div>
     </ThemeWrapper>
   );
