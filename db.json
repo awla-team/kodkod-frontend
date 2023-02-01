@@ -488,6 +488,41 @@
       "alias": "5°B",
       "img": "",
       "level": 5
+    },
+    {
+      "level": 1,
+      "code": "A",
+      "alias": "1° A",
+      "userId": 1,
+      "id": 4
+    },
+    {
+      "level": 1,
+      "code": "C",
+      "alias": "1° C",
+      "userId": 1,
+      "id": 5
+    },
+    {
+      "level": 2,
+      "code": "C",
+      "alias": "2° C",
+      "userId": 1,
+      "id": 6
+    },
+    {
+      "level": 3,
+      "code": "C",
+      "alias": "3° C",
+      "userId": 1,
+      "id": 7
+    },
+    {
+      "level": 1,
+      "code": "A",
+      "alias": "1° A",
+      "userId": 1,
+      "id": 8
     }
   ],
   "users": [

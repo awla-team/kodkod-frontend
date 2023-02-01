@@ -13,25 +13,43 @@ import { AxiosResponse } from "axios";
 import { TEST_USER } from "services/users";
 import { FetchStatus } from "global/enums";
 import "./App.css";
+import CreateClassModal from "./components/Modals";
+import type { MouseEvent } from "react";
+import { sortClasses } from "./utils";
 
 const App: React.FC = () => {
   // TODO: remove this fake data when integration with backend is completed
   const [classes, setClasses] = useState<ClassInterface[]>([]);
   const [fetching, setFetching] = useState<FetchStatus>(FetchStatus.Idle);
+  const [open, setOpen] = useState<boolean>(false);
 
-  useEffect(() => {
-    setFetching(FetchStatus.Pending);
+  const getClassesData = () => {
     getClassesByTeacherId(TEST_USER.id)
       .then((response: AxiosResponse) => response?.data)
       .then((classes: ClassInterface[]) => {
-        if (!!classes && Object.values(classes).length) setClasses(classes);
+        if (!!classes && Object.values(classes).length)
+          setClasses(sortClasses(classes));
         setFetching(FetchStatus.Success);
       })
       .catch((error) => {
         setFetching(FetchStatus.Error);
         console.log(error);
       });
+  };
+
+  useEffect(() => {
+    setFetching(FetchStatus.Pending);
+    getClassesData();
   }, []);
+
+  const handleClose = (
+    reason: "backdropClick" | "escapeKeyDown" | "success"
+  ) => {
+    if (reason !== "backdropClick") setOpen(false);
+    if (reason === "success") {
+      getClassesData();
+    }
+  };
 
   if (fetching === FetchStatus.Idle || fetching === FetchStatus.Pending)
     return (
@@ -57,15 +75,20 @@ const App: React.FC = () => {
   //   );
 
   // On fetching success
+
+  const handleOpenModal = () => {
+    setOpen(true);
+  };
   return (
     <ThemeWrapper>
       <div className="app-container d-flex">
-        <Sidebar classes={classes} />
+        <Sidebar classes={classes} handleOpenModal={handleOpenModal} />
         <div className="app-main-container d-flex flex-column flex-fill">
           <div className="app-content container">
-            <Outlet context={{ classes }} />
+            <Outlet context={{ classes, handleOpenModal }} />
           </div>
         </div>
+        <CreateClassModal open={open} onClose={handleClose} />
       </div>
     </ThemeWrapper>
   );

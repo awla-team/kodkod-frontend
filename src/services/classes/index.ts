@@ -1,4 +1,4 @@
 import http from "global/api";
+import { CreateClassBody } from "./interfaces";
 
-export const getClassesByTeacherId = (teacherId: number | string) =>
-  http.get(`users/${teacherId}/classes`);
+

@@ -1,3 +1,5 @@
+import { FormInitialState } from "components/Modals/CreateClassModal/interfaces";
+
 export interface ClassInterface {
   [index: string]: any;
 

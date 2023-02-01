@@ -1,15 +1,20 @@
 import type { FC } from "react";
 import { Box, Button } from "@mui/material";
 import styled from "styled-components";
+import { WelcomePageProps } from "./interfaces";
 
-const WelcomePage: FC = () => {
+const WelcomePage: FC<WelcomePageProps> = ({
+  handleOpenModal,
+}: WelcomePageProps) => {
   return (
     <WelcomePageContainer>
       <h1 className="text-center header__text">Selecciona un curso</h1>
       <p className={"description__text"}>
         Add a class to start improving our classroom environment together
       </p>
-      <Button variant={'contained'}>Add your first class</Button>
+      <Button onClick={handleOpenModal} variant={"contained"}>
+        Add your first class
+      </Button>
     </WelcomePageContainer>
   );
 };
@@ -32,8 +37,8 @@ const WelcomePageContainer = styled(Box)`
     text-align: center;
     max-width: 45ch;
   }
-  
-  & button{
+
+  & button {
     border-radius: 8px;
     font-weight: 700;
     font-size: 1.5rem;
