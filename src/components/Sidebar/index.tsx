@@ -11,6 +11,7 @@ import {
   AddCourseButton,
   AddCourseButtonContainer,
 } from "./AddCourseButton/styled";
+import { sortClasses } from "../../utils";
 
 const Sidebar: FC<SidebarProps> = ({ classes, handleOpenModal }) => (
   <SidebarContainer>

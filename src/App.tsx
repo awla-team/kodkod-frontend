@@ -15,6 +15,7 @@ import { FetchStatus } from "global/enums";
 import "./App.css";
 import CreateClassModal from "./components/Modals";
 import type { MouseEvent } from "react";
+import { sortClasses } from "./utils";
 
 const App: React.FC = () => {
   // TODO: remove this fake data when integration with backend is completed
@@ -26,7 +27,8 @@ const App: React.FC = () => {
     getClassesByTeacherId(TEST_USER.id)
       .then((response: AxiosResponse) => response?.data)
       .then((classes: ClassInterface[]) => {
-        if (!!classes && Object.values(classes).length) setClasses(classes);
+        if (!!classes && Object.values(classes).length)
+          setClasses(sortClasses(classes));
         setFetching(FetchStatus.Success);
       })
       .catch((error) => {
