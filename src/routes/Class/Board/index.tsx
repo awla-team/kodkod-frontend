@@ -1,15 +1,13 @@
 import React, {useState} from "react";
-import {useOutletContext, useParams} from "react-router-dom";
+import {useOutletContext} from "react-router-dom";
 import {DashboardContainer, DashboardContainerLeftSide, DashboardContainerRightSide, DetailsCard} from "./styled";
 import ClassDetailsCard from "components/ClassDetailsCard";
-import {useEffect} from "react";
-import {ClassInterface} from "../../../services/classes/interfaces";
-import {getClassByID} from "../../../services/classes";
-import Toaster from "../../../utils/Toster";
+import {ClassInterface} from "services/classes/interfaces";
+import StudentsList from "components/StudentsList";
 
 const Board: React.FC<{}> = ({}) => {
 
-    const {classDetails} = useOutletContext() as {classDetails: ClassInterface}
+    const {classDetails, students} = useOutletContext() as {classDetails: ClassInterface, students: object[]}
 
 
   return (
@@ -27,6 +25,7 @@ const Board: React.FC<{}> = ({}) => {
       </DashboardContainerLeftSide>
         <DashboardContainerRightSide>
             <DetailsCard className={'h-100'}>
+                <StudentsList studentsData={students}/>
             </DetailsCard>
         </DashboardContainerRightSide>
     </DashboardContainer>

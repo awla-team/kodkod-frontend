@@ -7,6 +7,7 @@ import {NavTabsContainer} from "./styled";
 import {ClassInterface} from "../../services/classes/interfaces";
 import {getClassByID} from "../../services/classes";
 import Toaster from "../../utils/Toster";
+import {studentsByClass} from "../../services/students";
 
 const TAB_PATHS: TabPaths = {
   0: "tablero",
@@ -42,6 +43,7 @@ const Class: React.FC = () => {
 
     const { classId } = useParams();
     const [classDetails, setClassDetails]= useState<ClassInterface | undefined>()
+    const [students, setStudents]= useState<object[]>([])
 
     const getClassById= async (id: number| string) =>{
         try{
@@ -51,9 +53,22 @@ const Class: React.FC = () => {
             Toaster('error', e.message)
         }
     }
+
+    const getStudentsByClass= async (id: number| string)=> {
+        try{
+
+            const {data}: {data: any}= await studentsByClass(id)
+            console.log(data)
+            setStudents(data)
+
+        }catch (e: any) {
+            Toaster('error', e.message)
+        }
+    }
     useEffect(() =>{
         if (classId){
             getClassById(classId)
+            getStudentsByClass(classId)
         }
     },[classId])
 
@@ -90,14 +105,15 @@ const Class: React.FC = () => {
           </Box>
       </NavTabsContainer>
       <TabContent value={selectedTab} index={0}>
-        <Outlet context={{classDetails}} />
+        <Outlet context={{classDetails, students}} />
       </TabContent>
       <TabContent value={selectedTab} index={1}>
-        <Outlet context={{classDetails}}/>
+        <Outlet context={{classDetails, students}}/>
       </TabContent>
       <TabContent value={selectedTab} index={2}>
-        <Outlet context={{classDetails}}/>
+        <Outlet context={{classDetails, students}}/>
       </TabContent>
+
     </>
   );
 };

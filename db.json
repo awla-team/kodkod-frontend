@@ -532,5 +532,10 @@
       "last_name": "Pérez",
       "role": "Profesor"
     }
+  ],
+
+  "students": [
+    {},
+    {}
   ]
 }
