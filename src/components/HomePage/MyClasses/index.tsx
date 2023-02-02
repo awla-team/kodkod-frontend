@@ -51,7 +51,6 @@ export default MyClasses;
 const MyClassesContainer = styled(Box)`
   display: flex;
   flex-direction: column;
-  margin-block-start: 3rem;
   padding-block: 1rem;
 
   & a {

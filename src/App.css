@@ -9,6 +9,7 @@
   height: 100vh;
   overflow: auto;
   width: 100%;
+  padding-block-start: 3rem;
   /* padding-top: 100px; */
 }
 
