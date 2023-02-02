@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import {Box, Tab, Tabs} from "@mui/material";
-import { Outlet, useLocation, useNavigate} from "react-router-dom";
+import {Outlet, useLocation, useNavigate, useParams} from "react-router-dom";
 import TabContent from "components/TabContent";
 import { TabPaths } from "./interfaces";
 import {NavTabsContainer} from "./styled";
+import {ClassInterface} from "../../services/classes/interfaces";
+import {getClassByID} from "../../services/classes";
+import Toaster from "../../utils/Toster";
+
 const TAB_PATHS: TabPaths = {
   0: "tablero",
   1: "aventuras",
@@ -36,10 +40,28 @@ const Class: React.FC = () => {
     if (pathname.includes(TAB_PATHS[2])) changeTab(null, 2);
   }, [pathname]);
 
+    const { classId } = useParams();
+    const [classDetails, setClassDetails]= useState<ClassInterface | undefined>()
+
+    const getClassById= async (id: number| string) =>{
+        try{
+            const {data}: {data: ClassInterface} = await getClassByID(id)
+            setClassDetails(data)
+        }catch (e: any) {
+            Toaster('error', e.message)
+        }
+    }
+    useEffect(() =>{
+        if (classId){
+            getClassById(classId)
+        }
+    },[classId])
+
   return (
     <>
       <NavTabsContainer
       >
+
           <Box className={'nav__tab'} role={'button'} onClick={() => {
               navigate(TAB_PATHS[0]);
           }}>
@@ -68,13 +90,13 @@ const Class: React.FC = () => {
           </Box>
       </NavTabsContainer>
       <TabContent value={selectedTab} index={0}>
-        <Outlet />
+        <Outlet context={{classDetails}} />
       </TabContent>
       <TabContent value={selectedTab} index={1}>
-        <Outlet />
+        <Outlet context={{classDetails}}/>
       </TabContent>
       <TabContent value={selectedTab} index={2}>
-        <Outlet />
+        <Outlet context={{classDetails}}/>
       </TabContent>
     </>
   );
