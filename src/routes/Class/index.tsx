@@ -8,6 +8,7 @@ import {ClassInterface} from "../../services/classes/interfaces";
 import {getClassByID} from "../../services/classes";
 import Toaster from "../../utils/Toster";
 import {studentsByClass} from "../../services/students";
+import ClassContextProvider, {useClassContext} from "./Context";
 
 const TAB_PATHS: TabPaths = {
   0: "tablero",
@@ -41,36 +42,7 @@ const Class: React.FC = () => {
     if (pathname.includes(TAB_PATHS[2])) changeTab(null, 2);
   }, [pathname]);
 
-    const { classId } = useParams();
-    const [classDetails, setClassDetails]= useState<ClassInterface | undefined>()
-    const [students, setStudents]= useState<object[]>([])
-
-    const getClassById= async (id: number| string) =>{
-        try{
-            const {data}: {data: ClassInterface} = await getClassByID(id)
-            setClassDetails(data)
-        }catch (e: any) {
-            Toaster('error', e.message)
-        }
-    }
-
-    const getStudentsByClass= async (id: number| string)=> {
-        try{
-
-            const {data}: {data: any}= await studentsByClass(id)
-            console.log(data)
-            setStudents(data)
-
-        }catch (e: any) {
-            Toaster('error', e.message)
-        }
-    }
-    useEffect(() =>{
-        if (classId){
-            getClassById(classId)
-            getStudentsByClass(classId)
-        }
-    },[classId])
+  const {classDetails, students}= useClassContext()
 
   return (
     <>

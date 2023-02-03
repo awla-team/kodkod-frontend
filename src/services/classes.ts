@@ -11,3 +11,5 @@ export const createClass = (body: Omit<ClassInterface, "id">) =>
 export const getClassByID= (id: number | string) =>{
     return http.get('classes/'+id)
 }
+
+

@@ -5,51 +5,67 @@ import {
     StudentListContent,
     StudentsListDetailsContainer
 } from "./styled";
-import {FC} from "react";
+import {Dispatch, FC, SetStateAction} from "react";
 import {Avatar, Button, IconButton} from "@mui/material";
-import {StudentsListProps} from "./interfaces";
+import {StudentsListProps, StudentType} from "./interfaces";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-
-const StudentsList:FC<StudentsListProps>= ({studentsData}: StudentsListProps)=>{
+import {useState} from 'react'
+import AddStudentsDialog from "../Modals/AddStudentsDialog";
+import {useClassContext} from "../../routes/Class/Context";
+import {useParams} from "react-router-dom";
+const StudentsList:FC<StudentsListProps>= ({studentsData, classDetails}: StudentsListProps)=>{
+    const [OpenModal, setOpenModal]= useState<boolean>(false)
+    const {getStudentsByClass}= useClassContext()
+    const {classId} = useParams();
+    const handleModalClose= (reason: 'success' | undefined) =>{
+        if (reason==='success'){
+            if (classId)
+            getStudentsByClass(classId)
+        }
+        setOpenModal(false)
+    }
     return <StudentListContainer>
         <h1 className={'header__text'}>
             Students list
         </h1>
         <StudentListContent hasDetails={!!studentsData.length}>
-            {studentsData.length? <StudentsListDetails/>
-                : <DontHaveDetails/>
+            {studentsData.length? <StudentsListDetails studentsData={studentsData} setOpenModal={setOpenModal}/>
+                : <DontHaveDetails setOpenModal={setOpenModal}/>
             }
 
         </StudentListContent>
+        { OpenModal && <AddStudentsDialog classDetails={classDetails} open={OpenModal} onClose={handleModalClose} />
+        }
     </StudentListContainer>
 }
 
 export default StudentsList
-const DontHaveDetails: FC= () =>{
+const DontHaveDetails: FC<{setOpenModal: Dispatch<SetStateAction<boolean>>}>= ({setOpenModal}) =>{
     return <DontHaveDetailsContent>
         <span className={'helper__text'}>
 Your class has no associated students yet
         </span>
-        <Button variant={'contained'}>
+        <Button variant={'contained'} onClick={() => setOpenModal(true)}>
             Add students
         </Button>
     </DontHaveDetailsContent>
 }
 
 
-const StudentsListDetails: FC= () =>{
+const StudentsListDetails: FC<{setOpenModal: Dispatch<SetStateAction<boolean>>,
+    studentsData: StudentType[]}>= ({setOpenModal, studentsData}) =>{
     return <StudentsListDetailsContainer>
         <div className={'details'}>
             {
-                [1,2,].map((res, index) =>{
+                studentsData.map((res, index) =>{
                     return <StudentDetailBox key={index}>
                         <Avatar/>
                         <div className={'student__details'}>
                             <div className={'student__name'}>
-                                Abc Efg
+                                {res.name}
                             </div>
                             <div className={'student__email'}>
-                                abc@gmail.com
+                                {res.email}
                             </div>
                         </div>
                         <IconButton color={'inherit'}>
@@ -60,7 +76,7 @@ const StudentsListDetails: FC= () =>{
             }
         </div>
 
-        <Button variant={'contained'}>
+        <Button variant={'contained'} onClick={() => setOpenModal(true)}>
             Add students
         </Button>
     </StudentsListDetailsContainer>

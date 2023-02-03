@@ -4,10 +4,11 @@ import {DashboardContainer, DashboardContainerLeftSide, DashboardContainerRightS
 import ClassDetailsCard from "components/ClassDetailsCard";
 import {ClassInterface} from "services/classes/interfaces";
 import StudentsList from "components/StudentsList";
+import {StudentType} from "components/StudentsList/interfaces";
 
 const Board: React.FC<{}> = ({}) => {
 
-    const {classDetails, students} = useOutletContext() as {classDetails: ClassInterface, students: object[]}
+    const {classDetails, students} = useOutletContext() as {classDetails: ClassInterface, students: StudentType[]}
 
 
   return (
@@ -17,7 +18,6 @@ const Board: React.FC<{}> = ({}) => {
               {
                   classDetails &&  <ClassDetailsCard classDetails={classDetails}/>
               }
-
           </DetailsCard>
           <DetailsCard>
           </DetailsCard>
@@ -25,7 +25,7 @@ const Board: React.FC<{}> = ({}) => {
       </DashboardContainerLeftSide>
         <DashboardContainerRightSide>
             <DetailsCard className={'h-100'}>
-                <StudentsList studentsData={students}/>
+                <StudentsList studentsData={students} classDetails={classDetails}/>
             </DetailsCard>
         </DashboardContainerRightSide>
     </DashboardContainer>

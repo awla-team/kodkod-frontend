@@ -533,9 +533,36 @@
       "role": "Profesor"
     }
   ],
-
   "students": [
-    {},
-    {}
+    {
+      "id": 1,
+      "name": "Student1",
+      "email": "student1@email.com",
+      "classId": 1
+    },
+    {
+      "id": 2,
+      "name": "Student2",
+      "email": "student2@email.com",
+      "classId": 1
+    },
+    {
+      "id": 3,
+      "name": "sd",
+      "email": "111@ss.sa",
+      "classId": 1
+    },
+    {
+      "name": "ssasa",
+      "email": "umair.dmechs@gmail.com",
+      "classId": 1,
+      "id": 4
+    },
+    {
+      "name": "sds",
+      "email": "111@ss.sa",
+      "classId": 8,
+      "id": 5
+    }
   ]
 }

@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import "./index.css";
 import HomePage from "./components/HomePage";
+import ClassContextProvider from "./routes/Class/Context";
 
 export const router = createBrowserRouter([
   {
@@ -24,7 +25,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "cursos/:classId",
-        element: <Class />,
+        element: <ClassContextProvider><Class /></ClassContextProvider>,
         children: [
           {
             path: "tablero",

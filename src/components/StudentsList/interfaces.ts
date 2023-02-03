@@ -1,3 +1,14 @@
+import {ClassInterface} from "services/classes/interfaces";
+
+
+export interface StudentType{
+    id:number | string;
+    email:string;
+    name:string;
+    classId: string | number
+
+}
 export interface StudentsListProps{
-    studentsData: object[]
+    studentsData: StudentType[],
+    classDetails: ClassInterface
 }
