@@ -1,83 +1,129 @@
 import {
-    DontHaveDetailsContent,
-    StudentDetailBox,
-    StudentListContainer,
-    StudentListContent,
-    StudentsListDetailsContainer
+  DontHaveDetailsContent,
+  StudentDetailBox,
+  StudentListContainer,
+  StudentListContent,
+  StudentsListDetailsContainer,
 } from "./styled";
-import {Dispatch, FC, SetStateAction} from "react";
-import {Avatar, Button, IconButton} from "@mui/material";
-import {StudentsListProps, StudentType} from "./interfaces";
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import {useState} from 'react'
+import React, { Dispatch, FC, SetStateAction } from "react";
+import { Avatar, Button, IconButton, Menu, MenuItem } from "@mui/material";
+import { StudentsListProps, StudentType } from "./interfaces";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { useState } from "react";
 import AddStudentsDialog from "../Modals/AddStudentsDialog";
-import {useClassContext} from "../../routes/Class/Context";
-import {useParams} from "react-router-dom";
-const StudentsList:FC<StudentsListProps>= ({studentsData, classDetails}: StudentsListProps)=>{
-    const [OpenModal, setOpenModal]= useState<boolean>(false)
-    const {getStudentsByClass}= useClassContext()
-    const {classId} = useParams();
-    const handleModalClose= (reason: 'success' | undefined) =>{
-        if (reason==='success'){
-            if (classId)
-            getStudentsByClass(classId)
-        }
-        setOpenModal(false)
+import { useClassContext } from "../../routes/Class/Context";
+import { useParams } from "react-router-dom";
+import { updateStudent } from "../../services/students";
+import Toaster from "../../utils/Toster";
+
+const StudentsList: FC<StudentsListProps> = ({
+  studentsData,
+  classDetails,
+}: StudentsListProps) => {
+  const [OpenModal, setOpenModal] = useState<boolean>(false);
+  const { getStudentsByClass } = useClassContext();
+  const { classId } = useParams();
+  const handleModalClose = (reason: "success" | undefined) => {
+    if (reason === "success") {
+      if (classId) getStudentsByClass(classId);
     }
-    return <StudentListContainer>
-        <h1 className={'header__text'}>
-            Students list
-        </h1>
-        <StudentListContent hasDetails={!!studentsData.length}>
-            {studentsData.length? <StudentsListDetails studentsData={studentsData} setOpenModal={setOpenModal}/>
-                : <DontHaveDetails setOpenModal={setOpenModal}/>
-            }
+    setOpenModal(false);
+  };
 
-        </StudentListContent>
-        { OpenModal && <AddStudentsDialog classDetails={classDetails} open={OpenModal} onClose={handleModalClose} />
-        }
+  // temporary approcah
+  const handleDelete = async (studentId: string | number) => {
+    try {
+      if (studentId) {
+        await updateStudent(studentId);
+        if (classId) getStudentsByClass(classId);
+      }
+    } catch (e: any) {
+      Toaster("error", e.message);
+    }
+  };
+  return (
+    <StudentListContainer>
+      <h1 className={"header__text"}>Students list</h1>
+      <StudentListContent hasDetails={!!studentsData.length}>
+        {studentsData.length ? (
+          <StudentsListDetails
+            handleDelete={handleDelete}
+            studentsData={studentsData}
+            setOpenModal={setOpenModal}
+          />
+        ) : (
+          <DontHaveDetails setOpenModal={setOpenModal} />
+        )}
+      </StudentListContent>
+      {OpenModal && (
+        <AddStudentsDialog
+          classDetails={classDetails}
+          open={OpenModal}
+          onClose={handleModalClose}
+        />
+      )}
     </StudentListContainer>
-}
+  );
+};
 
-export default StudentsList
-const DontHaveDetails: FC<{setOpenModal: Dispatch<SetStateAction<boolean>>}>= ({setOpenModal}) =>{
-    return <DontHaveDetailsContent>
-        <span className={'helper__text'}>
-Your class has no associated students yet
-        </span>
-        <Button variant={'contained'} onClick={() => setOpenModal(true)}>
-            Add students
-        </Button>
+export default StudentsList;
+const DontHaveDetails: FC<{
+  setOpenModal: Dispatch<SetStateAction<boolean>>;
+}> = ({ setOpenModal }) => {
+  return (
+    <DontHaveDetailsContent>
+      <span className={"helper__text"}>
+        Your class has no associated students yet
+      </span>
+      <Button variant={"contained"} onClick={() => setOpenModal(true)}>
+        Add students
+      </Button>
     </DontHaveDetailsContent>
-}
+  );
+};
 
+const StudentsListDetails: FC<{
+  setOpenModal: Dispatch<SetStateAction<boolean>>;
+  studentsData: StudentType[];
+  handleDelete: (studentId: string | number) => void;
+}> = ({ setOpenModal, handleDelete, studentsData }) => {
+  const [elRef, setElRef] = useState<any | null>(null);
 
-const StudentsListDetails: FC<{setOpenModal: Dispatch<SetStateAction<boolean>>,
-    studentsData: StudentType[]}>= ({setOpenModal, studentsData}) =>{
-    return <StudentsListDetailsContainer>
-        <div className={'details'}>
-            {
-                studentsData.map((res, index) =>{
-                    return <StudentDetailBox key={index}>
-                        <Avatar/>
-                        <div className={'student__details'}>
-                            <div className={'student__name'}>
-                                {res.name}
-                            </div>
-                            <div className={'student__email'}>
-                                {res.email}
-                            </div>
-                        </div>
-                        <IconButton color={'inherit'}>
-                            <MoreVertIcon/>
-                        </IconButton>
-                    </StudentDetailBox>
-                })
-            }
-        </div>
+  const handleMenuOpen = (e: React.MouseEvent) => {
+    const { currentTarget } = e;
+    setElRef(currentTarget);
+  };
+  return (
+    <StudentsListDetailsContainer>
+      <div className={"details"}>
+        {studentsData.map((res, index) => {
+          return (
+            <StudentDetailBox key={index}>
+              <Avatar />
+              <div className={"student__details"}>
+                <div className={"student__name"}>{res.name}</div>
+                <div className={"student__email"}>{res.email}</div>
+              </div>
+              <IconButton color={"inherit"} onClick={handleMenuOpen}>
+                <MoreVertIcon />
+              </IconButton>
+              <Menu
+                elevation={1}
+                open={!!elRef}
+                anchorEl={elRef}
+                onClose={() => setElRef(null)}
+              >
+                <MenuItem>Edit</MenuItem>
+                <MenuItem onClick={() => handleDelete(res.id)}>Delete</MenuItem>
+              </Menu>
+            </StudentDetailBox>
+          );
+        })}
+      </div>
 
-        <Button variant={'contained'} onClick={() => setOpenModal(true)}>
-            Add students
-        </Button>
+      <Button variant={"contained"} onClick={() => setOpenModal(true)}>
+        Add students
+      </Button>
     </StudentsListDetailsContainer>
-}
+  );
+};

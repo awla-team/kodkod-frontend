@@ -51,8 +51,8 @@ const AddStudentsDialog: FC<AddStudentsDialogProps>= ({open, onClose, classDetai
 
     return <Styled.StudentAddDialog scroll={'body'} open={open} disableEscapeKeyDown maxWidth={'sm'} fullWidth={true}>
         <Styled.StudentAddDialogTitle>
-            <IconButton color={'inherit'}>
-                <CloseIcon onClick={() => onClose()}/>
+            <IconButton color={'inherit'} onClick={() => onClose()}>
+                <CloseIcon />
             </IconButton>
         </Styled.StudentAddDialogTitle>
         <Styled.StudentAddDialogContent>

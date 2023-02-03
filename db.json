@@ -553,9 +553,7 @@
       "classId": 1
     },
     {
-      "name": "ssasa",
-      "email": "umair.dmechs@gmail.com",
-      "classId": 1,
+      "classId": null,
       "id": 4
     },
     {
@@ -563,6 +561,14 @@
       "email": "111@ss.sa",
       "classId": 8,
       "id": 5
+    },
+    {
+      "classId": 0,
+      "id": 6
+    },
+    {
+      "classId": 0,
+      "id": 7
     }
   ]
 }
