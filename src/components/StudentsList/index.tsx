@@ -5,9 +5,21 @@ import {
   StudentListContent,
   StudentsListDetailsContainer,
 } from "./styled";
-import React, { Dispatch, FC, SetStateAction } from "react";
-import { Avatar, Button, IconButton, Menu, MenuItem } from "@mui/material";
-import { StudentsListProps, StudentType } from "./interfaces";
+import React, { Dispatch, FC, SetStateAction, useEffect } from "react";
+import {
+  Avatar,
+  Button,
+  IconButton,
+  Menu,
+  MenuItem,
+  InputBase,
+  FormControl,
+} from "@mui/material";
+import {
+  StudentEditInputField,
+  StudentsListProps,
+  StudentType,
+} from "./interfaces";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useState } from "react";
 import AddStudentsDialog from "../Modals/AddStudentsDialog";
@@ -16,6 +28,11 @@ import { useParams } from "react-router-dom";
 import { updateStudent } from "../../services/students";
 import Toaster from "../../utils/Toster";
 import ConfirmationModal from "../Modals/ConfirmationModal";
+import CloseIcon from "@mui/icons-material/Close";
+import CheckIcon from "@mui/icons-material/Check";
+import { Formik, Form, FormikHelpers } from "formik";
+import * as Yup from "yup";
+import { StudentDetails } from "./sub-components";
 
 const StudentsList: FC<StudentsListProps> = ({
   studentsData,
@@ -92,74 +109,17 @@ const StudentsListDetails: FC<{
   studentsData: StudentType[];
   handleDelete: (studentId: string | number) => Promise<boolean>;
 }> = ({ setOpenModal, handleDelete, studentsData }) => {
-  const [elRef, setElRef] = useState<any | null>(null);
-  const [openConfirmation, setOpenConfirmation] = useState<boolean>(false);
-  const [selectedStudent, setSelectedStudent] = useState<StudentType | null>(
-    null
-  );
-  const handleMenuOpen = (e: React.MouseEvent) => {
-    const { currentTarget } = e;
-    setElRef(currentTarget);
-  };
-
-  const handleDeleteCB = async () => {
-    try {
-      if (selectedStudent) {
-        await handleDelete(selectedStudent.id);
-        Toaster("success", `${selectedStudent.email} deleted successfully.`);
-        setElRef(null);
-        setOpenConfirmation(false)
-      }
-    } catch (e: any) {
-      Toaster("error", e.message);
-    }
-  };
-
-  const handleConfirmationClose = () => {
-    setOpenConfirmation(false);
-    setSelectedStudent(null);
-    setElRef(null)
-  };
   return (
     <StudentsListDetailsContainer>
       <div className={"details"}>
         {studentsData.map((res, index) => {
           return (
-            <StudentDetailBox key={index}>
-              <Avatar />
-              <div className={"student__details"}>
-                <div className={"student__name"}>{res.name}</div>
-                <div className={"student__email"}>{res.email}</div>
-              </div>
-              <IconButton color={"inherit"} onClick={handleMenuOpen}>
-                <MoreVertIcon />
-              </IconButton>
-              <Menu
-                elevation={1}
-                open={!!elRef}
-                anchorEl={elRef}
-                onClose={() => setElRef(null)}
-              >
-                <MenuItem>Edit</MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    setSelectedStudent(res);
-                    setOpenConfirmation(true);
-                  }}
-                >
-                  Delete
-                </MenuItem>
-              </Menu>
+            <StudentDetailBox key={`${index}-${res.id}`}>
+              <StudentDetails details={res} handleDelete={handleDelete} />
             </StudentDetailBox>
           );
         })}
       </div>
-
-      <ConfirmationModal
-        open={openConfirmation}
-        callBackFunction={handleDeleteCB}
-        onClose={handleConfirmationClose}
-      />
 
       <Button variant={"contained"} onClick={() => setOpenModal(true)}>
         Add students

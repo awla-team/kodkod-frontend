@@ -65,17 +65,48 @@ display: flex;
 `
 
 export const StudentDetailBox= styled(Box)`
-display: flex;
+  display: flex;
   align-items: center;
   gap: 1rem;
-  & .student__details{
+  justify-content: space-between;
+  
+  & .editable_section__form{
     flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    font-size: 1rem;
-    
-    & .student__email{
-      color: #969696
+    & .edit__section{
+      display: flex;
+
+      gap: 1rem;
+      align-items: center;
+
+      & .editable__field{
+        display: flex;
+        flex-direction: column;
+        font-size: 1rem;
+        flex-grow: 1;
+      }
+
+      & .editable__action__section{
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
     }
   }
+  
+  & .student__details__container {
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-between;
+    & .student__details {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      font-size: 1rem;
+
+      & .student__email {
+        color: #969696
+      }
+    }
+  }
+
 `
