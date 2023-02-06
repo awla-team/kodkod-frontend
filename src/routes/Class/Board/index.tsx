@@ -10,6 +10,7 @@ import ClassDetailsCard from "components/ClassDetailsCard";
 import { ClassInterface } from "services/classes/interfaces";
 import StudentsList from "components/StudentsList";
 import { StudentType } from "components/StudentsList/interfaces";
+import EmotionalThermometer from "../../../components/EmotionalThermometer";
 
 const Board: React.FC<{}> = ({}) => {
   const { classDetails, students } = useOutletContext() as {
@@ -23,7 +24,9 @@ const Board: React.FC<{}> = ({}) => {
         <DetailsCard>
           {classDetails && <ClassDetailsCard classDetails={classDetails} />}
         </DetailsCard>
-        <DetailsCard></DetailsCard>
+        <DetailsCard disablePadding>
+          <EmotionalThermometer />
+        </DetailsCard>
       </DashboardContainerLeftSide>
       <DashboardContainerRightSide>
         <DetailsCard className={"h-100"}>
