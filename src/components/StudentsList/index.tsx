@@ -15,6 +15,7 @@ import { useClassContext } from "../../routes/Class/Context";
 import { useParams } from "react-router-dom";
 import { updateStudent } from "../../services/students";
 import Toaster from "../../utils/Toster";
+import ConfirmationModal from "../Modals/ConfirmationModal";
 
 const StudentsList: FC<StudentsListProps> = ({
   studentsData,
@@ -31,15 +32,19 @@ const StudentsList: FC<StudentsListProps> = ({
   };
 
   // temporary approcah
-  const handleDelete = async (studentId: string | number) => {
-    try {
-      if (studentId) {
-        await updateStudent(studentId);
-        if (classId) getStudentsByClass(classId);
+  const handleDelete = (studentId: string | number): Promise<boolean> => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        if (studentId) {
+          await updateStudent(studentId);
+          if (classId) getStudentsByClass(classId);
+          resolve(true);
+        }
+        reject({ message: "Student id didn't find." });
+      } catch (e: any) {
+        reject(e);
       }
-    } catch (e: any) {
-      Toaster("error", e.message);
-    }
+    });
   };
   return (
     <StudentListContainer>
@@ -85,13 +90,35 @@ const DontHaveDetails: FC<{
 const StudentsListDetails: FC<{
   setOpenModal: Dispatch<SetStateAction<boolean>>;
   studentsData: StudentType[];
-  handleDelete: (studentId: string | number) => void;
+  handleDelete: (studentId: string | number) => Promise<boolean>;
 }> = ({ setOpenModal, handleDelete, studentsData }) => {
   const [elRef, setElRef] = useState<any | null>(null);
-
+  const [openConfirmation, setOpenConfirmation] = useState<boolean>(false);
+  const [selectedStudent, setSelectedStudent] = useState<StudentType | null>(
+    null
+  );
   const handleMenuOpen = (e: React.MouseEvent) => {
     const { currentTarget } = e;
     setElRef(currentTarget);
+  };
+
+  const handleDeleteCB = async () => {
+    try {
+      if (selectedStudent) {
+        await handleDelete(selectedStudent.id);
+        Toaster("success", `${selectedStudent.email} deleted successfully.`);
+        setElRef(null);
+        setOpenConfirmation(false)
+      }
+    } catch (e: any) {
+      Toaster("error", e.message);
+    }
+  };
+
+  const handleConfirmationClose = () => {
+    setOpenConfirmation(false);
+    setSelectedStudent(null);
+    setElRef(null)
   };
   return (
     <StudentsListDetailsContainer>
@@ -114,12 +141,25 @@ const StudentsListDetails: FC<{
                 onClose={() => setElRef(null)}
               >
                 <MenuItem>Edit</MenuItem>
-                <MenuItem onClick={() => handleDelete(res.id)}>Delete</MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    setSelectedStudent(res);
+                    setOpenConfirmation(true);
+                  }}
+                >
+                  Delete
+                </MenuItem>
               </Menu>
             </StudentDetailBox>
           );
         })}
       </div>
+
+      <ConfirmationModal
+        open={openConfirmation}
+        callBackFunction={handleDeleteCB}
+        onClose={handleConfirmationClose}
+      />
 
       <Button variant={"contained"} onClick={() => setOpenModal(true)}>
         Add students
