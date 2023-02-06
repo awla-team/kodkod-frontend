@@ -2,8 +2,14 @@ import { DetailsCardContent } from "./styled";
 import { ClassDetailsCardProps } from "./interfaces";
 import { FC } from "react";
 import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const ClassDetailsCard: FC<ClassDetailsCardProps> = ({ classDetails }) => {
+  const navigate = useNavigate();
+
+  const handleNavigate = () => {
+    navigate(`/cursos/${classDetails.id}/aventuras`);
+  };
   return (
     <DetailsCardContent>
       <div className={"card__title"}>
@@ -26,7 +32,7 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({ classDetails }) => {
         </p>
       </div>
       <div className={"card__action"}>
-        <Button variant={"contained"}>
+        <Button variant={"contained"} onClick={handleNavigate}>
           {true ? "Continue adventure" : "Start an adventure"}
         </Button>
       </div>
