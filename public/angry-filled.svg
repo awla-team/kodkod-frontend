@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="1080"
+     height="1080" viewBox="0 0 1080 1080" xml:space="preserve">
+<desc>Created with Fabric.js 5.2.4</desc>
+    <defs>
+</defs>
+    <rect x="0" y="0" width="100%" height="100%" fill="transparent"/>
+    <g transform="matrix(1 0 0 1 540 540)" id="10ddf20f-746e-4445-b5da-702b19b5238d">
+<rect style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1; visibility: hidden;"
+      vector-effect="non-scaling-stroke" x="-540" y="-540" rx="0" ry="0" width="1080" height="1080"/>
+</g>
+    <g transform="matrix(1 0 0 1 540 540)" id="2e15cf93-4e5c-4e5a-a53c-9162a44b436b">
+</g>
+    <g transform="matrix(22.02 0 0 22.02 540 540)">
+<g style="" vector-effect="non-scaling-stroke">
+		<g transform="matrix(1 0 0 1 0 0)">
+<path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(252,234,43); fill-rule: nonzero; opacity: 1;"
+      vector-effect="non-scaling-stroke" transform=" translate(-36, -36)"
+      d="M 36 13 C 23.317700000000002 13 13 23.317700000000002 13 36 C 13 48.6822 23.317700000000002 59 36 59 C 48.6822 59 59 48.6822 59 36 C 59 23.3177 48.6822 13 36 13 z"
+      stroke-linecap="round"/>
+</g>
+    <g transform="matrix(1 0 0 1 0 0)">
+<circle style="stroke: rgb(0,0,0); stroke-width: 2; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;"
+        vector-effect="non-scaling-stroke" cx="0" cy="0" r="23"/>
+</g>
+    <g transform="matrix(1 0 0 1 -9 -3.07)">
+<path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;"
+      vector-effect="non-scaling-stroke" transform=" translate(-27, -32.93)"
+      d="M 30 32.9252 C 30 34.5819 28.6552 35.9252 27 35.9252 C 25.3447 35.9252 24 34.5819 24 32.9252 C 24 31.269899999999996 25.3447 29.925199999999997 27 29.925199999999997 C 28.6552 29.9252 30 31.27 30 32.9252"
+      stroke-linecap="round"/>
+</g>
+    <g transform="matrix(1 0 0 1 9 -3.07)">
+<path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;"
+      vector-effect="non-scaling-stroke" transform=" translate(-45, -32.93)"
+      d="M 48 32.9252 C 48 34.5819 46.6553 35.9252 45 35.9252 C 43.3447 35.9252 42 34.5819 42 32.9252 C 42 31.269899999999996 43.3447 29.925199999999997 45 29.925199999999997 C 46.6553 29.925199999999997 48 31.27 48 32.9252"
+      stroke-linecap="round"/>
+</g>
+    <g transform="matrix(1 0 0 1 -9.5 -10)">
+<line style="stroke: rgb(0,0,0); stroke-width: 2; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;"
+      vector-effect="non-scaling-stroke" x1="-3.5" y1="-2" x2="3.5" y2="2"/>
+</g>
+    <g transform="matrix(1 0 0 1 9.5 -10)">
+<line style="stroke: rgb(0,0,0); stroke-width: 2; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;"
+      vector-effect="non-scaling-stroke" x1="3.5" y1="-2" x2="-3.5" y2="2"/>
+</g>
+    <g transform="matrix(1 0 0 1 0 6.5)">
+<path style="stroke: rgb(0,0,0); stroke-width: 2; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;"
+      vector-effect="non-scaling-stroke" transform=" translate(-36, -42.5)"
+      d="M 29.5 43 C 30.7841 42.3624 33.484700000000004 41.9692 36.3421 42.0019 C 38.9656 42.0319 41.3318 42.4165 42.5 43"
+      stroke-linecap="round"/>
+</g>
+</g>
+</g>
+</svg>

@@ -4,12 +4,36 @@ import { useFormik, useFormikContext } from "formik";
 import { FormInitialValue } from "../interfaces";
 import { ClassClimateMeterProps } from "./interfaces";
 
-const thermometerData: { value: string; imgSrc: string }[] = [
-  { imgSrc: "/image 10-disappointed.svg", value: "disappointed" },
-  { imgSrc: "/image 9-sad.svg", value: "sad" },
-  { imgSrc: "/image 8-neutral.svg", value: "neutral" },
-  { imgSrc: "/image 7-happy.svg", value: "happy" },
-  { imgSrc: "/image 6-joy.svg", value: "joy" },
+const thermometerData: {
+  value: string;
+  imgSrc: string;
+  selectedImgSrc?: string;
+}[] = [
+  {
+    imgSrc: "/angry-outlined.svg",
+    value: "disappointed",
+    selectedImgSrc: "/angry-filled.svg",
+  },
+  {
+    imgSrc: "/sad-outlined.svg",
+    value: "sad",
+    selectedImgSrc: "/sad-filled.svg",
+  },
+  {
+    imgSrc: "/neutral-outlined.svg",
+    value: "neutral",
+    selectedImgSrc: "/neutral-filled.svg",
+  },
+  {
+    imgSrc: "/smile-outlined.svg",
+    value: "happy",
+    selectedImgSrc: "/smile-filled.svg",
+  },
+  {
+    imgSrc: "/grinning-outlined.svg",
+    value: "joy",
+    selectedImgSrc: "/grinning-filled.svg",
+  },
 ];
 
 export const ClassClimateMeter: FC<ClassClimateMeterProps> = ({ editable }) => {
@@ -26,7 +50,9 @@ export const ClassClimateMeter: FC<ClassClimateMeterProps> = ({ editable }) => {
         {thermometerData.map((img, index) => {
           return (
             <img
-              src={img.imgSrc}
+              src={
+                values.climate === img.value ? img.selectedImgSrc : img.imgSrc
+              }
               alt={"img"}
               key={index}
               className={"meter"}
