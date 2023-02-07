@@ -1,12 +1,36 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import * as Styled from "./styled";
 import Moment from "moment";
 import { Tooltip } from "@mui/material";
-import { ClassClimateMeter } from "./sub-components";
+import { ClassClimateMeter, TodayReviews } from "./sub-components";
+import { Formik, Form, FormikHelpers } from "formik";
+import * as Yup from "yup";
+import { FormInitialValue } from "./interfaces";
+import ThermometerCalender from "./sub-components/ThermometerCalender";
 
 const EmotionalThermometer: FC = () => {
+  const [calenderView, setCalenderView] = useState<boolean>(false);
+  const [formInitialValue, setFormInitialValue] = useState<FormInitialValue>({
+    climate: "",
+    challenge: "",
+    remarkable: "",
+  });
+
+  const [editable, setEditable] = useState<boolean>(true);
+
+  const validationSchema = () => {
+    return Yup.object().shape({
+      climate: Yup.string().required(),
+      challenge: Yup.string().required(),
+      remarkable: Yup.string().required(),
+    });
+  };
+  const handleSubmit = (
+    value: FormInitialValue,
+    formikHelpers: FormikHelpers<FormInitialValue>
+  ) => {};
   return (
-    <Styled.EmotionalThermometerContainer>
+    <Styled.EmotionalThermometerContainer calenderView={calenderView}>
       <div className={"container__header"}>
         <div className={"container__header__text"}>
           <div className={"header__container"}>
@@ -21,14 +45,43 @@ const EmotionalThermometer: FC = () => {
             {Moment().format("MMMM DD, yyyy")}
           </div>
         </div>
-        <button className={"calender__icon"} />
+        <button
+          className={"calender__icon"}
+          onClick={() => setCalenderView((prevState) => !prevState)}
+        >
+          {calenderView ? "<" : ""}
+        </button>
       </div>
-      <div className={"helper__text"}>
-        Complete this section at the end of each class!
-      </div>
-      <div className={"thermometer__content"}>
-        <ClassClimateMeter />
-      </div>
+      {!calenderView ? (
+        <>
+          <div className={"helper__text"}>
+            Complete this section at the end of each class!
+          </div>
+          <div
+            className={"thermometer__content " + (editable? 'grey__color':'')}
+          >
+            <Formik
+              initialValues={formInitialValue}
+              onSubmit={handleSubmit}
+              validationSchema={validationSchema}
+            >
+              {({ handleSubmit }) => {
+                return (
+                  <Form onSubmit={handleSubmit}>
+                    <ClassClimateMeter editable={editable} />
+                    <TodayReviews
+                      editable={editable}
+                      setEditable={setEditable}
+                    />
+                  </Form>
+                );
+              }}
+            </Formik>
+          </div>
+        </>
+      ) : (
+        <ThermometerCalender />
+      )}
     </Styled.EmotionalThermometerContainer>
   );
 };

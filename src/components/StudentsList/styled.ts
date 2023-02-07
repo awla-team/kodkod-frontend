@@ -44,24 +44,28 @@ export const DontHaveDetailsContent= styled(Box)`
 
 export const StudentsListDetailsContainer= styled(Box)`
   margin-block-start: 1rem;
-display: flex;
+  display: flex;
   flex-direction: column;
   width: 100%;
   gap: 1rem;
   height: 100%;
-  & .details{
+
+  & .details {
     flex-grow: 1;
     display: flex;
     gap: 1rem;
     flex-direction: column;
+    max-height: 792px;
+    overflow: hidden;
+    overflow-y: auto;
   }
-  
-  & .${buttonClasses.contained}{
+
+  & .${buttonClasses.contained} {
     border-radius: 8px;
     text-transform: none;
     font-weight: 700;
   }
-  
+
 `
 
 export const StudentDetailBox= styled(Box)`
