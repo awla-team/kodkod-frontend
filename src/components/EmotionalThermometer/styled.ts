@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import { Box, Button } from "@mui/material";
-
+import { Box } from "@mui/material";
 export const EmotionalThermometerContainer = styled(Box).withConfig({
   shouldForwardProp: (prop, defaultValidatorFn) =>
     !["calenderView"].includes(prop) && defaultValidatorFn(prop),
@@ -31,12 +30,18 @@ export const EmotionalThermometerContainer = styled(Box).withConfig({
     }
 
     & .calender__icon {
+      & .back__arrow {
+        transform: translateX(-5px);
+        width: 24px;
+        height: 24px;
+      }
+
       border-radius: 50%;
       width: 44px;
       height: 44px;
       box-shadow: -2px 3px 4px rgba(0, 0, 0, 0.25);
       background: ${({calenderView}) =>
-          calenderView ? "" : 'url("/calender.svg")'} #ffffff center no-repeat;
+              calenderView ? "" : 'url("/calender.svg")'} #ffffff center no-repeat;
       background-size: 24px 24px;
       border: none;
       outline: none;

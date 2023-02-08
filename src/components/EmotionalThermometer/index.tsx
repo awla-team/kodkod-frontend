@@ -7,6 +7,7 @@ import { Formik, Form, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import { FormInitialValue } from "./interfaces";
 import ThermometerCalender from "./sub-components/ThermometerCalender";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 const EmotionalThermometer: FC = () => {
   const [calenderView, setCalenderView] = useState<boolean>(false);
@@ -49,7 +50,7 @@ const EmotionalThermometer: FC = () => {
           className={"calender__icon"}
           onClick={() => setCalenderView((prevState) => !prevState)}
         >
-          {calenderView ? "<" : ""}
+          {calenderView ? <ArrowBackIosIcon className={'back__arrow'}/> : ""}
         </button>
       </div>
       {!calenderView ? (
@@ -58,7 +59,9 @@ const EmotionalThermometer: FC = () => {
             Complete this section at the end of each class!
           </div>
           <div
-            className={"thermometer__content " + (editable? 'grey__color':'')}
+            className={
+              "thermometer__content " + (editable ? "grey__color" : "")
+            }
           >
             <Formik
               initialValues={formInitialValue}
