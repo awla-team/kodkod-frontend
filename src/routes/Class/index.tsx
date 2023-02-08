@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Tab, Tabs } from "@mui/material";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import TabContent from "components/TabContent";
 import { TabPaths } from "./interfaces";
 
 const TAB_PATHS: TabPaths = {
@@ -67,15 +66,13 @@ const Class: React.FC = () => {
           }}
         />
       </Tabs>
-      <TabContent value={selectedTab} index={0}>
+      <div
+        role="tabpanel"
+        style={{ padding: "32px" }}
+        className="w-100 overflow-auto"
+      >
         <Outlet />
-      </TabContent>
-      <TabContent value={selectedTab} index={1}>
-        <Outlet />
-      </TabContent>
-      <TabContent value={selectedTab} index={2}>
-        <Outlet />
-      </TabContent>
+      </div>
     </>
   );
 };

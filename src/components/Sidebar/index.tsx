@@ -21,7 +21,7 @@ const Sidebar: FC<SidebarProps> = ({ classes, handleOpenModal }) => (
     <LinkList>
       {classes?.map?.((teacherClass: ClassInterface) => (
         <SidebarLink
-          key={teacherClass.id}
+          key={`${teacherClass.id}-${teacherClass.alias}-${teacherClass.level}`}
           linkId={teacherClass.id}
           linkTitle={teacherClass.alias}
           linkRoute={`cursos/${teacherClass.id}/tablero`}

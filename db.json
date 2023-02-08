@@ -455,18 +455,11 @@
   ],
   "classes": [
     {
-      "id": 0,
+      "id": 1,
       "userId": 1,
       "alias": "7°B",
       "img": "",
       "level": 7
-    },
-    {
-      "id": 1,
-      "userId": 1,
-      "alias": "8°B",
-      "img": "",
-      "level": 8
     },
     {
       "id": 1,
@@ -494,7 +487,7 @@
       "code": "A",
       "alias": "1° A",
       "userId": 1,
-      "id": 4
+      "id": 0
     },
     {
       "level": 1,
@@ -531,6 +524,35 @@
       "first_name": "Juan",
       "last_name": "Pérez",
       "role": "Profesor"
+    }
+  ],
+  "goals": [
+    { "id": 0, "title": "Mejorar el clima escolar", "img": "" },
+    { "id": 1, "title": "Aprender hábitos de estudio", "img": "" },
+    { "id": 2, "title": "Otro objetivo", "img": "" },
+    { "id": 3, "title": "Otro objetivo mas", "img": "" }
+  ],
+  "adventuresHasGoals": [
+    { "id": 0, "adventureId": 0, "goalId": 1 },
+    { "id": 1, "adventureId": 1, "goalId": 1 },
+    { "id": 2, "adventureId": 2, "goalId": 1 }
+  ],
+  "classHasAdventures": [
+    {
+      "id": 0,
+      "adventureId": 0,
+      "classId": 0,
+      "date_start": "",
+      "date_stop": "",
+      "current_adventure": true
+    },
+    {
+      "id": 1,
+      "adventureId": 0,
+      "classId": 1,
+      "date_start": "",
+      "date_stop": "",
+      "current_adventure": false
     }
   ]
 }

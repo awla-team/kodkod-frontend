@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import "./index.css";
 import HomePage from "./components/HomePage";
+import AdventuresSummary from "routes/Class/Adventures/AdventuresSummary";
 
 export const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ export const router = createBrowserRouter([
           {
             path: "aventuras/:adventureId",
             element: <Adventure />,
+          },
+          {
+            path: "aventuras/summary",
+            element: <AdventuresSummary />,
           },
           {
             path: "puntajes",

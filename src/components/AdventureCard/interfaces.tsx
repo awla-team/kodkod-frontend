@@ -4,6 +4,6 @@ export interface IAdventureCardContainerProps {
   
 export interface IAdventureCardProps extends React.PropsWithChildren, IAdventureCardContainerProps {
     title: string;
-    stagesDuration: number;
+    stagesDuration?: number;
     info?: React.ReactNode;
 };

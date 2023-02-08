@@ -11,16 +11,6 @@ import SkillPoints from "components/SkillPoints";
 import TabContent from "components/TabContent";
 import { IAdventureSkill } from "global/interfaces";
 
-const AdventureWithProvider: React.FC = () => {
-  const { adventureId } = useParams();
-
-  return (
-    <AdventureProvider adventureId={adventureId}>
-      <Adventure />
-    </AdventureProvider>
-  );
-};
-
 const Adventure: React.FC = () => {
   const { classId } = useParams();
   const { adventure } = useContext(AdventureContext);
@@ -107,5 +97,11 @@ const Adventure: React.FC = () => {
     </AdventureContainer>
   );
 };
+
+const AdventureWithProvider: React.FC = () => (
+  <AdventureProvider>
+    <Adventure />
+  </AdventureProvider>
+);
 
 export default AdventureWithProvider;
