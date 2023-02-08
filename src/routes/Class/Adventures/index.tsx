@@ -1,21 +1,50 @@
 import React, { useState, useEffect } from "react";
 import { IAdventure } from "global/interfaces";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import theme from "global/theme";
-import { getAdventures } from "services/adventures";
 import AdventureCard from "components/AdventureCard";
 import SectionSubtitle from "components/SectionSubtitle";
 import SkillPoints from "components/SkillPoints";
 import ViewContainer from "components/ViewContainer";
+import GoalSelection from "./GoalSelection";
+import { FetchStatus } from "global/enums";
+import { CircularProgress } from "@mui/material";
+import { getClassCurrentAdventure } from "services/adventures";
 
 const Adventures: React.FC = () => {
+  const { classId } = useParams();
   const [adventures, setAdventures] = useState([]);
+  const [currentAdventure, setCurrentAdventure] = useState(null);
+  const [loading, setLoading] = useState<FetchStatus>(FetchStatus.Idle);
 
   useEffect(() => {
-    getAdventures()
-      .then(({ data }) => setAdventures(data))
-      .catch((e) => console.log(e));
-  }, []);
+    setLoading(FetchStatus.Pending);
+    getClassCurrentAdventure(classId)
+      .then(({ data }) => {
+        if (!!data?.adventures?.length) setCurrentAdventure(data.adventures[0]);
+        setLoading(FetchStatus.Success);
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoading(FetchStatus.Error);
+      });
+  }, [classId]);
+
+  // useEffect(() => {
+  //   getAdventures()
+  //     .then(({ data }) => setAdventures(data))
+  //     .catch((e) => console.log(e));
+  // }, []);
+
+  if (loading === FetchStatus.Idle || loading === FetchStatus.Pending)
+    return (
+      <div className="d-flex w-100 align-items-center justify-content-center">
+        <CircularProgress />
+      </div>
+    );
+
+  // TODO: if there is a goal associated with this class***
+  if (!currentAdventure) return <GoalSelection />;
 
   return (
     <ViewContainer>
