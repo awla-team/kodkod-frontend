@@ -8,8 +8,10 @@ import * as Yup from "yup";
 import { FormInitialValue } from "./interfaces";
 import ThermometerCalender from "./sub-components/ThermometerCalender";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import { Moment as MomentType } from "moment/moment";
 
 const EmotionalThermometer: FC = () => {
+  const [date, setDate] = useState<MomentType>(Moment());
   const [calenderView, setCalenderView] = useState<boolean>(false);
   const [formInitialValue, setFormInitialValue] = useState<FormInitialValue>({
     climate: "",
@@ -25,6 +27,11 @@ const EmotionalThermometer: FC = () => {
       challenge: Yup.string().required(),
       remarkable: Yup.string().required(),
     });
+  };
+
+  const handleDateChange = (date: Moment.Moment) => {
+    setCalenderView((prevState) => !prevState);
+    setDate(date);
   };
   const handleSubmit = (
     value: FormInitialValue,
@@ -42,15 +49,13 @@ const EmotionalThermometer: FC = () => {
               </Tooltip>
             </div>
           </div>
-          <div className={"header__date"}>
-            {Moment().format("MMMM DD, yyyy")}
-          </div>
+          <div className={"header__date"}>{date.format("MMMM DD, yyyy")}</div>
         </div>
         <button
           className={"calender__icon"}
           onClick={() => setCalenderView((prevState) => !prevState)}
         >
-          {calenderView ? <ArrowBackIosIcon className={'back__arrow'}/> : ""}
+          {calenderView ? <ArrowBackIosIcon className={"back__arrow"} /> : ""}
         </button>
       </div>
       {!calenderView ? (
@@ -83,7 +88,7 @@ const EmotionalThermometer: FC = () => {
           </div>
         </>
       ) : (
-        <ThermometerCalender />
+        <ThermometerCalender date={date} handleDateChange={handleDateChange} />
       )}
     </Styled.EmotionalThermometerContainer>
   );
