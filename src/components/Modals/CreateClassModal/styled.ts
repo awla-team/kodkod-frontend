@@ -25,8 +25,8 @@ export const DialogBoxContent = styled(DialogContent)`
     font-weight: 700;
     font-size: 1.25rem;
   }
-  
-  & form{
+
+  & form {
     flex-grow: 1;
     display: flex;
     flex-direction: column;

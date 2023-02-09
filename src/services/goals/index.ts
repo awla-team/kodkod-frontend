@@ -1,3 +1,3 @@
-import http from 'global/api';
+import http from "global/api";
 
-export const getGoals = () => http.get('goals')
+export const getGoals = () => http.get("goals");

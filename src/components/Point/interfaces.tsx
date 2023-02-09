@@ -1,3 +1,3 @@
 export interface IPoint {
-    highlighted: boolean;
-};
+  highlighted: boolean;
+}

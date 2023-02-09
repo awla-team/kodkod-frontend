@@ -1,11 +1,11 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Card, Typography } from '@mui/material';
-import kodcoinIcon from './../../assets/images/kodcoin.png';
+import React from "react";
+import styled from "styled-components";
+import { Card, Typography } from "@mui/material";
+import kodcoinIcon from "./../../assets/images/kodcoin.png";
 
 interface IMissionCardContainerProps {
   background?: string;
-};
+}
 
 interface IMissionCardProps {
   title: string;
@@ -14,10 +14,10 @@ interface IMissionCardProps {
   points: number;
   icon: string;
   color: string;
-};
+}
 
 const SkillIconContainer = styled.div`
-  border: 1px solid #FFF;
+  border: 1px solid #fff;
   width: fit-content;
   border-radius: 24px;
   padding: 4px;
@@ -31,7 +31,7 @@ const SkillIconContainer = styled.div`
 `;
 
 const PointsContainer = styled.div`
-  background-color: #FFF;
+  background-color: #fff;
   border-radius: 8px;
   color: #717171;
   text-align: center;
@@ -49,28 +49,44 @@ const QRContainer = styled.div`
   }
 `;
 
-const MissionCardContainer = styled(Card)`  
+const MissionCardContainer = styled(Card)`
   &.MuiPaper-root {
-    background-color: ${(props: IMissionCardContainerProps) => props.background || '#000'};
+    background-color: ${(props: IMissionCardContainerProps) =>
+      props.background || "#000"};
     border-radius: 8px;
-    color: #FFF;
+    color: #fff;
   }
 `;
 
-const MissionCard: React.FC<IMissionCardProps> = ({ title, description, qr, points, icon, color }) => (
-  <MissionCardContainer background={color} className="mission-card p-4 d-flex" variant="outlined">
+const MissionCard: React.FC<IMissionCardProps> = ({
+  title,
+  description,
+  qr,
+  points,
+  icon,
+  color,
+}) => (
+  <MissionCardContainer
+    background={color}
+    className="mission-card p-4 d-flex"
+    variant="outlined"
+  >
     <div className="d-flex flex-column me-3 align-items-between justify-content-between">
       <div className="d-flex align-items-center">
         <SkillIconContainer className="me-3">
           <img src={icon} />
         </SkillIconContainer>
-        <Typography variant="h6" fontWeight="bold">{title}</Typography>
+        <Typography variant="h6" fontWeight="bold">
+          {title}
+        </Typography>
       </div>
       <div className="mt-2">
         <Typography>{description}</Typography>
       </div>
       <PointsContainer className="d-flex mt-3 align-items-center justify-content-center">
-        <Typography className="me-1" variant="h5" fontWeight="bold">{points}</Typography>
+        <Typography className="me-1" variant="h5" fontWeight="bold">
+          {points}
+        </Typography>
         <img src={kodcoinIcon} />
       </PointsContainer>
     </div>

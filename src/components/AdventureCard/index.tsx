@@ -8,8 +8,10 @@ const AdventureCard: React.FC<IAdventureCardProps> = ({
   stagesDuration,
   img,
   info,
+  onClick,
 }) => (
   <AdventureCardContainer
+    onClick={onClick}
     className="p-4 d-flex flex-column justify-content-between"
     img={img}
     variant="outlined"

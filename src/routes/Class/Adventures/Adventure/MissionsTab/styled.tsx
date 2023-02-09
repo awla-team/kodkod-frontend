@@ -1,11 +1,11 @@
 import { Dialog } from "@mui/material";
 import styled from "styled-components";
 
-export const MissionsListContainer = styled.div`  
+export const MissionsListContainer = styled.div`
   width: 100%;
-  background: #EFF3FF;
+  background: #eff3ff;
   border-radius: 8px;
-  border: 1px solid #D1D1D1;
+  border: 1px solid #d1d1d1;
   padding: 24px;
   color: ${(props) => props.theme.palette.primary.dark};
 
@@ -14,7 +14,7 @@ export const MissionsListContainer = styled.div`
     width: 54px;
     margin-left: -10px;
     margin-right: -10px;
-    border-top: 2px solid #4A4A4A;
+    border-top: 2px solid #4a4a4a;
     opacity: 0.6;
   }
 
@@ -31,7 +31,7 @@ export const MissionsListContainer = styled.div`
 `;
 
 export const StagesStepper = styled.div`
-  color: #4A4A4A;
+  color: #4a4a4a;
 `;
 
 export const MissionDialog = styled(Dialog)`
