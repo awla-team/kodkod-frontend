@@ -1,8 +1,8 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const SkillPointsContainer = styled.div`
-    img {
-        width: 18px;
-        heigth: 18px;
-    }
+  img {
+    width: 18px;
+    heigth: 18px;
+  }
 `;

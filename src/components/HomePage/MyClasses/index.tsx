@@ -18,7 +18,7 @@ const MyClasses: FC<MyClassesProps> = ({ classes }: MyClassesProps) => {
       <h1 className={"header__text"}>My classes</h1>
       {classesData.map(({ level, ...rest }, index) => {
         return (
-          <div key={index} className={'mb-3'}>
+          <div key={index} className={"mb-3"}>
             <div className={"class__level"}>
               <span className={"class__level__text"}>{`${level}° Medio`}</span>
             </div>

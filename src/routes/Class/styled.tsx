@@ -1,19 +1,19 @@
-import styled, { ThemeProps, DefaultTheme } from 'styled-components';
+import styled, { ThemeProps, DefaultTheme } from "styled-components";
 
 export const HomeContainer = styled.div`
-  font-family: "Arista 2.0";  
+  font-family: "Arista 2.0";
 
   img {
     height: 260px;
   }
 
   h1 {
-    font-size: 48px;    
+    font-size: 48px;
     span {
-      color: ${(props: ThemeProps<DefaultTheme>) => props.theme.palette.primary.main};
+      color: ${(props: ThemeProps<DefaultTheme>) =>
+        props.theme.palette.primary.main};
     }
   }
-
 `;
 
 /* button {

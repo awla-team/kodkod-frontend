@@ -10,7 +10,6 @@ const SidebarContainer = styled.div`
   min-width: 120px;
   /*padding: 24px 0px 0px 0px;*/
   z-index: 2;
-  
 `;
 
 const LogoContainer = styled.div`

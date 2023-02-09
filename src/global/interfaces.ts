@@ -54,6 +54,7 @@ export interface IStage {
   index: number;
   title: string;
   icon: string;
+  description?: string;
 }
 
 export interface IMission {

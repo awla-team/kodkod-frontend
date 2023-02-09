@@ -2,7 +2,7 @@ import type { PropsWithChildren, MouseEvent } from "react";
 
 export interface CreateClassModalProps {
   open: boolean;
-  onClose: (reason: "backdropClick" | "escapeKeyDown" |'success') => void;
+  onClose: (reason: "backdropClick" | "escapeKeyDown" | "success") => void;
 }
 
 export interface FormInitialState {

@@ -3,40 +3,42 @@ import styled, { DefaultTheme } from "styled-components";
 
 export interface IRewardCardElementProps {
   type: string;
-};
+}
 
 export const RewardCardContainer = styled.div`
   .points-container {
-    border: 3px solid ${(props: IRewardCardElementProps) => {
-      switch (props.type) {
-        case 'single':
-          return '#68BBD4';
-        case 'course':
-          return '#F962BB';
-        default:
-          return '#fff';
-      }
-    }};
+    border: 3px solid
+      ${(props: IRewardCardElementProps) => {
+        switch (props.type) {
+          case "single":
+            return "#68BBD4";
+          case "course":
+            return "#F962BB";
+          default:
+            return "#fff";
+        }
+      }};
   }
   .MuiPaper-root {
-    border: 1px solid ${(props: IRewardCardElementProps) => {
-      switch (props.type) {
-        case 'single':
-          return '#68BBD4';
-        case 'course':
-          return '#F962BB';
-        default:
-          return '#fff';
-      }
-    }};
+    border: 1px solid
+      ${(props: IRewardCardElementProps) => {
+        switch (props.type) {
+          case "single":
+            return "#68BBD4";
+          case "course":
+            return "#F962BB";
+          default:
+            return "#fff";
+        }
+      }};
     background: ${(props: IRewardCardElementProps) => {
       switch (props.type) {
-        case 'single':
-          return '#E4F9FF';
-        case 'course':
-          return '#FFE1F3';
+        case "single":
+          return "#E4F9FF";
+        case "course":
+          return "#FFE1F3";
         default:
-          return '#fff';
+          return "#fff";
       }
     }};
   }
@@ -47,7 +49,6 @@ export const RewardCardContainer = styled.div`
     height: 64px;
   }
   padding: 16px;
-  
 `;
 
 export const PointsContainer = styled.div`

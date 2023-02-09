@@ -1,7 +1,9 @@
 export interface SectionSubtitleContainerProps {
-    textColor?: string;
-    lineColor?: string;
-    filled?: boolean;
-};
+  textColor?: string;
+  lineColor?: string;
+  filled?: boolean;
+}
 
-export interface SectionSubtitleProps extends React.PropsWithChildren, SectionSubtitleContainerProps {};
+export interface SectionSubtitleProps
+  extends React.PropsWithChildren,
+    SectionSubtitleContainerProps {}

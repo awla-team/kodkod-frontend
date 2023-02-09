@@ -1,4 +1,3 @@
-import styled, { ThemeProps, DefaultTheme } from 'styled-components';
+import styled, { ThemeProps, DefaultTheme } from "styled-components";
 
-export const AdventuresContainer = styled.div`  
-`;
+export const AdventuresContainer = styled.div``;
