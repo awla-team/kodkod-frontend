@@ -7,7 +7,7 @@ import {
 import { ThemeProvider as StyledThemeProvider } from "styled-components";
 import theme from "./global/theme";
 import Sidebar from "./components/Sidebar";
-import { getClassesByTeacherId } from "services/classes";
+import { getClassesByUser } from "services/classes";
 import { ClassInterface } from "services/classes/interfaces";
 import { AxiosResponse } from "axios";
 import { TEST_USER } from "services/users";
@@ -24,8 +24,10 @@ const App: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false);
 
   const getClassesData = () => {
-    getClassesByTeacherId(TEST_USER.id)
-      .then((response: AxiosResponse) => response?.data)
+    getClassesByUser(TEST_USER.id)
+      .then((response: AxiosResponse) => {
+        return response?.data?.responseData;
+      })
       .then((classes: ClassInterface[]) => {
         if (!!classes && Object.values(classes).length)
           setClasses(sortClasses(classes));
