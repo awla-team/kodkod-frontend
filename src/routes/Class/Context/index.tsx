@@ -42,8 +42,9 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const getClassById = async (id: number | string) => {
     try {
-      const { data }: { data: ClassInterface } = await getClassByID(id);
-      setClassDetails(data);
+      const { data }: { data: { responseData: ClassInterface } } =
+        await getClassByID(id);
+      setClassDetails(data.responseData);
     } catch (e: any) {
       Toaster("error", e.message);
     }
@@ -51,8 +52,8 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const getStudentsByClass = async (id: number | string) => {
     try {
-      const { data }: { data: any } = await studentsByClass(id);
-      setStudents(data);
+      const { data }: { data: any } = await studentsByClass(id, "student");
+      setStudents(data.responseData);
     } catch (e: any) {
       Toaster("error", e.message);
     }

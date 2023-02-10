@@ -1,8 +1,11 @@
 import http from "global/api";
 import { StudentType } from "../components/StudentsList/interfaces";
 
-export const studentsByClass = (classId: number | string) => {
-  return http.get("students?classId=" + classId);
+export const studentsByClass = (
+  classId: number | string,
+  role?: "student" | "teacher"
+) => {
+  return http.get(`user-by-class/${classId}` + (role ? "?role=" + role : ""));
 };
 
 export const updateStudent = (

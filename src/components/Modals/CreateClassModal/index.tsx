@@ -22,7 +22,6 @@ const CreateClassModal: FC<CreateClassModalProps> = ({ open, onClose }) => {
     code: "",
     alias: "",
   });
-
   const validationSchema = () => {
     return Yup.object().shape({
       level: Yup.number().required(),
