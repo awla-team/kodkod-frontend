@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from "react";
 import {Box, Tab, Tabs} from "@mui/material";
-import {Outlet, useLocation, useNavigate, useParams} from "react-router-dom";
+import {Outlet, useLocation, useNavigate} from "react-router-dom";
 import TabContent from "components/TabContent";
 import { TabPaths } from "./interfaces";
 import {NavTabsContainer} from "./styled";
-import {ClassInterface} from "../../services/classes/interfaces";
-import {getClassByID} from "../../services/classes";
-import Toaster from "../../utils/Toster";
-import {studentsByClass} from "../../services/students";
-import ClassContextProvider, {useClassContext} from "./Context";
+import {useClassContext} from "./Context";
 
 const TAB_PATHS: TabPaths = {
   0: "tablero",

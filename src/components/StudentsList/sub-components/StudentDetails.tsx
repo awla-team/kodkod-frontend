@@ -59,7 +59,7 @@ export const StudentDetails: FC<{
   useEffect(() => {
     if (details) {
       setInputValues({
-        name: details.name,
+        name: `${details.first_name} ${details.last_name}`,
         email: details.email,
       });
     }
@@ -70,7 +70,9 @@ export const StudentDetails: FC<{
     formikHelper: FormikHelpers<StudentEditInputField>
   ) => {
     try {
-      await updateStudent(details.id, { ...details, ...values });
+      const {name, email}= values
+      const [first_name,  last_name]= name.split(' ')
+      await updateStudent(details.id, { ...details,email, last_name, first_name });
       Toaster("success", "Student Details updated");
       setEditState(false);
       if (classId) getStudentsByClass(classId);
@@ -87,7 +89,9 @@ export const StudentDetails: FC<{
       {!editState ? (
         <div className={"student__details__container"}>
           <div className={"student__details"}>
-            <div className={"student__name"}>{details.name}</div>
+            <div
+              className={"student__name"}
+            >{`${details.first_name} ${details.last_name}`}</div>
             <div className={"student__email"}>{details.email}</div>
           </div>
           <IconButton
