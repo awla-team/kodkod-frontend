@@ -13,6 +13,7 @@ import { ToastContainer } from "react-toastify";
 import HomePage from "./components/HomePage";
 import ClassContextProvider from "./routes/Class/Context";
 import AdventuresSummary from "routes/Class/Adventures/GoalSelection/AdventuresSummary";
+import "./index.css";
 
 export const router = createBrowserRouter([
   {
