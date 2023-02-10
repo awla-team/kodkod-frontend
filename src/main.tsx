@@ -26,7 +26,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "cursos/:classId",
-        element: <ClassContextProvider><Class /></ClassContextProvider>,
+        element: (
+          <ClassContextProvider>
+            <Class />
+          </ClassContextProvider>
+        ),
         children: [
           {
             path: "tablero",

@@ -37,14 +37,14 @@ export const TodayReviewQuestionsContainer = styled(Box)`
 
   & .completed__text {
     text-align: center;
-    color: #4E4E4E;
+    color: #4e4e4e;
     font-size: 1.125rem;
   }
 
   & .again__action {
     text-align: center;
     text-decoration: underline;
-    color: #4E4E4E;
+    color: #4e4e4e;
     font-size: 1.125rem;
     cursor: pointer;
   }
@@ -57,9 +57,7 @@ export const ActionButton = styled(Button)`
   font-size: 1.125rem;
 `;
 
-
-export const ThermometerCalenderView= styled(Box)`
-
+export const ThermometerCalenderView = styled(Box)`
   padding: 0 2.25rem 2.25rem 2.25rem;
 
   & .info__text {
@@ -86,8 +84,8 @@ export const ThermometerCalenderView= styled(Box)`
         line-height: 50px;
         font-weight: 700;
         font-size: 1.125rem;
-        
-        & .last__check{
+
+        & .last__check {
           width: 15px;
           height: 15px;
           position: absolute;
@@ -95,11 +93,11 @@ export const ThermometerCalenderView= styled(Box)`
           top: -4px;
         }
 
-        &:hover, &.current {
-          background: #C9C9C9;
+        &:hover,
+        &.current {
+          background: #c9c9c9;
         }
       }
     }
   }
-
-`
+`;
