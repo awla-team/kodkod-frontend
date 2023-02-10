@@ -22,7 +22,7 @@ const GoalSelection: React.FC = () => {
   };
 
   const handleGoalSelectionSave = () => {
-    // TODO: patch to adventure to asociate goal
+    // TODO: patch to adventure to asociate goal?
     navigate("summary", {
       replace: true,
       state: { selectedGoal: goals.find((goal) => goal.id === selectedGoalId) },

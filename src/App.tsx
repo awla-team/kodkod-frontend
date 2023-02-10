@@ -18,7 +18,6 @@ import type { MouseEvent } from "react";
 import { sortClasses } from "./utils";
 
 const App: React.FC = () => {
-  // TODO: remove this fake data when integration with backend is completed
   const [classes, setClasses] = useState<ClassInterface[]>([]);
   const [fetching, setFetching] = useState<FetchStatus>(FetchStatus.Idle);
   const [open, setOpen] = useState<boolean>(false);
