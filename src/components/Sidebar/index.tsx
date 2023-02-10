@@ -19,9 +19,9 @@ const Sidebar: FC<SidebarProps> = ({ classes, handleOpenModal }) => (
     <Divider className="w-75 mb-1" color="#DE4CE1" />
     <h6 className="text-center fw-bold p-0 mt-4 mb-2">Mis cursos</h6>
     <LinkList>
-      {classes?.map?.((teacherClass: ClassInterface) => (
+      {classes?.map?.((teacherClass: ClassInterface, index) => (
         <SidebarLink
-          key={teacherClass.id}
+          key={`side-bar-${teacherClass.id}-${index}`}
           linkId={teacherClass.id}
           linkTitle={teacherClass.alias}
           linkRoute={`cursos/${teacherClass.id}/tablero`}

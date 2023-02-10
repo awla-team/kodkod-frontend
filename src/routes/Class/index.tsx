@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Tab, Tabs } from "@mui/material";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import {Box, Tab, Tabs} from "@mui/material";
+import {Outlet, useLocation, useNavigate, useParams} from "react-router-dom";
 import TabContent from "components/TabContent";
 import { TabPaths } from "./interfaces";
+import {NavTabsContainer} from "./styled";
+import {ClassInterface} from "../../services/classes/interfaces";
+import {getClassByID} from "../../services/classes";
+import Toaster from "../../utils/Toster";
+import {studentsByClass} from "../../services/students";
+import ClassContextProvider, {useClassContext} from "./Context";
 
 const TAB_PATHS: TabPaths = {
   0: "tablero",
@@ -36,46 +42,50 @@ const Class: React.FC = () => {
     if (pathname.includes(TAB_PATHS[2])) changeTab(null, 2);
   }, [pathname]);
 
+  const {classDetails, students}= useClassContext()
+
   return (
     <>
-      <Tabs
-        value={selectedTab}
-        onChange={changeTab}
-        indicatorColor="secondary"
-        textColor="inherit"
-        variant="fullWidth"
-        aria-label="full width tabs example"
-        className="sticky-top"
-        sx={{ background: "white", zIndex: 1 }}
+      <NavTabsContainer
       >
-        <Tab
-          label="Tablero"
-          onClick={() => {
-            navigate(TAB_PATHS[0]);
-          }}
-        />
-        <Tab
-          label="Aventuras"
-          onClick={() => {
-            navigate(TAB_PATHS[1]);
-          }}
-        />
-        <Tab
-          label="Puntajes"
-          onClick={() => {
-            navigate(TAB_PATHS[2]);
-          }}
-        />
-      </Tabs>
+
+          <Box className={'nav__tab'} role={'button'} onClick={() => {
+              navigate(TAB_PATHS[0]);
+          }}>
+              <img className={'nav__icon'} src={'/dashboard.svg'}/>
+              <span className={'nav__title'}>Dashboard</span>
+          </Box>
+          <Box className={'nav__tab'} role={'button'}  onClick={() => {
+              navigate(TAB_PATHS[1]);
+          }}>
+              <img className={'nav__icon'} src={'/rocket.svg'}/>
+              <span className={'nav__title'}> Adventure</span>
+          </Box>
+
+          <Box className={'nav__tab'} role={'button'} onClick={() => {
+              navigate(TAB_PATHS[2]);
+          }}>
+              <img className={'nav__icon'} src={'/progress.svg'}/>
+              <span className={'nav__title'}>Progress</span>
+          </Box>
+
+          <Box className={'nav__tab'} role={'button'} onClick={() => {
+              navigate(TAB_PATHS[2]);
+          }}>
+              <img className={'nav__icon'} src={'/reports.svg'}/>
+              <span className={'nav__title'}>Reports</span>
+          </Box>
+      </NavTabsContainer>
       <TabContent value={selectedTab} index={0}>
-        <Outlet />
+        <Outlet context={{classDetails, students}} />
       </TabContent>
       <TabContent value={selectedTab} index={1}>
-        <Outlet />
+        <Outlet context={{classDetails, students}}/>
       </TabContent>
       <TabContent value={selectedTab} index={2}>
-        <Outlet />
+        <Outlet context={{classDetails, students}}/>
       </TabContent>
+
     </>
   );
 };
