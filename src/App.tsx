@@ -14,7 +14,6 @@ import { TEST_USER } from "services/users";
 import { FetchStatus } from "global/enums";
 import "./App.css";
 import CreateClassModal from "./components/Modals";
-import type { MouseEvent } from "react";
 import { sortClasses } from "./utils";
 
 const App: React.FC = () => {

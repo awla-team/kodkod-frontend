@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Tab, Tabs } from "@mui/material";
+import { Box, Tab, Tabs } from "@mui/material";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { TabPaths } from "./interfaces";
 
@@ -66,13 +66,13 @@ const Class: React.FC = () => {
           }}
         />
       </Tabs>
-      <div
+      <Box
         role="tabpanel"
-        style={{ padding: "32px" }}
         className="w-100 overflow-auto"
+        sx={{ padding: "32px" }}
       >
         <Outlet />
-      </div>
+      </Box>
     </>
   );
 };
