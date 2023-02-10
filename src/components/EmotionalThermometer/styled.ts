@@ -42,8 +42,9 @@ export const EmotionalThermometerContainer = styled(Box).withConfig({
       width: 44px;
       height: 44px;
       box-shadow: -2px 3px 4px rgba(0, 0, 0, 0.25);
-      background: ${({calenderView}) =>
-          calenderView ? "" : 'url("/calender.svg")'} #ffffff center no-repeat;
+      background: ${({ calenderView }) =>
+          calenderView ? "" : 'url("/calender.svg")'}
+        #ffffff center no-repeat;
       background-size: 24px 24px;
       border: none;
       outline: none;

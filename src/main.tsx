@@ -10,9 +10,10 @@ import Points from "routes/Class/Points";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
-import "./index.css";
 import HomePage from "./components/HomePage";
 import ClassContextProvider from "./routes/Class/Context";
+import AdventuresSummary from "routes/Class/Adventures/GoalSelection/AdventuresSummary";
+import "./index.css";
 
 export const router = createBrowserRouter([
   {
@@ -25,7 +26,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "cursos/:classId",
-        element: <ClassContextProvider><Class /></ClassContextProvider>,
+        element: (
+          <ClassContextProvider>
+            <Class />
+          </ClassContextProvider>
+        ),
         children: [
           {
             path: "tablero",
@@ -38,6 +43,10 @@ export const router = createBrowserRouter([
           {
             path: "aventuras/:adventureId",
             element: <Adventure />,
+          },
+          {
+            path: "aventuras/summary",
+            element: <AdventuresSummary />,
           },
           {
             path: "puntajes",

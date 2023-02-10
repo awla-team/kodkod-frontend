@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap");
 
 :root {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
@@ -34,15 +34,15 @@ body {
 }
 
 html,
-body {    
+body {
   margin: 0;
   display: flex;
   min-width: 320px;
   min-height: 100vh;
   overflow: hidden;
-  font-family: 'Quicksand', 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: "Quicksand", "Montserrat", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
 }
 
 h1 {
@@ -83,10 +83,10 @@ button:focus-visible {
 }
 
 @font-face {
-    font-family: 'Arista 2.0';
-    src: url('./assets/fonts/Arista20.woff2') format('woff2'),
-        url('./assets/fonts/Arista20.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
+  font-family: "Arista 2.0";
+  src: url("./assets/fonts/Arista20.woff2") format("woff2"),
+    url("./assets/fonts/Arista20.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }

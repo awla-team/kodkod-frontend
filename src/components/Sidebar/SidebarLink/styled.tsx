@@ -12,7 +12,7 @@ export const SidebarLinkContainer = styled.div`
   span {
     transition: all 0.2s ease;
     font-weight: bold;
-    color: #BDBDBD;
+    color: #bdbdbd;
     font-size: 14px;
   }
 
@@ -26,7 +26,7 @@ export const SidebarLinkContainer = styled.div`
     height: 58px;
     padding: 8px;
     transition: all 0.3s ease;
-    border: 2px solid #BDBDBD;
+    border: 2px solid #bdbdbd;
   }
 
   // On hover

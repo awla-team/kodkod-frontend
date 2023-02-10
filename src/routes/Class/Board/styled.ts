@@ -14,7 +14,7 @@ export const DetailsCard = styled(Box).withConfig({
     !["disablePadding"].includes(prop) && defaultValidatorFn(prop),
 })<{ disablePadding?: boolean }>`
   border-radius: 8px;
-  padding: ${({disablePadding}) => disablePadding ? '0rem' : '2.25rem'};
+  padding: ${({ disablePadding }) => (disablePadding ? "0rem" : "2.25rem")};
   border: 1px solid #000;
 `;
 

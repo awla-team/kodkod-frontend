@@ -1,8 +1,8 @@
 export interface IStageIconProps {
-    icon: string;
-    selected?: boolean;
-};
+  icon: string;
+  selected?: boolean;
+}
 
 export interface IStageIconContainerProps {
-    selected: boolean;
-};
+  selected: boolean;
+}

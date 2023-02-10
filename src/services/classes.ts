@@ -7,9 +7,6 @@ export const getClassesByTeacherId = (teacherId: number | string) =>
 export const createClass = (body: Omit<ClassInterface, "id">) =>
   http.post(`classes`, body);
 
-
-export const getClassByID= (id: number | string) =>{
-    return http.get('classes/'+id)
-}
-
-
+export const getClassByID = (id: number | string) => {
+  return http.get("classes/" + id);
+};

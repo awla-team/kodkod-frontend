@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import {Box, Tab, Tabs} from "@mui/material";
-import {Outlet, useLocation, useNavigate, useParams} from "react-router-dom";
+import { Box, Tab, Tabs } from "@mui/material";
+import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import TabContent from "components/TabContent";
 import { TabPaths } from "./interfaces";
-import {NavTabsContainer} from "./styled";
-import {ClassInterface} from "../../services/classes/interfaces";
-import {getClassByID} from "../../services/classes";
+import { NavTabsContainer } from "./styled";
+import { ClassInterface } from "../../services/classes/interfaces";
+import { getClassByID } from "../../services/classes";
 import Toaster from "../../utils/Toster";
-import {studentsByClass} from "../../services/students";
-import ClassContextProvider, {useClassContext} from "./Context";
+import { studentsByClass } from "../../services/students";
+import ClassContextProvider, { useClassContext } from "./Context";
 
 const TAB_PATHS: TabPaths = {
   0: "tablero",
@@ -42,50 +42,61 @@ const Class: React.FC = () => {
     if (pathname.includes(TAB_PATHS[2])) changeTab(null, 2);
   }, [pathname]);
 
-  const {classDetails, students}= useClassContext()
+  const { classDetails, students } = useClassContext();
 
   return (
     <>
-      <NavTabsContainer
-      >
+      <NavTabsContainer>
+        <Box
+          className={"nav__tab"}
+          role={"button"}
+          onClick={() => {
+            navigate(TAB_PATHS[0]);
+          }}
+        >
+          <img className={"nav__icon"} src={"/dashboard.svg"} />
+          <span className={"nav__title"}>Dashboard</span>
+        </Box>
+        <Box
+          className={"nav__tab"}
+          role={"button"}
+          onClick={() => {
+            navigate(TAB_PATHS[1]);
+          }}
+        >
+          <img className={"nav__icon"} src={"/rocket.svg"} />
+          <span className={"nav__title"}> Adventure</span>
+        </Box>
 
-          <Box className={'nav__tab'} role={'button'} onClick={() => {
-              navigate(TAB_PATHS[0]);
-          }}>
-              <img className={'nav__icon'} src={'/dashboard.svg'}/>
-              <span className={'nav__title'}>Dashboard</span>
-          </Box>
-          <Box className={'nav__tab'} role={'button'}  onClick={() => {
-              navigate(TAB_PATHS[1]);
-          }}>
-              <img className={'nav__icon'} src={'/rocket.svg'}/>
-              <span className={'nav__title'}> Adventure</span>
-          </Box>
+        <Box
+          className={"nav__tab"}
+          role={"button"}
+          onClick={() => {
+            navigate(TAB_PATHS[2]);
+          }}
+        >
+          <img className={"nav__icon"} src={"/progress.svg"} />
+          <span className={"nav__title"}>Progress</span>
+        </Box>
 
-          <Box className={'nav__tab'} role={'button'} onClick={() => {
-              navigate(TAB_PATHS[2]);
-          }}>
-              <img className={'nav__icon'} src={'/progress.svg'}/>
-              <span className={'nav__title'}>Progress</span>
-          </Box>
-
-          <Box className={'nav__tab'} role={'button'} onClick={() => {
-              navigate(TAB_PATHS[2]);
-          }}>
-              <img className={'nav__icon'} src={'/reports.svg'}/>
-              <span className={'nav__title'}>Reports</span>
-          </Box>
+        <Box
+          className={"nav__tab"}
+          role={"button"}
+          onClick={() => {
+            navigate(TAB_PATHS[2]);
+          }}
+        >
+          <img className={"nav__icon"} src={"/reports.svg"} />
+          <span className={"nav__title"}>Reports</span>
+        </Box>
       </NavTabsContainer>
-      <TabContent value={selectedTab} index={0}>
-        <Outlet context={{classDetails, students}} />
-      </TabContent>
-      <TabContent value={selectedTab} index={1}>
-        <Outlet context={{classDetails, students}}/>
-      </TabContent>
-      <TabContent value={selectedTab} index={2}>
-        <Outlet context={{classDetails, students}}/>
-      </TabContent>
-
+      <Box
+        role="tabpanel"
+        className="w-100 overflow-auto"
+        sx={{ padding: "32px" }}
+      >
+        <Outlet context={{ classDetails, students }} />
+      </Box>
     </>
   );
 };
