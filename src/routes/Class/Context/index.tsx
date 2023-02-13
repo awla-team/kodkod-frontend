@@ -6,12 +6,12 @@ import {
   useEffect,
   useState,
 } from "react";
-import { ClassInterface } from "../../../services/classes/interfaces";
-import { getClassByID } from "../../../services/classes";
-import Toaster from "../../../utils/Toster";
-import { studentsByClass } from "../../../services/students";
+import { ClassInterface } from "services/classes/interfaces";
+import { getClassByID } from "services/classes";
+import Toaster from "utils/Toster";
+import { studentsByClass } from "services/students";
 import { useParams } from "react-router-dom";
-import { StudentType } from "../../../components/StudentsList/interfaces";
+import { StudentType } from "components/StudentsList/interfaces";
 import { ClassContextType } from "../interfaces";
 
 const ClassContext = createContext<ClassContextType>({
@@ -61,7 +61,12 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <ClassContext.Provider
-      value={{ getClassById, getStudentsByClass, classDetails, students }}
+      value={{
+        getClassById,
+        getStudentsByClass,
+        classDetails,
+        students,
+      }}
     >
       {children}
     </ClassContext.Provider>

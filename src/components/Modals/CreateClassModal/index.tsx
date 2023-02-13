@@ -16,15 +16,19 @@ import { useState } from "react";
 import { createClass } from "services/classes";
 import Toaster from "utils/Toster";
 
-const CreateClassModal: FC<CreateClassModalProps> = ({ open, onClose }) => {
+const CreateClassModal: FC<CreateClassModalProps> = ({
+  open,
+  onClose,
+  levels,
+}) => {
   const [initialState, setInitialState] = useState<FormInitialState>({
-    level: "",
+    id_level: "",
     code: "",
     alias: "",
   });
   const validationSchema = () => {
     return Yup.object().shape({
-      level: Yup.number().required(),
+      id_level: Yup.number().required(),
       code: Yup.string().required(),
       alias: Yup.string().required(),
     });
@@ -38,9 +42,9 @@ const CreateClassModal: FC<CreateClassModalProps> = ({ open, onClose }) => {
     if (e) {
       const { name, value } = e.target as HTMLInputElement;
       if (name === "level") {
-        setFieldValue("alias", `${value}° ${values.code}`);
+        setFieldValue("alias", `${value}°${values.code}`);
       } else {
-        setFieldValue("alias", `${values.level}° ${value}`);
+        setFieldValue("alias", `${values.id_level}°${value}`);
       }
     }
   };
@@ -50,10 +54,10 @@ const CreateClassModal: FC<CreateClassModalProps> = ({ open, onClose }) => {
     formikHelpers: FormikHelpers<FormInitialState>
   ) => {
     try {
-      const data = await createClass({
+      await createClass({
         ...values,
-        userId: 1,
-        level: values.level as number,
+        id_user: 1,
+        id_level: values.id_level as number,
       });
       onClose("success");
       Toaster("success", `You successfully added the ${values.alias} class.`);
@@ -92,14 +96,16 @@ const CreateClassModal: FC<CreateClassModalProps> = ({ open, onClose }) => {
             submitCount,
             setFieldValue,
             isSubmitting,
+            isValid,
+            dirty,
           }) => {
             return (
               <Form onSubmit={handleSubmit}>
                 <Styled.DialogFormContainer>
-                  <FormControl error={!!errors.level && !!submitCount}>
+                  <FormControl error={!!errors.id_level && !!submitCount}>
                     <Styled.DialogFormLabel>Level</Styled.DialogFormLabel>
                     <Select
-                      name={"level"}
+                      name={"id_level"}
                       onChange={(e) => {
                         handleAliasValue(
                           e as ChangeEvent<HTMLInputElement>,
@@ -108,16 +114,18 @@ const CreateClassModal: FC<CreateClassModalProps> = ({ open, onClose }) => {
                         );
                         handleChange(e);
                       }}
-                      value={values.level}
+                      value={values.id_level}
                     >
                       <MenuItem value={""} disabled>
                         Select a level
                       </MenuItem>
-                      <MenuItem value={1}>1° medio</MenuItem>
-                      <MenuItem value={2}>2° medio</MenuItem>
-                      <MenuItem value={3}>3° medio</MenuItem>
-                      <MenuItem value={4}>4° medio</MenuItem>
-                      <MenuItem value={5}>5° medio</MenuItem>
+                      {levels.map((res, index) => {
+                        return (
+                          <MenuItem key={index} value={res.id}>
+                            {res.name}
+                          </MenuItem>
+                        );
+                      })}
                     </Select>
                   </FormControl>
                   <FormControl error={!!errors.code && !!submitCount}>
@@ -154,7 +162,7 @@ const CreateClassModal: FC<CreateClassModalProps> = ({ open, onClose }) => {
                   </FormControl>
                   <Styled.DialogFormActions>
                     <Button
-                      disabled={isSubmitting}
+                      disabled={isSubmitting || !isValid || !dirty}
                       type={"submit"}
                       variant={"contained"}
                     >

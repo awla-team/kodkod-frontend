@@ -15,12 +15,15 @@ import { FetchStatus } from "global/enums";
 import "./App.css";
 import CreateClassModal from "./components/Modals";
 import { sortClasses } from "./utils";
+import { getAllTheLevel } from "./services/levels";
+import Toaster from "./utils/Toster";
+import { Levels } from "./components/Modals/CreateClassModal/interfaces";
 
 const App: React.FC = () => {
   const [classes, setClasses] = useState<ClassInterface[]>([]);
   const [fetching, setFetching] = useState<FetchStatus>(FetchStatus.Idle);
   const [open, setOpen] = useState<boolean>(false);
-
+  const [levels, setLevels] = useState<Levels[]>([]);
   const getClassesData = () => {
     getClassesByUser(TEST_USER.id)
       .then((response: AxiosResponse) => {
@@ -37,9 +40,20 @@ const App: React.FC = () => {
       });
   };
 
+  const getLevels = async () => {
+    try {
+      const { data }: { data: { responseData: Levels[] } } =
+        await getAllTheLevel();
+      setLevels(data.responseData);
+    } catch (e: any) {
+      Toaster("error", e.message);
+    }
+  };
+
   useEffect(() => {
     setFetching(FetchStatus.Pending);
     getClassesData();
+    getLevels();
   }, []);
 
   const handleClose = (
@@ -88,7 +102,7 @@ const App: React.FC = () => {
             <Outlet context={{ classes, handleOpenModal }} />
           </div>
         </div>
-        <CreateClassModal open={open} onClose={handleClose} />
+        <CreateClassModal open={open} onClose={handleClose} levels={levels} />
       </div>
     </ThemeWrapper>
   );

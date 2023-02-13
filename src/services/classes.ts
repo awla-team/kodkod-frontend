@@ -5,7 +5,7 @@ export const getClassesByUser = (userId: number | string) =>
   http.get(`classes-by-user/` + userId);
 
 export const createClass = (body: Omit<ClassInterface, "id">) =>
-  http.post(`classes`, body);
+  http.post(`class`, body);
 
 export const getClassByID = (id: number | string) => {
   return http.get("class/" + id);
