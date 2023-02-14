@@ -25,7 +25,7 @@ import { useState } from "react";
 import AddStudentsDialog from "../Modals/AddStudentsDialog";
 import { useClassContext } from "../../routes/Class/Context";
 import { useParams } from "react-router-dom";
-import { updateStudent } from "../../services/students";
+import { deleteStudent, updateStudent } from "../../services/students";
 import Toaster from "../../utils/Toster";
 import ConfirmationModal from "../Modals/ConfirmationModal";
 import CloseIcon from "@mui/icons-material/Close";
@@ -53,8 +53,7 @@ const StudentsList: FC<StudentsListProps> = ({
     return new Promise(async (resolve, reject) => {
       try {
         if (studentId) {
-          await updateStudent(studentId);
-          if (classId) getStudentsByClass(classId);
+          await deleteStudent(studentId);
           resolve(true);
         }
         reject({ message: "Student id didn't find." });

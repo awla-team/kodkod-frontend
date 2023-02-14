@@ -21,3 +21,7 @@ export const updateStudent = (
 export const addStudentsInClass = (body: any) => {
   return http.post("students", body);
 };
+
+export const deleteStudent = (id: number | string) => {
+  return http.delete("user/" + id);
+};

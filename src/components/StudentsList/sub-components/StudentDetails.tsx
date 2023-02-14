@@ -27,7 +27,6 @@ export const StudentDetails: FC<{
   const [openConfirmation, setOpenConfirmation] = useState<boolean>(false);
   const [openMenu, setOpenMenu] = useState<boolean>(false);
   const { updateStudentsData } = useClassContext();
-  const { classId } = useParams();
   const handleMenuOpen = (e: React.MouseEvent) => {
     setOpenMenu(true);
     const { currentTarget } = e;
@@ -46,6 +45,7 @@ export const StudentDetails: FC<{
       setElRef(null);
       setOpenMenu(false);
       setOpenConfirmation(false);
+      updateStudentsData("delete", details);
     } catch (e: any) {
       Toaster("error", e.message);
     }
@@ -81,7 +81,7 @@ export const StudentDetails: FC<{
         });
       Toaster("success", "Student Details updated");
       setEditState(false);
-      updateStudentsData(data.responseData);
+      updateStudentsData("update", data.responseData);
     } catch (e: any) {
       Toaster("error", e.message);
     } finally {

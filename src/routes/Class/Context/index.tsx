@@ -19,7 +19,7 @@ const ClassContext = createContext<ClassContextType>({
   classDetails: undefined,
   getStudentsByClass: (id: number | string) => {},
   getClassById: (id: number | string) => {},
-  updateStudentsData: (data: StudentType) => {},
+  updateStudentsData: (actionType, data) => {},
 });
 
 export const useClassContext = () => {
@@ -60,18 +60,34 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
     }
   };
 
-  const updateStudentsData = (data: StudentType) => {
+  const updateStudentsData = (
+    actionType: "delete" | "update",
+    data: StudentType
+  ) => {
     if (data) {
-      setStudents((prevState) => {
-        const tempData = [...prevState];
-        const findIndex = tempData.findIndex(
-          (student) => student.id === data.id
-        );
-        if (findIndex > -1) {
-          tempData[findIndex] = data;
-        }
-        return tempData;
-      });
+      if (actionType === "delete") {
+        setStudents((prevState) => {
+          const tempData = [...prevState];
+          const findIndex = tempData.findIndex(
+            (student) => student.id === data.id
+          );
+          if (findIndex > -1) {
+            tempData.splice(findIndex, 1);
+          }
+          return tempData;
+        });
+      } else {
+        setStudents((prevState) => {
+          const tempData = [...prevState];
+          const findIndex = tempData.findIndex(
+            (student) => student.id === data.id
+          );
+          if (findIndex > -1) {
+            tempData[findIndex] = data;
+          }
+          return tempData;
+        });
+      }
     }
   };
 
