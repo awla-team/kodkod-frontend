@@ -26,7 +26,7 @@ export const StudentDetails: FC<{
   const [elRef, setElRef] = useState<any | null>(null);
   const [openConfirmation, setOpenConfirmation] = useState<boolean>(false);
   const [openMenu, setOpenMenu] = useState<boolean>(false);
-  const { getStudentsByClass } = useClassContext();
+  const { updateStudentsData } = useClassContext();
   const { classId } = useParams();
   const handleMenuOpen = (e: React.MouseEvent) => {
     setOpenMenu(true);
@@ -70,12 +70,18 @@ export const StudentDetails: FC<{
     formikHelper: FormikHelpers<StudentEditInputField>
   ) => {
     try {
-      const {name, email}= values
-      const [first_name,  last_name]= name.split(' ')
-      await updateStudent(details.id, { ...details,email, last_name, first_name });
+      const { name, email } = values;
+      const [first_name, last_name] = name.split(" ");
+      const { data }: { data: { responseData: StudentType } } =
+        await updateStudent(details.id, {
+          role: "student",
+          email,
+          last_name,
+          first_name,
+        });
       Toaster("success", "Student Details updated");
       setEditState(false);
-      if (classId) getStudentsByClass(classId);
+      updateStudentsData(data.responseData);
     } catch (e: any) {
       Toaster("error", e.message);
     } finally {

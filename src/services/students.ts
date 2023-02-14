@@ -1,5 +1,8 @@
 import http from "global/api";
-import { StudentType } from "../components/StudentsList/interfaces";
+import {
+  StudentType,
+  StudentUpdateDataType,
+} from "../components/StudentsList/interfaces";
 
 export const studentsByClass = (
   classId: number | string,
@@ -10,9 +13,9 @@ export const studentsByClass = (
 
 export const updateStudent = (
   id: number | string,
-  body?: Partial<StudentType>
+  body?: Partial<StudentUpdateDataType>
 ) => {
-  return http.put("students/" + id, body || { classId: null });
+  return http.put("user/" + id, body);
 };
 
 export const addStudentsInClass = (body: any) => {

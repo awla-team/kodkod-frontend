@@ -19,6 +19,7 @@ const ClassContext = createContext<ClassContextType>({
   classDetails: undefined,
   getStudentsByClass: (id: number | string) => {},
   getClassById: (id: number | string) => {},
+  updateStudentsData: (data: StudentType) => {},
 });
 
 export const useClassContext = () => {
@@ -59,9 +60,25 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
     }
   };
 
+  const updateStudentsData = (data: StudentType) => {
+    if (data) {
+      setStudents((prevState) => {
+        const tempData = [...prevState];
+        const findIndex = tempData.findIndex(
+          (student) => student.id === data.id
+        );
+        if (findIndex > -1) {
+          tempData[findIndex] = data;
+        }
+        return tempData;
+      });
+    }
+  };
+
   return (
     <ClassContext.Provider
       value={{
+        updateStudentsData,
         getClassById,
         getStudentsByClass,
         classDetails,

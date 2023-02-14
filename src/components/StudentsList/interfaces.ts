@@ -10,6 +10,13 @@ export interface StudentType {
   classId: string | number;
 }
 
+export interface StudentUpdateDataType {
+  role: "student";
+  first_name: string;
+  last_name: string;
+  email: string;
+}
+
 export interface StudentsListProps {
   studentsData: StudentType[];
   classDetails: ClassInterface;
