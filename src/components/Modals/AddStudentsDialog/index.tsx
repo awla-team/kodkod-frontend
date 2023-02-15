@@ -26,10 +26,18 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
   ) => {
     // temporary approach
     try {
-      const requests = values.students.map((res) => {
-        return addStudentsInClass({ ...res, classId: classDetails.id });
+      const request = await addStudentsInClass({
+        id_class: classDetails.id,
+        students: values.students.map(({ name, email }) => {
+          const [first_name, last_name] = name.split(" ");
+          return {
+            first_name,
+            last_name,
+            email,
+            role: "student",
+          };
+        }),
       });
-      await Promise.all(requests);
       const noOfStudents = values.students.length;
       Toaster(
         "success",
@@ -39,6 +47,7 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
       );
       onClose("success");
     } catch (e: any) {
+      debugger;
       Toaster("error", e.message);
     } finally {
       formikHelper.setSubmitting(false);
@@ -58,7 +67,9 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
       students: Yup.array().of(
         Yup.object().shape({
           email: Yup.string().email().required(),
-          name: Yup.string().required(),
+          name: Yup.string()
+            .matches(/^(\w+ \w+)$/g, "FirstName and LastName is required")
+            .required(),
         })
       ),
     });
@@ -171,6 +182,7 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
                                     name={`students[${index}].name`}
                                     onChange={handleChange}
                                     variant={"standard"}
+                                    placeholder={"FirstName LastName"}
                                     fullWidth
                                   />
                                 </div>

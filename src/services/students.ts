@@ -3,6 +3,7 @@ import {
   StudentType,
   StudentUpdateDataType,
 } from "../components/StudentsList/interfaces";
+import { AddStudentsInClassBody } from "./interfaces";
 
 export const studentsByClass = (
   classId: number | string,
@@ -18,8 +19,8 @@ export const updateStudent = (
   return http.put("user/" + id, body);
 };
 
-export const addStudentsInClass = (body: any) => {
-  return http.post("students", body);
+export const addStudentsInClass = (body: AddStudentsInClassBody) => {
+  return http.post("add-students", body);
 };
 
 export const deleteStudent = (id: number | string) => {
