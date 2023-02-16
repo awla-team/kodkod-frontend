@@ -39,11 +39,14 @@ const StudentsList: FC<StudentsListProps> = ({
   classDetails,
 }: StudentsListProps) => {
   const [OpenModal, setOpenModal] = useState<boolean>(false);
-  const { getStudentsByClass } = useClassContext();
+  const { updateStudentsData } = useClassContext();
   const { classId } = useParams();
-  const handleModalClose = (reason: "success" | undefined) => {
-    if (reason === "success") {
-      if (classId) getStudentsByClass(classId);
+  const handleModalClose = (
+    reason: "student" | undefined,
+    data?: StudentType[]
+  ) => {
+    if (reason === "student" && data) {
+      updateStudentsData("update", data);
     }
     setOpenModal(false);
   };

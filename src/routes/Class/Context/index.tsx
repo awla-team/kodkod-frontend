@@ -62,31 +62,48 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const updateStudentsData = (
     actionType: "delete" | "update",
-    data: StudentType
+    data: StudentType | StudentType[]
   ) => {
     if (data) {
-      if (actionType === "delete") {
-        setStudents((prevState) => {
-          const tempData = [...prevState];
-          const findIndex = tempData.findIndex(
-            (student) => student.id === data.id
-          );
-          if (findIndex > -1) {
-            tempData.splice(findIndex, 1);
+      switch (actionType) {
+        case "update":
+          {
+            if (Array.isArray(data)) {
+              setStudents((prevState) => {
+                return [...data, ...prevState];
+              });
+            } else {
+              setStudents((prevState) => {
+                const tempData = [...prevState];
+                const findIndex = tempData.findIndex(
+                  (student) => student.id === data.id
+                );
+                if (findIndex > -1) {
+                  tempData[findIndex] = data;
+                }
+                return tempData;
+              });
+            }
           }
-          return tempData;
-        });
-      } else {
-        setStudents((prevState) => {
-          const tempData = [...prevState];
-          const findIndex = tempData.findIndex(
-            (student) => student.id === data.id
-          );
-          if (findIndex > -1) {
-            tempData[findIndex] = data;
+          break;
+        case "delete": {
+          if (!Array.isArray(data)) {
+            setStudents((prevState) => {
+              const tempData = [...prevState];
+              const findIndex = tempData.findIndex(
+                (student) => student.id === data.id
+              );
+              if (findIndex > -1) {
+                tempData.splice(findIndex, 1);
+              }
+              return tempData;
+            });
           }
-          return tempData;
-        });
+          break;
+        }
+        default: {
+          break;
+        }
       }
     }
   };

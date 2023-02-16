@@ -8,6 +8,7 @@ import { useState } from "react";
 import { addStudentsInClass } from "services/students";
 import Toaster from "utils/Toster";
 import * as Yup from "yup";
+import { StudentType } from "../../StudentsList/interfaces";
 
 const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
   open,
@@ -26,18 +27,19 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
   ) => {
     // temporary approach
     try {
-      const request = await addStudentsInClass({
-        id_class: classDetails.id,
-        students: values.students.map(({ name, email }) => {
-          const [first_name, last_name] = name.split(" ");
-          return {
-            first_name,
-            last_name,
-            email,
-            role: "student",
-          };
-        }),
-      });
+      const { data }: { data: { responseData: { students: StudentType[] } } } =
+        await addStudentsInClass({
+          id_class: classDetails.id,
+          students: values.students.map(({ name, email }) => {
+            const [first_name, last_name] = name.split(" ");
+            return {
+              first_name,
+              last_name,
+              email,
+              role: "student",
+            };
+          }),
+        });
       const noOfStudents = values.students.length;
       Toaster(
         "success",
@@ -45,7 +47,7 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
           noOfStudents < 2 ? "student" : "students"
         } successfully added`
       );
-      onClose("success");
+      onClose("student", data.responseData.students);
     } catch (e: any) {
       debugger;
       Toaster("error", e.message);
