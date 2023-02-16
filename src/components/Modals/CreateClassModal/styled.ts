@@ -13,13 +13,22 @@ export const DialogBox = styled(Dialog)`
   border-radius: 0px;
 
   & .${dialogClasses.paper} {
-    min-height: 668px;
+    height: calc(100vh - 64px);
+    max-height: 668px;
+  }
+
+  @media screen and (max-width: 663.95px) {
+    & .${dialogClasses.paper} {
+      height: auto;
+      max-height: none;
+    }
   }
 `;
 export const DialogBoxContent = styled(DialogContent)`
   display: flex;
   flex-direction: column;
-  min-height: 668px;
+  height: calc(calc(100% - 64px) - 20px);
+  
 
   & .dialog__header__text {
     font-weight: 700;
