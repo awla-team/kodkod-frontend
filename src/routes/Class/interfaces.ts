@@ -10,4 +10,8 @@ export interface ClassContextType {
   classDetails: ClassInterface | undefined;
   students: StudentType[];
   getStudentsByClass: (id: number | string) => void;
+  updateStudentsData: (
+    actionType: "delete" | "update",
+    data?: StudentType | StudentType[]
+  ) => void;
 }

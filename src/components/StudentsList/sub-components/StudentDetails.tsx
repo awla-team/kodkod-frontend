@@ -6,7 +6,7 @@ import Toaster from "../../../utils/Toster";
 import { Form, Formik, FormikHelpers } from "formik";
 import { updateStudent } from "../../../services/students";
 import {
-  Avatar,
+  Avatar, Box,
   FormControl,
   IconButton,
   InputBase,
@@ -26,8 +26,7 @@ export const StudentDetails: FC<{
   const [elRef, setElRef] = useState<any | null>(null);
   const [openConfirmation, setOpenConfirmation] = useState<boolean>(false);
   const [openMenu, setOpenMenu] = useState<boolean>(false);
-  const { getStudentsByClass } = useClassContext();
-  const { classId } = useParams();
+  const { updateStudentsData } = useClassContext();
   const handleMenuOpen = (e: React.MouseEvent) => {
     setOpenMenu(true);
     const { currentTarget } = e;
@@ -46,20 +45,23 @@ export const StudentDetails: FC<{
       setElRef(null);
       setOpenMenu(false);
       setOpenConfirmation(false);
+      updateStudentsData("delete", details);
     } catch (e: any) {
       Toaster("error", e.message);
     }
   };
 
   const [inputValues, setInputValues] = useState<StudentEditInputField>({
-    name: "",
+    last_name: "",
+    first_name: "",
     email: "",
   });
 
   useEffect(() => {
     if (details) {
       setInputValues({
-        name: details.name,
+        first_name: details.first_name,
+        last_name: details.last_name,
         email: details.email,
       });
     }
@@ -70,10 +72,17 @@ export const StudentDetails: FC<{
     formikHelper: FormikHelpers<StudentEditInputField>
   ) => {
     try {
-      await updateStudent(details.id, { ...details, ...values });
+      const { last_name, first_name, email } = values;
+      const { data }: { data: { responseData: StudentType } } =
+        await updateStudent(details.id, {
+          role: "student",
+          email,
+          last_name,
+          first_name,
+        });
       Toaster("success", "Student Details updated");
       setEditState(false);
-      if (classId) getStudentsByClass(classId);
+      updateStudentsData("update", data.responseData);
     } catch (e: any) {
       Toaster("error", e.message);
     } finally {
@@ -87,7 +96,9 @@ export const StudentDetails: FC<{
       {!editState ? (
         <div className={"student__details__container"}>
           <div className={"student__details"}>
-            <div className={"student__name"}>{details.name}</div>
+            <div
+              className={"student__name"}
+            >{`${details.first_name} ${details.last_name}`}</div>
             <div className={"student__email"}>{details.email}</div>
           </div>
           <IconButton
@@ -116,15 +127,26 @@ export const StudentDetails: FC<{
               >
                 <div className={"edit__section"}>
                   <div className={"editable__field"}>
-                    <FormControl error={!!errors.name && !!submitCount}>
-                      <InputBase
-                        name={"name"}
-                        className={"name"}
-                        placeholder={"name"}
-                        value={values.name}
-                        onChange={handleChange}
-                      />
-                    </FormControl>
+                   <Box display={'flex'} gap={1}>
+                     <FormControl error={!!errors.first_name && !!submitCount}>
+                       <InputBase
+                           name={"first_name"}
+                           className={"name"}
+                           placeholder={"First name"}
+                           value={values.first_name}
+                           onChange={handleChange}
+                       />
+                     </FormControl>
+                     <FormControl error={!!errors.last_name && !!submitCount}>
+                       <InputBase
+                           name={"last_name"}
+                           className={"name"}
+                           placeholder={"Last name"}
+                           value={values.last_name}
+                           onChange={handleChange}
+                       />
+                     </FormControl>
+                   </Box>
                     <FormControl error={!!errors.email && !!submitCount}>
                       <InputBase
                         name={"email"}

@@ -49,6 +49,7 @@ export const StudentsListDetailsContainer = styled(Box)`
   width: 100%;
   gap: 1rem;
   height: 100%;
+  justify-content: space-between;
 
   & .details {
     flex-grow: 1;

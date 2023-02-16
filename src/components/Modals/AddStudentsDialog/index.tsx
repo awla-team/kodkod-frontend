@@ -8,6 +8,7 @@ import { useState } from "react";
 import { addStudentsInClass } from "services/students";
 import Toaster from "utils/Toster";
 import * as Yup from "yup";
+import { StudentType } from "../../StudentsList/interfaces";
 
 const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
   open,
@@ -26,10 +27,18 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
   ) => {
     // temporary approach
     try {
-      const requests = values.students.map((res) => {
-        return addStudentsInClass({ ...res, classId: classDetails.id });
-      });
-      await Promise.all(requests);
+      const { data }: { data: { responseData: { students: StudentType[] } } } =
+        await addStudentsInClass({
+          id_class: classDetails.id,
+          students: values.students.map(({ first_name, last_name, email }) => {
+            return {
+              first_name,
+              last_name,
+              email,
+              role: "student",
+            };
+          }),
+        });
       const noOfStudents = values.students.length;
       Toaster(
         "success",
@@ -37,8 +46,9 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
           noOfStudents < 2 ? "student" : "students"
         } successfully added`
       );
-      onClose("success");
+      onClose("student", data.responseData.students);
     } catch (e: any) {
+      debugger;
       Toaster("error", e.message);
     } finally {
       formikHelper.setSubmitting(false);
@@ -58,7 +68,8 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
       students: Yup.array().of(
         Yup.object().shape({
           email: Yup.string().email().required(),
-          name: Yup.string().required(),
+          first_name: Yup.string().required(),
+          last_name: Yup.string().required(),
         })
       ),
     });
@@ -79,7 +90,11 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
           return {
             students: [
               ...prevState.students,
-              ...transformedTextArray.map((email) => ({ name: "", email })),
+              ...transformedTextArray.map((email) => ({
+                first_name: "",
+                last_name: "",
+                email,
+              })),
             ],
           };
         });
@@ -161,18 +176,35 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
                                     />
                                   </IconButton>
                                 </div>
-                                <div className={"input__field"}>
-                                  <TextField
-                                    error={
-                                      !!submitCount &&
-                                      !!errors?.students?.[index]
-                                    }
-                                    value={values.students[index].name}
-                                    name={`students[${index}].name`}
-                                    onChange={handleChange}
-                                    variant={"standard"}
-                                    fullWidth
-                                  />
+                                <div className={"input_field_group"}>
+                                  <div className={"input__field"}>
+                                    <TextField
+                                      error={
+                                        !!submitCount &&
+                                        !!errors?.students?.[index]
+                                      }
+                                      value={values.students[index].first_name}
+                                      name={`students[${index}].first_name`}
+                                      onChange={handleChange}
+                                      variant={"standard"}
+                                      placeholder={"FirstName"}
+                                      fullWidth
+                                    />
+                                  </div>
+                                  <div className={"input__field"}>
+                                    <TextField
+                                      error={
+                                        !!submitCount &&
+                                        !!errors?.students?.[index]
+                                      }
+                                      value={values.students[index].last_name}
+                                      name={`students[${index}].last_name`}
+                                      onChange={handleChange}
+                                      variant={"standard"}
+                                      placeholder={"LastName"}
+                                      fullWidth
+                                    />
+                                  </div>
                                 </div>
                                 <div className={"input__field"}>
                                   <TextField

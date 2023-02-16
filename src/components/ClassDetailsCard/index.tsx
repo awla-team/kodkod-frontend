@@ -1,6 +1,6 @@
 import { DetailsCardContent } from "./styled";
 import { ClassDetailsCardProps } from "./interfaces";
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
@@ -10,6 +10,10 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({ classDetails }) => {
   const handleNavigate = () => {
     navigate(`/cursos/${classDetails.id}/aventuras`);
   };
+
+  const hasAdventure: boolean = useMemo(() => {
+    return classDetails && !!classDetails.adventures?.length;
+  }, [classDetails]);
   return (
     <DetailsCardContent>
       <div className={"card__title"}>
@@ -18,14 +22,14 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({ classDetails }) => {
       </div>
       <div className={"card__content"}>
         <p className={"adventure__status"}>
-          {true
+          {hasAdventure
             ? "You have an ongoing adventure!"
             : "You haven't selected an adventure yet."}
         </p>
         <p className={"adventure__details"}>
           <b>
             {" "}
-            {true
+            {hasAdventure
               ? "With the reward in mind - Stage 2"
               : "Go to adventure to start working with your students"}
           </b>
@@ -33,7 +37,7 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({ classDetails }) => {
       </div>
       <div className={"card__action"}>
         <Button variant={"contained"} onClick={handleNavigate}>
-          {true ? "Continue adventure" : "Start an adventure"}
+          {hasAdventure ? "Continue adventure" : "Start an adventure"}
         </Button>
       </div>
     </DetailsCardContent>

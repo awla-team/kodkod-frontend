@@ -8,7 +8,6 @@ const Toaster = (type = "success", message = "", options = {}) => {
     hideProgressBar: true,
     closeOnClick: true,
     draggable: true,
-    progress: undefined,
     theme: "dark",
     ...options,
   };

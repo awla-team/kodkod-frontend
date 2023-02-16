@@ -2,9 +2,19 @@ import { ClassInterface } from "services/classes/interfaces";
 
 export interface StudentType {
   id: number | string;
+  role: string;
+  first_name: string;
+  last_name: string;
+
   email: string;
-  name: string;
   classId: string | number;
+}
+
+export interface StudentUpdateDataType {
+  role: "student";
+  first_name: string;
+  last_name: string;
+  email: string;
 }
 
 export interface StudentsListProps {
@@ -14,5 +24,6 @@ export interface StudentsListProps {
 
 export interface StudentEditInputField {
   email: string;
-  name: string;
+  first_name: string;
+  last_name: string;
 }

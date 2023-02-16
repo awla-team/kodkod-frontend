@@ -7,7 +7,7 @@ import {
 import { ThemeProvider as StyledThemeProvider } from "styled-components";
 import theme from "./global/theme";
 import Sidebar from "./components/Sidebar";
-import { getClassesByTeacherId } from "services/classes";
+import { getClassesByUser } from "services/classes";
 import { ClassInterface } from "services/classes/interfaces";
 import { AxiosResponse } from "axios";
 import { TEST_USER } from "services/users";
@@ -15,15 +15,20 @@ import { FetchStatus } from "global/enums";
 import "./App.css";
 import CreateClassModal from "./components/Modals";
 import { sortClasses } from "./utils";
+import { getAllTheLevel } from "./services/levels";
+import Toaster from "./utils/Toster";
+import { Levels } from "./components/Modals/CreateClassModal/interfaces";
 
 const App: React.FC = () => {
   const [classes, setClasses] = useState<ClassInterface[]>([]);
   const [fetching, setFetching] = useState<FetchStatus>(FetchStatus.Idle);
   const [open, setOpen] = useState<boolean>(false);
-
+  const [levels, setLevels] = useState<Levels[]>([]);
   const getClassesData = () => {
-    getClassesByTeacherId(TEST_USER.id)
-      .then((response: AxiosResponse) => response?.data)
+    getClassesByUser(TEST_USER.id)
+      .then((response: AxiosResponse) => {
+        return response?.data?.responseData;
+      })
       .then((classes: ClassInterface[]) => {
         if (!!classes && Object.values(classes).length)
           setClasses(sortClasses(classes));
@@ -35,9 +40,20 @@ const App: React.FC = () => {
       });
   };
 
+  const getLevels = async () => {
+    try {
+      const { data }: { data: { responseData: Levels[] } } =
+        await getAllTheLevel();
+      setLevels(data.responseData);
+    } catch (e: any) {
+      Toaster("error", e.message);
+    }
+  };
+
   useEffect(() => {
     setFetching(FetchStatus.Pending);
     getClassesData();
+    getLevels();
   }, []);
 
   const handleClose = (
@@ -86,7 +102,7 @@ const App: React.FC = () => {
             <Outlet context={{ classes, handleOpenModal }} />
           </div>
         </div>
-        <CreateClassModal open={open} onClose={handleClose} />
+        <CreateClassModal open={open} onClose={handleClose} levels={levels} />
       </div>
     </ThemeWrapper>
   );

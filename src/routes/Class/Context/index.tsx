@@ -6,12 +6,12 @@ import {
   useEffect,
   useState,
 } from "react";
-import { ClassInterface } from "../../../services/classes/interfaces";
-import { getClassByID } from "../../../services/classes";
-import Toaster from "../../../utils/Toster";
-import { studentsByClass } from "../../../services/students";
+import { ClassInterface } from "services/classes/interfaces";
+import { getClassByID } from "services/classes";
+import Toaster from "utils/Toster";
+import { studentsByClass } from "services/students";
 import { useParams } from "react-router-dom";
-import { StudentType } from "../../../components/StudentsList/interfaces";
+import { StudentType } from "components/StudentsList/interfaces";
 import { ClassContextType } from "../interfaces";
 
 const ClassContext = createContext<ClassContextType>({
@@ -19,6 +19,7 @@ const ClassContext = createContext<ClassContextType>({
   classDetails: undefined,
   getStudentsByClass: (id: number | string) => {},
   getClassById: (id: number | string) => {},
+  updateStudentsData: (actionType, data) => {},
 });
 
 export const useClassContext = () => {
@@ -42,8 +43,9 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const getClassById = async (id: number | string) => {
     try {
-      const { data }: { data: ClassInterface } = await getClassByID(id);
-      setClassDetails(data);
+      const { data }: { data: { responseData: ClassInterface } } =
+        await getClassByID(id);
+      setClassDetails(data.responseData);
     } catch (e: any) {
       Toaster("error", e.message);
     }
@@ -51,16 +53,70 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const getStudentsByClass = async (id: number | string) => {
     try {
-      const { data }: { data: any } = await studentsByClass(id);
-      setStudents(data);
+      const { data }: { data: any } = await studentsByClass(id, "student");
+      setStudents(data.responseData);
     } catch (e: any) {
       Toaster("error", e.message);
     }
   };
 
+  const updateStudentsData = (
+    actionType: "delete" | "update",
+    data: StudentType | StudentType[]
+  ) => {
+    if (data) {
+      switch (actionType) {
+        case "update":
+          {
+            if (Array.isArray(data)) {
+              setStudents((prevState) => {
+                return [...data, ...prevState];
+              });
+            } else {
+              setStudents((prevState) => {
+                const tempData = [...prevState];
+                const findIndex = tempData.findIndex(
+                  (student) => student.id === data.id
+                );
+                if (findIndex > -1) {
+                  tempData[findIndex] = data;
+                }
+                return tempData;
+              });
+            }
+          }
+          break;
+        case "delete": {
+          if (!Array.isArray(data)) {
+            setStudents((prevState) => {
+              const tempData = [...prevState];
+              const findIndex = tempData.findIndex(
+                (student) => student.id === data.id
+              );
+              if (findIndex > -1) {
+                tempData.splice(findIndex, 1);
+              }
+              return tempData;
+            });
+          }
+          break;
+        }
+        default: {
+          break;
+        }
+      }
+    }
+  };
+
   return (
     <ClassContext.Provider
-      value={{ getClassById, getStudentsByClass, classDetails, students }}
+      value={{
+        updateStudentsData,
+        getClassById,
+        getStudentsByClass,
+        classDetails,
+        students,
+      }}
     >
       {children}
     </ClassContext.Provider>
