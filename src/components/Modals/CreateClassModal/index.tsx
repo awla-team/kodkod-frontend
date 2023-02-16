@@ -15,6 +15,7 @@ import * as Yup from "yup";
 import { useState } from "react";
 import { createClass } from "services/classes";
 import Toaster from "utils/Toster";
+import { ClassInterface } from "../../../services/classes/interfaces";
 
 const CreateClassModal: FC<CreateClassModalProps> = ({
   open,
@@ -41,7 +42,7 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
   ) => {
     if (e) {
       const { name, value } = e.target as HTMLInputElement;
-      if (name === "level") {
+      if (name === "id_level") {
         setFieldValue("alias", `${value}°${values.code}`);
       } else {
         setFieldValue("alias", `${values.id_level}°${value}`);
@@ -54,12 +55,13 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
     formikHelpers: FormikHelpers<FormInitialState>
   ) => {
     try {
-      await createClass({
-        ...values,
-        id_user: 1,
-        id_level: values.id_level as number,
-      });
-      onClose("success");
+      const { data }: { data: { responseData: ClassInterface } } =
+        await createClass({
+          ...values,
+          id_user: 1,
+          id_level: values.id_level as number,
+        });
+      onClose("success", data.responseData);
       Toaster("success", `You successfully added the ${values.alias} class.`);
     } catch (e: any) {
       Toaster("error", e.message);

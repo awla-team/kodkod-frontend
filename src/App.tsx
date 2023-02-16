@@ -57,11 +57,16 @@ const App: React.FC = () => {
   }, []);
 
   const handleClose = (
-    reason: "backdropClick" | "escapeKeyDown" | "success"
+    reason: "backdropClick" | "escapeKeyDown" | "success",
+    data?: ClassInterface
   ) => {
     if (reason !== "backdropClick") setOpen(false);
     if (reason === "success") {
-      getClassesData();
+      if (data) {
+        setClasses((prevState) => {
+          return sortClasses([...prevState, data]);
+        });
+      }
     }
   };
 
