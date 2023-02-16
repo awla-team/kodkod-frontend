@@ -10,6 +10,7 @@ export interface AddStudentsDialogProps {
 export interface FormInitialState {
   students: {
     email: string;
-    name: string;
+    first_name: string;
+    last_name: string;
   }[];
 }

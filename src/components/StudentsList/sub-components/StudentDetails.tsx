@@ -6,7 +6,7 @@ import Toaster from "../../../utils/Toster";
 import { Form, Formik, FormikHelpers } from "formik";
 import { updateStudent } from "../../../services/students";
 import {
-  Avatar,
+  Avatar, Box,
   FormControl,
   IconButton,
   InputBase,
@@ -52,14 +52,16 @@ export const StudentDetails: FC<{
   };
 
   const [inputValues, setInputValues] = useState<StudentEditInputField>({
-    name: "",
+    last_name: "",
+    first_name: "",
     email: "",
   });
 
   useEffect(() => {
     if (details) {
       setInputValues({
-        name: `${details.first_name} ${details.last_name}`,
+        first_name: details.first_name,
+        last_name: details.last_name,
         email: details.email,
       });
     }
@@ -70,8 +72,7 @@ export const StudentDetails: FC<{
     formikHelper: FormikHelpers<StudentEditInputField>
   ) => {
     try {
-      const { name, email } = values;
-      const [first_name, last_name] = name.split(" ");
+      const { last_name, first_name, email } = values;
       const { data }: { data: { responseData: StudentType } } =
         await updateStudent(details.id, {
           role: "student",
@@ -126,15 +127,26 @@ export const StudentDetails: FC<{
               >
                 <div className={"edit__section"}>
                   <div className={"editable__field"}>
-                    <FormControl error={!!errors.name && !!submitCount}>
-                      <InputBase
-                        name={"name"}
-                        className={"name"}
-                        placeholder={"name"}
-                        value={values.name}
-                        onChange={handleChange}
-                      />
-                    </FormControl>
+                   <Box display={'flex'} gap={1}>
+                     <FormControl error={!!errors.first_name && !!submitCount}>
+                       <InputBase
+                           name={"first_name"}
+                           className={"name"}
+                           placeholder={"First name"}
+                           value={values.first_name}
+                           onChange={handleChange}
+                       />
+                     </FormControl>
+                     <FormControl error={!!errors.last_name && !!submitCount}>
+                       <InputBase
+                           name={"last_name"}
+                           className={"name"}
+                           placeholder={"Last name"}
+                           value={values.last_name}
+                           onChange={handleChange}
+                       />
+                     </FormControl>
+                   </Box>
                     <FormControl error={!!errors.email && !!submitCount}>
                       <InputBase
                         name={"email"}

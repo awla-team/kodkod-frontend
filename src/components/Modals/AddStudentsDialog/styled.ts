@@ -72,6 +72,16 @@ export const StudentsFormDetailsContainer = styled(Box)`
     align-items: center;
     width: 100%;
     gap: 1rem;
+    & .input_field_group{
+      flex-basis: 45%;
+      max-width: 45%;
+      display: flex;
+      gap: 1rem;
+      & .input__field {
+        flex-basis: 45%;
+        max-width: 45%;
+      }
+    }
     & .input__field {
       flex-basis: 45%;
       max-width: 45%;

@@ -30,8 +30,7 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
       const { data }: { data: { responseData: { students: StudentType[] } } } =
         await addStudentsInClass({
           id_class: classDetails.id,
-          students: values.students.map(({ name, email }) => {
-            const [first_name, last_name] = name.split(" ");
+          students: values.students.map(({ first_name, last_name, email }) => {
             return {
               first_name,
               last_name,
@@ -69,9 +68,8 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
       students: Yup.array().of(
         Yup.object().shape({
           email: Yup.string().email().required(),
-          name: Yup.string()
-            .matches(/^(\w+ \w+)$/g, "FirstName and LastName is required")
-            .required(),
+          first_name: Yup.string().required(),
+          last_name: Yup.string().required(),
         })
       ),
     });
@@ -92,7 +90,11 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
           return {
             students: [
               ...prevState.students,
-              ...transformedTextArray.map((email) => ({ name: "", email })),
+              ...transformedTextArray.map((email) => ({
+                first_name: "",
+                last_name: "",
+                email,
+              })),
             ],
           };
         });
@@ -174,19 +176,35 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
                                     />
                                   </IconButton>
                                 </div>
-                                <div className={"input__field"}>
-                                  <TextField
-                                    error={
-                                      !!submitCount &&
-                                      !!errors?.students?.[index]
-                                    }
-                                    value={values.students[index].name}
-                                    name={`students[${index}].name`}
-                                    onChange={handleChange}
-                                    variant={"standard"}
-                                    placeholder={"FirstName LastName"}
-                                    fullWidth
-                                  />
+                                <div className={"input_field_group"}>
+                                  <div className={"input__field"}>
+                                    <TextField
+                                      error={
+                                        !!submitCount &&
+                                        !!errors?.students?.[index]
+                                      }
+                                      value={values.students[index].first_name}
+                                      name={`students[${index}].first_name`}
+                                      onChange={handleChange}
+                                      variant={"standard"}
+                                      placeholder={"FirstName"}
+                                      fullWidth
+                                    />
+                                  </div>
+                                  <div className={"input__field"}>
+                                    <TextField
+                                      error={
+                                        !!submitCount &&
+                                        !!errors?.students?.[index]
+                                      }
+                                      value={values.students[index].last_name}
+                                      name={`students[${index}].last_name`}
+                                      onChange={handleChange}
+                                      variant={"standard"}
+                                      placeholder={"LastName"}
+                                      fullWidth
+                                    />
+                                  </div>
                                 </div>
                                 <div className={"input__field"}>
                                   <TextField
