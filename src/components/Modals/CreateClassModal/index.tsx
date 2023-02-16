@@ -42,7 +42,7 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
   ) => {
     if (e) {
       const { name, value } = e.target as HTMLInputElement;
-      if (name === "level") {
+      if (name === "id_level") {
         setFieldValue("alias", `${value}°${values.code}`);
       } else {
         setFieldValue("alias", `${values.id_level}°${value}`);
