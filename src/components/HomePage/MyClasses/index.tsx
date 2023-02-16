@@ -20,7 +20,7 @@ const MyClasses: FC<MyClassesProps> = ({ classes }: MyClassesProps) => {
         return (
           <div key={index} className={"mb-3"}>
             <div className={"class__level"}>
-              <span className={"class__level__text"}>{`${level}° Medio`}</span>
+              <span className={"class__level__text"}>{`${level}`}</span>
             </div>
             <div className={"class__level__cards__container"}>
               {rest.classes.map((teacherClass, _index) => {
