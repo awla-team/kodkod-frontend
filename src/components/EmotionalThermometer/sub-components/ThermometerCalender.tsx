@@ -22,6 +22,8 @@ const ThermometerCalender: FC<ThermometerCalenderProps> = ({
         <div className={"calender__view"}>
           <LocalizationProvider dateAdapter={AdapterMoment}>
             <CalendarPicker
+              minDate={Moment().subtract(30, "day")}
+              maxDate={Moment()}
               date={date}
               onChange={(newDate) => handleDateChange(Moment(newDate))}
             />
