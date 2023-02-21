@@ -5,41 +5,41 @@ import { FormInitialValue } from "../interfaces";
 import { ClassClimateMeterProps } from "./interfaces";
 
 const thermometerData: {
-  value: string;
+  value: number;
   imgSrc: string;
   selectedImgSrc?: string;
 }[] = [
   {
     imgSrc: "/angry-outlined.svg",
-    value: "disappointed",
+    value: 1,
     selectedImgSrc: "/angry-filled.svg",
   },
   {
     imgSrc: "/sad-outlined.svg",
-    value: "sad",
+    value: 2,
     selectedImgSrc: "/sad-filled.svg",
   },
   {
     imgSrc: "/neutral-outlined.svg",
-    value: "neutral",
+    value: 3,
     selectedImgSrc: "/neutral-filled.svg",
   },
   {
     imgSrc: "/smile-outlined.svg",
-    value: "happy",
+    value: 4,
     selectedImgSrc: "/smile-filled.svg",
   },
   {
     imgSrc: "/grinning-outlined.svg",
-    value: "joy",
+    value: 5,
     selectedImgSrc: "/grinning-filled.svg",
   },
 ];
 
 export const ClassClimateMeter: FC<ClassClimateMeterProps> = ({ editable }) => {
   const { values, setFieldValue } = useFormikContext<FormInitialValue>();
-  const handleImageClick = (value: string) => {
-    setFieldValue("climate", value);
+  const handleImageClick = (value: number) => {
+    setFieldValue("score", value);
   };
   return (
     <Styled.ClimateThermometerContainer>
@@ -50,9 +50,7 @@ export const ClassClimateMeter: FC<ClassClimateMeterProps> = ({ editable }) => {
         {thermometerData.map((img, index) => {
           return (
             <img
-              src={
-                values.climate === img.value ? img.selectedImgSrc : img.imgSrc
-              }
+              src={values.score === img.value ? img.selectedImgSrc : img.imgSrc}
               alt={"img"}
               key={index}
               className={"meter"}

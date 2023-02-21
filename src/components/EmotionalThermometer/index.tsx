@@ -1,42 +1,96 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import * as Styled from "./styled";
 import Moment from "moment";
 import { Tooltip } from "@mui/material";
 import { ClassClimateMeter, TodayReviews } from "./sub-components";
 import { Formik, Form, FormikHelpers } from "formik";
 import * as Yup from "yup";
-import { FormInitialValue } from "./interfaces";
+import {
+  EmotionalThermometerProps,
+  EmotionalThermometerType,
+  FormInitialValue,
+} from "./interfaces";
 import ThermometerCalender from "./sub-components/ThermometerCalender";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { Moment as MomentType } from "moment/moment";
+import Toaster from "../../utils/Toster";
+import { getEmotionalThermometerByClassId } from "../../services/emotional_thermometer";
 
-const EmotionalThermometer: FC = () => {
+const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
+  classDetails,
+}) => {
   const [date, setDate] = useState<MomentType>(Moment());
   const [calenderView, setCalenderView] = useState<boolean>(false);
   const [formInitialValue, setFormInitialValue] = useState<FormInitialValue>({
-    climate: "",
+    score: null,
     challenge: "",
-    remarkable: "",
+    most_remarkable: "",
   });
 
-  const [editable, setEditable] = useState<boolean>(true);
+  const [editable, setEditable] = useState<boolean>(false);
 
   const validationSchema = () => {
     return Yup.object().shape({
-      climate: Yup.string().required(),
+      score: Yup.number().required(),
       challenge: Yup.string().required(),
-      remarkable: Yup.string().required(),
+      most_remarkable: Yup.string().required(),
     });
+  };
+
+  useEffect(() => {
+    if (classDetails) {
+      handleGetThermometerDetails(classDetails.id);
+    }
+  }, [date, classDetails]);
+
+  const handleGetThermometerDetails = async (classId: string | number) => {
+    try {
+      const {
+        data: { responseData },
+      }: { data: { responseData: EmotionalThermometerType[] } } =
+        await getEmotionalThermometerByClassId(
+          classId,
+          date.toDate(),
+          date.toDate()
+        );
+
+      setEditable(!!responseData.length);
+
+      if (responseData.length) {
+        const { id, score, most_remarkable, challenge } = responseData[0];
+        setFormInitialValue({
+          id,
+          score,
+          most_remarkable,
+          challenge,
+        });
+      } else {
+        setFormInitialValue({
+          score: null,
+          challenge: "",
+          most_remarkable: "",
+        });
+      }
+    } catch (e: any) {
+      Toaster("error", e.message);
+    }
   };
 
   const handleDateChange = (date: Moment.Moment) => {
     setCalenderView((prevState) => !prevState);
     setDate(date);
   };
-  const handleSubmit = (
+  const handleSubmit = async (
     value: FormInitialValue,
     formikHelpers: FormikHelpers<FormInitialValue>
-  ) => {};
+  ) => {
+    try {
+    } catch (e: any) {
+      Toaster("error", e.message);
+    } finally {
+      formikHelpers.setSubmitting(false);
+    }
+  };
   return (
     <Styled.EmotionalThermometerContainer calenderView={calenderView}>
       <div className={"container__header"}>
@@ -69,6 +123,7 @@ const EmotionalThermometer: FC = () => {
             }
           >
             <Formik
+              enableReinitialize
               initialValues={formInitialValue}
               onSubmit={handleSubmit}
               validationSchema={validationSchema}

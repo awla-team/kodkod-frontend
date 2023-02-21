@@ -33,15 +33,15 @@ export const TodayReviews: FC<TodayReviewsProps> = ({
         </Select>
       </FormControl>
 
-      <FormControl fullWidth error={!!errors.remarkable && !!submitCount}>
+      <FormControl fullWidth error={!!errors.most_remarkable && !!submitCount}>
         <FormLabel className={"form__label"}>
           What was the most remarkable?
         </FormLabel>
         <Select
           disabled={editable}
-          name={"remarkable"}
+          name={"most_remarkable"}
           onChange={handleChange}
-          value={values.remarkable}
+          value={values.most_remarkable}
         >
           <MenuItem value={"Ganó el equipo de los malos"}>
             Ganó el equipo de los malos

@@ -25,7 +25,7 @@ const Board: React.FC<{}> = ({}) => {
           {classDetails && <ClassDetailsCard classDetails={classDetails} />}
         </DetailsCard>
         <DetailsCard className={"h-100"} disablePadding>
-          <EmotionalThermometer />
+          <EmotionalThermometer classDetails={classDetails}/>
         </DetailsCard>
       </DashboardContainerLeftSide>
       <DashboardContainerRightSide>
