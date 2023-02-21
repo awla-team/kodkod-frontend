@@ -64,3 +64,11 @@
 .grey__color {
   color: #808080;
 }
+
+
+.display-name-container{
+  max-width: 10ch;
+  white-space:nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -14,11 +14,16 @@ import HomePage from "./components/HomePage";
 import ClassContextProvider from "./routes/Class/Context";
 import AdventuresSummary from "routes/Class/Adventures/GoalSelection/AdventuresSummary";
 import "./index.css";
+import AuthContextProvider from "./contexts/AuthContext";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: (
+      <AuthContextProvider>
+        <App />
+      </AuthContextProvider>
+    ),
     children: [
       {
         element: <HomePage />,

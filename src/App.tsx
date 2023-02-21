@@ -10,7 +10,6 @@ import Sidebar from "./components/Sidebar";
 import { getClassesByUser } from "services/classes";
 import { ClassInterface } from "services/classes/interfaces";
 import { AxiosResponse } from "axios";
-import { TEST_USER } from "services/users";
 import { FetchStatus } from "global/enums";
 import "./App.css";
 import CreateClassModal from "./components/Modals";
@@ -18,14 +17,16 @@ import { sortClasses } from "./utils";
 import { getAllTheLevel } from "./services/levels";
 import Toaster from "./utils/Toster";
 import { Levels } from "./components/Modals/CreateClassModal/interfaces";
+import { useAuth } from "./contexts/AuthContext";
 
 const App: React.FC = () => {
   const [classes, setClasses] = useState<ClassInterface[]>([]);
   const [fetching, setFetching] = useState<FetchStatus>(FetchStatus.Idle);
   const [open, setOpen] = useState<boolean>(false);
   const [levels, setLevels] = useState<Levels[]>([]);
+  const { user } = useAuth();
   const getClassesData = () => {
-    getClassesByUser(TEST_USER.id)
+    getClassesByUser(user.id)
       .then((response: AxiosResponse) => {
         return response?.data?.responseData;
       })
@@ -51,10 +52,12 @@ const App: React.FC = () => {
   };
 
   useEffect(() => {
-    setFetching(FetchStatus.Pending);
-    getClassesData();
-    getLevels();
-  }, []);
+    if (user) {
+      setFetching(FetchStatus.Pending);
+      getClassesData();
+      getLevels();
+    }
+  }, [user]);
 
   const handleClose = (
     reason: "backdropClick" | "escapeKeyDown" | "success",
