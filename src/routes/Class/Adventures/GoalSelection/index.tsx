@@ -33,8 +33,8 @@ const GoalSelection: React.FC = () => {
     setLoadingGoals(FetchStatus.Pending);
     getGoals()
       .then((response: AxiosResponse) => response?.data)
-      .then((goalsResponse: Goal[]) => {
-        if (goalsResponse?.length) setGoals(goalsResponse);
+      .then((goalsResponse: { responseData: any }) => {
+        setGoals(goalsResponse.responseData);
         setLoadingGoals(FetchStatus.Success);
       })
       .catch((error) => {
