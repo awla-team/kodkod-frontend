@@ -9,9 +9,9 @@ import ViewContainer from "components/ViewContainer";
 import GoalSelection from "./GoalSelection";
 import { FetchStatus } from "global/enums";
 import { CircularProgress } from "@mui/material";
-import { getAllTheGoals, getClassCurrentAdventure } from "services/adventures";
-import Toaster from "../../../utils/Toster";
-import { GoalResponseType } from "./interfaces";
+import Toaster from "utils/Toster";
+import { getClassByID } from "services/classes";
+import { ClassInterface } from "services/classes/interfaces";
 
 const Adventures: React.FC = () => {
   const { classId } = useParams();
@@ -20,16 +20,27 @@ const Adventures: React.FC = () => {
   const [loading, setLoading] = useState<FetchStatus>(FetchStatus.Idle);
 
   useEffect(() => {
-    setLoading(FetchStatus.Pending);
-    getAllTheGoals()
-      .then(({ data }: { data: GoalResponseType }) => {
-        setAdventures(data.responseData);
-        setLoading(FetchStatus.Success);
-      })
-      .catch((error) => {
-        Toaster("error", error.message);
-        setLoading(FetchStatus.Error);
-      });
+    if (classId) {
+      setLoading(FetchStatus.Pending);
+      getClassByID(classId)
+        .then(
+          ({
+            data: { responseData },
+          }: {
+            data: { responseData: ClassInterface };
+          }) => {
+            if (responseData.current_adventure) {
+              debugger;
+              setCurrentAdventure(responseData.current_adventure);
+            }
+            setLoading(FetchStatus.Success);
+          }
+        )
+        .catch((error) => {
+          Toaster("error", error.message);
+          setLoading(FetchStatus.Error);
+        });
+    }
   }, [classId]);
 
   // useEffect(() => {

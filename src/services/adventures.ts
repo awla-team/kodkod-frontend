@@ -11,10 +11,11 @@ export const getClassCurrentAdventure = (classId: number | string) =>
   );
 
 export const getAdventuresByGoal = (goalId: number | string) =>
-  http.get(`goals/${goalId}/adventuresHasGoals?_embed=adventures`);
+  http.get(`/adventure-by-goal-id/${goalId}?goal=true`);
 
-
-
-export const getAllTheGoals= () =>{
-  return http.get('goal')
-}
+export const setCurrentAdventure = (body: {
+  id_class: number | string;
+  id_adventure: number | string;
+}) => {
+  return http.post("/set-adventure", body);
+};
