@@ -12,7 +12,7 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({ classDetails }) => {
   };
 
   const hasAdventure: boolean = useMemo(() => {
-    return classDetails && !!classDetails.adventures?.length;
+    return classDetails && !!classDetails.current_adventure;
   }, [classDetails]);
   return (
     <DetailsCardContent>
