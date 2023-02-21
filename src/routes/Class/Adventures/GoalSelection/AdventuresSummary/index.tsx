@@ -3,19 +3,19 @@ import Typography from "@mui/material/Typography";
 import AdventureCard from "components/AdventureCard";
 import type { IAdventure } from "global/interfaces";
 import Point from "components/Point";
-import { useLocation } from "react-router";
-import { getAdventuresByGoal } from "services/adventures";
 import { FetchStatus } from "global/enums";
 import CircularProgress from "@mui/material/CircularProgress";
 import AdventureSummaryDialog from "../components/AdventureSummaryDialog";
+import { useSearchParams } from "react-router-dom";
+import { getGoalById } from "services/goals";
+import { GoalType } from "../../interfaces";
 
 const AdventuresSummary: React.FC = () => {
-  const { state } = useLocation();
-  const { selectedGoal } = state;
   const [loading, setLoading] = useState<FetchStatus>(FetchStatus.Idle);
   const [adventures, setAdventures] = useState<IAdventure[]>([]);
   const [selectedAdventure, setSelectedAdventure] = useState<IAdventure>(null);
-
+  const [selectedGoal, setSelectedGoal] = useState<null | GoalType>(null);
+  const [searchParams] = useSearchParams();
   const handleOnClickAdventure = (adventure: IAdventure) => {
     setSelectedAdventure(adventure);
   };
@@ -29,11 +29,12 @@ const AdventuresSummary: React.FC = () => {
   };
 
   useEffect(() => {
-    if (selectedGoal && Object.keys(selectedGoal).length) {
+    const id = searchParams.get("goal");
+    if (id) {
       setLoading(FetchStatus.Pending);
-      getAdventuresByGoal(selectedGoal.id)
-        .then(({ data }) => {
-          if (!!data?.length) setAdventures(data);
+      getGoalById(id)
+        .then(({ data }: { data: { responseData: GoalType } }) => {
+          setSelectedGoal(data.responseData);
           setLoading(FetchStatus.Success);
         })
         .catch((error) => {
@@ -41,7 +42,7 @@ const AdventuresSummary: React.FC = () => {
           setLoading(FetchStatus.Error);
         });
     }
-  }, [selectedGoal]);
+  }, [searchParams]);
 
   if (loading === FetchStatus.Idle || loading === FetchStatus.Pending)
     return (
@@ -68,10 +69,10 @@ const AdventuresSummary: React.FC = () => {
         ¡Muy bien! Ahora selecciona una de las siguientes aventuras creadas
         especificamente para <b>{selectedGoal?.title || ""}</b>
       </Typography>
-      {adventures?.length ? (
+      {selectedGoal && selectedGoal?.adventures?.length ? (
         <>
           <div className="d-flex h-100 w-100 align-items-center justify-content-center justify-content-sm-start flex-wrap gap-4">
-            {adventures.map((adventure, index) => (
+            {selectedGoal?.adventures?.map((adventure, index) => (
               <AdventureCard
                 onClick={() => {
                   handleOnClickAdventure(adventure);
