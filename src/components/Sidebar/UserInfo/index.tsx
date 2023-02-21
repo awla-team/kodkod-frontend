@@ -1,7 +1,8 @@
-import { Avatar, Menu, MenuItem } from "@mui/material";
+import {Avatar, Menu, MenuItem, Tooltip, Typography} from "@mui/material";
 import { useState } from "react";
 import { UserInfoProps } from "./interfaces";
 import { UserInfoButton } from "./styled";
+import ImgAvatar from "assets/images/avatar.png";
 
 const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
@@ -17,10 +18,14 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
         className="d-flex w-100 flex-column align-items-center"
         onClick={handleClick}
       >
-        <img src={user.avatar} alt="avatar" />
+        <img src={ImgAvatar} alt="avatar" />
         <div className="d-flex flex-column justify-content-center">
           <span>{user.role}</span>
-          <span>{`${user.first_name} ${user.last_name}`}</span>
+          <Tooltip title={`${user?.first_name} ${user?.last_name}`} arrow>
+            <span
+              className={"display-name-container"}
+            >{`${user?.first_name} ${user?.last_name}`}</span>
+          </Tooltip>
         </div>
       </UserInfoButton>
       <Menu
@@ -34,7 +39,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
         sx={{ left: 100 }}
       >
         <MenuItem divider>
-          <Avatar src={user.avatar} /> Mi perfil
+          <Avatar src={ImgAvatar} /> <Typography sx={{ml:1}}>{`${user?.first_name} ${user?.last_name}`}</Typography>
         </MenuItem>
         <MenuItem>Configuración</MenuItem>
         <MenuItem>Cerrar sesión</MenuItem>
