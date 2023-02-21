@@ -6,18 +6,19 @@ import AddIcon from "@mui/icons-material/Add";
 import UserInfo from "./UserInfo";
 import { Divider } from "@mui/material";
 import { ClassInterface } from "services/classes/interfaces";
-import { TEST_USER } from "services/users";
 import {
   AddCourseButton,
   AddCourseButtonContainer,
 } from "./AddCourseButton/styled";
 import HouseSidingIcon from "@mui/icons-material/HouseSiding";
 import { Link as RouterLink } from "react-router-dom";
+import {useAuth} from "../../contexts/AuthContext";
 
 const Sidebar: FC<SidebarProps> = ({ classes, handleOpenModal }) => {
+    const {user}= useAuth()
   return (
     <SidebarContainer>
-      <UserInfo user={TEST_USER} />
+      <UserInfo user={user} />
       <Divider className="w-75 mb-1" color="#DE4CE1" />
       <h6 className="text-center fw-bold p-0 mt-4 mb-2">Mis cursos</h6>
       <AddCourseButtonContainer as={RouterLink} to={"/"}>
