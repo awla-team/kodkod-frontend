@@ -9,7 +9,9 @@ import ViewContainer from "components/ViewContainer";
 import GoalSelection from "./GoalSelection";
 import { FetchStatus } from "global/enums";
 import { CircularProgress } from "@mui/material";
-import { getClassCurrentAdventure } from "services/adventures";
+import { getAllTheGoals, getClassCurrentAdventure } from "services/adventures";
+import Toaster from "../../../utils/Toster";
+import { GoalResponseType } from "./interfaces";
 
 const Adventures: React.FC = () => {
   const { classId } = useParams();
@@ -19,13 +21,13 @@ const Adventures: React.FC = () => {
 
   useEffect(() => {
     setLoading(FetchStatus.Pending);
-    getClassCurrentAdventure(classId)
-      .then(({ data }) => {
-        if (!!data?.adventures?.length) setCurrentAdventure(data.adventures[0]);
+    getAllTheGoals()
+      .then(({ data }: { data: GoalResponseType }) => {
+        setAdventures(data.responseData);
         setLoading(FetchStatus.Success);
       })
       .catch((error) => {
-        console.error(error);
+        Toaster("error", error.message);
         setLoading(FetchStatus.Error);
       });
   }, [classId]);
