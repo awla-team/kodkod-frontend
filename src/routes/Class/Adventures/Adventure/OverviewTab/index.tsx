@@ -26,7 +26,7 @@ const OverviewTab: React.FC = () => {
           Resultados esperados
         </SectionSubtitle>
         <ul>
-          {adventure?.expectedResults.map((result, i) => (
+          {adventure?.expectedResults?.map((result, i) => (
             <Typography key={i} className="mb-1" component="li">
               {result}
             </Typography>

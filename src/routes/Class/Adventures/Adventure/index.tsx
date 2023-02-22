@@ -10,8 +10,9 @@ import RewardsTab from "./RewardsTab";
 import SkillPoints from "components/SkillPoints";
 import TabContent from "components/TabContent";
 import { IAdventureSkill } from "global/interfaces";
+import { AdventureWithProviderProps } from "../interfaces";
 
-const Adventure: React.FC = () => {
+export const Adventure: React.FC = () => {
   const { classId } = useParams();
   const { adventure } = useContext(AdventureContext);
   const [selectedTab, setSelectedTab] = React.useState<number>(0);
@@ -98,8 +99,10 @@ const Adventure: React.FC = () => {
   );
 };
 
-const AdventureWithProvider: React.FC = () => (
-  <AdventureProvider>
+const AdventureWithProvider: React.FC<AdventureWithProviderProps> = ({
+  adventure,
+}) => (
+  <AdventureProvider adventure={adventure}>
     <Adventure />
   </AdventureProvider>
 );
