@@ -32,7 +32,7 @@ const CurrentStage: FC = () => {
 
       <div className={"action-container"}>
         <Button variant={"contained"}>See rewards</Button>
-        <Button variant={"contained"}>Unlock Stage 2</Button>
+        <Button variant={"contained"} disabled>Unlock Stage 2</Button>
       </div>
     </Styled.CurrentStageContainer>
   );

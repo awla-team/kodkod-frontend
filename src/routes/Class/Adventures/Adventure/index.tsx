@@ -107,21 +107,6 @@ export const Adventure: React.FC = () => {
       {/* StageRequirements */}
       <StageRequirements />
       {/*  StageRequirements ends*/}
-
-      <Tabs value={selectedTab} onChange={handleTabChange}>
-        <Tab label="Resumen" />
-        <Tab label="Misiones" />
-        <Tab label="Recompensas" />
-      </Tabs>
-      <TabContent className="py-3 px-3" value={selectedTab} index={0}>
-        <OverviewTab />
-      </TabContent>
-      <TabContent className="py-3 px-3" value={selectedTab} index={1}>
-        <MissionsTab />
-      </TabContent>
-      <TabContent className="py-3 px-3" value={selectedTab} index={2}>
-        <RewardsTab />
-      </TabContent>
     </AdventureContainer>
   );
 };
