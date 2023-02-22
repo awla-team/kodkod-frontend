@@ -19,6 +19,7 @@ import SkillPoints from "components/SkillPoints";
 import TabContent from "components/TabContent";
 import { IAdventureSkill } from "global/interfaces";
 import { AdventureWithProviderProps } from "../interfaces";
+import CurrentStage from "./CurrentStage";
 
 export const Adventure: React.FC = () => {
   const { classId } = useParams();
@@ -97,6 +98,13 @@ export const Adventure: React.FC = () => {
         {/*  </Button>*/}
         {/*</div>*/}
       </AdventureBanner>
+
+      {/*  Steps details */}
+
+      <CurrentStage />
+
+      {/*  Steps details ends*/}
+
       <Tabs value={selectedTab} onChange={handleTabChange}>
         <Tab label="Resumen" />
         <Tab label="Misiones" />
