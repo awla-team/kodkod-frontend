@@ -11,7 +11,7 @@ const SidebarContainer = styled.div`
   width: 88px;
   z-index: 2;
   font-size: 14px;
-  padding: 24px 0px;
+  padding: 24px 0px;  
 `;
 
 const LogoContainer = styled.div`

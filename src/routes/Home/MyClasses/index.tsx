@@ -1,9 +1,10 @@
 import type { FC } from "react";
 import styled from "styled-components";
-import { Box } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from "@mui/material";
 import { MyClassesProps } from "./interfaces";
 import { Link as RouterLink } from "react-router-dom";
 import { useMemo, Fragment } from "react";
+import { ExpandMore } from "@mui/icons-material";
 
 const MyClasses: FC<MyClassesProps> = ({ classes }: MyClassesProps) => {
   const classesData = useMemo(() => {
@@ -13,16 +14,18 @@ const MyClasses: FC<MyClassesProps> = ({ classes }: MyClassesProps) => {
       classes: classes.filter((classData) => classLevel === classData.level),
     }));
   }, [classes]);
+
   return (
-    <MyClassesContainer>
-      <h1 className={"header__text"}>My classes</h1>
+    <MyClassesContainer className="p-5">
+      <Typography component="h1" variant="h4" className="fw-bold mb-1">Mis cursos</Typography>
+      <Typography component="span" variant="body2" color="primary" className="fw-bold mb-4">{`${classes.length} cursos en total`}</Typography>
       {classesData.map(({ level, ...rest }, index) => {
-        return (
-          <div key={index} className={"mb-3"}>
-            <div className={"class__level"}>
-              <span className={"class__level__text"}>{`${level}`}</span>
-            </div>
-            <div className={"class__level__cards__container"}>
+        return (          
+          <LevelAccordion defaultExpanded disableGutters elevation={0} key={index}>
+            <AccordionSummary expandIcon={<ExpandMore />}>
+              <Typography component="span" variant="body1" className="fw-bold">{level}</Typography>
+            </AccordionSummary>
+            <AccordionDetails className={"class__level__cards__container"}>
               {rest.classes.map((teacherClass, _index) => {
                 return (
                   <RouterLink
@@ -38,8 +41,8 @@ const MyClasses: FC<MyClassesProps> = ({ classes }: MyClassesProps) => {
                   </RouterLink>
                 );
               })}
-            </div>
-          </div>
+            </AccordionDetails>
+          </LevelAccordion>
         );
       })}
     </MyClassesContainer>
@@ -48,10 +51,24 @@ const MyClasses: FC<MyClassesProps> = ({ classes }: MyClassesProps) => {
 
 export default MyClasses;
 
+const LevelAccordion = styled(Accordion)`  
+  .MuiAccordionSummary-root  {
+    margin: 0;
+    padding: 0;
+    min-height: 0;
+  }
+  .MuiAccordionDetails-root {
+    margin: 0;
+    padding: 0;
+  }
+`;
+
 const MyClassesContainer = styled(Box)`
   display: flex;
-  flex-direction: column;
-  padding-block: 1rem;
+  flex-direction: column;    
+  background: #FFF;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
 
   & a {
     color: #000;
@@ -59,27 +76,21 @@ const MyClassesContainer = styled(Box)`
     font-weight: normal;
   }
 
-  & .header__text {
-    font-weight: 700;
-    font-size: 3rem;
-  }
-
   & .class__level {
-    & .class__level__text {
-      font-weight: 700;
+    & .class__level__text {      
       font-size: 1.25rem;
     }
-
-    border-bottom: 1px solid #1e1e1e;
   }
 
   & .class__level__cards__container {
-    margin-block-start: 1rem;
     display: grid;
     grid-auto-flow: row;
     grid-template-columns: repeat(auto-fill, minmax(0px, 304px));
     gap: 1rem;
     grid-gap: 1rem;
+    &:last-child {
+      margin-bottom: 24px;
+    }    
 
     & .class__level__card {
       background: #8a8a8a;
