@@ -48,7 +48,6 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
       );
       onClose("student", data.responseData.students);
     } catch (e: any) {
-      debugger;
       Toaster("error", e.message);
     } finally {
       formikHelper.setSubmitting(false);

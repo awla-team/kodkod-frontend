@@ -1,8 +1,16 @@
 import React, { useContext } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Tabs, Tab, Button, Chip, Typography, Skeleton } from "@mui/material";
+import {
+  Tabs,
+  Tab,
+  Button,
+  Chip,
+  Typography,
+  Skeleton,
+  IconButton,
+} from "@mui/material";
 import AdventureProvider, { AdventureContext } from "./provider";
-import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { AdventureContainer, AdventureBanner } from "./styled";
 import OverviewTab from "./OverviewTab";
 import MissionsTab from "./MissionsTab";
@@ -47,18 +55,26 @@ export const Adventure: React.FC = () => {
   return (
     <AdventureContainer className="p-0 m-0">
       <AdventureBanner
-        className="d-flex flex-column p-lg-5 mb-4"
-        backgroundImg={adventure.banner}
+        className="d-flex flex-column"
+        // backgroundImg={adventure.banner}
       >
-        <div className="mb-4">
-          <Link to={`/cursos/${classId}/aventuras`}>
-            <Button color="info" startIcon={<ChevronLeftRoundedIcon />}>
-              Volver a Aventuras
-            </Button>
-          </Link>
-        </div>
-        <div className="mb-2">
-          <Chip color="info" label="Previsualización" />
+        {/*<div className="mb-4">*/}
+        {/*  <Link to={`/cursos/${classId}/aventuras`}>*/}
+        {/*    <Button color="info" startIcon={<ChevronLeftRoundedIcon />}>*/}
+        {/*      Volver a Aventuras*/}
+        {/*    </Button>*/}
+        {/*  </Link>*/}
+        {/*</div>*/}
+
+        <div className="mb-2 d-flex justify-content-between align-items-center">
+          <Chip
+            className={"chip-info"}
+            color="info"
+            label="Ongoing adventure"
+          />
+          <IconButton color={"inherit"}>
+            <MoreVertIcon />
+          </IconButton>
         </div>
         <div className="mb-3">
           <Typography variant="h3" component="h2" fontWeight="bold">
@@ -66,20 +82,20 @@ export const Adventure: React.FC = () => {
           </Typography>
         </div>
         <div className="d-flex mb-1">
-          {adventure?.adventureSkills?.map((skill: IAdventureSkill) => (
-            <div className="me-4" key={`${adventure.id}-${skill.skillId}`}>
-              <SkillPoints skillId={skill.skillId} points={skill.points} />
+          {adventure?.skills?.map((skill) => (
+            <div className="me-4" key={`${adventure.id}-${skill.id}`}>
+              <SkillPoints skill={{ ...skill, points: 2 }} />
             </div>
           ))}
         </div>
-        <div className="mb-4">
-          <Typography fontWeight="bold">{`Aventura de ${adventure.stagesDuration} etapas`}</Typography>
-        </div>
-        <div>
-          <Button color="primary" size="large" variant="contained">
-            Iniciar aventura
-          </Button>
-        </div>
+        {/*<div className="mb-4">*/}
+        {/*  <Typography fontWeight="bold">{`Aventura de ${adventure.stagesDuration} etapas`}</Typography>*/}
+        {/*</div>*/}
+        {/*<div>*/}
+        {/*  <Button color="primary" size="large" variant="contained">*/}
+        {/*    Iniciar aventura*/}
+        {/*  </Button>*/}
+        {/*</div>*/}
       </AdventureBanner>
       <Tabs value={selectedTab} onChange={handleTabChange}>
         <Tab label="Resumen" />

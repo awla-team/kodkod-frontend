@@ -24,7 +24,6 @@ const Adventures: React.FC = () => {
             data: { responseData: ClassInterface };
           }) => {
             if (responseData.current_adventure) {
-              debugger;
               setCurrentAdventure(responseData.current_adventure);
             }
             setLoading(FetchStatus.Success);
