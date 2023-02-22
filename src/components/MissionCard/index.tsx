@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { Card, Typography } from "@mui/material";
-import kodcoinIcon from "./../../assets/images/kodcoin.png";
+import kodcoinIcon from "assets/images/kodcoin.png";
+import SwitchIcon from "assets/images/switch.svg";
 
 interface IMissionCardContainerProps {
   background?: string;
@@ -10,7 +11,6 @@ interface IMissionCardContainerProps {
 interface IMissionCardProps {
   title: string;
   description: string;
-  qr: string;
   points: number;
   icon: string;
   color: string;
@@ -24,6 +24,7 @@ const SkillIconContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
   img {
     width: 24px;
     height: 24px;
@@ -31,46 +32,54 @@ const SkillIconContainer = styled.div`
 `;
 
 const PointsContainer = styled.div`
+  position: absolute;
+  right: 10px;
   background-color: #fff;
-  border-radius: 8px;
   color: #717171;
   text-align: center;
   padding: 4px 8px;
+  border-radius: 4vmax;
+  border: 1px solid #000000;
+  
+
+  &.bottom-position {
+    bottom: -20px;
+  }
+
+  &.fixed-width-height {
+    width: 185px;
+    height: 40px;
+  }
+
+  &.top-position {
+    top: -16px;
+  }
+
   img {
-    height: 24px;
-    width: 24px;
+    height: 16px;
+    width: 16px;
   }
 `;
 
-const QRContainer = styled.div`
-  img {
-    height: 160px;
-    width: 160px;
-  }
-`;
 
 const MissionCardContainer = styled(Card)`
   &.MuiPaper-root {
-    background-color: ${(props: IMissionCardContainerProps) =>
-      props.background || "#000"};
+    position: relative;
+    background: #dadada;
     border-radius: 8px;
-    color: #fff;
+    margin-block: 1rem;
+    overflow: visible;
   }
 `;
 
 const MissionCard: React.FC<IMissionCardProps> = ({
   title,
   description,
-  qr,
   points,
   icon,
   color,
 }) => (
-  <MissionCardContainer
-    background={color}
-    className="mission-card p-4 d-flex"
-    variant="outlined"
-  >
+  <MissionCardContainer className="mission-card p-4 d-flex" variant="outlined">
     <div className="d-flex flex-column me-3 align-items-between justify-content-between">
       <div className="d-flex align-items-center">
         <SkillIconContainer className="me-3">
@@ -83,16 +92,17 @@ const MissionCard: React.FC<IMissionCardProps> = ({
       <div className="mt-2">
         <Typography>{description}</Typography>
       </div>
-      <PointsContainer className="d-flex mt-3 align-items-center justify-content-center">
+      <PointsContainer className="d-flex align-items-center justify-content-center bottom-position fixed-width-height">
         <Typography className="me-1" variant="h5" fontWeight="bold">
           {points}
         </Typography>
         <img src={kodcoinIcon} />
       </PointsContainer>
+
+      <PointsContainer className="d-flex align-items-center justify-content-center top-position">
+        <img src={SwitchIcon} />
+      </PointsContainer>
     </div>
-    <QRContainer className="qr-container">
-      <img src={qr} />
-    </QRContainer>
   </MissionCardContainer>
 );
 
