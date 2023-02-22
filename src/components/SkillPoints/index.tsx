@@ -17,33 +17,30 @@ const IconContainer = styled.div`
   justify-content: center;
   padding: 4px;
   border-radius: 36px;
+
   img {
     height: 16px;
     width: 16px;
+    &.blank-icon{
+      background: #D9D9D9;
+      border-radius: 50%;
+    }
   }
 `;
 
-const SkillPoints: React.FC<ISkillPointsProps> = ({ skillId, points }) => {
-  const [skill, setSkill] = useState<ISkill | undefined>(undefined);
-
-  useEffect(() => {
-    getSkill(skillId)
-      .then(({ data }) => setSkill(data))
-      .catch((e) => console.log(e));
-  }, [skillId]);
-
+const SkillPoints: React.FC<ISkillPointsProps> = ({ skill }) => {
   return (
     <SkillPointsContainer className="d-flex align-items-center mb-1">
       {skill ? (
         <>
           <IconContainer background={skill.color} className="me-2">
-            <img src={skill.icon} />
+            <img className={!skill.icon?"" :"blank-icon"} src={skill.icon} />
           </IconContainer>
           <span className="me-2">{skill.title}</span>
           <div className="d-flex">
-            <Point highlighted={points > 0} />
-            <Point highlighted={points > 1} />
-            <Point highlighted={points > 2} />
+            <Point highlighted={skill.points > 0} />
+            <Point highlighted={skill.points > 1} />
+            <Point highlighted={skill.points > 2} />
           </div>
         </>
       ) : null}
