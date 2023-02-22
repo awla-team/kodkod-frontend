@@ -25,20 +25,22 @@ const MyClasses: FC<MyClassesProps> = ({ classes }: MyClassesProps) => {
             <AccordionSummary expandIcon={<ExpandMore />}>
               <Typography component="span" variant="body1" className="fw-bold">{level}</Typography>
             </AccordionSummary>
-            <AccordionDetails className={"class__level__cards__container"}>
+            <AccordionDetails className={"class__level__cards__container row"}>              
               {rest.classes.map((teacherClass, _index) => {
                 return (
-                  <RouterLink
-                    key={`${_index}-${index}`}
-                    to={`cursos/${teacherClass.id}/tablero`}
-                  >
-                    <div className={"class__level__card"}>
-                      <h1 className={"header__text"}>{teacherClass.alias}</h1>
-                      <span className={"class__status"}>
-                        No ongoing adventures
-                      </span>
-                    </div>
-                  </RouterLink>
+                  <div className="col-3">
+                    <RouterLink
+                      key={`${_index}-${index}`}
+                      to={`cursos/${teacherClass.id}/tablero`}
+                    >
+                      <div className={"class__level__card"}>
+                        <h1 className={"header__text"}>{teacherClass.alias}</h1>
+                        <span className={"class__status"}>
+                          No ongoing adventures
+                        </span>
+                      </div>
+                    </RouterLink>
+                  </div>                    
                 );
               })}
             </AccordionDetails>
@@ -83,11 +85,7 @@ const MyClassesContainer = styled(Box)`
   }
 
   & .class__level__cards__container {
-    display: grid;
-    grid-auto-flow: row;
-    grid-template-columns: repeat(auto-fill, minmax(0px, 304px));
-    gap: 1rem;
-    grid-gap: 1rem;
+    display: flex;
     &:last-child {
       margin-bottom: 24px;
     }    
@@ -101,7 +99,7 @@ const MyClassesContainer = styled(Box)`
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: 0.5rem;
+      margin-bottom: 24px;      
 
       & .header__text {
         font-weight: 700;
