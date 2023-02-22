@@ -21,6 +21,7 @@ import { IAdventureSkill } from "global/interfaces";
 import { AdventureWithProviderProps } from "../interfaces";
 import CurrentStage from "./CurrentStage";
 import StageRequirements from "./StageRequirements";
+import Missions from "./Missions";
 
 export const Adventure: React.FC = () => {
   const { classId } = useParams();
@@ -107,6 +108,10 @@ export const Adventure: React.FC = () => {
       {/* StageRequirements */}
       <StageRequirements />
       {/*  StageRequirements ends*/}
+
+      {/*    Missions*/}
+      <Missions />
+      {/*    Missions ends*/}
     </AdventureContainer>
   );
 };
