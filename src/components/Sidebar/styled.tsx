@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
+
 const SidebarContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -7,9 +8,9 @@ const SidebarContainer = styled.div`
   background: #fff;
   box-shadow: 0px 2px 5px 2px rgba(0, 0, 0, 0.1);
   height: 100%;
-  min-width: 120px;
-  /*padding: 24px 0px 0px 0px;*/
+  width: 88px;
   z-index: 2;
+  font-size: 14px;
 `;
 
 const LogoContainer = styled.div`

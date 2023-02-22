@@ -6,11 +6,8 @@ import AddIcon from "@mui/icons-material/Add";
 import UserInfo from "./UserInfo";
 import { Divider } from "@mui/material";
 import { ClassInterface } from "services/classes/interfaces";
-import {
-  AddCourseButton,
-  AddCourseButtonContainer,
-} from "./AddCourseButton/styled";
-import HouseSidingIcon from "@mui/icons-material/HouseSiding";
+import { AddCourseButton } from "./AddCourseButton/styled";
+import HomeIcon from '@mui/icons-material/Home';
 import { Link as RouterLink } from "react-router-dom";
 import {useAuth} from "../../contexts/AuthContext";
 
@@ -20,12 +17,12 @@ const Sidebar: FC<SidebarProps> = ({ classes, handleOpenModal }) => {
     <SidebarContainer>
       <UserInfo user={user} />
       <Divider className="w-75 mb-1" color="#DE4CE1" />
-      <h6 className="text-center fw-bold p-0 mt-4 mb-2">Mis cursos</h6>
-      <AddCourseButtonContainer as={RouterLink} to={"/"}>
+      <span className="text-center fw-bold p-0 mt-4 mb-3">Cursos</span>
+      <RouterLink to={"/"}>
         <AddCourseButton color="primary">
-          <HouseSidingIcon />
+          <HomeIcon />
         </AddCourseButton>
-      </AddCourseButtonContainer>
+      </RouterLink>
       <LinkList>
         {classes?.map?.((teacherClass: ClassInterface, index) => (
           <SidebarLink
@@ -35,13 +32,10 @@ const Sidebar: FC<SidebarProps> = ({ classes, handleOpenModal }) => {
             linkRoute={`cursos/${teacherClass.id}/tablero`}
           />
         ))}
-      </LinkList>
-      <AddCourseButtonContainer onClick={() => handleOpenModal()}>
-        <AddCourseButton color="primary">
-          <AddIcon />
-        </AddCourseButton>
-      </AddCourseButtonContainer>
-      {/* <SignOutButton variant="text" color="primary" fullWidth>Cerrar sesión</SignOutButton> */}
+      </LinkList>      
+      <AddCourseButton color="info" onClick={() => handleOpenModal()}>
+        <AddIcon />
+      </AddCourseButton>
     </SidebarContainer>
   );
 };
