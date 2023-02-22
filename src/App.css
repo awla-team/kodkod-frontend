@@ -7,10 +7,10 @@
 .app-main-container {
   position: relative;
   height: 100vh;
+  background-color: #F1F6FF;
   overflow: auto;
   width: 100%;
-  padding-block-start: 3rem;
-  /* padding-top: 100px; */
+  padding-top: 36px;  
 }
 
 .app-content {

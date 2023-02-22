@@ -1,7 +1,7 @@
 import {Avatar, Menu, MenuItem, Tooltip, Typography} from "@mui/material";
 import { useState } from "react";
 import { UserInfoProps } from "./interfaces";
-import { UserInfoButton } from "./styled";
+import { UserInfoButton, UserInfoContainer } from "./styled";
 import ImgAvatar from "assets/images/avatar.png";
 
 const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
@@ -13,21 +13,19 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
   const handleClose = () => setAnchorEl(null);
 
   return user.id ? (
-    <>
+    <UserInfoContainer>
       <UserInfoButton
-        className="d-flex w-100 flex-column align-items-center"
+        role="button"
+        tabIndex={0}
+        className="d-flex w-100 flex-column align-items-center mb-2"
         onClick={handleClick}
       >
-        <img src={ImgAvatar} alt="avatar" />
-        <div className="d-flex flex-column justify-content-center">
-          <span>{user.role}</span>
-          <Tooltip title={`${user?.first_name} ${user?.last_name}`} arrow>
-            <span
-              className={"display-name-container"}
-            >{`${user?.first_name} ${user?.last_name}`}</span>
-          </Tooltip>
-        </div>
+        <img src={ImgAvatar} alt="avatar" />        
       </UserInfoButton>
+      <div className="d-flex flex-column justify-content-center mb-4">
+          <span>{`${user?.first_name}`}</span>
+          <span>{`${user?.last_name}`}</span>          
+      </div>
       <Menu
         anchorEl={anchorEl}
         id="user-menu"
@@ -36,15 +34,15 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
         onClick={handleClose}
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "top" }}
-        sx={{ left: 100 }}
+        sx={{ left: 64, top: 0, }}
       >
         <MenuItem divider>
-          <Avatar src={ImgAvatar} /> <Typography sx={{ml:1}}>{`${user?.first_name} ${user?.last_name}`}</Typography>
+          <Avatar src={ImgAvatar} /> <Typography sx={{ml:1}}>Mi Perfil</Typography>
         </MenuItem>
         <MenuItem>Configuración</MenuItem>
         <MenuItem>Cerrar sesión</MenuItem>
       </Menu>
-    </>
+    </UserInfoContainer>
   ) : null;
 };
 

@@ -17,7 +17,7 @@ export const SidebarLinkContainer = styled.div`
     justify-content: center;
     background-color: ${(props) => props.theme.palette.primary.contrastText};    
     color: ${(props) => props.theme.palette.primary.main};
-    box-shadow: 0 0 2px rgba(33, 33, 33, 0.4);
+    box-shadow: 0 0 2px rgba(33, 33, 33, 0.6);
     border-radius: 100%;
     width: 36px;
     height: 36px;

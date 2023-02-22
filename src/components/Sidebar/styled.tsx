@@ -6,11 +6,12 @@ const SidebarContainer = styled.div`
   flex-direction: column;
   align-items: center;
   background: #fff;
-  box-shadow: 0px 2px 5px 2px rgba(0, 0, 0, 0.1);
+  border-right: 1px solid rgba(0, 0, 0, 0.08);
   height: 100%;
   width: 88px;
   z-index: 2;
   font-size: 14px;
+  padding: 24px 0px;
 `;
 
 const LogoContainer = styled.div`
