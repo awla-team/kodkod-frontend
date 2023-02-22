@@ -1,5 +1,6 @@
 import "styled-components";
 import { Theme } from "@mui/material/styles";
+
 interface CustomTheme {
   bg?: {
     main: string;
@@ -13,6 +14,7 @@ interface CustomTheme {
 
 declare module "@mui/material/styles" {
   interface Theme extends CustomTheme {}
+
   interface ThemeOptions extends CustomTheme {}
 }
 
@@ -29,7 +31,6 @@ export interface ISkill {
 
 export interface IAdventureSkill {
   id: number;
-  adventureId: number;
   skillId: number;
   points: number;
   skill?: ISkill;
@@ -44,7 +45,7 @@ export interface IAdventure {
   category: string;
   overview: string;
   expectedResults: string[];
-  adventureSkills?: IAdventureSkill[];
+  skills?: ISkill[];
   stages?: IStage[];
 }
 
