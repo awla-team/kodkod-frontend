@@ -20,6 +20,7 @@ import TabContent from "components/TabContent";
 import { IAdventureSkill } from "global/interfaces";
 import { AdventureWithProviderProps } from "../interfaces";
 import CurrentStage from "./CurrentStage";
+import StageRequirements from "./StageRequirements";
 
 export const Adventure: React.FC = () => {
   const { classId } = useParams();
@@ -100,10 +101,12 @@ export const Adventure: React.FC = () => {
       </AdventureBanner>
 
       {/*  Steps details */}
-
       <CurrentStage />
-
       {/*  Steps details ends*/}
+
+      {/* StageRequirements */}
+      <StageRequirements />
+      {/*  StageRequirements ends*/}
 
       <Tabs value={selectedTab} onChange={handleTabChange}>
         <Tab label="Resumen" />
