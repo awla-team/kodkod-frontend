@@ -14,7 +14,11 @@ import ThermometerCalender from "./sub-components/ThermometerCalender";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { Moment as MomentType } from "moment/moment";
 import Toaster from "../../utils/Toster";
-import { getEmotionalThermometerByClassId } from "../../services/emotional_thermometer";
+import {
+  getEmotionalThermometerByClassId,
+  saveEmotionalThermometerDetails,
+  updateEmotionalThermometerDetails,
+} from "../../services/emotional_thermometer";
 
 const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
   classDetails,
@@ -85,6 +89,25 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
     formikHelpers: FormikHelpers<FormInitialValue>
   ) => {
     try {
+      let responseData: FormInitialValue;
+      if ("id" in value) {
+        const { id, ...body } = value;
+        const { data }: { data: { responseData: FormInitialValue } } =
+          await updateEmotionalThermometerDetails(id, body);
+        responseData = data.responseData;
+        Toaster("success", "Successfully updated!");
+      } else {
+        const { data }: { data: { responseData: FormInitialValue } } =
+          await saveEmotionalThermometerDetails({
+            ...value,
+            date: date.toDate(),
+            id_class: classDetails.id,
+          });
+        responseData = data.responseData;
+        Toaster("success", "Successfully Saved!");
+      }
+      setFormInitialValue(responseData);
+      setEditable(true);
     } catch (e: any) {
       Toaster("error", e.message);
     } finally {
