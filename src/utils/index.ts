@@ -1,4 +1,5 @@
 import { ClassInterface } from "services/classes/interfaces";
+import { Dispatch, SetStateAction, useState } from "react";
 
 export const sortClasses = (classes?: ClassInterface[]): ClassInterface[] => {
   if (classes && Array.isArray(classes)) {
