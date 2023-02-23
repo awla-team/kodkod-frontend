@@ -8,7 +8,7 @@ const WelcomePage: FC<WelcomePageProps> = ({
 }: WelcomePageProps) => {
   return (
     <WelcomePageContainer className="p-5">
-      <img className="mb-4" />
+      <img className="mb-5" />
       <div> 
         <Typography component="h1" variant="h5" className="fw-bold text-center mb-3">Comienza añadiendo tu primer curso</Typography>
         <Typography component="div" variant="body1" className="mb-4">
@@ -25,9 +25,11 @@ export default WelcomePage;
 
 const WelcomePageContainer = styled(Box)`
   display: flex;
-  align-items: center;  
+  align-items: center;
+  justify-content: center;  
   flex-direction: column;
   background-color: #FFF;
+  border-radius: 8px;
   width: 420px;  
   text-align: center;
   border: 1px solid rgba(0, 0, 0, 0.08);

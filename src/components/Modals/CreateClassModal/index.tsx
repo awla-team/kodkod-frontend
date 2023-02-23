@@ -12,7 +12,7 @@ import {
   DialogActions,
   Typography,
 } from "@mui/material";
-import * as Styled from "./styled";
+import { FormContainer } from "./styled";
 import { Formik, Form, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import { useState } from "react";
@@ -50,7 +50,7 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
         setFieldValue("alias", `${level.name.charAt(0)}°${values.code}`);
       } else {
         const level = levels.find((level) => level.id === values.id_level);
-        setFieldValue("alias", `${level ? level.name.charAt(0) : ''}°${value}`);
+        if (level) setFieldValue("alias", `${level.name.charAt(0)}°${value}`);
       }
     }
   };
@@ -95,8 +95,8 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
           }) => {
             return (              
                 <Form onSubmit={handleSubmit}>
-                  <DialogContent dividers className="py-4">
-                    <Styled.FormContainer>
+                  <DialogContent dividers className="py-5">
+                    <FormContainer>
                       <FormControl error={!!errors.id_level && !!submitCount}>
                         <Typography component="label" variant="body1" fontWeight="bold" className="mb-1">Nivel</Typography>
                         <Select
@@ -154,7 +154,7 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
                           size="small"                          
                         />
                       </FormControl>                  
-                    </Styled.FormContainer>
+                    </FormContainer>
                   </DialogContent>
                   <DialogActions className="pt-3">
                     <Button variant="outlined" onClick={() => onClose("escapeKeyDown")}>
