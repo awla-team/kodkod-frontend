@@ -1,15 +1,18 @@
 import type { FC, ChangeEvent } from "react";
 import { CreateClassModalProps, FormInitialState } from "./interfaces";
 import {
-  IconButton,
   Select,
   MenuItem,
   FormControl,
   TextField,
   Button,
+  DialogTitle,
+  Dialog,
+  DialogContent,
+  DialogActions,
+  Typography,
 } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import * as Styled from "./styled";
+import { FormContainer } from "./styled";
 import { Formik, Form, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import { useState } from "react";
@@ -34,18 +37,20 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
       alias: Yup.string().required(),
     });
   };
-
+// extract first char from string 
   const handleAliasValue = (
     e: ChangeEvent,
     values: FormInitialState,
     setFieldValue: FormikHelpers<FormInitialState>["setFieldValue"]
-  ) => {
+  ) => {    
     if (e) {
       const { name, value } = e.target as HTMLInputElement;
       if (name === "id_level") {
-        setFieldValue("alias", `${value}°${values.code}`);
+        const level = levels.find((level) => level.id === value);
+        setFieldValue("alias", `${level.name.charAt(0)}°${values.code}`);
       } else {
-        setFieldValue("alias", `${values.id_level}°${value}`);
+        const level = levels.find((level) => level.id === values.id_level);
+        if (level) setFieldValue("alias", `${level.name.charAt(0)}°${value}`);
       }
     }
   };
@@ -70,21 +75,8 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
     }
   };
   return (
-    <Styled.DialogBox
-      open={open}
-      fullWidth={true}
-      maxWidth={"sm"}
-      scroll={"body"}
-      disableEscapeKeyDown
-    >
-      <Styled.DialogBoxTitle>
-        <IconButton color={"inherit"} onClick={() => onClose("escapeKeyDown")}>
-          <CloseIcon />
-        </IconButton>
-      </Styled.DialogBoxTitle>
-      <Styled.DialogBoxContent>
-        <h1 className={"dialog__header__text"}>Add new class</h1>
-
+    <Dialog open={open} PaperProps={ { className: 'p-3' }}>
+      <DialogTitle fontWeight="bold">Añade un nuevo curso</DialogTitle>            
         <Formik
           initialValues={initialState}
           onSubmit={handleSubmit}
@@ -101,83 +93,86 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
             isValid,
             dirty,
           }) => {
-            return (
-              <Form onSubmit={handleSubmit}>
-                <Styled.DialogFormContainer>
-                  <FormControl error={!!errors.id_level && !!submitCount}>
-                    <Styled.DialogFormLabel>Level</Styled.DialogFormLabel>
-                    <Select
-                      name={"id_level"}
-                      onChange={(e) => {
-                        handleAliasValue(
-                          e as ChangeEvent<HTMLInputElement>,
-                          values,
-                          setFieldValue
-                        );
-                        handleChange(e);
-                      }}
-                      value={values.id_level}
-                    >
-                      <MenuItem value={""} disabled>
-                        Select a level
-                      </MenuItem>
-                      {levels.map((res, index) => {
-                        return (
-                          <MenuItem key={index} value={res.id}>
-                            {res.name}
+            return (              
+                <Form onSubmit={handleSubmit}>
+                  <DialogContent dividers className="py-5">
+                    <FormContainer>
+                      <FormControl error={!!errors.id_level && !!submitCount}>
+                        <Typography component="label" variant="body1" fontWeight="bold" className="mb-1">Nivel</Typography>
+                        <Select
+                          name={"id_level"}
+                          size="small"
+                          placeholder="Selecciona un nivel"
+                          onChange={(e) => {                 
+                            handleChange(e);
+                            handleAliasValue(
+                              e as ChangeEvent<HTMLInputElement>,
+                              values,
+                              setFieldValue
+                            );
+                          }}
+                          value={values.id_level}
+                        >
+                          <MenuItem value={""} disabled>
+                            Selecciona un nivel
                           </MenuItem>
-                        );
-                      })}
-                    </Select>
-                  </FormControl>
-                  <FormControl error={!!errors.code && !!submitCount}>
-                    <Styled.DialogFormLabel>
-                      Code{" "}
-                      <span className={"helper__text"}>
-                        (It is the letter that accompanies the level and that
-                        identifies the class)
-                      </span>
-                    </Styled.DialogFormLabel>
-                    <TextField
-                      name={"code"}
-                      onChange={(e) => {
-                        handleAliasValue(e, values, setFieldValue);
-                        handleChange(e);
-                      }}
-                      value={values.code}
-                      variant={"standard"}
-                    />
-                  </FormControl>
-                  <FormControl error={!!errors.alias && !!submitCount}>
-                    <Styled.DialogFormLabel>
-                      Alias{" "}
-                      <span className={"helper__text"}>
-                        (It is usually the level + the class code)
-                      </span>
-                    </Styled.DialogFormLabel>
-                    <TextField
-                      name={"alias"}
-                      onChange={handleChange}
-                      value={values.alias}
-                      variant={"standard"}
-                    />
-                  </FormControl>
-                  <Styled.DialogFormActions>
+                          {levels.map((res, index) => {
+                            return (
+                              <MenuItem key={index} value={res.id}>
+                                {res.name}
+                              </MenuItem>
+                            );
+                          })}
+                        </Select>
+                      </FormControl>
+                      <FormControl error={!!errors.code && !!submitCount}>
+                        <div className="d-flex align-items-end mb-1" >
+                          <Typography component="label" variant="body1" fontWeight="bold" className="me-1">Código</Typography>
+                          <Typography component="span" variant="caption">(Es la letra que acompaña al nivel e identifica al curso)</Typography>                        
+                        </div>                        
+                        <TextField
+                          name={"code"}
+                          placeholder="Ejemplo: A, B, C..."
+                          onChange={(e) => {
+                            handleAliasValue(e, values, setFieldValue);
+                            handleChange(e);
+                          }}
+                          value={values.code}
+                          size="small"
+                        />
+                      </FormControl>
+                      <FormControl error={!!errors.alias && !!submitCount}>
+                        <div className="d-flex align-items-end mb-1" >
+                          <Typography component="label" variant="body1" fontWeight="bold" className="me-1">Alias</Typography>
+                          <Typography component="span" variant="caption">(Suele ser nivel + código del curso)</Typography>                        
+                        </div>                        
+                        <TextField
+                          name={"alias"}
+                          placeholder="Ejemplo: 1°A, 2°B, 3°C..."
+                          onChange={handleChange}
+                          value={values.alias}
+                          size="small"                          
+                        />
+                      </FormControl>                  
+                    </FormContainer>
+                  </DialogContent>
+                  <DialogActions className="pt-3">
+                    <Button variant="outlined" onClick={() => onClose("escapeKeyDown")}>
+                      Cancelar
+                    </Button>
                     <Button
                       disabled={isSubmitting || !isValid || !dirty}
                       type={"submit"}
                       variant={"contained"}
                     >
-                      Add class
-                    </Button>
-                  </Styled.DialogFormActions>
-                </Styled.DialogFormContainer>
-              </Form>
+                      Añadir curso
+                    </Button>                    
+                  </DialogActions>
+                </Form>                            
             );
           }}
-        </Formik>
-      </Styled.DialogBoxContent>
-    </Styled.DialogBox>
+        </Formik>            
+    </Dialog>
   );
 };
 

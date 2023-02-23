@@ -10,7 +10,7 @@ import Points from "routes/Class/Points";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
-import HomePage from "./components/HomePage";
+import Home from "./routes/Home";
 import ClassContextProvider from "./routes/Class/Context";
 import AdventuresSummary from "routes/Class/Adventures/GoalSelection/AdventuresSummary";
 import "./index.css";
@@ -26,7 +26,7 @@ export const router = createBrowserRouter([
     ),
     children: [
       {
-        element: <HomePage />,
+        element: <Home />,
         index: true,
       },
       {

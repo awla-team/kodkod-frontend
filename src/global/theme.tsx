@@ -3,16 +3,21 @@ import { createTheme } from "@mui/material";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#53a8b6",
-      dark: "#000072",
-      light: "#E4F9FF",
+      main: "#5D7CFB",
+      dark: "#3D5EE1",
+      light: "#9FB2FF",
       contrastText: "#fff",
     },
     secondary: {
-      main: "#DE4CE1",
+      main: "#FDC51A",
+      dark: "#E3AB00",
+      light: "#FFD040",
     },
     info: {
-      main: "#fff",
+      main: "#EAEDFE",
+      dark: "#d8d8f4",
+      light: "#e9e9f9",
+      contrastText: "#5D7CFB",
     },
   },
   typography: {
@@ -33,11 +38,15 @@ const theme = createTheme({
   components: {
     MuiButton: {
       styleOverrides: {
-        root: {
-          borderRadius: "24px",
+        root: {          
+          boxShadow: 'none',
+          textTransform: 'none',
+          '&:hover': {
+            boxShadow: 'none',
+          },
         },
       },
-    },
+    },    
     MuiChip: {
       styleOverrides: {
         root: {
@@ -46,7 +55,7 @@ const theme = createTheme({
           },
         },
       },
-    },
+    },    
   },
 });
 

@@ -21,10 +21,11 @@ import { useAuth } from "./contexts/AuthContext";
 
 const App: React.FC = () => {
   const [classes, setClasses] = useState<ClassInterface[]>([]);
-  const [fetching, setFetching] = useState<FetchStatus>(FetchStatus.Idle);
-  const [open, setOpen] = useState<boolean>(false);
   const [levels, setLevels] = useState<Levels[]>([]);
   const { user } = useAuth();
+  const [fetching, setFetching] = useState<FetchStatus>(FetchStatus.Idle);
+  const [open, setOpen] = useState<boolean>(false);
+
   const getClassesData = () => {
     getClassesByUser(user.id)
       .then((response: AxiosResponse) => {
@@ -45,7 +46,11 @@ const App: React.FC = () => {
     try {
       const { data }: { data: { responseData: Levels[] } } =
         await getAllTheLevel();
-      setLevels(data.responseData);
+      setLevels(data.responseData.sort((a, b) => {
+        if (a.name > b.name) return 1;
+        if (a.name < b.name) return -1;        
+        return 0;
+      }));
     } catch (e: any) {
       Toaster("error", e.message);
     }
@@ -84,23 +89,10 @@ const App: React.FC = () => {
       </ThemeWrapper>
     );
 
-  // TODO: uncomment this when integration with backend is completed
-  // if (fetching === FetchStatus.Error)
-  //   return (
-  //     <ThemeWrapper>
-  //       <div className="app-container d-flex">
-  //         <div className="d-flex w-100 h-100 justify-content-center align-items-center">
-  //           <h1>Hubo un error</h1>
-  //         </div>
-  //       </div>
-  //     </ThemeWrapper>
-  //   );
-
-  // On fetching success
-
   const handleOpenModal = () => {
     setOpen(true);
   };
+
   return (
     <ThemeWrapper>
       <div className="app-container d-flex">
