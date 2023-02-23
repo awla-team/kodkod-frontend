@@ -2,9 +2,11 @@ import React, { FC, useState } from "react";
 import { MissionContainer } from "./styled";
 import MissionCard, { MissionCardType } from "components/MissionCard";
 import ReplaceMissionModal from "components/Modals/ReplaceMissionModal";
+import { MissionAccomplishedDrawer } from "components/Drawers";
 
 const Missions: FC = () => {
   const [open, setOpen] = useState<boolean>(false);
+  const [openDrawer, setOpenDrawer] = useState<boolean>(false);
   const [selectedMission, setSelectedMission] =
     useState<null | MissionCardType>(null);
 
@@ -18,6 +20,11 @@ const Missions: FC = () => {
       setSelectedMission(null);
     }
   };
+
+  const handleDrawerClose = () => {
+    setOpenDrawer(false);
+    setSelectedMission(null);
+  };
   return (
     <MissionContainer>
       <h3 className={"section__heading"}>Missions</h3>
@@ -28,6 +35,10 @@ const Missions: FC = () => {
           .map((res, index) => {
             return (
               <MissionCard
+                onClick={() => {
+                  setOpenDrawer(true);
+                  setSelectedMission(res);
+                }}
                 openModal={handleOpen}
                 key={index}
                 title={"Rewarding trip"}
@@ -46,6 +57,11 @@ const Missions: FC = () => {
         open={open && !!selectedMission}
         onClose={handleClose}
         mission={selectedMission}
+      />
+      <MissionAccomplishedDrawer
+        open={openDrawer && !!selectedMission}
+        anchor={"right"}
+        onClose={handleDrawerClose}
       />
     </MissionContainer>
   );
