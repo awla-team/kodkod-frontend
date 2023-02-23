@@ -11,7 +11,11 @@ const SidebarContainer = styled.div`
   width: 88px;
   z-index: 2;
   font-size: 14px;
-  padding: 24px 0px;  
+  padding: 24px 0px;
+
+  .home-button {
+    margin-bottom: 16px;
+  }
 `;
 
 const LogoContainer = styled.div`
@@ -25,7 +29,7 @@ const LinkList = styled.div`
   align-items: center;
   gap: 16px;
   width: 100%;
-  padding: 16px 0px;
+  padding: 1px 0px 16px;
   overflow-y: auto;
 `;
 

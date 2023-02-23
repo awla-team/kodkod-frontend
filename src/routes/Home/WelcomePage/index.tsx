@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import styled from "styled-components";
 import { WelcomePageProps } from "./interfaces";
 
@@ -7,14 +7,17 @@ const WelcomePage: FC<WelcomePageProps> = ({
   handleOpenModal,
 }: WelcomePageProps) => {
   return (
-    <WelcomePageContainer>
-      <h1 className="text-center header__text">Selecciona un curso</h1>
-      <p className={"description__text"}>
-        Add a class to start improving our classroom environment together
-      </p>
-      <Button onClick={handleOpenModal} variant={"contained"}>
-        Add your first class
-      </Button>
+    <WelcomePageContainer className="p-5">
+      <img className="mb-4" />
+      <div> 
+        <Typography component="h1" variant="h5" className="fw-bold text-center mb-3">Comienza añadiendo tu primer curso</Typography>
+        <Typography component="div" variant="body1" className="mb-4">
+          Y descubre cómo mejorar el ambiente de la sala de clases de manera divertida.
+        </Typography>
+        <Button onClick={handleOpenModal} variant={"contained"} className="w-100">
+          Añade tu primer curso
+        </Button>       
+      </div>      
     </WelcomePageContainer>
   );
 };
@@ -22,26 +25,17 @@ export default WelcomePage;
 
 const WelcomePageContainer = styled(Box)`
   display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
+  align-items: center;  
   flex-direction: column;
+  background-color: #FFF;
+  width: 420px;  
+  text-align: center;
+  border: 1px solid rgba(0, 0, 0, 0.08);
 
-  & .header__text {
-    font-weight: 700;
-    font-size: 3rem;
-  }
-
-  & .description__text {
-    font-size: 1.5rem;
-    text-align: center;
-    max-width: 45ch;
-  }
-
-  & button {
+  img {
+    border: 1px solid lightgray;
     border-radius: 8px;
-    font-weight: 700;
-    font-size: 1.5rem;
-    text-transform: none;
+    width: 100%;
+    height: 250px;
   }
 `;

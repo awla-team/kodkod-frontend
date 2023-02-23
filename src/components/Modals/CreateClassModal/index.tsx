@@ -34,18 +34,20 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
       alias: Yup.string().required(),
     });
   };
-
+// extract first char from string 
   const handleAliasValue = (
     e: ChangeEvent,
     values: FormInitialState,
     setFieldValue: FormikHelpers<FormInitialState>["setFieldValue"]
-  ) => {
+  ) => {    
     if (e) {
       const { name, value } = e.target as HTMLInputElement;
       if (name === "id_level") {
-        setFieldValue("alias", `${value}°${values.code}`);
+        const level = levels.find((level) => level.id === value);
+        setFieldValue("alias", `${level.name.charAt(0)}°${values.code}`);
       } else {
-        setFieldValue("alias", `${values.id_level}°${value}`);
+        const level = levels.find((level) => level.id === values.id_level);
+        setFieldValue("alias", `${level.name.charAt(0)}°${value}`);
       }
     }
   };
@@ -108,13 +110,13 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
                     <Styled.DialogFormLabel>Level</Styled.DialogFormLabel>
                     <Select
                       name={"id_level"}
-                      onChange={(e) => {
+                      onChange={(e) => {                        
+                        handleChange(e);
                         handleAliasValue(
                           e as ChangeEvent<HTMLInputElement>,
                           values,
                           setFieldValue
                         );
-                        handleChange(e);
                       }}
                       value={values.id_level}
                     >

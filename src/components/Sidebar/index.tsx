@@ -19,20 +19,22 @@ const Sidebar: FC<SidebarProps> = ({ classes, handleOpenModal }) => {
       <Divider className="w-75 mb-1" color="gray" />
       <span className="text-center fw-bold p-0 mt-4 mb-3">Cursos</span>
       <RouterLink to={"/"}>
-        <RoundButton color="primary">
+        <RoundButton color="primary" className="home-button">
           <HomeIcon />
         </RoundButton>
       </RouterLink>
-      <LinkList>
-        {classes?.map?.((teacherClass: ClassInterface, index) => (
-          <SidebarLink
-            key={`side-bar-${teacherClass.id}-${index}`}
-            linkId={teacherClass.id}
-            linkTitle={teacherClass.alias}
-            linkRoute={`cursos/${teacherClass.id}/tablero`}
-          />
-        ))}
-      </LinkList>      
+      {classes.length ? (
+        <LinkList>
+          {classes?.map?.((teacherClass: ClassInterface, index) => (
+            <SidebarLink
+              key={`side-bar-${teacherClass.id}-${index}`}
+              linkId={teacherClass.id}
+              linkTitle={teacherClass.alias}
+              linkRoute={`cursos/${teacherClass.id}/tablero`}
+            />
+          ))}
+        </LinkList>      
+      ) : null}
       <RoundButton color="info" onClick={() => handleOpenModal()}>
         <AddIcon />
       </RoundButton>

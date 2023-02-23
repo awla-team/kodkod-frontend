@@ -28,9 +28,8 @@ const MyClasses: FC<MyClassesProps> = ({ classes }: MyClassesProps) => {
             <AccordionDetails className={"class__level__cards__container row"}>              
               {rest.classes.map((teacherClass, _index) => {
                 return (
-                  <div className="col-3">
-                    <RouterLink
-                      key={`${_index}-${index}`}
+                  <div className="col-3" key={`${_index}-${index}`}>
+                    <RouterLink                      
                       to={`cursos/${teacherClass.id}/tablero`}
                     >
                       <div className={"class__level__card"}>

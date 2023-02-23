@@ -38,8 +38,12 @@ const theme = createTheme({
   components: {
     MuiButton: {
       styleOverrides: {
-        root: {
-          borderRadius: "24px",
+        root: {          
+          boxShadow: 'none',
+          textTransform: 'none',
+          '&:hover': {
+            boxShadow: 'none',
+          },
         },
       },
     },    
