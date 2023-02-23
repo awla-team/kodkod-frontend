@@ -60,7 +60,7 @@ export const PointsContainer = styled.button`
   }
 `;
 
-const Chip = styled(Box)`
+export const Chip = styled(Box)`
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -87,35 +87,36 @@ const Chip = styled(Box)`
     border: 1px solid #a5a5a5;
     gap: 0.3rem;
 
-
     & .level__icon {
       position: relative;
       height: 11px;
       width: 2px;
       border-radius: 2px;
-      background: #BBBBBB;
+      background: #bbbbbb;
       margin-inline: 7px;
       margin-block-start: 1px;
 
       &.level__easy:before {
-        background: #231F20;
+        background: #231f20;
       }
 
       &.level__medium {
-        background: #231F20;
+        background: #231f20;
 
         &:before {
-          background: #231F20;
+          background: #231f20;
         }
       }
 
       &.level__hard {
-        background: #231F20;
+        background: #231f20;
 
-        &:before, &:after {
-          background: #231F20;
+        &:before,
+        &:after {
+          background: #231f20;
         }
       }
+
       &:before {
         position: absolute;
         left: -5px;
@@ -125,7 +126,7 @@ const Chip = styled(Box)`
         display: block;
         width: 2px;
         border-radius: 2px;
-        background: #BBBBBB;
+        background: #bbbbbb;
       }
 
       &:after {
@@ -137,7 +138,7 @@ const Chip = styled(Box)`
         display: block;
         width: 2px;
         border-radius: 2px;
-        background: #BBBBBB;
+        background: #bbbbbb;
       }
     }
   }
@@ -150,6 +151,12 @@ const MissionCardContainer = styled(Card)`
     border-radius: 8px;
     margin-block: 1rem;
     overflow: visible;
+    border: 4px solid transparent;
+
+    &.selected {
+      border-color: #000;
+      background: #fff;
+    }
   }
 
   & .chip__tag__container {
@@ -160,45 +167,60 @@ const MissionCardContainer = styled(Card)`
   }
 `;
 
-const MissionCard: React.FC<IMissionCardProps> = ({
-  title,
-  description,
-  points,
-  icon,
-  color,
-}) => (
-  <MissionCardContainer className="mission-card p-4 d-flex" variant="outlined">
-    <div className="d-flex flex-column">
-      <div className={"chip__tag__container"}>
-        <Chip className={"variant__outlined"}>
-          <span className={"level__icon level__easy"} />
-          <span>Easy</span>
-        </Chip>
-        <Chip className={"variant__contained"}>
-          <span className={"icon"} />
-          <span>Collaboration</span>
-        </Chip>
-      </div>
-      <div className={"text__details"}>
-        <Typography variant="h6" fontWeight="bold">
-          {title}
-        </Typography>
-        <Typography sx={{ mt: 1 }}>{description}</Typography>
-      </div>
+const MissionCard: React.FC<IMissionCardProps> = (props) => {
+  const {
+    title,
+    description,
+    points,
+    icon,
+    color,
+    openModal,
+    onClick,
+    selected,
+  } = props;
+  return (
+    <MissionCardContainer
+      onClick={onClick}
+      className={"mission-card p-4 d-flex" + (selected ? " selected" : "")}
+      variant="outlined"
+    >
+      <div className="d-flex flex-column">
+        <div className={"chip__tag__container"}>
+          <Chip className={"variant__outlined"}>
+            <span className={"level__icon level__easy"} />
+            <span>Easy</span>
+          </Chip>
+          <Chip className={"variant__contained"}>
+            <span className={"icon"} />
+            <span>Collaboration</span>
+          </Chip>
+        </div>
+        <div className={"text__details"}>
+          <Typography variant="h6" fontWeight="bold">
+            {title}
+          </Typography>
+          <Typography sx={{ mt: 1 }}>{description}</Typography>
+        </div>
 
-      {/* Action Buttons with absolute position */}
-      <PointsContainer className="d-flex align-items-center justify-content-center bottom-position fixed-width-height">
-        <Typography className="me-1" variant="h5" fontWeight="bold">
-          {points}
-        </Typography>
-        <img src={kodcoinIcon} />
-      </PointsContainer>
-      <PointsContainer className="d-flex align-items-center justify-content-center top-position">
-        <img src={SwitchIcon} />
-      </PointsContainer>
-      {/* Action Buttons with absolute position end*/}
-    </div>
-  </MissionCardContainer>
-);
+        {/* Action Buttons with absolute position */}
+        <PointsContainer className="d-flex align-items-center justify-content-center bottom-position fixed-width-height">
+          <Typography className="me-1" variant="h5" fontWeight="bold">
+            {points}
+          </Typography>
+          <img src={kodcoinIcon} />
+        </PointsContainer>
+        {openModal && (
+          <PointsContainer
+            className="d-flex align-items-center justify-content-center top-position"
+            onClick={() => openModal(props)}
+          >
+            <img src={SwitchIcon} />
+          </PointsContainer>
+        )}
+        {/* Action Buttons with absolute position end*/}
+      </div>
+    </MissionCardContainer>
+  );
+};
 
 export default MissionCard;
