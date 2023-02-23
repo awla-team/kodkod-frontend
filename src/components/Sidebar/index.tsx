@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { SidebarProps } from "./interfaces";
-import { SidebarContainer, LinkList } from "./styled";
+import logo from 'assets/images/logo.png';
+import { SidebarContainer, LinkList, LogoContainer } from "./styled";
 import SidebarLink from "./SidebarLink";
 import AddIcon from "@mui/icons-material/Add";
 import UserInfo from "./UserInfo";
@@ -15,9 +16,11 @@ const Sidebar: FC<SidebarProps> = ({ classes, handleOpenModal }) => {
     const {user}= useAuth()
   return (
     <SidebarContainer>
-      <UserInfo user={user} />
-      <Divider className="w-75 mb-1" color="gray" />
-      <span className="text-center fw-bold p-0 mt-4 mb-3">Cursos</span>
+      <LogoContainer>
+        <img src={logo} />
+      </LogoContainer>    
+      <Divider className="w-75 my-4" color="gray" />  
+      <span className="text-center fw-bold p-0 mb-3">Cursos</span>
       <RouterLink to={"/"}>
         <RoundButton color="primary" className="home-button">
           <HomeIcon />
@@ -35,9 +38,10 @@ const Sidebar: FC<SidebarProps> = ({ classes, handleOpenModal }) => {
           ))}
         </LinkList>      
       ) : null}
-      <RoundButton color="info" onClick={() => handleOpenModal()}>
+      <RoundButton sx={{marginBottom: '74px'}} color="info" onClick={() => handleOpenModal()}>
         <AddIcon />
-      </RoundButton>
+      </RoundButton>      
+      <UserInfo user={user} />
     </SidebarContainer>
   );
 };

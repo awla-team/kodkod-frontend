@@ -103,7 +103,7 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
                           name={"id_level"}
                           size="small"
                           placeholder="Selecciona un nivel"
-                          onChange={(e) => {                        
+                          onChange={(e) => {                 
                             handleChange(e);
                             handleAliasValue(
                               e as ChangeEvent<HTMLInputElement>,

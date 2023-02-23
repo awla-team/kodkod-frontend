@@ -46,7 +46,11 @@ const App: React.FC = () => {
     try {
       const { data }: { data: { responseData: Levels[] } } =
         await getAllTheLevel();
-      setLevels(data.responseData);
+      setLevels(data.responseData.sort((a, b) => {
+        if (a.name > b.name) return 1;
+        if (a.name < b.name) return -1;        
+        return 0;
+      }));
     } catch (e: any) {
       Toaster("error", e.message);
     }
