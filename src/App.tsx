@@ -18,6 +18,8 @@ import { getAllTheLevel } from "./services/levels";
 import Toaster from "./utils/Toster";
 import { Levels } from "./components/Modals/CreateClassModal/interfaces";
 import { useAuth } from "./contexts/AuthContext";
+import moment from 'moment';
+import 'moment/dist/locale/es';
 
 const App: React.FC = () => {
   const [classes, setClasses] = useState<ClassInterface[]>([]);
@@ -55,6 +57,10 @@ const App: React.FC = () => {
       Toaster("error", e.message);
     }
   };
+
+  useEffect(() => {
+    moment.locale('es');
+  }, []);
 
   useEffect(() => {
     if (user) {

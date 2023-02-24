@@ -6,11 +6,11 @@ export interface EmotionalThermometerProps {
 
 export interface FormInitialValue {
   id?: number | string;
-  score: number;
+  score: number | string;
 
   challenge: string;
 
-  most_remarkable: string;
+  achievement: string;
 }
 
 export interface EmotionalThermometerType extends FormInitialValue {

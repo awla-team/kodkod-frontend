@@ -40,8 +40,8 @@ const Class: React.FC = () => {
   return (
     <>
       <NavTabsContainer>
-        {tabs.map((tab) => (
-          <Box className={`nav__tab ${pathname.includes(tab.path) ? "active" : ""}`} role="button" onClick={() => navigate(tab.path)}>
+        {tabs.map((tab, i) => (
+          <Box key={`tab-${i}`} className={`nav__tab ${pathname.includes(tab.path) ? "active" : ""}`} role="button" onClick={() => navigate(tab.path)}>
             {tab.svg}
             <Typography fontWeight="bold" component="span" variant="body2">{tab.title}</Typography>
           </Box>

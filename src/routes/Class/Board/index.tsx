@@ -21,15 +21,15 @@ const Board: React.FC<{}> = ({}) => {
   return (
     <DashboardContainer>
       <DashboardContainerLeftSide>
-        <DetailsCard>
+        <DetailsCard className="p-5">
           {classDetails && <ClassDetailsCard classDetails={classDetails} />}
         </DetailsCard>
-        <DetailsCard className={"h-100"} disablePadding>
+        <DetailsCard className="h-100 p-5">
           <EmotionalThermometer classDetails={classDetails}/>
         </DetailsCard>
       </DashboardContainerLeftSide>
       <DashboardContainerRightSide>
-        <DetailsCard className={"h-100"}>
+        <DetailsCard className="h-100 p-5">
           <StudentsList studentsData={students} classDetails={classDetails} />
         </DetailsCard>
       </DashboardContainerRightSide>
