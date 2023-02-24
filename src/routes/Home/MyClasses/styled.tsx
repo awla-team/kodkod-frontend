@@ -13,7 +13,11 @@ export const LevelAccordion = styled(Accordion)`
   }
 `;
 
-export const MyClassesContainer = styled(Box)`
+export const MyClassesContainer = styled.div`
+  padding: 36px 0px;
+`;
+
+export const MyClassesBox = styled(Box)`
   display: flex;
   flex-direction: column;
   width: 100%;
