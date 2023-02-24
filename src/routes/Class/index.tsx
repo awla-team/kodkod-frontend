@@ -1,94 +1,56 @@
 import React, { useEffect, useState } from "react";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { TabPaths } from "./interfaces";
 import { NavTabsContainer } from "./styled";
 import { useClassContext } from "./Context";
+import DashboardIcon from '@mui/icons-material/DashboardTwoTone';
+import AdventuresIcon from '@mui/icons-material/RocketLaunchTwoTone';
+import ProgressIcon from '@mui/icons-material/LeaderboardTwoTone';
+import ReportsIcon from '@mui/icons-material/PieChartTwoTone';
 
-const TAB_PATHS: TabPaths = {
-  0: "tablero",
-  1: "aventuras",
-  2: "puntajes",
-};
+const tabs = [
+  {    
+    title: 'Tablero',
+    path: 'tablero',
+    svg: <DashboardIcon />
+  },
+  {    
+    title: 'Aventuras',
+    path: 'aventuras',
+    svg: <AdventuresIcon />
+  },
+  {    
+    title: 'Progreso',
+    path: 'progreso',
+    svg: <ProgressIcon />
+  },
+  {    
+    title: 'Reportes',
+    path: 'reportes',
+    svg: <ReportsIcon />
+  },
+];
 
 const Class: React.FC = () => {
   const navigate = useNavigate();
-  const { pathname } = useLocation();
-  const [selectedTab, selectTab] = useState<number>(
-    pathname.includes(TAB_PATHS[0])
-      ? 0
-      : pathname.includes(TAB_PATHS[1])
-      ? 1
-      : pathname.includes(TAB_PATHS[2])
-      ? 2
-      : 0
-  );
-
-  const changeTab = (
-    _event: React.SyntheticEvent<Element, Event> | null,
-    tabIndex: number
-  ) => {
-    selectTab(tabIndex);
-  };
-
-  useEffect(() => {
-    if (pathname.includes(TAB_PATHS[0])) changeTab(null, 0);
-    if (pathname.includes(TAB_PATHS[1])) changeTab(null, 1);
-    if (pathname.includes(TAB_PATHS[2])) changeTab(null, 2);
-  }, [pathname]);
-
+  const { pathname } = useLocation();  
   const { classDetails, students } = useClassContext();
 
   return (
     <>
       <NavTabsContainer>
-        <Box
-          className={"nav__tab"}
-          role={"button"}
-          onClick={() => {
-            navigate(TAB_PATHS[0]);
-          }}
-        >
-          <img className={"nav__icon"} src={"/dashboard.svg"} />
-          <span className={"nav__title"}>Dashboard</span>
-        </Box>
-        <Box
-          className={"nav__tab"}
-          role={"button"}
-          onClick={() => {
-            navigate(TAB_PATHS[1]);
-          }}
-        >
-          <img className={"nav__icon"} src={"/rocket.svg"} />
-          <span className={"nav__title"}> Adventure</span>
-        </Box>
-
-        <Box
-          className={"nav__tab"}
-          role={"button"}
-          onClick={() => {
-            navigate(TAB_PATHS[2]);
-          }}
-        >
-          <img className={"nav__icon"} src={"/progress.svg"} />
-          <span className={"nav__title"}>Progress</span>
-        </Box>
-
-        <Box
-          className={"nav__tab"}
-          role={"button"}
-          onClick={() => {
-            navigate(TAB_PATHS[2]);
-          }}
-        >
-          <img className={"nav__icon"} src={"/reports.svg"} />
-          <span className={"nav__title"}>Reports</span>
-        </Box>
+        {tabs.map((tab) => (
+          <Box className={`nav__tab ${pathname.includes(tab.path) ? "active" : ""}`} role="button" onClick={() => navigate(tab.path)}>
+            {tab.svg}
+            <Typography fontWeight="bold" component="span" variant="body2">{tab.title}</Typography>
+          </Box>
+        ))}        
       </NavTabsContainer>
       <Box
         role="tabpanel"
         className="w-100 overflow-auto"
-        sx={{ padding: "32px" }}
+        sx={{ marginTop: 'calc(64px + 36px)', paddingBottom: '36px' }}        
       >
         <Outlet context={{ classDetails, students }} />
       </Box>
