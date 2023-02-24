@@ -1,35 +1,10 @@
 import styled from "styled-components";
-import { Box } from "@mui/material";
-export const EmotionalThermometerContainer = styled(Box).withConfig({
-  shouldForwardProp: (prop, defaultValidatorFn) =>
-    !["calenderView"].includes(prop) && defaultValidatorFn(prop),
-})<{ calenderView?: boolean }>`
-  min-height: 672px;
-
+import { Box, Radio } from "@mui/material";
+export const EmotionalThermometerContainer = styled(Box)`
   & .container__header {
-    display: flex;
-    align-items: center;
+    display: flex;    
     justify-content: space-between;
-    gap: 1rem;
-    padding: 2.25rem;
-
-    & .container__header__text {
-      flex-grow: 1;
-
-      & .header__container {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-
-        & .header__text {
-          font-weight: 700;
-          font-size: 1.25rem;
-        }
-      }
-
-      & .header__date {
-      }
-    }
+    align-items: center;
 
     & .calender__icon {
       color: #000;
@@ -58,10 +33,19 @@ export const EmotionalThermometerContainer = styled(Box).withConfig({
     padding: 0.625rem;
     font-weight: 700;
     text-align: center;
+    border-radius: 8px;
     color: #ffffff;
   }
 
   & .thermometer__content {
     padding: 2.25rem;
+  }
+`;
+
+export const EmojiRadio = styled(Radio)`
+  svg {
+    width: 32px;
+    height: 32px;
+    fill: white;    
   }
 `;
