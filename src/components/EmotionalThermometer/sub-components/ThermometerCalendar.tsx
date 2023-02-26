@@ -1,25 +1,25 @@
 import { FC, useMemo, useState } from "react";
-import { ThermometerCalenderView } from "./styled";
+import { ThermometerCalendarView } from "./styled";
 import Moment from "moment";
 import type { Moment as MomentType } from "moment";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import { CalendarPicker } from "@mui/x-date-pickers/CalendarPicker";
-import { ThermometerCalenderProps } from "./interfaces";
+import { ThermometerCalendarProps } from "./interfaces";
 
-const ThermometerCalender: FC<ThermometerCalenderProps> = ({
+const ThermometerCalendar: FC<ThermometerCalendarProps> = ({
   date,
   handleDateChange,
 }) => {
   return (
-    <ThermometerCalenderView>
+    <ThermometerCalendarView>
       <div className={"info__text"}>
         Select a date to use your Emotional Thermometer or to edit another
       </div>
-      <div className={"calender__container"}>
+      <div className={"calendar__container"}>
         {/*<div className={"date__text"}>{Moment().format("MMMM yyyy")}</div>*/}
 
-        <div className={"calender__view"}>
+        <div className={"calendar__view"}>
           <LocalizationProvider dateAdapter={AdapterMoment}>
             <CalendarPicker
               minDate={Moment().subtract(30, "day")}
@@ -30,8 +30,8 @@ const ThermometerCalender: FC<ThermometerCalenderProps> = ({
           </LocalizationProvider>
         </div>
       </div>
-    </ThermometerCalenderView>
+    </ThermometerCalendarView>
   );
 };
 
-export default ThermometerCalender;
+export default ThermometerCalendar;

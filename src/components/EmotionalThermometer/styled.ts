@@ -40,6 +40,12 @@ export const EmotionalThermometerContainer = styled(Box)`
   & .thermometer__content {
     padding: 2.25rem;
   }
+
+  form.disabled {
+    label {
+      opacity: 0.6;
+    }
+  }  
 `;
 
 export const EmojiRadio = styled(Radio)`
@@ -49,3 +55,7 @@ export const EmojiRadio = styled(Radio)`
     fill: white;    
   }
 `;
+
+export const EmotionalThermometerActions = styled.div`
+  height: 54px;
+`

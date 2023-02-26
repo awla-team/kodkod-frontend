@@ -11,7 +11,7 @@ export interface TodayReviewsProps {
   setEditable: Dispatch<SetStateAction<boolean>>;
 }
 
-export interface ThermometerCalenderProps {
+export interface ThermometerCalendarProps {
   date: Moment;
   handleDateChange: (date: Moment) => void;
 }
