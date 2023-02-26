@@ -4,13 +4,14 @@ import Moment from "moment";
 import type { Moment as MomentType } from "moment";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
-import { ThermometerCalenderProps } from "./interfaces";
+import { ThermometerCalendarProps } from "./interfaces";
 import { EmotionalThermometerType } from "../interfaces";
 import { getEmotionalThermometerByClassId } from "../../../services/emotional_thermometer";
 import Toaster from "utils/Toster";
 import { PickersDay, PickersDayProps } from "@mui/x-date-pickers";
+import { ThermometerCalendarView } from "./styled";
 
-const ThermometerCalender: FC<ThermometerCalenderProps> = ({
+const ThermometerCalendar: FC<ThermometerCalendarProps> = ({
   date,
   handleDateChange,
   classId,
@@ -45,14 +46,14 @@ const ThermometerCalender: FC<ThermometerCalenderProps> = ({
     );
   };
   return (
-    <Styled.ThermometerCalenderView>
+    <ThermometerCalendarView>
       <div className={"info__text"}>
         Select a date to use your Emotional Thermometer or to edit another
       </div>
-      <div className={"calender__container"}>
+      <div className={"calendar__container"}>
         {/*<div className={"date__text"}>{Moment().format("MMMM yyyy")}</div>*/}
 
-        <div className={"calender__view"}>
+        <div className={"calendar__view"}>
           <LocalizationProvider dateAdapter={AdapterMoment}>
             <Styled.CalendarPicker
               renderDay={(
@@ -85,7 +86,8 @@ const ThermometerCalender: FC<ThermometerCalenderProps> = ({
           </LocalizationProvider>
         </div>
       </div>
-    </Styled.ThermometerCalenderView>
+    </ThermometerCalendarView>
   );
 };
-export default ThermometerCalender;
+
+export default ThermometerCalendar;

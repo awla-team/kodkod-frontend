@@ -68,20 +68,20 @@ export const ActionButton = styled(Button)`
   font-size: 1.125rem;
 `;
 
-export const ThermometerCalenderView = styled(Box)`
+export const ThermometerCalendarView = styled(Box)`
   padding: 0 2.25rem 2.25rem 2.25rem;
 
   & .info__text {
     margin-bottom: 2.2rem;
   }
 
-  & .calender__container {
+  & .calendar__container {
     & .date__text {
       text-transform: uppercase;
       margin-bottom: 0.5rem;
     }
 
-    & .calender__view {
+    & .calendar__view {
       display: flex;
       flex-wrap: wrap;
 
