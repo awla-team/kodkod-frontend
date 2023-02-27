@@ -6,7 +6,7 @@ export const StudentListContainer = styled(Box)`
   height: 100%;
 
   & .students__list {
-    height: calc(100% - 128px);
+    height: calc(100% - 68px);
     margin-block: 0.5rem;
     display: flex;
     gap: 1rem;
@@ -45,6 +45,7 @@ export const StudentListContainer = styled(Box)`
     margin-block: 0.5rem;
     text-align: right;
   }
+
 `;
 
 export const Checkbox = styled(MuiCheckbox)`

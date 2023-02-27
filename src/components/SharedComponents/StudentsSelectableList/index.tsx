@@ -86,12 +86,6 @@ export const StudentsSelectableList: FC = () => {
       <div className={"student__selection__count"}>
         <b>5</b> of <b>5</b> students selected
       </div>
-
-      <div className={"student__list__actions"}>
-        <Button variant={"contained"} fullWidth>
-          Save Changes
-        </Button>
-      </div>
     </Styled.StudentListContainer>
   );
 };
