@@ -15,4 +15,6 @@ export interface FormInitialValue {
 
 export interface EmotionalThermometerType extends FormInitialValue {
   id_class: number | string;
+
+  date: Date;
 }

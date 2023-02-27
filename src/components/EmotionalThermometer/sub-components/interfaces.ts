@@ -14,4 +14,5 @@ export interface TodayReviewsProps {
 export interface ThermometerCalenderProps {
   date: Moment;
   handleDateChange: (date: Moment) => void;
+  classId: number | string;
 }
