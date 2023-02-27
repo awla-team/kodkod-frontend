@@ -56,7 +56,7 @@ export const MissionAccomplishedDrawer = styled(Drawer)`
   & .student__details__section {
     margin-block: 0.5rem;
     height: 46%;
-    min-height: 250px;
+    min-height: 450px;
   }
 
   & .student__list__actions {
