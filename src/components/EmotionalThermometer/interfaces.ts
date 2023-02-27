@@ -77,4 +77,5 @@ export interface TodayReviewsProps {
 export interface ThermometerCalendarProps {
   date: Moment;
   handleDateChange: (date: Moment) => void;
+  classId: number | string;
 }

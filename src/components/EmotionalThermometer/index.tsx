@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { EmotionalThermometerContainer, EmojiRadio, EmotionalThermometerActions } from "./styled";
+import { EmotionalThermometerContainer, EmojiRadio, EmotionalThermometerActions, PickersDateContainer } from "./styled";
 import Moment from "moment";
 import { Tooltip, Typography, Fade, Chip, Button, FormControl, RadioGroup, FormControlLabel, Select, MenuItem } from "@mui/material";
 import { Formik, Form, FormikHelpers } from "formik";
@@ -41,20 +41,24 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
   classDetails,
 }) => {
   const [date, setDate] = useState<MomentType>(Moment());
+  const [detailsByDates, setDetailsByDates] = useState<EmotionalThermometerType[]>([]);
   const [calendarIsOpen, setCalendarOpen] = useState<boolean>(false);
   const [formInitialValue, setFormInitialValue] = useState<FormInitialValue>(initialValues);
   const [editable, setEditable] = useState<boolean>(false);
 
   useEffect(() => {
-    if (classDetails) handleGetThermometerDetails(classDetails.id);
+    if (classDetails) {
+      handleGetThermometerDetails();
+      handleMonthChange();
+    }
   }, [date, classDetails]);
 
-  const handleGetThermometerDetails = async (classId: string | number) => {
+  const handleGetThermometerDetails = async () => {
     try {
       const { data: { responseData },
       }: { data: { responseData: EmotionalThermometerType[] } } =
         await getEmotionalThermometerByClassId(
-          classId,
+          classDetails.id,
           date.toDate(),
           date.toDate()
         );
@@ -78,6 +82,50 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
     } catch (e: any) {
       Toaster("error", e.message);
     }
+  };
+
+  const checkDate = (date: MomentType): Boolean => {
+    return detailsByDates.some((res) =>
+      Moment(res.date).startOf("day").isSame(date, "day")
+    );
+  };
+
+  const handleMonthChange = async () => {
+    try {
+      const {
+        data: { responseData },
+      }: { data: { responseData: EmotionalThermometerType[] } } =
+        await getEmotionalThermometerByClassId(
+          classDetails.id,
+          Moment(date).startOf("month").toDate(),
+          Moment(date).endOf("month").toDate()
+        );
+      setDetailsByDates(responseData);
+    } catch (e: any) {
+      Toaster("error", e.message);
+    }
+  };
+
+  const customRenderDay = (
+    day: MomentType | unknown,
+    selectedDays: MomentType[] | unknown[],
+    pickersDayProps:
+      | PickersDayProps<MomentType>
+      | PickersDayProps<unknown>
+  ) => {
+    return (
+      <PickersDateContainer key={pickersDayProps.key}>
+        <PickersDay
+          day={day}
+          outsideCurrentMonth={false}
+          {...(pickersDayProps as PickersDayProps<MomentType>)}
+        />
+        {!pickersDayProps.outsideCurrentMonth &&
+          checkDate(day as MomentType) && (
+            <span className={"tick__icon"}>&#10004;</span>
+          )}
+      </PickersDateContainer>
+    );
   };
 
   const handleDateChange = (date: Moment.Moment) => setDate(date);
@@ -112,12 +160,6 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
       formikHelpers.setSubmitting(false);
     }
   };
-
-  const renderDayWithData = (day: MomentType, selectedDay: MomentType[], pickersDayProps: PickersDayProps<MomentType>) => {
-    return (
-      <PickersDay {...pickersDayProps} />
-    );
-  };
   
   return (
     <EmotionalThermometerContainer>
@@ -138,7 +180,7 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
           <DatePicker
             open={calendarIsOpen}
             onClose={() => setCalendarOpen(false)}
-            renderDay={renderDayWithData}
+            renderDay={customRenderDay}
             minDate={Moment().subtract(30, "day")}            
             maxDate={Moment()}
             value={date}
