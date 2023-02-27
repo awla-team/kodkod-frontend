@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Box } from "@mui/material";
-import { buttonClasses } from "@mui/material/Button";
 export const StudentListContainer = styled(Box)`
   display: flex;
   flex-direction: column;
@@ -52,19 +51,14 @@ export const StudentsListDetailsContainer = styled(Box)`
   justify-content: space-between;
 
   & .details {
+    padding: 0px 8px;
     flex-grow: 1;
     display: flex;
     gap: 1rem;
     flex-direction: column;
-    max-height: 792px;
+    max-height: 700px;
     overflow: hidden;
     overflow-y: auto;
-  }
-
-  & .${buttonClasses.contained} {
-    border-radius: 8px;
-    text-transform: none;
-    font-weight: 700;
   }
 `;
 
@@ -74,13 +68,17 @@ export const StudentDetailBox = styled(Box)`
   gap: 1rem;
   justify-content: space-between;
 
+  .student-avatar {
+    background: ${(props) => props.theme.palette.primary.light};
+  }
+
   & .editable_section__form {
     flex-grow: 1;
     & .edit__section {
       display: flex;
 
       gap: 1rem;
-      align-items: center;
+      align-items: center;   
 
       & .editable__field {
         display: flex;
@@ -90,8 +88,10 @@ export const StudentDetailBox = styled(Box)`
       }
 
       & .editable__action__section {
+        width: 100px;
         display: flex;
         align-items: center;
+        justify-content: end;
         gap: 0.5rem;
       }
     }
@@ -110,6 +110,37 @@ export const StudentDetailBox = styled(Box)`
       & .student__email {
         color: #969696;
       }
+    }
+  }
+`;
+
+export const StudentRow = styled.div`
+  input {
+    padding: 0px;
+  }
+
+  .more-button {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    &:hover, &:active, &:focus {
+      opacity: 1;
+    }
+  }
+
+  &:hover {
+    .more-button {
+      opacity: 1;
+    }
+  }
+
+  .Mui-disabled {    
+    -webkit-text-fill-color: #000;
+    ::before {
+      display: none;
+    }
+
+    & input[name="email"] {
+      opacity: 0.6;
     }
   }
 `;
