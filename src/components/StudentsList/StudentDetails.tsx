@@ -1,10 +1,10 @@
 import React, { FC, useEffect, useState } from "react";
-import { StudentEditInputField, StudentType } from "../interfaces";
-import { useClassContext } from "../../../routes/Class/Context";
+import { StudentEditInputField, StudentType } from "./interfaces";
+import { useClassContext } from "../../routes/Class/Context";
 import { useParams } from "react-router-dom";
-import Toaster from "../../../utils/Toster";
+import Toaster from "../../utils/Toster";
 import { Form, Formik, FormikHelpers } from "formik";
-import { updateStudent } from "../../../services/students";
+import { updateStudent } from "../../services/students";
 import {
   Avatar, Box,
   FormControl,
@@ -12,12 +12,13 @@ import {
   TextField,
   Menu,
   MenuItem,
+  Typography,
 } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CloseIcon from "@mui/icons-material/Close";
 import CheckIcon from "@mui/icons-material/Check";
-import ConfirmationModal from "../../Modals/ConfirmationModal";
-import { StudentRow } from "../styled";
+import ConfirmationModal from "../Modals/ConfirmationModal";
+import { StudentRow } from "./styled";
 
 export const StudentDetails: FC<{
   details: StudentType;
@@ -106,30 +107,38 @@ export const StudentDetails: FC<{
               >
                 <div className={"edit__section"}>
                   <div className={"editable__field"}>
-                    <Box display={'flex'} gap={3}>
-                      <FormControl error={!!errors.first_name && !!submitCount}>
-                        <TextField
-                          variant="standard"
-                          autoFocus
-                          disabled={!editState}
-                          name={"first_name"}
-                          className={"name"}
-                          placeholder={"First name"}
-                          value={values.first_name}
-                          onChange={handleChange}
-                       />
-                      </FormControl>
-                      <FormControl error={!!errors.last_name && !!submitCount}>
-                        <TextField
-                          variant="standard"
-                          disabled={!editState}
-                          name={"last_name"}
-                          className={"name"}
-                          placeholder={"Last name"}
-                          value={values.last_name}
-                          onChange={handleChange}
-                        />
-                      </FormControl>
+                    <Box display={'flex'} gap={1}>
+                      {editState ? (
+                        <FormControl error={!!errors.first_name && !!submitCount}>
+                          <TextField
+                            variant="standard"
+                            autoFocus
+                            disabled={!editState}
+                            name={"first_name"}
+                            className={"name"}
+                            placeholder={"Nombres"}
+                            value={values.first_name}
+                            onChange={handleChange}
+                          />
+                        </FormControl>
+                      ) : (
+                        <Typography>{values.first_name}</Typography>
+                      )}
+                      {editState ? (
+                        <FormControl error={!!errors.last_name && !!submitCount}>
+                          <TextField
+                            variant="standard"
+                            disabled={!editState}
+                            name={"last_name"}
+                            className={"name"}
+                            placeholder={"Apellidos"}
+                            value={values.last_name}
+                            onChange={handleChange}
+                          />
+                        </FormControl>
+                      ) : (
+                        <Typography>{values.last_name}</Typography>
+                      )}
                     </Box>
                     <FormControl className="mt-2" error={!!errors.email && !!submitCount}>
                       <TextField
@@ -138,7 +147,7 @@ export const StudentDetails: FC<{
                         name={"email"}
                         type={"email"}
                         className={"email"}
-                        placeholder={"email"}
+                        placeholder={"E-mail"}
                         value={values.email}
                         onChange={handleChange}
                       />
@@ -147,7 +156,7 @@ export const StudentDetails: FC<{
                   <div className={"editable__action__section"}>
                     {editState ? (
                       <>
-                        <IconButton
+                        <IconButton                          
                           disabled={isSubmitting}
                           type={"submit"}
                           color={"primary"}
@@ -203,6 +212,7 @@ export const StudentDetails: FC<{
       </Menu>
 
       <ConfirmationModal
+        description={<span>Estás apunto de eliminar al estudiante <b>{details.first_name} {details.last_name}</b>. ¿Deseas continuar?</span>}
         open={openConfirmation}
         callBackFunction={handleDeleteCB}
         onClose={handleConfirmationClose}
