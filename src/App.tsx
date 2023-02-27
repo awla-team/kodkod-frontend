@@ -25,7 +25,6 @@ const App: React.FC = () => {
   const { user } = useAuth();
   const [fetching, setFetching] = useState<FetchStatus>(FetchStatus.Idle);
   const [open, setOpen] = useState<boolean>(false);
-
   const getClassesData = () => {
     getClassesByUser(user.id)
       .then((response: AxiosResponse) => {

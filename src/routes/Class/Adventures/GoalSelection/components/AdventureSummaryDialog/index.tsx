@@ -12,12 +12,31 @@ import CloseIcon from "@mui/icons-material/Close";
 import SkillSummary from "../SkillSummary";
 import StageSummary from "../StageSummary";
 import type { IAdventure } from "global/interfaces";
+import Toaster from "../../../../../../utils/Toster";
+import { setCurrentAdventure } from "../../../../../../services/adventures";
+import { ClassInterface } from "../../../../../../services/classes/interfaces";
+import { useParams, useNavigate } from "react-router-dom";
 
 const AdventureSummaryDialog: React.FC<{
   selectedAdventure: IAdventure;
   handleOnCloseModal: () => void;
   handleAdventureSelection: () => void;
 }> = ({ selectedAdventure, handleOnCloseModal, handleAdventureSelection }) => {
+  const { classId } = useParams();
+  const navigate = useNavigate();
+  const setAdventure = async () => {
+    if (classId && selectedAdventure) {
+      try {
+        const { data } = await setCurrentAdventure({
+          id_class: +classId,
+          id_adventure: selectedAdventure.id,
+        });
+        navigate(`/cursos/${classId}/aventuras`);
+      } catch (e: any) {
+        Toaster("error", e.message);
+      }
+    }
+  };
   return (
     <Dialog
       open={!!selectedAdventure}
@@ -184,11 +203,7 @@ const AdventureSummaryDialog: React.FC<{
         </Box>
       </DialogContent>
       <DialogActions className="d-flex align-items-center justify-content-center">
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleAdventureSelection}
-        >
+        <Button variant="contained" color="primary" onClick={setAdventure}>
           Quiero esta aventura
         </Button>
       </DialogActions>

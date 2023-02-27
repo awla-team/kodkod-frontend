@@ -23,9 +23,8 @@ const GoalSelection: React.FC = () => {
 
   const handleGoalSelectionSave = () => {
     // TODO: patch to adventure to asociate goal?
-    navigate("summary", {
+    navigate("summary?goal=" + selectedGoalId, {
       replace: true,
-      state: { selectedGoal: goals.find((goal) => goal.id === selectedGoalId) },
     });
   };
 
@@ -33,8 +32,8 @@ const GoalSelection: React.FC = () => {
     setLoadingGoals(FetchStatus.Pending);
     getGoals()
       .then((response: AxiosResponse) => response?.data)
-      .then((goalsResponse: Goal[]) => {
-        if (goalsResponse?.length) setGoals(goalsResponse);
+      .then((goalsResponse: { responseData: any }) => {
+        setGoals(goalsResponse.responseData);
         setLoadingGoals(FetchStatus.Success);
       })
       .catch((error) => {
