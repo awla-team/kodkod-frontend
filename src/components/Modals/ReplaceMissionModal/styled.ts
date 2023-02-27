@@ -6,6 +6,7 @@ import {
   DialogTitle,
 } from "@mui/material";
 import { dialogClasses } from "@mui/material/Dialog";
+import {dialogContentClasses} from '@mui/material/DialogContent'
 
 export const ReplaceMissionModal = styled(Dialog)`
   & .${dialogClasses.paper} {
@@ -21,11 +22,8 @@ export const ReplaceMissionModal = styled(Dialog)`
   }
 `;
 export const ReplaceMissionModalContent = styled(DialogContent)`
-  & .dialog__header__text {
-    font-weight: 700;
-    font-size: 1.25rem;
-  }
-
+  padding: 0px 24px;
+  
   & .mission__card__container {
     padding: 0.8rem;
     border: 1px solid #cacaca;
@@ -60,8 +58,22 @@ export const ReplaceMissionModalContent = styled(DialogContent)`
 `;
 
 export const ReplaceMissionModalTitle = styled(DialogTitle)`
-  text-align: right;
+  position: sticky;
+  top:0;
+  background: #fff;
+  z-index: 1;
+  & .close__icon__container {
+    text-align: right;
+  }
+
+  & .dialog__header__text {
+    font-weight: 700;
+    font-size: 1.25rem;
+  }
 `;
 
 export const ReplaceMissionModalActions = styled(DialogActions)`
-margin-block-start: 0.5rem`;
+  position: sticky;
+  padding: 1rem;
+  bottom: 0;
+  background: #fff;`;
