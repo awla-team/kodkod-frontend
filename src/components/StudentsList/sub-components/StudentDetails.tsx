@@ -9,7 +9,7 @@ import {
   Avatar, Box,
   FormControl,
   IconButton,
-  InputBase,
+  TextField,
   Menu,
   MenuItem,
 } from "@mui/material";
@@ -17,6 +17,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CloseIcon from "@mui/icons-material/Close";
 import CheckIcon from "@mui/icons-material/Check";
 import ConfirmationModal from "../../Modals/ConfirmationModal";
+import { StudentRow } from "../styled";
 
 export const StudentDetails: FC<{
   details: StudentType;
@@ -51,11 +52,7 @@ export const StudentDetails: FC<{
     }
   };
 
-  const [inputValues, setInputValues] = useState<StudentEditInputField>({
-    last_name: "",
-    first_name: "",
-    email: "",
-  });
+  const [inputValues, setInputValues] = useState<StudentEditInputField>({ ...details });
 
   useEffect(() => {
     if (details) {
@@ -91,27 +88,9 @@ export const StudentDetails: FC<{
   };
 
   return (
-    <>
-      <Avatar />
-      {!editState ? (
-        <div className={"student__details__container"}>
-          <div className={"student__details"}>
-            <div
-              className={"student__name"}
-            >{`${details.first_name} ${details.last_name}`}</div>
-            <div className={"student__email"}>{details.email}</div>
-          </div>
-          <IconButton
-            color={"inherit"}
-            onClick={(e) => {
-              handleMenuOpen(e);
-            }}
-          >
-            <MoreVertIcon />
-          </IconButton>
-        </div>
-      ) : (
-        <Formik initialValues={inputValues} onSubmit={handleSubmit}>
+    <StudentRow className={`d-flex align-items-center w-100 ${editState ? 'editable' : ''}`}>
+      <Avatar className="student-avatar me-3">{`${details.first_name[0]}${details.last_name[0]}`}</Avatar>
+      <Formik initialValues={inputValues} onSubmit={handleSubmit}>
           {({
             handleSubmit,
             values,
@@ -127,28 +106,35 @@ export const StudentDetails: FC<{
               >
                 <div className={"edit__section"}>
                   <div className={"editable__field"}>
-                   <Box display={'flex'} gap={1}>
-                     <FormControl error={!!errors.first_name && !!submitCount}>
-                       <InputBase
-                           name={"first_name"}
-                           className={"name"}
-                           placeholder={"First name"}
-                           value={values.first_name}
-                           onChange={handleChange}
+                    <Box display={'flex'} gap={3}>
+                      <FormControl error={!!errors.first_name && !!submitCount}>
+                        <TextField
+                          variant="standard"
+                          autoFocus
+                          disabled={!editState}
+                          name={"first_name"}
+                          className={"name"}
+                          placeholder={"First name"}
+                          value={values.first_name}
+                          onChange={handleChange}
                        />
-                     </FormControl>
-                     <FormControl error={!!errors.last_name && !!submitCount}>
-                       <InputBase
-                           name={"last_name"}
-                           className={"name"}
-                           placeholder={"Last name"}
-                           value={values.last_name}
-                           onChange={handleChange}
-                       />
-                     </FormControl>
-                   </Box>
-                    <FormControl error={!!errors.email && !!submitCount}>
-                      <InputBase
+                      </FormControl>
+                      <FormControl error={!!errors.last_name && !!submitCount}>
+                        <TextField
+                          variant="standard"
+                          disabled={!editState}
+                          name={"last_name"}
+                          className={"name"}
+                          placeholder={"Last name"}
+                          value={values.last_name}
+                          onChange={handleChange}
+                        />
+                      </FormControl>
+                    </Box>
+                    <FormControl className="mt-2" error={!!errors.email && !!submitCount}>
+                      <TextField
+                        variant="standard"
+                        disabled={!editState}
                         name={"email"}
                         type={"email"}
                         className={"email"}
@@ -159,26 +145,39 @@ export const StudentDetails: FC<{
                     </FormControl>
                   </div>
                   <div className={"editable__action__section"}>
-                    <IconButton
-                      color={"error"}
-                      onClick={() => setEditState(false)}
-                    >
-                      <CloseIcon />
-                    </IconButton>
-                    <IconButton
-                      disabled={isSubmitting}
-                      type={"submit"}
-                      color={"success"}
-                    >
-                      <CheckIcon />
-                    </IconButton>
+                    {editState ? (
+                      <>
+                        <IconButton
+                          disabled={isSubmitting}
+                          type={"submit"}
+                          color={"primary"}
+                        >
+                          <CheckIcon />
+                        </IconButton>
+                        <IconButton
+                          color={"error"}
+                          onClick={() => setEditState(false)}
+                        >
+                          <CloseIcon />
+                        </IconButton>                    
+                      </>
+                    ) : (
+                      <IconButton
+                        className="more-button"
+                        color={"inherit"}
+                        onClick={(e) => {
+                          handleMenuOpen(e);
+                        }}
+                      >
+                        <MoreVertIcon />
+                      </IconButton>
+                    )}
                   </div>
                 </div>
               </Form>
             );
           }}
         </Formik>
-      )}
 
       <Menu
         elevation={1}
@@ -192,14 +191,14 @@ export const StudentDetails: FC<{
             setOpenMenu(false);
           }}
         >
-          Edit
+          Editar
         </MenuItem>
         <MenuItem
           onClick={() => {
             setOpenConfirmation(true);
           }}
         >
-          Delete
+          Eliminar
         </MenuItem>
       </Menu>
 
@@ -208,6 +207,6 @@ export const StudentDetails: FC<{
         callBackFunction={handleDeleteCB}
         onClose={handleConfirmationClose}
       />
-    </>
+    </StudentRow>
   );
 };

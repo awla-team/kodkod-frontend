@@ -121,7 +121,7 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
   
   return (
     <EmotionalThermometerContainer>
-      <div className="container__header mb-4">
+      <div className="d-flex justify-content-between align-items-center mb-4">
         <div>
           <div className="d-flex align-items-center">
             <Typography className="me-2" component="h6" variant="h6" fontWeight="bold">Termómetro socioemocional</Typography>
@@ -193,7 +193,7 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
                       {challengeOptions.map((challenge, i) => <MenuItem value={challenge} key={`challenges-${i}`}>{challenge}</MenuItem>)}
                     </Select>
                   </FormControl>
-                  <FormControl className="w-100 mb-5" error={!!errors.most_remarkable && !!submitCount} disabled={!editable}>
+                  <FormControl className="w-100 mb-4" error={!!errors.most_remarkable && !!submitCount} disabled={!editable}>
                     <Typography component="label" variant="body1" fontWeight="bold" className="mb-2">¿Cuál fue el mayor logro de hoy?</Typography>
                     <Select
                       name="most_remarkable"
@@ -206,7 +206,7 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
                       {mostRemarkableOptions.map((most_remarkable, i) => <MenuItem value={most_remarkable} key={`most_remarkable-${i}`}>{most_remarkable}</MenuItem>)}
                     </Select>
                   </FormControl>
-                  <EmotionalThermometerActions>
+                  <EmotionalThermometerActions className="d-flex align-items-end justify-content-center">
                     {editable ? (
                       <div className="d-flex justify-content-center">
                         <Button disabled={!isValid || !dirty} color="primary" variant="contained" size="large" type="submit">Guardar Termómetro Socioemocional</Button>
