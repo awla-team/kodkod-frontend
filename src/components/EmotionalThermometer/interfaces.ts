@@ -49,3 +49,32 @@ export interface ThermometerCalendarProps {
   date: Moment;
   handleDateChange: (date: Moment) => void;
 }
+
+export interface EmotionalThermometerFormProps {
+  editable: boolean;
+  setEditable: (
+    editable: boolean
+  ) => void;
+};
+
+export interface IScoreOption {
+  text: string;
+  value: number;
+  icon: React.ReactNode;
+  selectedIcon: React.ReactNode; 
+};
+
+export interface ClassClimateMeterProps {
+  editable: boolean;
+}
+
+export interface TodayReviewsProps {
+  editable: boolean;
+
+  setEditable: Dispatch<SetStateAction<boolean>>;
+}
+
+export interface ThermometerCalendarProps {
+  date: Moment;
+  handleDateChange: (date: Moment) => void;
+}
