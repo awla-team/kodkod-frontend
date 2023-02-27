@@ -22,17 +22,20 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
       disableEscapeKeyDown
     >
       <Styled.ReplaceMissionModalTitle>
-        <IconButton color={"inherit"} onClick={() => onClose()}>
-          <CloseIcon />
-        </IconButton>
-      </Styled.ReplaceMissionModalTitle>
-      <Styled.ReplaceMissionModalContent>
+        <div className={'close__icon__container'}>
+          <IconButton color={"inherit"} onClick={() => onClose()}>
+            <CloseIcon />
+          </IconButton>
+        </div>
+
         <div>
           <h1 className={"dialog__header__text"}>Change mission</h1>
           <span>
             Select a new mission to replace <b>"{mission?.title}"</b>:
           </span>
         </div>
+      </Styled.ReplaceMissionModalTitle>
+      <Styled.ReplaceMissionModalContent>
 
         <div className={"mission__card__container"}>
           <div className={"mission__detail"}>
@@ -71,12 +74,12 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
             </div>
           </div>
         </div>
-        <Styled.ReplaceMissionModalActions>
-          <Button fullWidth variant={"contained"}>
-            Change mission
-          </Button>
-        </Styled.ReplaceMissionModalActions>
       </Styled.ReplaceMissionModalContent>
+      <Styled.ReplaceMissionModalActions>
+        <Button fullWidth variant={"contained"}>
+          Change mission
+        </Button>
+      </Styled.ReplaceMissionModalActions>
     </Styled.ReplaceMissionModal>
   );
 };
