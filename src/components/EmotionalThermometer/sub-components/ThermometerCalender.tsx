@@ -9,8 +9,6 @@ import { EmotionalThermometerType } from "../interfaces";
 import { getEmotionalThermometerByClassId } from "../../../services/emotional_thermometer";
 import Toaster from "utils/Toster";
 import { PickersDay, PickersDayProps } from "@mui/x-date-pickers";
-import Badge from "@mui/material/Badge";
-import { PickersDateContainer } from "./styled";
 
 const ThermometerCalender: FC<ThermometerCalenderProps> = ({
   date,
@@ -23,7 +21,7 @@ const ThermometerCalender: FC<ThermometerCalenderProps> = ({
 
   useEffect(() => {
     handleMonthChange(date);
-  }, [date]);
+  }, [date, classId]);
 
   const handleMonthChange = async (date: Moment.Moment) => {
     try {
