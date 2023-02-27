@@ -146,6 +146,7 @@ export const Chip = styled(Box)`
 
 const MissionCardContainer = styled(Card)`
   &.MuiPaper-root {
+    cursor: pointer;
     position: relative;
     background: #dadada;
     border-radius: 8px;

@@ -6,11 +6,15 @@ export const MissionAccomplishedDrawer = styled(Drawer)`
 
   & .${drawerClasses.paper} {
     width: 409px;
-    padding: 1rem;
+    padding: 0 1rem;
     height: 100vh;
   }
 
   & .drawer__header {
+    z-index: 1;
+    position: sticky;
+    top: 0;
+    background: #fff;
     text-align: right;
   }
 
@@ -52,6 +56,14 @@ export const MissionAccomplishedDrawer = styled(Drawer)`
   & .student__details__section {
     margin-block: 0.5rem;
     height: 46%;
-    min-height:250px;
+    min-height: 250px;
+  }
+
+  & .student__list__actions {
+    position: sticky;
+    bottom: 0;
+    z-index: 1;
+    background: #fff;
+    padding: 1rem;
   }
 `;
