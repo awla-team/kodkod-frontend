@@ -3,5 +3,5 @@ export interface ConfirmationModalProps {
   callBackFunction: Function;
   onClose: () => void;
   title?: string;
-  description?: string;
+  description?: string | React.ReactNode;
 }

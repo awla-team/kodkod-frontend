@@ -1,67 +1,40 @@
 import styled from "styled-components";
-import { Box } from "@mui/material";
-export const EmotionalThermometerContainer = styled(Box).withConfig({
-  shouldForwardProp: (prop, defaultValidatorFn) =>
-    !["calenderView"].includes(prop) && defaultValidatorFn(prop),
-})<{ calenderView?: boolean }>`
-  min-height: 672px;
+import { Box, Radio } from "@mui/material";
 
-  & .container__header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 2.25rem;
-
-    & .container__header__text {
-      flex-grow: 1;
-
-      & .header__container {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-
-        & .header__text {
-          font-weight: 700;
-          font-size: 1.25rem;
-        }
-      }
-
-      & .header__date {
-      }
+export const EmotionalThermometerContainer = styled(Box)`
+  form.disabled {
+    label {
+      opacity: 0.6;
     }
+  }  
+`;
 
-    & .calender__icon {
-      color: #000;
-
-      & .back__arrow {
-        transform: translateX(-5px);
-        width: 24px;
-        height: 24px;
-      }
-
-      border-radius: 50%;
-      width: 44px;
-      height: 44px;
-      box-shadow: -2px 3px 4px rgba(0, 0, 0, 0.25);
-      background: ${({calenderView}) =>
-          calenderView ? "" : 'url("/calender.svg")'} #ffffff center no-repeat;
-      background-size: 24px 24px;
-      border: none;
-      outline: none;
-      font-weight: 700;
-    }
-  }
-
-  & .helper__text {
-    background: #7e7e7e;
-    padding: 0.625rem;
-    font-weight: 700;
-    text-align: center;
-    color: #ffffff;
-  }
-
-  & .thermometer__content {
-    padding: 2.25rem;
+export const EmojiRadio = styled(Radio)`
+  svg {
+    width: 32px;
+    height: 32px;
+    fill: white;    
   }
 `;
+
+export const EmotionalThermometerActions = styled.div`
+  height: 54px;  
+`;
+
+export const PickersDateContainer= styled(Box)`
+  position: relative;
+
+  & .tick__icon {
+    text-align: center;
+    background: #2FB745;
+    height: 15px;
+    width: 15px;
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    font-size: 0.5rem;
+    color: #fff;
+    border-radius: 50%;
+    padding: 0.1rem;
+  }
+`

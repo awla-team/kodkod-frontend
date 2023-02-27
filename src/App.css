@@ -8,8 +8,7 @@
 .app-main-container {
   position: relative;  
   background-color: #F1F6FF;  
-  width: 100%;
-  padding: 36px 0;  
+  width: 100%;  
   overflow: auto;  
 }
 

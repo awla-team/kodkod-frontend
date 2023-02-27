@@ -1,7 +1,6 @@
 import React, { FC } from "react";
-import * as Styled from "./styled";
 import { AddStudentsDialogProps, FormInitialState } from "./interfaces";
-import { IconButton, TextField } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, TextField, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { Formik, Form, FormikHelpers, FieldArray } from "formik";
 import { useState } from "react";
@@ -9,6 +8,7 @@ import { addStudentsInClass } from "services/students";
 import Toaster from "utils/Toster";
 import * as Yup from "yup";
 import { StudentType } from "../../StudentsList/interfaces";
+import { StudentsFormDetailsContainer } from "./styled";
 
 const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
   open,
@@ -105,64 +105,48 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
   };
 
   return (
-    <Styled.StudentAddDialog
-      scroll={"body"}
-      open={open}
-      disableEscapeKeyDown
-      maxWidth={"sm"}
-      fullWidth={true}
-    >
-      <Styled.StudentAddDialogTitle>
-        <IconButton color={"inherit"} onClick={() => onClose()}>
-          <CloseIcon />
-        </IconButton>
-      </Styled.StudentAddDialogTitle>
-      <Styled.StudentAddDialogContent>
-        <h1 className={"bold__header__20"}>Add students</h1>
-
-        <TextField
-          error={inputFieldValueError}
-          helperText={inputFieldValueError && "You have entered invalid Email"}
-          value={inputFieldValue}
-          onKeyDown={handleStudentValues}
-          onChange={handleInputFieldChange}
-          fullWidth
-          placeholder={"Enter the emails, separated by comma"}
-        ></TextField>
-        <Styled.StudentsFormDetailsContainer>
-          <div className={"form__header"}>
-            <div className={"header__action"}></div>
-
-            <div className={"header__text"}>Full name</div>
-
-            <div className={"header__text"}>Email address</div>
-          </div>
-          <Formik
-            validationSchema={validationSchema}
-            enableReinitialize
-            initialValues={formInitialState}
-            onSubmit={handleSubmit}
-          >
-            {({
-              handleSubmit,
-              values,
-              handleChange,
-              isSubmitting,
-              errors,
-              submitCount,
-            }) => {
-              return (
-                <Form onSubmit={handleSubmit}>
-                  <div className={"student__details_container"}>
-                    <div className={"details__list"}>
+    <Dialog open={open} PaperProps={ { className: 'p-3' }} maxWidth="sm" fullWidth>
+      <DialogTitle fontWeight="bold">Añadir estudiantes</DialogTitle>
+      <Formik
+        validationSchema={validationSchema}
+        enableReinitialize
+        initialValues={formInitialState}
+        onSubmit={handleSubmit}
+      >
+        {({
+          handleSubmit,
+          values,
+          handleChange,
+          isSubmitting,
+          errors,
+          submitCount,
+        }) => {
+          return (
+            <Form onSubmit={handleSubmit}>
+              <DialogContent dividers className="py-5">
+                <StudentsFormDetailsContainer>
+                  <TextField
+                    className="mb-4"
+                    error={inputFieldValueError}
+                    helperText={inputFieldValueError && "Has ingresado un email inválido"}
+                    value={inputFieldValue}
+                    onKeyDown={handleStudentValues}
+                    onChange={handleInputFieldChange}
+                    fullWidth
+                    size="small"
+                    placeholder={"Ingresa los emails separados por coma"}
+                  ></TextField>                    
+                  <div>
+                    <div className="details-list">
                       <FieldArray name={"students"}>
                         {({ remove }) => {
                           return values.students.map((student, index) => {
                             return (
-                              <div key={index} className={"student__details"}>
-                                <div className={"delete__action"}>
-                                  <IconButton color={"inherit"}>
+                              <div key={index} className="d-flex align-items-center">
+                                <div className="me-2">
+                                  <IconButton color={"inherit"} size="small">
                                     <CloseIcon
+                                      fontSize="small"
                                       onClick={() => {
                                         setFormInitialState((prevState) => {
                                           return {
@@ -175,8 +159,8 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
                                     />
                                   </IconButton>
                                 </div>
-                                <div className={"input_field_group"}>
-                                  <div className={"input__field"}>
+                                <div className="d-flex">
+                                  <div className="me-3">
                                     <TextField
                                       error={
                                         !!submitCount &&
@@ -186,11 +170,11 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
                                       name={`students[${index}].first_name`}
                                       onChange={handleChange}
                                       variant={"standard"}
-                                      placeholder={"FirstName"}
+                                      placeholder={"Nombres"}
                                       fullWidth
                                     />
                                   </div>
-                                  <div className={"input__field"}>
+                                  <div className="me-3">
                                     <TextField
                                       error={
                                         !!submitCount &&
@@ -200,12 +184,12 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
                                       name={`students[${index}].last_name`}
                                       onChange={handleChange}
                                       variant={"standard"}
-                                      placeholder={"LastName"}
+                                      placeholder={"Apellidos"}
                                       fullWidth
                                     />
                                   </div>
                                 </div>
-                                <div className={"input__field"}>
+                                <div>
                                   <TextField
                                     error={
                                       !!submitCount &&
@@ -216,6 +200,7 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
                                     onChange={handleChange}
                                     type={"email"}
                                     variant={"standard"}
+                                    placeholder={"E-mail"}
                                     fullWidth
                                   />
                                 </div>
@@ -225,28 +210,32 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
                         }}
                       </FieldArray>
                     </div>
-                    <div className={"details__helper__text"}>
-                      You are adding <b>{values.students.length}</b> students to{" "}
-                      <b>{classDetails.alias}</b> class
-                    </div>
+                    <div className="d-flex">
+                      <Typography textAlign="right" component="span" variant="body2" className="mt-4 w-100">
+                        Estás añadiendo <b>{values.students.length}</b> estudiantes a la clase{" "}
+                        <b>{classDetails.alias}</b>
+                      </Typography>
+                    </div>                    
                   </div>
-
-                  <div className={"action__container"}>
-                    <Styled.ActionButton
-                      disabled={!values.students.length || isSubmitting}
-                      variant={"contained"}
-                      type={"submit"}
-                    >
-                      Add students
-                    </Styled.ActionButton>
-                  </div>
-                </Form>
-              );
-            }}
-          </Formik>
-        </Styled.StudentsFormDetailsContainer>
-      </Styled.StudentAddDialogContent>
-    </Styled.StudentAddDialog>
+                </StudentsFormDetailsContainer>
+              </DialogContent>
+              <DialogActions> 
+                <Button variant={"outlined"} onClick={() => onClose()}>
+                  Cancelar
+                </Button>
+                <Button
+                  disabled={!values.students.length || !!isSubmitting}
+                  variant={"contained"}
+                  type={"submit"}
+                >
+                  Añadir estudiantes
+                </Button>                    
+              </DialogActions>
+            </Form>
+          );
+        }}
+      </Formik>
+    </Dialog>
   );
 };
 

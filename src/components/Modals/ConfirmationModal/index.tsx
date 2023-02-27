@@ -1,7 +1,6 @@
-import * as Styled from "./styled";
 import { FC } from "react";
 import { ConfirmationModalProps } from "./interface";
-import { Button, DialogActions } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 
 const ConfirmationModal: FC<ConfirmationModalProps> = ({
   open,
@@ -11,29 +10,20 @@ const ConfirmationModal: FC<ConfirmationModalProps> = ({
   title,
 }) => {
   return (
-    <Styled.ConfirmationModal open={open} maxWidth={"sm"} fullWidth>
-      <Styled.ConfirmationModalTitle>
-        {title || "Confirmation"}
-      </Styled.ConfirmationModalTitle>
-      <Styled.ConfirmationModalContent>
-        <div>{description || "Are you sure you want to delete ?"}</div>
-      </Styled.ConfirmationModalContent>
-      <DialogActions>
-        <Styled.ActionButton
-          variant={"contained"}
-          className={"secondary__button"}
-          onClick={() => onClose()}
-        >
-          No
-        </Styled.ActionButton>
-        <Styled.ActionButton
-          variant={"contained"}
-          onClick={() => callBackFunction()}
-        >
-          Yes
-        </Styled.ActionButton>
+    <Dialog open={open} PaperProps={ { className: 'p-3' }} maxWidth="sm">
+      <DialogTitle fontWeight="bold">{title || "Confirmación"}</DialogTitle>
+      <DialogContent className="py-4">
+        <div>{description}</div>
+      </DialogContent>
+      <DialogActions className="pt-3">
+        <Button variant={"outlined"} onClick={() => onClose()}>
+          No, mantener
+        </Button>
+        <Button variant={"contained"} onClick={() => callBackFunction()}>
+          Sí, eliminar
+        </Button>                    
       </DialogActions>
-    </Styled.ConfirmationModal>
+    </Dialog>
   );
 };
 

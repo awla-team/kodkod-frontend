@@ -5,34 +5,20 @@ import {
   StudentListContent,
   StudentsListDetailsContainer,
 } from "./styled";
-import React, { Dispatch, FC, SetStateAction, useEffect } from "react";
+import { Dispatch, FC, SetStateAction } from "react";
 import {
-  Avatar,
-  Button,
-  IconButton,
-  Menu,
-  MenuItem,
-  InputBase,
-  FormControl,
+  Button, Typography,
 } from "@mui/material";
-import {
-  StudentEditInputField,
+import {  
   StudentsListProps,
   StudentType,
 } from "./interfaces";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useState } from "react";
 import AddStudentsDialog from "../Modals/AddStudentsDialog";
 import { useClassContext } from "../../routes/Class/Context";
 import { useParams } from "react-router-dom";
-import { deleteStudent, updateStudent } from "../../services/students";
-import Toaster from "../../utils/Toster";
-import ConfirmationModal from "../Modals/ConfirmationModal";
-import CloseIcon from "@mui/icons-material/Close";
-import CheckIcon from "@mui/icons-material/Check";
-import { Formik, Form, FormikHelpers } from "formik";
-import * as Yup from "yup";
-import { StudentDetails } from "./sub-components";
+import { deleteStudent } from "../../services/students";
+import { StudentDetails } from "./StudentDetails";
 
 const StudentsList: FC<StudentsListProps> = ({
   studentsData,
@@ -67,7 +53,8 @@ const StudentsList: FC<StudentsListProps> = ({
   };
   return (
     <StudentListContainer>
-      <h1 className={"header__text"}>Students list</h1>
+      <Typography component="h6" variant="h6" fontWeight="bold">Lista de estudiantes</Typography>
+      <Typography component="span" variant="body1" sx={{ opacity: '0.6' }}>{`${studentsData.length} estudiantes en total`}</Typography>
       <StudentListContent hasDetails={!!studentsData.length}>
         {studentsData.length ? (
           <StudentsListDetails
@@ -99,8 +86,8 @@ const DontHaveDetails: FC<{
       <span className={"helper__text"}>
         Your class has no associated students yet
       </span>
-      <Button variant={"contained"} onClick={() => setOpenModal(true)}>
-        Add students
+      <Button size="large" variant={"contained"} onClick={() => setOpenModal(true)}>
+        Añadir estudiantes
       </Button>
     </DontHaveDetailsContent>
   );
@@ -123,8 +110,8 @@ const StudentsListDetails: FC<{
         })}
       </div>
 
-      <Button variant={"contained"} onClick={() => setOpenModal(true)}>
-        Add students
+      <Button size="large" variant={"contained"} onClick={() => setOpenModal(true)}>
+        Añadir estudiantes
       </Button>
     </StudentsListDetailsContainer>
   );

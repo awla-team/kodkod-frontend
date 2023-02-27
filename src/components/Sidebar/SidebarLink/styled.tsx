@@ -39,7 +39,7 @@ export const SidebarLinkContainer = styled.div`
   // On active
   &.active {
     a > div {
-      background-color: ${(props) => props.theme.palette.secondary.main};            
+      background-color: ${(props) => props.theme.palette.highlight.main};            
       box-shadow: none;
       border: none;
     }

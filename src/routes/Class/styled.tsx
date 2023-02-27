@@ -19,40 +19,65 @@ export const HomeContainer = styled.div`
 
 export const NavTabsContainer = styled(Box)`
   display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
+  height: 64px;
+  width: 100%;
+  background: #fff;
+  position: fixed;
+  border-bottom: 1px solid rgb(33, 33, 33, 0.08);      
   justify-content: center;
   align-items: center;
-  & .nav__tab {
-    flex-basis: 15%;
-    max-width: 25%;
-    min-width: 100px;
-    padding: 0.5rem;
+  gap: 24px;
+
+  & > div {
     display: flex;
     flex-direction: column;
-    min-height: 80px;
-    text-align: center;
-    align-items: center;
-    gap: 0.5rem;
-    & .nav__icon {
-      max-width: 36px;
-      max-height: 36px;
+    color: rgba(0, 0, 0, 0.4);
+    padding: 6px;
+    border-radius: 8px;
+    transition: all 0.2s ease;    
+
+    svg {
+      height: 24px;
+      width: auto;      
+
+      path {
+        transition: all 0.2s ease;
+        opacity: 1;
+
+        &:first-child {
+          stroke-width: 1px;
+          stroke: transparent;
+          fill: transparent;
+        }
+
+        &:last-child {
+          fill: rgba(0, 0, 0, 0.4);
+        }
+      }
     }
 
-    & .nav__title {
-      font-size: 1.25rem;
+    &:hover {
+      color: ${(props) => props.theme.palette.primary.light};
+      svg path {
+        &:last-child {
+          fill: ${(props) => props.theme.palette.primary.light};
+        }
+      }
+    }
+
+    &.active {
+      color: ${(props) => props.theme.palette.primary.dark};
+      svg path {
+        &:first-child {
+          fill: ${(props) => props.theme.palette.primary.dark};
+          stroke: ${(props) => props.theme.palette.primary.dark};
+          stroke-width: 1px;
+        }        
+        &:last-child {
+          fill: ${(props) => props.theme.palette.primary.dark};
+          
+        }
+      }
     }
   }
 `;
-
-/* button {
-    font-family: "Montserrat";
-    font-size: 18px;
-    text-transform: none;
-    border-radius: 8px;
-    width: 240px;
-    box-shadow: none;
-    background-color: #68bbd4;
-    border: 1px solid #68bbd4;
-    border-width: 1px;   
-  }*/

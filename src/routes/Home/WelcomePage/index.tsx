@@ -7,18 +7,20 @@ const WelcomePage: FC<WelcomePageProps> = ({
   handleOpenModal,
 }: WelcomePageProps) => {
   return (
-    <WelcomePageContainer className="p-5">
-      <img className="mb-5" />
-      <div> 
-        <Typography component="h1" variant="h5" className="fw-bold text-center mb-3">Comienza añadiendo tu primer curso</Typography>
-        <Typography component="div" variant="body1" className="mb-4">
-          Y descubre cómo mejorar el ambiente de la sala de clases de manera divertida.
-        </Typography>
-        <Button onClick={handleOpenModal} variant={"contained"} className="w-100">
-          Añade tu primer curso
-        </Button>       
-      </div>      
-    </WelcomePageContainer>
+    <div className="w-100 d-flex align-items-center justify-content-center p-5">
+      <WelcomePageContainer className="p-5">
+        <img className="mb-5" />
+        <div> 
+          <Typography component="h1" variant="h5" className="fw-bold text-center mb-3">Comienza añadiendo tu primer curso</Typography>
+          <Typography component="div" variant="body1" className="mb-4">
+            Y descubre cómo mejorar el ambiente de la sala de clases de manera divertida.
+          </Typography>
+          <Button onClick={handleOpenModal} variant={"contained"} className="w-100">
+            Añade tu primer curso
+          </Button>       
+        </div>      
+      </WelcomePageContainer>
+    </div>    
   );
 };
 export default WelcomePage;

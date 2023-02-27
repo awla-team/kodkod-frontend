@@ -1,6 +1,15 @@
 import "styled-components";
 import { Theme } from "@mui/material/styles";
 
+declare module '@mui/material/styles/createPalette' {
+  interface Palette {
+      highlight: Palette['primary'];
+  }
+  interface PaletteOptions {
+      highlight: PaletteOptions['primary'];
+  }
+}
+
 interface CustomTheme {
   bg?: {
     main: string;

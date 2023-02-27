@@ -1,7 +1,7 @@
 import { DetailsCardContent } from "./styled";
 import { ClassDetailsCardProps } from "./interfaces";
 import { FC, useMemo } from "react";
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 const ClassDetailsCard: FC<ClassDetailsCardProps> = ({ classDetails }) => {
@@ -15,29 +15,14 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({ classDetails }) => {
     return classDetails && !!classDetails.current_adventure;
   }, [classDetails]);
   return (
-    <DetailsCardContent>
-      <div className={"card__title"}>
-        <h1 className={"card__title__text"}>{classDetails.alias}</h1>
-        <button className={"card__title__notification"} />
+    <DetailsCardContent>      
+      <Typography component="h2" variant="h2" fontWeight="bold" className="mb-2">{classDetails.alias}</Typography>
+      <div className="mb-3">
+        <Typography component="span" variant="body1">Empieza una aventura con tus estudiantes para mejorar el ambiente de tu sala de clases.</Typography>
       </div>
-      <div className={"card__content"}>
-        <p className={"adventure__status"}>
-          {hasAdventure
-            ? "You have an ongoing adventure!"
-            : "You haven't selected an adventure yet."}
-        </p>
-        <p className={"adventure__details"}>
-          <b>
-            {" "}
-            {hasAdventure
-              ? "With the reward in mind - Stage 2"
-              : "Go to adventure to start working with your students"}
-          </b>
-        </p>
-      </div>
-      <div className={"card__action"}>
-        <Button variant={"contained"} onClick={handleNavigate}>
-          {hasAdventure ? "Continue adventure" : "Start an adventure"}
+      <div>
+        <Button variant="contained" size="large" onClick={handleNavigate}>
+          Selecciona una aventura
         </Button>
       </div>
     </DetailsCardContent>
