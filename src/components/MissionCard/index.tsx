@@ -212,7 +212,10 @@ const MissionCard: React.FC<IMissionCardProps> = (props) => {
         {openModal && (
           <PointsContainer
             className="d-flex align-items-center justify-content-center top-position"
-            onClick={() => openModal(props)}
+            onClick={(e) => {
+              e.stopPropagation();
+              openModal(props);
+            }}
           >
             <img src={SwitchIcon} />
           </PointsContainer>
