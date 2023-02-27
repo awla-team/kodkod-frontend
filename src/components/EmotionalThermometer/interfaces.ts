@@ -1,4 +1,5 @@
-import React from "react";
+import { Moment } from "moment";
+import React, { Dispatch, SetStateAction } from "react";
 import { ClassInterface } from "services/classes/interfaces";
 
 export interface EmotionalThermometerProps {
@@ -31,3 +32,18 @@ export interface IScoreOption {
   icon: React.ReactNode;
   selectedIcon: React.ReactNode; 
 };
+
+export interface ClassClimateMeterProps {
+  editable: boolean;
+}
+
+export interface TodayReviewsProps {
+  editable: boolean;
+
+  setEditable: Dispatch<SetStateAction<boolean>>;
+}
+
+export interface ThermometerCalendarProps {
+  date: Moment;
+  handleDateChange: (date: Moment) => void;
+}
