@@ -18,7 +18,7 @@ import AddStudentsDialog from "../Modals/AddStudentsDialog";
 import { useClassContext } from "../../routes/Class/Context";
 import { useParams } from "react-router-dom";
 import { deleteStudent } from "../../services/students";
-import { StudentDetails } from "./sub-components";
+import { StudentDetails } from "./StudentDetails";
 
 const StudentsList: FC<StudentsListProps> = ({
   studentsData,
