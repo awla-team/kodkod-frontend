@@ -166,7 +166,11 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
           </div>
         </>
       ) : (
-        <ThermometerCalender date={date} handleDateChange={handleDateChange} />
+        <ThermometerCalender
+          classId={classDetails.id}
+          date={date}
+          handleDateChange={handleDateChange}
+        />
       )}
     </Styled.EmotionalThermometerContainer>
   );

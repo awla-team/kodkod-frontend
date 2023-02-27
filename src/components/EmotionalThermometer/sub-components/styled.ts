@@ -1,5 +1,16 @@
 import styled from "styled-components";
 import { Box, Button } from "@mui/material";
+import {
+  CalendarPicker as MuiCalendarPicker,
+  CalendarPickerProps,
+} from "@mui/x-date-pickers/CalendarPicker";
+import { Moment } from "moment";
+import {
+  PickersDay as MuiPickersDay,
+  PickersDayProps,
+} from "@mui/x-date-pickers";
+
+import { withStyles } from "@mui/material";
 
 export const ClimateThermometerContainer = styled(Box)`
   & .header__text {
@@ -101,3 +112,26 @@ export const ThermometerCalenderView = styled(Box)`
     }
   }
 `;
+
+export const CalendarPicker = styled(MuiCalendarPicker)<
+  CalendarPickerProps<Moment>
+>``;
+
+
+export const PickersDateContainer= styled(Box)`
+  position: relative;
+
+  & .tick__icon {
+    text-align: center;
+    background: #2FB745;
+    height: 15px;
+    width: 15px;
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    font-size: 0.5rem;
+    color: #fff;
+    border-radius: 50%;
+    padding: 0.1rem;
+  }
+`
