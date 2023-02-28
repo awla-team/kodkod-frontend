@@ -5,32 +5,34 @@ export interface IRewardCardElementProps {
   type: string;
 }
 
-export const RewardCardContainer = styled.div`
+export const RewardCardContainer = styled.div.withConfig({
+  shouldForwardProp: (prop, defaultValidatorFn) =>
+    !["type"].includes(prop) && defaultValidatorFn(prop),
+})`
   .points-container {
-    border: 3px solid
-      ${(props: IRewardCardElementProps) => {
-        switch (props.type) {
-          case "single":
-            return "#68BBD4";
-          case "course":
-            return "#F962BB";
-          default:
-            return "#fff";
-        }
-      }};
+    border: 3px solid ${(props: IRewardCardElementProps) => {
+      switch (props.type) {
+        case "single":
+          return "#68BBD4";
+        case "course":
+          return "#F962BB";
+        default:
+          return "#fff";
+      }
+    }};
   }
+
   .MuiPaper-root {
-    border: 1px solid
-      ${(props: IRewardCardElementProps) => {
-        switch (props.type) {
-          case "single":
-            return "#68BBD4";
-          case "course":
-            return "#F962BB";
-          default:
-            return "#fff";
-        }
-      }};
+    border: 1px solid ${(props: IRewardCardElementProps) => {
+      switch (props.type) {
+        case "single":
+          return "#68BBD4";
+        case "course":
+          return "#F962BB";
+        default:
+          return "#fff";
+      }
+    }};
     background: ${(props: IRewardCardElementProps) => {
       switch (props.type) {
         case "single":
@@ -42,12 +44,15 @@ export const RewardCardContainer = styled.div`
       }
     }};
   }
+
   text-align: center;
   flex: 0 0 240px;
+
   img {
     width: 64px;
     height: 64px;
   }
+
   padding: 16px;
 `;
 
