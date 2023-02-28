@@ -16,8 +16,6 @@ export const RewardsViewContainer= styled(Box)`
   & .rewards__sections {
     display: flex;
     flex-direction: column;
-    padding-block: 2rem;
-    gap: 1rem;
 
     & .header__text {
       font-size: 1.25rem;
@@ -29,36 +27,10 @@ export const RewardsViewContainer= styled(Box)`
       line-height: 1.5rem;
     }
 
-    & .rewards__container {
-
-      & .rewards__scrollable__container {
-
-        display: flex;
-        flex-wrap: nowrap;
-        gap: 3.375rem;
-        width: 100%;
-        overflow: hidden;
-        overflow-x: auto;
-        overscroll-behavior-x: contain;
-        scroll-snap-type: x mandatory;
-
-        & > * {
-          scroll-snap-align: start;
-          position: relative;
-          &:not(:last-of-type):after {
-            content: '';
-            position: absolute;
-            height: 5px;
-            width: calc(2rem + 3.375rem);
-            background: #000;
-            top: 50%;
-            right: -29%;
-
-          }
-        }
-      }
+    & .rewards__scrollable__container {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 3.375rem;
     }
-
-
   }
 `
