@@ -15,3 +15,17 @@ export const sortClasses = (classes?: ClassInterface[]): ClassInterface[] => {
   }
   return [];
 };
+
+export const generateQueryParamsFromObject = (obj: any): string => {
+  let finalQueryParamString = "";
+  if (typeof obj === "object" && !Array.isArray(obj)) {
+    Object.keys(obj).forEach((key, index) => {
+      if (index === 0) {
+        finalQueryParamString += `?${key}=${obj[key]}`;
+      } else {
+        finalQueryParamString += `&${key}=${obj[key]}`;
+      }
+    });
+  }
+  return finalQueryParamString;
+};

@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useMemo, useState } from "react";
 import * as Styled from "./styled";
 import {
   TextField,
@@ -7,9 +7,24 @@ import {
   Avatar,
   Button,
 } from "@mui/material";
+import Toaster from "utils/Toster";
+import { StudentType } from "../../StudentsList/interfaces";
+import { getUsers } from "services/users";
+import { StudentsSelectableListProps } from "./interfaces";
 
-export const StudentsSelectableList: FC = () => {
+export const StudentsSelectableList: FC<StudentsSelectableListProps> = ({
+  mission,
+}) => {
   const [selected, setSelected] = useState<any>({});
+  const [studentsList, setStudentsLists] = useState<StudentType[]>([]);
+
+  const selectedLength = useMemo(() => {
+    return Object.keys(selected).length;
+  }, [selected]);
+
+  useEffect(() => {
+    if (mission) handleGetStudents();
+  }, [mission]);
   const handleCheck = (
     { target }: React.ChangeEvent<HTMLInputElement>,
     value: number | string
@@ -29,14 +44,22 @@ export const StudentsSelectableList: FC = () => {
     const { checked } = target;
     const selectAll: any = {};
     if (checked) {
-      Array(10)
-        .fill(true)
-        .forEach((res, index) => {
-          selectAll[index] = res;
-        });
+      studentsList.forEach((res, index) => {
+        selectAll[res.id] = true;
+      });
       return setSelected(selectAll);
     }
     return setSelected({});
+  };
+
+  const handleGetStudents = async () => {
+    try {
+      const { data }: { data: { responseData: StudentType[] } } =
+        await getUsers({ role: "student" });
+      setStudentsLists(data.responseData);
+    } catch (e: any) {
+      Toaster("error", e.message);
+    }
   };
   return (
     <Styled.StudentListContainer>
@@ -50,41 +73,36 @@ export const StudentsSelectableList: FC = () => {
           control={
             <Checkbox
               onChange={handleAllSelect}
-              checked={Array(10)
-                .fill(true)
-                .every((key, index) => selected[index])}
+              checked={studentsList.every((res, index) => selected[res.id])}
             />
           }
           label={"Select all"}
         />
         <div className={"scrollable__container"}>
-          {Array(10)
-            .fill("")
-            .map((res, index) => {
-              return (
-                <div key={index} className={"student__detail__container"}>
-                  <Styled.Checkbox
-                    onChange={(e) => handleCheck(e, index)}
-                    checked={!!selected[index]}
-                  />
-                  <div className={"student__detail"}>
-                    <Avatar />
-                    <div className={"student__details__text"}>
-                      <div className={"student_name"}>
-                        Álvaro Arratia Ramirez
-                      </div>
-                      <div className={"student__email"}>
-                        a.arratia@colegio.cl
-                      </div>
+          {studentsList.map((res, index) => {
+            return (
+              <div key={index} className={"student__detail__container"}>
+                <Styled.Checkbox
+                  onChange={(e) => handleCheck(e, res.id)}
+                  checked={!!selected[res.id]}
+                />
+                <div className={"student__detail"}>
+                  <Avatar />
+                  <div className={"student__details__text"}>
+                    <div className={"student_name"}>
+                      {`${res.first_name} ${res.last_name}`}
                     </div>
+                    <div className={"student__email"}>{`${res.email}`}</div>
                   </div>
                 </div>
-              );
-            })}
+              </div>
+            );
+          })}
         </div>
       </div>
       <div className={"student__selection__count"}>
-        <b>5</b> of <b>5</b> students selected
+        <b>{selectedLength}</b> of <b>{studentsList.length}</b> students
+        selected
       </div>
     </Styled.StudentListContainer>
   );
