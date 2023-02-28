@@ -1,5 +1,6 @@
 import "styled-components";
 import { Theme } from "@mui/material/styles";
+import Missions from "../routes/Class/Adventures/Adventure/Missions";
 
 declare module '@mui/material/styles/createPalette' {
   interface Palette {
