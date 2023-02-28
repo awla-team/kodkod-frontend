@@ -16,7 +16,7 @@ export interface GoalResponseType {
 }
 
 export interface AdventureWithProviderProps {
-  adventure: IAdventure;
+  adventure?: IAdventure;
 }
 
 export interface AdventureProviderProps
