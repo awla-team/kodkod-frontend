@@ -1,5 +1,6 @@
 import "styled-components";
 import { Theme } from "@mui/material/styles";
+import Missions from "../routes/Class/Adventures/Adventure/Missions";
 
 declare module '@mui/material/styles/createPalette' {
   interface Palette {
@@ -36,6 +37,8 @@ export interface ISkill {
   title: string;
   icon: string;
   color: string;
+
+  points: number;
 }
 
 export interface IAdventureSkill {
@@ -55,7 +58,17 @@ export interface IAdventure {
   overview: string;
   expectedResults: string[];
   skills?: ISkill[];
-  stages?: IStage[];
+  template_stages?: TemplateStages[];
+}
+
+export interface TemplateStages {
+  id: number;
+  title: string;
+  icon: string;
+
+  id_adventure: number;
+
+  missions?: IMission[];
 }
 
 export interface IStage {
