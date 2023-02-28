@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import * as Styled from "./styled";
 import { MissionAccomplishedProps } from "./interfaces";
 import CloseIcon from "@mui/icons-material/Close";
-import {Button, IconButton} from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import MissionCard from "../../MissionCard";
 import { StudentsSelectableList } from "../../SharedComponents";
 
@@ -10,6 +10,7 @@ const MissionAccomplished: FC<MissionAccomplishedProps> = ({
   open,
   anchor = "right",
   onClose,
+  mission,
 }) => {
   return (
     <Styled.MissionAccomplishedDrawer
@@ -50,7 +51,7 @@ const MissionAccomplished: FC<MissionAccomplishedProps> = ({
       </div>
 
       <div className={"student__details__section"}>
-        <StudentsSelectableList />
+        <StudentsSelectableList mission={mission} />
       </div>
       <div className={"student__list__actions"}>
         <Button variant={"contained"} fullWidth>

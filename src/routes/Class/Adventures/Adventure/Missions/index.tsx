@@ -62,6 +62,7 @@ const Missions: FC = () => {
         open={openDrawer && !!selectedMission}
         anchor={"right"}
         onClose={handleDrawerClose}
+        mission={selectedMission}
       />
     </MissionContainer>
   );
