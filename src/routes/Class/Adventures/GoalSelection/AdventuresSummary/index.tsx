@@ -9,6 +9,7 @@ import AdventureSummaryDialog from "../components/AdventureSummaryDialog";
 import { useSearchParams } from "react-router-dom";
 import { getGoalById } from "services/goals";
 import { GoalType } from "../../interfaces";
+import Toaster from "../../../../../utils/Toster";
 
 const AdventuresSummary: React.FC = () => {
   const [loading, setLoading] = useState<FetchStatus>(FetchStatus.Idle);
@@ -37,8 +38,8 @@ const AdventuresSummary: React.FC = () => {
           setSelectedGoal(data.responseData);
           setLoading(FetchStatus.Success);
         })
-        .catch((error) => {
-          console.error(error);
+        .catch((error: any) => {
+          Toaster("error", error.message);
           setLoading(FetchStatus.Error);
         });
     }
@@ -81,12 +82,12 @@ const AdventuresSummary: React.FC = () => {
                 title={adventure.title}
                 info={
                   <div>
-                    {adventure?.adventureSkills?.map((skill, index) => (
+                    {adventure?.skills?.map((skill, index) => (
                       <div
                         key={index}
                         className="d-flex align-items-center gap-1"
                       >
-                        <span className="me-2">{skill.skill.title}</span>
+                        <span className="me-2">{skill.title}</span>
                         <div className="d-flex">
                           <Point highlighted={skill.points > 0} />
                           <Point highlighted={skill.points > 1} />
