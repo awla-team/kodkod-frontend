@@ -2,6 +2,7 @@ import { FC } from "react";
 import * as Styled from "./styled";
 import { Stepper, Step, StepLabel, Button } from "@mui/material";
 import { StepIconProps } from "@mui/material/StepIcon";
+import { Link as RouterLink } from "react-router-dom";
 
 const CurrentStage: FC = () => {
   return (
@@ -31,8 +32,12 @@ const CurrentStage: FC = () => {
       </div>
 
       <div className={"action-container"}>
-        <Button variant={"contained"}>See rewards</Button>
-        <Button variant={"contained"} disabled>Unlock Stage 2</Button>
+        <Button variant={"contained"} component={RouterLink} to={"rewards"}>
+          See rewards
+        </Button>
+        <Button variant={"contained"} disabled>
+          Unlock Stage 2
+        </Button>
       </div>
     </Styled.CurrentStageContainer>
   );

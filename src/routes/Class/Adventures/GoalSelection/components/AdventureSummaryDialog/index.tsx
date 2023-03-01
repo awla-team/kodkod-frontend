@@ -93,39 +93,17 @@ const AdventureSummaryDialog: React.FC<{
             </Typography>
             <div className="d-flex flex-wrap flex-lg-nowrap gap-3">
               {/* TODO: remove this three SkillSummary components */}
-              <SkillSummary
-                key={0}
-                title={"adventureSkill"}
-                points={1}
-                icon={""}
-                color="green"
-              />
-              <SkillSummary
-                key={1}
-                title={"adventureSkill"}
-                points={2}
-                icon={""}
-                color="red"
-              />
-              <SkillSummary
-                key={2}
-                title={"adventureSkill"}
-                points={3}
-                icon={""}
-                color="blue"
-              />
-              {!!selectedAdventure?.adventureSkills?.length
-                ? selectedAdventure.adventureSkills.map(
-                    (adventureSkill, index) => (
-                      <SkillSummary
-                        key={`${adventureSkill.skill.id}-${adventureSkill.skill.title}-${index}`}
-                        title={adventureSkill.skill.title}
-                        points={adventureSkill.points}
-                        icon={adventureSkill.skill.icon}
-                        color={adventureSkill.skill.color}
-                      />
-                    )
-                  )
+
+              {!!selectedAdventure?.skills?.length
+                ? selectedAdventure.skills.map((adventureSkill, index) => (
+                    <SkillSummary
+                      key={`${adventureSkill.id}-${adventureSkill.title}-${index}`}
+                      title={adventureSkill.title}
+                      points={adventureSkill.points}
+                      icon={adventureSkill.icon}
+                      color={adventureSkill.color}
+                    />
+                  ))
                 : null}
             </div>
           </section>
@@ -178,26 +156,15 @@ const AdventureSummaryDialog: React.FC<{
               Etapas de la aventura
             </Typography>
             <div className="d-flex flex-column gap-2 align-items-center">
-              {!!selectedAdventure?.stages?.length
-                ? selectedAdventure.stages.map((stage, index) => (
+              {!!selectedAdventure?.template_stages?.length
+                ? selectedAdventure.template_stages.map((stage, index) => (
                     <StageSummary
                       key={`${index}-${stage.id}-${stage.title}`}
                       title={stage.title}
-                      description={stage.description}
+                      description={""}
                     />
                   ))
                 : null}
-              {/* TODO: remove this two StageSummary components */}
-              <StageSummary
-                key={0}
-                title={"stage.title"}
-                description={"stage.description"}
-              />
-              <StageSummary
-                key={1}
-                title={"stage.title"}
-                description={"stage.description"}
-              />
             </div>
           </section>
         </Box>

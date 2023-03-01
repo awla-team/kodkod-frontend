@@ -15,6 +15,7 @@ import ClassContextProvider from "./routes/Class/Context";
 import AdventuresSummary from "routes/Class/Adventures/GoalSelection/AdventuresSummary";
 import "./index.css";
 import AuthContextProvider from "./contexts/AuthContext";
+import RewardsView from "./components/RewardsView";
 
 export const router = createBrowserRouter([
   {
@@ -56,6 +57,10 @@ export const router = createBrowserRouter([
           {
             path: "puntajes",
             element: <Points />,
+          },
+          {
+            path: "aventuras/rewards",
+            element: <RewardsView />,
           },
         ],
       },
