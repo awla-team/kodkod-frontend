@@ -71,7 +71,7 @@ export interface IMission {
   title: string;
   description: string;
   points: number;
-  id_skill: number;
+  id_skill?: number;
   skill?: ISkill;
   difficulty: "easy" | "normal" | "hard";
 }

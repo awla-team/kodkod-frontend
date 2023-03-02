@@ -27,15 +27,7 @@ const MissionAccomplished: FC<MissionAccomplishedProps> = ({
       <div className={"drawer__heading__text"}>Mission accomplished!</div>
 
       <div className={"card__container"}>
-        <MissionCard
-          title={"Rewarding trip"}
-          description={
-            "Write in your notebook a learning that you have had during the week"
-          }
-          points={20}
-          icon={""}
-          color={"#000"}
-        />
+        <MissionCard mission={{ ...mission, points: 20 }} />
       </div>
 
       <div className={"info__text"}>

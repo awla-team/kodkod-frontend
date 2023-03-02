@@ -83,7 +83,7 @@ export const Adventure: React.FC = () => {
         <div className="d-flex mb-1">
           {adventure?.skills?.map((skill) => (
             <div className="me-4" key={`${adventure.id}-${skill.id}`}>
-              <SkillPoints skill={{ ...skill, points: 2 }} />
+              <SkillPoints skill={skill} />
             </div>
           ))}
         </div>

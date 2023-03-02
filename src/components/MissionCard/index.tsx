@@ -11,7 +11,7 @@ interface IMissionCardContainerProps {
 }
 
 export interface MissionCardType {
-  id?: number | string;
+  id: number | string;
   title: string;
   description: string;
   points: number;
@@ -21,7 +21,7 @@ export interface MissionCardType {
 
 interface IMissionCardProps {
   mission: IMission;
-  openModal?: (mission: MissionCardType) => void;
+  openModal?: (mission: IMission) => void;
   selected?: boolean;
   onClick?: (e: React.MouseEvent) => void;
 }

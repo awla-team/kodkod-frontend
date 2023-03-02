@@ -4,12 +4,13 @@ import MissionCard, { MissionCardType } from "components/MissionCard";
 import ReplaceMissionModal from "components/Modals/ReplaceMissionModal";
 import { MissionAccomplishedDrawer } from "components/Drawers";
 import { AdventureContext } from "../provider";
+import {IMission} from "global/interfaces";
 
 const Missions: FC = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [openDrawer, setOpenDrawer] = useState<boolean>(false);
   const [selectedMission, setSelectedMission] =
-    useState<null | MissionCardType>(null);
+    useState<null | IMission>(null);
 
   const { adventure } = useContext(AdventureContext);
 
@@ -20,7 +21,7 @@ const Missions: FC = () => {
       return null;
     }
   }, [adventure]);
-  const handleOpen = (missionDetails: MissionCardType) => {
+  const handleOpen = (missionDetails: IMission) => {
     setSelectedMission(missionDetails);
     setOpen(true);
   };
