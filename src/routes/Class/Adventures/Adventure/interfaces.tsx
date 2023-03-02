@@ -1,4 +1,4 @@
-import { IAdventure } from "global/interfaces";
+import { IAdventure, IMission } from "global/interfaces";
 
 export interface IAdventureBannerProps {
   backgroundImg: string;
@@ -10,4 +10,5 @@ export interface IAdventureProviderProps extends React.PropsWithChildren {
 
 export interface IAdventureContext {
   adventure: IAdventure | undefined;
+  missions: IMission[];
 }

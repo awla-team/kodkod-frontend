@@ -1,8 +1,9 @@
-import React, { FC, useState } from "react";
+import React, { FC, useContext, useState } from "react";
 import { MissionContainer } from "./styled";
 import MissionCard, { MissionCardType } from "components/MissionCard";
 import ReplaceMissionModal from "components/Modals/ReplaceMissionModal";
 import { MissionAccomplishedDrawer } from "components/Drawers";
+import { AdventureContext } from "../provider";
 
 const Missions: FC = () => {
   const [open, setOpen] = useState<boolean>(false);
@@ -10,6 +11,8 @@ const Missions: FC = () => {
   const [selectedMission, setSelectedMission] =
     useState<null | MissionCardType>(null);
 
+  const { adventure } = useContext(AdventureContext);
+  debugger;
   const handleOpen = (missionDetails: MissionCardType) => {
     setSelectedMission(missionDetails);
     setOpen(true);
@@ -30,9 +33,8 @@ const Missions: FC = () => {
       <h3 className={"section__heading"}>Missions</h3>
 
       <div className={"mission__content__container"}>
-        {Array(3)
-          .fill(1)
-          .map((res, index) => {
+        {!!adventure?.missions &&
+          adventure?.missions.map((res, index) => {
             return (
               <MissionCard
                 onClick={() => {
@@ -41,13 +43,10 @@ const Missions: FC = () => {
                 }}
                 openModal={handleOpen}
                 key={index}
-                title={"Rewarding trip"}
-                description={
-                  "Write in your notebook a learning that you have had during the week"
-                }
+                title={res.title}
+                description={res.description}
                 points={20}
-                icon={""}
-                color={"#000"}
+                difficulty={res.difficulty}
               />
             );
           })}

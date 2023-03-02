@@ -1,4 +1,4 @@
-import { IAdventure } from "../../../global/interfaces";
+import { IAdventure, IMission } from "../../../global/interfaces";
 import { PropsWithChildren } from "react";
 
 export interface GoalType {
@@ -17,6 +17,7 @@ export interface GoalResponseType {
 
 export interface AdventureWithProviderProps {
   adventure?: IAdventure;
+  missions?: IMission[];
 }
 
 export interface AdventureProviderProps

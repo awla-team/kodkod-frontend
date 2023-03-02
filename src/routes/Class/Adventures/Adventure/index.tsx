@@ -26,10 +26,6 @@ import Missions from "./Missions";
 export const Adventure: React.FC = () => {
   const { classId } = useParams();
   const { adventure } = useContext(AdventureContext);
-  const [selectedTab, setSelectedTab] = React.useState<number>(0);
-
-  const handleTabChange = (_event: React.SyntheticEvent, newValue: number) =>
-    setSelectedTab(newValue);
 
   if (!adventure)
     return (
@@ -118,8 +114,9 @@ export const Adventure: React.FC = () => {
 
 const AdventureWithProvider: React.FC<AdventureWithProviderProps> = ({
   adventure,
+  missions,
 }) => (
-  <AdventureProvider adventure={adventure}>
+  <AdventureProvider adventure={adventure} missions={missions}>
     <Adventure />
   </AdventureProvider>
 );

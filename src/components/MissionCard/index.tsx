@@ -3,17 +3,19 @@ import styled from "styled-components";
 import { Box, Card, Typography } from "@mui/material";
 import kodcoinIcon from "assets/images/kodcoin.png";
 import SwitchIcon from "assets/images/switch.svg";
+import { putDifficultyClass } from "utils";
 
 interface IMissionCardContainerProps {
   background?: string;
 }
 
 export interface MissionCardType {
+  id?: number | string;
   title: string;
   description: string;
   points: number;
-  icon: string;
-  color: string;
+
+  difficulty: string;
 }
 
 interface IMissionCardProps extends MissionCardType {
@@ -67,6 +69,7 @@ export const Chip = styled(Box)`
   border-radius: 4vmax;
   font-weight: 700;
   padding: 0.2rem 0.5rem;
+  text-transform: capitalize;
 
   &.variant__contained {
     background: #a5a5a5;
@@ -100,7 +103,7 @@ export const Chip = styled(Box)`
         background: #231f20;
       }
 
-      &.level__medium {
+      &.level__normal {
         background: #231f20;
 
         &:before {
@@ -173,12 +176,12 @@ const MissionCard: React.FC<IMissionCardProps> = (props) => {
     title,
     description,
     points,
-    icon,
-    color,
+    difficulty,
     openModal,
     onClick,
     selected,
   } = props;
+
   return (
     <MissionCardContainer
       onClick={onClick}
@@ -188,8 +191,8 @@ const MissionCard: React.FC<IMissionCardProps> = (props) => {
       <div className="d-flex flex-column">
         <div className={"chip__tag__container"}>
           <Chip className={"variant__outlined"}>
-            <span className={"level__icon level__easy"} />
-            <span>Easy</span>
+            <span className={"level__icon" + putDifficultyClass(difficulty)} />
+            <span>{difficulty}</span>
           </Chip>
           <Chip className={"variant__contained"}>
             <span className={"icon"} />

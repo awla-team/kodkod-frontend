@@ -1,10 +1,11 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useContext } from "react";
 import { ReplaceMissionModalProps } from "./interfaces";
 import * as Styled from "./styled";
 import CloseIcon from "@mui/icons-material/Close";
 import { Button, IconButton, Typography } from "@mui/material";
 import MissionCard, { Chip } from "../../MissionCard";
-import { ReplaceMissionModalActions } from "./styled";
+import { AdventureContext } from "routes/Class/Adventures/Adventure/provider";
+import { putDifficultyClass } from "utils";
 
 const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
   open,
@@ -12,6 +13,7 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
   mission,
 }) => {
   const [selected, setSelected] = useState<null | number>(null);
+  const { missions } = useContext(AdventureContext);
   return (
     <Styled.ReplaceMissionModal
       open={open}
@@ -22,7 +24,7 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
       disableEscapeKeyDown
     >
       <Styled.ReplaceMissionModalTitle>
-        <div className={'close__icon__container'}>
+        <div className={"close__icon__container"}>
           <IconButton color={"inherit"} onClick={() => onClose()}>
             <CloseIcon />
           </IconButton>
@@ -36,7 +38,6 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
         </div>
       </Styled.ReplaceMissionModalTitle>
       <Styled.ReplaceMissionModalContent>
-
         <div className={"mission__card__container"}>
           <div className={"mission__detail"}>
             Missions of{" "}
@@ -46,31 +47,30 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
             </Chip>
             of difficulty
             <Chip className={"variant__outlined"} component={"span"}>
-              <span className={"level__icon level__easy"} />
-              <span>Easy</span>
+              <span
+                className={
+                  "level__icon" + putDifficultyClass(mission?.difficulty)
+                }
+              />
+              <span>{mission?.difficulty}</span>
             </Chip>
           </div>
 
           <div className={"mission__details_cards"}>
             <div className={"cards__view"}>
-              {Array(3)
-                .fill(1)
-                .map((res, index) => {
-                  return (
-                    <MissionCard
-                      onClick={() => setSelected(index)}
-                      selected={index === selected}
-                      key={index}
-                      title={"Rewarding trip"}
-                      description={
-                        "Write in your notebook a learning that you have had during the week"
-                      }
-                      points={20}
-                      icon={""}
-                      color={"#000"}
-                    />
-                  );
-                })}
+              {missions.map((res, index) => {
+                return (
+                  <MissionCard
+                    onClick={() => setSelected(index)}
+                    selected={index === selected}
+                    key={index}
+                    title={res.title}
+                    description={res.description}
+                    difficulty={res.difficulty}
+                    points={20}
+                  />
+                );
+              })}
             </div>
           </div>
         </div>

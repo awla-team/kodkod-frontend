@@ -29,3 +29,20 @@ export const generateQueryParamsFromObject = (obj: any): string => {
   }
   return finalQueryParamString;
 };
+
+export const putDifficultyClass = (difficulty: string): string => {
+  switch (difficulty) {
+    case "easy": {
+      return " level__easy";
+    }
+    case "normal": {
+      return " level__normal";
+    }
+    case "hard": {
+      return " level__hard";
+    }
+    default: {
+      return " level__easy";
+    }
+  }
+};

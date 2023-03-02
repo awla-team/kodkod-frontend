@@ -7,11 +7,14 @@ import Toaster from "utils/Toster";
 import { getClassByID } from "services/classes";
 import { ClassInterface } from "services/classes/interfaces";
 import AdventureWithProvider, { Adventure } from "./Adventure";
+import { getMissionsByStage } from "../../../services/missions";
+import { IMission } from "../../../global/interfaces";
 
 const Adventures: React.FC = () => {
   const { classId } = useParams();
   const [currentAdventure, setCurrentAdventure] = useState(null);
   const [loading, setLoading] = useState<FetchStatus>(FetchStatus.Idle);
+  const [missions, setMissions] = useState<IMission[]>([]);
 
   useEffect(() => {
     if (classId) {
@@ -36,11 +39,20 @@ const Adventures: React.FC = () => {
     }
   }, [classId]);
 
-  // useEffect(() => {
-  //   getAdventures()
-  //     .then(({ data }) => setAdventures(data))
-  //     .catch((e) => console.log(e));
-  // }, []);
+  const getMissions = async () => {
+    try {
+      const {
+        data: { responseData },
+      }: { data: { responseData: IMission[] } } = await getMissionsByStage();
+      setMissions(responseData);
+    } catch (e: any) {
+      Toaster("error", e.message);
+    }
+  };
+
+  useEffect(() => {
+    getMissions();
+  }, []);
 
   if (loading === FetchStatus.Idle || loading === FetchStatus.Pending)
     return (
@@ -54,7 +66,7 @@ const Adventures: React.FC = () => {
 
   return (
     <>
-      <AdventureWithProvider adventure={currentAdventure} />
+      <AdventureWithProvider adventure={currentAdventure} missions={missions}/>
       {/*<ViewContainer>*/}
       {/*    <h2>Empieza una aventura &#128640;</h2>*/}
       {/*    <p>*/}

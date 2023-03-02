@@ -7,14 +7,16 @@ import { AdventureProviderProps } from "../interfaces";
 
 export const AdventureContext = createContext<IAdventureContext>({
   adventure: undefined,
+  missions: [],
 });
 
 const AdventureProvider: React.FC<AdventureProviderProps> = ({
   children,
   adventure,
+  missions,
 }) => {
   return (
-    <AdventureContext.Provider value={{ adventure }}>
+    <AdventureContext.Provider value={{ adventure, missions }}>
       {children}
     </AdventureContext.Provider>
   );
