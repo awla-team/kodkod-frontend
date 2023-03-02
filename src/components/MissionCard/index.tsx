@@ -4,6 +4,7 @@ import { Box, Card, Typography } from "@mui/material";
 import kodcoinIcon from "assets/images/kodcoin.png";
 import SwitchIcon from "assets/images/switch.svg";
 import { putDifficultyClass } from "utils";
+import { IMission } from "../../global/interfaces";
 
 interface IMissionCardContainerProps {
   background?: string;
@@ -18,7 +19,8 @@ export interface MissionCardType {
   difficulty: string;
 }
 
-interface IMissionCardProps extends MissionCardType {
+interface IMissionCardProps {
+  mission: IMission;
   openModal?: (mission: MissionCardType) => void;
   selected?: boolean;
   onClick?: (e: React.MouseEvent) => void;
@@ -172,15 +174,9 @@ const MissionCardContainer = styled(Card)`
 `;
 
 const MissionCard: React.FC<IMissionCardProps> = (props) => {
-  const {
-    title,
-    description,
-    points,
-    difficulty,
-    openModal,
-    onClick,
-    selected,
-  } = props;
+  const { mission, openModal, onClick, selected } = props;
+
+  const { title, description, points, difficulty } = mission;
 
   return (
     <MissionCardContainer
@@ -218,7 +214,7 @@ const MissionCard: React.FC<IMissionCardProps> = (props) => {
             className="d-flex align-items-center justify-content-center top-position"
             onClick={(e) => {
               e.stopPropagation();
-              openModal(props);
+              openModal(mission);
             }}
           >
             <img src={SwitchIcon} />

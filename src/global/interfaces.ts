@@ -63,10 +63,11 @@ export interface TemplateStages {
 
 export interface IStage extends TemplateStages {
   _index: number;
+
 }
 
 export interface IMission {
-  id: string;
+  id: string | number;
   title: string;
   description: string;
   points: number;

@@ -6,14 +6,35 @@ import { Button, IconButton, Typography } from "@mui/material";
 import MissionCard, { Chip } from "../../MissionCard";
 import { AdventureContext } from "routes/Class/Adventures/Adventure/provider";
 import { putDifficultyClass } from "utils";
+import Toaster from "../../../utils/Toster";
+import { updateStageMission } from "../../../services/missions";
 
 const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
   open,
   onClose,
   mission,
+  stage,
 }) => {
+  debugger;
   const [selected, setSelected] = useState<null | number>(null);
+  const [pending, setPending] = useState<boolean>(false);
   const { missions } = useContext(AdventureContext);
+
+  const handleClick = async () => {
+    try {
+      setPending(true);
+      await updateStageMission({
+        id_stage: stage.id,
+        new_mission_id: selected,
+        old_mission_id: mission.id as number,
+      });
+      onClose();
+    } catch (e: any) {
+      Toaster("error", e.message);
+    } finally {
+      setPending(false);
+    }
+  };
   return (
     <Styled.ReplaceMissionModal
       open={open}
@@ -61,13 +82,10 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
               {missions.map((res, index) => {
                 return (
                   <MissionCard
-                    onClick={() => setSelected(index)}
-                    selected={index === selected}
+                    onClick={() => setSelected(res.id as number)}
+                    selected={res.id === selected}
                     key={index}
-                    title={res.title}
-                    description={res.description}
-                    difficulty={res.difficulty}
-                    points={20}
+                    mission={{ ...res, points: 20 }}
                   />
                 );
               })}
@@ -76,7 +94,12 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
         </div>
       </Styled.ReplaceMissionModalContent>
       <Styled.ReplaceMissionModalActions>
-        <Button fullWidth variant={"contained"}>
+        <Button
+          fullWidth
+          variant={"contained"}
+          onClick={handleClick}
+          disabled={pending}
+        >
           Change mission
         </Button>
       </Styled.ReplaceMissionModalActions>
