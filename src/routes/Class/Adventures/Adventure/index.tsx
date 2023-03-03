@@ -115,8 +115,15 @@ export const Adventure: React.FC = () => {
 const AdventureWithProvider: React.FC<AdventureWithProviderProps> = ({
   adventure,
   missions,
+  students,
+  handleUpdateCurrentAdventure,
 }) => (
-  <AdventureProvider adventure={adventure} missions={missions}>
+  <AdventureProvider
+    adventure={adventure}
+    missions={missions}
+    students={students}
+    handleUpdateCurrentAdventure={handleUpdateCurrentAdventure}
+  >
     <Adventure />
   </AdventureProvider>
 );

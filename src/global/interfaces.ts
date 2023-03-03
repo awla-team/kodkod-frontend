@@ -41,12 +41,11 @@ export interface IAdventureSkill {
 export interface IAdventure {
   id: number;
   title: string;
-  stagesDuration: number;
   thumbnail: string;
   banner: string;
   category: string;
   overview: string;
-  expectedResults: string[];
+  expected_results: string;
   skills?: ISkill[];
   template_stages?: TemplateStages[];
   stages: IStage[];
@@ -63,7 +62,6 @@ export interface TemplateStages {
 
 export interface IStage extends TemplateStages {
   _index: number;
-
 }
 
 export interface IMission {

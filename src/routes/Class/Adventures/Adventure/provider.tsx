@@ -1,22 +1,25 @@
-import { IAdventure } from "global/interfaces";
-import React, { useState, useEffect, createContext } from "react";
-import { useParams } from "react-router-dom";
-import { getAdventure } from "services/adventures";
+import React, { createContext } from "react";
 import { IAdventureContext } from "./interfaces";
 import { AdventureProviderProps } from "../interfaces";
 
 export const AdventureContext = createContext<IAdventureContext>({
   adventure: undefined,
   missions: [],
+  students: [],
+  handleUpdateCurrentAdventure: (data) => {},
 });
 
 const AdventureProvider: React.FC<AdventureProviderProps> = ({
   children,
   adventure,
   missions,
+  students,
+  handleUpdateCurrentAdventure,
 }) => {
   return (
-    <AdventureContext.Provider value={{ adventure, missions }}>
+    <AdventureContext.Provider
+      value={{ adventure, missions, students, handleUpdateCurrentAdventure }}
+    >
       {children}
     </AdventureContext.Provider>
   );

@@ -1,13 +1,14 @@
-import React, { FC, useState, useContext } from "react";
+import React, { FC, useState, useContext, useEffect } from "react";
 import { ReplaceMissionModalProps } from "./interfaces";
 import * as Styled from "./styled";
 import CloseIcon from "@mui/icons-material/Close";
 import { Button, IconButton, Typography } from "@mui/material";
 import MissionCard, { Chip } from "../../MissionCard";
-import { AdventureContext } from "routes/Class/Adventures/Adventure/provider";
 import { putDifficultyClass } from "utils";
-import Toaster from "../../../utils/Toster";
-import { updateStageMission } from "../../../services/missions";
+import Toaster from "utils/Toster";
+import { getMissionsByStage, updateStageMission } from "services/missions";
+import { IMission } from "../../../global/interfaces";
+import { AdventureContext } from "../../../routes/Class/Adventures/Adventure/provider";
 
 const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
   open,
@@ -15,19 +16,41 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
   mission,
   stage,
 }) => {
-  debugger;
-  const [selected, setSelected] = useState<null | number>(null);
+  const [selected, setSelected] = useState<null | IMission>(null);
   const [pending, setPending] = useState<boolean>(false);
-  const { missions } = useContext(AdventureContext);
+  const [missions, setMissions] = useState<IMission[]>([]);
+  const { handleUpdateCurrentAdventure } = useContext(AdventureContext);
+
+  useEffect(() => {
+    if (mission) {
+      handleGetMission();
+    }
+  }, [mission]);
+
+  const handleGetMission = async () => {
+    try {
+      const { data }: { data: { responseData: IMission[] } } =
+        await getMissionsByStage({
+          id_skill: mission.id_skill,
+          difficulty: mission.difficulty,
+        });
+      setMissions(data.responseData);
+    } catch (e: any) {
+      Toaster("error", e.message);
+    }
+  };
 
   const handleClick = async () => {
     try {
       setPending(true);
-      await updateStageMission({
+
+      const body = {
         id_stage: stage.id,
-        new_mission_id: selected,
+        new_mission_id: selected.id as number,
         old_mission_id: mission.id as number,
-      });
+      };
+      await updateStageMission(body);
+      handleUpdateCurrentAdventure(selected, body);
       onClose();
     } catch (e: any) {
       Toaster("error", e.message);
@@ -82,8 +105,8 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
               {missions.map((res, index) => {
                 return (
                   <MissionCard
-                    onClick={() => setSelected(res.id as number)}
-                    selected={res.id === selected}
+                    onClick={() => setSelected(res)}
+                    selected={res.id === selected?.id}
                     key={index}
                     mission={{ ...res, points: 20 }}
                   />

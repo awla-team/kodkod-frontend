@@ -6,15 +6,39 @@ import { CircularProgress } from "@mui/material";
 import Toaster from "utils/Toster";
 import { getClassByID } from "services/classes";
 import { ClassInterface } from "services/classes/interfaces";
-import AdventureWithProvider, { Adventure } from "./Adventure";
-import { getMissionsByStage } from "../../../services/missions";
-import { IMission } from "../../../global/interfaces";
+import AdventureWithProvider from "./Adventure";
+import { getMissionsByStage, StageMissionUpdateBody } from "services/missions";
+import { IAdventure, IMission } from "global/interfaces";
+import { studentsByClass } from "services/students";
+import { StudentType } from "components/StudentsList/interfaces";
 
 const Adventures: React.FC = () => {
   const { classId } = useParams();
-  const [currentAdventure, setCurrentAdventure] = useState(null);
+  const [currentAdventure, setCurrentAdventure] = useState<null | IAdventure>(
+    null
+  );
   const [loading, setLoading] = useState<FetchStatus>(FetchStatus.Idle);
   const [missions, setMissions] = useState<IMission[]>([]);
+  const [students, setStudents] = useState<StudentType[]>([]);
+
+  const handleUpdateCurrentAdventure = (
+    missionData: IMission,
+    ref: StageMissionUpdateBody
+  ) => {
+    setCurrentAdventure((prevState) => {
+      if (prevState) {
+        const tempData: IAdventure = JSON.parse(JSON.stringify(prevState));
+        const { old_mission_id } = ref;
+        const { missions } = tempData.stages[0];
+        const index = missions.findIndex((res) => res.id === old_mission_id);
+        if (index > -1) {
+          missions[index] = missionData;
+        }
+        return tempData;
+      }
+      return prevState;
+    });
+  };
 
   useEffect(() => {
     if (classId) {
@@ -44,7 +68,18 @@ const Adventures: React.FC = () => {
       const {
         data: { responseData },
       }: { data: { responseData: IMission[] } } = await getMissionsByStage();
+
       setMissions(responseData);
+    } catch (e: any) {
+      Toaster("error", e.message);
+    }
+  };
+
+  const getAllTheStudentOfTheClass = async () => {
+    try {
+      const { data }: { data: { responseData: StudentType[] } } =
+        await studentsByClass(classId, "student");
+      setStudents(data.responseData);
     } catch (e: any) {
       Toaster("error", e.message);
     }
@@ -52,6 +87,7 @@ const Adventures: React.FC = () => {
 
   useEffect(() => {
     getMissions();
+    getAllTheStudentOfTheClass();
   }, []);
 
   if (loading === FetchStatus.Idle || loading === FetchStatus.Pending)
@@ -66,7 +102,12 @@ const Adventures: React.FC = () => {
 
   return (
     <>
-      <AdventureWithProvider adventure={currentAdventure} missions={missions}/>
+      <AdventureWithProvider
+        adventure={currentAdventure}
+        missions={missions}
+        students={students}
+        handleUpdateCurrentAdventure={handleUpdateCurrentAdventure}
+      />
       {/*<ViewContainer>*/}
       {/*    <h2>Empieza una aventura &#128640;</h2>*/}
       {/*    <p>*/}

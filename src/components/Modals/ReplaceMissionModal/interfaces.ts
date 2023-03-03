@@ -1,10 +1,10 @@
 import { MissionCardType } from "../../MissionCard";
-import {IStage} from "../../../global/interfaces";
+import { IMission, IStage } from "../../../global/interfaces";
 
 export interface ReplaceMissionModalProps {
   open: boolean;
   onClose: (reason?: "backdropClick" | "escapeKeyDown") => void;
-  mission: MissionCardType;
+  mission: IMission;
 
-  stage: IStage
+  stage: IStage;
 }

@@ -1,30 +1,23 @@
-import React, { FC, useEffect, useMemo, useState } from "react";
+import React, { FC, useContext, useEffect, useMemo, useState } from "react";
 import * as Styled from "./styled";
-import {
-  TextField,
-  FormControlLabel,
-  Checkbox,
-  Avatar,
-  Button,
-} from "@mui/material";
-import Toaster from "utils/Toster";
+import { TextField, FormControlLabel, Checkbox, Avatar } from "@mui/material";
 import { StudentType } from "../../StudentsList/interfaces";
-import { getUsers } from "services/users";
+
 import { StudentsSelectableListProps } from "./interfaces";
+import { AdventureContext } from "routes/Class/Adventures/Adventure/provider";
+import studentsList from "../../StudentsList";
 
 export const StudentsSelectableList: FC<StudentsSelectableListProps> = ({
   mission,
 }) => {
   const [selected, setSelected] = useState<any>({});
-  const [studentsList, setStudentsLists] = useState<StudentType[]>([]);
+
+  const { students: studentsList } = useContext(AdventureContext);
 
   const selectedLength = useMemo(() => {
     return Object.keys(selected).length;
   }, [selected]);
 
-  useEffect(() => {
-    if (mission) handleGetStudents();
-  }, [mission]);
   const handleCheck = (
     { target }: React.ChangeEvent<HTMLInputElement>,
     value: number | string
@@ -51,16 +44,6 @@ export const StudentsSelectableList: FC<StudentsSelectableListProps> = ({
     }
     return setSelected({});
   };
-
-  const handleGetStudents = async () => {
-    try {
-      const { data }: { data: { responseData: StudentType[] } } =
-        await getUsers({ role: "student" });
-      setStudentsLists(data.responseData);
-    } catch (e: any) {
-      Toaster("error", e.message);
-    }
-  };
   return (
     <Styled.StudentListContainer>
       <TextField
@@ -73,7 +56,10 @@ export const StudentsSelectableList: FC<StudentsSelectableListProps> = ({
           control={
             <Checkbox
               onChange={handleAllSelect}
-              checked={studentsList.every((res, index) => selected[res.id])}
+              checked={
+                !!studentsList.length &&
+                studentsList.every((res, index) => selected[res.id])
+              }
             />
           }
           label={"Select all"}

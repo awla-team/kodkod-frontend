@@ -8,7 +8,6 @@ const SkillSummary: React.FC<{
   icon?: string;
   color?: string;
 }> = ({ title, points, icon, color }) => {
-  debugger;
   return (
     <div className="d-flex align-items-center gap-2">
       <Box
