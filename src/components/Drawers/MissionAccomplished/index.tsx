@@ -1,10 +1,11 @@
-import React, { FC } from "react";
+import React, { FC, useRef } from "react";
 import * as Styled from "./styled";
 import { MissionAccomplishedProps } from "./interfaces";
 import CloseIcon from "@mui/icons-material/Close";
 import { Button, IconButton } from "@mui/material";
 import MissionCard from "../../MissionCard";
 import { StudentsSelectableList } from "../../SharedComponents";
+import { Formik, Form } from "formik";
 
 const MissionAccomplished: FC<MissionAccomplishedProps> = ({
   open,
@@ -12,6 +13,11 @@ const MissionAccomplished: FC<MissionAccomplishedProps> = ({
   onClose,
   mission,
 }) => {
+  const formButtonRef = useRef<HTMLButtonElement>();
+
+  const handleFormButtonClick = () => {
+    if (formButtonRef.current) formButtonRef.current.click();
+  };
   return (
     <Styled.MissionAccomplishedDrawer
       open={open}
@@ -43,10 +49,10 @@ const MissionAccomplished: FC<MissionAccomplishedProps> = ({
       </div>
 
       <div className={"student__details__section"}>
-        <StudentsSelectableList mission={mission} />
+        <StudentsSelectableList ref={formButtonRef} mission={mission} />
       </div>
       <div className={"student__list__actions"}>
-        <Button variant={"contained"} fullWidth>
+        <Button variant={"contained"} fullWidth onClick={handleFormButtonClick}>
           Save Changes
         </Button>
       </div>

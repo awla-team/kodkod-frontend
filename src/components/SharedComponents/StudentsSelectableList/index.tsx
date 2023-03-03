@@ -1,15 +1,39 @@
-import React, { FC, useContext, useEffect, useMemo, useState } from "react";
+import React, {
+  FC,
+  useContext,
+  forwardRef,
+  useMemo,
+  useState,
+  ForwardRefRenderFunction,
+} from "react";
 import * as Styled from "./styled";
-import { TextField, FormControlLabel, Checkbox, Avatar } from "@mui/material";
+import {
+  TextField,
+  FormControlLabel,
+  Checkbox,
+  Avatar,
+  Button,
+} from "@mui/material";
 import { StudentType } from "../../StudentsList/interfaces";
 
 import { StudentsSelectableListProps } from "./interfaces";
 import { AdventureContext } from "routes/Class/Adventures/Adventure/provider";
-import studentsList from "../../StudentsList";
+import Toaster from "../../../utils/Toster";
+import { missionAccomplished } from "../../../services/missions";
+import { IStage } from "../../../global/interfaces";
 
-export const StudentsSelectableList: FC<StudentsSelectableListProps> = ({
-  mission,
-}) => {
+export const StudentsSelectableList: React.ForwardRefExoticComponent<
+  StudentsSelectableListProps & React.RefAttributes<HTMLButtonElement>
+> = forwardRef(({ mission }, ref) => {
+  const { adventure } = useContext(AdventureContext);
+
+  const stage = useMemo((): IStage | null => {
+    if (adventure.stages && adventure.stages.length) {
+      return adventure.stages[0];
+    }
+    return null;
+  }, [adventure]);
+
   const [selected, setSelected] = useState<any>({});
 
   const { students: studentsList } = useContext(AdventureContext);
@@ -43,6 +67,21 @@ export const StudentsSelectableList: FC<StudentsSelectableListProps> = ({
       return setSelected(selectAll);
     }
     return setSelected({});
+  };
+
+  const handleSave = async () => {
+    try {
+      if (!stage || !Object.keys(selected).length) return;
+      const { data }: { data: { responseData: any } } =
+        await missionAccomplished({
+          studentIds: Object.keys(selected).map((key) => +key),
+          id_mission: mission.id as number,
+          id_stage: stage.id as number,
+        });
+      Toaster("success", "data saved successfully!");
+    } catch (e: any) {
+      Toaster("error", e.message);
+    }
   };
   return (
     <Styled.StudentListContainer>
@@ -90,8 +129,9 @@ export const StudentsSelectableList: FC<StudentsSelectableListProps> = ({
         <b>{selectedLength}</b> of <b>{studentsList.length}</b> students
         selected
       </div>
+      <Button ref={ref} sx={{ display: "none" }} onClick={handleSave} />
     </Styled.StudentListContainer>
   );
-};
+});
 
 export default StudentsSelectableList;

@@ -1,5 +1,5 @@
-import { MissionCardType } from "../../MissionCard";
+import { IMission } from "../../../global/interfaces";
 
 export interface StudentsSelectableListProps {
-  mission: MissionCardType;
+  mission: IMission;
 }
