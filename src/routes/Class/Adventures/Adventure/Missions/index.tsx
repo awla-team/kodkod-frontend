@@ -5,6 +5,7 @@ import ReplaceMissionModal from "components/Modals/ReplaceMissionModal";
 import { MissionAccomplishedDrawer } from "components/Drawers";
 import { AdventureContext } from "../provider";
 import { IMission } from "global/interfaces";
+import { sortStageByActiveStatus } from "../../../../../utils";
 
 const Missions: FC = () => {
   const [open, setOpen] = useState<boolean>(false);
@@ -15,7 +16,7 @@ const Missions: FC = () => {
 
   const stage = useMemo(() => {
     if (adventure.stages && adventure.stages.length) {
-      return adventure.stages[0];
+      return sortStageByActiveStatus(adventure.stages)[0];
     } else {
       return null;
     }

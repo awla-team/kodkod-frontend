@@ -5,13 +5,14 @@ import { StepIconProps } from "@mui/material/StepIcon";
 import { Link as RouterLink } from "react-router-dom";
 import { AdventureContext } from "../provider";
 import { IStage } from "global/interfaces";
+import { sortStageByActiveStatus } from "utils";
 
 const CurrentStage: FC = () => {
   const { adventure } = useContext(AdventureContext);
 
   const stage = useMemo((): IStage | null => {
     if (adventure.stages && adventure.stages.length) {
-      return adventure.stages[0];
+      return sortStageByActiveStatus(adventure.stages)[0];
     }
     return null;
   }, [adventure]);

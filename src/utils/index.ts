@@ -1,5 +1,6 @@
 import { ClassInterface } from "services/classes/interfaces";
 import { Dispatch, SetStateAction, useState } from "react";
+import { IStage } from "../global/interfaces";
 
 export const sortClasses = (classes?: ClassInterface[]): ClassInterface[] => {
   if (classes && Array.isArray(classes)) {
@@ -45,4 +46,14 @@ export const putDifficultyClass = (difficulty: string): string => {
       return " level__easy";
     }
   }
+};
+
+export const sortStageByActiveStatus = (stages: IStage[]) => {
+  return stages
+    .sort((stage1, stage2) => {
+      return stage1._index - stage2._index;
+    })
+    .sort((stage1, stage2) => {
+      return Number(stage2.active) - Number(stage1.active);
+    });
 };

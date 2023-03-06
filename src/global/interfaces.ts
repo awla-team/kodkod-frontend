@@ -62,6 +62,7 @@ export interface TemplateStages {
 
 export interface IStage extends TemplateStages {
   _index: number;
+  active: boolean;
 }
 
 export interface IMission {
