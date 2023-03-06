@@ -50,6 +50,7 @@ export interface IAdventure {
   template_stages?: TemplateStages[];
   stages: IStage[];
 
+  id_class_has_adventure?: number;
   missions: IMission[];
 }
 

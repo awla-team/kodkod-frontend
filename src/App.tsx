@@ -12,14 +12,14 @@ import { ClassInterface } from "services/classes/interfaces";
 import { AxiosResponse } from "axios";
 import { FetchStatus } from "global/enums";
 import "./App.css";
-import CreateClassModal from "./components/Modals";
+import { CreateClassModal } from "./components/Modals";
 import { sortClasses } from "./utils";
 import { getAllTheLevel } from "./services/levels";
 import Toaster from "./utils/Toster";
 import { Levels } from "./components/Modals/CreateClassModal/interfaces";
 import { useAuth } from "./contexts/AuthContext";
-import moment from 'moment';
-import 'moment/dist/locale/es';
+import moment from "moment";
+import "moment/dist/locale/es";
 
 const App: React.FC = () => {
   const [classes, setClasses] = useState<ClassInterface[]>([]);
@@ -47,18 +47,20 @@ const App: React.FC = () => {
     try {
       const { data }: { data: { responseData: Levels[] } } =
         await getAllTheLevel();
-      setLevels(data.responseData.sort((a, b) => {
-        if (a.name > b.name) return 1;
-        if (a.name < b.name) return -1;        
-        return 0;
-      }));
+      setLevels(
+        data.responseData.sort((a, b) => {
+          if (a.name > b.name) return 1;
+          if (a.name < b.name) return -1;
+          return 0;
+        })
+      );
     } catch (e: any) {
       Toaster("error", e.message);
     }
   };
 
   useEffect(() => {
-    moment.locale('es');
+    moment.locale("es");
   }, []);
 
   useEffect(() => {

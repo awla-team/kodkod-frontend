@@ -51,7 +51,7 @@ export const putDifficultyClass = (difficulty: string): string => {
 export const sortStageByActiveStatus = (stages: IStage[]) => {
   return stages
     .sort((stage1, stage2) => {
-      return stage1._index - stage2._index;
+      return stage2._index - stage1._index;
     })
     .sort((stage1, stage2) => {
       return Number(stage2.active) - Number(stage1.active);
