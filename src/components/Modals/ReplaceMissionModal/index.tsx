@@ -16,6 +16,7 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
   mission,
   stage,
 }) => {
+  debugger
   const [selected, setSelected] = useState<null | IMission>(null);
   const [pending, setPending] = useState<boolean>(false);
   const [missions, setMissions] = useState<IMission[]>([]);
@@ -34,7 +35,9 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
           id_skill: mission.id_skill,
           difficulty: mission.difficulty,
         });
-      setMissions(data.responseData);
+      setMissions(
+        data.responseData.filter((_mission) => _mission.id !== mission.id)
+      );
     } catch (e: any) {
       Toaster("error", e.message);
     }
@@ -87,7 +90,7 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
             Missions of{" "}
             <Chip className={"variant__contained"}>
               <span className={"icon"} />
-              <span>Collaboration</span>
+              <span>{mission?.skill?.title}</span>
             </Chip>
             of difficulty
             <Chip className={"variant__outlined"} component={"span"}>

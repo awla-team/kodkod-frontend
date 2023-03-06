@@ -192,7 +192,7 @@ const MissionCard: React.FC<IMissionCardProps> = (props) => {
           </Chip>
           <Chip className={"variant__contained"}>
             <span className={"icon"} />
-            <span>Collaboration</span>
+            <span>{mission?.skill?.title}</span>
           </Chip>
         </div>
         <div className={"text__details"}>
