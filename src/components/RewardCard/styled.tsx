@@ -10,34 +10,36 @@ export const RewardCardContainer = styled.div.withConfig({
     !["type"].includes(prop) && defaultValidatorFn(prop),
 })`
   .points-container {
-    border: 3px solid ${(props: IRewardCardElementProps) => {
-      switch (props.type) {
-        case "single":
-          return "#68BBD4";
-        case "course":
-          return "#F962BB";
-        default:
-          return "#fff";
-      }
-    }};
+    border: 3px solid
+      ${(props: IRewardCardElementProps) => {
+        switch (props.type) {
+          case "individual":
+            return "#68BBD4";
+          case "class":
+            return "#F962BB";
+          default:
+            return "#fff";
+        }
+      }};
   }
 
   .MuiPaper-root {
-    border: 1px solid ${(props: IRewardCardElementProps) => {
-      switch (props.type) {
-        case "single":
-          return "#68BBD4";
-        case "course":
-          return "#F962BB";
-        default:
-          return "#fff";
-      }
-    }};
+    border: 1px solid
+      ${(props: IRewardCardElementProps) => {
+        switch (props.type) {
+          case "individual":
+            return "#68BBD4";
+          case "class":
+            return "#F962BB";
+          default:
+            return "#fff";
+        }
+      }};
     background: ${(props: IRewardCardElementProps) => {
       switch (props.type) {
-        case "single":
+        case "individual":
           return "#E4F9FF";
-        case "course":
+        case "class":
           return "#FFE1F3";
         default:
           return "#fff";
@@ -65,6 +67,7 @@ export const PointsContainer = styled.div`
   width: 80px;
   height: 80px;
   padding: 20px;
+
   img {
     height: 22px;
     width: 22px;

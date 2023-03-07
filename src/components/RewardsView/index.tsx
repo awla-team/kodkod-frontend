@@ -1,21 +1,37 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import { RewardsViewContainer } from "./styled";
 import { Box } from "@mui/material";
 import { Link as RouterLink, useParams } from "react-router-dom";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import RewardCard from "../RewardCard";
 import { useSearchParams } from "react-router-dom";
+import { getRewards } from "../../services/rewards";
+import { IReward } from "../../global/interfaces";
+import Toaster from "../../utils/Toster";
 
 const RewardsView: FC = () => {
   const { classId } = useParams();
   const [searchParams] = useSearchParams();
+  const [rewards, setRewards] = useState<IReward[]>([]);
 
   useEffect(() => {
     const id = searchParams.get("adventureId");
     if (id) {
-      
+      getAllRewards(id);
     }
   }, []);
+
+  const getAllRewards = async (adventureId: number | string) => {
+    try {
+      const { data }: { data: { responseData: IReward[] } } = await getRewards({
+        id_class: classId,
+        id_adventure: adventureId,
+      });
+      setRewards(data.responseData);
+    } catch (e: any) {
+      Toaster("error", e.message);
+    }
+  };
   return (
     <RewardsViewContainer>
       <Box
@@ -38,20 +54,18 @@ const RewardsView: FC = () => {
         </Box>
         <Box className={"rewards__container"}>
           <Box className={"rewards__scrollable__container"}>
-            {Array(10)
-              .fill("")
-              .map((res, index) => {
-                return (
-                  <RewardCard
-                    key={index}
-                    title={"Invisibility cloak"}
-                    description={"You can leave 10 minutes before recess"}
-                    icon={""}
-                    requiredPoints={100}
-                    type={"single"}
-                  />
-                );
-              })}
+            {rewards.map((res, index) => {
+              return (
+                <RewardCard
+                  key={index}
+                  title={res.title}
+                  description={res.description}
+                  icon={""}
+                  requiredPoints={100}
+                  type={res.type}
+                />
+              );
+            })}
           </Box>
         </Box>
       </Box>
@@ -76,7 +90,7 @@ const RewardsView: FC = () => {
                     description={"You can leave 10 minutes before recess"}
                     icon={""}
                     requiredPoints={100}
-                    type={"course"}
+                    type={"class"}
                   />
                 );
               })}
