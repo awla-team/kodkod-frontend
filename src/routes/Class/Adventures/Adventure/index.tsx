@@ -117,12 +117,14 @@ const AdventureWithProvider: React.FC<AdventureWithProviderProps> = ({
   missions,
   students,
   handleUpdateCurrentAdventure,
+  updateStagesData,
 }) => (
   <AdventureProvider
     adventure={adventure}
     missions={missions}
     students={students}
     handleUpdateCurrentAdventure={handleUpdateCurrentAdventure}
+    updateStagesData={updateStagesData}
   >
     <Adventure />
   </AdventureProvider>

@@ -1,6 +1,6 @@
-import { IAdventure, IMission } from "global/interfaces";
+import { IAdventure, IMission, IStage } from "global/interfaces";
 import { StudentType } from "components/StudentsList/interfaces";
-import {StageMissionUpdateBody} from "services/missions";
+import { StageMissionUpdateBody } from "services/missions";
 
 export interface IAdventureBannerProps {
   backgroundImg: string;
@@ -15,5 +15,10 @@ export interface IAdventureContext {
   missions: IMission[];
 
   students: StudentType[];
-  handleUpdateCurrentAdventure: (data: IMission, ref:StageMissionUpdateBody) => void;
+  handleUpdateCurrentAdventure: (
+    data: IMission,
+    ref: StageMissionUpdateBody
+  ) => void;
+
+  updateStagesData: (stage: IStage) => void;
 }

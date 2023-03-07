@@ -8,7 +8,7 @@ import { getClassByID } from "services/classes";
 import { ClassInterface } from "services/classes/interfaces";
 import AdventureWithProvider from "./Adventure";
 import { getMissionsByStage, StageMissionUpdateBody } from "services/missions";
-import { IAdventure, IMission } from "global/interfaces";
+import { IAdventure, IMission, IStage } from "global/interfaces";
 import { studentsByClass } from "services/students";
 import { StudentType } from "components/StudentsList/interfaces";
 
@@ -38,6 +38,23 @@ const Adventures: React.FC = () => {
       }
       return prevState;
     });
+  };
+
+  const updateStagesData = (stage: IStage) => {
+    if (stage) {
+      setCurrentAdventure((prevState) => {
+        if (prevState) {
+          const tempData: IAdventure = JSON.parse(JSON.stringify(prevState));
+          const { stages } = tempData;
+          const index = stages.findIndex((res) => res.id === stage.id);
+          if (index > -1) {
+            stages[index] = stage;
+          }
+          return tempData;
+        }
+        return prevState;
+      });
+    }
   };
 
   useEffect(() => {
@@ -107,6 +124,7 @@ const Adventures: React.FC = () => {
         missions={missions}
         students={students}
         handleUpdateCurrentAdventure={handleUpdateCurrentAdventure}
+        updateStagesData={updateStagesData}
       />
       {/*<ViewContainer>*/}
       {/*    <h2>Empieza una aventura &#128640;</h2>*/}

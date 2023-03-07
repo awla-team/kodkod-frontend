@@ -10,6 +10,7 @@ const UnlockStageConfirmationDialog: FC<UnlockStageConfirmationDialogProps> = ({
   handleClose,
   onConfirm,
   isLoading,
+  unlockableStageData,
 }) => {
   return (
     <Styled.Dialog
@@ -32,7 +33,7 @@ const UnlockStageConfirmationDialog: FC<UnlockStageConfirmationDialogProps> = ({
         </div>
 
         <div className={"dialog__header__text"}>
-          Your class is about to unlock stage 2!
+          Your class is about to unlock stage {unlockableStageData?._index}!
         </div>
       </Styled.DialogTitle>
       <Styled.DialogContent>
@@ -60,7 +61,7 @@ const UnlockStageConfirmationDialog: FC<UnlockStageConfirmationDialogProps> = ({
       </Styled.DialogContent>
       <Styled.DialogActions>
         <Button variant={"contained"} disabled={isLoading} onClick={onConfirm}>
-          Unlock Stage 2
+          Unlock Stage {unlockableStageData?._index}
         </Button>
       </Styled.DialogActions>
     </Styled.Dialog>

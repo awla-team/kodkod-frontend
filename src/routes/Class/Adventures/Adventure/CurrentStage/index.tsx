@@ -5,25 +5,31 @@ import { StepIconProps } from "@mui/material/StepIcon";
 import { Link as RouterLink } from "react-router-dom";
 import { AdventureContext } from "../provider";
 import { IStage } from "global/interfaces";
-import { getActiveStage, sortStageByActiveStatus } from "utils";
+import {
+  getActiveStage,
+  getFirstNonActiveStage,
+  sortStageByActiveStatus,
+} from "utils";
 import { UnlockStageConfirmationDialog } from "components/Modals";
 import { unlockStage } from "services/stages";
 import Toaster from "utils/Toster";
 
 const CurrentStage: FC = () => {
-  const { adventure } = useContext(AdventureContext);
+  const { adventure, updateStagesData } = useContext(AdventureContext);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
 
   const stage = useMemo((): {
     stages: IStage[];
     activeStage: IStage | null;
+    nextNonActiveStage: IStage | null;
   } | null => {
     if (adventure.stages && adventure.stages.length) {
       const stages = sortStageByActiveStatus(adventure.stages);
       return {
         stages,
         activeStage: getActiveStage(stages),
+        nextNonActiveStage: getFirstNonActiveStage(stages),
       };
     }
     return null;
@@ -39,6 +45,8 @@ const CurrentStage: FC = () => {
           id_class_has_adventure: adventure.id_class_has_adventure,
         });
         Toaster("success", "Unlocked");
+        updateStagesData(responseData);
+        setOpenDialog(false);
       }
     } catch (e: any) {
       Toaster("error", e.message);
@@ -77,16 +85,25 @@ const CurrentStage: FC = () => {
       </div>
 
       <div className={"action-container"}>
-        <Button variant={"contained"} component={RouterLink} to={"rewards"}>
+        <Button
+          variant={"contained"}
+          component={RouterLink}
+          to={"rewards?adventureId=" + adventure.id}
+        >
           See rewards
         </Button>
-        <Button variant={"contained"} onClick={() => setOpenDialog(true)}>
-          Unlock Stage 2
+        <Button
+          variant={"contained"}
+          onClick={() => setOpenDialog(true)}
+          disabled={!stage?.nextNonActiveStage}
+        >
+          Unlock Stage {stage?.nextNonActiveStage?._index}
         </Button>
       </div>
       <UnlockStageConfirmationDialog
+        unlockableStageData={stage?.nextNonActiveStage}
         isLoading={loading}
-        open={openDialog}
+        open={openDialog && !!stage?.nextNonActiveStage}
         handleClose={handleClose}
         onConfirm={handleUnlock}
       />

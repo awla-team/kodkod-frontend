@@ -7,6 +7,7 @@ export const AdventureContext = createContext<IAdventureContext>({
   missions: [],
   students: [],
   handleUpdateCurrentAdventure: (data) => {},
+  updateStagesData: (stage) => {},
 });
 
 const AdventureProvider: React.FC<AdventureProviderProps> = ({
@@ -15,10 +16,17 @@ const AdventureProvider: React.FC<AdventureProviderProps> = ({
   missions,
   students,
   handleUpdateCurrentAdventure,
+  updateStagesData,
 }) => {
   return (
     <AdventureContext.Provider
-      value={{ adventure, missions, students, handleUpdateCurrentAdventure }}
+      value={{
+        adventure,
+        missions,
+        students,
+        handleUpdateCurrentAdventure,
+        updateStagesData,
+      }}
     >
       {children}
     </AdventureContext.Provider>

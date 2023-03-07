@@ -1,12 +1,21 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { RewardsViewContainer } from "./styled";
 import { Box } from "@mui/material";
 import { Link as RouterLink, useParams } from "react-router-dom";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import RewardCard from "../RewardCard";
+import { useSearchParams } from "react-router-dom";
 
 const RewardsView: FC = () => {
   const { classId } = useParams();
+  const [searchParams] = useSearchParams();
+
+  useEffect(() => {
+    const id = searchParams.get("adventureId");
+    if (id) {
+      
+    }
+  }, []);
   return (
     <RewardsViewContainer>
       <Box
