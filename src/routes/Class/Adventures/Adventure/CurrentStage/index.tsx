@@ -1,11 +1,11 @@
 import { FC, useContext, useMemo, useState } from "react";
 import * as Styled from "./styled";
-import { Stepper, Step, StepLabel, Button } from "@mui/material";
+import { Stepper, Step, StepLabel, Button, Tooltip } from "@mui/material";
 import { StepIconProps } from "@mui/material/StepIcon";
 import { Link as RouterLink } from "react-router-dom";
 import { AdventureContext } from "../provider";
 import { IStage } from "global/interfaces";
-import { sortStageByActiveStatus } from "utils";
+import { getActiveStage, sortStageByActiveStatus } from "utils";
 import { UnlockStageConfirmationDialog } from "components/Modals";
 import { unlockStage } from "services/stages";
 import Toaster from "utils/Toster";
@@ -15,14 +15,19 @@ const CurrentStage: FC = () => {
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
 
-  const stage = useMemo((): IStage | null => {
+  const stage = useMemo((): {
+    stages: IStage[];
+    activeStage: IStage | null;
+  } | null => {
     if (adventure.stages && adventure.stages.length) {
-      return sortStageByActiveStatus(adventure.stages)[0];
+      const stages = sortStageByActiveStatus(adventure.stages);
+      return {
+        stages,
+        activeStage: getActiveStage(stages),
+      };
     }
     return null;
   }, [adventure]);
-
-  debugger
 
   const handleUnlock = async () => {
     try {
@@ -49,27 +54,24 @@ const CurrentStage: FC = () => {
     <Styled.CurrentStageContainer>
       <div className={"step-details"}>
         <Stepper
-          activeStep={(stage?._index || 0) - 1}
+          activeStep={(stage?.activeStage?._index || 0) - 1}
           connector={<Styled.StyledStepConnector />}
         >
-          <Step>
-            <StepLabel StepIconComponent={StepIconComponent} />
-          </Step>
-          <Step>
-            <StepLabel StepIconComponent={StepIconComponent} />
-          </Step>
-          <Step>
-            <StepLabel StepIconComponent={StepIconComponent} />
-          </Step>
-          <Step>
-            <StepLabel StepIconComponent={StepIconComponent} />
-          </Step>
+          {stage &&
+            stage.stages.map((res, index) => {
+              return (
+                <Step key={index}>
+                  <StepLabel StepIconComponent={StepIconComponent} />
+                </Step>
+              );
+            })}
         </Stepper>
 
         <div className={"stage-details"}>
           <div className={"round-icon"} />
           <div className={"stage-name"}>
-            Stage {stage?._index || 0}: <b>{stage?.title}</b>
+            Stage {stage?.activeStage?._index || 0}:{" "}
+            <b>{stage?.activeStage?.title}</b>
           </div>
         </div>
       </div>
@@ -91,7 +93,6 @@ const CurrentStage: FC = () => {
     </Styled.CurrentStageContainer>
   );
 };
-
 export default CurrentStage;
 
 const StepIconComponent = ({ active, completed, className }: StepIconProps) => {

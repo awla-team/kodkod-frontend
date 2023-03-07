@@ -51,9 +51,24 @@ export const putDifficultyClass = (difficulty: string): string => {
 export const sortStageByActiveStatus = (stages: IStage[]) => {
   return stages
     .sort((stage1, stage2) => {
-      return stage2._index - stage1._index;
+      return stage1._index - stage2._index;
     })
     .sort((stage1, stage2) => {
       return Number(stage2.active) - Number(stage1.active);
     });
+};
+
+export const getActiveStage = (
+  stage: IStage[],
+  sort?: boolean
+): IStage | null => {
+  if (stage.length) {
+    let actives = stage.filter((res) => res.active);
+    if (stage) {
+      actives = sortStageByActiveStatus(actives);
+    }
+    return actives[actives.length - 1];
+  } else {
+    return null;
+  }
 };
