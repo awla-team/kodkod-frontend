@@ -53,7 +53,9 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const getStudentsByClass = async (id: number | string) => {
     try {
-      const { data }: { data: any } = await studentsByClass(id, "student");
+      const { data }: { data: any } = await studentsByClass(id, {
+        role: "student",
+      });
       setStudents(data.responseData);
     } catch (e: any) {
       Toaster("error", e.message);

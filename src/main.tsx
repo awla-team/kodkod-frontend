@@ -16,6 +16,7 @@ import AdventuresSummary from "routes/Class/Adventures/GoalSelection/AdventuresS
 import "./index.css";
 import AuthContextProvider from "./contexts/AuthContext";
 import RewardsView from "./components/RewardsView";
+import Progress from "./routes/Class/Progress";
 
 export const router = createBrowserRouter([
   {
@@ -61,6 +62,10 @@ export const router = createBrowserRouter([
           {
             path: "aventuras/rewards",
             element: <RewardsView />,
+          },
+          {
+            path: "progreso",
+            element: <Progress />,
           },
         ],
       },

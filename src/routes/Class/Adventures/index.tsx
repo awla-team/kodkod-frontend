@@ -95,7 +95,7 @@ const Adventures: React.FC = () => {
   const getAllTheStudentOfTheClass = async () => {
     try {
       const { data }: { data: { responseData: StudentType[] } } =
-        await studentsByClass(classId, "student");
+        await studentsByClass(classId, { role: "student" });
       setStudents(data.responseData);
     } catch (e: any) {
       Toaster("error", e.message);

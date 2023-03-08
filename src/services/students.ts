@@ -4,12 +4,20 @@ import {
   StudentUpdateDataType,
 } from "../components/StudentsList/interfaces";
 import { AddStudentsInClassBody } from "./interfaces";
+import { generateQueryParamsFromObject } from "../utils";
+
+export interface UserFilter {
+  role?: "student" | "teacher";
+  missions?: boolean;
+}
 
 export const studentsByClass = (
   classId: number | string,
-  role?: "student" | "teacher"
+  queryObject?: UserFilter
 ) => {
-  return http.get(`user-by-class/${classId}` + (role ? "?role=" + role : ""));
+  return http.get(
+    `user-by-class/${classId}` + generateQueryParamsFromObject(queryObject)
+  );
 };
 
 export const updateStudent = (
