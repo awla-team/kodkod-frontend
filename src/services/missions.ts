@@ -30,3 +30,12 @@ export const updateStageMission = (body: StageMissionUpdateBody) =>
 export const missionAccomplished = (body: MissionAccomplishedType) => {
   return http.post("mission-accomplished", body);
 };
+
+export const completedMissionByStudents = (
+  queryParams: Omit<MissionAccomplishedType, "studentIds">
+) => {
+  return http.get(
+    "mission-student-details" +
+      (queryParams ? generateQueryParamsFromObject(queryParams) : "")
+  );
+};

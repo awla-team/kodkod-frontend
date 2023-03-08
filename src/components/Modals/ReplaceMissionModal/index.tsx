@@ -111,7 +111,7 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
                     onClick={() => setSelected(res)}
                     selected={res.id === selected?.id}
                     key={index}
-                    mission={{ ...res, points: 20 }}
+                    mission={res}
                   />
                 );
               })}

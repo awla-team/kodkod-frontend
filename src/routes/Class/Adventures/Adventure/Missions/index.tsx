@@ -4,8 +4,8 @@ import MissionCard, { MissionCardType } from "components/MissionCard";
 import ReplaceMissionModal from "components/Modals/ReplaceMissionModal";
 import { MissionAccomplishedDrawer } from "components/Drawers";
 import { AdventureContext } from "../provider";
-import { IMission } from "global/interfaces";
-import { sortStageByActiveStatus } from "../../../../../utils";
+import {IMission, IStage} from "global/interfaces";
+import {getActiveStage, getFirstNonActiveStage, sortStageByActiveStatus} from "utils";
 
 const Missions: FC = () => {
   const [open, setOpen] = useState<boolean>(false);
@@ -14,12 +14,20 @@ const Missions: FC = () => {
 
   const { adventure } = useContext(AdventureContext);
 
-  const stage = useMemo(() => {
+  const stage = useMemo((): {
+    stages: IStage[];
+    activeStage: IStage | null;
+    nextNonActiveStage: IStage | null;
+  } | null => {
     if (adventure.stages && adventure.stages.length) {
-      return sortStageByActiveStatus(adventure.stages)[0];
-    } else {
-      return null;
+      const stages = sortStageByActiveStatus(adventure.stages);
+      return {
+        stages,
+        activeStage: getActiveStage(stages),
+        nextNonActiveStage: getFirstNonActiveStage(stages),
+      };
     }
+    return null;
   }, [adventure]);
   const handleOpen = (missionDetails: IMission) => {
     setSelectedMission(missionDetails);
@@ -41,15 +49,15 @@ const Missions: FC = () => {
       <h3 className={"section__heading"}>Missions</h3>
 
       <div className={"mission__content__container"}>
-        {!!stage?.missions &&
-          stage?.missions?.map((res, index) => {
+        {!!stage?.activeStage?.missions &&
+          stage?.activeStage?.missions?.map((res, index) => {
             return (
               <MissionCard
                 onClick={() => {
                   setOpenDrawer(true);
                   setSelectedMission(res);
                 }}
-                mission={{ ...res, points: 20 }}
+                mission={res}
                 openModal={handleOpen}
                 key={index}
               />
@@ -62,7 +70,7 @@ const Missions: FC = () => {
           open={open && !!selectedMission}
           onClose={handleClose}
           mission={selectedMission}
-          stage={stage}
+          stage={stage.activeStage}
         />
       )}
       {openDrawer && !!selectedMission && (
@@ -71,6 +79,7 @@ const Missions: FC = () => {
           anchor={"right"}
           onClose={handleDrawerClose}
           mission={selectedMission}
+          stage={stage.activeStage}
         />
       )}
     </MissionContainer>
