@@ -24,6 +24,7 @@ const Progress: FC<ProgressProps> = () => {
         await studentsByClass(classId, {
           missions: true,
           role: "student",
+          rewards:true
         });
       setStudents(data.responseData);
     } catch (e: any) {
@@ -84,10 +85,12 @@ const Progress: FC<ProgressProps> = () => {
                     {res.first_name} {res.last_name}
                   </TableCell>
                   <TableCell className={"points"}>{res.points}</TableCell>
-                  <TableCell className={"accomplished"}>2 of 3</TableCell>
+                  <TableCell className={"accomplished"}>
+                    {res?.missions?.length}
+                  </TableCell>
                   <TableCell className={"available__rewards"}>
                     <Box className={"reward__points__container"}>
-                      <span className={"reward__point available"} />
+                      <span className={"reward__point"} />
                       <span className={"reward__point"} />
                       <span className={"reward__point"} />
                       <span className={"reward__point"} />

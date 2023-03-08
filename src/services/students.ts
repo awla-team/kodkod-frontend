@@ -9,6 +9,7 @@ import { generateQueryParamsFromObject } from "../utils";
 export interface UserFilter {
   role?: "student" | "teacher";
   missions?: boolean;
+  rewards?: true;
 }
 
 export const studentsByClass = (
