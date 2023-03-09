@@ -7,17 +7,19 @@ import {
   formControlClasses,
   formLabelClasses,
   inputBaseClasses,
-    buttonClasses
+  buttonClasses,
+  selectClasses,
+  outlinedInputClasses,
 } from "@mui/material";
 
-export const SignInContainer = styled(Box)`
+export const SignUpContainer = styled(Box)`
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100%;
 `;
 
-export const SignInCard = styled(Card)`
+export const SignUpCard = styled(Card)`
   &.${cardClasses.root} {
     width: 100%;
     max-width: 450px;
@@ -42,6 +44,18 @@ export const SignInCard = styled(Card)`
           border-bottom-color: #ffffff;
         }
       }
+
+      & .${selectClasses.outlined} {
+        color: #ffffff;
+
+        & ~ svg {
+          color: #ffffff;
+        }
+
+        & ~ .${outlinedInputClasses.notchedOutline} {
+          border-color: #ffffff;
+        }
+      }
     }
 
     & .forget__password {
@@ -62,7 +76,7 @@ export const SignInCard = styled(Card)`
 
         &:disabled {
           cursor: no-drop;
-          background: #BDBDBD;
+          background: #bdbdbd;
         }
 
         border-color: #ffffff;
@@ -72,3 +86,4 @@ export const SignInCard = styled(Card)`
     }
   }
 `;
+
