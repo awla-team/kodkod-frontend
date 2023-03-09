@@ -1,6 +1,22 @@
-import { FC, useContext, useMemo, useState } from "react";
+import {
+  FC,
+  useContext,
+  useMemo,
+  useState,
+  useReducer,
+  useEffect,
+  useCallback,
+} from "react";
 import * as Styled from "./styled";
-import { Stepper, Step, StepLabel, Button, Tooltip } from "@mui/material";
+import {
+  Stepper,
+  Step,
+  StepLabel,
+  Button,
+  Tooltip,
+  Box,
+  IconButton,
+} from "@mui/material";
 import { StepIconProps } from "@mui/material/StepIcon";
 import { Link as RouterLink } from "react-router-dom";
 import { AdventureContext } from "../provider";
@@ -13,26 +29,46 @@ import {
 import { UnlockStageConfirmationDialog } from "components/Modals";
 import { unlockStage } from "services/stages";
 import Toaster from "utils/Toster";
+import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import { CurrentStageType } from "./interfaces";
 
 const CurrentStage: FC = () => {
   const { adventure, updateStagesData } = useContext(AdventureContext);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
-
-  const stage = useMemo((): {
-    stages: IStage[];
-    activeStage: IStage | null;
-    nextNonActiveStage: IStage | null;
-  } | null => {
-    if (adventure.stages && adventure.stages.length) {
-      const stages = sortStageByActiveStatus(adventure.stages);
-      return {
-        stages,
-        activeStage: getActiveStage(stages),
-        nextNonActiveStage: getFirstNonActiveStage(stages),
-      };
+  const [currentlyShowingStage, setCurrentlyShowingStage] =
+    useState<IStage>(null);
+  const reducer = (
+    state: CurrentStageType,
+    payload: { type: string; payload?: any }
+  ) => {
+    switch (payload.type) {
+      case "save__stage": {
+        const stages = sortStageByActiveStatus(adventure.stages);
+        const activeStage = getActiveStage(stages);
+        setCurrentlyShowingStage(activeStage);
+        return {
+          stages,
+          activeStage,
+          nextNonActiveStage: getFirstNonActiveStage(stages),
+        };
+      }
+      default: {
+        return state;
+      }
     }
-    return null;
+  };
+  const [stage, dispatch] = useReducer(reducer, {
+    stages: [],
+    activeStage: null,
+    nextNonActiveStage: null,
+  });
+
+  useEffect(() => {
+    if (adventure.stages && adventure.stages.length) {
+      dispatch({ type: "save__stage" });
+    }
   }, [adventure]);
 
   const handleUnlock = async () => {
@@ -58,6 +94,12 @@ const CurrentStage: FC = () => {
   const handleClose = () => {
     setOpenDialog(false);
   };
+
+  const handleStageChange = (index: number, stages: IStage[]) => {
+    if (index >= 0 && index <= stages.length - 1) {
+      setCurrentlyShowingStage(stages[index]);
+    }
+  };
   return (
     <Styled.CurrentStageContainer>
       <div className={"step-details"}>
@@ -75,13 +117,34 @@ const CurrentStage: FC = () => {
             })}
         </Stepper>
 
-        <div className={"stage-details"}>
-          <div className={"round-icon"} />
-          <div className={"stage-name"}>
-            Stage {stage?.activeStage?._index || 0}:{" "}
-            <b>{stage?.activeStage?.title}</b>
-          </div>
-        </div>
+        {stage.stages.map((_stage: IStage, index: number, array: IStage[]) => {
+          return (
+            _stage.id === currentlyShowingStage?.id && (
+              <Box display={"flex"} gap={1} alignItems={"center"} key={index}>
+                <IconButton
+                  color={"inherit"}
+                  size={"small"}
+                  onClick={() => handleStageChange(index - 1, array)}
+                >
+                  <NavigateBeforeIcon />
+                </IconButton>
+                <div className={"stage-details"}>
+                  <div className={"round-icon"} />
+                  <div className={"stage-name"}>
+                    Stage {_stage._index || 0}: <b>{_stage.title}</b>
+                  </div>
+                </div>
+                <IconButton
+                  color={"inherit"}
+                  size={"small"}
+                  onClick={() => handleStageChange(index + 1, array)}
+                >
+                  <NavigateNextIcon />
+                </IconButton>
+              </Box>
+            )
+          );
+        })}
       </div>
 
       <div className={"action-container"}>
