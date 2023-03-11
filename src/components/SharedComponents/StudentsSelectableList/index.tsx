@@ -1,4 +1,11 @@
-import React, { FC, useEffect, useMemo, useState } from "react";
+import React, {
+  FC,
+  useContext,
+  forwardRef,
+  useMemo,
+  useState,
+  useEffect,
+} from "react";
 import * as Styled from "./styled";
 import {
   TextField,
@@ -7,24 +14,56 @@ import {
   Avatar,
   Button,
 } from "@mui/material";
-import Toaster from "utils/Toster";
-import { StudentType } from "../../StudentsList/interfaces";
-import { getUsers } from "services/users";
 import { StudentsSelectableListProps } from "./interfaces";
+import { AdventureContext } from "routes/Class/Adventures/Adventure/provider";
+import Toaster from "utils/Toster";
+import { missionAccomplished } from "services/missions";
+import { IStage } from "global/interfaces";
+import {
+  getActiveStage,
+  getFirstNonActiveStage,
+  sortStageByActiveStatus,
+} from "../../../utils";
 
-export const StudentsSelectableList: FC<StudentsSelectableListProps> = ({
-  mission,
-}) => {
+export const StudentsSelectableList: React.ForwardRefExoticComponent<
+  StudentsSelectableListProps & React.RefAttributes<HTMLButtonElement>
+> = forwardRef(({ mission, studentsDetails }, ref) => {
+  const { adventure } = useContext(AdventureContext);
+
+  const stage = useMemo((): {
+    stages: IStage[];
+    activeStage: IStage | null;
+    nextNonActiveStage: IStage | null;
+  } | null => {
+    if (adventure.stages && adventure.stages.length) {
+      const stages = sortStageByActiveStatus(adventure.stages);
+      return {
+        stages,
+        activeStage: getActiveStage(stages),
+        nextNonActiveStage: getFirstNonActiveStage(stages),
+      };
+    }
+    return null;
+  }, [adventure]);
+
   const [selected, setSelected] = useState<any>({});
-  const [studentsList, setStudentsLists] = useState<StudentType[]>([]);
+
+  const { students: studentsList } = useContext(AdventureContext);
 
   const selectedLength = useMemo(() => {
     return Object.keys(selected).length;
   }, [selected]);
 
   useEffect(() => {
-    if (mission) handleGetStudents();
-  }, [mission]);
+    if (studentsDetails) {
+      const selectedDetail: any = {};
+      studentsDetails.forEach((detail) => {
+        selectedDetail[detail.id_user] = true;
+      });
+      setSelected((prevState: any) => ({ ...prevState, ...selectedDetail }));
+    }
+  }, [studentsDetails]);
+
   const handleCheck = (
     { target }: React.ChangeEvent<HTMLInputElement>,
     value: number | string
@@ -52,11 +91,16 @@ export const StudentsSelectableList: FC<StudentsSelectableListProps> = ({
     return setSelected({});
   };
 
-  const handleGetStudents = async () => {
+  const handleSave = async () => {
     try {
-      const { data }: { data: { responseData: StudentType[] } } =
-        await getUsers({ role: "student" });
-      setStudentsLists(data.responseData);
+      if (!stage?.activeStage || !Object.keys(selected).length) return;
+      const { data }: { data: { responseData: any } } =
+        await missionAccomplished({
+          studentIds: Object.keys(selected).map((key) => +key),
+          id_mission: mission.id as number,
+          id_stage: stage?.activeStage?.id as number,
+        });
+      Toaster("success", "data saved successfully!");
     } catch (e: any) {
       Toaster("error", e.message);
     }
@@ -73,7 +117,10 @@ export const StudentsSelectableList: FC<StudentsSelectableListProps> = ({
           control={
             <Checkbox
               onChange={handleAllSelect}
-              checked={studentsList.every((res, index) => selected[res.id])}
+              checked={
+                !!studentsList.length &&
+                studentsList.every((res, index) => selected[res.id])
+              }
             />
           }
           label={"Select all"}
@@ -104,8 +151,9 @@ export const StudentsSelectableList: FC<StudentsSelectableListProps> = ({
         <b>{selectedLength}</b> of <b>{studentsList.length}</b> students
         selected
       </div>
+      <Button ref={ref} sx={{ display: "none" }} onClick={handleSave} />
     </Styled.StudentListContainer>
   );
-};
+});
 
 export default StudentsSelectableList;

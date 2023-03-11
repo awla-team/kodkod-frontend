@@ -1,5 +1,6 @@
 import { ClassInterface } from "services/classes/interfaces";
 import { Dispatch, SetStateAction, useState } from "react";
+import { IStage } from "../global/interfaces";
 
 export const sortClasses = (classes?: ClassInterface[]): ClassInterface[] => {
   if (classes && Array.isArray(classes)) {
@@ -28,4 +29,61 @@ export const generateQueryParamsFromObject = (obj: any): string => {
     });
   }
   return finalQueryParamString;
+};
+
+export const putDifficultyClass = (difficulty: string): string => {
+  switch (difficulty) {
+    case "easy": {
+      return " level__easy";
+    }
+    case "normal": {
+      return " level__normal";
+    }
+    case "hard": {
+      return " level__hard";
+    }
+    default: {
+      return " level__easy";
+    }
+  }
+};
+
+export const sortStageByActiveStatus = (stages: IStage[]) => {
+  return stages
+    .sort((stage1, stage2) => {
+      return stage1._index - stage2._index;
+    })
+    .sort((stage1, stage2) => {
+      return Number(stage2.active) - Number(stage1.active);
+    });
+};
+
+export const getActiveStage = (
+  stage: IStage[],
+  sort?: boolean
+): IStage | null => {
+  if (stage.length) {
+    let actives = stage.filter((res) => res.active);
+    if (sort) {
+      actives = sortStageByActiveStatus(actives);
+    }
+    return actives[actives.length - 1];
+  } else {
+    return null;
+  }
+};
+
+export const getFirstNonActiveStage = (
+  stage: IStage[],
+  sort?: boolean
+): IStage | null => {
+  if (stage.length) {
+    let actives = stage.filter((res) => !res.active);
+    if (sort) {
+      actives = sortStageByActiveStatus(actives);
+    }
+    return actives[0];
+  } else {
+    return null;
+  }
 };

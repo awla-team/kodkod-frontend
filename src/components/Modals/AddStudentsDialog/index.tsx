@@ -1,6 +1,15 @@
 import React, { FC } from "react";
 import { AddStudentsDialogProps, FormInitialState } from "./interfaces";
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, TextField, Typography } from "@mui/material";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  TextField,
+  Typography,
+} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { Formik, Form, FormikHelpers, FieldArray } from "formik";
 import { useState } from "react";
@@ -74,9 +83,14 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
     });
   };
 
-  const handleStudentValues = (e: React.KeyboardEvent) => {
+  const handleStudentValues = (
+    e: React.KeyboardEvent,
+    formikInitialValues: FormInitialState
+  ) => {
+    e.stopPropagation();
     const { key } = e;
     if (key === "Enter") {
+      e.preventDefault();
       const transformedTextArray = inputFieldValue
         .split(",")
         .map((res) => res.trim())
@@ -88,7 +102,7 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
         setFormInitialState((prevState) => {
           return {
             students: [
-              ...prevState.students,
+              ...formikInitialValues.students,
               ...transformedTextArray.map((email) => ({
                 first_name: "",
                 last_name: "",
@@ -104,8 +118,19 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
     }
   };
 
+  const preventFormSubmitOnKeyDown = (e: React.KeyboardEvent) => {
+    const { key } = e;
+    if (key === "Enter") {
+      e.preventDefault();
+    }
+  };
   return (
-    <Dialog open={open} PaperProps={ { className: 'p-3' }} maxWidth="sm" fullWidth>
+    <Dialog
+      open={open}
+      PaperProps={{ className: "p-3" }}
+      maxWidth="sm"
+      fullWidth
+    >
       <DialogTitle fontWeight="bold">Añadir estudiantes</DialogTitle>
       <Formik
         validationSchema={validationSchema}
@@ -122,39 +147,41 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
           submitCount,
         }) => {
           return (
-            <Form onSubmit={handleSubmit}>
+            <Form
+              onSubmit={handleSubmit}
+              onKeyDown={preventFormSubmitOnKeyDown}
+            >
               <DialogContent dividers className="py-5">
                 <StudentsFormDetailsContainer>
                   <TextField
                     className="mb-4"
                     error={inputFieldValueError}
-                    helperText={inputFieldValueError && "Has ingresado un email inválido"}
+                    helperText={
+                      inputFieldValueError && "Has ingresado un email inválido"
+                    }
                     value={inputFieldValue}
-                    onKeyDown={handleStudentValues}
+                    onKeyDown={(event) => handleStudentValues(event, values)}
                     onChange={handleInputFieldChange}
                     fullWidth
                     size="small"
                     placeholder={"Ingresa los emails separados por coma"}
-                  ></TextField>                    
+                  ></TextField>
                   <div>
                     <div className="details-list">
                       <FieldArray name={"students"}>
                         {({ remove }) => {
                           return values.students.map((student, index) => {
                             return (
-                              <div key={index} className="d-flex align-items-center">
+                              <div
+                                key={index}
+                                className="d-flex align-items-center"
+                              >
                                 <div className="me-2">
                                   <IconButton color={"inherit"} size="small">
                                     <CloseIcon
                                       fontSize="small"
                                       onClick={() => {
-                                        setFormInitialState((prevState) => {
-                                          return {
-                                            students: prevState.students.filter(
-                                              (_, SIndex) => index !== SIndex
-                                            ),
-                                          };
-                                        });
+                                        remove(index);
                                       }}
                                     />
                                   </IconButton>
@@ -211,15 +238,20 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
                       </FieldArray>
                     </div>
                     <div className="d-flex">
-                      <Typography textAlign="right" component="span" variant="body2" className="mt-4 w-100">
-                        Estás añadiendo <b>{values.students.length}</b> estudiantes a la clase{" "}
-                        <b>{classDetails.alias}</b>
+                      <Typography
+                        textAlign="right"
+                        component="span"
+                        variant="body2"
+                        className="mt-4 w-100"
+                      >
+                        Estás añadiendo <b>{values.students.length}</b>{" "}
+                        estudiantes a la clase <b>{classDetails.alias}</b>
                       </Typography>
-                    </div>                    
+                    </div>
                   </div>
                 </StudentsFormDetailsContainer>
               </DialogContent>
-              <DialogActions> 
+              <DialogActions>
                 <Button variant={"outlined"} onClick={() => onClose()}>
                   Cancelar
                 </Button>
@@ -229,7 +261,7 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
                   type={"submit"}
                 >
                   Añadir estudiantes
-                </Button>                    
+                </Button>
               </DialogActions>
             </Form>
           );

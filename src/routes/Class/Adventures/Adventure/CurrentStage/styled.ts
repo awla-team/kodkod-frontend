@@ -15,7 +15,7 @@ export const CurrentStageContainer= styled(Box)`
   & .action-container{
     display: flex;
     gap: 0.5rem;
-    & a{
+    & a, & button{
       text-decoration: none;
       font-size: 1.25rem;
       font-weight: 700;

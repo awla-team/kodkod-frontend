@@ -1,4 +1,5 @@
 import { ClassInterface } from "services/classes/interfaces";
+import { IMission } from "../../global/interfaces";
 
 export interface StudentType {
   id: number | string;
@@ -8,6 +9,9 @@ export interface StudentType {
 
   email: string;
   classId: string | number;
+
+  points: number;
+  missions: IMission[];
 }
 
 export interface StudentUpdateDataType {

@@ -28,7 +28,6 @@ export interface ISkill {
   title: string;
   icon: string;
   color: string;
-
   points: number;
 }
 
@@ -42,44 +41,39 @@ export interface IAdventureSkill {
 export interface IAdventure {
   id: number;
   title: string;
-  stagesDuration: number;
   thumbnail: string;
   banner: string;
   category: string;
   overview: string;
-  expectedResults: string[];
+  expected_results: string;
   skills?: ISkill[];
   template_stages?: TemplateStages[];
+  stages: IStage[];
+
+  id_class_has_adventure?: number;
+  missions: IMission[];
 }
 
 export interface TemplateStages {
   id: number;
   title: string;
   icon: string;
-
-  id_adventure: number;
-
   missions?: IMission[];
 }
 
-export interface IStage {
-  id: number;
-  adventureId: number;
-  index: number;
-  title: string;
-  icon: string;
-  description?: string;
+export interface IStage extends TemplateStages {
+  _index: number;
+  active: boolean;
 }
 
 export interface IMission {
-  id: string;
-  stageId: string;
+  id: string | number;
   title: string;
   description: string;
   points: number;
-  qr: string;
-  skillId: number;
+  id_skill?: number;
   skill?: ISkill;
+  difficulty: "easy" | "normal" | "hard";
 }
 
 export interface IReward {

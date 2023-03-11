@@ -26,10 +26,6 @@ import Missions from "./Missions";
 export const Adventure: React.FC = () => {
   const { classId } = useParams();
   const { adventure } = useContext(AdventureContext);
-  const [selectedTab, setSelectedTab] = React.useState<number>(0);
-
-  const handleTabChange = (_event: React.SyntheticEvent, newValue: number) =>
-    setSelectedTab(newValue);
 
   if (!adventure)
     return (
@@ -87,7 +83,7 @@ export const Adventure: React.FC = () => {
         <div className="d-flex mb-1">
           {adventure?.skills?.map((skill) => (
             <div className="me-4" key={`${adventure.id}-${skill.id}`}>
-              <SkillPoints skill={{ ...skill, points: 2 }} />
+              <SkillPoints skill={skill} />
             </div>
           ))}
         </div>
@@ -118,8 +114,18 @@ export const Adventure: React.FC = () => {
 
 const AdventureWithProvider: React.FC<AdventureWithProviderProps> = ({
   adventure,
+  missions,
+  students,
+  handleUpdateCurrentAdventure,
+  updateStagesData,
 }) => (
-  <AdventureProvider adventure={adventure}>
+  <AdventureProvider
+    adventure={adventure}
+    missions={missions}
+    students={students}
+    handleUpdateCurrentAdventure={handleUpdateCurrentAdventure}
+    updateStagesData={updateStagesData}
+  >
     <Adventure />
   </AdventureProvider>
 );

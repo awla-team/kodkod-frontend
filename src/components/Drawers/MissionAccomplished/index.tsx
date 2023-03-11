@@ -1,17 +1,48 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import * as Styled from "./styled";
-import { MissionAccomplishedProps } from "./interfaces";
+import { MissionAccomplishedProps, StudentsDetailsType } from "./interfaces";
 import CloseIcon from "@mui/icons-material/Close";
 import { Button, IconButton } from "@mui/material";
 import MissionCard from "../../MissionCard";
 import { StudentsSelectableList } from "../../SharedComponents";
+import { completedMissionByStudents } from "../../../services/missions";
+import Toaster from "utils/Toster";
 
 const MissionAccomplished: FC<MissionAccomplishedProps> = ({
   open,
   anchor = "right",
   onClose,
+  stage,
   mission,
 }) => {
+  const [studentsDetails, setStudentsDetails] = useState<StudentsDetailsType[]>(
+    []
+  );
+  const formButtonRef = useRef<HTMLButtonElement>();
+
+  const handleFormButtonClick = () => {
+    if (formButtonRef.current) formButtonRef.current.click();
+  };
+
+  useEffect(() => {
+    if (mission && stage) {
+      getStudentsDetails();
+    }
+  }, [mission, stage]);
+
+  const getStudentsDetails = async () => {
+    try {
+      const { data }: { data: { responseData: StudentsDetailsType[] } } =
+        await completedMissionByStudents({
+          id_mission: mission.id as number,
+          id_stage: stage.id,
+        });
+
+      setStudentsDetails(data.responseData);
+    } catch (e: any) {
+      Toaster("error", e.messsage);
+    }
+  };
   return (
     <Styled.MissionAccomplishedDrawer
       open={open}
@@ -27,15 +58,7 @@ const MissionAccomplished: FC<MissionAccomplishedProps> = ({
       <div className={"drawer__heading__text"}>Mission accomplished!</div>
 
       <div className={"card__container"}>
-        <MissionCard
-          title={"Rewarding trip"}
-          description={
-            "Write in your notebook a learning that you have had during the week"
-          }
-          points={20}
-          icon={""}
-          color={"#000"}
-        />
+        <MissionCard mission={mission} />
       </div>
 
       <div className={"info__text"}>
@@ -51,10 +74,10 @@ const MissionAccomplished: FC<MissionAccomplishedProps> = ({
       </div>
 
       <div className={"student__details__section"}>
-        <StudentsSelectableList mission={mission} />
+        <StudentsSelectableList ref={formButtonRef} mission={mission} studentsDetails={studentsDetails} />
       </div>
       <div className={"student__list__actions"}>
-        <Button variant={"contained"} fullWidth>
+        <Button variant={"contained"} fullWidth onClick={handleFormButtonClick}>
           Save Changes
         </Button>
       </div>

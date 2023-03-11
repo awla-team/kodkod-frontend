@@ -6,12 +6,56 @@ import { CircularProgress } from "@mui/material";
 import Toaster from "utils/Toster";
 import { getClassByID } from "services/classes";
 import { ClassInterface } from "services/classes/interfaces";
-import AdventureWithProvider, { Adventure } from "./Adventure";
+import AdventureWithProvider from "./Adventure";
+import { getMissionsByStage, StageMissionUpdateBody } from "services/missions";
+import { IAdventure, IMission, IStage } from "global/interfaces";
+import { studentsByClass } from "services/students";
+import { StudentType } from "components/StudentsList/interfaces";
 
 const Adventures: React.FC = () => {
   const { classId } = useParams();
-  const [currentAdventure, setCurrentAdventure] = useState(null);
+  const [currentAdventure, setCurrentAdventure] = useState<null | IAdventure>(
+    null
+  );
   const [loading, setLoading] = useState<FetchStatus>(FetchStatus.Idle);
+  const [missions, setMissions] = useState<IMission[]>([]);
+  const [students, setStudents] = useState<StudentType[]>([]);
+
+  const handleUpdateCurrentAdventure = (
+    missionData: IMission,
+    ref: StageMissionUpdateBody
+  ) => {
+    setCurrentAdventure((prevState) => {
+      if (prevState) {
+        const tempData: IAdventure = JSON.parse(JSON.stringify(prevState));
+        const { old_mission_id } = ref;
+        const { missions } = tempData.stages[0];
+        const index = missions.findIndex((res) => res.id === old_mission_id);
+        if (index > -1) {
+          missions[index] = missionData;
+        }
+        return tempData;
+      }
+      return prevState;
+    });
+  };
+
+  const updateStagesData = (stage: IStage) => {
+    if (stage) {
+      setCurrentAdventure((prevState) => {
+        if (prevState) {
+          const tempData: IAdventure = JSON.parse(JSON.stringify(prevState));
+          const { stages } = tempData;
+          const index = stages.findIndex((res) => res.id === stage.id);
+          if (index > -1) {
+            stages[index] = stage;
+          }
+          return tempData;
+        }
+        return prevState;
+      });
+    }
+  };
 
   useEffect(() => {
     if (classId) {
@@ -36,11 +80,32 @@ const Adventures: React.FC = () => {
     }
   }, [classId]);
 
-  // useEffect(() => {
-  //   getAdventures()
-  //     .then(({ data }) => setAdventures(data))
-  //     .catch((e) => console.log(e));
-  // }, []);
+  const getMissions = async () => {
+    try {
+      const {
+        data: { responseData },
+      }: { data: { responseData: IMission[] } } = await getMissionsByStage();
+
+      setMissions(responseData);
+    } catch (e: any) {
+      Toaster("error", e.message);
+    }
+  };
+
+  const getAllTheStudentOfTheClass = async () => {
+    try {
+      const { data }: { data: { responseData: StudentType[] } } =
+        await studentsByClass(classId, { role: "student" });
+      setStudents(data.responseData);
+    } catch (e: any) {
+      Toaster("error", e.message);
+    }
+  };
+
+  useEffect(() => {
+    getMissions();
+    getAllTheStudentOfTheClass();
+  }, []);
 
   if (loading === FetchStatus.Idle || loading === FetchStatus.Pending)
     return (
@@ -54,7 +119,13 @@ const Adventures: React.FC = () => {
 
   return (
     <>
-      <AdventureWithProvider adventure={currentAdventure} />
+      <AdventureWithProvider
+        adventure={currentAdventure}
+        missions={missions}
+        students={students}
+        handleUpdateCurrentAdventure={handleUpdateCurrentAdventure}
+        updateStagesData={updateStagesData}
+      />
       {/*<ViewContainer>*/}
       {/*    <h2>Empieza una aventura &#128640;</h2>*/}
       {/*    <p>*/}
