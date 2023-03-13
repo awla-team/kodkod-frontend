@@ -92,3 +92,8 @@ export interface ISchool {
   name: string;
   phone: string;
 }
+
+export interface SignInResponseType {
+  accessToken: string;
+  refreshToken: string;
+}

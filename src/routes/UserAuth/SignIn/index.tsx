@@ -13,7 +13,10 @@ import {
 import { Formik, Form, FormikHelpers } from "formik";
 import { FormInitialValuesType } from "./interfaces";
 import * as Yup from "yup";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { signIn } from "services/auth";
+import Toaster from "utils/Toster";
+import { SignInResponseType } from "../../../global/interfaces";
 
 const SignIn: React.FC = () => {
   const [formInitialValues, setFormInitialValues] =
@@ -21,6 +24,7 @@ const SignIn: React.FC = () => {
       email: "",
       password: "",
     });
+  const navigate = useNavigate();
 
   const validationSchema = () => {
     return Yup.object({
@@ -29,11 +33,23 @@ const SignIn: React.FC = () => {
     });
   };
 
-  const handleSubmit = (
+  const handleSubmit = async (
     values: FormInitialValuesType,
     formikHelper: FormikHelpers<FormInitialValuesType>
   ) => {
-    console.log(values);
+    try {
+      const {
+        data: { responseData },
+      }: { data: { responseData: SignInResponseType } } = await signIn(values);
+      const { refreshToken, accessToken } = responseData;
+      localStorage.setItem("refreshToken", refreshToken);
+      localStorage.setItem("accessToken", accessToken);
+      navigate("/app");
+    } catch (error: any) {
+      Toaster("error", error.message);
+    } finally {
+      formikHelper.setSubmitting(false);
+    }
   };
   return (
     <Styled.SignInContainer>
@@ -126,6 +142,8 @@ const SignIn: React.FC = () => {
                         Log in
                       </Button>
                       <Button
+                          component={RouterLink}
+                          to={'/signup'}
                         fullWidth
                         className={"create__account__button"}
                         variant={"outlined"}

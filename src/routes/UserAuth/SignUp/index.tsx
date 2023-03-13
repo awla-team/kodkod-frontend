@@ -17,6 +17,8 @@ import * as Yup from "yup";
 import Toaster from "utils/Toster";
 import { getSchools as getSchoolAction } from "services/school";
 import { ISchool } from "global/interfaces";
+import { signUp } from "../../../services/auth";
+import { AxiosError } from "axios";
 
 const SignUp: React.FC = () => {
   const [schools, setSchools] = useState<ISchool[]>([]);
@@ -50,11 +52,32 @@ const SignUp: React.FC = () => {
     });
   };
 
-  const handleSubmit = (
+  const handleSubmit = async (
     values: FormInitialValuesType,
     formikHelper: FormikHelpers<FormInitialValuesType>
   ) => {
-    console.log(values);
+    try {
+      delete values.confirmPassword;
+      await signUp(values);
+      Toaster("success", "You will get a verification email!");
+      formikHelper.resetForm();
+    } catch (e: any) {
+      if (e instanceof AxiosError) {
+        const {
+          data: { responseData },
+        } = e.response;
+        if (
+          responseData.client === "postgres" &&
+          responseData?.constraint === "user_email_unique"
+        ) {
+          Toaster("error", "Email already exists");
+          formikHelper.setFieldError("email", "Email already exists");
+        }
+      }
+      Toaster("error", e.message);
+    } finally {
+      formikHelper.setSubmitting(false);
+    }
   };
 
   useEffect(() => {

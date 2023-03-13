@@ -6,7 +6,7 @@ interface UserFilter {
 }
 
 export const getAuthUser = () => {
-  return http.get("/user/1");
+  return http.get("/get-auth-user");
 };
 
 export const getUsers = (filter: UserFilter) => {

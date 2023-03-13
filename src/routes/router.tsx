@@ -16,11 +16,7 @@ import App from "App";
 
 export const router = createBrowserRouter([
   {
-    element: (
-      <AuthContextProvider>
-        <Outlet />
-      </AuthContextProvider>
-    ),
+    element: <Outlet />,
     children: [
       {
         path: "*",
@@ -42,7 +38,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/app",
-        element: <App />,
+        element: (
+          <AuthContextProvider>
+            <App />
+          </AuthContextProvider>
+        ),
         children: [
           {
             element: <Home />,
