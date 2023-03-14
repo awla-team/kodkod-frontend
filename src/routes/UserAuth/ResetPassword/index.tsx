@@ -1,35 +1,39 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import * as Styled from "./styled";
 import {
   Box,
-  CardContent,
-  FormLabel,
-  Typography,
-  FormControl,
-  TextField,
   Button,
+  CardContent,
+  FormControl,
+  FormLabel,
+  TextField,
+  Typography,
 } from "@mui/material";
-
-import { Formik, Form, FormikHelpers } from "formik";
+import { Form, Formik, FormikHelpers } from "formik";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { FormInitialValuesType } from "./interfaces";
 import * as Yup from "yup";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
-import { signIn } from "services/auth";
 import Toaster from "utils/Toster";
-import { SignInResponseType } from "../../../global/interfaces";
 
-const SignIn: React.FC = () => {
+const ResetPassword: FC = () => {
   const [formInitialValues, setFormInitialValues] =
     useState<FormInitialValuesType>({
-      email: "",
+      confirmPassword: "",
       password: "",
     });
   const navigate = useNavigate();
 
   const validationSchema = () => {
     return Yup.object({
-      email: Yup.string().email().required("Email cannot be empty."),
-      password: Yup.string().required("Password cannot be empty."),
+      password: Yup.string()
+        .matches(
+          /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}/g
+        )
+        .required("Password cannot be empty."),
+      confirmPassword: Yup.string().oneOf(
+        [Yup.ref("password"), null],
+        "Password must match"
+      ),
     });
   };
 
@@ -38,13 +42,6 @@ const SignIn: React.FC = () => {
     formikHelper: FormikHelpers<FormInitialValuesType>
   ) => {
     try {
-      const {
-        data: { responseData },
-      }: { data: { responseData: SignInResponseType } } = await signIn(values);
-      const { refreshToken, accessToken } = responseData;
-      localStorage.setItem("refreshToken", refreshToken);
-      localStorage.setItem("accessToken", accessToken);
-      navigate("/app");
     } catch (error: any) {
       Toaster("error", error.message);
     } finally {
@@ -52,13 +49,12 @@ const SignIn: React.FC = () => {
     }
   };
   return (
-    <Styled.SignInContainer>
-      <Styled.SignInCard>
+    <Styled.ResetPasswordContainer>
+      <Styled.ResetPasswordCard>
         <CardContent>
           <Typography variant={"h4"} className={"heading__text"}>
-            Log in to your account
+            Choose a new password
           </Typography>
-
           <Formik
             initialValues={formInitialValues}
             onSubmit={handleSubmit}
@@ -84,23 +80,11 @@ const SignIn: React.FC = () => {
                     mt={4}
                     px={4.7}
                   >
-                    <FormControl error={!!errors.email && touched.email}>
-                      <FormLabel>Email</FormLabel>
-                      <TextField
-                        name={"email"}
-                        value={values.email}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        type={"email"}
-                        inputProps={{
-                          sx: { color: "#fff" },
-                        }}
-                        placeholder={"Ej: juanito.perez@email.com"}
-                        variant={"standard"}
-                      />
-                    </FormControl>
-                    <FormControl error={!!errors.password && touched.password}>
-                      <FormLabel>Password</FormLabel>
+                    <FormControl
+                      required
+                      error={!!errors.password && touched.password}
+                    >
+                      <FormLabel>New password</FormLabel>
                       <TextField
                         name={"password"}
                         value={values.password}
@@ -114,16 +98,27 @@ const SignIn: React.FC = () => {
                         variant={"standard"}
                       />
                     </FormControl>
-                    <Typography
-                      className={"forget__password"}
-                      textAlign={"center"}
-                      color={"#fff"}
-                      variant={"subtitle2"}
-                      component={RouterLink}
-                      to={"/forgot-password"}
+
+                    <FormControl
+                      required
+                      error={
+                        !!errors.confirmPassword && touched.confirmPassword
+                      }
                     >
-                      Forget my password
-                    </Typography>
+                      <FormLabel>Confirm new password</FormLabel>
+                      <TextField
+                        name={"confirmPassword"}
+                        value={values.confirmPassword}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        inputProps={{
+                          sx: { color: "#fff" },
+                        }}
+                        type={"password"}
+                        placeholder={"Ingresa tu contraseña"}
+                        variant={"standard"}
+                      />
+                    </FormControl>
 
                     <Box
                       className={"action__container"}
@@ -135,20 +130,20 @@ const SignIn: React.FC = () => {
                       <Button
                         disabled={isSubmitting || !isValid || !dirty}
                         fullWidth
-                        className={"login__button"}
+                        className={"submit__button"}
                         variant={"contained"}
                         type={"submit"}
                       >
-                        Log in
+                        Set new password
                       </Button>
                       <Button
                         component={RouterLink}
-                        to={"/signup"}
+                        to={"/signin"}
                         fullWidth
-                        className={"create__account__button"}
+                        className={"login__button"}
                         variant={"outlined"}
                       >
-                        Create a new account
+                        Go to login
                       </Button>
                     </Box>
                   </Box>
@@ -157,9 +152,9 @@ const SignIn: React.FC = () => {
             }}
           </Formik>
         </CardContent>
-      </Styled.SignInCard>
-    </Styled.SignInContainer>
+      </Styled.ResetPasswordCard>
+    </Styled.ResetPasswordContainer>
   );
 };
 
-export default SignIn;
+export default ResetPassword;

@@ -13,6 +13,8 @@ import AdventuresSummary from "./Class/Adventures/GoalSelection/AdventuresSummar
 import Points from "./Class/Points";
 import RewardsView from "components/RewardsView";
 import App from "App";
+import ForgotPassword from "./UserAuth/ForgotPassword";
+import ResetPassword from "./UserAuth/ResetPassword";
 
 export const router = createBrowserRouter([
   {
@@ -33,6 +35,14 @@ export const router = createBrowserRouter([
           {
             path: "/signup",
             element: <SignUp />,
+          },
+          {
+            path: "/forgot-password",
+            element: <ForgotPassword />,
+          },
+          {
+            path: "/reset-password/:token",
+            element: <ResetPassword />,
           },
         ],
       },

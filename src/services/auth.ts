@@ -80,3 +80,7 @@ export const generateAccessToken = async (body?: GenerateAccessTokenBody) => {
       });
   });
 };
+
+export const forgotPassword = (body: { email: string }) => {
+  return http.post("/auth/forgot-password", body);
+};

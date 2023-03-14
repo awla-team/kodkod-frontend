@@ -1,35 +1,32 @@
-import React, { useState } from "react";
+import { ForgotPasswordProps } from "./interfaces";
+import React, { FC, useState } from "react";
 import * as Styled from "./styled";
 import {
   Box,
-  CardContent,
-  FormLabel,
-  Typography,
-  FormControl,
-  TextField,
   Button,
+  CardContent,
+  FormControl,
+  FormLabel,
+  TextField,
+  Typography,
 } from "@mui/material";
-
-import { Formik, Form, FormikHelpers } from "formik";
+import { Form, Formik, FormikHelpers } from "formik";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { FormInitialValuesType } from "./interfaces";
 import * as Yup from "yup";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
-import { signIn } from "services/auth";
 import Toaster from "utils/Toster";
-import { SignInResponseType } from "../../../global/interfaces";
+import { forgotPassword } from "services/auth";
 
-const SignIn: React.FC = () => {
+const ForgotPassword: FC<ForgotPasswordProps> = () => {
   const [formInitialValues, setFormInitialValues] =
     useState<FormInitialValuesType>({
       email: "",
-      password: "",
     });
   const navigate = useNavigate();
 
   const validationSchema = () => {
     return Yup.object({
       email: Yup.string().email().required("Email cannot be empty."),
-      password: Yup.string().required("Password cannot be empty."),
     });
   };
 
@@ -38,13 +35,9 @@ const SignIn: React.FC = () => {
     formikHelper: FormikHelpers<FormInitialValuesType>
   ) => {
     try {
-      const {
-        data: { responseData },
-      }: { data: { responseData: SignInResponseType } } = await signIn(values);
-      const { refreshToken, accessToken } = responseData;
-      localStorage.setItem("refreshToken", refreshToken);
-      localStorage.setItem("accessToken", accessToken);
-      navigate("/app");
+      await forgotPassword(values);
+      Toaster("success", "Email has been sent to your email address");
+      formikHelper.resetForm();
     } catch (error: any) {
       Toaster("error", error.message);
     } finally {
@@ -52,11 +45,11 @@ const SignIn: React.FC = () => {
     }
   };
   return (
-    <Styled.SignInContainer>
-      <Styled.SignInCard>
+    <Styled.ForgotPasswordContainer>
+      <Styled.ForgotPasswordCard>
         <CardContent>
           <Typography variant={"h4"} className={"heading__text"}>
-            Log in to your account
+            Recover your password
           </Typography>
 
           <Formik
@@ -99,31 +92,6 @@ const SignIn: React.FC = () => {
                         variant={"standard"}
                       />
                     </FormControl>
-                    <FormControl error={!!errors.password && touched.password}>
-                      <FormLabel>Password</FormLabel>
-                      <TextField
-                        name={"password"}
-                        value={values.password}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        inputProps={{
-                          sx: { color: "#fff" },
-                        }}
-                        type={"password"}
-                        placeholder={"Ingresa tu contraseña"}
-                        variant={"standard"}
-                      />
-                    </FormControl>
-                    <Typography
-                      className={"forget__password"}
-                      textAlign={"center"}
-                      color={"#fff"}
-                      variant={"subtitle2"}
-                      component={RouterLink}
-                      to={"/forgot-password"}
-                    >
-                      Forget my password
-                    </Typography>
 
                     <Box
                       className={"action__container"}
@@ -135,20 +103,20 @@ const SignIn: React.FC = () => {
                       <Button
                         disabled={isSubmitting || !isValid || !dirty}
                         fullWidth
-                        className={"login__button"}
+                        className={"submit__button"}
                         variant={"contained"}
                         type={"submit"}
                       >
-                        Log in
+                        Send recovery email
                       </Button>
                       <Button
                         component={RouterLink}
-                        to={"/signup"}
+                        to={"/signin"}
                         fullWidth
-                        className={"create__account__button"}
+                        className={"back__button"}
                         variant={"outlined"}
                       >
-                        Create a new account
+                        Back
                       </Button>
                     </Box>
                   </Box>
@@ -157,9 +125,9 @@ const SignIn: React.FC = () => {
             }}
           </Formik>
         </CardContent>
-      </Styled.SignInCard>
-    </Styled.SignInContainer>
+      </Styled.ForgotPasswordCard>
+    </Styled.ForgotPasswordContainer>
   );
 };
 
-export default SignIn;
+export default ForgotPassword;
