@@ -1,6 +1,7 @@
 import { ClassInterface } from "services/classes/interfaces";
 import { Dispatch, SetStateAction, useState } from "react";
 import { IStage } from "../global/interfaces";
+import { generateAccessToken } from "../services/auth";
 
 export const sortClasses = (classes?: ClassInterface[]): ClassInterface[] => {
   if (classes && Array.isArray(classes)) {
@@ -86,4 +87,19 @@ export const getFirstNonActiveStage = (
   } else {
     return null;
   }
+};
+
+export const getAccessTokenUsingRefreshToken = () => {
+  return new Promise(async (resolve, reject) => {
+    const refreshToken = localStorage.getItem("refreshToken");
+    if (!refreshToken) {
+      return reject("Refresh token not found");
+    }
+    try {
+      const data = await generateAccessToken({ refreshToken });
+      return resolve(data);
+    } catch (e) {
+      return reject(e);
+    }
+  });
 };
