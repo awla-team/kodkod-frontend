@@ -36,7 +36,7 @@ const RewardsView: FC = () => {
     <RewardsViewContainer>
       <Box
         component={RouterLink}
-        to={`/cursos/${classId}/aventuras`}
+        to={`cursos/${classId}/aventuras`}
         className={"back__navigation__container"}
       >
         <ArrowBackIosNewIcon />
