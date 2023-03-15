@@ -84,3 +84,14 @@ export const generateAccessToken = async (body?: GenerateAccessTokenBody) => {
 export const forgotPassword = (body: { email: string }) => {
   return http.post("/auth/forgot-password", body);
 };
+
+export const verifyResetToken = (token: string) => {
+  return http.get("/auth/verify-token/" + token);
+};
+
+export const resetPassword = (
+  body: Omit<SignInBody, "email">,
+  token: string
+) => {
+  return http.post("/auth/reset-password/" + token, body);
+};

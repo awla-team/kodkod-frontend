@@ -12,13 +12,13 @@ const theme = createTheme({
       main: "#EAEDFE",
       dark: "#E3AB00",
       light: "#FFD040",
-      contrastText: '#3D5EE1'
+      contrastText: "#3D5EE1",
     },
     highlight: {
       main: "#FDC51A",
       dark: "#E3AB00",
       light: "#FFD040",
-      contrastText: '#FFF',
+      contrastText: "#FFF",
     },
     info: {
       main: "#EAEDFE",
@@ -45,15 +45,15 @@ const theme = createTheme({
   components: {
     MuiButton: {
       styleOverrides: {
-        root: {          
-          boxShadow: 'none',
-          textTransform: 'none',
-          '&:hover': {
-            boxShadow: 'none',
+        root: {
+          boxShadow: "none",
+          textTransform: "none",
+          "&:hover": {
+            boxShadow: "none",
           },
         },
       },
-    },    
+    },
     MuiChip: {
       styleOverrides: {
         root: {
@@ -62,7 +62,7 @@ const theme = createTheme({
           },
         },
       },
-    },    
+    },
   },
 });
 

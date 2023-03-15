@@ -25,6 +25,10 @@ export const ResetPasswordCard = styled(Card)`
   }
 
   & .${cardContentClasses.root} {
+    
+    & .invalid__token__text{
+      text-align: center;
+    }
     & .heading__text {
       color: #ffff;
       text-align: center;
