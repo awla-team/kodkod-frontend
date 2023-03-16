@@ -41,7 +41,7 @@ export const generateAccessToken = async (body?: GenerateAccessTokenBody) => {
       }
     }
 
-    const data = await fetch(
+    fetch(
       "http://localhost:3000/auth/generate-access-token",
       {
         method: "post",
@@ -55,7 +55,7 @@ export const generateAccessToken = async (body?: GenerateAccessTokenBody) => {
     )
       .then((res) => {
         if (res.ok) {
-          res.json();
+          return res.json();
         }
         throw res;
       })

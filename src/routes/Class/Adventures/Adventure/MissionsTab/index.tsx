@@ -20,7 +20,7 @@ const MissionsTab: React.FC = () => {
 
   useEffect(() => {
     if (shownStage && !missionsByStage[shownStage.id]) {
-      getMissionsByStage(shownStage.id)
+      getMissionsByStage({ id: shownStage.id })
         .then(({ data }) =>
           setMissionsByStage((missionsByStage) => ({
             ...missionsByStage,
@@ -46,7 +46,7 @@ const MissionsTab: React.FC = () => {
                   <StageIcon selected icon={shownStage.icon} />
                 </div>
                 <div className="d-flex flex-column justify-content-center">
-                  <Typography className="me-2">{`Etapa ${shownStage.index}`}</Typography>
+                  <Typography className="me-2">{`Etapa ${shownStage._index}`}</Typography>
                   <Typography variant="h4" fontWeight="bold">
                     {shownStage.title}
                   </Typography>
@@ -68,7 +68,7 @@ const MissionsTab: React.FC = () => {
                     <Typography
                       variant="caption"
                       className="mt-1"
-                    >{`Etapa ${stage.index}`}</Typography>
+                    >{`Etapa ${stage._index}`}</Typography>
                   </StagesStepper>
                   {adventure?.stages && i < adventure?.stages?.length - 1 ? (
                     <hr />
@@ -89,14 +89,7 @@ const MissionsTab: React.FC = () => {
                 role="button"
                 onClick={() => handleSelectMission(mission)}
               >
-                <MissionCard
-                  title={mission.title}
-                  description={mission.description}
-                  qr={mission.qr}
-                  points={20}
-                  icon={mission.skill?.icon || ""}
-                  color={mission.skill?.color || "#000"}
-                />
+                <MissionCard mission={mission} />
               </div>
             ))}
           </div>
@@ -107,12 +100,7 @@ const MissionsTab: React.FC = () => {
           >
             {selectedMission ? (
               <MissionCard
-                title={selectedMission.title}
-                description={selectedMission.description}
-                qr={selectedMission.qr}
-                points={20}
-                icon={selectedMission.skill?.icon || ""}
-                color={selectedMission.skill?.color || "#000"}
+                mission={selectedMission}
               />
             ) : null}
           </MissionDialog>
