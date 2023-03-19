@@ -85,3 +85,15 @@ export interface IReward {
   icon: string;
   type: string;
 }
+
+export interface ISchool {
+  id: number;
+  id_address: number;
+  name: string;
+  phone: string;
+}
+
+export interface SignInResponseType {
+  accessToken: string;
+  refreshToken: string;
+}
