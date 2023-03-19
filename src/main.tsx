@@ -6,10 +6,17 @@ import { router } from "routes/router";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
+import { ThemeProvider as MuiThemeProvider } from "@mui/material";
+import { ThemeProvider as StyledThemeProvider } from "styled-components";
+import theme from "global/theme";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <ToastContainer />
-    <RouterProvider router={router} />
+    <MuiThemeProvider theme={theme}>
+      <StyledThemeProvider theme={theme}>
+        <ToastContainer />
+        <RouterProvider router={router} />
+      </StyledThemeProvider>
+    </MuiThemeProvider>    
   </React.StrictMode>
 );

@@ -1,15 +1,16 @@
 import React, { useState } from "react";
-import * as Styled from "./styled";
+import {SignInCard, SignInContainer } from "./styled";
 import {
-  Box,
-  CardContent,
+  Box,  
   FormLabel,
   Typography,
   FormControl,
   TextField,
   Button,
+  CardContent,
+  CardMedia,
 } from "@mui/material";
-
+import logoWhite from 'assets/images/logo-white.png';
 import { Formik, Form, FormikHelpers } from "formik";
 import { FormInitialValuesType } from "./interfaces";
 import * as Yup from "yup";
@@ -17,6 +18,7 @@ import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { signIn } from "services/auth";
 import Toaster from "utils/Toster";
 import { SignInResponseType } from "../../../global/interfaces";
+
 
 const SignIn: React.FC = () => {
   const [formInitialValues, setFormInitialValues] =
@@ -52,13 +54,19 @@ const SignIn: React.FC = () => {
     }
   };
   return (
-    <Styled.SignInContainer>
-      <Styled.SignInCard>
-        <CardContent>
-          <Typography variant={"h4"} className={"heading__text"}>
-            Log in to your account
+    <SignInContainer className="d-flex flex-column">
+      <SignInCard variant="outlined">
+        <CardMedia
+          className="p-5"          
+          component="img"
+          height="200"
+          image={logoWhite}
+          alt="kodkod logo"
+        />
+        <CardContent className="px-5 py-4">
+          <Typography component="h4" variant="h5" textAlign="center">
+            Ingresa a tu cuenta
           </Typography>
-
           <Formik
             initialValues={formInitialValues}
             onSubmit={handleSubmit}
@@ -79,50 +87,41 @@ const SignIn: React.FC = () => {
                 <Form onSubmit={handleSubmit}>
                   <Box
                     display={"flex"}
-                    flexDirection={"column"}
-                    gap={3}
-                    mt={4}
-                    px={4.7}
+                    flexDirection={"column"}                    
+                    mt={3}                  
                   >
-                    <FormControl error={!!errors.email && touched.email}>
-                      <FormLabel>Email</FormLabel>
+                    <FormControl error={!!errors.email && touched.email} className="mb-3">
                       <TextField
                         name={"email"}
                         value={values.email}
                         onChange={handleChange}
-                        onBlur={handleBlur}
+                        onBlur={handleBlur}                        
                         type={"email"}
-                        inputProps={{
-                          sx: { color: "#fff" },
-                        }}
-                        placeholder={"Ej: juanito.perez@email.com"}
-                        variant={"standard"}
+                        color="primary"
+                        placeholder={"Ingresa tu email"}
+                        variant="outlined"
                       />
                     </FormControl>
-                    <FormControl error={!!errors.password && touched.password}>
-                      <FormLabel>Password</FormLabel>
+                    <FormControl error={!!errors.password && touched.password} className="mb-2">
                       <TextField
                         name={"password"}
                         value={values.password}
                         onChange={handleChange}
-                        onBlur={handleBlur}
-                        inputProps={{
-                          sx: { color: "#fff" },
-                        }}
+                        onBlur={handleBlur}                                              
+                        color="primary"
                         type={"password"}
                         placeholder={"Ingresa tu contraseña"}
-                        variant={"standard"}
+                        variant="outlined"
                       />
                     </FormControl>
                     <Typography
-                      className={"forget__password"}
-                      textAlign={"center"}
-                      color={"#fff"}
-                      variant={"subtitle2"}
+                      className="mb-4"         
+                      textAlign={"center"}                      
+                      variant="subtitle2"
                       component={RouterLink}
                       to={"/forgot-password"}
                     >
-                      Forget my password
+                      Olvidé mi contraseña
                     </Typography>
 
                     <Box
@@ -135,21 +134,17 @@ const SignIn: React.FC = () => {
                       <Button
                         disabled={isSubmitting || !isValid || !dirty}
                         fullWidth
+                        size="large"
                         className={"login__button"}
                         variant={"contained"}
                         type={"submit"}
                       >
-                        Log in
+                        Iniciar sesión
                       </Button>
-                      <Button
-                        component={RouterLink}
-                        to={"/signup"}
-                        fullWidth
-                        className={"create__account__button"}
-                        variant={"outlined"}
-                      >
-                        Create a new account
-                      </Button>
+                      <Typography component="span" variant="subtitle2">
+                        ¿Aún no tienes una cuenta? {" "}
+                        <Typography component={RouterLink} variant="subtitle2" to={"/signup"}>Registrate</Typography>
+                      </Typography>
                     </Box>
                   </Box>
                 </Form>
@@ -157,8 +152,8 @@ const SignIn: React.FC = () => {
             }}
           </Formik>
         </CardContent>
-      </Styled.SignInCard>
-    </Styled.SignInContainer>
+      </SignInCard>      
+    </SignInContainer>
   );
 };
 
