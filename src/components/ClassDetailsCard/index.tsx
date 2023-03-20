@@ -8,7 +8,7 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({ classDetails }) => {
   const navigate = useNavigate();
 
   const handleNavigate = () => {
-    navigate(`cursos/${classDetails.id}/aventuras`);
+    navigate(`/app/cursos/${classDetails.id}/aventuras`);
   };
   
   return (

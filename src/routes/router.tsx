@@ -1,6 +1,5 @@
-import { createBrowserRouter, Navigate, Outlet } from "react-router-dom";
+import { createBrowserRouter, Outlet } from "react-router-dom";
 import AuthContextProvider from "contexts/AuthContext";
-import UserAuthLayout from "./UserAuth";
 import SignIn from "./UserAuth/SignIn";
 import SignUp from "./UserAuth/SignUp";
 import Home from "./Home";
@@ -15,6 +14,9 @@ import RewardsView from "components/RewardsView";
 import App from "App";
 import ForgotPassword from "./UserAuth/ForgotPassword";
 import ResetPassword from "./UserAuth/ResetPassword";
+import Error404 from "../components/Error404";
+import Progress from "./Class/Progress";
+import UserAuthLayout from "./UserAuth";
 
 export const router = createBrowserRouter([
   {
@@ -22,7 +24,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "*",
-        element: <Navigate to="/signin" replace />,
+        element: <Error404 />,
       },
       {
         element: <UserAuthLayout />,
@@ -73,6 +75,10 @@ export const router = createBrowserRouter([
               {
                 path: "aventuras",
                 element: <Adventures />,
+              },
+              {
+                path: "progreso",
+                element: <Progress />,
               },
               {
                 path: "aventuras/:adventureId",

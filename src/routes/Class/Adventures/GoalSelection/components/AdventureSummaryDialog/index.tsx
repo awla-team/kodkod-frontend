@@ -30,7 +30,7 @@ const AdventureSummaryDialog: React.FC<{
           id_class: +classId,
           id_adventure: selectedAdventure.id,
         });
-        navigate(`/aap/cursos/${classId}/aventuras`);
+        navigate(`/app/cursos/${classId}/aventuras`);
       } catch (e: any) {
         Toaster("error", e.message);
       }
