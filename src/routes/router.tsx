@@ -1,4 +1,9 @@
-import { createBrowserRouter, Outlet } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  Outlet,
+  useLocation,
+} from "react-router-dom";
 import AuthContextProvider from "contexts/AuthContext";
 import SignIn from "./UserAuth/SignIn";
 import SignUp from "./UserAuth/SignUp";
@@ -17,10 +22,23 @@ import ResetPassword from "./UserAuth/ResetPassword";
 import Error404 from "../components/Error404";
 import Progress from "./Class/Progress";
 import UserAuthLayout from "./UserAuth";
+import { FC } from "react";
+
+const MainRouterComponent: FC = () => {
+  const { pathname } = useLocation();
+  if (pathname === "/") {
+    return <Navigate to={"/app"} />;
+  }
+  return (
+    <>
+      <Outlet />
+    </>
+  );
+};
 
 export const router = createBrowserRouter([
   {
-    element: <Outlet />,
+    element: <MainRouterComponent />,
     children: [
       {
         path: "*",
