@@ -20,9 +20,14 @@ export const SignUpContainer = styled(Box)`
 
 export const SignUpCard = styled(Card)`
   border-radius: 8px;
+  width: 500px;
 
   .MuiCardMedia-root {
     background: ${(props) => props.theme.palette.primary.main};
+  }
+
+  .MuiButton-startIcon .MuiSvgIcon-root {
+    font-size: 14px;
   }
 `;
 

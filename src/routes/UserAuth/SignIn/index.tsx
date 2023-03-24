@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import {SignInCard, SignInContainer } from "./styled";
 import {
-  Box,  
-  FormLabel,
+  Box,
   Typography,
   FormControl,
   TextField,
@@ -56,13 +55,16 @@ const SignIn: React.FC = () => {
   return (
     <SignInContainer className="d-flex flex-column">
       <SignInCard variant="outlined">
-        <CardMedia
-          className="p-5"          
-          component="img"
-          height="200"
-          image={logoWhite}
-          alt="kodkod logo"
-        />
+        <div>
+          <CardMedia
+            className="p-5"          
+            component="img"
+            height="200"
+            width="500"
+            image={logoWhite}
+            alt="kodkod logo"
+          />
+        </div>        
         <CardContent className="px-5 py-4">
           <Typography component="h4" variant="h5" textAlign="center">
             Ingresa a tu cuenta

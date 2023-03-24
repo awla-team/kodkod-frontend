@@ -1,6 +1,6 @@
 import { ForgotPasswordProps } from "./interfaces";
 import React, { FC, useState } from "react";
-import * as Styled from "./styled";
+import { ForgotPasswordCard, ForgotPasswordContainer } from "./styled";
 import {
   Box,
   Button,
@@ -16,6 +16,7 @@ import { FormInitialValuesType } from "./interfaces";
 import * as Yup from "yup";
 import Toaster from "utils/Toster";
 import { forgotPassword } from "services/auth";
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 const ForgotPassword: FC<ForgotPasswordProps> = () => {
   const [formInitialValues, setFormInitialValues] =
@@ -45,13 +46,16 @@ const ForgotPassword: FC<ForgotPasswordProps> = () => {
     }
   };
   return (
-    <Styled.ForgotPasswordContainer>
-      <Styled.ForgotPasswordCard>
-        <CardContent>
-          <Typography variant={"h4"} className={"heading__text"}>
-            Recover your password
+    <ForgotPasswordContainer className="d-flex flex-column">
+      <ForgotPasswordCard variant="outlined">
+        <CardContent className="p-5">
+          <Button className="mb-2" startIcon={<ArrowBackIosIcon fontSize="small" />} component={RouterLink} to={"/signin"}>Volver</Button>
+          <Typography component="h4" variant="h5" className="mb-1">
+            Recupera tu contraseña
           </Typography>
-
+          <Typography component="span" variant="body2" color="gray" width="200px">
+            Ingresa tu email para enviarte un correo con instrucciones para recuperar tu contraseña
+          </Typography>
           <Formik
             initialValues={formInitialValues}
             onSubmit={handleSubmit}
@@ -73,23 +77,19 @@ const ForgotPassword: FC<ForgotPasswordProps> = () => {
                   <Box
                     display={"flex"}
                     flexDirection={"column"}
-                    gap={3}
-                    mt={4}
-                    px={4.7}
+                    gap={2}
+                    mt={2 }                    
                   >
-                    <FormControl error={!!errors.email && touched.email}>
-                      <FormLabel>Email</FormLabel>
+                    <FormControl error={!!errors.email && touched.email}>                    
                       <TextField
                         name={"email"}
                         value={values.email}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         type={"email"}
-                        inputProps={{
-                          sx: { color: "#fff" },
-                        }}
+                        label="Email"
                         placeholder={"Ej: juanito.perez@email.com"}
-                        variant={"standard"}
+                        variant="outlined"
                       />
                     </FormControl>
 
@@ -103,21 +103,13 @@ const ForgotPassword: FC<ForgotPasswordProps> = () => {
                       <Button
                         disabled={isSubmitting || !isValid || !dirty}
                         fullWidth
+                        size="large"
                         className={"submit__button"}
                         variant={"contained"}
                         type={"submit"}
                       >
-                        Send recovery email
-                      </Button>
-                      <Button
-                        component={RouterLink}
-                        to={"/signin"}
-                        fullWidth
-                        className={"back__button"}
-                        variant={"outlined"}
-                      >
-                        Back
-                      </Button>
+                        Enviar correo de recuperación
+                      </Button>                      
                     </Box>
                   </Box>
                 </Form>
@@ -125,8 +117,8 @@ const ForgotPassword: FC<ForgotPasswordProps> = () => {
             }}
           </Formik>
         </CardContent>
-      </Styled.ForgotPasswordCard>
-    </Styled.ForgotPasswordContainer>
+      </ForgotPasswordCard>
+    </ForgotPasswordContainer>
   );
 };
 

@@ -8,6 +8,7 @@ export const SignInContainer = styled(Box)`
 `;
 
 export const SignInCard = styled(Card)`
+  width: 500px;
   border-radius: 8px;
 
   .MuiCardMedia-root {

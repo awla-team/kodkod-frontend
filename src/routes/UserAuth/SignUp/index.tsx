@@ -47,7 +47,7 @@ const SignUp: React.FC = () => {
       confirmPassword: Yup.string().oneOf(
         [Yup.ref("password"), null],
         "Password must match"
-      ),
+      ).required("Password cannot be empty."),
       first_name: Yup.string().required("First name cannot be empty."),
       last_name: Yup.string().required("Last name cannot be empty."),
       school: Yup.number(),
@@ -100,8 +100,8 @@ const SignUp: React.FC = () => {
     <SignUpContainer className="d-flex flex-column">
       <SignUpCard variant="outlined">
         <CardContent className="px-5 pt-5">
-          <Button className="mb-2" startIcon={<ArrowBackIosIcon fontSize="small" />} component={RouterLink} to={"/signin"}>Volver</Button>
-          <Typography component="h4" variant="h5" textAlign="center">
+          <Button className="mb-2" startIcon={<ArrowBackIosIcon />} component={RouterLink} to={"/signin"}>Volver</Button>
+          <Typography component="h4" variant="h5">
             Crea una nueva cuenta en Kodkod
           </Typography>
           <Formik
@@ -249,7 +249,7 @@ const SignUp: React.FC = () => {
                         onBlur={handleBlur}                        
                         label="¿Qué asignatura enseñas? (opcional)"
                       >
-                        <MenuItem value={""}>Select a subject</MenuItem>
+                        <MenuItem disabled value={""}>Escoge una asignatura</MenuItem>
                         {subjects.map((subject, index) => {
                           return (
                             <MenuItem key={index} value={subject}>
@@ -275,7 +275,7 @@ const SignUp: React.FC = () => {
                         variant={"contained"}
                         type={"submit"}
                       >
-                        Create account
+                        Crear cuenta
                       </Button>
                     </Box>
                   </Box>
