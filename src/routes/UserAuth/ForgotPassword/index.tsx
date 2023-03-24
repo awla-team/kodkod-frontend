@@ -49,11 +49,11 @@ const ForgotPassword: FC<ForgotPasswordProps> = () => {
     <ForgotPasswordContainer className="d-flex flex-column">
       <ForgotPasswordCard variant="outlined">
         <CardContent className="p-5">
-          <Button className="mb-2" startIcon={<ArrowBackIosIcon fontSize="small" />} component={RouterLink} to={"/signin"}>Volver</Button>
+          <Button className="mb-2" startIcon={<ArrowBackIosIcon />} component={RouterLink} to={"/signin"}>Volver al inicio de sesión</Button>
           <Typography component="h4" variant="h5" className="mb-1">
             Recupera tu contraseña
           </Typography>
-          <Typography component="span" variant="body2" color="gray" width="200px">
+          <Typography component="span" variant="body2" color="gray">
             Ingresa tu email para enviarte un correo con instrucciones para recuperar tu contraseña
           </Typography>
           <Formik
@@ -82,6 +82,7 @@ const ForgotPassword: FC<ForgotPasswordProps> = () => {
                   >
                     <FormControl error={!!errors.email && touched.email}>                    
                       <TextField
+                        required
                         name={"email"}
                         value={values.email}
                         onChange={handleChange}

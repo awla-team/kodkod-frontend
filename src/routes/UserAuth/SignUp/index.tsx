@@ -100,10 +100,20 @@ const SignUp: React.FC = () => {
     <SignUpContainer className="d-flex flex-column">
       <SignUpCard variant="outlined">
         <CardContent className="px-5 pt-5">
-          <Button className="mb-2" startIcon={<ArrowBackIosIcon />} component={RouterLink} to={"/signin"}>Volver</Button>
-          <Typography component="h4" variant="h5">
+          <Button className="mb-2" startIcon={<ArrowBackIosIcon />} component={RouterLink} to={"/signin"}>Volver al inicio de sesión</Button>
+          <Typography component="h4" variant="h5" className="mb-1">
             Crea una nueva cuenta en Kodkod
           </Typography>
+          <Typography component="span" variant="body2" color="gray">
+            Tu contraseña debe contener:
+          </Typography>
+          <ul>
+            <Typography component="li" variant="body2" color="gray">Al menos 8 caractéres</Typography>
+            <Typography component="li" variant="body2" color="gray">Al menos 1 minúscula</Typography>
+            <Typography component="li" variant="body2" color="gray">Al menos 1 mayúscula</Typography>
+            <Typography component="li" variant="body2" color="gray">Al menos 1 número</Typography>
+            <Typography component="li" variant="body2" color="gray">Al menos 1 símbolo</Typography>
+          </ul>
           <Formik
             initialValues={formInitialValues}
             onSubmit={handleSubmit}
