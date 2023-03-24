@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, CircularProgress, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { CardContainer, ImgContainer } from "./styled";
+import { GoalSelectionContainer, CardContainer, ImgContainer } from "./styled";
 import { AxiosResponse } from "axios";
 import { getGoals } from "services/goals";
 import { FetchStatus } from "global/enums";
@@ -50,7 +50,7 @@ const GoalSelection: React.FC = () => {
     );
 
   return (
-    <div className="d-flex flex-column flex-fill w-100 h-100">
+    <GoalSelectionContainer className="w-100 p-5">
       <Typography variant="h4" fontWeight="bold" className="mb-2">
         Escoge un objetivo
       </Typography>
@@ -90,7 +90,7 @@ const GoalSelection: React.FC = () => {
           Continuar
         </Button>
       </div>
-    </div>
+    </GoalSelectionContainer>
   );
 };
 
