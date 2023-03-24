@@ -8,7 +8,8 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({ classDetails }) => {
   const navigate = useNavigate();
 
   const handleNavigate = () => {
-    navigate(`cursos/${classDetails.id}/aventuras`);
+    //navigate(`/app`);
+    navigate(`/app/cursos/${classDetails.id}/aventuras`);
   };
   
   return (
@@ -23,7 +24,10 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({ classDetails }) => {
             <Typography component="span" variant="body1">{classDetails.current_adventure.title}</Typography>
           </div>          
         ) : (
-          <Typography component="span" variant="body1">Empieza una aventura con tus estudiantes para mejorar el ambiente de tu sala de clases.</Typography>
+          <div className="d-flex flex-column">
+            <Typography component="span" variant="body1" fontWeight="bold" mb={1}>¡Aún no has seleccionado una aventura!</Typography>
+            <Typography component="span" variant="body1">Presiona el botón a continuación para escoger una aventura que se ajuste a tus objetivos</Typography>          
+          </div>          
         )}
       </div>
       <div>

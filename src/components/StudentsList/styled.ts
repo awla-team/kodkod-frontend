@@ -33,12 +33,7 @@ export const DontHaveDetailsContent = styled(Box)`
     color: #4e4e4e;
     font-size: 1.125rem;
     text-align: center;
-  }
-
-  & button {
-    border-radius: 8px;
-    text-transform: none;
-  }
+  }  
 `;
 
 export const StudentsListDetailsContainer = styled(Box)`

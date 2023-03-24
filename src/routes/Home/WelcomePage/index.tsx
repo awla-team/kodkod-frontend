@@ -11,9 +11,9 @@ const WelcomePage: FC<WelcomePageProps> = ({
       <WelcomePageContainer className="p-5">
         <img className="mb-5" />
         <div> 
-          <Typography component="h1" variant="h5" className="fw-bold text-center mb-3">Comienza añadiendo tu primer curso</Typography>
+          <Typography component="h1" variant="h5" className="fw-bold text-center mb-3">¡Vamos a añadir tus cursos!</Typography>
           <Typography component="div" variant="body1" className="mb-4">
-            Y descubre cómo mejorar el ambiente de la sala de clases de manera divertida.
+            En tus cursos, podrás escoger divertidas aventuras para trabajar en el desarrollo socioemocional de tus estudiantes.
           </Typography>
           <Button onClick={handleOpenModal} variant={"contained"} className="w-100">
             Añade tu primer curso
