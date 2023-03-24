@@ -161,10 +161,10 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
                     }
                     value={inputFieldValue}
                     onKeyDown={(event) => handleStudentValues(event, values)}
-                    onChange={handleInputFieldChange}
+                    onChange={handleInputFieldChange}                    
                     fullWidth
                     size="small"
-                    placeholder={"Ingresa los emails separados por coma"}
+                    placeholder={"Ingresa los emails de tus estudiantes separados por coma"}
                   ></TextField>
                   <div>
                     <div className="details-list">

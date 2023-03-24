@@ -167,7 +167,7 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
         <div>
           <div className="d-flex align-items-center">
             <Typography className="me-2" component="h6" variant="h6" fontWeight="bold">Termómetro socioemocional</Typography>
-            <Tooltip title="Delete" placement="right" TransitionComponent={Fade}>
+            <Tooltip title="El termómetro socioemocional es una herramienta que nos permitirá hacer seguimiento del clima escolar del curso a lo largo del tiempo. ¡Es importantísimo llenarlo cada clase para poder entregarte reportes de calidad!" placement="right" TransitionComponent={Fade}>
               <HelpIcon sx={{ opacity: 0.8, cursor: 'pointer', fontSize: '20px' }} />
             </Tooltip>
           </div>

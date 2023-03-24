@@ -83,9 +83,7 @@ const DontHaveDetails: FC<{
 }> = ({ setOpenModal }) => {
   return (
     <DontHaveDetailsContent>
-      <span className={"helper__text"}>
-        Your class has no associated students yet
-      </span>
+      <Typography component="span" variant="body1">Aún no has añadido estudiantes a tu curso</Typography>
       <Button size="large" variant={"contained"} onClick={() => setOpenModal(true)}>
         Añadir estudiantes
       </Button>

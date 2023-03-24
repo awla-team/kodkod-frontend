@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from "react";
-import * as Styled from "./styled";
+import { ResetPasswordContainer, ResetPasswordCard} from "./styled";
 import {
   Box,
   Button,
@@ -15,6 +15,8 @@ import { FormInitialValuesType } from "./interfaces";
 import * as Yup from "yup";
 import Toaster from "utils/Toster";
 import { resetPassword, verifyResetToken } from "services/auth";
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+
 
 const ResetPassword: FC = () => {
   const [valid, setValid] = useState<boolean>(true);
@@ -60,7 +62,7 @@ const ResetPassword: FC = () => {
       confirmPassword: Yup.string().oneOf(
         [Yup.ref("password"), null],
         "Password must match"
-      ),
+      ).required("Password cannot be empty"),
     });
   };
 
@@ -83,12 +85,23 @@ const ResetPassword: FC = () => {
     }
   };
   return (
-    <Styled.ResetPasswordContainer>
-      <Styled.ResetPasswordCard>
-        <CardContent>
-          <Typography variant={"h4"} className={"heading__text"}>
-            Choose a new password
+    <ResetPasswordContainer className="d-flex flex-column">
+      <ResetPasswordCard variant="outlined">
+        <CardContent className="p-5">
+          <Button className="mb-2" startIcon={<ArrowBackIosIcon />} component={RouterLink} to={"/signin"}>Volver al inicio de sesión</Button>
+          <Typography component="h4" variant="h5" className="mb-1">
+            Crea una nueva contraseña
           </Typography>
+          <Typography component="span" variant="body2" color="gray">
+            Tu nueva contraseña debe contener:
+          </Typography>
+          <ul>
+            <Typography component="li" variant="body2" color="gray">Al menos 8 caractéres</Typography>
+            <Typography component="li" variant="body2" color="gray">Al menos 1 minúscula</Typography>
+            <Typography component="li" variant="body2" color="gray">Al menos 1 mayúscula</Typography>
+            <Typography component="li" variant="body2" color="gray">Al menos 1 número</Typography>
+            <Typography component="li" variant="body2" color="gray">Al menos 1 símbolo</Typography>
+          </ul>
           {valid ? (
             <Formik
               initialValues={formInitialValues}
@@ -111,26 +124,22 @@ const ResetPassword: FC = () => {
                     <Box
                       display={"flex"}
                       flexDirection={"column"}
-                      gap={3}
-                      mt={4}
-                      px={4.7}
+                      gap={2}
+                      mt={3}                  
                     >
                       <FormControl
                         required
                         error={!!errors.password && touched.password}
-                      >
-                        <FormLabel>New password</FormLabel>
+                      >                        
                         <TextField
                           name={"password"}
                           value={values.password}
                           onChange={handleChange}
-                          onBlur={handleBlur}
-                          inputProps={{
-                            sx: { color: "#fff" },
-                          }}
+                          onBlur={handleBlur}                          
                           type={"password"}
-                          placeholder={"Ingresa tu contraseña"}
-                          variant={"standard"}
+                          label="Nueva contraseña"
+                          placeholder={"Ingresa tu nueva contraseña"}
+                          variant="outlined"
                         />
                       </FormControl>
 
@@ -139,19 +148,16 @@ const ResetPassword: FC = () => {
                         error={
                           !!errors.confirmPassword && touched.confirmPassword
                         }
-                      >
-                        <FormLabel>Confirm new password</FormLabel>
+                      >                        
                         <TextField
                           name={"confirmPassword"}
                           value={values.confirmPassword}
                           onChange={handleChange}
-                          onBlur={handleBlur}
-                          inputProps={{
-                            sx: { color: "#fff" },
-                          }}
+                          onBlur={handleBlur}                          
                           type={"password"}
-                          placeholder={"Ingresa tu contraseña"}
-                          variant={"standard"}
+                          label="Confirma tu nueva contraseña"
+                          placeholder={"Ingresa tu nueva contraseña una vez más"}
+                          variant="outlined"
                         />
                       </FormControl>
 
@@ -170,18 +176,10 @@ const ResetPassword: FC = () => {
                           className={"submit__button"}
                           variant={"contained"}
                           type={"submit"}
+                          size="large"
                         >
-                          Set new password
-                        </Button>
-                        <Button
-                          component={RouterLink}
-                          to={"/signin"}
-                          fullWidth
-                          className={"login__button"}
-                          variant={"outlined"}
-                        >
-                          Go to login
-                        </Button>
+                          Establecer nueva contraseña
+                        </Button>                        
                       </Box>
                     </Box>
                   </Form>
@@ -198,8 +196,8 @@ const ResetPassword: FC = () => {
             </Typography>
           )}
         </CardContent>
-      </Styled.ResetPasswordCard>
-    </Styled.ResetPasswordContainer>
+      </ResetPasswordCard>
+    </ResetPasswordContainer>
   );
 };
 
