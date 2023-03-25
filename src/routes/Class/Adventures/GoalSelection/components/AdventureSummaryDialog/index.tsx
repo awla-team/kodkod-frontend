@@ -12,9 +12,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import SkillSummary from "../SkillSummary";
 import StageSummary from "../StageSummary";
 import type { IAdventure } from "global/interfaces";
-import Toaster from "../../../../../../utils/Toster";
-import { setCurrentAdventure } from "../../../../../../services/adventures";
-import { ClassInterface } from "../../../../../../services/classes/interfaces";
+import Toaster from "utils/Toster";
+import { setCurrentAdventure } from "services/adventures";
 import { useParams, useNavigate } from "react-router-dom";
 
 const AdventureSummaryDialog: React.FC<{
@@ -31,7 +30,7 @@ const AdventureSummaryDialog: React.FC<{
           id_class: +classId,
           id_adventure: selectedAdventure.id,
         });
-        navigate(`/aap/cursos/${classId}/aventuras`);
+        navigate(`/app/cursos/${classId}/aventuras`);
       } catch (e: any) {
         Toaster("error", e.message);
       }
@@ -121,7 +120,7 @@ const AdventureSummaryDialog: React.FC<{
             </Typography>
             {!!selectedAdventure?.expectedResults?.length ? (
               <ul className="ps-3 mb-0">
-                {selectedAdventure.expectedResults.map((expectedResult) => (
+                {selectedAdventure.expectedResults.map((expectedResult: any) => (
                   <li>{expectedResult}</li>
                 ))}
               </ul>

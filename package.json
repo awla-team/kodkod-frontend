@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "server": "json-server --watch db.json --delay 500"
+    "server": "json-server --watch db.json --delay 500",
+    "deploy": "aws s3 sync ./dist/ s3://kodkod.cl",
+    "build:prod": "yarn run build && yarn run deploy"
   },
   "dependencies": {
     "@emotion/react": "^11.10.4",
@@ -19,6 +21,7 @@
     "axios": "^1.1.2",
     "bootstrap": "5.2.1",
     "formik": "^2.2.9",
+    "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

@@ -19,6 +19,15 @@ declare module "@mui/material/styles" {
   interface ThemeOptions extends CustomTheme {}
 }
 
+declare module '@mui/material/styles/createPalette' {
+  interface Palette {
+    highlight: Palette['primary'];
+  }
+  interface PaletteOptions {
+    highlight: PaletteOptions['primary'];
+  }
+}
+
 declare module "styled-components" {
   export interface DefaultTheme extends Theme {}
 }
@@ -52,6 +61,8 @@ export interface IAdventure {
 
   id_class_has_adventure?: number;
   missions: IMission[];
+
+  expectedResults: string[];
 }
 
 export interface TemplateStages {

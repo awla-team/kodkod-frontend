@@ -96,7 +96,7 @@ const CurrentStage: FC = () => {
   };
 
   const handleStageChange = (index: number, stages: IStage[]) => {
-    if (index >= 0 && index <= stages.length - 1) {
+    if (index >= 0 && index <= stages.length - 1 && stage?.activeStage?._index -1 >= index) {
       setCurrentlyShowingStage(stages[index]);
     }
   };
