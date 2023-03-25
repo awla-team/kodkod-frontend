@@ -87,13 +87,11 @@ const App: React.FC = () => {
 
   if (fetching === FetchStatus.Idle || fetching === FetchStatus.Pending)
     return (
-      <ThemeWrapper>
-        <div className="app-container d-flex">
-          <div className="d-flex w-100 h-100 justify-content-center align-items-center">
-            <CircularProgress />
-          </div>
+      <div className="app-container d-flex">
+        <div className="d-flex w-100 h-100 justify-content-center align-items-center">
+          <CircularProgress />
         </div>
-      </ThemeWrapper>
+      </div>
     );
 
   const handleOpenModal = () => {
@@ -101,25 +99,15 @@ const App: React.FC = () => {
   };
 
   return (
-    <ThemeWrapper>
-      <div className="app-container d-flex">
-        <Sidebar classes={classes} handleOpenModal={handleOpenModal} />
-        <div className="app-main-container d-flex flex-column flex-fill">
-          <div className="app-content container">
-            <Outlet context={{ classes, handleOpenModal }} />
-          </div>
+    <div className="app-container d-flex">
+      <Sidebar classes={classes} handleOpenModal={handleOpenModal} />
+      <div className="app-main-container d-flex flex-column flex-fill">
+        <div className="app-content container">
+          <Outlet context={{ classes, handleOpenModal }} />
         </div>
-        <CreateClassModal open={open} onClose={handleClose} levels={levels} />
       </div>
-    </ThemeWrapper>
-  );
-};
-
-const ThemeWrapper: React.FC<React.PropsWithChildren> = ({ children }) => {
-  return (
-    <MuiThemeProvider theme={theme}>
-      <StyledThemeProvider theme={theme}>{children}</StyledThemeProvider>
-    </MuiThemeProvider>
+      <CreateClassModal open={open} onClose={handleClose} levels={levels} />
+    </div>
   );
 };
 

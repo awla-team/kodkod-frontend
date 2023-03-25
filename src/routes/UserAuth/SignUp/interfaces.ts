@@ -10,17 +10,17 @@ export interface FormInitialValuesType {
 
 export const subjects = [
   "Artes visuales",
-  " Ciencias naturales",
+  "Ciencias naturales",
   "Educación física y salud",
   "Historia",
-  " geografía y ciencias sociales",
-  "Inglés",
-  "Inglés (Propuesta curricular)",
+  "Geografía y ciencias sociales",
+  "Inglés",  
   "Lengua indígena",
-  "Lenguaje y comunicación / Lengua y literatura",
+  "Lenguaje y comunicación",
   "Lengua y Cultura de los Pueblos Originarios Ancestrales",
   "Matemática",
   "Música",
   "Orientación",
-  "ReligiónTecnología",
+  "Religión",
+  "Tecnología"
 ];

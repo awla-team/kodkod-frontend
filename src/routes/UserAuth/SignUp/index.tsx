@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import * as Styled from "./styled";
 import {
   Typography,
   CardContent,
@@ -10,15 +9,19 @@ import {
   Button,
   Select,
   MenuItem,
+  InputLabel,
 } from "@mui/material";
 import { Form, Formik, FormikHelpers } from "formik";
 import { FormInitialValuesType, subjects } from "./interfaces";
 import * as Yup from "yup";
 import Toaster from "utils/Toster";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { getSchools as getSchoolAction } from "services/school";
 import { ISchool } from "global/interfaces";
 import { signUp } from "../../../services/auth";
 import { AxiosError } from "axios";
+import { SignUpContainer, SignUpCard } from "./styled";
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 const SignUp: React.FC = () => {
   const [schools, setSchools] = useState<ISchool[]>([]);
@@ -44,11 +47,11 @@ const SignUp: React.FC = () => {
       confirmPassword: Yup.string().oneOf(
         [Yup.ref("password"), null],
         "Password must match"
-      ),
+      ).required("Password cannot be empty."),
       first_name: Yup.string().required("First name cannot be empty."),
       last_name: Yup.string().required("Last name cannot be empty."),
-      school: Yup.number().required("School cannot be empty."),
-      subject: Yup.string().required("Subject cannot be empty."),
+      school: Yup.number(),
+      subject: Yup.string(),
     });
   };
 
@@ -94,12 +97,23 @@ const SignUp: React.FC = () => {
     }
   };
   return (
-    <Styled.SignUpContainer>
-      <Styled.SignUpCard>
-        <CardContent>
-          <Typography variant={"h4"} className={"heading__text"}>
-            Create a new account
+    <SignUpContainer className="d-flex flex-column">
+      <SignUpCard variant="outlined">
+        <CardContent className="px-5 pt-5">
+          <Button className="mb-2" startIcon={<ArrowBackIosIcon />} component={RouterLink} to={"/signin"}>Volver al inicio de sesión</Button>
+          <Typography component="h4" variant="h5" className="mb-1">
+            Crea una nueva cuenta en Kodkod
           </Typography>
+          <Typography component="span" variant="body2" color="gray">
+            Tu contraseña debe contener:
+          </Typography>
+          <ul>
+            <Typography component="li" variant="body2" color="gray">Al menos 8 caractéres</Typography>
+            <Typography component="li" variant="body2" color="gray">Al menos 1 minúscula</Typography>
+            <Typography component="li" variant="body2" color="gray">Al menos 1 mayúscula</Typography>
+            <Typography component="li" variant="body2" color="gray">Al menos 1 número</Typography>
+            <Typography component="li" variant="body2" color="gray">Al menos 1 símbolo</Typography>
+          </ul>
           <Formik
             initialValues={formInitialValues}
             onSubmit={handleSubmit}
@@ -121,85 +135,76 @@ const SignUp: React.FC = () => {
                   <Box
                     display={"flex"}
                     flexDirection={"column"}
-                    gap={3}
-                    mt={4}
-                    px={4.7}
+                    gap={2}
+                    mt={3}
                   >
                     <Box
                       display={"flex"}
-                      gap={3}
+                      gap={2}
                       flexDirection={{ xs: "column", sm: "row" }}
                     >
                       <FormControl
                         required
                         error={!!errors.first_name && touched.first_name}
-                      >
-                        <FormLabel>First name</FormLabel>
-                        <TextField
+                      >                        
+                        <TextField             
+                          required             
                           name={"first_name"}
                           value={values.first_name}
                           onChange={handleChange}
-                          onBlur={handleBlur}
-                          inputProps={{
-                            sx: { color: "#fff" },
-                          }}
-                          placeholder={"Ej: Juanito"}
-                          variant={"standard"}
+                          onBlur={handleBlur}                          
+                          placeholder={"Ej: Juan Andrés"}
+                          label="Nombre"
+                          variant="outlined"
                         />
                       </FormControl>
                       <FormControl
                         required
                         error={!!errors.last_name && touched.last_name}
-                      >
-                        <FormLabel>Last name</FormLabel>
+                      >                        
                         <TextField
+                          required
                           value={values.last_name}
                           onChange={handleChange}
                           onBlur={handleBlur}
                           type={"last_name"}
-                          name="last_name"
-                          inputProps={{
-                            sx: { color: "#fff" },
-                          }}
-                          placeholder={"Ej: Pérez"}
-                          variant={"standard"}
+                          name="last_name"                          
+                          placeholder={"Ej: Gómez Pérez"}
+                          label="Apellido"
+                          variant="outlined"
                         />
                       </FormControl>
                     </Box>
                     <FormControl
                       required
                       error={!!errors.email && touched.email}
-                    >
-                      <FormLabel>Email</FormLabel>
+                    >                      
                       <TextField
                         name={"email"}
                         value={values.email}
+                        required
                         onChange={handleChange}
                         onBlur={handleBlur}
                         type={"email"}
-                        inputProps={{
-                          sx: { color: "#fff" },
-                        }}
                         placeholder={"Ej: juanito.perez@email.com"}
-                        variant={"standard"}
+                        label="Email"
+                        variant="outlined"
                       />
                     </FormControl>
                     <FormControl
                       required
                       error={!!errors.password && touched.password}
-                    >
-                      <FormLabel>Password</FormLabel>
+                    >                      
                       <TextField
+                        required
                         name={"password"}
                         value={values.password}
                         onChange={handleChange}
-                        onBlur={handleBlur}
-                        inputProps={{
-                          sx: { color: "#fff" },
-                        }}
+                        onBlur={handleBlur}                        
                         type={"password"}
-                        placeholder={"Ingresa tu contraseña"}
-                        variant={"standard"}
+                        placeholder={"Crea una contraseña para tu cuenta"}
+                        label="Contraseña"
+                        variant="outlined"
                       />
                     </FormControl>
 
@@ -208,37 +213,32 @@ const SignUp: React.FC = () => {
                       error={
                         !!errors.confirmPassword && touched.confirmPassword
                       }
-                    >
-                      <FormLabel>Confirm password</FormLabel>
+                    >                      
                       <TextField
+                        required
                         name={"confirmPassword"}
                         value={values.confirmPassword}
                         onChange={handleChange}
-                        onBlur={handleBlur}
-                        inputProps={{
-                          sx: { color: "#fff" },
-                        }}
+                        onBlur={handleBlur}                        
                         type={"password"}
-                        placeholder={"Ingresa tu contraseña"}
-                        variant={"standard"}
+                        placeholder={"¡Para estar seguros!"}
+                        label="Repite tu contraseña"
+                        variant="outlined"
                       />
                     </FormControl>
 
-                    <FormControl error={!!errors.school && touched.school}>
-                      <FormLabel>School</FormLabel>
-                      <Select
-                        size={"small"}
-                        variant={"outlined"}
+                    <FormControl>                      
+                      <InputLabel id="school-label">Establecimiento educacional (opcional)</InputLabel>
+                      <Select                    
+                        labelId="school-label"
+                        variant={"outlined"}                        
                         name={"school"}
                         value={values.school}
                         onChange={handleChange}
-                        onBlur={handleBlur}
-                        inputProps={{
-                          sx: { color: "#fff" },
-                        }}
-                        placeholder={"Select a school"}
+                        onBlur={handleBlur}    
+                        label="Establecimiento educacional (opcional)"
                       >
-                        <MenuItem value={""}>Select a school</MenuItem>
+                        <MenuItem value={""} disabled>Escoge un colegio</MenuItem>
                         {schools.map((school, index) => {
                           return (
                             <MenuItem key={index} value={school.id}>
@@ -248,24 +248,18 @@ const SignUp: React.FC = () => {
                         })}
                       </Select>
                     </FormControl>
-                    <FormControl
-                      required
-                      error={!!errors.subject && touched.subject}
-                    >
-                      <FormLabel>What school subject do you teach?</FormLabel>
-                      <Select
-                        size={"small"}
+                    <FormControl>
+                      <InputLabel id="subject-label">¿Qué asignatura enseñas? (opcional)</InputLabel>
+                      <Select           
+                        labelId="subject-label"          
                         variant={"outlined"}
                         name={"subject"}
                         value={values.subject}
                         onChange={handleChange}
-                        onBlur={handleBlur}
-                        inputProps={{
-                          sx: { color: "#fff" },
-                        }}
-                        placeholder={"Select a subject"}
+                        onBlur={handleBlur}                        
+                        label="¿Qué asignatura enseñas? (opcional)"
                       >
-                        <MenuItem value={""}>Select a subject</MenuItem>
+                        <MenuItem disabled value={""}>Escoge una asignatura</MenuItem>
                         {subjects.map((subject, index) => {
                           return (
                             <MenuItem key={index} value={subject}>
@@ -286,11 +280,12 @@ const SignUp: React.FC = () => {
                       <Button
                         disabled={isSubmitting || !isValid || !dirty}
                         fullWidth
+                        size="large"
                         className={"login__button"}
                         variant={"contained"}
                         type={"submit"}
                       >
-                        Create account
+                        Crear cuenta
                       </Button>
                     </Box>
                   </Box>
@@ -299,8 +294,8 @@ const SignUp: React.FC = () => {
             }}
           </Formik>
         </CardContent>
-      </Styled.SignUpCard>
-    </Styled.SignUpContainer>
+      </SignUpCard>
+    </SignUpContainer>
   );
 };
 
