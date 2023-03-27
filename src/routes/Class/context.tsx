@@ -14,6 +14,7 @@ import { useParams } from "react-router-dom";
 import { StudentType } from "components/StudentsList/interfaces";
 import { ClassContextType } from "./interfaces";
 import { IAdventure } from "global/interfaces";
+import { FetchStatus } from "global/enums";
 
 const ClassContext = createContext<ClassContextType>({
   students: [],
@@ -21,6 +22,7 @@ const ClassContext = createContext<ClassContextType>({
   getStudentsByClass: (id: number | string) => {},
   getClassById: (id: number | string) => {},
   updateStudentsData: (actionType, data) => {},
+  loadingClass: FetchStatus.Idle,
 });
 
 export const useClassContext = () => {
@@ -32,6 +34,7 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
     ClassInterface | undefined
   >();
   const [students, setStudents] = useState<StudentType[]>([]);
+  const [loadingClass, setLoadingClass] = useState(FetchStatus.Idle);
   const [currentAdventure, setCurrentAdventure] = useState<null | IAdventure>(
     null
   );
@@ -40,18 +43,22 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
 
   useEffect(() => {
     if (classId) {
+      
       getClassById(classId);
       getStudentsByClass(classId);
     }
   }, [classId]);
 
   const getClassById = async (id: number | string) => {
-    try {
+    setLoadingClass(FetchStatus.Pending);
+    try {      
       const { data }: { data: { responseData: ClassInterface } } =
         await getClassByID(id);
       setClassDetails(data.responseData);
+      setLoadingClass(FetchStatus.Success);
     } catch (e: any) {
       Toaster("error", e.message);
+      setLoadingClass(FetchStatus.Error);
     }
   };
 
@@ -121,6 +128,7 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
         getClassById,
         getStudentsByClass,
         classDetails,
+        loadingClass,
         students,
       }}
     >

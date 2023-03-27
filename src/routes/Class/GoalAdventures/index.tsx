@@ -6,15 +6,16 @@ import Point from "components/Point";
 import { FetchStatus } from "global/enums";
 import CircularProgress from "@mui/material/CircularProgress";
 import AdventureSummaryDialog from "./AdventureSummaryDialog";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { getGoalById } from "services/goals";
 import { GoalType } from "../Adventures/interfaces";
 import Toaster from "../../../utils/Toster";
 import { AdventureSelectionContainer } from "./styled";
+import { useClassContext } from "../context";
 
 const GoalAdventures: React.FC = () => {  
   const [loading, setLoading] = useState<FetchStatus>(FetchStatus.Idle);
-  const [adventures, setAdventures] = useState<IAdventure[]>([]);
+  const { classDetails, loadingClass } = useClassContext();
   const [selectedAdventure, setSelectedAdventure] = useState<IAdventure>(null);
   const [selectedGoal, setSelectedGoal] = useState<null | GoalType>(null);
   const params = useParams();
@@ -32,7 +33,6 @@ const GoalAdventures: React.FC = () => {
 
   useEffect(() => {    
     const id = params.goalId;
-
     if (id) {
       setLoading(FetchStatus.Pending);
       getGoalById(id)
@@ -55,6 +55,8 @@ const GoalAdventures: React.FC = () => {
         </div>
       </div>
     );
+
+  if (loadingClass === FetchStatus.Success && classDetails.current_adventure) return <Navigate to={`/app/cursos/${classDetails.id}/aventuras`} />
 
   return (
     <AdventureSelectionContainer className="w-100 p-5">

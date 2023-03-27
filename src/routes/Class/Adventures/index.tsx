@@ -1,25 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { Navigate, useOutletContext, useParams } from "react-router-dom";
-import GoalSelection from "./GoalSelection";
 import { FetchStatus } from "global/enums";
 import { CircularProgress } from "@mui/material";
 import Toaster from "utils/Toster";
-import { getClassByID } from "services/classes";
 import { ClassInterface } from "services/classes/interfaces";
 import AdventureWithProvider from "./Adventure";
 import { getMissionsByStage, StageMissionUpdateBody } from "services/missions";
-import { IAdventure, IMission, IStage } from "global/interfaces";
-import { studentsByClass } from "services/students";
+import { IMission, IStage } from "global/interfaces";
 import { StudentType } from "components/StudentsList/interfaces";
-import AdventureSelection from "./AdventureSelection";
+import { useClassContext } from "../context";
 
 const Adventures: React.FC = () => {
   const [loading, setLoading] = useState<FetchStatus>(FetchStatus.Success);
   const [missions, setMissions] = useState<IMission[]>([]);
-  const { classDetails, students } = useOutletContext() as {
-    classDetails: ClassInterface;
-    students: StudentType[];
-  };
+  const { classDetails, students, loadingClass } = useClassContext();
+  console.log(classDetails);
+  
 
   useEffect(() => {
     getMissions();
@@ -73,14 +69,14 @@ const Adventures: React.FC = () => {
     }
   };
   
-  if (loading === FetchStatus.Idle || loading === FetchStatus.Pending)
+  if (loadingClass !== FetchStatus.Success)
     return (
       <div className="d-flex w-100 align-items-center justify-content-center">
         <CircularProgress />
       </div>
     );
 
-  if (!classDetails?.current_adventure) return <Navigate to="iniciar" />;
+  if (!classDetails?.current_adventure && loadingClass === FetchStatus.Success) return <Navigate to="iniciar" />;
 
   return (
     <>
