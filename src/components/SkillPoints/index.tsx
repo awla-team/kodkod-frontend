@@ -5,6 +5,7 @@ import { ISkillPointsProps } from "./interfaces";
 import { SkillPointsContainer } from "./styled";
 import { ISkill } from "../../global/interfaces";
 import { getSkill } from "../../services/skills";
+import { Typography } from "@mui/material";
 
 interface IIconContainerProps {
   background?: string;
@@ -36,7 +37,7 @@ const SkillPoints: React.FC<ISkillPointsProps> = ({ skill }) => {
           <IconContainer background={skill.color} className="me-2">
             <img className={!skill.icon?"" :"blank-icon"} src={skill.icon} />
           </IconContainer>
-          <span className="me-2">{skill.title}</span>
+          <Typography component="span" variant="body1" className="me-2">{skill.title}</Typography>
           <div className="d-flex">
             <Point highlighted={skill.points > 0} />
             <Point highlighted={skill.points > 1} />

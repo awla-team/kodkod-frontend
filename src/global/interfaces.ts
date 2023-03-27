@@ -22,9 +22,11 @@ declare module "@mui/material/styles" {
 declare module '@mui/material/styles/createPalette' {
   interface Palette {
     highlight: Palette['primary'];
+    pink: Palette['primary'];
   }
   interface PaletteOptions {
     highlight: PaletteOptions['primary'];
+    pink: Palette['primary'];
   }
 }
 
@@ -66,6 +68,7 @@ export interface IAdventure {
 }
 
 export interface TemplateStages {
+  _index: number;
   id: number;
   title: string;
   icon: string;

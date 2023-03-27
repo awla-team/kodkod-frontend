@@ -12,7 +12,8 @@ import Toaster from "utils/Toster";
 import { studentsByClass } from "services/students";
 import { useParams } from "react-router-dom";
 import { StudentType } from "components/StudentsList/interfaces";
-import { ClassContextType } from "../interfaces";
+import { ClassContextType } from "./interfaces";
+import { IAdventure } from "global/interfaces";
 
 const ClassContext = createContext<ClassContextType>({
   students: [],
@@ -31,6 +32,9 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
     ClassInterface | undefined
   >();
   const [students, setStudents] = useState<StudentType[]>([]);
+  const [currentAdventure, setCurrentAdventure] = useState<null | IAdventure>(
+    null
+  );
 
   const { classId } = useParams();
 

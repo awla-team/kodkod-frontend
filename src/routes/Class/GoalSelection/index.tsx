@@ -1,32 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { Button, CircularProgress, Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { GoalSelectionContainer, CardContainer, ImgContainer } from "./styled";
 import { AxiosResponse } from "axios";
 import { getGoals } from "services/goals";
 import { FetchStatus } from "global/enums";
 import { Goal } from "services/goals/interfaces";
+import { useClassContext } from "routes/Class/context";
 
 const GoalSelection: React.FC = () => {
+  const { classDetails } = useClassContext();
   const navigate = useNavigate();
-  const className = "3°C";
   const [goals, setGoals] = useState<Goal[]>([]);
   const [selectedGoalId, setSelectedGoalId] = useState<number>(null);
-  const [loadingGoals, setLoadingGoals] = useState<FetchStatus>(
-    FetchStatus.Idle
-  );
-
-  const handleGoalSelection = (goalId: number) => {
+  const [loadingGoals, setLoadingGoals] = useState<FetchStatus>(FetchStatus.Idle);
+  
+  const selectAdventure = (goalId: number) => {
     if (selectedGoalId !== goalId) setSelectedGoalId(goalId);
     else setSelectedGoalId(null);
   };
 
-  const handleGoalSelectionSave = () => {
-    // TODO: patch to adventure to asociate goal?
-    navigate("summary?goal=" + selectedGoalId, {
-      replace: true,
-    });
-  };
+  const nextView = () => navigate("objetivo/" + selectedGoalId);
 
   useEffect(() => {
     setLoadingGoals(FetchStatus.Pending);
@@ -42,7 +36,7 @@ const GoalSelection: React.FC = () => {
       });
   }, []);
 
-  if (loadingGoals === FetchStatus.Idle || loadingGoals === FetchStatus.Pending)
+  if (loadingGoals === FetchStatus.Idle || loadingGoals === FetchStatus.Pending || !classDetails)
     return (
       <div className="d-flex w-100 align-items-center justify-content-center">
         <CircularProgress />
@@ -51,41 +45,47 @@ const GoalSelection: React.FC = () => {
 
   return (
     <GoalSelectionContainer className="w-100 p-5">
-      <Typography variant="h4" fontWeight="bold" className="mb-2">
-        Escoge un objetivo
+      <Typography variant="h4" fontWeight="bold" className="mb-4">
+        Inicia una nueva aventura
+      </Typography>
+      <Typography variant="h5" className="mb-2">
+        <b>Paso 1:</b> Escoge un objetivo
       </Typography>
       <Typography variant="body1" className="mb-4">
-        Una aventura es una serie de misiones planificadas para alcanzar un
-        objetivo con tu curso. Para empezar, <b>escoge el objetivo</b> que
-        quieres alcanzar con el curso <b>{className}</b>.
+        Una aventura es una serie de misiones planificadas para <b>alcanzar un objetivo</b> en concreto con tu curso. Para empezar, <b>escoge el objetivo</b> que quieres alcanzar con el curso <b>{classDetails.alias}</b>.
       </Typography>
-      <div className="d-flex flex-column w-100 align-items-center justify-content-between h-100 gap-4">
-        <div className="d-flex align-items-center justify-content-center gap-4 w-100 flex-wrap">
+      <div className="d-flex flex-column w-100 align-items-center justify-content-between h-100">
+        <div className="d-flex justify-content-center gap-4 w-100 flex-wrap">
           {goals?.length
             ? goals.map((goal: Goal) => (
                 <CardContainer
                   key={`${goal.id}-${goal.title}`}
-                  className={`d-flex flex-column align-items-center justify-content-between gap-2 ${
+                  className={`d-flex flex-column p-4 align-items-center ${
                     goal.id === selectedGoalId ? "selected" : ""
                   }`}
-                  onClick={() => handleGoalSelection(goal.id)}
+                  onClick={() => selectAdventure(goal.id)}
                 >
-                  <ImgContainer></ImgContainer>
-                  <Typography
-                    variant="body2"
-                    textAlign="center"
-                    fontWeight={goal.id === selectedGoalId ? "bold" : "normal"}
-                  >
-                    {goal.title}
-                  </Typography>
+                  <ImgContainer className="mb-3"></ImgContainer>
+                  <div className="d-flex align-items-center justify-content-center flex-fill">
+                    <Typography
+                      variant="body1"
+                      component="span"
+                      textAlign="center"
+                      fontWeight="bold"                      
+                    >
+                      {goal.title}
+                    </Typography>
+                  </div>                  
                 </CardContainer>
               ))
             : null}
         </div>
         <Button
+          className="mt-4"
           variant="contained"
+          size="large"
           disabled={!(selectedGoalId >= 0)}
-          onClick={handleGoalSelectionSave}
+          onClick={nextView}
         >
           Continuar
         </Button>

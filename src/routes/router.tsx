@@ -8,12 +8,12 @@ import AuthContextProvider from "contexts/AuthContext";
 import SignIn from "./UserAuth/SignIn";
 import SignUp from "./UserAuth/SignUp";
 import Home from "./Home";
-import ClassContextProvider from "./Class/Context";
+import ClassContextProvider from "./Class/context";
 import Class from "./Class";
 import Board from "./Class/Board";
 import Adventures from "./Class/Adventures";
 import { Adventure } from "./Class/Adventures/Adventure";
-import AdventuresSummary from "./Class/Adventures/GoalSelection/AdventuresSummary";
+import AdventuresSummary from "./Class/GoalAdventures";
 import Points from "./Class/Points";
 import RewardsView from "components/RewardsView";
 import App from "App";
@@ -23,6 +23,8 @@ import Error404 from "../components/Error404";
 import Progress from "./Class/Progress";
 import UserAuthLayout from "./UserAuth";
 import { FC } from "react";
+import GoalSelection from "./Class/GoalSelection";
+import GoalAdventures from "./Class/GoalAdventures";
 
 const MainRouterComponent: FC = () => {
   const { pathname } = useLocation();
@@ -89,23 +91,27 @@ export const router = createBrowserRouter([
               {
                 path: "tablero",
                 element: <Board />,
+              },              
+              {
+                path: "progreso",
+                element: <Progress />,
               },
               {
                 path: "aventuras",
                 element: <Adventures />,
               },
               {
-                path: "progreso",
-                element: <Progress />,
+                path: "aventuras/iniciar",
+                element: <GoalSelection />,
+              },
+              {
+                path: "aventuras/iniciar/objetivo/:goalId",
+                element: <GoalAdventures />,
               },
               {
                 path: "aventuras/:adventureId",
                 element: <Adventure />,
-              },
-              {
-                path: "aventuras/summary",
-                element: <AdventuresSummary />,
-              },
+              },              
               {
                 path: "puntajes",
                 element: <Points />,
