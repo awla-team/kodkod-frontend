@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import { StudentEditInputField, StudentType } from "./interfaces";
-import { useClassContext } from "../../routes/Class/Context";
+import { useClassContext } from "../../routes/Class/context";
 import { useParams } from "react-router-dom";
 import Toaster from "../../utils/Toster";
 import { Form, Formik, FormikHelpers } from "formik";
