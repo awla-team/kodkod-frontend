@@ -16,6 +16,7 @@ import { ClassContextType } from "./interfaces";
 import { IAdventure } from "global/interfaces";
 import { Levels } from "components/Modals/CreateClassModal/interfaces";
 import { getAllTheLevel } from "./../../services/levels";
+import { FetchStatus } from "global/enums";
 
 const ClassContext = createContext<ClassContextType>({
   students: [],
@@ -25,6 +26,7 @@ const ClassContext = createContext<ClassContextType>({
   updateStudentsData: (actionType, data) => {},
   levels: [],
   setClassDetails: (prevState) => {},
+  loadingClass: FetchStatus.Idle,
 });
 
 export const useClassContext = () => {
@@ -37,6 +39,7 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
   >();
   const [levels, setLevels] = useState<Levels[]>([]);
   const [students, setStudents] = useState<StudentType[]>([]);
+  const [loadingClass, setLoadingClass] = useState(FetchStatus.Idle);
   const [currentAdventure, setCurrentAdventure] = useState<null | IAdventure>(
     null
   );
@@ -61,6 +64,7 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
 
   useEffect(() => {
     if (classId) {
+      
       getClassById(classId);
       getStudentsByClass(classId);
       getLevels();
@@ -68,12 +72,15 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
   }, [classId]);
 
   const getClassById = async (id: number | string) => {
-    try {
+    setLoadingClass(FetchStatus.Pending);
+    try {      
       const { data }: { data: { responseData: ClassInterface } } =
         await getClassByID(id);
       setClassDetails(data.responseData);
+      setLoadingClass(FetchStatus.Success);
     } catch (e: any) {
       Toaster("error", e.message);
+      setLoadingClass(FetchStatus.Error);
     }
   };
 
@@ -143,6 +150,7 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
         getClassById,
         getStudentsByClass,
         classDetails,
+        loadingClass,
         students,
         levels,
         setClassDetails,

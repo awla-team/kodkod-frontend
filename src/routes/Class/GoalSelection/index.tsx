@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button, CircularProgress, Typography } from "@mui/material";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Navigate, Outlet, useNavigate } from "react-router-dom";
 import { GoalSelectionContainer, CardContainer, ImgContainer } from "./styled";
 import { AxiosResponse } from "axios";
 import { getGoals } from "services/goals";
@@ -9,7 +9,7 @@ import { Goal } from "services/goals/interfaces";
 import { useClassContext } from "routes/Class/context";
 
 const GoalSelection: React.FC = () => {
-  const { classDetails } = useClassContext();
+  const { classDetails, loadingClass } = useClassContext();
   const navigate = useNavigate();
   const [goals, setGoals] = useState<Goal[]>([]);
   const [selectedGoalId, setSelectedGoalId] = useState<number>(null);
@@ -42,6 +42,8 @@ const GoalSelection: React.FC = () => {
         <CircularProgress />
       </div>
     );
+
+  if (loadingClass === FetchStatus.Success && classDetails.current_adventure) return <Navigate to={`/app/cursos/${classDetails.id}/aventuras`} />
 
   return (
     <GoalSelectionContainer className="w-100 p-5">
