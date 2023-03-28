@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
   Tabs,
@@ -8,24 +8,25 @@ import {
   Typography,
   Skeleton,
   IconButton,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import AdventureProvider, { AdventureContext } from "./provider";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { AdventureContainer, AdventureBanner } from "./styled";
-import OverviewTab from "./OverviewTab";
-import MissionsTab from "./MissionsTab";
-import RewardsTab from "./RewardsTab";
 import SkillPoints from "components/SkillPoints";
-import TabContent from "components/TabContent";
-import { IAdventureSkill } from "global/interfaces";
 import { AdventureWithProviderProps } from "../interfaces";
 import CurrentStage from "./CurrentStage";
 import StageRequirements from "./StageRequirements";
 import Missions from "./Missions";
+import Toaster from "utils/Toster";
+import { cancelAdventureFromClass } from "services/adventures";
 
 export const Adventure: React.FC = () => {
   const { classId } = useParams();
-  const { adventure } = useContext(AdventureContext);
+  const { adventure, makeAdventureNull } = useContext(AdventureContext);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   if (!adventure)
     return (
@@ -51,6 +52,24 @@ export const Adventure: React.FC = () => {
       </AdventureContainer>
     );
 
+  const handleVerticalButtonClick = ({
+    currentTarget,
+  }: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(currentTarget);
+  };
+
+  const cancelAdventure = async () => {
+    try {
+      setLoading(true);
+      await cancelAdventureFromClass(adventure.id_class_has_adventure);
+      makeAdventureNull();
+    } catch (e: any) {
+      Toaster("error", e.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <AdventureContainer className="p-0 m-0">
       <AdventureBanner
@@ -71,9 +90,17 @@ export const Adventure: React.FC = () => {
             color="info"
             label="Ongoing adventure"
           />
-          <IconButton color={"inherit"}>
+          <IconButton color={"inherit"} onClick={handleVerticalButtonClick}>
             <MoreVertIcon />
           </IconButton>
+
+          <Menu
+            open={!!anchorEl}
+            anchorEl={anchorEl}
+            onClose={() => setAnchorEl(null)}
+          >
+            <MenuItem disabled={loading} onClick={cancelAdventure}>Cancel adventure</MenuItem>
+          </Menu>
         </div>
         <div className="mb-3">
           <Typography variant="h3" component="h2" fontWeight="bold">
@@ -118,6 +145,7 @@ const AdventureWithProvider: React.FC<AdventureWithProviderProps> = ({
   students,
   handleUpdateCurrentAdventure,
   updateStagesData,
+  makeAdventureNull,
 }) => (
   <AdventureProvider
     adventure={adventure}
@@ -125,6 +153,7 @@ const AdventureWithProvider: React.FC<AdventureWithProviderProps> = ({
     students={students}
     handleUpdateCurrentAdventure={handleUpdateCurrentAdventure}
     updateStagesData={updateStagesData}
+    makeAdventureNull={makeAdventureNull}
   >
     <Adventure />
   </AdventureProvider>

@@ -23,7 +23,7 @@ const Adventures: React.FC = () => {
 
   const handleUpdateCurrentAdventure = (
     missionData: IMission,
-    ref: StageMissionUpdateBody
+    ref: StageMissionUpdateBody,
   ) => {
     setCurrentAdventure((prevState) => {
       if (prevState) {
@@ -39,6 +39,10 @@ const Adventures: React.FC = () => {
       return prevState;
     });
   };
+
+  const makeAdventureNull= () =>{
+    setCurrentAdventure(null)
+  }
 
   const updateStagesData = (stage: IStage) => {
     if (stage) {
@@ -125,6 +129,7 @@ const Adventures: React.FC = () => {
         students={students}
         handleUpdateCurrentAdventure={handleUpdateCurrentAdventure}
         updateStagesData={updateStagesData}
+        makeAdventureNull={makeAdventureNull}
       />
       {/*<ViewContainer>*/}
       {/*    <h2>Empieza una aventura &#128640;</h2>*/}
