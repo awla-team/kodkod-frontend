@@ -1,4 +1,4 @@
-import { DetailsCardContent } from "./styled";
+import { AdventureBanner, DetailsCardContent } from "./styled";
 import { ClassDetailsCardProps } from "./interfaces";
 import React, { FC, useState } from "react";
 import {
@@ -13,11 +13,12 @@ import {
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useNavigate } from "react-router-dom";
 import { CreateClassModal } from "../Modals";
-import { useClassContext } from "routes/Class/Context";
+import { useClassContext } from "routes/Class/context";
 import { ClassInterface } from "../../services/classes/interfaces";
 import ConfirmationModal from "../Modals/ConfirmationModal";
 import Toaster from "../../utils/Toster";
 import { deleteClass } from "../../services/classes";
+import SkillPoints from "components/SkillPoints";
 
 const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
   classDetails,

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   Tabs,
   Tab,
@@ -16,7 +16,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { AdventureContainer, AdventureBanner } from "./styled";
 import SkillPoints from "components/SkillPoints";
 import { AdventureWithProviderProps } from "../interfaces";
-import CurrentStage from "./CurrentStage";
+import StageStepper from "./StageStepper";
 import StageRequirements from "./StageRequirements";
 import Missions from "./Missions";
 import Toaster from "utils/Toster";
@@ -27,6 +27,7 @@ export const Adventure: React.FC = () => {
   const { adventure, makeAdventureNull } = useContext(AdventureContext);
   const [anchorEl, setAnchorEl] = useState(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   if (!adventure)
     return (
@@ -106,6 +107,19 @@ export const Adventure: React.FC = () => {
           <Typography variant="h3" component="h2" fontWeight="bold">
             {adventure.title}
           </Typography>
+          <div>
+            <Button
+              variant={"outlined"}
+              color="info"
+              onClick={() => navigate("rewards?adventureId=" + adventure.id)}
+              size="large"
+            >
+              Ver recompensas disponibles
+            </Button>
+            <IconButton color={"inherit"}>
+              <MoreVertIcon fontSize="large" />
+            </IconButton>
+          </div>
         </div>
         <div className="d-flex mb-1">
           {adventure?.skills?.map((skill) => (
@@ -114,23 +128,12 @@ export const Adventure: React.FC = () => {
             </div>
           ))}
         </div>
-        {/*<div className="mb-4">*/}
-        {/*  <Typography fontWeight="bold">{`Aventura de ${adventure.stagesDuration} etapas`}</Typography>*/}
-        {/*</div>*/}
-        {/*<div>*/}
-        {/*  <Button color="primary" size="large" variant="contained">*/}
-        {/*    Iniciar aventura*/}
-        {/*  </Button>*/}
-        {/*</div>*/}
       </AdventureBanner>
+      <StageStepper stages={adventure?.stages} />
 
-      {/*  Steps details */}
-      <CurrentStage />
-      {/*  Steps details ends*/}
-
-      {/* StageRequirements */}
-      <StageRequirements />
-      {/*  StageRequirements ends*/}
+      {/* StageRequirements
+        <StageRequirements />
+      StageRequirements ends*/}
 
       {/*    Missions*/}
       <Missions />

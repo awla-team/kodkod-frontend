@@ -2,16 +2,17 @@ import React, { useState, useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import AdventureCard from "components/AdventureCard";
 import type { IAdventure } from "global/interfaces";
-import Point from "components/Point";
+//import Point from "components/Point";
 import { FetchStatus } from "global/enums";
 import CircularProgress from "@mui/material/CircularProgress";
-import AdventureSummaryDialog from "./AdventureSummaryDialog";
+import AdventureSummaryDialog from "../../../components/Modals/AdventureSummaryDialog";
 import { Navigate, useParams } from "react-router-dom";
 import { getGoalById } from "services/goals";
 import { GoalType } from "../Adventures/interfaces";
 import Toaster from "../../../utils/Toster";
 import { AdventureSelectionContainer } from "./styled";
 import { useClassContext } from "../context";
+import SkillPoints from "components/SkillPoints";
 
 const GoalAdventures: React.FC = () => {  
   const [loading, setLoading] = useState<FetchStatus>(FetchStatus.Idle);
@@ -80,20 +81,10 @@ const GoalAdventures: React.FC = () => {
                 key={index}
                 title={adventure.title}
                 info={
-                  <div>
-                    {adventure?.skills?.map((skill, index) => (
-                      <div
-                        key={index}
-                        className="d-flex align-items-center gap-1"
-                      >
-                        <span className="me-2">{skill.title}</span>
-                        <div className="d-flex">
-                          <Point highlighted={skill.points > 0} />
-                          <Point highlighted={skill.points > 1} />
-                          <Point highlighted={skill.points > 2} />
-                        </div>
-                      </div>
-                    ))}
+                  <div className="d-flex flex-column gap-1">
+                    {!!adventure?.skills?.length ? adventure.skills.map((adventureSkill, index) => (
+                        <SkillPoints key={`${adventureSkill.id}-${adventureSkill.title}-${index}`} skill={adventureSkill} />
+                    )) : null}
                   </div>
                 }
               />

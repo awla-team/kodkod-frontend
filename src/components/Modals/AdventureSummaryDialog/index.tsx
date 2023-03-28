@@ -14,14 +14,13 @@ import Toaster from "utils/Toster";
 import { setCurrentAdventure } from "services/adventures";
 import { useParams, useNavigate } from "react-router-dom";
 import SkillPoints from "components/SkillPoints";
-import { AdventureBanner } from "./styled";
 import EmojiFlagsIcon from '@mui/icons-material/EmojiFlags';
+import { AdventureBanner } from "./styled";
 
 const AdventureSummaryDialog: React.FC<{
   selectedAdventure: IAdventure;
   handleOnCloseModal: () => void;
-  handleAdventureSelection: () => void;
-}> = ({ selectedAdventure, handleOnCloseModal, handleAdventureSelection }) => {
+}> = ({ selectedAdventure, handleOnCloseModal }) => {
   const { classId } = useParams();
   const [shownAdventure, setShownAdventure] = useState<IAdventure>(undefined);
   const [sortedStages, setSortedStages] = useState([]);
@@ -71,7 +70,7 @@ const AdventureSummaryDialog: React.FC<{
           </section>
         </AdventureBanner>
       </DialogTitle>
-      <DialogContent className="d-flex flex-column p-0">
+      <DialogContent dividers className="d-flex flex-column p-0">
         <Box className="d-flex flex-column flex-fill w-100">          
           <div className="d-flex flex-column gap-3 p-4">
             <section className="d-flex flex-column">
@@ -104,8 +103,11 @@ const AdventureSummaryDialog: React.FC<{
           </div>          
         </Box>
       </DialogContent>
-      <DialogActions className="d-flex align-items-center justify-content-center p-4">
-        <Button variant="contained" color="primary" size="large" onClick={setAdventure}>
+      <DialogActions className="d-flex align-items-center p-4">
+        <Button variant={"outlined"} onClick={handleOnCloseModal}>
+          Cancelar
+        </Button>
+        <Button variant="contained" color="primary" onClick={setAdventure}>
           Quiero esta aventura
         </Button>
       </DialogActions>
