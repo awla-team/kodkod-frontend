@@ -6,7 +6,7 @@ import Toaster from "utils/Toster";
 import { ClassInterface } from "services/classes/interfaces";
 import AdventureWithProvider from "./Adventure";
 import { getMissionsByStage, StageMissionUpdateBody } from "services/missions";
-import { IMission, IStage } from "global/interfaces";
+import { IAdventure, IMission, IStage } from "global/interfaces";
 import { StudentType } from "components/StudentsList/interfaces";
 import { useClassContext } from "../context";
 
@@ -14,8 +14,13 @@ const Adventures: React.FC = () => {
   const [loading, setLoading] = useState<FetchStatus>(FetchStatus.Success);
   const [missions, setMissions] = useState<IMission[]>([]);
   const { classDetails, students, loadingClass } = useClassContext();
-  console.log(classDetails);
-  
+  const [currentAdventure, setCurrentAdventure] = useState<null | IAdventure>(
+    null
+  );
+
+  useEffect(() => {
+    if (classDetails) setCurrentAdventure(classDetails.current_adventure);
+  }, [classDetails]);
 
   useEffect(() => {
     getMissions();
@@ -42,7 +47,7 @@ const Adventures: React.FC = () => {
 
   const updateStagesData = (stage: IStage) => {
     if (stage) {
-      /*setCurrentAdventure((prevState) => {
+      setCurrentAdventure((prevState) => {
         if (prevState) {
           const tempData: IAdventure = JSON.parse(JSON.stringify(prevState));
           const { stages } = tempData;
@@ -53,7 +58,7 @@ const Adventures: React.FC = () => {
           return tempData;
         }
         return prevState;
-      });*/
+      });
     }
   };
 
@@ -81,7 +86,7 @@ const Adventures: React.FC = () => {
   return (
     <>
       <AdventureWithProvider
-        adventure={classDetails.current_adventure}
+        adventure={currentAdventure}
         missions={missions}
         students={students}
         handleUpdateCurrentAdventure={handleUpdateCurrentAdventure}

@@ -11,17 +11,14 @@ export const AdventureContainer = styled.div`
 
 export const AdventureBanner = styled.div`
   width: 100%;
-  border-radius: 16px;
-  min-height: 238px;
+  border-radius: 8px;
+  min-height: 200px;
   color: #fff;
-  top: 0;
-  left: 0;
-  z-index: -1;
-  padding: 36px 24px;
+  padding: 0px 24px;
   background: #8A8A8A;
-
+  position: relative;
   background-size: cover;
-  //box-shadow: inset 0px 0px 1240px 24px #000;
+  box-shadow: inset 0 0 200px 40px #000;
 
   & .${chipClasses.root}.chip-info {
     padding-block: 12px;

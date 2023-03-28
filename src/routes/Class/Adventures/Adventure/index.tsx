@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   Tabs,
   Tab,
@@ -19,13 +19,15 @@ import SkillPoints from "components/SkillPoints";
 import TabContent from "components/TabContent";
 import { IAdventureSkill } from "global/interfaces";
 import { AdventureWithProviderProps } from "../interfaces";
-import CurrentStage from "./CurrentStage";
+import StageStepper from "./StageStepper";
 import StageRequirements from "./StageRequirements";
 import Missions from "./Missions";
+import { Link as RouterLink } from "react-router-dom";
 
 export const Adventure: React.FC = () => {
   const { classId } = useParams();
   const { adventure } = useContext(AdventureContext);
+  const navigate = useNavigate();
 
   if (!adventure)
     return (
@@ -53,32 +55,24 @@ export const Adventure: React.FC = () => {
 
   return (
     <AdventureContainer className="p-0 m-0">
-      <AdventureBanner
-        className="d-flex flex-column"
-        // backgroundImg={adventure.banner}
-      >
-        {/*<div className="mb-4">*/}
-        {/*  <Link to={`/cursos/${classId}/aventuras`}>*/}
-        {/*    <Button color="info" startIcon={<ChevronLeftRoundedIcon />}>*/}
-        {/*      Volver a Aventuras*/}
-        {/*    </Button>*/}
-        {/*  </Link>*/}
-        {/*</div>*/}
-
-        <div className="mb-2 d-flex justify-content-between align-items-center">
-          <Chip
-            className={"chip-info"}
-            color="info"
-            label="Ongoing adventure"
-          />
-          <IconButton color={"inherit"}>
-            <MoreVertIcon />
-          </IconButton>
-        </div>
-        <div className="mb-3">
-          <Typography variant="h3" component="h2" fontWeight="bold">
+      <AdventureBanner className="d-flex flex-column px-5 justify-content-center mb-4">
+        <div className="d-flex justify-content-between align-items-end mb-3">
+          <Typography variant="h4" component="h2" fontWeight="bold">
             {adventure.title}
           </Typography>
+          <div>
+            <Button
+              variant={"outlined"}
+              color="info"
+              onClick={() => navigate("rewards?adventureId=" + adventure.id)}
+              size="large"
+            >
+              Ver recompensas disponibles
+            </Button>
+            <IconButton color={"inherit"}>
+              <MoreVertIcon fontSize="large" />
+            </IconButton>
+          </div>
         </div>
         <div className="d-flex mb-1">
           {adventure?.skills?.map((skill) => (
@@ -87,23 +81,12 @@ export const Adventure: React.FC = () => {
             </div>
           ))}
         </div>
-        {/*<div className="mb-4">*/}
-        {/*  <Typography fontWeight="bold">{`Aventura de ${adventure.stagesDuration} etapas`}</Typography>*/}
-        {/*</div>*/}
-        {/*<div>*/}
-        {/*  <Button color="primary" size="large" variant="contained">*/}
-        {/*    Iniciar aventura*/}
-        {/*  </Button>*/}
-        {/*</div>*/}
       </AdventureBanner>
+      <StageStepper stages={adventure?.stages} />
 
-      {/*  Steps details */}
-      <CurrentStage />
-      {/*  Steps details ends*/}
-
-      {/* StageRequirements */}
-      <StageRequirements />
-      {/*  StageRequirements ends*/}
+      {/* StageRequirements
+        <StageRequirements />
+      StageRequirements ends*/}
 
       {/*    Missions*/}
       <Missions />
