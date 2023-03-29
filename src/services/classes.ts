@@ -25,3 +25,7 @@ export const getClassByID = (id: number | string) => {
 export const updateClass= (body: ClassMutationType) =>{
  return http.put('class/'+body.id, body)
 }
+
+export const deleteClass= (id: number | string) =>{
+  return http.delete('class/'+id)
+}

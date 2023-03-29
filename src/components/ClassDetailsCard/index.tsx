@@ -15,6 +15,9 @@ import { useNavigate } from "react-router-dom";
 import { CreateClassModal } from "../Modals";
 import { useClassContext } from "routes/Class/Context";
 import { ClassInterface } from "../../services/classes/interfaces";
+import ConfirmationModal from "../Modals/ConfirmationModal";
+import Toaster from "../../utils/Toster";
+import { deleteClass } from "../../services/classes";
 
 const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
   classDetails,
@@ -23,7 +26,10 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState<boolean>(false);
+  const [openDeleteConfirmationDialog, setOpenDeleteConfirmationDialog] =
+    useState<boolean>(false);
   const { setClassDetails } = useClassContext();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleClose = (
     reason: "backdropClick" | "escapeKeyDown" | "success",
@@ -38,9 +44,22 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
     }
   };
 
-  const handleNavigate = () => {
-    //navigate(`/app`);
-    navigate(`/app/cursos/${classDetails.id}/aventuras`);
+  const handleNavigate = (reason: "home" | "adventure") => {
+    switch (reason) {
+      case "adventure": {
+        return navigate(`/app/cursos/${classDetails.id}/aventuras`);
+      }
+      case "home": {
+        return navigate(`/app`, {
+          state: {
+            deletedClass: classDetails.id,
+          },
+        });
+      }
+      default: {
+        return;
+      }
+    }
   };
 
   const handleMenuOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -50,6 +69,19 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
 
   const handleMenuClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleDelete = async () => {
+    try {
+      setLoading(true);
+      await deleteClass(classDetails.id);
+      Toaster("success", `${classDetails.alias} deleted!`);
+      handleNavigate("home");
+    } catch (e: any) {
+      Toaster("error", e.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -73,7 +105,9 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
         </IconButton>
         <Menu open={!!anchorEl} anchorEl={anchorEl} onClose={handleMenuClose}>
           <MenuItem onClick={() => setOpen(true)}>Edit class</MenuItem>
-          <MenuItem>Delete class</MenuItem>
+          <MenuItem onClick={() => setOpenDeleteConfirmationDialog(true)}>
+            Delete class
+          </MenuItem>
         </Menu>
       </Box>
       <div className="mb-3">
@@ -108,7 +142,11 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
         )}
       </div>
       <div>
-        <Button variant="contained" size="large" onClick={handleNavigate}>
+        <Button
+          variant="contained"
+          size="large"
+          onClick={() => handleNavigate("adventure")}
+        >
           {classDetails.current_adventure
             ? "Continua la aventura"
             : "Selecciona una aventura"}
@@ -119,6 +157,13 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
         open={open}
         onClose={handleClose}
         levels={levels}
+      />
+      <ConfirmationModal
+        open={openDeleteConfirmationDialog}
+        callBackFunction={handleDelete}
+        onClose={() => setOpenDeleteConfirmationDialog(false)}
+        loading={loading}
+        description={`Are you sure you want to delete ${classDetails.alias}?`}
       />
     </DetailsCardContent>
   );

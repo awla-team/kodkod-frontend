@@ -17,3 +17,6 @@ export interface ClassInterface {
 
   current_adventure?: IAdventure;
 }
+export interface ClassInterfaceModified extends Omit<ClassInterface, 'level'>{
+  level: number
+}

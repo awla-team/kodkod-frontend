@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import {
   CircularProgress,
   ThemeProvider as MuiThemeProvider,
@@ -19,6 +19,7 @@ import Toaster from "./utils/Toster";
 import { Levels } from "./components/Modals/CreateClassModal/interfaces";
 import { useAuth } from "./contexts/AuthContext";
 import moment from "moment";
+import { useLocation } from "react-router-dom";
 import "moment/dist/locale/es";
 
 const App: React.FC = () => {
@@ -27,6 +28,8 @@ const App: React.FC = () => {
   const { user } = useAuth();
   const [fetching, setFetching] = useState<FetchStatus>(FetchStatus.Idle);
   const [open, setOpen] = useState<boolean>(false);
+  const location = useLocation();
+  const navigate = useNavigate();
   const getClassesData = () => {
     getClassesByUser(user.id)
       .then((response: AxiosResponse) => {
@@ -58,6 +61,21 @@ const App: React.FC = () => {
       Toaster("error", e.message);
     }
   };
+
+  useEffect(() => {
+    if (location.state) {
+      const { deletedClass } = location.state;
+      if (deletedClass) {
+        setClasses((prevState) => {
+          return prevState.filter((res) => res.id !== deletedClass);
+        });
+        navigate(location.pathname, {
+          state: null,
+          replace: true,
+        });
+      }
+    }
+  }, [location]);
 
   useEffect(() => {
     moment.locale("es");
