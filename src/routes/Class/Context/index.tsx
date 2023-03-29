@@ -13,6 +13,8 @@ import { studentsByClass } from "services/students";
 import { useParams } from "react-router-dom";
 import { StudentType } from "components/StudentsList/interfaces";
 import { ClassContextType } from "../interfaces";
+import { Levels } from "../../../components/Modals/CreateClassModal/interfaces";
+import { getAllTheLevel } from "../../../services/levels";
 
 const ClassContext = createContext<ClassContextType>({
   students: [],
@@ -20,6 +22,8 @@ const ClassContext = createContext<ClassContextType>({
   getStudentsByClass: (id: number | string) => {},
   getClassById: (id: number | string) => {},
   updateStudentsData: (actionType, data) => {},
+  levels: [],
+  setClassDetails: (prevState) => {},
 });
 
 export const useClassContext = () => {
@@ -30,14 +34,32 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const [classDetails, setClassDetails] = useState<
     ClassInterface | undefined
   >();
+  const [levels, setLevels] = useState<Levels[]>([]);
   const [students, setStudents] = useState<StudentType[]>([]);
 
   const { classId } = useParams();
+
+  const getLevels = async () => {
+    try {
+      const { data }: { data: { responseData: Levels[] } } =
+        await getAllTheLevel();
+      setLevels(
+        data.responseData.sort((a, b) => {
+          if (a.name > b.name) return 1;
+          if (a.name < b.name) return -1;
+          return 0;
+        })
+      );
+    } catch (e: any) {
+      Toaster("error", e.message);
+    }
+  };
 
   useEffect(() => {
     if (classId) {
       getClassById(classId);
       getStudentsByClass(classId);
+      getLevels();
     }
   }, [classId]);
 
@@ -118,6 +140,8 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
         getStudentsByClass,
         classDetails,
         students,
+        levels,
+        setClassDetails,
       }}
     >
       {children}

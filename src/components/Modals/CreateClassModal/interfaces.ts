@@ -13,6 +13,8 @@ export interface CreateClassModalProps {
     data?: ClassInterface
   ) => void;
   levels: Levels[];
+
+  classDetails?: ClassInterface;
 }
 
 export interface FormInitialState {

@@ -15,8 +15,8 @@ import {
 import { FormContainer } from "./styled";
 import { Formik, Form, FormikHelpers } from "formik";
 import * as Yup from "yup";
-import { useState } from "react";
-import { createClass } from "services/classes";
+import { useEffect, useState } from "react";
+import { createClass, updateClass } from "services/classes";
 import Toaster from "utils/Toster";
 import { ClassInterface } from "services/classes/interfaces";
 import { useAuth } from "contexts/AuthContext";
@@ -25,6 +25,7 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
   open,
   onClose,
   levels,
+  classDetails,
 }) => {
   const [initialState, setInitialState] = useState<FormInitialState>({
     id_level: "",
@@ -39,6 +40,16 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
       alias: Yup.string().required(),
     });
   };
+
+  useEffect(() => {
+    if (classDetails) {
+      setInitialState({
+        id_level: classDetails.level.id,
+        code: classDetails.code,
+        alias: classDetails.alias,
+      });
+    }
+  }, [classDetails]);
   // extract first char from string
   const handleAliasValue = (
     e: ChangeEvent,
@@ -62,14 +73,25 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
     formikHelpers: FormikHelpers<FormInitialState>
   ) => {
     try {
-      const { data }: { data: { responseData: ClassInterface } } =
-        await createClass({
-          ...values,
-          id_user: user.id,
-          id_level: values.id_level as number,
-        });
-      onClose("success", data.responseData);
-      Toaster("success", `You successfully added the ${values.alias} class.`);
+      if (classDetails) {
+        const { data }: { data: { responseData: ClassInterface } } =
+          await updateClass({
+            ...values,
+            id_level: values.id_level as number,
+            id: classDetails.id,
+          });
+        onClose("success", data.responseData);
+        Toaster("success", `Updated successfully!`);
+      } else {
+        const { data }: { data: { responseData: ClassInterface } } =
+          await createClass({
+            ...values,
+            id_user: user.id,
+            id_level: values.id_level as number,
+          });
+        onClose("success", data.responseData);
+        Toaster("success", `You successfully added the ${values.alias} class.`);
+      }
     } catch (e: any) {
       Toaster("error", e.message);
     } finally {
