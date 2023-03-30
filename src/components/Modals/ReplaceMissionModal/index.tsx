@@ -16,7 +16,6 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
   mission,
   stage,
 }) => {
-  debugger
   const [selected, setSelected] = useState<null | IMission>(null);
   const [pending, setPending] = useState<boolean>(false);
   const [missions, setMissions] = useState<IMission[]>([]);

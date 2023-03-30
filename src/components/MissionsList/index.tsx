@@ -45,7 +45,7 @@ const MissionsList: FC<{ shownStage: IStage }> = ({ shownStage }) => {
   
   return (
     <MissionListContainer className="p-5">
-      <Typography component="h6" variant="h6" fontWeight="bold" className="mb-3">Lista de misiones</Typography>
+      <Typography component="h6" variant="h6" fontWeight="bold" className="mb-5">Lista de misiones</Typography>
 
       <div className="d-flex flex-wrap align-items-center justify-content-center gap-5">
         {sortedMissions.length ? (
