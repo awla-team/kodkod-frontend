@@ -14,11 +14,11 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({ classDetails }) => {
   
   return (
     <DetailsCardContent>      
-      <Typography component="h2" variant="h2" fontWeight="bold" className="mb-2">{classDetails.alias}</Typography>
-      <Typography component="span" variant="body1" className="mb-2">Tienes una aventura en curso:</Typography>
+      <Typography component="h2" variant="h2" fontWeight="bold" className="mb-2">{classDetails.alias}</Typography>      
       <div className="mb-3">
         {classDetails.current_adventure ? (
           <div>            
+            <Typography component="span" variant="body1" className="mb-2">Tienes una aventura en curso:</Typography>
             <Typography variant="h5" fontWeight="bold" className="mb-2">{classDetails.current_adventure?.title}</Typography>
             <section className="d-flex flex-column">
               <div className="d-flex flex-wrap flex-lg-nowrap gap-3">
@@ -35,7 +35,7 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({ classDetails }) => {
           <div className="d-flex flex-column">
             <Typography component="span" variant="body1" fontWeight="bold" mb={1}>¡Aún no has seleccionado una aventura!</Typography>
             <Typography component="span" variant="body1">Presiona el botón a continuación para escoger una aventura que se ajuste a tus objetivos</Typography>
-            <div>
+            <div className="mt-2">
               <Button variant="contained" size="large" onClick={handleNavigate}>Selecciona una aventura</Button>
             </div>
           </div>          

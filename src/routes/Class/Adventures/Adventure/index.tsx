@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   Tabs,
@@ -12,21 +12,16 @@ import {
 import AdventureProvider, { AdventureContext } from "./provider";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { AdventureContainer, AdventureBanner } from "./styled";
-import OverviewTab from "./OverviewTab";
-import MissionsTab from "./MissionsTab";
-import RewardsTab from "./RewardsTab";
 import SkillPoints from "components/SkillPoints";
-import TabContent from "components/TabContent";
-import { IAdventureSkill } from "global/interfaces";
+import { IStage } from "global/interfaces";
 import { AdventureWithProviderProps } from "../interfaces";
-import StageStepper from "./StageStepper";
-import StageRequirements from "./StageRequirements";
+import StageStepper from "../../../../components/StageStepper";
 import Missions from "./Missions";
-import { Link as RouterLink } from "react-router-dom";
 
 export const Adventure: React.FC = () => {
   const { classId } = useParams();
   const { adventure } = useContext(AdventureContext);
+  const [shownStage, setShownStage] = useState<IStage | undefined>(undefined);
   const navigate = useNavigate();
 
   if (!adventure)
@@ -52,6 +47,10 @@ export const Adventure: React.FC = () => {
         />
       </AdventureContainer>
     );
+
+  const handleStageChange = (stage: IStage) => {
+    setShownStage(stage);
+  };  
 
   return (
     <AdventureContainer className="p-0 m-0">
@@ -82,14 +81,14 @@ export const Adventure: React.FC = () => {
           ))}
         </div>
       </AdventureBanner>
-      <StageStepper stages={adventure?.stages} />
+      <StageStepper shownStage={shownStage} stages={adventure?.stages} onStageChange={handleStageChange} />
 
       {/* StageRequirements
         <StageRequirements />
       StageRequirements ends*/}
 
       {/*    Missions*/}
-      <Missions />
+      <Missions shownStage={shownStage} />
       {/*    Missions ends*/}
     </AdventureContainer>
   );
@@ -100,14 +99,14 @@ const AdventureWithProvider: React.FC<AdventureWithProviderProps> = ({
   missions,
   students,
   handleUpdateCurrentAdventure,
-  updateStagesData,
+  updateStageData,
 }) => (
   <AdventureProvider
     adventure={adventure}
     missions={missions}
     students={students}
     handleUpdateCurrentAdventure={handleUpdateCurrentAdventure}
-    updateStagesData={updateStagesData}
+    updateStageData={updateStageData}
   >
     <Adventure />
   </AdventureProvider>

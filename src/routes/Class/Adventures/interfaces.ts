@@ -22,7 +22,7 @@ export interface AdventureWithProviderProps {
   missions?: IMission[];
   students?: StudentType[];
 
-  updateStagesData?: (stage: IStage) => void;
+  updateStageData?: (stage: IStage) => void;
   handleUpdateCurrentAdventure?: (
     data: IMission,
     ref: StageMissionUpdateBody

@@ -20,5 +20,5 @@ export interface IAdventureContext {
     ref: StageMissionUpdateBody
   ) => void;
 
-  updateStagesData: (stage: IStage) => void;
+  updateStageData: (stage: IStage) => void;
 }

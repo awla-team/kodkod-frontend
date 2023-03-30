@@ -1,6 +1,7 @@
 import { ClassInterface } from "../../services/classes/interfaces";
 import { StudentType } from "../../components/StudentsList/interfaces";
 import { FetchStatus } from "global/enums";
+import { IStage } from "global/interfaces";
 
 export interface TabPaths {
   [index: number]: string;
@@ -16,4 +17,5 @@ export interface ClassContextType {
     actionType: "delete" | "update",
     data?: StudentType | StudentType[]
   ) => void;
+  updateStageData: (stage: IStage) => void;
 }

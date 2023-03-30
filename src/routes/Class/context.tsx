@@ -13,7 +13,7 @@ import { studentsByClass } from "services/students";
 import { useParams } from "react-router-dom";
 import { StudentType } from "components/StudentsList/interfaces";
 import { ClassContextType } from "./interfaces";
-import { IAdventure } from "global/interfaces";
+import { IAdventure, IStage } from "global/interfaces";
 import { FetchStatus } from "global/enums";
 
 const ClassContext = createContext<ClassContextType>({
@@ -22,6 +22,7 @@ const ClassContext = createContext<ClassContextType>({
   getStudentsByClass: (id: number | string) => {},
   getClassById: (id: number | string) => {},
   updateStudentsData: (actionType, data) => {},
+  updateStageData: (stage) => {},
   loadingClass: FetchStatus.Idle,
 });
 
@@ -35,9 +36,6 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
   >();
   const [students, setStudents] = useState<StudentType[]>([]);
   const [loadingClass, setLoadingClass] = useState(FetchStatus.Idle);
-  const [currentAdventure, setCurrentAdventure] = useState<null | IAdventure>(
-    null
-  );
 
   const { classId } = useParams();
 
@@ -72,6 +70,26 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
       Toaster("error", e.message);
     }
   };
+
+  const updateStageData = (stage: IStage) => {
+    const stagesCopy = [...classDetails.current_adventure.stages];
+    const match = stagesCopy.find((currentStage) => currentStage.id === stage.id);
+    const index = stagesCopy.indexOf(match);
+    stagesCopy[index] = stage;
+    stagesCopy.sort((a, b) => {
+      if (a._index > b._index) return 1;
+      if (a._index < b._index) return -1;
+      return 0
+    });
+    
+    setClassDetails({
+      ...classDetails,
+      current_adventure: {
+        ...classDetails.current_adventure,
+        stages: stagesCopy
+      }
+    });
+  };  
 
   const updateStudentsData = (
     actionType: "delete" | "update",
@@ -125,6 +143,7 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
     <ClassContext.Provider
       value={{
         updateStudentsData,
+        updateStageData,
         getClassById,
         getStudentsByClass,
         classDetails,
