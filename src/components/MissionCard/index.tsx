@@ -1,10 +1,14 @@
 import React, { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
-import { Box, Card, Typography } from "@mui/material";
+import { Box, Button, Card, Typography } from "@mui/material";
 import kodcoinIcon from "assets/images/kodcoin.png";
 import SwitchIcon from "assets/images/switch.svg";
-import { putDifficultyClass } from "utils";
+import { difficultyToText, putDifficultyClass } from "utils";
 import { IMission } from "../../global/interfaces";
+import SignalCellularAlt1BarIcon from '@mui/icons-material/SignalCellularAlt1Bar';
+import SignalCellularAlt2BarIcon from '@mui/icons-material/SignalCellularAlt2Bar';
+import SignalCellularAltIcon from '@mui/icons-material/SignalCellularAlt';
+import CachedIcon from '@mui/icons-material/Cached';
 
 interface IMissionCardContainerProps {
   background?: string;
@@ -26,41 +30,26 @@ interface IMissionCardProps {
   onClick?: (e: React.MouseEvent) => void;
 }
 
-export const PointsContainer = styled.button`
+export const ChangeMissionButton = styled(Button)`
   position: absolute;
   right: 10px;
-  background-color: #fff;
-  color: #717171;
-  text-align: center;
-  padding: 4px 8px;
-  border-radius: 4vmax;
-  border: 1px solid #000000;
-  cursor: pointer;
-  outline: none;
+  top: -24px;
+  height: 40px;
+  width: 40px;
+  border-radius: 100%;
+  box-shadow: 0 0 2px rgba(33, 33, 33, 0.4);
+  min-width: unset;
+`;
 
-  &:hover {
-    outline: none;
-    border: 1px solid #000000;
-  }
-
-  &.bottom-position {
-    bottom: -20px;
-  }
-
-  &.fixed-width-height {
-    width: 185px;
-    height: 40px;
-  }
-
-  &.top-position {
-    top: -16px;
-    width: 48px;
-    height: 32px;
-  }
+export const PointsContainer = styled.div`
+  background: #fff;
+  color: rgba(0, 0, 0, 0.8);
+  border-radius: 8px;
+  width: 120px;
+  height: 100%;
 
   img {
-    height: 16px;
-    width: 16px;
+    width: 30px;
   }
 `;
 
@@ -150,10 +139,12 @@ export const Chip = styled(Box)`
 `;
 
 const MissionCardContainer = styled(Card)`
+  width: 420px;
+  height: 200px;
   &.MuiPaper-root {
     cursor: pointer;
     position: relative;
-    background: #dadada;
+    color: #fff;
     border-radius: 8px;
     margin-block: 1rem;
     overflow: visible;
@@ -173,6 +164,12 @@ const MissionCardContainer = styled(Card)`
   }
 `;
 
+const difficultyIcons = {
+  easy: <SignalCellularAlt1BarIcon />,
+  normal: <SignalCellularAlt2BarIcon />,
+  hard: <SignalCellularAltIcon />,
+}
+
 const MissionCard: React.FC<IMissionCardProps> = (props) => {
   const { mission, openModal, onClick, selected } = props;
 
@@ -181,47 +178,51 @@ const MissionCard: React.FC<IMissionCardProps> = (props) => {
   return (
     <MissionCardContainer
       onClick={onClick}
-      className={"mission-card p-4 d-flex" + (selected ? " selected" : "")}
+      className={"mission-card p-4 d-flex justify-content-between" + (selected ? " selected" : "")}
       variant="outlined"
+      sx={{ background: mission.skill.color }}
     >
-      <div className="d-flex flex-column">
-        <div className={"chip__tag__container"}>
-          <Chip className={"variant__outlined"}>
-            <span className={"level__icon" + putDifficultyClass(difficulty)} />
-            <span>{difficulty}</span>
-          </Chip>
-          <Chip className={"variant__contained"}>
-            <span className={"icon"} />
-            <span>{mission?.skill?.title}</span>
-          </Chip>
-        </div>
+      <div className="d-flex flex-column justify-content-between">
         <div className={"text__details"}>
           <Typography variant="h6" fontWeight="bold">
             {title}
           </Typography>
-          <Typography sx={{ mt: 1 }}>{description}</Typography>
+          <Typography className="mt-1">{description}</Typography>
+        </div>
+        <div className="d-flex gap-4">
+          <div className="d-flex align-items-center justify-content-center gap-1">
+            {difficultyIcons[difficulty]}
+            <Typography component="span" variant="body2">{difficultyToText(difficulty)}</Typography>
+          </div>
+          <div className="d-flex align-items-center justify-content-center gap-1">
+            <div style={{ borderRadius: '100%', height: '12px', width: '12px', background: '#fff' }} />
+            <Typography component="span" variant="body2">{mission?.skill?.title}</Typography>
+          </div>
         </div>
 
-        {/* Action Buttons with absolute position */}
-        <PointsContainer className="d-flex align-items-center justify-content-center bottom-position fixed-width-height">
-          <Typography className="me-1" variant="h5" fontWeight="bold">
-            {points}
-          </Typography>
-          <img src={kodcoinIcon} />
-        </PointsContainer>
+        {/* Action Buttons with absolute position */}        
         {openModal && (
-          <PointsContainer
-            className="d-flex align-items-center justify-content-center top-position"
+          <ChangeMissionButton
+            className="d-flex align-items-center justify-content-center"
+            variant="contained"
+            color="info"
             onClick={(e) => {
               e.stopPropagation();
               openModal(mission);
             }}
           >
-            <img src={SwitchIcon} />
-          </PointsContainer>
+            <CachedIcon sx={{ fill: 'rgba(0, 0, 0, 0.8)' }} />
+          </ChangeMissionButton>
         )}
         {/* Action Buttons with absolute position end*/}
       </div>
+      <div className="d-flex align-items-center">
+        <PointsContainer className="d-flex align-items-center justify-content-center">
+          <Typography className="me-1" variant="h5" fontWeight="bold">{points}</Typography>
+          <img src={kodcoinIcon} />
+        </PointsContainer>
+      </div>
+      
     </MissionCardContainer>
   );
 };

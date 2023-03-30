@@ -16,7 +16,7 @@ import SkillPoints from "components/SkillPoints";
 import { IStage } from "global/interfaces";
 import { AdventureWithProviderProps } from "../interfaces";
 import StageStepper from "../../../../components/StageStepper";
-import Missions from "./Missions";
+import MissionsList from "../../../../components/MissionsList";
 
 export const Adventure: React.FC = () => {
   const { classId } = useParams();
@@ -81,14 +81,18 @@ export const Adventure: React.FC = () => {
           ))}
         </div>
       </AdventureBanner>
-      <StageStepper shownStage={shownStage} stages={adventure?.stages} onStageChange={handleStageChange} />
+      <div className="mt-5">
+        <StageStepper shownStage={shownStage} stages={adventure?.stages} onStageChange={handleStageChange} />
+      </div>      
 
       {/* StageRequirements
         <StageRequirements />
       StageRequirements ends*/}
 
       {/*    Missions*/}
-      <Missions shownStage={shownStage} />
+      <div className="mt-4">
+        <MissionsList shownStage={shownStage} />
+      </div>      
       {/*    Missions ends*/}
     </AdventureContainer>
   );

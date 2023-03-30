@@ -49,6 +49,23 @@ export const putDifficultyClass = (difficulty: string): string => {
   }
 };
 
+export const difficultyToText = (difficulty: string): string => {
+  switch (difficulty) {
+    case "easy": {
+      return " Fácil";
+    }
+    case "normal": {
+      return " Normal";
+    }
+    case "hard": {
+      return " Difícil";
+    }
+    default: {
+      return " Fácil";
+    }
+  }
+};
+
 export const sortStageByActiveStatus = (stages: IStage[]) => {
   return stages
     .sort((stage1, stage2) => {
