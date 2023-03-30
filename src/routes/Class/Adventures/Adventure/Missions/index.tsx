@@ -7,28 +7,11 @@ import { AdventureContext } from "../provider";
 import {IMission, IStage} from "global/interfaces";
 import {getActiveStage, getFirstNonActiveStage, sortStageByActiveStatus} from "utils";
 
-const Missions: FC = () => {
+const Missions: FC<{ shownStage: IStage }> = ({ shownStage }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [openDrawer, setOpenDrawer] = useState<boolean>(false);
   const [selectedMission, setSelectedMission] = useState<null | IMission>(null);
 
-  const { adventure } = useContext(AdventureContext);
-
-  const stage = useMemo((): {
-    stages: IStage[];
-    activeStage: IStage | null;
-    nextNonActiveStage: IStage | null;
-  } | null => {
-    if (adventure.stages && adventure.stages.length) {
-      const stages = sortStageByActiveStatus(adventure.stages);
-      return {
-        stages,
-        activeStage: getActiveStage(stages),
-        nextNonActiveStage: getFirstNonActiveStage(stages),
-      };
-    }
-    return null;
-  }, [adventure]);
   const handleOpen = (missionDetails: IMission) => {
     setSelectedMission(missionDetails);
     setOpen(true);
@@ -44,13 +27,13 @@ const Missions: FC = () => {
     setOpenDrawer(false);
     setSelectedMission(null);
   };
+  
   return (
     <MissionContainer>
       <h3 className={"section__heading"}>Missions</h3>
 
       <div className={"mission__content__container"}>
-        {!!stage?.activeStage?.missions &&
-          stage?.activeStage?.missions?.map((res, index) => {
+        {!!shownStage?.missions && shownStage?.missions?.map((res, index) => {
             return (
               <MissionCard
                 onClick={() => {
@@ -70,7 +53,7 @@ const Missions: FC = () => {
           open={open && !!selectedMission}
           onClose={handleClose}
           mission={selectedMission}
-          stage={stage.activeStage}
+          stage={shownStage}
         />
       )}
       {openDrawer && !!selectedMission && (
@@ -79,7 +62,7 @@ const Missions: FC = () => {
           anchor={"right"}
           onClose={handleDrawerClose}
           mission={selectedMission}
-          stage={stage.activeStage}
+          stage={shownStage}
         />
       )}
     </MissionContainer>

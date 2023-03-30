@@ -15,9 +15,9 @@ import AdventureProvider, { AdventureContext } from "./provider";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { AdventureContainer, AdventureBanner } from "./styled";
 import SkillPoints from "components/SkillPoints";
+import { IStage } from "global/interfaces";
 import { AdventureWithProviderProps } from "../interfaces";
-import StageStepper from "./StageStepper";
-import StageRequirements from "./StageRequirements";
+import StageStepper from "../../../../components/StageStepper";
 import Missions from "./Missions";
 import Toaster from "utils/Toster";
 import { cancelAdventureFromClass } from "services/adventures";
@@ -25,6 +25,7 @@ import { cancelAdventureFromClass } from "services/adventures";
 export const Adventure: React.FC = () => {
   const { classId } = useParams();
   const { adventure, makeAdventureNull } = useContext(AdventureContext);
+  const [shownStage, setShownStage] = useState<IStage | undefined>(undefined);
   const [anchorEl, setAnchorEl] = useState(null);
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
@@ -70,6 +71,9 @@ export const Adventure: React.FC = () => {
       setLoading(false);
     }
   };
+  const handleStageChange = (stage: IStage) => {
+    setShownStage(stage);
+  };  
 
   return (
     <AdventureContainer className="p-0 m-0">
@@ -129,14 +133,14 @@ export const Adventure: React.FC = () => {
           ))}
         </div>
       </AdventureBanner>
-      <StageStepper stages={adventure?.stages} />
+      <StageStepper shownStage={shownStage} stages={adventure?.stages} onStageChange={handleStageChange} />
 
       {/* StageRequirements
         <StageRequirements />
       StageRequirements ends*/}
 
       {/*    Missions*/}
-      <Missions />
+      <Missions shownStage={shownStage} />
       {/*    Missions ends*/}
     </AdventureContainer>
   );
@@ -147,16 +151,16 @@ const AdventureWithProvider: React.FC<AdventureWithProviderProps> = ({
   missions,
   students,
   handleUpdateCurrentAdventure,
-  updateStagesData,
   makeAdventureNull,
+  updateStageData,
 }) => (
   <AdventureProvider
     adventure={adventure}
     missions={missions}
     students={students}
     handleUpdateCurrentAdventure={handleUpdateCurrentAdventure}
-    updateStagesData={updateStagesData}
     makeAdventureNull={makeAdventureNull}
+    updateStageData={updateStageData}
   >
     <Adventure />
   </AdventureProvider>

@@ -12,7 +12,7 @@ import StudentsList from "components/StudentsList";
 import { StudentType } from "components/StudentsList/interfaces";
 import EmotionalThermometer from "components/EmotionalThermometer";
 import { Levels } from "components/Modals/CreateClassModal/interfaces";
-import {useClassContext} from "../Context";
+import {useClassContext} from "../context";
 
 const Board: React.FC<{}> = ({}) => {
   const { classDetails, students, levels } =

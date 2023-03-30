@@ -9,18 +9,12 @@ import { getMissionsByStage, StageMissionUpdateBody } from "services/missions";
 import { IAdventure, IMission, IStage } from "global/interfaces";
 import { StudentType } from "components/StudentsList/interfaces";
 import { useClassContext } from "../context";
+import { getClassCurrentAdventure, setCurrentAdventure } from "services/adventures";
 
 const Adventures: React.FC = () => {
   const [loading, setLoading] = useState<FetchStatus>(FetchStatus.Success);
   const [missions, setMissions] = useState<IMission[]>([]);
-  const { classDetails, students, loadingClass } = useClassContext();
-  const [currentAdventure, setCurrentAdventure] = useState<null | IAdventure>(
-    null
-  );
-
-  useEffect(() => {
-    if (classDetails) setCurrentAdventure(classDetails.current_adventure);
-  }, [classDetails]);
+  const { classDetails, students, loadingClass, updateStageData } = useClassContext();
 
   useEffect(() => {
     getMissions();
@@ -49,9 +43,10 @@ const Adventures: React.FC = () => {
     setCurrentAdventure(null)
   }
 
-  const updateStagesData = (stage: IStage) => {
+  /*const updateStagesData = (stage: IStage) => {
     if (stage) {
-      setCurrentAdventure((prevState) => {
+
+      /*setCurrentAdventure((prevState) => {
         if (prevState) {
           const tempData: IAdventure = JSON.parse(JSON.stringify(prevState));
           const { stages } = tempData;
@@ -64,7 +59,7 @@ const Adventures: React.FC = () => {
         return prevState;
       });
     }
-  };
+  };*/
 
   const getMissions = async () => {
     try {
@@ -90,12 +85,12 @@ const Adventures: React.FC = () => {
   return (
     <>
       <AdventureWithProvider
-        adventure={currentAdventure}
+        adventure={classDetails.current_adventure}
         missions={missions}
         students={students}
         handleUpdateCurrentAdventure={handleUpdateCurrentAdventure}
-        updateStagesData={updateStagesData}
         makeAdventureNull={makeAdventureNull}
+        updateStageData={updateStageData}
       />
     </>
   );
