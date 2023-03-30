@@ -1,16 +1,31 @@
-import React, { FC, useContext, useMemo, useState } from "react";
-import { MissionContainer } from "./styled";
+import React, { FC, useEffect, useState } from "react";
+import { MissionListContainer } from "./styled";
 import MissionCard, { MissionCardType } from "components/MissionCard";
 import ReplaceMissionModal from "components/Modals/ReplaceMissionModal";
 import { MissionAccomplishedDrawer } from "components/Drawers";
-import { AdventureContext } from "../provider";
+import { AdventureContext } from "../../routes/Class/Adventures/Adventure/provider";
 import {IMission, IStage} from "global/interfaces";
 import {getActiveStage, getFirstNonActiveStage, sortStageByActiveStatus} from "utils";
+import { Typography } from "@mui/material";
 
-const Missions: FC<{ shownStage: IStage }> = ({ shownStage }) => {
+const MissionsList: FC<{ shownStage: IStage }> = ({ shownStage }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [openDrawer, setOpenDrawer] = useState<boolean>(false);
   const [selectedMission, setSelectedMission] = useState<null | IMission>(null);
+  const [sortedMissions, setSortedMissions] = useState<IMission[]>([]);
+
+  useEffect(() => {
+    if (shownStage && shownStage.missions) {
+      const missionsCopy = [...shownStage?.missions];
+      missionsCopy.sort((a, b) => {
+        if (a.title > b.title) return 1;
+        if (a.title < b.title) return -1;
+        return 0;
+      });
+
+      setSortedMissions(missionsCopy);
+    }
+  }, [shownStage]);
 
   const handleOpen = (missionDetails: IMission) => {
     setSelectedMission(missionDetails);
@@ -29,23 +44,25 @@ const Missions: FC<{ shownStage: IStage }> = ({ shownStage }) => {
   };
   
   return (
-    <MissionContainer>
-      <h3 className={"section__heading"}>Missions</h3>
+    <MissionListContainer className="p-5">
+      <Typography component="h6" variant="h6" fontWeight="bold" className="mb-3">Lista de misiones</Typography>
 
-      <div className={"mission__content__container"}>
-        {!!shownStage?.missions && shownStage?.missions?.map((res, index) => {
+      <div className="d-flex flex-wrap align-items-center justify-content-center gap-5">
+        {sortedMissions.length ? (
+          sortedMissions.map((res, index) => {
             return (
               <MissionCard
-                onClick={() => {
-                  setOpenDrawer(true);
-                  setSelectedMission(res);
-                }}
-                mission={res}
-                openModal={handleOpen}
-                key={index}
-              />
+                  onClick={() => {
+                    setOpenDrawer(true);
+                    setSelectedMission(res);
+                  }}
+                  mission={res}
+                  openModal={handleOpen}
+                  key={`mission-${index}`}
+                />
             );
-          })}
+          })
+        ) : <Typography>Esta etapa aún no tiene misiones</Typography>}
       </div>
 
       {open && !!selectedMission && (
@@ -65,7 +82,7 @@ const Missions: FC<{ shownStage: IStage }> = ({ shownStage }) => {
           stage={shownStage}
         />
       )}
-    </MissionContainer>
+    </MissionListContainer>
   );
 };
-export default Missions;
+export default MissionsList;
