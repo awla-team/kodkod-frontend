@@ -19,3 +19,7 @@ export const setCurrentAdventure = (body: {
 }) => {
   return http.post("/set-adventure", body);
 };
+
+export const cancelAdventureFromClass = (id: string | number) => {
+  return http.delete("/delete_adventure_from_class/" + id);
+};
