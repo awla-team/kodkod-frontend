@@ -35,7 +35,8 @@ const StageStepper: FC<{ shownStage: IStage, stages: IStage[], onStageChange: (s
       const navigableStages = sorted.filter((stage) => stage.active);
       setSortedStages(sorted);
       setNavigableStages(navigableStages);
-      setActiveStep(navigableStages[navigableStages.length - 1]._index);
+      if (shownStage) onStageChange(stages.find((stage) => stage.id === shownStage.id));
+      else setActiveStep(navigableStages[navigableStages.length - 1]._index);
     }
   }, [stages]);
 

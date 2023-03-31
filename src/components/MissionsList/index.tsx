@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import { MissionListContainer } from "./styled";
-import MissionCard, { MissionCardType } from "components/MissionCard";
+import MissionCard from "components/MissionCard";
 import ReplaceMissionModal from "components/Modals/ReplaceMissionModal";
 import { MissionAccomplishedDrawer } from "components/Drawers";
 import { AdventureContext } from "../../routes/Class/Adventures/Adventure/provider";
@@ -12,9 +12,9 @@ const MissionsList: FC<{ shownStage: IStage }> = ({ shownStage }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [openDrawer, setOpenDrawer] = useState<boolean>(false);
   const [selectedMission, setSelectedMission] = useState<null | IMission>(null);
-  const [sortedMissions, setSortedMissions] = useState<IMission[]>([]);
+  // const [sortedMissions, setSortedMissions] = useState<IMission[]>([]);
 
-  useEffect(() => {
+  /*useEffect(() => {
     if (shownStage && shownStage.missions) {
       const missionsCopy = [...shownStage?.missions];
       missionsCopy.sort((a, b) => {
@@ -25,7 +25,7 @@ const MissionsList: FC<{ shownStage: IStage }> = ({ shownStage }) => {
 
       setSortedMissions(missionsCopy);
     }
-  }, [shownStage]);
+  }, [shownStage]);*/
 
   const handleOpen = (missionDetails: IMission) => {
     setSelectedMission(missionDetails);
@@ -48,14 +48,15 @@ const MissionsList: FC<{ shownStage: IStage }> = ({ shownStage }) => {
       <Typography component="h6" variant="h6" fontWeight="bold" className="mb-5">Lista de misiones</Typography>
 
       <div className="d-flex flex-wrap align-items-center justify-content-center gap-5">
-        {sortedMissions.length ? (
-          sortedMissions.map((res, index) => {
+        {shownStage?.missions?.length ? (
+          shownStage?.missions?.map((res, index) => {
             return (
               <MissionCard
                   onClick={() => {
                     setOpenDrawer(true);
                     setSelectedMission(res);
                   }}
+                  clickable
                   mission={res}
                   openModal={handleOpen}
                   key={`mission-${index}`}
