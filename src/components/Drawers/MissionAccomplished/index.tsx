@@ -18,6 +18,7 @@ const MissionAccomplished: FC<MissionAccomplishedProps> = ({
   const [studentsDetails, setStudentsDetails] = useState<StudentsDetailsType[]>(
     []
   );
+
   const formButtonRef = useRef<HTMLButtonElement>();
 
   const handleFormButtonClick = () => {
@@ -43,6 +44,7 @@ const MissionAccomplished: FC<MissionAccomplishedProps> = ({
       Toaster("error", e.messsage);
     }
   };
+
   return (
     <Styled.MissionAccomplishedDrawer
       open={open}
@@ -74,7 +76,11 @@ const MissionAccomplished: FC<MissionAccomplishedProps> = ({
       </div>
 
       <div className={"student__details__section"}>
-        <StudentsSelectableList ref={formButtonRef} mission={mission} studentsDetails={studentsDetails} />
+        <StudentsSelectableList
+          ref={formButtonRef}
+          mission={mission}
+          studentsDetails={studentsDetails}
+        />
       </div>
       <div className={"student__list__actions"}>
         <Button variant={"contained"} fullWidth onClick={handleFormButtonClick}>
