@@ -1,12 +1,10 @@
-import React, { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { MissionListContainer } from "./styled";
 import MissionCard from "components/MissionCard";
 import ReplaceMissionModal from "components/Modals/ReplaceMissionModal";
-import { MissionAccomplishedDrawer } from "components/Drawers";
-import { AdventureContext } from "../../routes/Class/Adventures/Adventure/provider";
 import {IMission, IStage} from "global/interfaces";
-import {getActiveStage, getFirstNonActiveStage, sortStageByActiveStatus} from "utils";
 import { Typography } from "@mui/material";
+import MissionAccomplishedDrawer from "components/Modals/MissionAccomplished";
 
 const MissionsList: FC<{ shownStage: IStage }> = ({ shownStage }) => {
   const [open, setOpen] = useState<boolean>(false);

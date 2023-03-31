@@ -5,8 +5,10 @@ import { checkboxClasses } from "@mui/material/Checkbox";
 export const StudentListContainer = styled(Box)`
   height: 100%;
 
+  .student-avatar {
+    background: ${(props) => props.theme.palette.primary.light};
+  }
   & .students__list {
-    height: calc(100% - 68px);
     margin-block: 0.5rem;
     display: flex;
     gap: 1rem;

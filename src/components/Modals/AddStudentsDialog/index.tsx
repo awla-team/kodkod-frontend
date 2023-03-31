@@ -177,13 +177,8 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
                                 className="d-flex align-items-center"
                               >
                                 <div className="me-2">
-                                  <IconButton color={"inherit"} size="small">
-                                    <CloseIcon
-                                      fontSize="small"
-                                      onClick={() => {
-                                        remove(index);
-                                      }}
-                                    />
+                                  <IconButton color={"inherit"} size="small" onClick={() => remove(index)}>
+                                    <CloseIcon fontSize="small" />
                                   </IconButton>
                                 </div>
                                 <div className="d-flex">
