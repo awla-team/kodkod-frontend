@@ -35,8 +35,7 @@ const tabs = [
 const Class: React.FC = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();  
-  const { classDetails, students } = useClassContext();
-
+  const { classDetails, students, levels } = useClassContext();
   return (
     <>
       <NavTabsContainer>
@@ -52,7 +51,7 @@ const Class: React.FC = () => {
         className="w-100 overflow-auto"
         sx={{ marginTop: 'calc(64px + 36px)', paddingBottom: '36px' }}        
       >
-        <Outlet context={{ classDetails, students }} />
+        <Outlet context={{ classDetails, students, levels }} />
       </Box>
     </>
   );

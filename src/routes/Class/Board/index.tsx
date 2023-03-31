@@ -10,22 +10,28 @@ import ClassDetailsCard from "components/ClassDetailsCard";
 import { ClassInterface } from "services/classes/interfaces";
 import StudentsList from "components/StudentsList";
 import { StudentType } from "components/StudentsList/interfaces";
-import EmotionalThermometer from "../../../components/EmotionalThermometer";
+import EmotionalThermometer from "components/EmotionalThermometer";
+import { Levels } from "components/Modals/CreateClassModal/interfaces";
+import {useClassContext} from "../Context";
 
 const Board: React.FC<{}> = ({}) => {
-  const { classDetails, students } = useOutletContext() as {
-    classDetails: ClassInterface;
-    students: StudentType[];
-  };
+  const { classDetails, students, levels } =
+    useOutletContext() as {
+      classDetails: ClassInterface;
+      students: StudentType[];
+      levels: Levels[];
+    };
 
   return (
     <DashboardContainer>
       <DashboardContainerLeftSide>
         <DetailsCard className="p-5">
-          {classDetails && <ClassDetailsCard classDetails={classDetails} />}
+          {classDetails && (
+            <ClassDetailsCard classDetails={classDetails} levels={levels}/>
+          )}
         </DetailsCard>
         <DetailsCard className="h-100 p-5">
-          <EmotionalThermometer classDetails={classDetails}/>
+          <EmotionalThermometer classDetails={classDetails} />
         </DetailsCard>
       </DashboardContainerLeftSide>
       <DashboardContainerRightSide>

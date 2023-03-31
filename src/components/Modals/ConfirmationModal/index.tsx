@@ -1,6 +1,12 @@
 import { FC } from "react";
 import { ConfirmationModalProps } from "./interface";
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+} from "@mui/material";
 
 const ConfirmationModal: FC<ConfirmationModalProps> = ({
   open,
@@ -8,9 +14,10 @@ const ConfirmationModal: FC<ConfirmationModalProps> = ({
   callBackFunction,
   description,
   title,
+  loading,
 }) => {
   return (
-    <Dialog open={open} PaperProps={ { className: 'p-3' }} maxWidth="sm">
+    <Dialog open={open} PaperProps={{ className: "p-3" }} maxWidth="sm">
       <DialogTitle fontWeight="bold">{title || "Confirmación"}</DialogTitle>
       <DialogContent className="py-4">
         <div>{description}</div>
@@ -19,9 +26,13 @@ const ConfirmationModal: FC<ConfirmationModalProps> = ({
         <Button variant={"outlined"} onClick={() => onClose()}>
           No, mantener
         </Button>
-        <Button variant={"contained"} onClick={() => callBackFunction()}>
+        <Button
+          variant={"contained"}
+          disabled={loading}
+          onClick={() => callBackFunction()}
+        >
           Sí, eliminar
-        </Button>                    
+        </Button>
       </DialogActions>
     </Dialog>
   );

@@ -8,7 +8,15 @@ export interface ClassInterface {
   userId: number;
   alias: string;
   img?: string;
-  level: number;
+
+  code: string;
+  level: {
+    id: number;
+    name: string;
+  };
 
   current_adventure?: IAdventure;
+}
+export interface ClassInterfaceModified extends Omit<ClassInterface, 'level'>{
+  level: number
 }

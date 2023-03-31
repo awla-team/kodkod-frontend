@@ -1,10 +1,13 @@
-import { ClassInterface } from "services/classes/interfaces";
+import {
+  ClassInterface,
+  ClassInterfaceModified,
+} from "services/classes/interfaces";
 
 export interface MyClassesProps {
-  classes: ClassInterface[];
+  classes: ClassInterfaceModified[];
 }
 
 export interface ClassLevelData {
   level: number;
-  classes: ClassInterface[];
+  classes: ClassInterfaceModified[];
 }
