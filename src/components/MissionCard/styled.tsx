@@ -28,7 +28,6 @@ export const MissionCardContainer = styled(Card)`
   min-width: 45%;
   height: 200px;
   &.MuiPaper-root {
-    cursor: pointer;
     position: relative;
     color: #fff;
     border-radius: 8px;
@@ -37,8 +36,11 @@ export const MissionCardContainer = styled(Card)`
 
     transition: opacity 0.2s ease, transform 0.2s ease;
 
-    &.clickable:hover {
-      transform: scale(1.05);
+    &.clickable {
+      cursor: pointer;  
+      &:hover {
+        transform: scale(1.05);
+      }
     }
 
     &.selected {
