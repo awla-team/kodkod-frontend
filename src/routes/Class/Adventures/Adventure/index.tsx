@@ -21,11 +21,13 @@ import StageStepper from "../../../../components/StageStepper";
 import Toaster from "utils/Toster";
 import { cancelAdventureFromClass } from "services/adventures";
 import MissionsList from "../../../../components/MissionsList";
+import ConfirmationModal from "components/Modals/ConfirmationModal";
 
 export const Adventure: React.FC = () => {
   const { classId } = useParams();
   const { adventure, makeAdventureNull } = useContext(AdventureContext);
   const [shownStage, setShownStage] = useState<IStage | undefined>(undefined);
+  const [openConfirmation, setOpenConfirmation] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
@@ -65,6 +67,9 @@ export const Adventure: React.FC = () => {
       setLoading(true);
       await cancelAdventureFromClass(adventure.id_class_has_adventure);
       makeAdventureNull();
+      Toaster("success", "La aventura finalizó exitosamente");
+      navigate(`/app/cursos/${classId}/tablero`);
+      window.location.reload();
     } catch (e: any) {
       Toaster("error", e.message);
     } finally {
@@ -100,7 +105,7 @@ export const Adventure: React.FC = () => {
               anchorEl={anchorEl}
               onClose={() => setAnchorEl(null)}
             >
-              <MenuItem disabled={loading} onClick={cancelAdventure}>Finalizar aventura</MenuItem>
+              <MenuItem disabled={loading} onClick={() => setOpenConfirmation(true)}>Finalizar aventura</MenuItem>
             </Menu>
           </div>
         </div>
@@ -122,7 +127,15 @@ export const Adventure: React.FC = () => {
 
       <div className="mt-4">
         <MissionsList shownStage={shownStage} />
-      </div>      
+      </div>
+      <ConfirmationModal
+        title="¿Estás seguro de finalizar la aventura?"
+        description={<span>Los puntajes obtenidos por los estudiantes se mantendrán, y podrás escoger una nueva aventura si lo deseas.</span>}
+        open={openConfirmation}
+        confirmText="Sí, finalizar"
+        callBackFunction={cancelAdventure}
+        onClose={() => setOpenConfirmation(false)}
+      />
     </AdventureContainer>
   );
 };

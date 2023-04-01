@@ -135,11 +135,12 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
         levels={levels}
       />
       <ConfirmationModal
+        title={`¿Estás seguro de eliminar el curso ${classDetails.alias}? `}
         open={openDeleteConfirmationDialog}
         callBackFunction={handleDelete}
         onClose={() => setOpenDeleteConfirmationDialog(false)}
         loading={loading}
-        description={<Typography>¿Estás seguro de que deseas eliminar el curso <b>{classDetails.alias}</b>?</Typography>}
+        description={<Typography>El curso será eliminado y el avance de la aventura se perderá.</Typography>}
       />
     </DetailsCardContent>
   );

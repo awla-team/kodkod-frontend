@@ -24,7 +24,6 @@ const AdventureSummaryDialog: React.FC<{
   const { classId } = useParams();
   const [shownAdventure, setShownAdventure] = useState<IAdventure>(undefined);
   const [sortedStages, setSortedStages] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (selectedAdventure && selectedAdventure.template_stages) {

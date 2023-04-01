@@ -11,6 +11,7 @@ import {
 const ConfirmationModal: FC<ConfirmationModalProps> = ({
   open,
   onClose,
+  confirmText,
   callBackFunction,
   description,
   title,
@@ -31,7 +32,7 @@ const ConfirmationModal: FC<ConfirmationModalProps> = ({
           disabled={loading}
           onClick={() => callBackFunction()}
         >
-          Sí, eliminar
+          {confirmText || "Sí, eliminar"}
         </Button>
       </DialogActions>
     </Dialog>
