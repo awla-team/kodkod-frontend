@@ -1,0 +1,9 @@
+import { IMission } from "global/interfaces";
+import { StudentsDetailsType } from "../Modals/MissionAccomplished/interfaces";
+
+export interface StudentsSelectableListProps {
+  mission: IMission;
+  handleClose: () => void;
+  stage: IStage;
+  studentsDetails: StudentsDetailsType[];
+}

@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { TabPaths } from "./interfaces";
 import { NavTabsContainer } from "./styled";
-import { useClassContext } from "./Context";
+import { useClassContext } from "./context";
 import DashboardIcon from '@mui/icons-material/DashboardTwoTone';
 import AdventuresIcon from '@mui/icons-material/RocketLaunchTwoTone';
 import ProgressIcon from '@mui/icons-material/LeaderboardTwoTone';

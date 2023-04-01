@@ -1,9 +1,6 @@
 import { FC } from "react";
 import { UnlockStageConfirmationDialogProps } from "./interfaces";
-import * as Styled from "./styled";
-import { Button, IconButton } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import { DialogActions } from "./styled";
+import { Button, Typography, DialogTitle, DialogActions, DialogContent, Dialog } from "@mui/material";
 
 const UnlockStageConfirmationDialog: FC<UnlockStageConfirmationDialogProps> = ({
   open,
@@ -13,58 +10,48 @@ const UnlockStageConfirmationDialog: FC<UnlockStageConfirmationDialogProps> = ({
   unlockableStageData,
 }) => {
   return (
-    <Styled.Dialog
+    <Dialog
+      PaperProps={{ className: "p-3" }}
       open={open}
-      fullWidth={true}
-      maxWidth={"sm"}
-      scroll={"body"}
       disableEscapeKeyDown
       onClose={handleClose}
     >
-      <Styled.DialogTitle>
-        <div className={"close__icon__container"}>
-          <IconButton
-            color={"inherit"}
-            onClick={handleClose}
-            disabled={isLoading}
-          >
-            <CloseIcon />
-          </IconButton>
+      <DialogTitle fontWeight="bold">
+        Desbloquear etapa {unlockableStageData?._index}
+      </DialogTitle>
+      <DialogContent dividers className="py-4">
+        <div className="d-flex flex-column gap-2">
+          <Typography component="span" variant="body1">Tu clase está a punto de avanzar a:</Typography>
+          <Typography component="span" variant="h6" textAlign="center" className="mb-2"><b>{`Etapa ${unlockableStageData._index}: `}</b>{unlockableStageData.title}</Typography>
         </div>
-
-        <div className={"dialog__header__text"}>
-          Your class is about to unlock stage {unlockableStageData?._index}!
-        </div>
-      </Styled.DialogTitle>
-      <Styled.DialogContent>
-        <p>
-          Unlocking a new stage means that the class has worked hard and is
-          ready to move on. Good job!
-        </p>
-        <h5 className={"heading__text"}>
-          What will happen when you unlock the next stage?
-        </h5>
+        <Typography component="p" variant="body1" className="mb-4">
+          Desbloquear una nueva etapa significa que el curso ha trabajado duro
+          y está listo para descubrir nuevos desafíos y misiones. <b>¡Muy buen trabajo!</b>
+        </Typography>
+        <Typography component="h6" variant="subtitle1" fontWeight="bold" className="mb-1">¿Qué sucederá al desbloquear la siguiente etapa?</Typography>
         <ul>
           <li>
-            <b>New missions</b> will appear that will allow you to gain more
-            experience!
+            Verán <b>nuevas misiones</b>, las que les permitirán sumar más puntos.
           </li>
           <li>
-            With experience you can access <b>more rewards! </b>
+            Con estos puntos podrás acceder a <b>más recompensas.</b>
           </li>
-          <li> The missions of stage 1 will disappear :o</li>
+          <li>Las misiones de las etapas anteriores seguirán disponibles para quienes aún no las hayan completado.</li>
         </ul>
 
-        <div className={"confirmation__text heading__text"}>
-          Are you ready to keep moving forward?
-        </div>
-      </Styled.DialogContent>
-      <Styled.DialogActions>
-        <Button variant={"contained"} disabled={isLoading} onClick={onConfirm}>
-          Unlock Stage {unlockableStageData?._index}
+        <Typography textAlign="center" variant="h6" fontWeight="bold">
+          ¿Están listos para seguir avanzando?
+        </Typography>
+      </DialogContent>
+      <DialogActions className="d-flex align-items-center mt-3">
+        <Button variant={"outlined"} onClick={handleClose}>
+          Cancelar
         </Button>
-      </Styled.DialogActions>
-    </Styled.Dialog>
+        <Button variant={"contained"} disabled={isLoading} onClick={onConfirm}>
+          Desbloquear etapa {unlockableStageData?._index}
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 };
 

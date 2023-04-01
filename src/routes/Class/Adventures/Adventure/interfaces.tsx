@@ -19,6 +19,6 @@ export interface IAdventureContext {
     data: IMission,
     ref: StageMissionUpdateBody
   ) => void;
-  updateStagesData: (stage: IStage) => void;
   makeAdventureNull: () => void;
+  updateStageData: (stage: IStage) => void;
 }

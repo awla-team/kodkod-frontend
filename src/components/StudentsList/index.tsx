@@ -15,7 +15,7 @@ import {
 } from "./interfaces";
 import { useState } from "react";
 import AddStudentsDialog from "../Modals/AddStudentsDialog";
-import { useClassContext } from "../../routes/Class/Context";
+import { useClassContext } from "../../routes/Class/context";
 import { useParams } from "react-router-dom";
 import { deleteStudent } from "../../services/students";
 import { StudentDetails } from "./StudentDetails";

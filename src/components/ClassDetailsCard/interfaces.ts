@@ -6,3 +6,11 @@ export interface ClassDetailsCardProps {
   classDetails: ClassInterface;
   levels: Levels[];
 }
+
+export interface IAdventureBannerProps {
+  img?: string;
+}
+
+export interface IAdventureBannerProps {
+  img?: string;
+}
