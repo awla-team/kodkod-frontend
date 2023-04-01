@@ -14,10 +14,12 @@ export const CustomStepper = styled(Stepper)`
         width: 16px;
         height: 16px;
         border-radius: 100%;
+        pointer-events: none;
 
         &.navigable {
             background: #fff;
             border: 3px solid ${(props) => props.theme.palette.highlight.main};
+            pointer-events: all;
 
             &.active {
                 background: ${(props) => props.theme.palette.highlight.main};

@@ -38,7 +38,7 @@ const StageStepper: FC<{ shownStage: IStage, stages: IStage[], onStageChange: (s
       if (shownStage) onStageChange(stages.find((stage) => stage.id === shownStage.id));
       else setActiveStep(navigableStages[navigableStages.length - 1]._index);
     }
-  }, [stages]);
+  }, [stages]);  
 
   useEffect(() => {
     // When changing step, shown the proper stage
@@ -55,9 +55,11 @@ const StageStepper: FC<{ shownStage: IStage, stages: IStage[], onStageChange: (s
         }: { data: { responseData: IStage } } = await unlockStage({
           id_class_has_adventure: adventure.id_class_has_adventure,
         });
-        Toaster("success", `¡Etapa ${stages[navigableStages.length]._index} desbloqueada!`);
+        Toaster("success", `¡Etapa ${sortedStages[navigableStages.length]._index} desbloqueada!`);
         updateStageData(responseData);
         setOpenDialog(false);
+        setActiveStep(responseData._index);
+        window.location.reload();
       }
     } catch (e: any) {
       Toaster("error", e.message);
@@ -75,7 +77,7 @@ const StageStepper: FC<{ shownStage: IStage, stages: IStage[], onStageChange: (s
             const isActive = shownStage?._index === stage._index;
             
             return (
-              <Step key={`step-${stage._index}`} completed={false}>
+              <Step key={`step-${stage._index}`} completed={false} disabled={!isNavigable}>
                 <div role="button" className={`stage-step ${isNavigable ? 'navigable' : ''} ${isActive ? 'active' : ''}`} onClick={() => setActiveStep(stage._index)} />
               </Step>
             )
