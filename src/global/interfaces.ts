@@ -95,7 +95,7 @@ export interface IReward {
   adventureId: number;
   title: string;
   description: string;
-  requiredPoints: number;
+  required_points: number;
   icon: string;
   type: string;
 }
