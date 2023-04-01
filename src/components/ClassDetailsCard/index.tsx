@@ -11,6 +11,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import SettingsIcon from '@mui/icons-material/Settings';
 import { useNavigate } from "react-router-dom";
 import { CreateClassModal } from "../Modals";
 import { useClassContext } from "routes/Class/context";
@@ -45,24 +46,6 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
     }
   };
 
-  const handleNavigate = (reason: "home" | "adventure") => {
-    switch (reason) {
-      case "adventure": {
-        return navigate(`/app/cursos/${classDetails.id}/aventuras`);
-      }
-      case "home": {
-        return navigate(`/app`, {
-          state: {
-            deletedClass: classDetails.id,
-          },
-        });
-      }
-      default: {
-        return;
-      }
-    }
-  };
-
   const handleMenuOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
     const { currentTarget } = e;
     setAnchorEl(currentTarget);
@@ -72,12 +55,17 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
     setAnchorEl(null);
   };
 
+  const handleNavigate = () => {    
+    navigate(`/app/cursos/${classDetails.id}/aventuras`);
+  };
+
   const handleDelete = async () => {
     try {
       setLoading(true);
       await deleteClass(classDetails.id);
       Toaster("success", `${classDetails.alias} deleted!`);
-      handleNavigate("home");
+      navigate('/app');
+      window.location.reload();
     } catch (e: any) {
       Toaster("error", e.message);
     } finally {
@@ -86,12 +74,14 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
   };
 
   return (
-    <DetailsCardContent>
+    <DetailsCardContent>   
       <Box
         display={"flex"}
-        alignItems={"center"}
+        sx={{ position: 'relative' }}
+        alignItems={"start"}
         justifyContent={"space-between"}
       >
+        
         <Typography
           component="h2"
           variant="h2"
@@ -100,10 +90,11 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
         >
           {classDetails.alias}
         </Typography>
-
-        <IconButton color={"inherit"} onClick={handleMenuOpen}>
-          <MoreVertIcon />
+        <IconButton sx={{ position: 'absolute', top: '8px', right: 0 }} color="inherit" onClick={handleMenuOpen}>
+          <MoreVertIcon fontSize="large" />
         </IconButton>
+
+        
         <Menu open={!!anchorEl} anchorEl={anchorEl} onClose={handleMenuClose}>
           <MenuItem onClick={() => setOpen(true)}>Edit class</MenuItem>
           <MenuItem onClick={() => setOpenDeleteConfirmationDialog(true)}>
@@ -113,45 +104,29 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
       </Box>
       <div className="mb-3">
         {classDetails.current_adventure ? (
-          <div className="d-flex flex-column">
-            <div className="mb-2">
-              <Chip
-                label="Aventura en curso"
-                color="primary"
-                variant="outlined"
-              />
-            </div>
-            <Typography component="span" variant="body1">
-              {classDetails.current_adventure.title}
-            </Typography>
+          <div>            
+            <Typography component="span" variant="body1" className="mb-2">Tienes una aventura en curso:</Typography>
+            <Typography variant="h5" fontWeight="bold" className="mb-2">{classDetails.current_adventure?.title}</Typography>
+            <section className="d-flex flex-column">
+              <div className="d-flex flex-wrap flex-lg-nowrap gap-3">
+                {!!classDetails.current_adventure?.skills?.length ? classDetails.current_adventure.skills.map((adventureSkill, index) => (
+                    <SkillPoints key={`${adventureSkill.id}-${adventureSkill.title}-${index}`} skill={adventureSkill} />
+                )) : null}
+              </div>
+            </section>
+            <div className="mt-3">
+              <Button variant="contained" size="large" onClick={handleNavigate}>Continuar aventura</Button>
+            </div>            
           </div>
         ) : (
           <div className="d-flex flex-column">
-            <Typography
-              component="span"
-              variant="body1"
-              fontWeight="bold"
-              mb={1}
-            >
-              ¡Aún no has seleccionado una aventura!
-            </Typography>
-            <Typography component="span" variant="body1">
-              Presiona el botón a continuación para escoger una aventura que se
-              ajuste a tus objetivos
-            </Typography>
-          </div>
+            <Typography component="span" variant="body1" fontWeight="bold" mb={1}>¡Aún no has seleccionado una aventura!</Typography>
+            <Typography component="span" variant="body1">Presiona el botón a continuación para escoger una aventura que se ajuste a tus objetivos</Typography>
+            <div className="mt-">
+              <Button variant="contained" size="large" onClick={handleNavigate}>Selecciona una aventura</Button>
+            </div>
+          </div>          
         )}
-      </div>
-      <div>
-        <Button
-          variant="contained"
-          size="large"
-          onClick={() => handleNavigate("adventure")}
-        >
-          {classDetails.current_adventure
-            ? "Continua la aventura"
-            : "Selecciona una aventura"}
-        </Button>
       </div>
       <CreateClassModal
         classDetails={classDetails}

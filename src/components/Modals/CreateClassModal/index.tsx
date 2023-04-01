@@ -82,6 +82,7 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
           });
         onClose("success", data.responseData);
         Toaster("success", `Updated successfully!`);
+        window.location.reload();
       } else {
         const { data }: { data: { responseData: ClassInterface } } =
           await createClass({
@@ -100,7 +101,7 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
   };
   return (
     <Dialog open={open} PaperProps={{ className: "p-3" }}>
-      <DialogTitle fontWeight="bold">Añade un nuevo curso</DialogTitle>
+      <DialogTitle fontWeight="bold">{classDetails ? 'Editar curso' : 'Añade un nuevo curso'}</DialogTitle>
       <Formik
         initialValues={initialState}
         onSubmit={handleSubmit}
@@ -218,7 +219,7 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
                   type={"submit"}
                   variant={"contained"}
                 >
-                  Añadir curso
+                  {classDetails ? 'Guardar cambios' : 'Añade un nuevo curso'}
                 </Button>
               </DialogActions>
             </Form>
