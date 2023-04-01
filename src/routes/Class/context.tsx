@@ -165,6 +165,7 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
     <ClassContext.Provider
       value={{
         updateStudentsData,
+        updateStageData,
         getClassById,
         getStudentsByClass,
         classDetails,
