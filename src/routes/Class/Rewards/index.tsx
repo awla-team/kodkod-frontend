@@ -1,15 +1,15 @@
 import { FC, useEffect, useState } from "react";
-import { RewardsViewContainer } from "./styled";
-import { Box } from "@mui/material";
+import { RewardsBox, RewardsList } from "./styled";
+import { Box, Button, Typography } from "@mui/material";
 import { Link as RouterLink, useParams } from "react-router-dom";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import RewardCard from "../RewardCard";
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import RewardCard from "../../../components/RewardCard";
 import { useSearchParams } from "react-router-dom";
-import { getRewards } from "../../services/rewards";
-import { IReward } from "../../global/interfaces";
-import Toaster from "../../utils/Toster";
+import { getRewards } from "../../../services/rewards";
+import { IReward } from "../../../global/interfaces";
+import Toaster from "../../../utils/Toster";
 
-const RewardsView: FC = () => {
+const Rewards: FC = () => {
   const { classId } = useParams();
   const [searchParams] = useSearchParams();
   const [rewards, setRewards] = useState<IReward[]>([]);
@@ -27,33 +27,25 @@ const RewardsView: FC = () => {
         id_class: classId,
         id_adventure: adventureId,
       });
-      setRewards(data.responseData);
+      const sorted = data.responseData.sort((a, b) => {
+        if (a.required_points > b.required_points) return 1;
+        if (a.required_points < b.required_points) return -1;
+        return 0;
+      })
+      setRewards(sorted)
     } catch (e: any) {
       Toaster("error", e.message);
     }
-  };
-  return (
-    <RewardsViewContainer>
-      <Box
-        component={RouterLink}
-        to={`/app/cursos/${classId}/aventuras`}
-        className={"back__navigation__container"}
-      >
-        <ArrowBackIosNewIcon />
-        <span>Back to adventure</span>
-      </Box>
+  };  
 
-      <Box className={"rewards__sections"}>
-        <Box className={"header__text"}>Individual rewards</Box>
-        <Box className={"subheading__text"}>
-          <p>
-            Individual rewards are automatically unlocked once you reach the
-            required experience. Then, you just have to tell your teacher to use
-            them!
-          </p>
-        </Box>
-        <Box className={"rewards__container"}>
-          <Box className={"rewards__scrollable__container"}>
+  return (
+    <Box>
+      <RewardsBox className="p-5">
+        <Button className="mb-3" component={RouterLink} to={`/app/cursos/${classId}/aventuras`} size="large" startIcon={<ArrowBackIosIcon sx={{ fontSize: '16px!important' }} fontSize="small" />}>Volver a la aventura</Button>
+        <Typography component="h4" variant="h4" fontWeight="bold" className="mb-2">Recompensas</Typography>
+        <Typography component="span" variant="body1">Los estudiantes recibirán recompensas <b>automáticamente</b> cada vez que alcancen el puntaje indicado en ellas. Luego, en la vista <b>Progreso</b> puedes gestionar las recompensas de tus estudiantes.</Typography>
+        <Box className="mt-5">
+          <RewardsList className="d-flex gap-5 pb-4">
             {rewards.map((res, index) => {
               return (
                 <RewardCard
@@ -61,16 +53,16 @@ const RewardsView: FC = () => {
                   title={res.title}
                   description={res.description}
                   icon={""}
-                  requiredPoints={100}
+                  requiredPoints={res.required_points}
                   type={res.type}
                 />
               );
             })}
-          </Box>
+          </RewardsList>
         </Box>
-      </Box>
+      </RewardsBox>
 
-      <Box className={"rewards__sections"}>
+      {/*<Box className={"rewards__sections"}>
         <Box className={"header__text"}> Class rewards </Box>
         <Box className={"subheading__text"}>
           <p>
@@ -89,16 +81,16 @@ const RewardsView: FC = () => {
                     title={"Invisibility cloak"}
                     description={"You can leave 10 minutes before recess"}
                     icon={""}
-                    requiredPoints={100}
+                    requiredPoints={res.requiredPoints}
                     type={"class"}
                   />
                 );
               })}
           </Box>
         </Box>
-      </Box>
-    </RewardsViewContainer>
+      </Box>*/}
+    </Box>
   );
 };
 
-export default RewardsView;
+export default Rewards;

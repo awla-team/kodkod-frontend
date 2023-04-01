@@ -5,71 +5,29 @@ export interface IRewardCardElementProps {
   type: string;
 }
 
-export const RewardCardContainer = styled.div.withConfig({
-  shouldForwardProp: (prop, defaultValidatorFn) =>
-    !["type"].includes(prop) && defaultValidatorFn(prop),
-})`
+export const CustomCard = styled(Card)`
+  min-width: 240px;
+  width: 240px;
+  height: 360px;
+  border-radius: 8px;
+  position: relative;
+
+  .reward-img > img {
+    width: 120px;
+    height: 168px;
+  }
+  
   .points-container {
-    border: 3px solid
-      ${(props: IRewardCardElementProps) => {
-        switch (props.type) {
-          case "individual":
-            return "#68BBD4";
-          case "class":
-            return "#F962BB";
-          default:
-            return "#fff";
-        }
-      }};
-  }
-
-  .MuiPaper-root {
-    border: 1px solid
-      ${(props: IRewardCardElementProps) => {
-        switch (props.type) {
-          case "individual":
-            return "#68BBD4";
-          case "class":
-            return "#F962BB";
-          default:
-            return "#fff";
-        }
-      }};
-    background: ${(props: IRewardCardElementProps) => {
-      switch (props.type) {
-        case "individual":
-          return "#E4F9FF";
-        case "class":
-          return "#FFE1F3";
-        default:
-          return "#fff";
-      }
-    }};
-  }
-
-  text-align: center;
-  flex: 0 0 240px;
-
-  img {
-    width: 64px;
-    height: 64px;
-  }
-
-  padding: 16px;
-`;
-
-export const PointsContainer = styled.div`
-  border-radius: 64px;
-  display: flex;
-  color: #717171;
-  align-items: center;
-  justify-content: center;
-  width: 80px;
-  height: 80px;
-  padding: 20px;
-
-  img {
-    height: 22px;
-    width: 22px;
+    position: absolute;
+    padding: 4px 16px;
+    bottom: 0;
+    border: 1px solid #dadada;
+    border-radius: 16px 16px 0px 0px;
+    border-bottom: none;
+    background: #fff;
+    img {
+      width: 24px;
+      height: 24px;
+    }
   }
 `;

@@ -13,9 +13,6 @@ import Class from "./Class";
 import Board from "./Class/Board";
 import Adventures from "./Class/Adventures";
 import { Adventure } from "./Class/Adventures/Adventure";
-import AdventuresSummary from "./Class/GoalAdventures";
-import Points from "./Class/Points";
-import RewardsView from "components/RewardsView";
 import App from "App";
 import ForgotPassword from "./UserAuth/ForgotPassword";
 import ResetPassword from "./UserAuth/ResetPassword";
@@ -25,6 +22,7 @@ import UserAuthLayout from "./UserAuth";
 import { FC } from "react";
 import GoalSelection from "./Class/GoalSelection";
 import GoalAdventures from "./Class/GoalAdventures";
+import Rewards from "routes/Class/Rewards";
 
 const MainRouterComponent: FC = () => {
   const { pathname } = useLocation();
@@ -111,14 +109,10 @@ export const router = createBrowserRouter([
               {
                 path: "aventuras/:adventureId",
                 element: <Adventure />,
-              },              
-              {
-                path: "puntajes",
-                element: <Points />,
               },
               {
-                path: "aventuras/rewards",
-                element: <RewardsView />,
+                path: "aventuras/recompensas",
+                element: <Rewards />,
               },
             ],
           },
