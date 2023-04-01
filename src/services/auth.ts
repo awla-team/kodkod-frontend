@@ -27,7 +27,7 @@ export const logout = (body: LogoutBody) => {
   return http.post("/auth/logout", body);
 };
 
-export const signUp = (body: SignUpBody) => {
+export const signUp = (body: Omit<SignUpBody, "confirmPassword">) => {
   return http.post("/auth/signup", body);
 };
 
