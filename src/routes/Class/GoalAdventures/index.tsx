@@ -93,7 +93,6 @@ const GoalAdventures: React.FC = () => {
           <AdventureSummaryDialog
             selectedAdventure={selectedAdventure}
             handleOnCloseModal={handleOnCloseModal}
-            handleAdventureSelection={handleAdventureSelection}
           />
         </>
       ) : (

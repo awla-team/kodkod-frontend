@@ -96,9 +96,9 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
 
         
         <Menu open={!!anchorEl} anchorEl={anchorEl} onClose={handleMenuClose}>
-          <MenuItem onClick={() => setOpen(true)}>Edit class</MenuItem>
+          <MenuItem onClick={() => setOpen(true)}>Editar información del curso</MenuItem>
           <MenuItem onClick={() => setOpenDeleteConfirmationDialog(true)}>
-            Delete class
+            Eliminar curso
           </MenuItem>
         </Menu>
       </Box>
@@ -122,7 +122,7 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
           <div className="d-flex flex-column">
             <Typography component="span" variant="body1" fontWeight="bold" mb={1}>¡Aún no has seleccionado una aventura!</Typography>
             <Typography component="span" variant="body1">Presiona el botón a continuación para escoger una aventura que se ajuste a tus objetivos</Typography>
-            <div className="mt-">
+            <div className="mt-4">
               <Button variant="contained" size="large" onClick={handleNavigate}>Selecciona una aventura</Button>
             </div>
           </div>          
@@ -139,7 +139,7 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
         callBackFunction={handleDelete}
         onClose={() => setOpenDeleteConfirmationDialog(false)}
         loading={loading}
-        description={`Are you sure you want to delete ${classDetails.alias}?`}
+        description={<Typography>¿Estás seguro de que deseas eliminar el curso <b>{classDetails.alias}</b>?</Typography>}
       />
     </DetailsCardContent>
   );

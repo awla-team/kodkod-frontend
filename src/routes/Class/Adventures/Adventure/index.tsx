@@ -71,44 +71,16 @@ export const Adventure: React.FC = () => {
       setLoading(false);
     }
   };
+
   const handleStageChange = (stage: IStage) => {
     setShownStage(stage);
   };  
 
   return (
     <AdventureContainer className="p-0 m-0">
-      <AdventureBanner
-        className="d-flex flex-column"
-        // backgroundImg={adventure.banner}
-      >
-        {/*<div className="mb-4">*/}
-        {/*  <Link to={`/cursos/${classId}/aventuras`}>*/}
-        {/*    <Button color="info" startIcon={<ChevronLeftRoundedIcon />}>*/}
-        {/*      Volver a Aventuras*/}
-        {/*    </Button>*/}
-        {/*  </Link>*/}
-        {/*</div>*/}
-
-        <div className="mb-2 d-flex justify-content-between align-items-center">
-          <Chip
-            className={"chip-info"}
-            color="info"
-            label="Ongoing adventure"
-          />
-          <IconButton color={"inherit"} onClick={handleVerticalButtonClick}>
-            <MoreVertIcon />
-          </IconButton>
-
-          <Menu
-            open={!!anchorEl}
-            anchorEl={anchorEl}
-            onClose={() => setAnchorEl(null)}
-          >
-            <MenuItem disabled={loading} onClick={cancelAdventure}>Cancel adventure</MenuItem>
-          </Menu>
-        </div>
-        <div className="mb-3">
-          <Typography variant="h3" component="h2" fontWeight="bold">
+      <AdventureBanner className="d-flex flex-column px-5 justify-content-center mb-4">
+        <div className="d-flex justify-content-between align-items-end mb-3">
+          <Typography variant="h4" component="h2" fontWeight="bold">
             {adventure.title}
           </Typography>
           <div>
@@ -120,9 +92,16 @@ export const Adventure: React.FC = () => {
             >
               Ver recompensas disponibles
             </Button>
-            <IconButton color={"inherit"}>
+            <IconButton color={"inherit"} onClick={handleVerticalButtonClick}>
               <MoreVertIcon fontSize="large" />
             </IconButton>
+            <Menu
+              open={!!anchorEl}
+              anchorEl={anchorEl}
+              onClose={() => setAnchorEl(null)}
+            >
+              <MenuItem disabled={loading} onClick={cancelAdventure}>Finalizar aventura</MenuItem>
+            </Menu>
           </div>
         </div>
         <div className="d-flex mb-1">
@@ -139,13 +118,11 @@ export const Adventure: React.FC = () => {
 
       {/* StageRequirements
         <StageRequirements />
-      StageRequirements ends*/}
+          StageRequirements ends */}
 
-      {/*    Missions*/}
       <div className="mt-4">
         <MissionsList shownStage={shownStage} />
       </div>      
-      {/*    Missions ends*/}
     </AdventureContainer>
   );
 };

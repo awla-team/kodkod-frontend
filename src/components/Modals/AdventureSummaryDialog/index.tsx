@@ -49,7 +49,9 @@ const AdventureSummaryDialog: React.FC<{
           id_class: +classId,
           id_adventure: selectedAdventure.id,
         });
-        navigate(`/app/cursos/${classId}/aventuras`);
+        //navigate(`/app/cursos/${classId}/aventuras`);
+        Toaster("success", "Aventura inciciada exitosamente");
+        window.location.reload();
       } catch (e: any) {
         Toaster("error", e.message);
       }
