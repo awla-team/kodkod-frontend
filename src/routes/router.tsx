@@ -23,6 +23,7 @@ import { FC } from "react";
 import GoalSelection from "./Class/GoalSelection";
 import GoalAdventures from "./Class/GoalAdventures";
 import Rewards from "routes/Class/Rewards";
+import VerifyEmail from "./UserAuth/VerifyEmail";
 
 const MainRouterComponent: FC = () => {
   const { pathname } = useLocation();
@@ -63,6 +64,10 @@ export const router = createBrowserRouter([
           {
             path: "/reset-password/:token",
             element: <ResetPassword />,
+          },
+          {
+            path: "/verify-email/:userId/:token",
+            element: <VerifyEmail />,
           },
         ],
       },

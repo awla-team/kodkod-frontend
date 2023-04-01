@@ -9,7 +9,7 @@ export interface GenerateAccessTokenBody {
   refreshToken: string;
 }
 
-export interface LogoutBody extends GenerateAccessTokenBody {}
+export interface LogoutBody extends GenerateAccessTokenBody { }
 
 export interface SignUpBody extends SignInBody {
   first_name: string;
@@ -94,4 +94,12 @@ export const resetPassword = (
   token: string
 ) => {
   return http.post("/auth/reset-password/" + token, body);
+};
+
+export const verifyEmail = (token: string) => {
+  return http.get(`/auth/verify-email/${token}`);
+};
+
+export const resendEmailVerification = (userId: number | string) => {
+  return http.get(`/auth/send-email-verification/${userId}`);
 };
