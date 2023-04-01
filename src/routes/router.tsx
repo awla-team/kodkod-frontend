@@ -23,6 +23,7 @@ import Error404 from "../components/Error404";
 import Progress from "./Class/Progress";
 import UserAuthLayout from "./UserAuth";
 import { FC } from "react";
+import VerifyEmail from "./UserAuth/VerifyEmail";
 
 const MainRouterComponent: FC = () => {
   const { pathname } = useLocation();
@@ -63,6 +64,10 @@ export const router = createBrowserRouter([
           {
             path: "/reset-password/:token",
             element: <ResetPassword />,
+          },
+          {
+            path: "/verify-email/:userId/:token",
+            element: <VerifyEmail />,
           },
         ],
       },
