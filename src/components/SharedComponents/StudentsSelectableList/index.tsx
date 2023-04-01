@@ -23,7 +23,8 @@ import {
   getActiveStage,
   getFirstNonActiveStage,
   sortStageByActiveStatus,
-} from "../../../utils";
+} from "utils";
+import { StudentType } from "../../StudentsList/interfaces";
 
 export const StudentsSelectableList: React.ForwardRefExoticComponent<
   StudentsSelectableListProps & React.RefAttributes<HTMLButtonElement>
@@ -50,6 +51,8 @@ export const StudentsSelectableList: React.ForwardRefExoticComponent<
 
   const { students: studentsList } = useContext(AdventureContext);
 
+  const [filteredData, setFilteredData] = useState<StudentType[]>([]);
+
   const selectedLength = useMemo(() => {
     return Object.keys(selected).length;
   }, [selected]);
@@ -63,6 +66,10 @@ export const StudentsSelectableList: React.ForwardRefExoticComponent<
       setSelected((prevState: any) => ({ ...prevState, ...selectedDetail }));
     }
   }, [studentsDetails]);
+
+  useEffect(() =>{
+    setFilteredData(studentsList)
+  },[studentsList])
 
   const handleCheck = (
     { target }: React.ChangeEvent<HTMLInputElement>,
@@ -91,6 +98,13 @@ export const StudentsSelectableList: React.ForwardRefExoticComponent<
     return setSelected({});
   };
 
+  const handleSearch = (value: string) => {
+    setFilteredData(() => {
+      return studentsList.filter((student) => {
+        return `${student.first_name}${student.last_name}`.toLowerCase().includes(value.trim().toLowerCase());
+      });
+    });
+  };
   const handleSave = async () => {
     try {
       if (!stage?.activeStage || !Object.keys(selected).length) return;
@@ -108,6 +122,9 @@ export const StudentsSelectableList: React.ForwardRefExoticComponent<
   return (
     <Styled.StudentListContainer>
       <TextField
+        onChange={({ target }) => {
+          handleSearch(target.value);
+        }}
         variant={"standard"}
         placeholder={"Search by first or last name"}
         fullWidth
@@ -126,7 +143,7 @@ export const StudentsSelectableList: React.ForwardRefExoticComponent<
           label={"Select all"}
         />
         <div className={"scrollable__container"}>
-          {studentsList.map((res, index) => {
+          {filteredData.map((res, index) => {
             return (
               <div key={index} className={"student__detail__container"}>
                 <Styled.Checkbox
