@@ -16,7 +16,7 @@ import { UnlockStageConfirmationDialog } from "components/Modals";
 import { unlockStage } from "services/stages";
 import Toaster from "utils/Toster";
 
-const StageStepper: FC<{ shownStage: IStage, stages: IStage[], onStageChange: (stage: IStage) => void }> = ({ shownStage, stages = [], onStageChange }) => {
+const StageStepper: FC<{ shownStage: IStage, stages: IStage[], onStageChange: (stage: IStage) => void, handleFinish: () => void }> = ({ shownStage, stages = [], onStageChange, handleFinish }) => {
   const { adventure, updateStageData } = useContext(AdventureContext);
   const [sortedStages, setSortedStages] = useState<IStage[]>([]);
   const [navigableStages, setNavigableStages] = useState<IStage[]>([]);
@@ -66,7 +66,7 @@ const StageStepper: FC<{ shownStage: IStage, stages: IStage[], onStageChange: (s
     } finally {
       setLoading(false);
     }
-  };  
+  };
   
   return (
     <div className="d-flex align-items-center justify-content-between gap-4">
@@ -86,24 +86,34 @@ const StageStepper: FC<{ shownStage: IStage, stages: IStage[], onStageChange: (s
         </CustomStepper>
         <Typography component="span" variant="h6"><b>{`Etapa ${activeStep}: `}</b>{shownStage?.title}</Typography>
       </div>      
-      {sortedStages.length && !sortedStages[sortedStages?.length - 1].active ? (
+      {sortedStages.length ? (
         <div>
-          <Button
-            variant={"contained"}
-            onClick={() => setOpenDialog(true)}
-            disabled={navigableStages.length === sortedStages.length}
-            size="large"
-          >
-            Desbloquear etapa {sortedStages[navigableStages.length]._index}
-          </Button>
+          {sortedStages[navigableStages.length] ? (
+            <Button
+              variant={"contained"}
+              onClick={() => setOpenDialog(true)}
+              disabled={navigableStages.length === sortedStages.length}
+              size="large"
+            >
+              Desbloquear etapa {sortedStages[navigableStages.length]._index}
+            </Button>
+          ) : (
+            <Button
+              variant={"contained"}
+              onClick={() => setOpenDialog(true)}
+              size="large"
+            >
+              ¡Completar etapa y finalizar aventura!
+            </Button>
+          )}
           <UnlockStageConfirmationDialog
             unlockableStageData={sortedStages[navigableStages.length]}
             isLoading={loading}
             open={openDialog}
             handleClose={() => setOpenDialog(false)}
-            onConfirm={handleUnlock}
+            onConfirm={sortedStages[navigableStages.length] ? handleUnlock : handleFinish}
           />
-        </div>        
+        </div>
       ) : null}
     </div>    
   );

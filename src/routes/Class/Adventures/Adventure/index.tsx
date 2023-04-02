@@ -15,24 +15,27 @@ import AdventureProvider, { AdventureContext } from "./provider";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { AdventureContainer, AdventureBanner } from "./styled";
 import SkillPoints from "components/SkillPoints";
-import { IStage } from "global/interfaces";
+import { ISkill, IStage } from "global/interfaces";
 import { AdventureWithProviderProps } from "../interfaces";
 import StageStepper from "../../../../components/StageStepper";
 import Toaster from "utils/Toster";
-import { cancelAdventureFromClass } from "services/adventures";
+import { cancelAdventureFromClass, endClassHasAdventure } from "services/adventures";
 import MissionsList from "../../../../components/MissionsList";
 import ConfirmationModal from "components/Modals/ConfirmationModal";
+import { useClassContext } from "routes/Class/context";
+import moment from "moment";
 
 export const Adventure: React.FC = () => {
   const { classId } = useParams();
-  const { adventure, makeAdventureNull } = useContext(AdventureContext);
+  const { classDetails, setClassDetails } = useClassContext();
   const [shownStage, setShownStage] = useState<IStage | undefined>(undefined);
   const [openConfirmation, setOpenConfirmation] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  if (!adventure)
+
+  if (!classDetails.current_adventure)
     return (
       <AdventureContainer className="d-flex flex-column gap-3 p-0 m-0">
         <Skeleton
@@ -65,11 +68,31 @@ export const Adventure: React.FC = () => {
   const cancelAdventure = async () => {
     try {
       setLoading(true);
-      await cancelAdventureFromClass(adventure.id_class_has_adventure);
-      makeAdventureNull();
-      Toaster("success", "La aventura finalizó exitosamente");
+      await cancelAdventureFromClass(classDetails.current_adventure.id_class_has_adventure);
+      //await cancelAdventure(classDetails.current_adventure.id_class_has_adventure, { date_stop: moment().format('YYYY-MM-DD') });
+      Toaster("success", "La aventura fue cancelada");
       navigate(`/app/cursos/${classId}/tablero`);
-      window.location.reload();
+      setClassDetails({
+        ...classDetails,
+        current_adventure: null
+      });
+    } catch (e: any) {
+      Toaster("error", e.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const finishAdventure = async () => {
+    try {
+      setLoading(true);
+      endClassHasAdventure(classDetails.current_adventure.id_class_has_adventure, { date_stop: moment().format('YYYY-MM-DD') });
+      Toaster("success", "¡Felicitaciones! ¡La aventura ha sido completada!");
+      navigate(`/app/cursos/${classId}/tablero`);
+      setClassDetails({
+        ...classDetails,
+        current_adventure: null
+      });
     } catch (e: any) {
       Toaster("error", e.message);
     } finally {
@@ -79,20 +102,20 @@ export const Adventure: React.FC = () => {
 
   const handleStageChange = (stage: IStage) => {
     setShownStage(stage);
-  };  
+  };    
 
   return (
     <AdventureContainer className="p-0 m-0">
       <AdventureBanner className="d-flex flex-column px-5 justify-content-center mb-4">
         <div className="d-flex justify-content-between align-items-end mb-3">
           <Typography variant="h4" component="h2" fontWeight="bold">
-            {adventure.title}
+            {classDetails.current_adventure.title}
           </Typography>
           <div>
             <Button
               variant={"outlined"}
               color="info"
-              onClick={() => navigate(`recompensas?adventureId=${adventure.id}`)}
+              onClick={() => navigate(`recompensas?adventureId=${classDetails.current_adventure.id}`)}
               size="large"
             >
               Ver recompensas disponibles
@@ -105,20 +128,20 @@ export const Adventure: React.FC = () => {
               anchorEl={anchorEl}
               onClose={() => setAnchorEl(null)}
             >
-              <MenuItem disabled={loading} onClick={() => setOpenConfirmation(true)}>Finalizar aventura</MenuItem>
+              <MenuItem disabled={loading} onClick={() => setOpenConfirmation(true)}>Terminar aventura</MenuItem>
             </Menu>
           </div>
         </div>
         <div className="d-flex mb-1">
-          {adventure?.skills?.map((skill) => (
-            <div className="me-4" key={`${adventure.id}-${skill.id}`}>
+          {classDetails.current_adventure?.skills?.map((skill) => (
+            <div className="me-4" key={`${classDetails.current_adventure.id}-${skill.id}`}>
               <SkillPoints skill={skill} />
             </div>
           ))}
         </div>
       </AdventureBanner>
       <div className="mt-5">
-        <StageStepper shownStage={shownStage} stages={adventure?.stages} onStageChange={handleStageChange} />
+        <StageStepper shownStage={shownStage} stages={classDetails.current_adventure?.stages} onStageChange={handleStageChange} handleFinish={finishAdventure} />
       </div>      
 
       {/* StageRequirements
@@ -129,10 +152,10 @@ export const Adventure: React.FC = () => {
         <MissionsList shownStage={shownStage} />
       </div>
       <ConfirmationModal
-        title="¿Estás seguro de finalizar la aventura?"
-        description={<span>Los puntajes obtenidos por los estudiantes se mantendrán, y podrás escoger una nueva aventura si lo deseas.</span>}
+        title="¿Estás seguro de terminar la aventura?"
+        description={<span>Esta aventura se terminará y los puntajes de l@s estudiantes volverán a 0. Podrás escoger una nueva aventura si lo deseas.</span>}
         open={openConfirmation}
-        confirmText="Sí, finalizar"
+        confirmText="Sí, terminar"
         callBackFunction={cancelAdventure}
         onClose={() => setOpenConfirmation(false)}
       />
@@ -145,7 +168,6 @@ const AdventureWithProvider: React.FC<AdventureWithProviderProps> = ({
   missions,
   students,
   handleUpdateCurrentAdventure,
-  makeAdventureNull,
   updateStageData,
 }) => (
   <AdventureProvider
@@ -153,7 +175,6 @@ const AdventureWithProvider: React.FC<AdventureWithProviderProps> = ({
     missions={missions}
     students={students}
     handleUpdateCurrentAdventure={handleUpdateCurrentAdventure}
-    makeAdventureNull={makeAdventureNull}
     updateStageData={updateStageData}
   >
     <Adventure />

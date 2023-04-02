@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import AdventureCard from "components/AdventureCard";
 import type { IAdventure } from "global/interfaces";
-//import Point from "components/Point";
 import { FetchStatus } from "global/enums";
 import CircularProgress from "@mui/material/CircularProgress";
 import AdventureSummaryDialog from "../../../components/Modals/AdventureSummaryDialog";
@@ -19,7 +18,9 @@ const GoalAdventures: React.FC = () => {
   const { classDetails, loadingClass } = useClassContext();
   const [selectedAdventure, setSelectedAdventure] = useState<IAdventure>(null);
   const [selectedGoal, setSelectedGoal] = useState<null | GoalType>(null);
+  const [sortedAdventures, setSortedAdventures] = useState<IAdventure[]>([]);
   const params = useParams();
+
   const handleOnClickAdventure = (adventure: IAdventure) => {
     setSelectedAdventure(adventure);
   };
@@ -28,9 +29,18 @@ const GoalAdventures: React.FC = () => {
     setSelectedAdventure(null);
   };
 
-  const handleAdventureSelection = () => {
-    // TODO: post to class_has_adventure (?)
-  };
+  useEffect(() => {
+    if (selectedGoal?.adventures?.length) {
+      const newSortedAdventures = selectedGoal.adventures
+        .sort((a, b) => {
+          if (a.title > b.title) return 1;
+          if (a.title < b.title) return -1;
+          return 0;
+        })
+
+      setSortedAdventures(newSortedAdventures);
+    }
+  }, [selectedGoal]);
 
   useEffect(() => {    
     const id = params.goalId;
@@ -73,11 +83,12 @@ const GoalAdventures: React.FC = () => {
       {selectedGoal && selectedGoal?.adventures?.length ? (
         <>
           <div className="d-flex h-100 w-100 align-items-center justify-content-center justify-content-sm-start flex-wrap gap-4">
-            {selectedGoal?.adventures?.map((adventure, index) => (
+            {sortedAdventures.map((adventure, index) => (
               <AdventureCard
                 onClick={() => {
                   handleOnClickAdventure(adventure);
                 }}
+                completed={!!adventure.class_has_adventures.length}
                 key={index}
                 title={adventure.title}
                 info={

@@ -49,6 +49,14 @@ export interface IAdventureSkill {
   skill?: ISkill;
 }
 
+export interface IClassHasAdventure {
+  id: number;
+  id_class: number;
+  id_adventure: number;
+  date_start?: string;
+  date_stop?: string;
+}
+
 export interface IAdventure {
   id: number;
   title: string;
@@ -56,6 +64,7 @@ export interface IAdventure {
   banner: string;
   category: string;
   overview: string;
+  class_has_adventures?: IClassHasAdventure[]; 
   expected_results: string;
   skills?: ISkill[];
   template_stages?: TemplateStages[];
