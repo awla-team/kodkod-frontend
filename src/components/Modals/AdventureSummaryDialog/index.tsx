@@ -6,7 +6,6 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  IconButton,
   Typography,
 } from "@mui/material";
 import type { IAdventure } from "global/interfaces";
@@ -16,6 +15,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import SkillPoints from "components/SkillPoints";
 import EmojiFlagsIcon from '@mui/icons-material/EmojiFlags';
 import { AdventureBanner } from "./styled";
+import { useClassContext } from "routes/Class/context";
 
 const AdventureSummaryDialog: React.FC<{
   selectedAdventure: IAdventure;
@@ -24,6 +24,8 @@ const AdventureSummaryDialog: React.FC<{
   const { classId } = useParams();
   const [shownAdventure, setShownAdventure] = useState<IAdventure>(undefined);
   const [sortedStages, setSortedStages] = useState([]);
+  const { classDetails, setClassDetails } = useClassContext();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (selectedAdventure && selectedAdventure.template_stages) {
@@ -48,9 +50,13 @@ const AdventureSummaryDialog: React.FC<{
           id_class: +classId,
           id_adventure: selectedAdventure.id,
         });
-        //navigate(`/app/cursos/${classId}/aventuras`);
+        setClassDetails({
+          ...classDetails,
+          current_adventure: data.responseData.currentAdventure
+        })
+      
+        navigate(`/app/cursos/${classId}/aventuras`);
         Toaster("success", "Aventura inciciada exitosamente");
-        window.location.reload();
       } catch (e: any) {
         Toaster("error", e.message);
       }

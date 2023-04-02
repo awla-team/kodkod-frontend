@@ -1,22 +1,28 @@
 import React from "react";
-import { Typography } from "@mui/material";
+import { Chip, Typography } from "@mui/material";
 import { IAdventureCardProps } from "./interfaces";
 import { AdventureCardContainer } from "./styled";
 
 const AdventureCard: React.FC<IAdventureCardProps> = ({
   title,
+  completed,
   stagesDuration,
   img,
   info,
   onClick,
 }) => (
   <AdventureCardContainer
-    onClick={onClick}
-    className="p-4 d-flex flex-column justify-content-between"
+    onClick={!completed ? onClick : () => {}}
+    className={`p-4 d-flex flex-column justify-content-between ${completed ? 'adventure-complete' : ''}`}
     img={img}
     variant="outlined"
   >
     <div>
+      {completed ? (
+        <div className="adventure-complete-chip d-flex align-items-center justify-content-center">
+          <Chip color="success" label="Aventura completada" />
+        </div>        
+      ) : null}
       {stagesDuration ? (
         <Typography variant="body1">{`${stagesDuration} etapas`}</Typography>
       ) : null}
