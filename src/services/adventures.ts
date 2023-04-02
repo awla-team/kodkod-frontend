@@ -23,3 +23,7 @@ export const setCurrentAdventure = (body: {
 export const cancelAdventureFromClass = (id: string | number) => {
   return http.delete("/delete_adventure_from_class/" + id);
 };
+
+export const endClassHasAdventure = (id: string | number, body: { date_stop: string }) => {
+  return http.put(`/classhasadventure/${id}`, body);
+};

@@ -27,7 +27,6 @@ export interface AdventureWithProviderProps {
     data: IMission,
     ref: StageMissionUpdateBody
   ) => void;
-  makeAdventureNull?: () => void
 }
 
 export interface AdventureProviderProps

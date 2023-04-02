@@ -173,7 +173,6 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
         students,
         levels,
         setClassDetails,
-        updateStageData
       }}
     >
       {children}

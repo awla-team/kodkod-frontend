@@ -39,10 +39,6 @@ const Adventures: React.FC = () => {
     });*/
   };
 
-  const makeAdventureNull= () =>{
-    setCurrentAdventure(null)
-  }
-
   /*const updateStagesData = (stage: IStage) => {
     if (stage) {
 
@@ -89,7 +85,6 @@ const Adventures: React.FC = () => {
         missions={missions}
         students={students}
         handleUpdateCurrentAdventure={handleUpdateCurrentAdventure}
-        makeAdventureNull={makeAdventureNull}
         updateStageData={updateStageData}
       />
     </>
