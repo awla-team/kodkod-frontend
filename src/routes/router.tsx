@@ -20,9 +20,12 @@ import Error404 from "../components/Error404";
 import Progress from "./Class/Progress";
 import UserAuthLayout from "./UserAuth";
 import { FC } from "react";
+<<<<<<< HEAD
 import GoalSelection from "./Class/GoalSelection";
 import GoalAdventures from "./Class/GoalAdventures";
 import Rewards from "routes/Class/Rewards";
+=======
+>>>>>>> cdb7ba9eb09fbbe128ce18ef761e20efdd674602
 import VerifyEmail from "./UserAuth/VerifyEmail";
 
 const MainRouterComponent: FC = () => {
