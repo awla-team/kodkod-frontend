@@ -91,6 +91,7 @@ const GoalAdventures: React.FC = () => {
                 completed={!!adventure.class_has_adventures.length}
                 key={index}
                 title={adventure.title}
+                img={adventure.thumbnail}
                 info={
                   <div className="d-flex gap-1 flex-wrap">
                     {!!adventure?.skills?.length ? adventure.skills.map((adventureSkill, index) => (

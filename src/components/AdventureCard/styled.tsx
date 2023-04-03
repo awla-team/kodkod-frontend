@@ -5,10 +5,9 @@ import { IAdventureCardContainerProps } from "./interfaces";
 export const AdventureCardContainer = styled(Card)`
   width: 300px;
   height: 240px;
-  background-image: url(${(props: IAdventureCardContainerProps) => props.img});
   background-position: center;
-  background-repeat: no-repeat;
-  box-shadow: inset 0 0 300px 40px #000;
+  background-size: cover;
+  box-shadow: inset 0 0 120px 30px #000;
   position: relative;
   overflow: visible;
 
@@ -18,7 +17,7 @@ export const AdventureCardContainer = styled(Card)`
   }
 
   &:hover {
-    box-shadow: inset 0 0 100px 20px #000;
+    box-shadow: inset 0 0 60px 10px #000;
     cursor: pointer;
   }
   &.MuiPaper-root {
