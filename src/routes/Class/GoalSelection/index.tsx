@@ -67,7 +67,7 @@ const GoalSelection: React.FC = () => {
                   }`}
                   onClick={() => selectAdventure(goal.id)}
                 >
-                  <img src={goal.image_url} />
+                  <img src={goal.image_url} height="500" width="100%" />
                   <Box className="goal-card-text py-2 px-3 d-flex align-items-center justify-content-center flex-fill">
                     <Typography
                       variant="body2"

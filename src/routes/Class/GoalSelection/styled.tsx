@@ -34,6 +34,7 @@ export const CardContainer = styled(Box)`
   }
 
   &.selected {
+    outline: 3px solid ${(props) => props.theme.palette.primary.main};
     .goal-card-text {
       background: ${(props) => props.theme.palette.primary.main};
       color: #fff;
