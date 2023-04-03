@@ -8,9 +8,9 @@ export const AdventureBanner = styled(Box)`
   width: 100%;
   height: fit-content;
   padding: 64px 24px;
-  background-image: ${(props: IAdventureBannerProps) => props.img ? `url(${props.img})` : 'none'};
   background-position: center;
   background-repeat: no-repeat;
+  background-size: cover;
   box-shadow: inset 0 0 200px 40px #000;
   border-radius: 0px;
   color: #fff;
