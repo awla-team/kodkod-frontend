@@ -106,7 +106,7 @@ export const Adventure: React.FC = () => {
 
   return (
     <AdventureContainer className="p-0 m-0">
-      <AdventureBanner className="d-flex flex-column px-5 justify-content-center mb-4">
+      <AdventureBanner className="d-flex flex-column px-5 justify-content-center mb-4" sx={{ backgroundImage: `url(${shownStage?.icon})`}}>
         <div className="d-flex justify-content-between align-items-end mb-3">
           <Typography variant="h4" component="h2" fontWeight="bold">
             {classDetails.current_adventure.title}
@@ -134,7 +134,7 @@ export const Adventure: React.FC = () => {
         </div>
         <div className="d-flex mb-1">
           {classDetails.current_adventure?.skills?.map((skill) => (
-            <div className="me-4" key={`${classDetails.current_adventure.id}-${skill.id}`}>
+            <div className="me-2" key={`${classDetails.current_adventure.id}-${skill.id}`}>
               <SkillPoints skill={skill} />
             </div>
           ))}

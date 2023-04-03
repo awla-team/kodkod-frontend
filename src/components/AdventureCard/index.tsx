@@ -23,9 +23,6 @@ const AdventureCard: React.FC<IAdventureCardProps> = ({
           <Chip color="success" label="Aventura completada" />
         </div>        
       ) : null}
-      {stagesDuration ? (
-        <Typography variant="body1">{`${stagesDuration} etapas`}</Typography>
-      ) : null}
       <Typography variant="h5">
         <b>{title}</b>
       </Typography>
