@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { IAdventureBannerProps } from "./interfaces";
 import {chipClasses} from '@mui/material/Chip'
+import { Box } from "@mui/system";
 
 export const AdventureContainer = styled.div`
   margin-top: 36px;
@@ -9,16 +10,16 @@ export const AdventureContainer = styled.div`
   }
 `;
 
-export const AdventureBanner = styled.div`
+export const AdventureBanner = styled(Box)`
   width: 100%;
   border-radius: 8px;
   min-height: 200px;
   color: #fff;
   padding: 0px 24px;
-  background: #8A8A8A;
   position: relative;
   background-size: cover;
-  box-shadow: inset 0 0 200px 40px #000;
+  background-position: center;
+  box-shadow: inset 0 0 120px 60px #000;
 
   & .${chipClasses.root}.chip-info {
     padding-block: 12px;

@@ -1,9 +1,8 @@
 import { AdventureBanner, DetailsCardContent } from "./styled";
 import { ClassDetailsCardProps } from "./interfaces";
-import React, { FC, useState } from "react";
+import React, { FC, useState, useEffect } from "react";
 import {
   Button,
-  Chip,
   Typography,
   Box,
   IconButton,
@@ -11,7 +10,6 @@ import {
   MenuItem,
 } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import SettingsIcon from '@mui/icons-material/Settings';
 import { useNavigate } from "react-router-dom";
 import { CreateClassModal } from "../Modals";
 import { useClassContext } from "routes/Class/context";
@@ -20,6 +18,7 @@ import ConfirmationModal from "../Modals/ConfirmationModal";
 import Toaster from "../../utils/Toster";
 import { deleteClass } from "../../services/classes";
 import SkillPoints from "components/SkillPoints";
+import { IStage } from "global/interfaces";
 
 const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
   classDetails,
@@ -32,6 +31,19 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
     useState<boolean>(false);
   const { setClassDetails } = useClassContext();
   const [loading, setLoading] = useState<boolean>(false);
+  const [latestStage, setLatestStage] = useState<IStage>(undefined);
+
+  useEffect(() => {
+    if (classDetails?.current_adventure?.stages?.length) {
+      const filtered = classDetails.current_adventure.stages.filter((stage) => stage.active);  
+      const newLatestStage = [...filtered].sort((a, b) => {
+        if (a._index > b._index) return 1;
+        if (a._index < b._index) return -1;
+        return 0;
+      });
+      setLatestStage(newLatestStage[newLatestStage.length - 1]);
+    }
+  }, [classDetails]);
 
   const handleClose = (
     reason: "backdropClick" | "escapeKeyDown" | "success",
@@ -102,22 +114,22 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
           </MenuItem>
         </Menu>
       </Box>
-      <div className="mb-3">
+      <div>
         {classDetails.current_adventure ? (
-          <div>            
-            <Typography component="span" variant="body1" className="mb-2">Tienes una aventura en curso:</Typography>
-            <Typography variant="h5" fontWeight="bold" className="mb-2">{classDetails.current_adventure?.title}</Typography>
-            <section className="d-flex flex-column">
-              <div className="d-flex flex-wrap flex-lg-nowrap gap-3">
+          <Box className="p-4" sx={{ backgroundImage: `url(${latestStage?.icon})`, borderRadius: '8px', color: '#FFF', boxShadow: 'rgb(0, 0, 0) 0px 0px 200px 40px inset', backgroundPosition: 'center', backgroundSize: 'cover' }}>
+            <section className="d-flex flex-column mb-1">
+              <div className="d-flex flex-wrap flex-lg-nowrap gap-2">
                 {!!classDetails.current_adventure?.skills?.length ? classDetails.current_adventure.skills.map((adventureSkill, index) => (
                     <SkillPoints key={`${adventureSkill.id}-${adventureSkill.title}-${index}`} skill={adventureSkill} />
                 )) : null}
               </div>
             </section>
-            <div className="mt-3">
-              <Button variant="contained" size="large" onClick={handleNavigate}>Continuar aventura</Button>
+            <Typography variant="h6" fontWeight="bold">{`${classDetails.current_adventure?.title}`}</Typography>
+            <Typography variant="body1" className="mb-3">{`Etapa ${latestStage?._index}: ${latestStage?.title}`}</Typography>
+            <div className="mt-2">
+              <Button variant="contained" onClick={handleNavigate}>Continuar aventura</Button>
             </div>            
-          </div>
+          </Box>
         ) : (
           <div className="d-flex flex-column">
             <Typography component="span" variant="body1" fontWeight="bold" mb={1}>¡Aún no has seleccionado una aventura!</Typography>

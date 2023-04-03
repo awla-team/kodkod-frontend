@@ -92,7 +92,7 @@ const GoalAdventures: React.FC = () => {
                 key={index}
                 title={adventure.title}
                 info={
-                  <div className="d-flex flex-column gap-1">
+                  <div className="d-flex gap-1 flex-wrap">
                     {!!adventure?.skills?.length ? adventure.skills.map((adventureSkill, index) => (
                         <SkillPoints key={`${adventureSkill.id}-${adventureSkill.title}-${index}`} skill={adventureSkill} />
                     )) : null}
