@@ -11,15 +11,21 @@ export const GoalSelectionContainer = styled(Box)`
   border-radius: 8px;
 `;
 
-export const CardContainer = styled.div`
+export const CardContainer = styled(Box)`
   width: 300px;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s ease;
-  outline: 1px solid rgba(0, 0, 0, 0.2);
+
+  .goal-card-text {
+    transition: all 0.2s ease;
+    background: #fff;
+    border-radius: 16px;
+    position: absolute;
+    bottom: 28px;
+  }
 
   &:hover {
-    outline: 1px solid ${(props) => props.theme.palette.primary.main};
     color: ${(props) => props.theme.palette.primary.main};
     div:first-child {
       background: ${(props) => props.theme.palette.primary.light};
@@ -28,11 +34,8 @@ export const CardContainer = styled.div`
   }
 
   &.selected {
-    outline-color: transparent;
-    border-color: ${(props) => props.theme.palette.primary.dark};
-    background: ${(props) => props.theme.palette.primary.main};
-
-    .MuiTypography-root {
+    .goal-card-text {
+      background: ${(props) => props.theme.palette.primary.main};
       color: #fff;
     }
 
@@ -40,6 +43,11 @@ export const CardContainer = styled.div`
       background-color: rgba(0, 0, 0, 0.1);
       opacity: 1;
     }
+  }
+
+  img {
+    width: 100%;
+    border-radius: 8px;
   }
 `;
 
