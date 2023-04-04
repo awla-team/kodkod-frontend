@@ -2,9 +2,9 @@ name: Kodkod frontend deploy
 
 on:
   pull_request:
-    branches:
-      - development
-      - main
+    # branches:
+    #   - development
+    #   - main
     types:
       - closed
 
