@@ -1,7 +1,4 @@
-import {
-  ClassInterface,
-  ClassInterfaceModified,
-} from "services/classes/interfaces";
+import { ClassInterfaceModified } from "services/classes/interfaces";
 
 export interface MyClassesProps {
   classes: ClassInterfaceModified[];
