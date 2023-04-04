@@ -38,7 +38,7 @@ jobs:
   deploy:
     name: Production deploy
     needs: build
-    if: github.ref == 'refs/heads/main'
+    if: github.base_ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - name: Download build
@@ -62,7 +62,7 @@ jobs:
   deploy-dev:
     name: Development deploy
     needs: build
-    if: github.ref == 'refs/heads/development'
+    if: github.base_ref == 'refs/heads/development'
     runs-on: ubuntu-latest
     steps:
       - name: Download build
