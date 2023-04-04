@@ -1,39 +1,49 @@
 import { FC } from "react";
 import { SidebarProps } from "./interfaces";
-import { SidebarContainer, LinkList } from "./styled";
+import logo from 'assets/images/logo.png';
+import { SidebarContainer, LinkList, LogoContainer } from "./styled";
 import SidebarLink from "./SidebarLink";
 import AddIcon from "@mui/icons-material/Add";
 import UserInfo from "./UserInfo";
 import { Divider } from "@mui/material";
 import { ClassInterface } from "services/classes/interfaces";
-import { TEST_USER } from "services/users";
-import {
-  AddCourseButton,
-  AddCourseButtonContainer,
-} from "./AddCourseButton/styled";
+import { RoundButton } from "./RoundButton/styled";
+import HomeIcon from '@mui/icons-material/Home';
+import { Link as RouterLink } from "react-router-dom";
+import {useAuth} from "../../contexts/AuthContext";
 
-const Sidebar: FC<SidebarProps> = ({ classes }) => (
-  <SidebarContainer>
-    <UserInfo user={TEST_USER} />
-    <Divider className="w-75 mb-1" color="#DE4CE1" />
-    <h6 className="text-center fw-bold p-0 mt-4 mb-2">Mis cursos</h6>
-    <LinkList>
-      {classes?.map?.((teacherClass: ClassInterface) => (
-        <SidebarLink
-          key={teacherClass.id}
-          linkId={teacherClass.id}
-          linkTitle={teacherClass.title}
-          linkRoute={`cursos/${teacherClass.id}/tablero`}
-        />
-      ))}
-    </LinkList>
-    <AddCourseButtonContainer>
-      <AddCourseButton color="primary">
+const Sidebar: FC<SidebarProps> = ({ classes, handleOpenModal }) => {
+    const {user}= useAuth()
+  return (
+    <SidebarContainer>
+      <LogoContainer>
+        <img src={logo} />
+      </LogoContainer>    
+      <Divider className="w-75 my-4" color="gray" />  
+      <span className="text-center fw-bold p-0 mb-3">Cursos</span>
+      <RouterLink to={"/app"}>
+        <RoundButton color="primary" className="home-button">
+          <HomeIcon />
+        </RoundButton>
+      </RouterLink>
+      {classes.length ? (
+        <LinkList>
+          {classes?.map?.((teacherClass: ClassInterface, index) => (
+            <SidebarLink
+              key={`side-bar-${teacherClass.id}-${index}`}
+              linkId={teacherClass.id}
+              linkTitle={teacherClass.alias}
+              linkRoute={`cursos/${teacherClass.id}/tablero`}
+            />
+          ))}
+        </LinkList>      
+      ) : null}
+      <RoundButton sx={{marginBottom: '74px'}} color="info" onClick={() => handleOpenModal()}>
         <AddIcon />
-      </AddCourseButton>
-    </AddCourseButtonContainer>
-    {/* <SignOutButton variant="text" color="primary" fullWidth>Cerrar sesión</SignOutButton> */}
-  </SidebarContainer>
-);
+      </RoundButton>      
+      <UserInfo user={user} />
+    </SidebarContainer>
+  );
+};
 
 export default Sidebar;

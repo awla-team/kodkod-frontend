@@ -1,28 +1,33 @@
-import { IAdventure } from "global/interfaces";
-import React, { useState, useEffect, createContext } from "react";
-import { getAdventure } from "services/adventures";
-import { IAdventureContext, IAdventureProviderProps } from "./interfaces";
+import React, { createContext } from "react";
+import { IAdventureContext } from "./interfaces";
+import { AdventureProviderProps } from "../interfaces";
 
 export const AdventureContext = createContext<IAdventureContext>({
   adventure: undefined,
+  missions: [],
+  students: [],
+  handleUpdateCurrentAdventure: (data) => {},
+  updateStageData: (stage) => {},
 });
 
-const AdventureProvider: React.FC<IAdventureProviderProps> = ({
+const AdventureProvider: React.FC<AdventureProviderProps> = ({
   children,
-  adventureId,
+  adventure,
+  missions,
+  students,
+  handleUpdateCurrentAdventure,
+  updateStageData,
 }) => {
-  const [adventure, setAdventure] = useState<IAdventure | undefined>(undefined);
-
-  useEffect(() => {
-    if (adventureId) {
-      getAdventure(adventureId)
-        .then(({ data }) => setAdventure(data))
-        .catch((e) => console.log(e));
-    }
-  }, [adventureId]);
-
   return (
-    <AdventureContext.Provider value={{ adventure }}>
+    <AdventureContext.Provider
+      value={{
+        adventure,
+        missions,
+        students,
+        handleUpdateCurrentAdventure,
+        updateStageData,
+      }}
+    >
       {children}
     </AdventureContext.Provider>
   );

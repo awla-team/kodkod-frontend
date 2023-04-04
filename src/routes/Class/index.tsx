@@ -1,81 +1,57 @@
 import React, { useEffect, useState } from "react";
-import { Tab, Tabs } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import TabContent from "components/TabContent";
-import { TabPaths } from "./interfaces";
+import { NavTabsContainer } from "./styled";
+import { useClassContext } from "./context";
+import DashboardIcon from '@mui/icons-material/DashboardTwoTone';
+import AdventuresIcon from '@mui/icons-material/RocketLaunchTwoTone';
+import ProgressIcon from '@mui/icons-material/LeaderboardTwoTone';
+import ReportsIcon from '@mui/icons-material/PieChartTwoTone';
 
-const TAB_PATHS: TabPaths = {
-  0: "tablero",
-  1: "aventuras",
-  2: "puntajes",
-};
+const tabs = [
+  {    
+    title: 'Tablero',
+    path: 'tablero',
+    svg: <DashboardIcon />
+  },
+  {    
+    title: 'Aventuras',
+    path: 'aventuras',
+    svg: <AdventuresIcon />
+  },
+  {    
+    title: 'Progreso',
+    path: 'progreso',
+    svg: <ProgressIcon />
+  },
+  {    
+    title: 'Reportes',
+    path: 'reportes',
+    svg: <ReportsIcon />
+  },
+];
 
 const Class: React.FC = () => {
   const navigate = useNavigate();
-  const { pathname } = useLocation();
-  const [selectedTab, selectTab] = useState<number>(
-    pathname.includes(TAB_PATHS[0])
-      ? 0
-      : pathname.includes(TAB_PATHS[1])
-      ? 1
-      : pathname.includes(TAB_PATHS[2])
-      ? 2
-      : 0
-  );
-
-  const changeTab = (
-    _event: React.SyntheticEvent<Element, Event> | null,
-    tabIndex: number
-  ) => {
-    selectTab(tabIndex);
-  };
-
-  useEffect(() => {
-    if (pathname.includes(TAB_PATHS[0])) changeTab(null, 0);
-    if (pathname.includes(TAB_PATHS[1])) changeTab(null, 1);
-    if (pathname.includes(TAB_PATHS[2])) changeTab(null, 2);
-  }, [pathname]);
-
+  const { pathname } = useLocation();  
+  const { classDetails, students, levels } = useClassContext();
   return (
     <>
-      <Tabs
-        value={selectedTab}
-        onChange={changeTab}
-        indicatorColor="secondary"
-        textColor="inherit"
-        variant="fullWidth"
-        aria-label="full width tabs example"
-        className="sticky-top"
-        sx={{ background: "white", zIndex: 1 }}
+      <NavTabsContainer>
+        {tabs.map((tab, i) => (
+          <Box key={`tab-${i}`} className={`nav__tab ${pathname.includes(tab.path) ? "active" : ""}`} role="button" onClick={() => navigate(tab.path)}>
+            {tab.svg}
+            <Typography fontWeight="bold" component="span" variant="body2">{tab.title}</Typography>
+          </Box>
+        ))}        
+      </NavTabsContainer>
+      <Box
+        role="tabpanel"
+        className="w-100 overflow-auto"
+        sx={{ marginTop: 'calc(64px + 36px)', paddingBottom: '36px' }}        
       >
-        <Tab
-          label="Tablero"
-          onClick={() => {
-            navigate(TAB_PATHS[0]);
-          }}
-        />
-        <Tab
-          label="Aventuras"
-          onClick={() => {
-            navigate(TAB_PATHS[1]);
-          }}
-        />
-        <Tab
-          label="Puntajes"
-          onClick={() => {
-            navigate(TAB_PATHS[2]);
-          }}
-        />
-      </Tabs>
-      <TabContent value={selectedTab} index={0}>
-        <Outlet />
-      </TabContent>
-      <TabContent value={selectedTab} index={1}>
-        <Outlet />
-      </TabContent>
-      <TabContent value={selectedTab} index={2}>
-        <Outlet />
-      </TabContent>
+        <Outlet context={{ classDetails, students, levels }} />
+      </Box>
     </>
   );
 };

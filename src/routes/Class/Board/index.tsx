@@ -1,13 +1,45 @@
-import React from "react";
-import { useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { useOutletContext } from "react-router-dom";
+import {
+  DashboardContainer,
+  DashboardContainerLeftSide,
+  DashboardContainerRightSide,
+  DetailsCard,
+} from "./styled";
+import ClassDetailsCard from "components/ClassDetailsCard";
+import { ClassInterface } from "services/classes/interfaces";
+import StudentsList from "components/StudentsList";
+import { StudentType } from "components/StudentsList/interfaces";
+import EmotionalThermometer from "components/EmotionalThermometer";
+import { Levels } from "components/Modals/CreateClassModal/interfaces";
+import {useClassContext} from "../context";
 
 const Board: React.FC<{}> = ({}) => {
-  const { classId } = useParams();
+  const { classDetails, students, levels } =
+    useOutletContext() as {
+      classDetails: ClassInterface;
+      students: StudentType[];
+      levels: Levels[];
+    };
 
   return (
-    <div className="d-flex justify-content-center align-items-center w-100 h-100">
-      <h1 className="text-center">Tablero {classId}</h1>
-    </div>
+    <DashboardContainer>
+      <DashboardContainerLeftSide>
+        <DetailsCard className="p-5">
+          {classDetails && (
+            <ClassDetailsCard classDetails={classDetails} levels={levels}/>
+          )}
+        </DetailsCard>
+        <DetailsCard className="h-100 p-5">
+          <EmotionalThermometer classDetails={classDetails} />
+        </DetailsCard>
+      </DashboardContainerLeftSide>
+      <DashboardContainerRightSide>
+        <DetailsCard className="h-100 p-5">
+          <StudentsList studentsData={students} classDetails={classDetails} />
+        </DetailsCard>
+      </DashboardContainerRightSide>
+    </DashboardContainer>
   );
 };
 

@@ -1,54 +1,28 @@
-import React, { useState, useEffect } from 'react';
-import styled, { StyledComponent, StyledComponentProps } from 'styled-components';
-import Point from '../Point';
-import { ISkillPointsProps } from './interfaces';
-import { SkillPointsContainer } from './styled';
-import { ISkill } from '../../global/interfaces';
-import { getSkill } from '../../services/skills';
+import React, { useState, useEffect } from "react";
+import { ISkillPointsProps } from "./interfaces";
+import { IconContainer, SkillPointsContainer } from "./styled";
+import { Box, Typography } from "@mui/material";
 
-interface IIconContainerProps {
-    background?: string;
-};
 
-const IconContainer = styled.div`
-    background: ${(props: IIconContainerProps) => props.background || '#000'};
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 4px;
-    border-radius: 36px;
-    img {
-        height: 16px;
-        width: 16px;
-    }
-`;
 
-const SkillPoints: React.FC<ISkillPointsProps> = ({ skillId, points }) => {
-    const [skill, setSkill] = useState<ISkill | undefined>(undefined);
-
-    useEffect(() => {
-        getSkill(skillId)
-        .then(({ data }) => setSkill(data))
-        .catch((e) => console.log(e))
-    }, [skillId]);
-
-    return (
-        <SkillPointsContainer className="d-flex align-items-center mb-1">
-            {skill ? (
-                <>
-                    <IconContainer background={skill.color} className="me-2">
-                        <img src={skill.icon} />
-                    </IconContainer>                    
-                    <span className="me-2">{skill.title}</span>
-                    <div className="d-flex">
-                        <Point highlighted={points > 0} />
-                        <Point highlighted={points > 1} />
-                        <Point highlighted={points > 2} />
-                    </div>
-                </>
-            ) : null}            
-        </SkillPointsContainer>
-    );
+const SkillPoints: React.FC<ISkillPointsProps> = ({ skill, dark }) => {
+  return (
+    <SkillPointsContainer className={`d-flex align-items-center mb-1 ${dark ? 'dark-colors' : ''}`}>
+      {skill ? (
+        <>
+          <IconContainer background={skill.color} className="me-2">
+            <img className={!skill.icon?"" :"blank-icon"} src={skill.icon} />
+          </IconContainer>
+          <Typography component="span" variant="body1" className="me-2">{skill.title}</Typography>
+          <div className="d-flex">
+            <Box sx={{ background: skill.points > 0 ? skill.color : 'lightgray' }} className="skill-point" />
+            <Box sx={{ background: skill.points > 1 ? skill.color : 'lightgray' }} className="skill-point" />
+            <Box sx={{ background: skill.points > 2 ? skill.color : 'lightgray' }} className="skill-point" />
+          </div>
+        </>
+      ) : null}
+    </SkillPointsContainer>
+  );
 };
 
 export default SkillPoints;

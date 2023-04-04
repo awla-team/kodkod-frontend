@@ -1,18 +1,14 @@
-import { User } from "./interfaces";
-import avatar from "./../../assets/images/avatar.png";
+import http from "global/api";
+import { generateQueryParamsFromObject } from "../../utils";
 
-export const TEST_USER: User = {
-  id: 1,
-  avatar,
-  first_name: "Juan",
-  last_name: "Pérez",
-  role: "Profesor",
+interface UserFilter {
+  role?: "student" | "teacher";
+}
+
+export const getAuthUser = () => {
+  return http.get("/get-auth-user");
 };
 
-export const EMPTY_USER: User = {
-  id: -1,
-  avatar: "",
-  first_name: "",
-  last_name: "",
-  role: "",
+export const getUsers = (filter: UserFilter) => {
+  return http.get("/user" + generateQueryParamsFromObject(filter));
 };

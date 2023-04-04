@@ -1,9 +1,13 @@
-export interface IAdventureCardContainerProps {  
-    img?: string;
-};
-  
-export interface IAdventureCardProps extends React.PropsWithChildren, IAdventureCardContainerProps {
-    title: string;
-    stagesDuration: number;
-    info?: React.ReactNode;
-};
+export interface IAdventureCardContainerProps {
+  img?: string;
+}
+
+export interface IAdventureCardProps
+  extends React.PropsWithChildren,
+    IAdventureCardContainerProps {
+  title: string;
+  completed: boolean;
+  stagesDuration?: number;
+  info?: React.ReactNode;
+  onClick?: () => void;
+}

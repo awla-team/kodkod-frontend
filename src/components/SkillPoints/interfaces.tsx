@@ -1,4 +1,10 @@
+import { ISkill } from "../../global/interfaces";
+
 export interface ISkillPointsProps {
-    skillId: number;
-    points: number;
-};
+  skill: ISkill & { points: number };
+  dark?: Boolean;
+}
+
+export interface IIconContainerProps {
+  background?: string;
+}

@@ -1,111 +1,93 @@
 import React, { useState, useEffect } from "react";
-import { IAdventure } from "global/interfaces";
-import { Link } from "react-router-dom";
-import theme from "global/theme";
-import { getAdventures } from "services/adventures";
-import AdventureCard from "components/AdventureCard";
-import SectionSubtitle from "components/SectionSubtitle";
-import SkillPoints from "components/SkillPoints";
-import ViewContainer from "components/ViewContainer";
+import { Navigate, useOutletContext, useParams } from "react-router-dom";
+import { FetchStatus } from "global/enums";
+import { CircularProgress } from "@mui/material";
+import Toaster from "utils/Toster";
+import { ClassInterface } from "services/classes/interfaces";
+import AdventureWithProvider from "./Adventure";
+import { getMissionsByStage, StageMissionUpdateBody } from "services/missions";
+import { IAdventure, IMission, IStage } from "global/interfaces";
+import { StudentType } from "components/StudentsList/interfaces";
+import { useClassContext } from "../context";
+import { getClassCurrentAdventure, setCurrentAdventure } from "services/adventures";
 
 const Adventures: React.FC = () => {
-  const [adventures, setAdventures] = useState([]);
+  const [loading, setLoading] = useState<FetchStatus>(FetchStatus.Success);
+  const [missions, setMissions] = useState<IMission[]>([]);
+  const { classDetails, students, loadingClass, updateStageData } = useClassContext();
 
   useEffect(() => {
-    getAdventures()
-      .then(({ data }) => setAdventures(data))
-      .catch((e) => console.log(e));
+    getMissions();
   }, []);
 
+  const handleUpdateCurrentAdventure = (
+    missionData: IMission,
+    ref: StageMissionUpdateBody,
+  ) => {
+    /*setCurrentAdventure((prevState) => {
+      if (prevState) {
+        const tempData: IAdventure = JSON.parse(JSON.stringify(prevState));
+        const { old_mission_id } = ref;
+        const { missions } = tempData.stages[0];
+        const index = missions.findIndex((res) => res.id === old_mission_id);
+        if (index > -1) {
+          missions[index] = missionData;
+        }
+        return tempData;
+      }
+      return prevState;
+    });*/
+  };
+
+  /*const updateStagesData = (stage: IStage) => {
+    if (stage) {
+
+      /*setCurrentAdventure((prevState) => {
+        if (prevState) {
+          const tempData: IAdventure = JSON.parse(JSON.stringify(prevState));
+          const { stages } = tempData;
+          const index = stages.findIndex((res) => res.id === stage.id);
+          if (index > -1) {
+            stages[index] = stage;
+          }
+          return tempData;
+        }
+        return prevState;
+      });
+    }
+  };*/
+
+  const getMissions = async () => {
+    try {
+      const {
+        data: { responseData },
+      }: { data: { responseData: IMission[] } } = await getMissionsByStage();
+
+      setMissions(responseData);
+    } catch (e: any) {
+      Toaster("error", e.message);
+    }
+  };
+  
+  if (loadingClass !== FetchStatus.Success)
+    return (
+      <div className="d-flex w-100 align-items-center justify-content-center">
+        <CircularProgress />
+      </div>
+    );
+
+  if (!classDetails?.current_adventure && loadingClass === FetchStatus.Success) return <Navigate to="iniciar" />;
+
   return (
-    <ViewContainer>
-      <h2>Empieza una aventura &#128640;</h2>
-      <p>
-        Una aventura es una serie de misiones planificadas que el estudiante
-        debe completar para desarrollar habilidades específicas. ¡Escoge una
-        aventura y desafía a tus estudiantes!
-      </p>
-      <div className="mb-4">
-        <SectionSubtitle
-          filled
-          lineColor={theme.palette.primary.main}
-          textColor="white"
-        >
-          Habilidades cognitivas
-        </SectionSubtitle>
-        <div className="row my-3">
-          {adventures
-            .filter(
-              (adventure: IAdventure) => adventure.category === "Cognition"
-            )
-            .map((adventure: IAdventure) => (
-              <div
-                key={adventure.id}
-                className="col-4 col-lg-3 d-flex justify-content-center"
-              >
-                <Link to={`${adventure.id}`}>
-                  <AdventureCard
-                    stagesDuration={adventure.stagesDuration}
-                    title={adventure.title}
-                    img={adventure.thumbnail}
-                    info={
-                      <div>
-                        {adventure?.adventureSkills?.map((skill) => (
-                          <SkillPoints
-                            key={`${adventure.id}-${skill.skillId}`}
-                            skillId={skill.skillId}
-                            points={skill.points}
-                          />
-                        ))}
-                      </div>
-                    }
-                  />
-                </Link>
-              </div>
-            ))}
-        </div>
-      </div>
-      <div className="mb-4">
-        <SectionSubtitle
-          filled
-          lineColor={theme.palette.secondary.light}
-          textColor="white"
-        >
-          Habilidades socioemocionales
-        </SectionSubtitle>
-        <div className="row my-3">
-          {adventures
-            .filter(
-              (adventure: IAdventure) => adventure.category === "Socioemotional"
-            )
-            .map((adventure: IAdventure) => (
-              <div
-                key={adventure.id}
-                className="col-4 col-lg-3 d-flex justify-content-center"
-              >
-                <Link to={`${adventure.id}`}>
-                  <AdventureCard
-                    stagesDuration={adventure.stagesDuration}
-                    title={adventure.title}
-                    img={adventure.thumbnail}
-                    info={
-                      <div>
-                        {adventure?.adventureSkills?.map((skill) => (
-                          <SkillPoints
-                            key={`${adventure.id}-${skill.skillId}`}
-                            skillId={skill.skillId}
-                            points={skill.points}
-                          />
-                        ))}
-                      </div>
-                    }
-                  />
-                </Link>
-              </div>
-            ))}
-        </div>
-      </div>
-    </ViewContainer>
+    <>
+      <AdventureWithProvider
+        adventure={classDetails.current_adventure}
+        missions={missions}
+        students={students}
+        handleUpdateCurrentAdventure={handleUpdateCurrentAdventure}
+        updateStageData={updateStageData}
+      />
+    </>
   );
 };
 

@@ -1,83 +1,64 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Card, Typography } from '@mui/material';
-import kodcoinIcon from './../../assets/images/kodcoin.png';
+import React from "react";
+import { Typography } from "@mui/material";
+import kodcoinIcon from "assets/images/kodcoin.png";
+import { difficultyIcons, difficultyToText } from "utils";
+import CachedIcon from '@mui/icons-material/Cached';
+import { MissionCardContainer, ChangeMissionButton, PointsContainer } from "./styled";
+import { IMissionCardProps } from "./interfaces";
 
-interface IMissionCardContainerProps {
-  background?: string;
-};
+const MissionCard: React.FC<IMissionCardProps> = ({ mission, openModal, onClick, selected, clickable }) => {
+  const { title, description, points, difficulty } = mission;
 
-interface IMissionCardProps {
-  title: string;
-  description: string;
-  qr: string;
-  points: number;
-  icon: string;
-  color: string;
-};
+  return (
+    <MissionCardContainer
+      onClick={onClick}
+      className={"mission-card p-4 d-flex justify-content-between" + (selected ? " selected" : "") + (clickable ? " clickable" : "")}
+      variant="outlined"
+      sx={{ background: mission.skill.color }}
+    >
+      <div className="d-flex flex-column justify-content-between">
+        <div className={"text__details"}>
+          <Typography variant="h6" fontWeight="bold">
+            {title}
+          </Typography>
+          <Typography className="mt-1">{description}</Typography>
+        </div>
+        <div className="d-flex gap-4">
+          <div className="d-flex align-items-end justify-content-center gap-1">
+            {difficultyIcons[difficulty]}
+            <Typography component="span" variant="body2">{difficultyToText(difficulty)}</Typography>
+          </div>
+          <div className="d-flex align-items-center justify-content-center gap-1">
+            <div style={{ borderRadius: '100%', height: '12px', width: '12px', background: '#fff' }} />
+            <Typography component="span" variant="body2">{mission?.skill?.title}</Typography>
+          </div>
+        </div>
 
-const SkillIconContainer = styled.div`
-  border: 1px solid #FFF;
-  width: fit-content;
-  border-radius: 24px;
-  padding: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  img {
-    width: 24px;
-    height: 24px;
-  }
-`;
-
-const PointsContainer = styled.div`
-  background-color: #FFF;
-  border-radius: 8px;
-  color: #717171;
-  text-align: center;
-  padding: 4px 8px;
-  img {
-    height: 24px;
-    width: 24px;
-  }
-`;
-
-const QRContainer = styled.div`
-  img {
-    height: 160px;
-    width: 160px;
-  }
-`;
-
-const MissionCardContainer = styled(Card)`  
-  &.MuiPaper-root {
-    background-color: ${(props: IMissionCardContainerProps) => props.background || '#000'};
-    border-radius: 8px;
-    color: #FFF;
-  }
-`;
-
-const MissionCard: React.FC<IMissionCardProps> = ({ title, description, qr, points, icon, color }) => (
-  <MissionCardContainer background={color} className="mission-card p-4 d-flex" variant="outlined">
-    <div className="d-flex flex-column me-3 align-items-between justify-content-between">
+        {/* Action Buttons with absolute position */}        
+        {openModal && (
+          <ChangeMissionButton
+            className="d-flex align-items-center justify-content-center"
+            variant="contained"
+            color="info"
+            onClick={(e) => {
+              e.stopPropagation();
+              openModal(mission);
+            }}
+          >
+            <CachedIcon sx={{ fill: 'rgba(0, 0, 0, 0.8)' }} />
+          </ChangeMissionButton>
+        )}
+        {/* Action Buttons with absolute position end*/}
+      </div>
       <div className="d-flex align-items-center">
-        <SkillIconContainer className="me-3">
-          <img src={icon} />
-        </SkillIconContainer>
-        <Typography variant="h6" fontWeight="bold">{title}</Typography>
+        <PointsContainer className="d-flex align-items-center justify-content-center">
+          <Typography className="me-1" variant="h5" fontWeight="bold">{points}</Typography>
+          <img src={kodcoinIcon} />
+        </PointsContainer>
       </div>
-      <div className="mt-2">
-        <Typography>{description}</Typography>
-      </div>
-      <PointsContainer className="d-flex mt-3 align-items-center justify-content-center">
-        <Typography className="me-1" variant="h5" fontWeight="bold">{points}</Typography>
-        <img src={kodcoinIcon} />
-      </PointsContainer>
-    </div>
-    <QRContainer className="qr-container">
-      <img src={qr} />
-    </QRContainer>
-  </MissionCardContainer>
-);
+      
+    </MissionCardContainer>
+  );
+};
 
 export default MissionCard;
