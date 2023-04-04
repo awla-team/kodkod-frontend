@@ -4,6 +4,8 @@ on:
   # pull_request:
   push:
     branches:
+      # - development
+      # - main
       - feature/configure-ci-cd
     # types:
     #   - closed
@@ -12,7 +14,7 @@ jobs:
   # TODO: separate jobs build and deploy
   build:
     name: Build
-    if: github.event.pull_request.merged == true
+    # if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - name: Actions checkout
