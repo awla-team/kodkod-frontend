@@ -48,9 +48,6 @@ jobs:
         with:
           name: build
 
-      - name: Log directories
-        run: ls -R
-
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
