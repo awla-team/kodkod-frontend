@@ -106,7 +106,7 @@ export const Adventure: React.FC = () => {
 
   return (
     <AdventureContainer className="p-0 m-0">
-      <AdventureBanner className="d-flex flex-column px-5 justify-content-center mb-4" sx={{ backgroundImage: `url(${shownStage?.icon})`}}>
+      <AdventureBanner className="d-flex flex-column px-5 justify-content-center mb-4" sx={{ backgroundImage: `url(${shownStage?.icon || classDetails.current_adventure.banner})`}}>
         <div className="d-flex justify-content-between align-items-end mb-3">
           <Typography variant="h4" component="h2" fontWeight="bold">
             {classDetails.current_adventure.title}

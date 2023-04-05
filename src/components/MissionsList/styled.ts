@@ -9,4 +9,8 @@ export const MissionListContainer = styled(Box)`
   background: #FFF;
   border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 8px;
+
+  .mission-card {
+    width: 45%;
+  }
 `
