@@ -37,7 +37,7 @@ const Class: React.FC = () => {
   const { classDetails, students, levels } = useClassContext();
   return (
     <>
-      <NavTabsContainer>
+      <NavTabsContainer sx={{ zIndex: 1 }}>
         {tabs.map((tab, i) => (
           <Box key={`tab-${i}`} className={`nav__tab ${pathname.includes(tab.path) ? "active" : ""}`} role="button" onClick={() => navigate(tab.path)}>
             {tab.svg}

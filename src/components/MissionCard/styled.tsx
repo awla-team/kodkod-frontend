@@ -25,7 +25,6 @@ export const PointsContainer = styled.div`
 `;
 
 export const MissionCardContainer = styled(Card)`
-  min-width: 45%;
   height: 200px;
   &.MuiPaper-root {
     position: relative;
