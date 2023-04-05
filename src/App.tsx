@@ -121,7 +121,7 @@ const App: React.FC = () => {
       <Sidebar classes={classes} handleOpenModal={handleOpenModal} />
       <div className="app-main-container d-flex flex-column flex-fill">
         <div className="app-content container">
-          <Outlet context={{ classes, handleOpenModal }} />
+          <Outlet context={{ classes, handleOpenModal, getClassesData }} />
         </div>
       </div>
       <CreateClassModal open={open} onClose={handleClose} levels={levels} />
