@@ -77,7 +77,7 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
       await deleteClass(classDetails.id);
       Toaster("success", `${classDetails.alias} deleted!`);
       navigate('/app');
-      window.location.reload();
+      //window.location.reload();
     } catch (e: any) {
       Toaster("error", e.message);
     } finally {

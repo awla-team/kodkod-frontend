@@ -20,6 +20,7 @@ import { createClass, updateClass } from "services/classes";
 import Toaster from "utils/Toster";
 import { ClassInterface } from "services/classes/interfaces";
 import { useAuth } from "contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const CreateClassModal: FC<CreateClassModalProps> = ({
   open,
@@ -40,6 +41,7 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
       alias: Yup.string().required(),
     });
   };
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (classDetails) {
@@ -90,6 +92,9 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
             id_user: user.id,
             id_level: values.id_level as number,
           });
+        
+        navigate(`/app/cursos/${data.responseData.id}/tablero`)
+        
         onClose("success", data.responseData);
         Toaster("success", `You successfully added the ${values.alias} class.`);
       }
