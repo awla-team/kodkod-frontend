@@ -6,6 +6,7 @@ export const DetailsCardContent = styled(Box)`
   display: flex;
   flex-direction: column;
   background-color: #FFF;
+  overflow: hidden;
 `;
 
 export const AdventureBanner = styled(Box)`

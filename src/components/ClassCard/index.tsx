@@ -1,4 +1,4 @@
-import { Typography, Chip } from '@mui/material';
+import { Typography, Chip, Tooltip } from '@mui/material';
 import { Box } from '@mui/system';
 import { IClass } from 'global/interfaces';
 import { Link } from 'react-router-dom';
@@ -17,7 +17,7 @@ const ClassCard: React.FC<{ classObj: IClass}> = ({ classObj }) => {
 					</Box>
 				)}
 				<div className="p-4">
-					<Typography component="h4" variant="h4" fontWeight="bold" className="mb-2">{classObj.alias}</Typography>
+					<Typography title={classObj.alias} component="h4" variant="h4" fontWeight="bold" className="mb-2" overflow="hidden" textOverflow="ellipsis">{classObj.alias}</Typography>				
 					<Typography component="span" variant="body1">Sin aventura en curso</Typography>                          
 				</div>                        
 			</div>
