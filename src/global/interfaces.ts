@@ -66,6 +66,19 @@ export interface IClass {
   current_adventure?: IAdventure;
 };
 
+export interface IUser {
+  id?: number;
+  first_name: string;
+  last_name: string;
+  email: string;
+  password: string;
+  role: string;
+  id_school: number;
+  academic_subject: string;
+  points: number;
+  verified: boolean;
+}
+
 export interface IAdventure {
   id: number;
   title: string;
