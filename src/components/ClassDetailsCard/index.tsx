@@ -96,13 +96,16 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
         
         <Typography
           component="h2"
+          title={classDetails.alias}
           variant="h2"
           fontWeight="bold"
           className="mb-2"
+          textOverflow="ellipsis"
+          overflow="hidden"
         >
           {classDetails.alias}
         </Typography>
-        <IconButton sx={{ position: 'absolute', top: '8px', right: 0 }} color="inherit" onClick={handleMenuOpen}>
+        <IconButton sx={{ top: '8px', right: 0, marginLeft: '16px' }} color="inherit" onClick={handleMenuOpen}>
           <MoreVertIcon fontSize="large" />
         </IconButton>
 

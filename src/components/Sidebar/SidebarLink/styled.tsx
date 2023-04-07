@@ -19,11 +19,16 @@ export const SidebarLinkContainer = styled.div`
     color: ${(props) => props.theme.palette.primary.main};
     box-shadow: 0 0 2px rgba(33, 33, 33, 0.6);
     border-radius: 100%;
-    width: 36px;
-    height: 36px;
-    padding: 8px;
+    width: 40px;
+    height: 40px;
+    padding: 2px;
     transition: all 0.3s ease;    
     border: 1px solid transparent;
+
+    span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 
   // On hover
