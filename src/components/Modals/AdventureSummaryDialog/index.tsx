@@ -66,10 +66,10 @@ const AdventureSummaryDialog: React.FC<{
   return (
     <Dialog open={!!selectedAdventure} onClose={handleOnCloseModal} fullWidth>
       <DialogTitle className="d-flex flex-column p-0">
-        <AdventureBanner>
+        <AdventureBanner sx={{ backgroundImage: `url(${selectedAdventure?.banner})` }}>
           <Typography variant="h4" fontWeight="bold" className="mb-2">{shownAdventure?.title}</Typography>
           <section className="d-flex flex-column">
-            <div className="d-flex flex-wrap flex-lg-nowrap gap-3">
+            <div className="d-flex flex-wrap flex-lg-nowrap gap-2">
               {!!shownAdventure?.skills?.length ? shownAdventure.skills.map((adventureSkill, index) => (
                   <SkillPoints key={`${adventureSkill.id}-${adventureSkill.title}-${index}`} skill={adventureSkill} />
               )) : null}

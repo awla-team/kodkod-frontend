@@ -12,15 +12,15 @@ import SadIconOutlined from "components/SVG/SadIconOutlined";
 import { IScoreOption } from "./interfaces";
 
 export const challengeOptions: string[] = [
-    'Obstáculo 1',
-    'Obstáculo 2',
-    'Obstáculo 3',
+    'Falta de atención',
+    'Retraso en el inicio de la clase',
+    'Interrupción de clase',
 ];
 
 export const mostRemarkableOptions: string[] =  [
-    'Logro 1',
-    'Logro 2',
-    'Logro 3',
+    'Alta participación',
+    'Buena concentración',
+    'Se trabajó bien en grupo',
 ];
 
 export const radioOptions: IScoreOption[] = [

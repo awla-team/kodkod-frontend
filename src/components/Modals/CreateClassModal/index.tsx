@@ -20,6 +20,7 @@ import { createClass, updateClass } from "services/classes";
 import Toaster from "utils/Toster";
 import { ClassInterface } from "services/classes/interfaces";
 import { useAuth } from "contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const CreateClassModal: FC<CreateClassModalProps> = ({
   open,
@@ -40,6 +41,7 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
       alias: Yup.string().required(),
     });
   };
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (classDetails) {
@@ -90,6 +92,9 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
             id_user: user.id,
             id_level: values.id_level as number,
           });
+        
+        navigate(`/app/cursos/${data.responseData.id}/tablero`)
+        
         onClose("success", data.responseData);
         Toaster("success", `You successfully added the ${values.alias} class.`);
       }
@@ -165,10 +170,10 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
                         fontWeight="bold"
                         className="me-1"
                       >
-                        Código
+                        Curso
                       </Typography>
                       <Typography component="span" variant="caption">
-                        (Es la letra que acompaña al nivel e identifica al
+                        (Es la letra o nombre que acompaña al nivel e identifica al
                         curso)
                       </Typography>
                     </div>
@@ -183,7 +188,7 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
                       size="small"
                     />
                   </FormControl>
-                  <FormControl error={!!errors.alias && !!submitCount}>
+                  {/*<FormControl error={!!errors.alias && !!submitCount}>
                     <div className="d-flex align-items-end mb-1">
                       <Typography
                         component="label"
@@ -204,7 +209,7 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
                       value={values.alias}
                       size="small"
                     />
-                  </FormControl>
+                    </FormControl>*/}
                 </FormContainer>
               </DialogContent>
               <DialogActions className="pt-3">

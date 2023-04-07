@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, CircularProgress, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import { Navigate, Outlet, useNavigate } from "react-router-dom";
 import { GoalSelectionContainer, CardContainer, ImgContainer } from "./styled";
 import { AxiosResponse } from "axios";
@@ -57,27 +57,27 @@ const GoalSelection: React.FC = () => {
         Una aventura es una serie de misiones planificadas para <b>alcanzar un objetivo</b> en concreto con tu curso. Para empezar, <b>escoge el objetivo</b> que quieres alcanzar con el curso <b>{classDetails.alias}</b>.
       </Typography>
       <div className="d-flex flex-column w-100 align-items-center justify-content-between h-100">
-        <div className="d-flex justify-content-center gap-4 w-100 flex-wrap">
+        <div className="d-flex justify-content-center gap-5 w-100 flex-wrap">
           {goals?.length
             ? goals.map((goal: Goal) => (
                 <CardContainer
                   key={`${goal.id}-${goal.title}`}
-                  className={`d-flex flex-column p-4 align-items-center ${
+                  className={`d-flex flex-column align-items-center position-relative ${
                     goal.id === selectedGoalId ? "selected" : ""
                   }`}
                   onClick={() => selectAdventure(goal.id)}
                 >
-                  <ImgContainer className="mb-3"></ImgContainer>
-                  <div className="d-flex align-items-center justify-content-center flex-fill">
+                  <img src={goal.image_url} height="500" width="100%" />
+                  <Box className="goal-card-text py-2 px-3 d-flex align-items-center justify-content-center flex-fill">
                     <Typography
-                      variant="body1"
+                      variant="body2"
                       component="span"
                       textAlign="center"
                       fontWeight="bold"                      
                     >
                       {goal.title}
                     </Typography>
-                  </div>                  
+                  </Box>                  
                 </CardContainer>
               ))
             : null}
@@ -86,7 +86,7 @@ const GoalSelection: React.FC = () => {
           className="mt-4"
           variant="contained"
           size="large"
-          disabled={!(selectedGoalId >= 0)}
+          disabled={!selectedGoalId && selectedGoalId !== 0}
           onClick={nextView}
         >
           Continuar

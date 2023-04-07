@@ -1,3 +1,4 @@
+import { Tooltip } from "@mui/material";
 import { Link, useParams } from "react-router-dom";
 import { SidebarLinkProps } from "./interfaces";
 import { SidebarLinkContainer } from "./styled";
@@ -10,7 +11,7 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({
   const { classId } = useParams();
 
   return (
-    <SidebarLinkContainer className={`${linkId}` === classId ? "active" : ""}>
+    <SidebarLinkContainer className={`${linkId}` === classId ? "active" : ""} title={linkTitle}>
       <Link
         to={linkRoute}
         replace

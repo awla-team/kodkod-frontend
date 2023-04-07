@@ -27,11 +27,12 @@ export const MyClassesBox = styled(Box)`
   border-radius: 8px;
 
   .class-img-container {
-    background: lightgray;
     border: none;
     border-radius: 8px 8px 0px 0px;
     height: 160px;
     transition: all 0.3s ease;
+    background-size: auto;
+    background-position: center;
   }
 
   & a {
@@ -59,10 +60,6 @@ export const MyClassesBox = styled(Box)`
       &:hover {
         color: ${(props) => props.theme.palette.primary.dark};
         border: 1px solid ${(props) => props.theme.palette.primary.dark};
-
-        .class-img-container {
-          background-color: gray;
-        }
       }
     }
   }

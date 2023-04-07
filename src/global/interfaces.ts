@@ -56,6 +56,29 @@ export interface IClassHasAdventure {
   date_stop?: string;
 }
 
+export interface IClass {
+  id?: number;
+  id_level?: number;
+  level?: string;
+  code?: string;
+  alias?: string;
+  id_user?: number;
+  current_adventure?: IAdventure;
+};
+
+export interface IUser {
+  id?: number;
+  first_name: string;
+  last_name: string;
+  email: string;
+  password: string;
+  role: string;
+  id_school: number;
+  academic_subject: string;
+  points: number;
+  verified: boolean;
+}
+
 export interface IAdventure {
   id: number;
   title: string;
