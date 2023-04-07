@@ -1,5 +1,5 @@
-import { ClassInterfaceModified } from "services/classes/interfaces";
 import { IClass } from "global/interfaces";
+import { ClassInterfaceModified } from "services/classes/interfaces";
 
 export interface MyClassesProps {
   classes: IClass[];
