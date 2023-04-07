@@ -86,55 +86,83 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
   };
 
   return (
-    <DetailsCardContent>   
-      <Box
-        display={"flex"}
-        sx={{ position: 'relative' }}
-        alignItems={"start"}
-        justifyContent={"space-between"}
-      >
-        
-        <Typography
-          component="h2"
-          title={classDetails.alias}
-          variant="h2"
-          fontWeight="bold"
-          className="mb-2"
-          textOverflow="ellipsis"
-          overflow="hidden"
-        >
-          {classDetails.alias}
-        </Typography>
-        <IconButton sx={{ top: '8px', right: 0, marginLeft: '16px' }} color="inherit" onClick={handleMenuOpen}>
-          <MoreVertIcon fontSize="large" />
-        </IconButton>
-
-        
-        <Menu open={!!anchorEl} anchorEl={anchorEl} onClose={handleMenuClose}>
-          <MenuItem onClick={() => setOpen(true)}>Editar información del curso</MenuItem>
-          <MenuItem onClick={() => setOpenDeleteConfirmationDialog(true)}>
-            Eliminar curso
-          </MenuItem>
-        </Menu>
-      </Box>
+    <DetailsCardContent>
       <div>
         {classDetails.current_adventure ? (
-          <Box className="p-4" sx={{ backgroundImage: `url(${latestStage?.icon})`, borderRadius: '8px', color: '#FFF', boxShadow: 'rgb(0, 0, 0) 0px 0px 200px 40px inset', backgroundPosition: 'center', backgroundSize: 'cover' }}>
-            <section className="d-flex flex-column mb-1">
+          <Box className="p-5" sx={{ backgroundImage: `url(${latestStage?.icon})`, borderRadius: '8px', color: '#FFF', boxShadow: 'rgb(0, 0, 0) 0px 0px 200px 60px inset', backgroundPosition: 'center', backgroundSize: 'cover' }}>
+            <Box
+              display={"flex"}
+              sx={{ position: 'relative' }}
+              alignItems={"start"}
+              justifyContent={"space-between"}
+            >
+              <Typography
+                component="h2"
+                title={classDetails.alias}
+                variant="h2"
+                fontWeight="bold"
+                className="mb-2"
+                textOverflow="ellipsis"
+                overflow="hidden"
+              >
+                {classDetails.alias}
+              </Typography>
+              <IconButton sx={{ top: '8px', right: 0, marginLeft: '16px' }} color="inherit" onClick={handleMenuOpen}>
+                <MoreVertIcon fontSize="large" />
+              </IconButton>
+
+              
+              <Menu open={!!anchorEl} anchorEl={anchorEl} onClose={handleMenuClose}>
+                <MenuItem onClick={() => setOpen(true)}>Editar información del curso</MenuItem>
+                <MenuItem onClick={() => setOpenDeleteConfirmationDialog(true)}>
+                  Eliminar curso
+                </MenuItem>
+              </Menu>
+            </Box>
+            <Typography variant="h6" fontWeight="bold">{`${classDetails.current_adventure?.title}`}</Typography>
+            <Typography variant="body1" className="mb-2">{`Etapa ${latestStage?._index}: ${latestStage?.title}`}</Typography>
+            <section className="d-flex flex-column mb-3">
               <div className="d-flex flex-wrap flex-lg-nowrap gap-2">
                 {!!classDetails.current_adventure?.skills?.length ? classDetails.current_adventure.skills.map((adventureSkill, index) => (
                     <SkillPoints key={`${adventureSkill.id}-${adventureSkill.title}-${index}`} skill={adventureSkill} />
                 )) : null}
               </div>
             </section>
-            <Typography variant="h6" fontWeight="bold">{`${classDetails.current_adventure?.title}`}</Typography>
-            <Typography variant="body1" className="mb-3">{`Etapa ${latestStage?._index}: ${latestStage?.title}`}</Typography>
             <div className="mt-2">
               <Button variant="contained" onClick={handleNavigate}>Continuar aventura</Button>
             </div>            
           </Box>
         ) : (
-          <div className="d-flex flex-column">
+          <div className="d-flex flex-column p-5">
+             <Box
+              display={"flex"}
+              sx={{ position: 'relative' }}
+              alignItems={"start"}
+              justifyContent={"space-between"}
+            >
+              <Typography
+                component="h2"
+                title={classDetails.alias}
+                variant="h2"
+                fontWeight="bold"
+                className="mb-2"
+                textOverflow="ellipsis"
+                overflow="hidden"
+              >
+                {classDetails.alias}
+              </Typography>
+              <IconButton sx={{ top: '8px', right: 0, marginLeft: '16px' }} color="inherit" onClick={handleMenuOpen}>
+                <MoreVertIcon fontSize="large" />
+              </IconButton>
+
+              
+              <Menu open={!!anchorEl} anchorEl={anchorEl} onClose={handleMenuClose}>
+                <MenuItem onClick={() => setOpen(true)}>Editar información del curso</MenuItem>
+                <MenuItem onClick={() => setOpenDeleteConfirmationDialog(true)}>
+                  Eliminar curso
+                </MenuItem>
+              </Menu>
+            </Box>
             <Typography component="span" variant="body1" fontWeight="bold" mb={1}>¡Aún no has seleccionado una aventura!</Typography>
             <Typography component="span" variant="body1">Presiona el botón a continuación para escoger una aventura que se ajuste a tus objetivos</Typography>
             <div className="mt-4">
