@@ -118,7 +118,7 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({ 
       <Typography component="span" variant="body2" className="mb-3" textAlign="end"><b>{Object.keys(selected).length + Object.keys(defaultSelected).length}</b> de <b>{studentsList.length}</b> estudiantes han cumplido esta misión</Typography>
       <div className="d-flex gap-2 justify-content-end">
         <Button onClick={handleClose} variant="outlined">Cancelar</Button>
-        <Button onClick={handleSave} variant="contained">Guardar cambios</Button>
+        <Button onClick={handleSave} variant="contained" disabled={!Object.keys(selected).length}>Guardar cambios</Button>
       </div>
       
     </StudentListContainer>
