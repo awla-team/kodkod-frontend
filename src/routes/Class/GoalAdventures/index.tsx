@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import AdventureCard from "components/AdventureCard";
-import type { IAdventure } from "global/interfaces";
+import type { IAdventure, IClassHasAdventure } from "global/interfaces";
 import { FetchStatus } from "global/enums";
 import CircularProgress from "@mui/material/CircularProgress";
 import AdventureSummaryDialog from "../../../components/Modals/AdventureSummaryDialog";
@@ -12,11 +12,13 @@ import Toaster from "../../../utils/Toster";
 import { AdventureSelectionContainer } from "./styled";
 import { useClassContext } from "../context";
 import SkillPoints from "components/SkillPoints";
+import { getClassHasAdventuresByClass } from "services/classes";
 
 const GoalAdventures: React.FC = () => {  
   const [loading, setLoading] = useState<FetchStatus>(FetchStatus.Idle);
   const { classDetails, loadingClass } = useClassContext();
   const [selectedAdventure, setSelectedAdventure] = useState<IAdventure>(null);
+  const [completedAdventures, setCompletedAdventures] = useState<IClassHasAdventure[]>([]);
   const [selectedGoal, setSelectedGoal] = useState<null | GoalType>(null);
   const [sortedAdventures, setSortedAdventures] = useState<IAdventure[]>([]);
   const params = useParams();
@@ -55,8 +57,20 @@ const GoalAdventures: React.FC = () => {
           Toaster("error", error.message);
           setLoading(FetchStatus.Error);
         });
+
+      
     }
   }, [params]);
+  
+  useEffect(() => {
+    if (classDetails) {
+      getClassHasAdventuresByClass(classDetails.id)
+        .then(({ data }) => setCompletedAdventures(data.responseData))
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+  }, [classDetails]);
 
   if (loading === FetchStatus.Idle || loading === FetchStatus.Pending)
     return (
@@ -69,6 +83,7 @@ const GoalAdventures: React.FC = () => {
 
   if (loadingClass === FetchStatus.Success && classDetails.current_adventure) return <Navigate to={`/app/cursos/${classDetails.id}/aventuras`} />
 
+  
   return (
     <AdventureSelectionContainer className="w-100 p-5">
       <Typography variant="h4" fontWeight="bold" className="mb-4">
@@ -85,10 +100,11 @@ const GoalAdventures: React.FC = () => {
           <div className="d-flex h-100 w-100 align-items-center justify-content-center justify-content-sm-start flex-wrap gap-4">
             {sortedAdventures.map((adventure, index) => (
               <AdventureCard
+                completed={!!completedAdventures.find((completedAdventure) => completedAdventure.id_adventure === adventure.id)}
                 onClick={() => {
                   handleOnClickAdventure(adventure);
                 }}
-                completed={!!adventure.class_has_adventures.length}
+                
                 key={index}
                 title={adventure.title}
                 img={adventure.thumbnail}
