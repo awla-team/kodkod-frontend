@@ -11,10 +11,7 @@ export const SignInCard = styled(Card)`
   min-width: 160px;
   max-width: 500px;
   width: 100%;
-
-  && {
-    overflow: unset !important;
-  }
+  overflow: auto !important;
 
   .MuiCardMedia-root {
     background: ${(props) => props.theme.palette.primary.main};
