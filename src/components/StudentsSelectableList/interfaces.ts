@@ -6,5 +6,4 @@ export interface StudentsSelectableListProps {
   handleClose: () => void;
   stage: IStage;
   onSave: (stageId: number | string) => void;
-  studentsDetails: StudentsDetailsType[];
 }

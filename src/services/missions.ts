@@ -16,7 +16,7 @@ interface MissionFilterType {
 }
 
 export interface MissionAccomplishedType {
-  studentIds: number[];
+  studentIds: (number | string)[];
   id_stage: number;
   id_mission: number;
 }
