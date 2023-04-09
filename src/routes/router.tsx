@@ -1,9 +1,4 @@
-import {
-  createBrowserRouter,
-  Navigate,
-  Outlet,
-  useLocation,
-} from "react-router-dom";
+import { createBrowserRouter, Outlet } from "react-router-dom";
 import AuthContextProvider from "contexts/AuthContext";
 import SignIn from "./UserAuth/SignIn";
 import SignUp from "./UserAuth/SignUp";
@@ -26,10 +21,10 @@ import Rewards from "routes/Class/Rewards";
 import VerifyEmail from "./UserAuth/VerifyEmail";
 
 const MainRouterComponent: FC = () => {
-  const { pathname } = useLocation();
-  if (pathname === "/") {
-    return <Navigate to={"/app"} />;
-  }
+  // const { pathname } = useLocation();
+  // if (pathname === "/") {
+  //   return <Navigate to={"/app"} />;
+  // }
   return (
     <>
       <Outlet />
@@ -39,7 +34,11 @@ const MainRouterComponent: FC = () => {
 
 export const router = createBrowserRouter([
   {
-    element: <MainRouterComponent />,
+    element: (
+      <AuthContextProvider>
+        <MainRouterComponent />
+      </AuthContextProvider>
+    ),
     children: [
       {
         path: "*",
@@ -73,11 +72,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/app",
-        element: (
-          <AuthContextProvider>
-            <App />
-          </AuthContextProvider>
-        ),
+        element: <App />,
         children: [
           {
             element: <Home />,
@@ -94,7 +89,7 @@ export const router = createBrowserRouter([
               {
                 path: "tablero",
                 element: <Board />,
-              },              
+              },
               {
                 path: "progreso",
                 element: <Progress />,

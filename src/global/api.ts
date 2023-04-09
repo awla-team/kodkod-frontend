@@ -1,5 +1,5 @@
 import axios, { AxiosError } from "axios";
-import { generateAccessToken, logout } from "../services/auth";
+import { generateAccessToken } from "../services/auth";
 
 const baseURL = import.meta.env.VITE_BASE_URL;
 

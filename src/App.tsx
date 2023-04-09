@@ -1,17 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import {
-  CircularProgress,
-  ThemeProvider as MuiThemeProvider,
-} from "@mui/material";
-import { ThemeProvider as StyledThemeProvider } from "styled-components";
-import theme from "./global/theme";
+import { CircularProgress } from "@mui/material";
 import Sidebar from "./components/Sidebar";
 import { getClassesByUser } from "services/classes";
 import { ClassInterface } from "services/classes/interfaces";
 import { AxiosResponse } from "axios";
 import { FetchStatus } from "global/enums";
-import "./App.css";
 import { CreateClassModal } from "./components/Modals";
 import { sortClasses } from "./utils";
 import { getAllTheLevel } from "./services/levels";
@@ -21,6 +15,9 @@ import { useAuth } from "./contexts/AuthContext";
 import moment from "moment";
 import { useLocation } from "react-router-dom";
 import "moment/dist/locale/es";
+import "./App.css";
+
+moment.locale("es");
 
 const App: React.FC = () => {
   const [classes, setClasses] = useState<ClassInterface[]>([]);
@@ -30,6 +27,7 @@ const App: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false);
   const location = useLocation();
   const navigate = useNavigate();
+
   const getClassesData = () => {
     getClassesByUser(user.id)
       .then((response: AxiosResponse) => {
@@ -62,33 +60,6 @@ const App: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    if (location.state) {
-      const { deletedClass } = location.state;
-      if (deletedClass) {
-        setClasses((prevState) => {
-          return prevState.filter((res) => res.id !== deletedClass);
-        });
-        navigate(location.pathname, {
-          state: null,
-          replace: true,
-        });
-      }
-    }
-  }, [location]);
-
-  useEffect(() => {
-    moment.locale("es");
-  }, []);
-
-  useEffect(() => {
-    if (user) {
-      setFetching(FetchStatus.Pending);
-      getClassesData();
-      getLevels();
-    }
-  }, [user]);
-
   const handleClose = (
     reason: "backdropClick" | "escapeKeyDown" | "success",
     data?: ClassInterface
@@ -103,6 +74,33 @@ const App: React.FC = () => {
     }
   };
 
+  const handleOpenModal = () => {
+    setOpen(true);
+  };
+
+  useEffect(() => {
+    if (location.state) {
+      const { deletedClass } = location.state;
+      if (deletedClass) {
+        setClasses((prevState) => {
+          return prevState.filter((res) => res.id !== deletedClass);
+        });
+        navigate(location.pathname, {
+          state: null,
+          replace: true,
+        });
+      }
+    }
+  }, [navigate, location]);
+
+  useEffect(() => {
+    if (user) {
+      setFetching(FetchStatus.Pending);
+      getClassesData();
+      getLevels();
+    }
+  }, [user]);
+
   if (fetching === FetchStatus.Idle || fetching === FetchStatus.Pending)
     return (
       <div className="app-container d-flex">
@@ -111,10 +109,6 @@ const App: React.FC = () => {
         </div>
       </div>
     );
-
-  const handleOpenModal = () => {
-    setOpen(true);
-  };
 
   return (
     <div className="app-container d-flex">
