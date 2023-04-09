@@ -43,14 +43,20 @@ const ForgotPassword: FC<ForgotPasswordProps> = () => {
           "El email ingresado no se encuentra registrado"
         );
       if (
-        error?.response?.data?.responseData?.includes("must be a valid email")
+        error?.response?.data?.responseData?.includes?.("must be a valid email")
       )
         return Toaster("error", "El email ingresado no es válido");
+      if (error?.response?.data?.responseData?.reason === "unverified")
+        return Toaster(
+          "error",
+          "El email de esta cuenta no ha sido verificado"
+        );
       Toaster("error", "Hubo un error al enviar el correo");
     } finally {
       formikHelper.setSubmitting(false);
     }
   };
+
   return (
     <ForgotPasswordCard variant="outlined">
       <CardContent className="p-5">
