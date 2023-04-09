@@ -57,8 +57,6 @@ const SignIn: React.FC = () => {
           <CardMedia
             className="p-5"
             component="img"
-            height="200"
-            width="500"
             image={logoWhite}
             alt="kodkod logo"
           />
