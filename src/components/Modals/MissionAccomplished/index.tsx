@@ -8,35 +8,14 @@ import StudentsSelectableList from "components/StudentsSelectableList";
 
 const MissionAccomplished: FC<MissionAccomplishedProps> = ({
   open,
+  onSave,
   anchor = "right",
   onClose,
   stage,
   mission,
 }) => {
-  const [studentsDetails, setStudentsDetails] = useState<StudentsDetailsType[]>([]);
-
-  useEffect(() => {
-    if (mission && stage) {
-      getStudentsDetails();
-    }
-  }, [mission, stage]);
-
   const handleClose = () => {
     onClose(null);
-  };
-
-  const getStudentsDetails = async () => {
-    try {
-      const { data }: { data: { responseData: StudentsDetailsType[] } } =
-        await completedMissionByStudents({
-          id_mission: mission.id as number,
-          id_stage: stage.id,
-        });
-
-      setStudentsDetails(data.responseData);
-    } catch (e: any) {
-      Toaster("error", e.messsage);
-    }
   };
   
   return (
@@ -60,7 +39,7 @@ const MissionAccomplished: FC<MissionAccomplishedProps> = ({
         </p>
       </div>*/}
 
-      <StudentsSelectableList stage={stage} handleClose={handleClose} mission={mission} studentsDetails={studentsDetails} />
+      <StudentsSelectableList stage={stage} onSave={onSave} handleClose={handleClose} mission={mission} />
     </Drawer>
   );
 };

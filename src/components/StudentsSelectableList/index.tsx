@@ -17,48 +17,42 @@ import Toaster from "utils/Toster";
 import { missionAccomplished } from "services/missions";
 import { StudentListContainer } from "./styled";
 
-export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({ stage, mission, studentsDetails, handleClose }) => {
-
-  const [selected, setSelected] = useState<any>({});
-  const [defaultSelected, setDefaultSelected] = useState<any>({});
-
+export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({ stage, mission, onSave, handleClose }) => {
+  const [selected, setSelected] = useState<(number | string)[]>([]);
+  const [defaultSelected, setDefaultSelected] = useState<(number | string)[]>([]);
   const { students: studentsList } = useContext(AdventureContext);
 
   useEffect(() => {
-    if (studentsDetails) {
-      const selectedDetail: any = {};
-      studentsDetails.forEach((detail) => {
-        selectedDetail[detail.id_user] = true;
-      });
-      setDefaultSelected((prevState: any) => ({ ...prevState, ...selectedDetail }));
-    }
-  }, [studentsDetails]);
-
+    if (mission?.completed_users) setDefaultSelected(mission.completed_users.map((user) => user.id));
+  }, [mission]);  
+  
   const handleCheck = (
     { target }: React.ChangeEvent<HTMLInputElement>,
     value: number | string
   ) => {
-    return setSelected((prevState: any) => {
-      const tempState = { ...prevState };
-      if (value in tempState) {
-        delete tempState[value];
+    
+    return setSelected((prevState) => {
+      const temp = [...prevState];
+      if (temp.includes(value)) {
+        const index = temp.indexOf(value);
+        temp.splice(index, 1);
       } else {
-        tempState[value] = true;
+        temp.push(value);
       }
-      return tempState;
+      return temp;
     });
   };
 
   const handleAllSelect = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
     const { checked } = target;
-    const selectAll: any = {};
+    const all: (number | string)[] = [];
     if (checked) {
       studentsList.forEach((res, index) => {
-        if (!defaultSelected[res.id]) selectAll[res.id] = true;
+        if (!defaultSelected.includes(res.id)) all.push(res.id);
       });
-      return setSelected(selectAll);
+      return setSelected(all);
     }
-    return setSelected({});
+    return setSelected([]);
   };
 
   const handleSave = async () => {    
@@ -66,11 +60,12 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({ 
       if (!stage) return;
       const { data }: { data: { responseData: any } } =
         await missionAccomplished({
-          studentIds: Object.keys(selected).map((key) => +key),
+          studentIds: selected,
           id_mission: mission.id as number,
           id_stage: stage.id as number,
         });
       Toaster("success", "data saved successfully!");
+      onSave(stage.id);
       handleClose();
     } catch (e: any) {
       Toaster("error", e.message);
@@ -88,21 +83,22 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({ 
           control={
             <Checkbox
               onChange={handleAllSelect}
-              disabled={studentsList.every((student) => defaultSelected[student.id])}
+              disabled={studentsList.every((student) => defaultSelected.includes(student.id))}
               checked={
                 !!studentsList.length &&
-                studentsList.every((res, index) => selected[res.id] || defaultSelected[res.id])
+                studentsList.every((res, index) => selected.includes(res.id) || defaultSelected.includes(res.id))
               }
             />
           }          
         />
+        
         <div className="d-flex flex-column gap-3">
           {studentsList.map((res, index) => (
             <div key={index} className="d-flex gap-2 align-items-center">
               <Checkbox
                 onChange={(e) => handleCheck(e, res.id)}
-                disabled={!!defaultSelected[res.id]}
-                checked={!!selected[res.id] || !!defaultSelected[res.id]}
+                disabled={defaultSelected.includes(res.id)}
+                checked={selected.includes(res.id) || defaultSelected.includes(res.id)}
               />
               <div className="d-flex align-items-center gap-3">
                 <Avatar className="student-avatar">{`${res.first_name[0]}${res.last_name[0]}`}</Avatar>

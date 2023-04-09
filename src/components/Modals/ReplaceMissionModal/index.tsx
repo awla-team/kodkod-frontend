@@ -30,7 +30,7 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
   const handleGetMission = async () => {
     try {
       const { data }: { data: { responseData: IMission[] } } =
-        await getMissionsByStage({ difficulty: mission.difficulty });
+        await getMissionsByStage({ id_skill: mission.id_skill, difficulty: mission.difficulty });
       const sorted = data.responseData.sort((a, b) => {
         if (a.title > b.title) return 1;
         if (a.title < b.title) return -1;
@@ -81,14 +81,16 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
     >
       <DialogTitle fontWeight="bold">{`Reemplazar misión "${mission.title}"`}</DialogTitle>
       <DialogContent>
-        <Typography component="span" variant="body1">Te sugerimos cambiar esta misión por otra de la misma <b>habilidad</b> y <b>dificultad</b></Typography>  
+        <div className="mb-3">
+          <Typography component="span" variant="body1">Cambia esta misión por otra de la misma <b>habilidad</b> y <b>dificultad</b>. Recuerda que no puedes reemplazar una misión que ya ha sido completada por algún estudiante.</Typography>
+        </div>
         <NewMissionList className="mt-2">
           <Box className="d-flex align-items-center justify-content-center p-3" sx={{ boxShadow: '0 0 2px rgba(33, 33, 33, 0.5);'}}>
-            <Typography component="span" variant="body2" className="me-1">Mostrando misiones </Typography>
-            {/*<div className="d-flex align-items-center justify-content-center gap-1 me-1">
+            <Typography component="span" variant="body2" className="me-2">Mostrando misiones de</Typography>
+            <div className="d-flex align-items-center justify-content-center gap-1 me-2">
               <div style={{ borderRadius: '100%', height: '12px', width: '12px', background: '#bdbdbd' }} />
               <Typography component="span" variant="body2" fontWeight="bold">{mission?.skill?.title}</Typography>
-            </div>*/}
+            </div>
             <Typography component="span" variant="body2" className="me-1">de dificultad</Typography>
             <div className="d-flex align-items-center">
               {difficultyIcons[mission.difficulty]}
