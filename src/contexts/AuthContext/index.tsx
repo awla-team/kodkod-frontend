@@ -5,12 +5,13 @@ import {
   PropsWithChildren,
   useReducer,
   useEffect,
+  useCallback,
 } from "react";
 import { AuthContextType } from "./interfaces";
 import { getAuthUser as getAuthUserAction } from "services/users";
 import Toaster from "utils/Toster";
 import { User } from "services/users/interfaces";
-import { useLocation, redirect, Navigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const publicRoutes = ["/signin", "/signup", "/reset-password"];
 const AuthContext = createContext<AuthContextType>({
@@ -43,16 +44,36 @@ const reducer = (
 };
 
 const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [{ user, authenticated }, dispatch] = useReducer(reducer, {
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const [{ user }, dispatch] = useReducer(reducer, {
     user: null,
     authenticated: false,
   });
-  const { pathname } = useLocation();
-  useEffect(() => {
-    checkAuthUser();
-  }, [pathname]);
 
-  const checkAuthUser = async () => {
+  const getAuthUser = async (): Promise<Omit<User, "avatar">> => {
+    try {
+      const { data }: { data: { responseData: Omit<User, "avatar"> } } =
+        await getAuthUserAction();
+      return data.responseData;
+    } catch (e) {
+      throw e;
+    }
+  };
+
+  const goToSignin = useCallback(() => {
+    dispatch({
+      type: "user__action",
+      payload: {
+        user: null,
+        authenticated: false,
+      },
+    });
+    localStorage.clear();
+    navigate("/signin", { replace: true });
+  }, [navigate]);
+
+  const checkAuthUser = useCallback(async () => {
     try {
       if (user) {
         return;
@@ -72,32 +93,20 @@ const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
         },
       });
     } catch (error: any) {
-      if (error?.response?.status === 401) {
+      if (error?.response?.status === 401)
         Toaster("error", "Unauthorized access");
-      } else {
-        Toaster("error", error.message);
-      }
-      dispatch({
-        type: "set__authenticatedFlag",
-        payload: {
-          authenticated: true,
-        },
-      });
+      else Toaster("error", error.message);
+      goToSignin();
     }
-  };
-  const getAuthUser = async (): Promise<Omit<User, "avatar">> => {
-    try {
-      const { data }: { data: { responseData: Omit<User, "avatar"> } } =
-        await getAuthUserAction();
-      return data.responseData;
-    } catch (e) {
-      throw e;
-    }
-  };
+  }, [goToSignin, pathname, user]);
 
-  if (authenticated && !user) {
-    return <Navigate to={"/signin"} />;
-  }
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    const refreshToken = localStorage.getItem("refreshToken");
+    if (accessToken && refreshToken) checkAuthUser();
+    else if (!pathname.includes("app")) goToSignin();
+  }, [pathname, checkAuthUser, goToSignin]);
+
   return (
     <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
   );
