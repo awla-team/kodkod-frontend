@@ -1,10 +1,4 @@
-import {
-  Avatar,
-  Divider,
-  Menu,
-  MenuItem,
-  Typography,
-} from "@mui/material";
+import { Avatar, Divider, Menu, MenuItem, Typography } from "@mui/material";
 import { useState } from "react";
 import { UserInfoProps } from "./interfaces";
 import { UserInfoButton, UserInfoContainer } from "./styled";
@@ -31,10 +25,13 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
       if (refreshToken) {
         await logout({ refreshToken });
         localStorage.clear();
-        navigate("/signin");
+        navigate("/signin", { replace: true });
       }
     } catch (error: any) {
-      Toaster("error", error.message);
+      console.error(error);
+      localStorage.clear();
+      navigate("/signin", { replace: true });
+      Toaster("error", "Hubo un error al cerrar sesión");
     } finally {
       setLoading(false);
     }

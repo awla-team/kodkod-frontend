@@ -1,7 +1,14 @@
 import { FC, useState, useContext, useEffect } from "react";
 import { ReplaceMissionModalProps } from "./interfaces";
 import { NewMissionList } from "./styled";
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from "@mui/material";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Typography,
+} from "@mui/material";
 import MissionCard from "../../MissionCard";
 import { difficultyIcons, difficultyToText } from "utils";
 import Toaster from "utils/Toster";
@@ -30,7 +37,10 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
   const handleGetMission = async () => {
     try {
       const { data }: { data: { responseData: IMission[] } } =
-        await getMissionsByStage({ id_skill: mission.id_skill, difficulty: mission.difficulty });
+        await getMissionsByStage({
+          id_skill: mission.id_skill,
+          difficulty: mission.difficulty,
+        });
       const sorted = data.responseData.sort((a, b) => {
         if (a.title > b.title) return 1;
         if (a.title < b.title) return -1;
@@ -38,8 +48,9 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
       });
       const filtered = sorted.filter((_mission) => _mission.id !== mission.id);
       setMissions(filtered);
-    } catch (e: any) {
-      Toaster("error", e.message);
+    } catch (error: any) {
+      console.error(error);
+      Toaster("error", "Hubo un error al obtener las misiones");
     }
   };
 
@@ -62,12 +73,13 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
       missionsCopy[index] = selected;
       updateStageData({
         ...stage,
-        missions: missionsCopy
+        missions: missionsCopy,
       });
-      Toaster("success", 'Misión reemplazada exitosamente');
+      Toaster("success", "Misión reemplazada exitosamente");
       onClose();
-    } catch (e: any) {
-      Toaster("error", e.message);
+    } catch (error: any) {
+      console.error(error);
+      Toaster("error", "Hubo un error al reemplazar la misión");
     } finally {
       setPending(false);
     }
@@ -82,22 +94,47 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
       <DialogTitle fontWeight="bold">{`Reemplazar misión "${mission.title}"`}</DialogTitle>
       <DialogContent>
         <div className="mb-3">
-          <Typography component="span" variant="body1">Cambia esta misión por otra de la misma <b>habilidad</b> y <b>dificultad</b>. Recuerda que no puedes reemplazar una misión que ya ha sido completada por algún estudiante.</Typography>
+          <Typography component="span" variant="body1">
+            Cambia esta misión por otra de la misma <b>habilidad</b> y{" "}
+            <b>dificultad</b>. Recuerda que no puedes reemplazar una misión que
+            ya ha sido completada por algún estudiante.
+          </Typography>
         </div>
         <NewMissionList className="mt-2">
-          <Box className="d-flex align-items-center justify-content-center p-3" sx={{ boxShadow: '0 0 2px rgba(33, 33, 33, 0.5);'}}>
-            <Typography component="span" variant="body2" className="me-2">Mostrando misiones de</Typography>
+          <Box
+            className="d-flex align-items-center justify-content-center p-3"
+            sx={{ boxShadow: "0 0 2px rgba(33, 33, 33, 0.5);" }}
+          >
+            <Typography component="span" variant="body2" className="me-2">
+              Mostrando misiones de
+            </Typography>
             <div className="d-flex align-items-center justify-content-center gap-1 me-2">
-              <div style={{ borderRadius: '100%', height: '12px', width: '12px', background: '#bdbdbd' }} />
-              <Typography component="span" variant="body2" fontWeight="bold">{mission?.skill?.title}</Typography>
+              <div
+                style={{
+                  borderRadius: "100%",
+                  height: "12px",
+                  width: "12px",
+                  background: "#bdbdbd",
+                }}
+              />
+              <Typography component="span" variant="body2" fontWeight="bold">
+                {mission?.skill?.title}
+              </Typography>
             </div>
-            <Typography component="span" variant="body2" className="me-1">de dificultad</Typography>
+            <Typography component="span" variant="body2" className="me-1">
+              de dificultad
+            </Typography>
             <div className="d-flex align-items-center">
               {difficultyIcons[mission.difficulty]}
-              <Typography component="span" variant="body2" fontWeight="bold">{difficultyToText(mission.difficulty)}</Typography>
+              <Typography component="span" variant="body2" fontWeight="bold">
+                {difficultyToText(mission.difficulty)}
+              </Typography>
             </div>
           </Box>
-          <Box className="d-flex flex-column gap-3 p-4" sx={{ height: '400px', overflow: 'auto', marginTop: '1px'}}>
+          <Box
+            className="d-flex flex-column gap-3 p-4"
+            sx={{ height: "400px", overflow: "auto", marginTop: "1px" }}
+          >
             {missions.length ? (
               missions.map((res, index) => (
                 <div key={`new-mission-${index}`}>
@@ -106,21 +143,24 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
                     selected={res.id === selected?.id}
                     mission={res}
                   />
-                </div>  
+                </div>
               ))
             ) : (
               <div className="d-flex align-items-center justify-content-center h-100">
-                <Typography component="span" variant="subtitle1" color="#bdbdbd">No hay misiones disponibles para reemplazar</Typography>
-              </div>              
+                <Typography
+                  component="span"
+                  variant="subtitle1"
+                  color="#bdbdbd"
+                >
+                  No hay misiones disponibles para reemplazar
+                </Typography>
+              </div>
             )}
           </Box>
         </NewMissionList>
       </DialogContent>
       <DialogActions>
-        <Button
-          variant="outlined"
-          onClick={() => onClose("escapeKeyDown")}
-        >
+        <Button variant="outlined" onClick={() => onClose("escapeKeyDown")}>
           Cancelar
         </Button>
         <Button

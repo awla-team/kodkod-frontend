@@ -9,12 +9,16 @@ import { getMissionsByStage, StageMissionUpdateBody } from "services/missions";
 import { IAdventure, IMission, IStage } from "global/interfaces";
 import { StudentType } from "components/StudentsList/interfaces";
 import { useClassContext } from "../context";
-import { getClassCurrentAdventure, setCurrentAdventure } from "services/adventures";
+import {
+  getClassCurrentAdventure,
+  setCurrentAdventure,
+} from "services/adventures";
 
 const Adventures: React.FC = () => {
   const [loading, setLoading] = useState<FetchStatus>(FetchStatus.Success);
   const [missions, setMissions] = useState<IMission[]>([]);
-  const { classDetails, students, loadingClass, updateStageData } = useClassContext();
+  const { classDetails, students, loadingClass, updateStageData } =
+    useClassContext();
 
   useEffect(() => {
     getMissions();
@@ -22,7 +26,7 @@ const Adventures: React.FC = () => {
 
   const handleUpdateCurrentAdventure = (
     missionData: IMission,
-    ref: StageMissionUpdateBody,
+    ref: StageMissionUpdateBody
   ) => {
     /*setCurrentAdventure((prevState) => {
       if (prevState) {
@@ -64,11 +68,12 @@ const Adventures: React.FC = () => {
       }: { data: { responseData: IMission[] } } = await getMissionsByStage();
 
       setMissions(responseData);
-    } catch (e: any) {
-      Toaster("error", e.message);
+    } catch (error: any) {
+      console.error(error);
+      Toaster("error", "Hubo un error al cargar las misiones");
     }
   };
-  
+
   if (loadingClass !== FetchStatus.Success)
     return (
       <div className="d-flex w-100 align-items-center justify-content-center">
@@ -76,7 +81,8 @@ const Adventures: React.FC = () => {
       </div>
     );
 
-  if (!classDetails?.current_adventure && loadingClass === FetchStatus.Success) return <Navigate to="iniciar" />;
+  if (!classDetails?.current_adventure && loadingClass === FetchStatus.Success)
+    return <Navigate to="iniciar" />;
 
   return (
     <>

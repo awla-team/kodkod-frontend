@@ -43,7 +43,7 @@ const ResetPassword: FC = () => {
       }
     } catch (e: any) {
       setValid(false);
-      Toaster("error", "Invalid token");
+      Toaster("error", "Link no valido o expirado");
     } finally {
       setLoading(false);
     }
@@ -70,10 +70,12 @@ const ResetPassword: FC = () => {
         values,
         token
       );
-      Toaster("success", data.responseData);
+      // Toaster("success", data.responseData);
+      Toaster("success", "Contraseña actualizada exitosamente");
       navigate("/signin");
     } catch (error: any) {
-      Toaster("error", error.message);
+      console.error(error);
+      Toaster("error", "Hubo un error al actualizar la contraseña");
     } finally {
       formikHelper.setSubmitting(false);
     }
@@ -192,7 +194,7 @@ const ResetPassword: FC = () => {
             color={"error"}
             className={"invalid__token__text"}
           >
-            Invalid Token
+            Link no valido o expirado
           </Typography>
         )}
       </CardContent>

@@ -110,8 +110,9 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
         });
       }
       setEditable(!responseData.length);
-    } catch (e: any) {
-      Toaster("error", e.message);
+    } catch (error: any) {
+      console.error(error);
+      Toaster("error", "Hubo un error al cargar los termómetros de la clase");
     }
   };
 
@@ -132,8 +133,9 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
           Moment(date).endOf("month").toDate()
         );
       setDetailsByDates(responseData);
-    } catch (e: any) {
-      Toaster("error", e.message);
+    } catch (error: any) {
+      console.error(error);
+      Toaster("error", "Hubo un error al cargar los termómetros del mes");
     }
   };
 
@@ -170,7 +172,7 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
         const { data }: { data: { responseData: FormInitialValue } } =
           await updateEmotionalThermometerDetails(id, body);
         responseData = data.responseData;
-        Toaster("success", "Successfully updated!");
+        Toaster("success", "Termómetro actualizado exitosamente");
       } else {
         const { data }: { data: { responseData: FormInitialValue } } =
           await saveEmotionalThermometerDetails({
@@ -179,12 +181,13 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
             id_class: classDetails.id,
           });
         responseData = data.responseData;
-        Toaster("success", "Successfully Saved!");
+        Toaster("success", "Termómetro guardado exitosamente");
       }
       formikHelpers.resetForm();
       setEditable(false);
-    } catch (e: any) {
-      Toaster("error", e.message);
+    } catch (error: any) {
+      console.error(error);
+      Toaster("error", "Hubo un error al guardar el termómetro");
     } finally {
       formikHelpers.setSubmitting(false);
     }
@@ -195,9 +198,22 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
       <div className="d-flex justify-content-between align-items-center mb-4">
         <div>
           <div className="d-flex align-items-center">
-            <Typography className="me-2" component="h6" variant="h6" fontWeight="bold">Termómetro socioemocional</Typography>
-            <Tooltip title="El termómetro socioemocional es una herramienta que nos permitirá hacer seguimiento del clima escolar del curso a lo largo del tiempo. ¡Es importantísimo llenarlo cada clase para poder entregarte reportes de calidad!" placement="right" TransitionComponent={Fade}>
-              <HelpIcon sx={{ opacity: 0.8, cursor: 'pointer', fontSize: '20px' }} />
+            <Typography
+              className="me-2"
+              component="h6"
+              variant="h6"
+              fontWeight="bold"
+            >
+              Termómetro socioemocional
+            </Typography>
+            <Tooltip
+              title="El termómetro socioemocional es una herramienta que nos permitirá hacer seguimiento del clima escolar del curso a lo largo del tiempo. ¡Es importantísimo llenarlo cada clase para poder entregarte reportes de calidad!"
+              placement="right"
+              TransitionComponent={Fade}
+            >
+              <HelpIcon
+                sx={{ opacity: 0.8, cursor: "pointer", fontSize: "20px" }}
+              />
             </Tooltip>
           </div>
           <div className="d-flex align-items-center">

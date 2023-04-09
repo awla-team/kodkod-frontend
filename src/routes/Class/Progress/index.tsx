@@ -24,17 +24,19 @@ const Progress: FC<ProgressProps> = () => {
         await studentsByClass(classId, {
           missions: true,
           role: "student",
-          rewards:true
+          rewards: true,
         });
       setStudents(data.responseData);
-    } catch (e: any) {
-      Toaster("error", e.message);
+    } catch (error: any) {
+      console.error(error);
+      Toaster("error", "Hubo un error al cargar los estudiantes");
     }
   };
 
   useEffect(() => {
     if (classId) getStudents();
   }, [classId]);
+
   return (
     <Styled.ProgressContainer>
       <Box className={"title__section"}>

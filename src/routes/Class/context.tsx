@@ -15,7 +15,7 @@ import { StudentType } from "components/StudentsList/interfaces";
 import { ClassContextType } from "./interfaces";
 import { Levels } from "components/Modals/CreateClassModal/interfaces";
 import { getAllTheLevel } from "./../../services/levels";
-import { IAdventure, IStage } from "global/interfaces";
+import { IStage } from "global/interfaces";
 import { FetchStatus } from "global/enums";
 
 const ClassContext = createContext<ClassContextType>({
@@ -55,14 +55,14 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
           return 0;
         })
       );
-    } catch (e: any) {
-      Toaster("error", e.message);
+    } catch (error: any) {
+      console.error(error);
+      Toaster("error", "Hubo un error al cargar los niveles");
     }
   };
 
   useEffect(() => {
     if (classId) {
-      
       getClassById(classId);
       getStudentsByClass(classId);
       getLevels();
@@ -71,13 +71,14 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const getClassById = async (id: number | string) => {
     setLoadingClass(FetchStatus.Pending);
-    try {      
+    try {
       const { data }: { data: { responseData: ClassInterface } } =
         await getClassByID(id);
       setClassDetails(data.responseData);
       setLoadingClass(FetchStatus.Success);
-    } catch (e: any) {
-      Toaster("error", e.message);
+    } catch (error: any) {
+      console.error(error);
+      Toaster("error", "Hubo un error al cargar el curso");
       setLoadingClass(FetchStatus.Error);
     }
   };
@@ -88,30 +89,33 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
         role: "student",
       });
       setStudents(data.responseData);
-    } catch (e: any) {
-      Toaster("error", e.message);
+    } catch (error: any) {
+      console.error(error);
+      Toaster("error", "Hubo un error al cargar los estudiantes");
     }
   };
 
   const updateStageData = (stage: IStage) => {
     const stagesCopy = [...classDetails.current_adventure.stages];
-    const match = stagesCopy.find((currentStage) => currentStage.id === stage.id);
+    const match = stagesCopy.find(
+      (currentStage) => currentStage.id === stage.id
+    );
     const index = stagesCopy.indexOf(match);
     stagesCopy[index] = stage;
     stagesCopy.sort((a, b) => {
       if (a._index > b._index) return 1;
       if (a._index < b._index) return -1;
-      return 0
+      return 0;
     });
-    
+
     setClassDetails({
       ...classDetails,
       current_adventure: {
         ...classDetails.current_adventure,
-        stages: stagesCopy
-      }
+        stages: stagesCopy,
+      },
     });
-  };  
+  };
 
   const updateStudentsData = (
     actionType: "delete" | "update",

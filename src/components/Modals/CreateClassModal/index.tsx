@@ -83,8 +83,11 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
             id: classDetails.id,
           });
         onClose("success", data.responseData);
-        Toaster("success", `Updated successfully!`);
-        window.location.reload();
+        Toaster("success", `Curso editado exitosamente`);
+        // TODO: remove this workarround
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
       } else {
         const { data }: { data: { responseData: ClassInterface } } =
           await createClass({
@@ -92,21 +95,23 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
             id_user: user.id,
             id_level: values.id_level as number,
           });
-        
-        navigate(`/app/cursos/${data.responseData.id}/tablero`)
-        
+
+        navigate(`/app/cursos/${data.responseData.id}/tablero`);
         onClose("success", data.responseData);
-        Toaster("success", `You successfully added the ${values.alias} class.`);
+        Toaster("success", `Curso ${values.alias} creado exitosamente`);
       }
-    } catch (e: any) {
-      Toaster("error", e.message);
+    } catch (error: any) {
+      console.error(error);
+      Toaster("error", `Hubo un error al crear el curso ${values.alias}`);
     } finally {
       formikHelpers.setSubmitting(false);
     }
   };
   return (
     <Dialog open={open} PaperProps={{ className: "p-3" }}>
-      <DialogTitle fontWeight="bold">{classDetails ? 'Editar curso' : 'Añade un nuevo curso'}</DialogTitle>
+      <DialogTitle fontWeight="bold">
+        {classDetails ? "Editar curso" : "Añade un nuevo curso"}
+      </DialogTitle>
       <Formik
         initialValues={initialState}
         onSubmit={handleSubmit}
@@ -173,8 +178,8 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
                         Curso
                       </Typography>
                       <Typography component="span" variant="caption">
-                        (Es la letra o nombre que acompaña al nivel e identifica al
-                        curso)
+                        (Es la letra o nombre que acompaña al nivel e identifica
+                        al curso)
                       </Typography>
                     </div>
                     <TextField
@@ -224,7 +229,7 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
                   type={"submit"}
                   variant={"contained"}
                 >
-                  {classDetails ? 'Guardar cambios' : 'Añade un nuevo curso'}
+                  {classDetails ? "Guardar cambios" : "Añade un nuevo curso"}
                 </Button>
               </DialogActions>
             </Form>

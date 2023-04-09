@@ -54,7 +54,8 @@ const GoalAdventures: React.FC = () => {
           setLoading(FetchStatus.Success);
         })
         .catch((error: any) => {
-          Toaster("error", error.message);
+          console.error(error);
+          Toaster("error", "Hubo un error al cargar el objetivo");
           setLoading(FetchStatus.Error);
         });
 

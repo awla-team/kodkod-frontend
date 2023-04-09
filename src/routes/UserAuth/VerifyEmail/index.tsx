@@ -36,7 +36,7 @@ const VerifyEmail: React.FC = () => {
       .catch((error) => {
         console.error(error);
         setEmailSend(FetchStatus.Error);
-        Toaster("error", "Ha ocurrido un error al enviar el link");
+        Toaster("error", "Hubo un error al enviar el link");
       });
   };
 

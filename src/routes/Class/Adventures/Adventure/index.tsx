@@ -19,7 +19,10 @@ import { ISkill, IStage } from "global/interfaces";
 import { AdventureWithProviderProps } from "../interfaces";
 import StageStepper from "../../../../components/StageStepper";
 import Toaster from "utils/Toster";
-import { cancelAdventureFromClass, endClassHasAdventure } from "services/adventures";
+import {
+  cancelAdventureFromClass,
+  endClassHasAdventure,
+} from "services/adventures";
 import MissionsList from "../../../../components/MissionsList";
 import ConfirmationModal from "components/Modals/ConfirmationModal";
 import { useClassContext } from "routes/Class/context";
@@ -33,7 +36,6 @@ export const Adventure: React.FC = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
-
 
   if (!classDetails.current_adventure)
     return (
@@ -68,16 +70,19 @@ export const Adventure: React.FC = () => {
   const cancelAdventure = async () => {
     try {
       setLoading(true);
-      await cancelAdventureFromClass(classDetails.current_adventure.id_class_has_adventure);
+      await cancelAdventureFromClass(
+        classDetails.current_adventure.id_class_has_adventure
+      );
       //await cancelAdventure(classDetails.current_adventure.id_class_has_adventure, { date_stop: moment().format('YYYY-MM-DD') });
       Toaster("success", "La aventura fue cancelada");
       navigate(`/app/cursos/${classId}/tablero`);
       setClassDetails({
         ...classDetails,
-        current_adventure: null
+        current_adventure: null,
       });
-    } catch (e: any) {
-      Toaster("error", e.message);
+    } catch (error: any) {
+      console.error(error);
+      Toaster("error", "Hubo un error al cancelar la aventura");
     } finally {
       setLoading(false);
     }
@@ -86,15 +91,19 @@ export const Adventure: React.FC = () => {
   const finishAdventure = async () => {
     try {
       setLoading(true);
-      endClassHasAdventure(classDetails.current_adventure.id_class_has_adventure, { date_stop: moment().format('YYYY-MM-DD') });
+      endClassHasAdventure(
+        classDetails.current_adventure.id_class_has_adventure,
+        { date_stop: moment().format("YYYY-MM-DD") }
+      );
       Toaster("success", "¡Felicitaciones! ¡La aventura ha sido completada!");
       navigate(`/app/cursos/${classId}/tablero`);
       setClassDetails({
         ...classDetails,
-        current_adventure: null
+        current_adventure: null,
       });
-    } catch (e: any) {
-      Toaster("error", e.message);
+    } catch (error: any) {
+      console.error(error);
+      Toaster("error", "Hubo un error al finalizar la aventura");
     } finally {
       setLoading(false);
     }
@@ -102,11 +111,18 @@ export const Adventure: React.FC = () => {
 
   const handleStageChange = (stage: IStage) => {
     setShownStage(stage);
-  };    
+  };
 
   return (
     <AdventureContainer className="p-0 m-0">
-      <AdventureBanner className="d-flex flex-column px-5 justify-content-center mb-4" sx={{ backgroundImage: `url(${shownStage?.icon || classDetails.current_adventure.banner})`}}>
+      <AdventureBanner
+        className="d-flex flex-column px-5 justify-content-center mb-4"
+        sx={{
+          backgroundImage: `url(${
+            shownStage?.icon || classDetails.current_adventure.banner
+          })`,
+        }}
+      >
         <div className="d-flex justify-content-between align-items-end mb-3">
           <Typography variant="h4" component="h2" fontWeight="bold">
             {classDetails.current_adventure.title}
@@ -115,7 +131,11 @@ export const Adventure: React.FC = () => {
             <Button
               variant={"outlined"}
               color="info"
-              onClick={() => navigate(`recompensas?adventureId=${classDetails.current_adventure.id}`)}
+              onClick={() =>
+                navigate(
+                  `recompensas?adventureId=${classDetails.current_adventure.id}`
+                )
+              }
               size="large"
             >
               Ver recompensas disponibles
@@ -128,21 +148,34 @@ export const Adventure: React.FC = () => {
               anchorEl={anchorEl}
               onClose={() => setAnchorEl(null)}
             >
-              <MenuItem disabled={loading} onClick={() => setOpenConfirmation(true)}>Terminar aventura</MenuItem>
+              <MenuItem
+                disabled={loading}
+                onClick={() => setOpenConfirmation(true)}
+              >
+                Terminar aventura
+              </MenuItem>
             </Menu>
           </div>
         </div>
         <div className="d-flex mb-1">
           {classDetails.current_adventure?.skills?.map((skill) => (
-            <div className="me-2" key={`${classDetails.current_adventure.id}-${skill.id}`}>
+            <div
+              className="me-2"
+              key={`${classDetails.current_adventure.id}-${skill.id}`}
+            >
               <SkillPoints skill={skill} />
             </div>
           ))}
         </div>
       </AdventureBanner>
       <div className="mt-5">
-        <StageStepper shownStage={shownStage} stages={classDetails.current_adventure?.stages} onStageChange={handleStageChange} handleFinish={finishAdventure} />
-      </div>      
+        <StageStepper
+          shownStage={shownStage}
+          stages={classDetails.current_adventure?.stages}
+          onStageChange={handleStageChange}
+          handleFinish={finishAdventure}
+        />
+      </div>
 
       {/* StageRequirements
         <StageRequirements />
@@ -153,7 +186,12 @@ export const Adventure: React.FC = () => {
       </div>
       <ConfirmationModal
         title="¿Estás seguro de terminar la aventura?"
-        description={<span>Esta aventura se terminará y los puntajes de l@s estudiantes volverán a 0. Podrás escoger una nueva aventura si lo deseas.</span>}
+        description={
+          <span>
+            Esta aventura se terminará y los puntajes de l@s estudiantes
+            volverán a 0. Podrás escoger una nueva aventura si lo deseas.
+          </span>
+        }
         open={openConfirmation}
         confirmText="Sí, terminar"
         callBackFunction={cancelAdventure}

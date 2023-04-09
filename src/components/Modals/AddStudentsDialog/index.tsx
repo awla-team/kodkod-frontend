@@ -52,12 +52,13 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
       Toaster(
         "success",
         `${noOfStudents} ${
-          noOfStudents < 2 ? "student" : "students"
-        } successfully added`
+          noOfStudents < 2 ? "estudiante" : "estudiantes"
+        } añadidos exitosamente`
       );
       onClose("student", data.responseData.students);
-    } catch (e: any) {
-      Toaster("error", e.message);
+    } catch (error: any) {
+      console.error(error);
+      Toaster("error", "Hubo un error al añadir estudiantes");
     } finally {
       formikHelper.setSubmitting(false);
     }
@@ -161,10 +162,12 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
                     }
                     value={inputFieldValue}
                     onKeyDown={(event) => handleStudentValues(event, values)}
-                    onChange={handleInputFieldChange}                    
+                    onChange={handleInputFieldChange}
                     fullWidth
                     size="small"
-                    placeholder={"Ingresa los emails de tus estudiantes separados por coma"}
+                    placeholder={
+                      "Ingresa los emails de tus estudiantes separados por coma"
+                    }
                   ></TextField>
                   <div>
                     <div className="details-list">
@@ -177,7 +180,11 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
                                 className="d-flex align-items-center"
                               >
                                 <div className="me-2">
-                                  <IconButton color={"inherit"} size="small" onClick={() => remove(index)}>
+                                  <IconButton
+                                    color={"inherit"}
+                                    size="small"
+                                    onClick={() => remove(index)}
+                                  >
                                     <CloseIcon fontSize="small" />
                                   </IconButton>
                                 </div>
