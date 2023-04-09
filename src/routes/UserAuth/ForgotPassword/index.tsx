@@ -1,6 +1,6 @@
 import { ForgotPasswordProps } from "./interfaces";
 import React, { FC, useState } from "react";
-import { ForgotPasswordCard, ForgotPasswordContainer } from "./styled";
+import { ForgotPasswordCard } from "./styled";
 import {
   Box,
   Button,
@@ -52,83 +52,81 @@ const ForgotPassword: FC<ForgotPasswordProps> = () => {
     }
   };
   return (
-    <ForgotPasswordContainer className="d-flex flex-column">
-      <ForgotPasswordCard variant="outlined">
-        <CardContent className="p-5">
-          <Button
-            className="mb-2"
-            startIcon={<ArrowBackIosIcon />}
-            component={RouterLink}
-            to={"/signin"}
-          >
-            Volver al inicio de sesión
-          </Button>
-          <Typography component="h4" variant="h5" className="mb-1">
-            Recupera tu contraseña
-          </Typography>
-          <Typography component="span" variant="body2" color="gray">
-            Ingresa tu email para enviarte un correo con instrucciones para
-            recuperar tu contraseña
-          </Typography>
-          <Formik
-            initialValues={formInitialValues}
-            onSubmit={handleSubmit}
-            validationSchema={validationSchema}
-          >
-            {({
-              values,
-              errors,
-              handleChange,
-              dirty,
-              isValid,
-              isSubmitting,
-              handleBlur,
-              touched,
-              handleSubmit,
-            }) => {
-              return (
-                <Form onSubmit={handleSubmit}>
-                  <Box display={"flex"} flexDirection={"column"} gap={2} mt={2}>
-                    <FormControl error={!!errors.email && touched.email}>
-                      <TextField
-                        required
-                        name={"email"}
-                        value={values.email}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        type={"email"}
-                        label="Email"
-                        placeholder={"Ej: juanito.perez@email.com"}
-                        variant="outlined"
-                      />
-                    </FormControl>
+    <ForgotPasswordCard variant="outlined">
+      <CardContent className="p-5">
+        <Button
+          className="mb-2"
+          startIcon={<ArrowBackIosIcon />}
+          component={RouterLink}
+          to={"/signin"}
+        >
+          Volver al inicio de sesión
+        </Button>
+        <Typography component="h4" variant="h5" className="mb-1">
+          Recupera tu contraseña
+        </Typography>
+        <Typography component="span" variant="body2" color="gray">
+          Ingresa tu email para enviarte un correo con instrucciones para
+          recuperar tu contraseña
+        </Typography>
+        <Formik
+          initialValues={formInitialValues}
+          onSubmit={handleSubmit}
+          validationSchema={validationSchema}
+        >
+          {({
+            values,
+            errors,
+            handleChange,
+            dirty,
+            isValid,
+            isSubmitting,
+            handleBlur,
+            touched,
+            handleSubmit,
+          }) => {
+            return (
+              <Form onSubmit={handleSubmit}>
+                <Box display={"flex"} flexDirection={"column"} gap={2} mt={2}>
+                  <FormControl error={!!errors.email && touched.email}>
+                    <TextField
+                      required
+                      name={"email"}
+                      value={values.email}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      type={"email"}
+                      label="Email"
+                      placeholder={"Ej: juanito.perez@email.com"}
+                      variant="outlined"
+                    />
+                  </FormControl>
 
-                    <Box
-                      className={"action__container"}
-                      display={"flex"}
-                      flexDirection={"column"}
-                      alignItems={"center"}
-                      gap={1}
+                  <Box
+                    className={"action__container"}
+                    display={"flex"}
+                    flexDirection={"column"}
+                    alignItems={"center"}
+                    gap={1}
+                  >
+                    <Button
+                      disabled={isSubmitting || !isValid || !dirty}
+                      fullWidth
+                      size="large"
+                      className={"submit__button"}
+                      variant={"contained"}
+                      type={"submit"}
                     >
-                      <Button
-                        disabled={isSubmitting || !isValid || !dirty}
-                        fullWidth
-                        size="large"
-                        className={"submit__button"}
-                        variant={"contained"}
-                        type={"submit"}
-                      >
-                        Enviar correo de recuperación
-                      </Button>
-                    </Box>
+                      Enviar correo de recuperación
+                    </Button>
                   </Box>
-                </Form>
-              );
-            }}
-          </Formik>
-        </CardContent>
-      </ForgotPasswordCard>
-    </ForgotPasswordContainer>
+                </Box>
+              </Form>
+            );
+          }}
+        </Formik>
+      </CardContent>
+    </ForgotPasswordCard>
   );
 };
 

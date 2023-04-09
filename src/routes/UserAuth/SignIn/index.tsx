@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SignInCard, SignInContainer } from "./styled";
+import { SignInCard } from "./styled";
 import {
   Box,
   Typography,
@@ -58,115 +58,113 @@ const SignIn: React.FC = () => {
     }
   };
   return (
-    <SignInContainer className="d-flex flex-column">
-      <SignInCard variant="outlined">
-        <div>
-          <CardMedia
-            className="p-5"
-            component="img"
-            image={logoWhite}
-            alt="kodkod logo"
-          />
-        </div>
-        <CardContent className="px-5 py-4">
-          <Typography component="h4" variant="h5" textAlign="center">
-            Ingresa a tu cuenta
-          </Typography>
-          <Formik
-            initialValues={formInitialValues}
-            onSubmit={handleSubmit}
-            validationSchema={validationSchema}
-          >
-            {({
-              values,
-              errors,
-              handleChange,
-              dirty,
-              isValid,
-              isSubmitting,
-              handleBlur,
-              touched,
-              handleSubmit,
-            }) => {
-              return (
-                <Form onSubmit={handleSubmit}>
-                  <Box display={"flex"} flexDirection={"column"} mt={3}>
-                    <FormControl
-                      error={!!errors.email && touched.email}
-                      className="mb-3"
-                    >
-                      <TextField
-                        name={"email"}
-                        value={values.email}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        type={"email"}
-                        color="primary"
-                        placeholder={"Ingresa tu email"}
-                        variant="outlined"
-                      />
-                    </FormControl>
-                    <FormControl
-                      error={!!errors.password && touched.password}
-                      className="mb-2"
-                    >
-                      <TextField
-                        name={"password"}
-                        value={values.password}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        color="primary"
-                        type={"password"}
-                        placeholder={"Ingresa tu contraseña"}
-                        variant="outlined"
-                      />
-                    </FormControl>
-                    <Typography
-                      className="mb-4"
-                      textAlign={"center"}
-                      variant="subtitle2"
-                      component={RouterLink}
-                      to={"/forgot-password"}
-                    >
-                      Olvidé mi contraseña
-                    </Typography>
+    <SignInCard variant="outlined">
+      <div>
+        <CardMedia
+          className="p-5"
+          component="img"
+          image={logoWhite}
+          alt="kodkod logo"
+        />
+      </div>
+      <CardContent className="px-5 py-4">
+        <Typography component="h4" variant="h5" textAlign="center">
+          Ingresa a tu cuenta
+        </Typography>
+        <Formik
+          initialValues={formInitialValues}
+          onSubmit={handleSubmit}
+          validationSchema={validationSchema}
+        >
+          {({
+            values,
+            errors,
+            handleChange,
+            dirty,
+            isValid,
+            isSubmitting,
+            handleBlur,
+            touched,
+            handleSubmit,
+          }) => {
+            return (
+              <Form onSubmit={handleSubmit}>
+                <Box display={"flex"} flexDirection={"column"} mt={3}>
+                  <FormControl
+                    error={!!errors.email && touched.email}
+                    className="mb-3"
+                  >
+                    <TextField
+                      name={"email"}
+                      value={values.email}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      type={"email"}
+                      color="primary"
+                      placeholder={"Ingresa tu email"}
+                      variant="outlined"
+                    />
+                  </FormControl>
+                  <FormControl
+                    error={!!errors.password && touched.password}
+                    className="mb-2"
+                  >
+                    <TextField
+                      name={"password"}
+                      value={values.password}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      color="primary"
+                      type={"password"}
+                      placeholder={"Ingresa tu contraseña"}
+                      variant="outlined"
+                    />
+                  </FormControl>
+                  <Typography
+                    className="mb-4"
+                    textAlign={"center"}
+                    variant="subtitle2"
+                    component={RouterLink}
+                    to={"/forgot-password"}
+                  >
+                    Olvidé mi contraseña
+                  </Typography>
 
-                    <Box
-                      className={"action__container"}
-                      display={"flex"}
-                      flexDirection={"column"}
-                      alignItems={"center"}
-                      gap={1}
+                  <Box
+                    className={"action__container"}
+                    display={"flex"}
+                    flexDirection={"column"}
+                    alignItems={"center"}
+                    gap={1}
+                  >
+                    <Button
+                      disabled={isSubmitting || !isValid || !dirty}
+                      fullWidth
+                      size="large"
+                      className={"login__button"}
+                      variant={"contained"}
+                      type={"submit"}
                     >
-                      <Button
-                        disabled={isSubmitting || !isValid || !dirty}
-                        fullWidth
-                        size="large"
-                        className={"login__button"}
-                        variant={"contained"}
-                        type={"submit"}
+                      Iniciar sesión
+                    </Button>
+                    <Typography component="span" variant="subtitle2">
+                      ¿Aún no tienes una cuenta?{" "}
+                      <Typography
+                        component={RouterLink}
+                        variant="subtitle2"
+                        to={"/signup"}
                       >
-                        Iniciar sesión
-                      </Button>
-                      <Typography component="span" variant="subtitle2">
-                        ¿Aún no tienes una cuenta?{" "}
-                        <Typography
-                          component={RouterLink}
-                          variant="subtitle2"
-                          to={"/signup"}
-                        >
-                          Registrate
-                        </Typography>
+                        Registrate
                       </Typography>
-                    </Box>
+                    </Typography>
                   </Box>
-                </Form>
-              );
-            }}
-          </Formik>
-        </CardContent>
-      </SignInCard>
-    </SignInContainer>
+                </Box>
+              </Form>
+            );
+          }}
+        </Formik>
+      </CardContent>
+    </SignInCard>
   );
 };
 
