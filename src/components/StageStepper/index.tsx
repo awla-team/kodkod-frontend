@@ -59,7 +59,6 @@ const StageStepper: FC<{ shownStage: IStage, stages: IStage[], onStageChange: (s
         updateStageData(responseData);
         setOpenDialog(false);
         setActiveStep(responseData._index);
-        window.location.reload();
       }
     } catch (e: any) {
       Toaster("error", e.message);
