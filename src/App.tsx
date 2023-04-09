@@ -34,13 +34,12 @@ const App: React.FC = () => {
         return response?.data?.responseData;
       })
       .then((classes: ClassInterface[]) => {
-        if (!!classes && Object.values(classes).length)
-          setClasses(sortClasses(classes));
+        setClasses(!!classes ? sortClasses(classes) : []);
         setFetching(FetchStatus.Success);
       })
       .catch((error) => {
         setFetching(FetchStatus.Error);
-        console.log(error);
+        console.error(error);
       });
   };
 
@@ -55,8 +54,9 @@ const App: React.FC = () => {
           return 0;
         })
       );
-    } catch (e: any) {
-      Toaster("error", e.message);
+    } catch (error: any) {
+      console.error(error);
+      Toaster("error", "Hubo un error al cargar los niveles");
     }
   };
 
