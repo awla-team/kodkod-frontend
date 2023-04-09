@@ -11,9 +11,9 @@ import { AuthContextType } from "./interfaces";
 import { getAuthUser as getAuthUserAction } from "services/users";
 import Toaster from "utils/Toster";
 import { User } from "services/users/interfaces";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 
-const publicRoutes = ["/signin", "/signup", "/reset-password"];
+// const publicRoutes = ["/signin", "/signup", "/reset-password"];
 const AuthContext = createContext<AuthContextType>({
   user: null,
 });
@@ -78,12 +78,6 @@ const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
       if (user) {
         return;
       }
-      if (publicRoutes.includes(pathname)) {
-        const accessToken = localStorage.getItem("accessToken");
-        if (!accessToken) {
-          return;
-        }
-      }
       const userData = await getAuthUser();
       dispatch({
         type: "user__action",
@@ -93,19 +87,27 @@ const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
         },
       });
     } catch (error: any) {
-      // if (error?.response?.status === 401)
-      Toaster("error", "Tu sesión ha caducado");
-      // else Toaster("error", "Ha ocurrido un error");
+      if (error?.response?.status === 401)
+        Toaster("error", "Tu sesión ha caducado");
+      else Toaster("error", "Ha ocurrido un error en tu sesión");
       goToSignin();
     }
-  }, [goToSignin, pathname, user]);
+  }, [goToSignin, user]);
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
     const refreshToken = localStorage.getItem("refreshToken");
-    if (accessToken && refreshToken) checkAuthUser();
-    else if (!pathname.includes("app")) goToSignin();
+    if (accessToken && refreshToken && pathname.includes("app"))
+      checkAuthUser();
   }, [pathname, checkAuthUser, goToSignin]);
+
+  if (localStorage.getItem("accessToken") && pathname === "/") {
+    return <Navigate to="/app" />;
+  }
+
+  if (!localStorage.getItem("accessToken") && pathname === "/") {
+    return <Navigate to="/signin" />;
+  }
 
   return (
     <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>

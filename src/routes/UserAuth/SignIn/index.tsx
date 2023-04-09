@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {SignInCard, SignInContainer } from "./styled";
+import { SignInCard, SignInContainer } from "./styled";
 import {
   Box,
   Typography,
@@ -9,7 +9,7 @@ import {
   CardContent,
   CardMedia,
 } from "@mui/material";
-import logoWhite from 'assets/images/logo-white.png';
+import logoWhite from "assets/images/logo-white.png";
 import { Formik, Form, FormikHelpers } from "formik";
 import { FormInitialValuesType } from "./interfaces";
 import * as Yup from "yup";
@@ -18,13 +18,11 @@ import { signIn } from "services/auth";
 import Toaster from "utils/Toster";
 import { SignInResponseType } from "../../../global/interfaces";
 
-
 const SignIn: React.FC = () => {
-  const [formInitialValues, setFormInitialValues] =
-    useState<FormInitialValuesType>({
-      email: "",
-      password: "",
-    });
+  const [formInitialValues] = useState<FormInitialValuesType>({
+    email: "",
+    password: "",
+  });
   const navigate = useNavigate();
 
   const validationSchema = () => {
@@ -57,14 +55,14 @@ const SignIn: React.FC = () => {
       <SignInCard variant="outlined">
         <div>
           <CardMedia
-            className="p-5"          
+            className="p-5"
             component="img"
             height="200"
             width="500"
             image={logoWhite}
             alt="kodkod logo"
           />
-        </div>        
+        </div>
         <CardContent className="px-5 py-4">
           <Typography component="h4" variant="h5" textAlign="center">
             Ingresa a tu cuenta
@@ -87,29 +85,31 @@ const SignIn: React.FC = () => {
             }) => {
               return (
                 <Form onSubmit={handleSubmit}>
-                  <Box
-                    display={"flex"}
-                    flexDirection={"column"}                    
-                    mt={3}                  
-                  >
-                    <FormControl error={!!errors.email && touched.email} className="mb-3">
+                  <Box display={"flex"} flexDirection={"column"} mt={3}>
+                    <FormControl
+                      error={!!errors.email && touched.email}
+                      className="mb-3"
+                    >
                       <TextField
                         name={"email"}
                         value={values.email}
                         onChange={handleChange}
-                        onBlur={handleBlur}                        
+                        onBlur={handleBlur}
                         type={"email"}
                         color="primary"
                         placeholder={"Ingresa tu email"}
                         variant="outlined"
                       />
                     </FormControl>
-                    <FormControl error={!!errors.password && touched.password} className="mb-2">
+                    <FormControl
+                      error={!!errors.password && touched.password}
+                      className="mb-2"
+                    >
                       <TextField
                         name={"password"}
                         value={values.password}
                         onChange={handleChange}
-                        onBlur={handleBlur}                                              
+                        onBlur={handleBlur}
                         color="primary"
                         type={"password"}
                         placeholder={"Ingresa tu contraseña"}
@@ -117,8 +117,8 @@ const SignIn: React.FC = () => {
                       />
                     </FormControl>
                     <Typography
-                      className="mb-4"         
-                      textAlign={"center"}                      
+                      className="mb-4"
+                      textAlign={"center"}
                       variant="subtitle2"
                       component={RouterLink}
                       to={"/forgot-password"}
@@ -144,8 +144,14 @@ const SignIn: React.FC = () => {
                         Iniciar sesión
                       </Button>
                       <Typography component="span" variant="subtitle2">
-                        ¿Aún no tienes una cuenta? {" "}
-                        <Typography component={RouterLink} variant="subtitle2" to={"/signup"}>Registrate</Typography>
+                        ¿Aún no tienes una cuenta?{" "}
+                        <Typography
+                          component={RouterLink}
+                          variant="subtitle2"
+                          to={"/signup"}
+                        >
+                          Registrate
+                        </Typography>
                       </Typography>
                     </Box>
                   </Box>
@@ -154,7 +160,7 @@ const SignIn: React.FC = () => {
             }}
           </Formik>
         </CardContent>
-      </SignInCard>      
+      </SignInCard>
     </SignInContainer>
   );
 };
