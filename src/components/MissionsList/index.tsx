@@ -15,18 +15,19 @@ const MissionsList: FC<{ shownStage: IStage }> = ({ shownStage }) => {
   // const [sortedMissions, setSortedMissions] = useState<IMission[]>([]);
 
   useEffect(() => {
-    (async () => {
-      if (shownStage) {
-        const response = await getStageMissions(shownStage.id);
-        setMissions(response.data.responseData);
-      }
-    })();
+    if (shownStage) handleGetMissions(shownStage.id);
   }, [shownStage]);
+
+  const handleGetMissions = async (stageId: number | string) => {
+    const response = await getStageMissions(stageId);
+    setMissions(response.data.responseData);
+  };
 
   const handleOpen = (missionDetails: IMission) => {
     setSelectedMission(missionDetails);
     setOpen(true);
   };
+
   const handleClose = (reason?: "backdropClick" | "escapeKeyDown") => {
     if (reason !== "backdropClick") {
       setOpen(false);
@@ -73,6 +74,7 @@ const MissionsList: FC<{ shownStage: IStage }> = ({ shownStage }) => {
       {openDrawer && !!selectedMission && (
         <MissionAccomplishedDrawer
           open={openDrawer && !!selectedMission}
+          onSave={handleGetMissions}
           anchor={"right"}
           onClose={handleDrawerClose}
           mission={selectedMission}

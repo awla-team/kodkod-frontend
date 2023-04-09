@@ -17,7 +17,7 @@ import Toaster from "utils/Toster";
 import { missionAccomplished } from "services/missions";
 import { StudentListContainer } from "./styled";
 
-export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({ stage, mission, studentsDetails, handleClose }) => {
+export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({ stage, mission, studentsDetails, onSave, handleClose }) => {
 
   const [selected, setSelected] = useState<any>({});
   const [defaultSelected, setDefaultSelected] = useState<any>({});
@@ -71,6 +71,7 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({ 
           id_stage: stage.id as number,
         });
       Toaster("success", "data saved successfully!");
+      onSave(stage.id);
       handleClose();
     } catch (e: any) {
       Toaster("error", e.message);

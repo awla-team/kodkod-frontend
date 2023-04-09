@@ -8,6 +8,7 @@ import StudentsSelectableList from "components/StudentsSelectableList";
 
 const MissionAccomplished: FC<MissionAccomplishedProps> = ({
   open,
+  onSave,
   anchor = "right",
   onClose,
   stage,
@@ -60,7 +61,7 @@ const MissionAccomplished: FC<MissionAccomplishedProps> = ({
         </p>
       </div>*/}
 
-      <StudentsSelectableList stage={stage} handleClose={handleClose} mission={mission} studentsDetails={studentsDetails} />
+      <StudentsSelectableList stage={stage} onSave={onSave} handleClose={handleClose} mission={mission} studentsDetails={studentsDetails} />
     </Drawer>
   );
 };
