@@ -118,6 +118,7 @@ export interface IMission {
   points: number;
   id_skill?: number;
   skill?: ISkill;
+  completed_users: IUser[];
   difficulty: "easy" | "normal" | "hard";
 }
 

@@ -10,6 +10,13 @@ export const ChangeMissionButton = styled(Button)`
   border-radius: 100%;
   box-shadow: 0 0 2px rgba(33, 33, 33, 0.4);
   min-width: unset;
+
+  &[disabled] {
+    background-color: #dbdbdb;
+    svg {
+      fill: gray;
+    }
+  }
 `;
 
 export const PointsContainer = styled.div`

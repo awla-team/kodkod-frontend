@@ -81,7 +81,7 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
     >
       <DialogTitle fontWeight="bold">{`Reemplazar misión "${mission.title}"`}</DialogTitle>
       <DialogContent>
-        <Typography component="span" variant="body1">Te sugerimos cambiar esta misión por otra de la misma <b>habilidad</b> y <b>dificultad</b></Typography>  
+        <Typography component="span" variant="body1">Cambia esta misión por otra de la misma <b>dificultad</b>. Recuerda que no puedes reemplazar una misión que ya ha sido completada por algún estudiante.</Typography>
         <NewMissionList className="mt-2">
           <Box className="d-flex align-items-center justify-content-center p-3" sx={{ boxShadow: '0 0 2px rgba(33, 33, 33, 0.5);'}}>
             <Typography component="span" variant="body2" className="me-1">Mostrando misiones </Typography>
