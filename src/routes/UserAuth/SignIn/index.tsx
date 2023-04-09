@@ -47,6 +47,11 @@ const SignIn: React.FC = () => {
     } catch (error: any) {
       if (error?.response?.data?.responseData === "Wrong credentials")
         return Toaster("error", "Email o contraseña incorrecta");
+      if (error?.response?.data?.responseData?.reason === "unverified")
+        return Toaster(
+          "error",
+          "El email de esta cuenta no ha sido verificado"
+        );
       Toaster("error", "Hubo un error al iniciar sesión");
     } finally {
       formikHelper.setSubmitting(false);

@@ -6,24 +6,21 @@ import {
   Button,
   CardContent,
   FormControl,
-  FormLabel,
   TextField,
   Typography,
 } from "@mui/material";
 import { Form, Formik, FormikHelpers } from "formik";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import { FormInitialValuesType } from "./interfaces";
 import * as Yup from "yup";
 import Toaster from "utils/Toster";
 import { forgotPassword } from "services/auth";
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 const ForgotPassword: FC<ForgotPasswordProps> = () => {
-  const [formInitialValues, setFormInitialValues] =
-    useState<FormInitialValuesType>({
-      email: "",
-    });
-  const navigate = useNavigate();
+  const [formInitialValues] = useState<FormInitialValuesType>({
+    email: "",
+  });
 
   const validationSchema = () => {
     return Yup.object({
@@ -37,10 +34,19 @@ const ForgotPassword: FC<ForgotPasswordProps> = () => {
   ) => {
     try {
       await forgotPassword(values);
-      Toaster("success", "Email has been sent to your email address");
+      Toaster("success", "El correo ha sido enviado a tu email");
       formikHelper.resetForm();
     } catch (error: any) {
-      Toaster("error", error.message);
+      if (error?.response?.data?.responseData === "Data not found")
+        return Toaster(
+          "error",
+          "El email ingresado no se encuentra registrado"
+        );
+      if (
+        error?.response?.data?.responseData?.includes("must be a valid email")
+      )
+        return Toaster("error", "El email ingresado no es válido");
+      Toaster("error", "Hubo un error al enviar el correo");
     } finally {
       formikHelper.setSubmitting(false);
     }
@@ -49,12 +55,20 @@ const ForgotPassword: FC<ForgotPasswordProps> = () => {
     <ForgotPasswordContainer className="d-flex flex-column">
       <ForgotPasswordCard variant="outlined">
         <CardContent className="p-5">
-          <Button className="mb-2" startIcon={<ArrowBackIosIcon />} component={RouterLink} to={"/signin"}>Volver al inicio de sesión</Button>
+          <Button
+            className="mb-2"
+            startIcon={<ArrowBackIosIcon />}
+            component={RouterLink}
+            to={"/signin"}
+          >
+            Volver al inicio de sesión
+          </Button>
           <Typography component="h4" variant="h5" className="mb-1">
             Recupera tu contraseña
           </Typography>
           <Typography component="span" variant="body2" color="gray">
-            Ingresa tu email para enviarte un correo con instrucciones para recuperar tu contraseña
+            Ingresa tu email para enviarte un correo con instrucciones para
+            recuperar tu contraseña
           </Typography>
           <Formik
             initialValues={formInitialValues}
@@ -74,13 +88,8 @@ const ForgotPassword: FC<ForgotPasswordProps> = () => {
             }) => {
               return (
                 <Form onSubmit={handleSubmit}>
-                  <Box
-                    display={"flex"}
-                    flexDirection={"column"}
-                    gap={2}
-                    mt={2 }                    
-                  >
-                    <FormControl error={!!errors.email && touched.email}>                    
+                  <Box display={"flex"} flexDirection={"column"} gap={2} mt={2}>
+                    <FormControl error={!!errors.email && touched.email}>
                       <TextField
                         required
                         name={"email"}
@@ -110,7 +119,7 @@ const ForgotPassword: FC<ForgotPasswordProps> = () => {
                         type={"submit"}
                       >
                         Enviar correo de recuperación
-                      </Button>                      
+                      </Button>
                     </Box>
                   </Box>
                 </Form>
