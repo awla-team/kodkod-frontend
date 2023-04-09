@@ -1,6 +1,5 @@
 import { FC, useEffect, useState } from "react";
 import { ProgressProps } from "./interfaces";
-import * as Styled from "./styled";
 import {
   Typography,
   Box,
@@ -13,64 +12,62 @@ import { useParams } from "react-router-dom";
 import { studentsByClass } from "services/students";
 import { StudentType } from "components/StudentsList/interfaces";
 import Toaster from "utils/Toster";
+import { ProgressContainer, KPICardContainer, KPICard, ClassLeaderboardContainer, ClassLeaderboardTable } from "./styled";
+import { useClassContext } from "../context";
+import { getMissionsByClassAdventure } from "services/missions";
+import { IMission } from "global/interfaces";
+import AdventureProgress from "components/AdventureProgress";
 
 const Progress: FC<ProgressProps> = () => {
-  const { classId } = useParams();
+  const { classDetails } = useClassContext();
   const [students, setStudents] = useState<StudentType[]>([]);
-
-  const getStudents = async () => {
-    try {
-      const { data }: { data: { responseData: StudentType[] } } =
-        await studentsByClass(classId, {
-          missions: true,
-          role: "student",
-          rewards: true,
-        });
-      setStudents(data.responseData);
-    } catch (error: any) {
-      console.error(error);
-      Toaster("error", "Hubo un error al cargar los estudiantes");
-    }
-  };
+  const [missions, setMissions] = useState<IMission[]>([]);
+  const [progressPercentage, setProgressPercentage] = useState<number | undefined>(undefined);
 
   useEffect(() => {
-    if (classId) getStudents();
-  }, [classId]);
+    if (classDetails) {
+      (async () => {
+        try {
+          const { data }: { data: { responseData: StudentType[] } } =
+            await studentsByClass(classDetails.id, {
+              missions: true,
+              role: "student",
+              rewards: true
+            });
+          setStudents(data.responseData);
+        } catch (e: any) {
+          Toaster("error", "Hubo un error al cargar los estudiantes");
+        }
+      })();
+      (async () => {
+        try {
+          const missionsResponse = await getMissionsByClassAdventure(classDetails?.current_adventure?.id_class_has_adventure);
+          setMissions(missionsResponse.data.responseData);
+        } catch (e: any) {
+          console.log(e);
+        }
+      })();
+    };
+  }, [classDetails]);
 
+  useEffect(() => {
+    if (students?.length && missions?.length) {
+      const completedMissions = students.reduce((accumulator, student) => accumulator + student.missions.length, 0);
+      setProgressPercentage(completedMissions / (students.length * missions.length) * 100);
+    }
+    else setProgressPercentage(0);
+  }, [students, missions]);  
+  
   return (
-    <Styled.ProgressContainer>
-      <Box className={"title__section"}>
-        <Typography
-          variant={"h4"}
-          fontWeight={700}
-          className={"title__heading"}
-        >
-          Progress
-        </Typography>
-
-        <Typography my={1}>
-          In this section you can see the missions and rewards that the students
-          of your class have achieved over time. You can also click on a reward
-          to mark it if it has already been claimed.
-        </Typography>
-      </Box>
-
-      <Styled.KPICardContainer>
-        <Styled.KPICard className={"completed__missions"}>
-          <Typography className={"count"}>64</Typography>
-          <Typography className={"text"}>Missions completed</Typography>
-        </Styled.KPICard>
-        <Styled.KPICard className={"finished__adventures"}>
-          <Typography className={"count"}>0</Typography>
-          <Typography className={"text"}>Adventures finished</Typography>
-        </Styled.KPICard>
-        <Styled.KPICard className={"rewards__obtained"}>
-          <Typography className={"count"}>20</Typography>
-          <Typography className={"text"}>Rewards obtained</Typography>
-        </Styled.KPICard>
-      </Styled.KPICardContainer>
-      <Styled.ClassLeaderboardContainer>
-        <Styled.ClassLeaderboardTable stickyHeader>
+    <ProgressContainer className="p-5">
+      <Typography variant="h4" component="h4" fontWeight="bold" className="mb-2">Progreso</Typography>
+      <Typography className="mb-4">En esta sección podrás ver el progreso de cada estudiante y del grupo curso. Podrás ver el puntaje en la aventura actual, el número de misiones completadas y las recompensas obtenidas. Además, puedes <b>gestionar el uso de recompensas</b> de los estudiantes.</Typography>
+      
+      {classDetails?.current_adventure ? (
+        <AdventureProgress adventure={classDetails.current_adventure} progressPercentage={progressPercentage} />
+      ) : null}
+      <ClassLeaderboardContainer>
+        <ClassLeaderboardTable stickyHeader>
           <TableHead>
             <TableRow>
               <TableCell>Full name</TableCell>
@@ -82,7 +79,7 @@ const Progress: FC<ProgressProps> = () => {
           <TableBody>
             {students.map((res, index) => {
               return (
-                <TableRow>
+                <TableRow key={`student-row-${res.id}`}>
                   <TableCell className={"name"}>
                     {res.first_name} {res.last_name}
                   </TableCell>
@@ -102,9 +99,9 @@ const Progress: FC<ProgressProps> = () => {
               );
             })}
           </TableBody>
-        </Styled.ClassLeaderboardTable>
-      </Styled.ClassLeaderboardContainer>
-    </Styled.ProgressContainer>
+        </ClassLeaderboardTable>
+      </ClassLeaderboardContainer>
+    </ProgressContainer>
   );
 };
 
