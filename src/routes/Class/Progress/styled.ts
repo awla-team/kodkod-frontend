@@ -9,15 +9,14 @@ import {
 } from "@mui/material";
 
 export const ProgressContainer = styled(Box)`
-  & .title__section {
-    margin-block-end: 1rem;
-
-    & .title__heading {
-      font-size: 2.25rem;
-    }
-  }
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: fit-content;
+  background: #FFF;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
 `;
-
 export const KPICardContainer = styled(Box)`
   display: flex;
   gap: 2rem;
