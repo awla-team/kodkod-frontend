@@ -45,7 +45,9 @@ const SignIn: React.FC = () => {
       localStorage.setItem("accessToken", accessToken);
       navigate("/app");
     } catch (error: any) {
-      Toaster("error", error.message);
+      if (error?.response?.data?.responseData === "Wrong credentials")
+        return Toaster("error", "Email o contraseña incorrecta");
+      Toaster("error", "Hubo un error al iniciar sesión");
     } finally {
       formikHelper.setSubmitting(false);
     }
