@@ -93,9 +93,9 @@ const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
         },
       });
     } catch (error: any) {
-      if (error?.response?.status === 401)
-        Toaster("error", "Unauthorized access");
-      else Toaster("error", error.message);
+      // if (error?.response?.status === 401)
+      Toaster("error", "Tu sesión ha caducado");
+      // else Toaster("error", "Ha ocurrido un error");
       goToSignin();
     }
   }, [goToSignin, pathname, user]);
