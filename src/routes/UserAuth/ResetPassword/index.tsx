@@ -52,9 +52,7 @@ const ResetPassword: FC = () => {
   const validationSchema = () => {
     return Yup.object({
       password: Yup.string()
-        .matches(
-          /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}/g
-        )
+        .matches(/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/g)
         .required("Password cannot be empty."),
       confirmPassword: Yup.string()
         .oneOf([Yup.ref("password"), null], "Password must match")
@@ -99,7 +97,7 @@ const ResetPassword: FC = () => {
         </Typography>
         <ul>
           <Typography component="li" variant="body2" color="gray">
-            Al menos 8 caractéres
+            Entre 8 y 16 caractéres
           </Typography>
           <Typography component="li" variant="body2" color="gray">
             Al menos 1 minúscula
@@ -109,9 +107,6 @@ const ResetPassword: FC = () => {
           </Typography>
           <Typography component="li" variant="body2" color="gray">
             Al menos 1 número
-          </Typography>
-          <Typography component="li" variant="body2" color="gray">
-            Al menos 1 símbolo
           </Typography>
         </ul>
         {valid ? (
