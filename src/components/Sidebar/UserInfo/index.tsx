@@ -3,7 +3,6 @@ import {
   Divider,
   Menu,
   MenuItem,
-  Tooltip,
   Typography,
 } from "@mui/material";
 import { useState } from "react";
@@ -69,7 +68,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
             sx={{ ml: 1 }}
           >{`${user.first_name} ${user.last_name}`}</Typography>
         </MenuItem>
-        <MenuItem disabled={loading}>Configuración</MenuItem>
+        {/* <MenuItem disabled={loading}>Configuración</MenuItem> */}
         <MenuItem onClick={handleLogout} disabled={loading}>
           Cerrar sesión
         </MenuItem>
