@@ -5,7 +5,7 @@ import { Link as RouterLink, useParams } from "react-router-dom";
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import RewardCard from "../../../components/RewardCard";
 import { useSearchParams } from "react-router-dom";
-import { getRewards } from "../../../services/rewards";
+import { getRewardsByAdventure } from "../../../services/rewards";
 import { IReward } from "../../../global/interfaces";
 import Toaster from "../../../utils/Toster";
 
@@ -17,26 +17,22 @@ const Rewards: FC = () => {
   useEffect(() => {
     const id = searchParams.get("adventureId");
     if (id) {
-      getAllRewards(id);
+      (async (adventureId: number | string) => {
+        try {
+          const { data }: { data: { responseData: IReward[] } } = await getRewardsByAdventure(adventureId);
+          
+          const sorted = data.responseData.sort((a, b) => {
+            if (a.required_points > b.required_points) return 1;
+            if (a.required_points < b.required_points) return -1;
+            return 0;
+          })
+          setRewards(sorted)
+        } catch (e: any) {
+          Toaster("error", e.message);
+        }
+      })(id);
     }
   }, []);
-
-  const getAllRewards = async (adventureId: number | string) => {
-    try {
-      const { data }: { data: { responseData: IReward[] } } = await getRewards({
-        id_class: classId,
-        id_adventure: adventureId,
-      });
-      const sorted = data.responseData.sort((a, b) => {
-        if (a.required_points > b.required_points) return 1;
-        if (a.required_points < b.required_points) return -1;
-        return 0;
-      })
-      setRewards(sorted)
-    } catch (e: any) {
-      Toaster("error", e.message);
-    }
-  };  
 
   return (
     <Box>

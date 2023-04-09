@@ -70,7 +70,6 @@ const SignUp: React.FC = () => {
     };
     signUp(filteredValues)
       .then((_response) => {
-        Toaster("success", "You will get a verification email!");
         formikHelper.resetForm();
         setIsFetching(FetchStatus.Success);
       })
@@ -87,8 +86,7 @@ const SignUp: React.FC = () => {
             formikHelper.setFieldError("email", "Email already exists");
           }
         }
-        console.error(error);
-        Toaster("error", error.message);
+        Toaster("error", error.response.data.responseData.message || error.message);
         setIsFetching(FetchStatus.Error);
       })
       .finally(() => {
@@ -154,7 +152,7 @@ const SignUp: React.FC = () => {
       </SignUpContainer>
     );
 
-  if (isFetching === FetchStatus.Error)
+  /*if (isFetching === FetchStatus.Error)
     return (
       <SignUpContainer className="d-flex flex-column">
         <AuthCard>
@@ -174,7 +172,7 @@ const SignUp: React.FC = () => {
           </Typography>
         </AuthCard>
       </SignUpContainer>
-    );
+    );*/
 
   return (
     <SignUpContainer className="d-flex flex-column">

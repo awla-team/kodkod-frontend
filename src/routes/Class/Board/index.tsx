@@ -25,7 +25,7 @@ const Board: React.FC<{}> = ({}) => {
   return (
     <DashboardContainer>
       <DashboardContainerLeftSide>
-        <DetailsCard className="p-5">
+        <DetailsCard>
           {classDetails && (
             <ClassDetailsCard classDetails={classDetails} levels={levels}/>
           )}

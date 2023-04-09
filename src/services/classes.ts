@@ -21,7 +21,6 @@ export const getClassByID = (id: number | string) => {
   return http.get("class/" + id);
 };
 
-
 export const updateClass= (body: ClassMutationType) =>{
  return http.put('class/'+body.id, body)
 }
@@ -29,3 +28,7 @@ export const updateClass= (body: ClassMutationType) =>{
 export const deleteClass= (id: number | string) =>{
   return http.delete('class/'+id)
 }
+
+export const getClassHasAdventuresByClass = (classId: number | string) => {
+  return http.get(`completed-class-adventures/${classId}`);
+};
