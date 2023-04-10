@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import AngryIconFilled from "components/SVG/AngryIconFilled";
 import AngryIconOutlined from "components/SVG/AngryIconOutlined";
 import GoodIconFilled from "components/SVG/GoodIconFilled";
@@ -12,46 +12,46 @@ import SadIconOutlined from "components/SVG/SadIconOutlined";
 import { IScoreOption } from "./interfaces";
 
 export const challengeOptions: string[] = [
-    'Falta de atención',
-    'Retraso en el inicio de la clase',
-    'Interrupción de clase',
+  "Falta de atención",
+  "Retraso en el inicio de la clase",
+  "Interrupción de clase",
 ];
 
-export const mostRemarkableOptions: string[] =  [
-    'Alta participación',
-    'Buena concentración',
-    'Se trabajó bien en grupo',
+export const mostRemarkableOptions: string[] = [
+  "Alta participación",
+  "Buena concentración",
+  "Se trabajó bien en grupo",
 ];
 
 export const radioOptions: IScoreOption[] = [
-    {
-        text: 'Muy malo',
-        value: 0,
-        icon: <AngryIconOutlined />,
-        selectedIcon: <AngryIconFilled />,    
-    },
-    {
-        text: 'Malo',
-        value: 1,
-        icon: <SadIconOutlined />,
-        selectedIcon: <SadIconFilled />,    
-    },
-    {
-        text: 'Neutral',
-        value: 2,
-        icon: <NeutralIconOutlined />,
-        selectedIcon: <NeutralIconFilled />,    
-    },
-    {
-        text: 'Bueno',
-        value: 3,
-        icon: <GoodIconOutlined />,
-        selectedIcon: <GoodIconFilled />,    
-    },
-    {
-        text: 'Muy bueno',
-        value: 4,
-        icon: <HappyIconOutlined />,
-        selectedIcon: <HappyIconFilled />,    
-    },
+  {
+    text: "Muy malo",
+    value: 0,
+    icon: <AngryIconOutlined />,
+    selectedIcon: <AngryIconFilled />,
+  },
+  {
+    text: "Malo",
+    value: 1,
+    icon: <SadIconOutlined />,
+    selectedIcon: <SadIconFilled />,
+  },
+  {
+    text: "Neutral",
+    value: 2,
+    icon: <NeutralIconOutlined />,
+    selectedIcon: <NeutralIconFilled />,
+  },
+  {
+    text: "Bueno",
+    value: 3,
+    icon: <GoodIconOutlined />,
+    selectedIcon: <GoodIconFilled />,
+  },
+  {
+    text: "Muy bueno",
+    value: 4,
+    icon: <HappyIconOutlined />,
+    selectedIcon: <HappyIconFilled />,
+  },
 ];

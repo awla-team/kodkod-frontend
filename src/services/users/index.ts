@@ -14,6 +14,9 @@ export const getUsers = (filter: UserFilter) => {
   return http.get("/user" + generateQueryParamsFromObject(filter));
 };
 
-export const getUsersByEmail = (params: { role: string, email_list: string[] }) => {
+export const getUsersByEmail = (params: {
+  role: string;
+  email_list: string[];
+}) => {
   return http.get<IUser>("/users-by-email", { params: params });
 };

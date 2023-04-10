@@ -23,7 +23,7 @@ export const NavTabsContainer = styled(Box)`
   width: 100%;
   background: #fff;
   position: fixed;
-  border-bottom: 1px solid rgb(33, 33, 33, 0.08);      
+  border-bottom: 1px solid rgb(33, 33, 33, 0.08);
   justify-content: center;
   align-items: center;
   gap: 24px;
@@ -34,11 +34,11 @@ export const NavTabsContainer = styled(Box)`
     color: rgba(0, 0, 0, 0.4);
     padding: 6px;
     border-radius: 8px;
-    transition: all 0.2s ease;    
+    transition: all 0.2s ease;
 
     svg {
       height: 24px;
-      width: auto;      
+      width: auto;
 
       path {
         transition: all 0.2s ease;
@@ -72,10 +72,9 @@ export const NavTabsContainer = styled(Box)`
           fill: ${(props) => props.theme.palette.primary.dark};
           stroke: ${(props) => props.theme.palette.primary.dark};
           stroke-width: 1px;
-        }        
+        }
         &:last-child {
           fill: ${(props) => props.theme.palette.primary.dark};
-          
         }
       }
     }

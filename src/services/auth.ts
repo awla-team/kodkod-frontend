@@ -9,7 +9,7 @@ export interface GenerateAccessTokenBody {
   refreshToken: string;
 }
 
-export interface LogoutBody extends GenerateAccessTokenBody { }
+export interface LogoutBody extends GenerateAccessTokenBody {}
 
 export interface SignUpBody extends SignInBody {
   first_name: string;
@@ -41,18 +41,15 @@ export const generateAccessToken = async (body?: GenerateAccessTokenBody) => {
       }
     }
 
-    fetch(
-      "http://localhost:3000/auth/generate-access-token",
-      {
-        method: "post",
-        body: JSON.stringify({
-          ...(body ? { refreshToken: body.refreshToken } : { refreshToken }),
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
+    fetch("http://localhost:3000/auth/generate-access-token", {
+      method: "post",
+      body: JSON.stringify({
+        ...(body ? { refreshToken: body.refreshToken } : { refreshToken }),
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
       .then((res) => {
         if (res.ok) {
           return res.json();

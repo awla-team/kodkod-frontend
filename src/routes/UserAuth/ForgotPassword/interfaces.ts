@@ -1,7 +1,5 @@
-export interface ForgotPasswordProps{
+export interface ForgotPasswordProps {}
 
-}
-
-export interface FormInitialValuesType{
-    email:string
+export interface FormInitialValuesType {
+  email: string;
 }

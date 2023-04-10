@@ -1,5 +1,1 @@
-
-
-export interface ProgressProps{
-
-}
+export interface ProgressProps {}

@@ -1,6 +1,5 @@
 import styled from "styled-components";
 
-
 const SidebarContainer = styled.div`
   position: relative;
   display: flex;
@@ -16,7 +15,7 @@ const SidebarContainer = styled.div`
 
   .home-button {
     margin-bottom: 16px;
-  }  
+  }
 `;
 
 const LogoContainer = styled.div`
@@ -26,7 +25,7 @@ const LogoContainer = styled.div`
 
   img {
     width: 100%;
-    height: auto;    
+    height: auto;
   }
 `;
 
@@ -41,12 +40,12 @@ const LinkList = styled.div`
   overflow-y: overlay;
   transition: all 0.3s ease;
 
-  &::-webkit-scrollbar {    
+  &::-webkit-scrollbar {
     width: 0;
     transition: all 0.3s ease;
   }
 
-  &:hover::-webkit-scrollbar {    
+  &:hover::-webkit-scrollbar {
     width: 3px;
   }
 `;

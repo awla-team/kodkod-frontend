@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const StudentsFormDetailsContainer = styled.div`  
+export const StudentsFormDetailsContainer = styled.div`
   .details-list {
     display: flex;
     flex-direction: column;

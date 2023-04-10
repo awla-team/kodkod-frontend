@@ -1,4 +1,4 @@
-import {ClassInterfaceModified} from "services/classes/interfaces";
+import { ClassInterfaceModified } from "services/classes/interfaces";
 
 export interface ClassCardProps {
   classObj: ClassInterfaceModified;

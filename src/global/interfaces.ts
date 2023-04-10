@@ -18,14 +18,14 @@ declare module "@mui/material/styles" {
   interface ThemeOptions extends CustomTheme {}
 }
 
-declare module '@mui/material/styles/createPalette' {
+declare module "@mui/material/styles/createPalette" {
   interface Palette {
-    highlight: Palette['primary'];
-    pink: Palette['primary'];
+    highlight: Palette["primary"];
+    pink: Palette["primary"];
   }
   interface PaletteOptions {
-    highlight: PaletteOptions['primary'];
-    pink: Palette['primary'];
+    highlight: PaletteOptions["primary"];
+    pink: Palette["primary"];
   }
 }
 
@@ -64,7 +64,7 @@ export interface IClass {
   alias?: string;
   id_user?: number;
   current_adventure?: IAdventure;
-};
+}
 
 export interface IUser {
   id?: number;
@@ -75,7 +75,8 @@ export interface IUser {
   role: string;
   id_school: number;
   academic_subject: string;
-  points: number;
+  user_has_rewards?: IUserHasReward[];
+  missions?: IMission[];
   verified: boolean;
 }
 
@@ -86,7 +87,7 @@ export interface IAdventure {
   banner: string;
   category: string;
   overview: string;
-  class_has_adventures?: IClassHasAdventure[]; 
+  class_has_adventures?: IClassHasAdventure[];
   expected_results: string;
   skills?: ISkill[];
   template_stages?: TemplateStages[];
@@ -130,6 +131,16 @@ export interface IReward {
   required_points: number;
   icon: string;
   type: string;
+}
+
+export interface IUserHasReward {
+  id: number;
+  created_at: Date;
+  updated_at: Date;
+  used_at: Date;
+  id_reward: number;
+  id_user: number;
+  reward?: IReward;
 }
 
 export interface ISchool {

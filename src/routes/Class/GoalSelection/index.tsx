@@ -13,8 +13,10 @@ const GoalSelection: React.FC = () => {
   const navigate = useNavigate();
   const [goals, setGoals] = useState<Goal[]>([]);
   const [selectedGoalId, setSelectedGoalId] = useState<number>(null);
-  const [loadingGoals, setLoadingGoals] = useState<FetchStatus>(FetchStatus.Idle);
-  
+  const [loadingGoals, setLoadingGoals] = useState<FetchStatus>(
+    FetchStatus.Idle
+  );
+
   const selectAdventure = (goalId: number) => {
     if (selectedGoalId !== goalId) setSelectedGoalId(goalId);
     else setSelectedGoalId(null);
@@ -36,14 +38,19 @@ const GoalSelection: React.FC = () => {
       });
   }, []);
 
-  if (loadingGoals === FetchStatus.Idle || loadingGoals === FetchStatus.Pending || !classDetails)
+  if (
+    loadingGoals === FetchStatus.Idle ||
+    loadingGoals === FetchStatus.Pending ||
+    !classDetails
+  )
     return (
       <div className="d-flex w-100 align-items-center justify-content-center">
         <CircularProgress />
       </div>
     );
 
-  if (loadingClass === FetchStatus.Success && classDetails.current_adventure) return <Navigate to={`/app/cursos/${classDetails.id}/aventuras`} />
+  if (loadingClass === FetchStatus.Success && classDetails.current_adventure)
+    return <Navigate to={`/app/cursos/${classDetails.id}/aventuras`} />;
 
   return (
     <GoalSelectionContainer className="w-100 p-5">
@@ -54,7 +61,10 @@ const GoalSelection: React.FC = () => {
         <b>Paso 1:</b> Escoge un objetivo
       </Typography>
       <Typography variant="body1" className="mb-4">
-        Una aventura es una serie de misiones planificadas para <b>alcanzar un objetivo</b> en concreto con tu curso. Para empezar, <b>escoge el objetivo</b> que quieres alcanzar con el curso <b>{classDetails.alias}</b>.
+        Una aventura es una serie de misiones planificadas para{" "}
+        <b>alcanzar un objetivo</b> en concreto con tu curso. Para empezar,{" "}
+        <b>escoge el objetivo</b> que quieres alcanzar con el curso{" "}
+        <b>{classDetails.alias}</b>.
       </Typography>
       <div className="d-flex flex-column w-100 align-items-center justify-content-between h-100">
         <div className="d-flex justify-content-center gap-5 w-100 flex-wrap">
@@ -73,11 +83,11 @@ const GoalSelection: React.FC = () => {
                       variant="body2"
                       component="span"
                       textAlign="center"
-                      fontWeight="bold"                      
+                      fontWeight="bold"
                     >
                       {goal.title}
                     </Typography>
-                  </Box>                  
+                  </Box>
                 </CardContainer>
               ))
             : null}

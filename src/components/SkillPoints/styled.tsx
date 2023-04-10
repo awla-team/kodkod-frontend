@@ -10,7 +10,7 @@ export const SkillPointsContainer = styled.div`
   .skill-point {
     height: 10px;
     width: 10px;
-    border-radius: 24px;    
+    border-radius: 24px;
     &:not(:last-child) {
       margin-right: 4px;
     }
@@ -28,8 +28,8 @@ export const IconContainer = styled.div`
   img {
     height: 16px;
     width: 16px;
-    &.blank-icon{
-      background: #D9D9D9;
+    &.blank-icon {
+      background: #d9d9d9;
       border-radius: 50%;
     }
   }
@@ -44,4 +44,3 @@ export const Point = styled.div`
     margin-right: 4px;
   }
 `;
-

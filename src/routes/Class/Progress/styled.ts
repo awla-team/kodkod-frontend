@@ -7,87 +7,53 @@ import {
   tableCellClasses,
   tableBodyClasses,
 } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
 
 export const ProgressContainer = styled(Box)`
-  & .title__section {
-    margin-block-end: 1rem;
-
-    & .title__heading {
-      font-size: 2.25rem;
-    }
-  }
-`;
-
-export const KPICardContainer = styled(Box)`
   display: flex;
-  gap: 2rem;
-  margin-block: 1rem;
-
-  & .rewards__obtained,
-  & .completed__missions {
-    max-width: 30%;
-    flex-basis: 30%;
-  }
-
-  & .finished__adventures {
-    max-width: 40%;
-    flex-basis: 40%;
-  }
-`;
-export const KPICard = styled(Box)`
-  padding: 2rem;
-  border: 1px solid #000;
+  flex-direction: column;
+  width: 100%;
+  height: fit-content;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-
-  & .count {
-    font-size: 3rem;
-    font-weight: 700;
-  }
-
-  & .text {
-    font-size: 1.5rem;
-  }
 `;
 
-export const ClassLeaderboardContainer = styled(TableContainer)`
-  border: 1px solid #000;
-  border-radius: 8px;
-  padding: 1rem;
-`;
+export const StickyDataGrid = styled(DataGrid)`
+  & .MuiDataGrid-columnHeaders {
+    position: sticky;
+    z-index: 1;
+    top: 0;
+    border-radius: 0;
+    background: ${(props) => props.theme.palette.primary.dark};
 
-export const ClassLeaderboardTable = styled(Table)`
-  & .${tableCellClasses.root} {
-    border: none;
-  }
-
-  & .${tableHeadClasses.root} {
-    & .${tableCellClasses.root} {
-      font-weight: 700;
-      background: transparent;
+    .MuiDataGrid-columnHeaderTitle {
+      font-weight: bold;
+      color: ${(props) => props.theme.palette.primary.contrastText};
     }
   }
-
-  & .${tableBodyClasses.root} {
-    & td.available__rewards > .reward__points__container {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-
-      & .reward__point {
-        width: 29px;
-        height: 29px;
-        background: #D9D9D9;
-        border-radius: 50%;
-        cursor: pointer;
-
-        &.available {
-          background: #000;
-        }
-      }
+  & .MuiDataGrid-footerContainer {
+    position: sticky;
+    z-index: 1;
+    bottom: 0;
+    background: #fff;
+    margin-bottom: 0;
+    border: 0;
+    outline: 1px solid rgb(224, 224, 224);
+    display: flex;
+    p {
+      margin: 0;
     }
+  }
+  & .MuiDataGrid-main {
+    overflow: visible;
+  }
+
+  .MuiDataGrid-row:nth-child(even) {
+    background: #fafafa;
+  }
+
+  .MuiDataGrid-row:hover {
+    background: #e0edff;
   }
 `;
