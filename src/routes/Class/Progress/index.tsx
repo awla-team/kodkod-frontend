@@ -31,18 +31,18 @@ const Progress: FC<ProgressProps> = () => {
 
   const columns: GridColDef[] = [
     {
-      field: 'last_name',
-      headerName: 'Apellidos',
-      width: 200,
-    },
-    {
       field: 'first_name',
       headerName: 'Nombres',
       width: 200
     },
     {
+      field: 'last_name',
+      headerName: 'Apellidos',
+      width: 200,
+    },
+    {
       field: 'points',
-      headerName: 'Puntaje',
+      headerName: 'Puntos actuales',
       width: 130,
       type: 'number',
       renderCell: (value) => (
