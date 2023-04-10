@@ -77,6 +77,7 @@ const StudentsList: FC<StudentsListProps> = ({
 };
 
 export default StudentsList;
+
 const DontHaveDetails: FC<{
   setOpenModal: Dispatch<SetStateAction<boolean>>;
 }> = ({ setOpenModal }) => {
@@ -104,13 +105,19 @@ const StudentsListDetails: FC<{
   return (
     <StudentsListDetailsContainer>
       <div className={"details"}>
-        {studentsData.map((res, index) => {
-          return (
-            <StudentDetailBox key={`${index}-${res.id}`}>
-              <StudentDetails details={res} handleDelete={handleDelete} />
-            </StudentDetailBox>
-          );
-        })}
+        {studentsData
+          .sort((a, b) => {
+            if (a.last_name > b.last_name) return 1;
+            if (a.last_name < b.last_name) return -1;
+            return 0;
+          })
+          .map((res, index) => {
+            return (
+              <StudentDetailBox key={`${index}-${res.id}`}>
+                <StudentDetails details={res} handleDelete={handleDelete} />
+              </StudentDetailBox>
+            );
+          })}
       </div>
 
       <Button
