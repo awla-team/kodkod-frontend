@@ -6,6 +6,10 @@ export const RewardsList = styled(Box)`
     .reward-icon {
       opacity: 0.3;
     }
+
+    .disabled {
+      pointer-events: none;
+    }
   }
 `;
 

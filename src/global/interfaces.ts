@@ -75,7 +75,7 @@ export interface IUser {
   role: string;
   id_school: number;
   academic_subject: string;
-  rewards?: IReward[];
+  user_has_rewards?: IUserHasReward[];
   missions?: IMission[];
   verified: boolean;
 }
@@ -131,14 +131,16 @@ export interface IReward {
   required_points: number;
   icon: string;
   type: string;
-  user_has_reward?: {
-    id: number;
-    created_at: Date;
-    updated_at: Date;
-    used_at: Date;
-    id_reward: number;
-    id_user: number;
-  };
+}
+
+export interface IUserHasReward {
+  id: number;
+  created_at: Date;
+  updated_at: Date;
+  used_at: Date;
+  id_reward: number;
+  id_user: number;
+  reward?: IReward;
 }
 
 export interface ISchool {
