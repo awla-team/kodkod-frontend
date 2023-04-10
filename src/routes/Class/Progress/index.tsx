@@ -47,7 +47,7 @@ const Progress: FC<ProgressProps> = () => {
       type: 'number',
       renderCell: (value) => (
         <div className="d-flex align-items-center gap-1">
-          <Typography variant="body2">{value.value}</Typography>
+          <Typography fontWeight="bold" variant="body2">{value.value}</Typography>
           <img src={kodcoinIcon} height="18" width="18" />
         </div>
       )
