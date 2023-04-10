@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import {
   EmotionalThermometerContainer,
   EmojiRadio,
@@ -73,6 +73,7 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
   const [formInitialValue, setFormInitialValue] =
     useState<FormInitialValue>(initialValues);
   const [editable, setEditable] = useState<boolean>(false);
+  const formRef = useRef(null);
 
   useEffect(() => {
     if (classDetails) {
@@ -159,7 +160,10 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
     );
   };
 
-  const handleDateChange = (date: Moment.Moment) => setDate(date);
+  const handleDateChange = (date: Moment.Moment) => {
+    formRef.current?.resetForm();
+    setDate(date);
+  };
 
   const handleSubmit = async (
     value: FormInitialValue,
@@ -270,6 +274,7 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
             initialValues={formInitialValue}
             onSubmit={handleSubmit}
             validationSchema={validationSchema}
+            innerRef={formRef}
           >
             {({
               errors,
