@@ -15,6 +15,7 @@ import AdventureProgress from "components/AdventureProgress";
 import { GridColDef, GridSortModel } from '@mui/x-data-grid';
 import kodcoinIcon from "assets/images/kodcoin.png";
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
+import RewardsModal from "components/Modals/RewardsModal";
 
 const Progress: FC<ProgressProps> = () => {
   const { classDetails } = useClassContext();
@@ -22,6 +23,8 @@ const Progress: FC<ProgressProps> = () => {
   const [missions, setMissions] = useState<IMission[]>([]);
   const [progressPercentage, setProgressPercentage] = useState<number | undefined>(undefined);
   const [averageCompletedMission, setAverageCompletedMission] = useState<number | undefined>(undefined);
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [selectedStudent, setSelectedStudent] = useState<IUser>(undefined);
   const [sortModel, setSortModel] = useState<GridSortModel>([
     {
       field: 'last_name',
@@ -69,11 +72,13 @@ const Progress: FC<ProgressProps> = () => {
       type: 'actions',
       flex: 1,
       align: 'right',
-      getActions: (params) => [
-        <Button startIcon={<EmojiEventsIcon htmlColor="#FDC51A" fontSize="small" />} variant="outlined" size="small" onClick={() => {}}>
-          Gestionar recompensas
-        </Button>
-      ],
+      getActions: ({ row }) => {
+        return [
+          <Button startIcon={<EmojiEventsIcon htmlColor="#FDC51A" fontSize="small" />} variant="outlined" size="small" onClick={() => handleOpenModal(row)}>
+            Activar recompensas
+          </Button>
+        ]
+      },
     },
   ];
 
@@ -115,6 +120,11 @@ const Progress: FC<ProgressProps> = () => {
       setAverageCompletedMission(0);
     }
   }, [students, missions]);
+
+  const handleOpenModal = (student: IUser) => {
+    setSelectedStudent(student);
+    setOpenModal(true);
+  };
   
   return (
     <ProgressContainer className="p-5">
@@ -141,6 +151,7 @@ const Progress: FC<ProgressProps> = () => {
           onSortModelChange={(model) => setSortModel(model)}
         />
       </Box>
+      <RewardsModal open={openModal} student={selectedStudent} onClose={() => setOpenModal(false)} />
     </ProgressContainer>
   );
 };
