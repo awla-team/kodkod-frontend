@@ -62,13 +62,12 @@ export const StudentDetails: FC<{
   });
 
   useEffect(() => {
-    if (details) {
+    if (details)
       setInputValues({
         first_name: details.first_name,
         last_name: details.last_name,
         email: details.email,
       });
-    }
   }, [details]);
 
   const handleSubmit = async (
@@ -84,11 +83,17 @@ export const StudentDetails: FC<{
           last_name,
           first_name,
         });
-      Toaster("success", "Estudiante actualizado");
+      Toaster("success", "Estudiante actualizado exitosamente");
       setEditState(false);
       updateStudentsData("update", data.responseData);
     } catch (error: any) {
       console.error(error);
+      if (
+        error?.response?.data?.responseData?.includes?.(
+          "is not allowed to be empty"
+        )
+      )
+        return Toaster("error", "Todos los campos deben ser llenados");
       Toaster("error", "Hubo un error al actualizar al estudiante");
     } finally {
       formikHelper.setSubmitting(false);
@@ -102,7 +107,10 @@ export const StudentDetails: FC<{
       }`}
     >
       <Avatar className="student-avatar me-3">{`${details.first_name[0]}${details.last_name[0]}`}</Avatar>
-      <Formik initialValues={inputValues} onSubmit={handleSubmit}>
+      <Formik
+        initialValues={inputValues}
+        onSubmit={handleSubmit}
+      >
         {({
           handleSubmit,
           values,
@@ -130,7 +138,7 @@ export const StudentDetails: FC<{
                         />
                       </FormControl>
                     ) : (
-                      <Typography>{values.first_name}</Typography>
+                      <Typography>{details.first_name}</Typography>
                     )}
                     {editState ? (
                       <FormControl error={!!errors.last_name && !!submitCount}>
@@ -140,29 +148,35 @@ export const StudentDetails: FC<{
                           name={"last_name"}
                           className={"name"}
                           placeholder={"Apellidos"}
-                          value={values.last_name}
+                          value={
+                            editState ? values.last_name : details.last_name
+                          }
                           onChange={handleChange}
                         />
                       </FormControl>
                     ) : (
-                      <Typography>{values.last_name}</Typography>
+                      <Typography>{details.last_name}</Typography>
                     )}
                   </Box>
-                  <FormControl
-                    className="mt-2"
-                    error={!!errors.email && !!submitCount}
-                  >
-                    <TextField
-                      variant="standard"
-                      disabled={!editState}
-                      name={"email"}
-                      type={"email"}
-                      className={"email"}
-                      placeholder={"E-mail"}
-                      value={values.email}
-                      onChange={handleChange}
-                    />
-                  </FormControl>
+                  {editState ? (
+                    <FormControl
+                      className="mt-2"
+                      error={!!errors.email && !!submitCount}
+                    >
+                      <TextField
+                        variant="standard"
+                        disabled={!editState}
+                        name={"email"}
+                        type={"email"}
+                        className={"email"}
+                        placeholder={"E-mail"}
+                        value={values.email}
+                        onChange={handleChange}
+                      />
+                    </FormControl>
+                  ) : (
+                    <Typography>{details.email}</Typography>
+                  )}
                 </div>
                 <div className={"editable__action__section"}>
                   {editState ? (
