@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import { StudentEditInputField, StudentType } from "./interfaces";
 import { useClassContext } from "../../routes/Class/context";
 import Toaster from "../../utils/Toster";
@@ -34,6 +34,7 @@ export const StudentDetails: FC<{
     const { currentTarget } = e;
     setElRef(currentTarget);
   };
+  const formRef = useRef(null);
 
   const handleConfirmationClose = () => {
     setOpenConfirmation(false);
@@ -100,6 +101,11 @@ export const StudentDetails: FC<{
     }
   };
 
+  const cancelEditMode = () => {
+    setEditState(false);
+    formRef.current?.resetForm();
+  };
+
   return (
     <StudentRow
       className={`d-flex align-items-center w-100 ${
@@ -110,6 +116,7 @@ export const StudentDetails: FC<{
       <Formik
         initialValues={inputValues}
         onSubmit={handleSubmit}
+        innerRef={formRef}
       >
         {({
           handleSubmit,
@@ -188,10 +195,7 @@ export const StudentDetails: FC<{
                       >
                         <CheckIcon />
                       </IconButton>
-                      <IconButton
-                        color={"error"}
-                        onClick={() => setEditState(false)}
-                      >
+                      <IconButton color={"error"} onClick={cancelEditMode}>
                         <CloseIcon />
                       </IconButton>
                     </>
