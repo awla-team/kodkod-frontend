@@ -24,8 +24,9 @@ export interface MissionAccomplishedType {
 export const getMissionsByStage = (query?: MissionFilterType) =>
   http.get(`mission` + (query ? generateQueryParamsFromObject(query) : ""));
 
-export const getMissionsByClassAdventure = (classAdventureId: number | string) =>
-  http.get(`missions-by-class-adventure/${classAdventureId}`);
+export const getMissionsByClassAdventure = (
+  classAdventureId: number | string
+) => http.get(`missions-by-class-adventure/${classAdventureId}`);
 
 export const getStageMissions = (stageId: number | string) =>
   http.get(`stage-missions/${stageId}`);

@@ -9,11 +9,13 @@ const AdventureCard: React.FC<IAdventureCardProps> = ({
   img,
   info,
   onClick,
-}) => {  
+}) => {
   return (
     <AdventureCardContainer
       onClick={!completed ? onClick : () => {}}
-      className={`p-4 d-flex flex-column justify-content-between ${completed ? 'adventure-complete' : ''}`}
+      className={`p-4 d-flex flex-column justify-content-between ${
+        completed ? "adventure-complete" : ""
+      }`}
       sx={{ backgroundImage: `url(${img})` }}
       variant="outlined"
     >
@@ -21,7 +23,7 @@ const AdventureCard: React.FC<IAdventureCardProps> = ({
         {completed ? (
           <div className="adventure-complete-chip d-flex align-items-center justify-content-center">
             <Chip color="success" label="Aventura completada" />
-          </div>        
+          </div>
         ) : null}
         <Typography variant="h5">
           <b>{title}</b>
@@ -30,6 +32,6 @@ const AdventureCard: React.FC<IAdventureCardProps> = ({
       {info}
     </AdventureCardContainer>
   );
-}
+};
 
 export default AdventureCard;

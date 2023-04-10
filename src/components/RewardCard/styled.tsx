@@ -16,7 +16,7 @@ export const CustomCard = styled(Card)`
     width: 120px;
     height: 168px;
   }
-  
+
   .points-container {
     position: absolute;
     padding: 4px 16px;

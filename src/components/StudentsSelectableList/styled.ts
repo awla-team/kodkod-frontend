@@ -40,14 +40,12 @@ export const StudentListContainer = styled(Box)`
         }
       }
     }
-
   }
 
   & .student__selection__count {
     margin-block: 0.5rem;
     text-align: right;
   }
-
 `;
 
 export const Checkbox = styled(MuiCheckbox)`

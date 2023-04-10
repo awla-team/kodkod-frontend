@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { IAdventureBannerProps } from "./interfaces";
-import {chipClasses} from '@mui/material/Chip'
+import { chipClasses } from "@mui/material/Chip";
 import { Box } from "@mui/system";
 
 export const AdventureContainer = styled.div`

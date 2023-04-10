@@ -1,12 +1,20 @@
 import type { FC } from "react";
-import { AccordionDetails, AccordionSummary, Box, Typography } from "@mui/material";
+import {
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  Typography,
+} from "@mui/material";
 import { MyClassesProps } from "./interfaces";
 import { useMemo, useEffect } from "react";
 import { ExpandMore } from "@mui/icons-material";
 import ClassCard from "components/ClassCard";
 import { MyClassesBox, LevelAccordion, MyClassesContainer } from "./styled";
 
-const MyClasses: FC<MyClassesProps> = ({ classes, getClassesData }: MyClassesProps) => {  
+const MyClasses: FC<MyClassesProps> = ({
+  classes,
+  getClassesData,
+}: MyClassesProps) => {
   const classesData = useMemo(() => {
     const totalLevel = [...new Set(classes.map((res) => res.level))].sort();
     return totalLevel.map((classLevel) => ({
@@ -18,7 +26,7 @@ const MyClasses: FC<MyClassesProps> = ({ classes, getClassesData }: MyClassesPro
   useEffect(() => {
     getClassesData();
   }, []);
-  
+
   return (
     <MyClassesContainer className="w-100">
       <MyClassesBox className="p-5">

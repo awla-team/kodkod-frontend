@@ -23,17 +23,15 @@ export interface EmotionalThermometerType extends FormInitialValue {
 
 export interface EmotionalThermometerFormProps {
   editable: boolean;
-  setEditable: (
-    editable: boolean
-  ) => void;
-};
+  setEditable: (editable: boolean) => void;
+}
 
 export interface IScoreOption {
   text: string;
   value: number;
   icon: React.ReactNode;
-  selectedIcon: React.ReactNode; 
-};
+  selectedIcon: React.ReactNode;
+}
 
 export interface ClassClimateMeterProps {
   editable: boolean;
@@ -52,17 +50,15 @@ export interface ThermometerCalendarProps {
 
 export interface EmotionalThermometerFormProps {
   editable: boolean;
-  setEditable: (
-    editable: boolean
-  ) => void;
-};
+  setEditable: (editable: boolean) => void;
+}
 
 export interface IScoreOption {
   text: string;
   value: number;
   icon: React.ReactNode;
-  selectedIcon: React.ReactNode; 
-};
+  selectedIcon: React.ReactNode;
+}
 
 export interface ClassClimateMeterProps {
   editable: boolean;

@@ -13,7 +13,7 @@ export const KPIBox = styled(Box)`
 
 export const AdventureProgressContainer = styled(Box)`
   border-radius: 8px 8px 0px 0px;
-  color: #FFF;
+  color: #fff;
   box-shadow: rgb(0, 0, 0) 0px 0px 200px 60px inset;
   background-position: center;
   background-size: cover;

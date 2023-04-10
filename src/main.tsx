@@ -17,6 +17,6 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
         <ToastContainer />
         <RouterProvider router={router} />
       </StyledThemeProvider>
-    </MuiThemeProvider>    
+    </MuiThemeProvider>
   </React.StrictMode>
 );

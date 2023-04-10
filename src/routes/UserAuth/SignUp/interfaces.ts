@@ -14,7 +14,7 @@ export const subjects = [
   "Educación física y salud",
   "Historia",
   "Geografía y ciencias sociales",
-  "Inglés",  
+  "Inglés",
   "Lengua indígena",
   "Lenguaje y comunicación",
   "Lengua y Cultura de los Pueblos Originarios Ancestrales",
@@ -22,5 +22,5 @@ export const subjects = [
   "Música",
   "Orientación",
   "Religión",
-  "Tecnología"
+  "Tecnología",
 ];

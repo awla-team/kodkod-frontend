@@ -43,7 +43,7 @@ export const MissionCardContainer = styled(Card)`
     transition: opacity 0.2s ease, transform 0.2s ease;
 
     &.clickable {
-      cursor: pointer;  
+      cursor: pointer;
       &:hover {
         transform: scale(1.05);
       }

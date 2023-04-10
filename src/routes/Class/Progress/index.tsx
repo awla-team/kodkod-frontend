@@ -1,10 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { ProgressProps } from "./interfaces";
-import {
-  Typography,
-  Box,
-  Button,
-} from "@mui/material";
+import { Typography, Box, Button } from "@mui/material";
 import { studentsByClass } from "services/students";
 import { StudentType } from "components/StudentsList/interfaces";
 import { ProgressContainer, StickyDataGrid } from "./styled";
@@ -12,9 +8,9 @@ import { useClassContext } from "../context";
 import { getMissionsByClassAdventure } from "services/missions";
 import { IMission, IUser } from "global/interfaces";
 import AdventureProgress from "components/AdventureProgress";
-import { GridColDef, GridSortModel } from '@mui/x-data-grid';
+import { GridColDef, GridSortModel } from "@mui/x-data-grid";
 import kodcoinIcon from "assets/images/kodcoin.png";
-import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
+import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import RewardsModal from "components/Modals/RewardsModal";
 import { studentUseRewards } from "services/rewards";
 import Toaster from "utils/Toster";
@@ -23,63 +19,74 @@ const Progress: FC<ProgressProps> = () => {
   const { classDetails } = useClassContext();
   const [students, setStudents] = useState<IUser[]>([]);
   const [missions, setMissions] = useState<IMission[]>([]);
-  const [progressPercentage, setProgressPercentage] = useState<number | undefined>(undefined);
-  const [averageCompletedMission, setAverageCompletedMission] = useState<number | undefined>(undefined);
+  const [progressPercentage, setProgressPercentage] = useState<
+    number | undefined
+  >(undefined);
+  const [averageCompletedMission, setAverageCompletedMission] = useState<
+    number | undefined
+  >(undefined);
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [selectedStudent, setSelectedStudent] = useState<IUser>(undefined);
   const [sortModel, setSortModel] = useState<GridSortModel>([
     {
-      field: 'last_name',
-      sort: 'asc',
+      field: "last_name",
+      sort: "asc",
     },
   ]);
 
   const columns: GridColDef[] = [
     {
-      field: 'first_name',
-      headerName: 'Nombres',
-      width: 200
-    },
-    {
-      field: 'last_name',
-      headerName: 'Apellidos',
+      field: "first_name",
+      headerName: "Nombres",
       width: 200,
     },
     {
-      field: 'points',
-      headerName: 'Puntos actuales',
+      field: "last_name",
+      headerName: "Apellidos",
+      width: 200,
+    },
+    {
+      field: "points",
+      headerName: "Puntos actuales",
       width: 130,
-      type: 'number',
+      type: "number",
       renderCell: (value) => (
         <div className="d-flex align-items-center gap-1">
-          <Typography fontWeight="bold" variant="body2">{value.value}</Typography>
+          <Typography fontWeight="bold" variant="body2">
+            {value.value}
+          </Typography>
           <img src={kodcoinIcon} height="18" width="18" />
         </div>
-      )
+      ),
     },
     {
-      field: 'completed_missions',
-      headerName: 'Misiones completadas',
+      field: "completed_missions",
+      headerName: "Misiones completadas",
       width: 200,
-      type: 'number',
+      type: "number",
     },
     {
-      field: 'obtained_rewards',
-      headerName: 'Recompensas obtenidas',
+      field: "obtained_rewards",
+      headerName: "Recompensas obtenidas",
       width: 200,
-      type: 'number',
+      type: "number",
     },
     {
-      field: 'actions',
-      type: 'actions',
+      field: "actions",
+      type: "actions",
       flex: 1,
-      align: 'right',
+      align: "right",
       getActions: ({ row }) => {
         return [
-          <Button startIcon={<EmojiEventsIcon htmlColor="#FDC51A" fontSize="small" />} variant="outlined" size="small" onClick={() => handleOpenModal(row)}>
+          <Button
+            startIcon={<EmojiEventsIcon htmlColor="#FDC51A" fontSize="small" />}
+            variant="outlined"
+            size="small"
+            onClick={() => handleOpenModal(row)}
+          >
             Activar recompensas
-          </Button>
-        ]
+          </Button>,
+        ];
       },
     },
   ];
@@ -88,16 +95,20 @@ const Progress: FC<ProgressProps> = () => {
     if (classDetails) {
       getStudents();
       getMissions();
-    };
+    }
   }, [classDetails]);
 
   useEffect(() => {
     if (students?.length && missions?.length) {
-      const completedMissions = students.reduce((accumulator, student) => accumulator + student.missions.length, 0);
-      setProgressPercentage(completedMissions / (students.length * missions.length) * 100);
+      const completedMissions = students.reduce(
+        (accumulator, student) => accumulator + student.missions.length,
+        0
+      );
+      setProgressPercentage(
+        (completedMissions / (students.length * missions.length)) * 100
+      );
       setAverageCompletedMission(completedMissions / students.length);
-    }
-    else {
+    } else {
       setProgressPercentage(0);
       setAverageCompletedMission(0);
     }
@@ -109,10 +120,14 @@ const Progress: FC<ProgressProps> = () => {
         await studentsByClass(classDetails.id, {
           missions: true,
           role: "student",
-          rewards: true
+          rewards: true,
         });
-      const studentsWithTableFields = data.responseData.map((student) => ({ ...student, completed_missions: student.missions.length || 0, obtained_rewards: student.user_has_rewards.length || 0 }))
-      
+      const studentsWithTableFields = data.responseData.map((student) => ({
+        ...student,
+        completed_missions: student.missions.length || 0,
+        obtained_rewards: student.user_has_rewards.length || 0,
+      }));
+
       setStudents(studentsWithTableFields);
     } catch (e: any) {
       Toaster("error", "Hubo un error al cargar los estudiantes");
@@ -121,7 +136,9 @@ const Progress: FC<ProgressProps> = () => {
 
   const getMissions = async () => {
     try {
-      const missionsResponse = await getMissionsByClassAdventure(classDetails?.current_adventure?.id_class_has_adventure);
+      const missionsResponse = await getMissionsByClassAdventure(
+        classDetails?.current_adventure?.id_class_has_adventure
+      );
       setMissions(missionsResponse.data.responseData);
     } catch (e: any) {
       Toaster("error", "Hubo un error al cargar las misiones");
@@ -136,24 +153,40 @@ const Progress: FC<ProgressProps> = () => {
   const handleSave = async (studentId: number, selectedRewards: number[]) => {
     try {
       await studentUseRewards(studentId, selectedRewards);
-      Toaster("success", '¡Recompensas activadas exitosamente!');
+      Toaster("success", "¡Recompensas activadas exitosamente!");
       setOpenModal(false);
       getStudents();
     } catch (error) {
       console.log(error);
-      Toaster("error", 'Ha ocurrido un error');
+      Toaster("error", "Ha ocurrido un error");
     }
   };
-  
+
   return (
     <ProgressContainer className="p-5">
-      <Typography variant="h4" component="h4" fontWeight="bold" className="mb-2">Progreso</Typography>
-      <Typography className="mb-4">En esta sección podrás ver el progreso de cada estudiante y del grupo curso. Podrás ver el puntaje en la aventura actual, el número de misiones completadas y las recompensas obtenidas. Además, puedes <b>gestionar el uso de recompensas</b> de los estudiantes.</Typography>
-      
+      <Typography
+        variant="h4"
+        component="h4"
+        fontWeight="bold"
+        className="mb-2"
+      >
+        Progreso
+      </Typography>
+      <Typography className="mb-4">
+        En esta sección podrás ver el progreso de cada estudiante y del grupo
+        curso. Podrás ver el puntaje en la aventura actual, el número de
+        misiones completadas y las recompensas obtenidas. Además, puedes{" "}
+        <b>gestionar el uso de recompensas</b> de los estudiantes.
+      </Typography>
+
       {classDetails?.current_adventure ? (
-        <AdventureProgress adventure={classDetails.current_adventure} progressPercentage={progressPercentage} averageCompletedMission={averageCompletedMission} />
+        <AdventureProgress
+          adventure={classDetails.current_adventure}
+          progressPercentage={progressPercentage}
+          averageCompletedMission={averageCompletedMission}
+        />
       ) : null}
-      <Box sx={{ maxHeight: 'calc(100vh - 160px)', overflow: 'auto'}}>
+      <Box sx={{ maxHeight: "calc(100vh - 160px)", overflow: "auto" }}>
         <StickyDataGrid
           rows={students}
           columns={columns}
@@ -162,15 +195,21 @@ const Progress: FC<ProgressProps> = () => {
           disableColumnMenu
           slotProps={{
             pagination: {
-              labelRowsPerPage: 'Estudiantes por página',
-              labelDisplayedRows: ({ from, to, count, page}) => `Total de ${count} estudiantes`
-            }
+              labelRowsPerPage: "Estudiantes por página",
+              labelDisplayedRows: ({ from, to, count, page }) =>
+                `Total de ${count} estudiantes`,
+            },
           }}
           sortModel={sortModel}
           onSortModelChange={(model) => setSortModel(model)}
         />
       </Box>
-      <RewardsModal open={openModal} student={selectedStudent} onClose={() => setOpenModal(false)} onSave={handleSave} />
+      <RewardsModal
+        open={openModal}
+        student={selectedStudent}
+        onClose={() => setOpenModal(false)}
+        onSave={handleSave}
+      />
     </ProgressContainer>
   );
 };

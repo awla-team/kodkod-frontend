@@ -2,12 +2,12 @@ import { ClassInterface } from "services/classes/interfaces";
 import React, { Dispatch, SetStateAction, useState } from "react";
 import { IStage } from "../global/interfaces";
 import { generateAccessToken } from "../services/auth";
-import SignalCellularAlt1BarIcon from '@mui/icons-material/SignalCellularAlt1Bar';
-import SignalCellularAlt2BarIcon from '@mui/icons-material/SignalCellularAlt2Bar';
-import SignalCellularAltIcon from '@mui/icons-material/SignalCellularAlt';
-import CachedIcon from '@mui/icons-material/Cached';
+import SignalCellularAlt1BarIcon from "@mui/icons-material/SignalCellularAlt1Bar";
+import SignalCellularAlt2BarIcon from "@mui/icons-material/SignalCellularAlt2Bar";
+import SignalCellularAltIcon from "@mui/icons-material/SignalCellularAlt";
+import CachedIcon from "@mui/icons-material/Cached";
 
-export const difficultyIcons = {  
+export const difficultyIcons = {
   easy: <SignalCellularAlt1BarIcon fontSize="small" />,
   normal: <SignalCellularAlt2BarIcon fontSize="small" />,
   hard: <SignalCellularAltIcon fontSize="small" />,

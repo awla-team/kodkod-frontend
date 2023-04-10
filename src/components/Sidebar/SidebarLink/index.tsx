@@ -11,7 +11,10 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({
   const { classId } = useParams();
 
   return (
-    <SidebarLinkContainer className={`${linkId}` === classId ? "active" : ""} title={linkTitle}>
+    <SidebarLinkContainer
+      className={`${linkId}` === classId ? "active" : ""}
+      title={linkTitle}
+    >
       <Link
         to={linkRoute}
         replace

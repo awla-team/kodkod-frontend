@@ -21,6 +21,6 @@ export const RewardIcon = styled(Box)`
   width: 64px;
 
   &.selected {
-    background: ${(props) => props.theme.palette.success.light}
+    background: ${(props) => props.theme.palette.success.light};
   }
 `;

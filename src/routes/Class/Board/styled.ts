@@ -11,7 +11,7 @@ export const DashboardContainer = styled(Box)`
 
 export const DetailsCard = styled(Box)`
   border-radius: 8px;
-  background-color: #FFF;
+  background-color: #fff;
   border: 1px solid rgba(33, 33, 33, 0.08);
 `;
 

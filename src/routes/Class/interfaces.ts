@@ -15,7 +15,7 @@ export interface ClassContextType {
   students: StudentType[];
   loadingClass: FetchStatus;
   getStudentsByClass: (id: number | string) => void;
-  updateStageData: (stage: IStage) => void; 
+  updateStageData: (stage: IStage) => void;
   updateStudentsData: (
     actionType: "delete" | "update",
     data?: StudentType | StudentType[]
