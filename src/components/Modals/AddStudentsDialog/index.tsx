@@ -84,6 +84,33 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
     });
   };
 
+  const addToList = (formikInitialValues: FormInitialState) => {
+    const transformedTextArray = inputFieldValue
+      .split(",")
+      .map((res) => res.trim())
+      .filter((res) => res);
+    const match = transformedTextArray
+      .join(",")
+      .match(/^([\w+-.%]+@[\w-.]+\.[A-Za-z]{2,4},?)+$/g);
+    if (match) {
+      setFormInitialState((prevState) => {
+        return {
+          students: [
+            ...formikInitialValues.students,
+            ...transformedTextArray.map((email) => ({
+              first_name: "",
+              last_name: "",
+              email,
+            })),
+          ],
+        };
+      });
+      setInputFieldValue("");
+    } else {
+      setInputFieldValueError(true);
+    }
+  };
+
   const handleStudentValues = (
     e: React.KeyboardEvent,
     formikInitialValues: FormInitialState
@@ -92,30 +119,7 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
     const { key } = e;
     if (key === "Enter") {
       e.preventDefault();
-      const transformedTextArray = inputFieldValue
-        .split(",")
-        .map((res) => res.trim())
-        .filter((res) => res);
-      const match = transformedTextArray
-        .join(",")
-        .match(/^([\w+-.%]+@[\w-.]+\.[A-Za-z]{2,4},?)+$/g);
-      if (match) {
-        setFormInitialState((prevState) => {
-          return {
-            students: [
-              ...formikInitialValues.students,
-              ...transformedTextArray.map((email) => ({
-                first_name: "",
-                last_name: "",
-                email,
-              })),
-            ],
-          };
-        });
-        setInputFieldValue("");
-      } else {
-        setInputFieldValueError(true);
-      }
+      addToList(formikInitialValues);
     }
   };
 
@@ -154,22 +158,38 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
             >
               <DialogContent dividers className="py-5">
                 <StudentsFormDetailsContainer>
-                  <TextField
-                    className="mb-4"
-                    error={inputFieldValueError}
-                    helperText={
-                      inputFieldValueError && "Has ingresado un email inválido"
-                    }
-                    value={inputFieldValue}
-                    onKeyDown={(event) => handleStudentValues(event, values)}
-                    onChange={handleInputFieldChange}
-                    fullWidth
-                    size="small"
-                    placeholder={
-                      "Ingresa los emails de tus estudiantes separados por coma"
-                    }
-                  ></TextField>
-                  <div>
+                  <div className="d-flex w-100 gap-2">
+                    <TextField
+                      className="mb-4"
+                      error={inputFieldValueError}
+                      helperText={
+                        inputFieldValueError &&
+                        "Has ingresado un email inválido"
+                      }
+                      value={inputFieldValue}
+                      onKeyDown={(event) => handleStudentValues(event, values)}
+                      onChange={handleInputFieldChange}
+                      fullWidth
+                      size="small"
+                      placeholder={
+                        "Emails de tus estudiantes separados por coma"
+                      }
+                    />
+                    <div>
+                      <Button
+                        sx={{
+                          mt: "1px",
+                        }}
+                        disabled={inputFieldValueError}
+                        variant="contained"
+                        color="primary"
+                        onClick={() => addToList(values)}
+                      >
+                        Añadir
+                      </Button>
+                    </div>
+                  </div>
+                  <>
                     <div className="details-list">
                       <FieldArray name={"students"}>
                         {({ remove }) => {
@@ -250,7 +270,7 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
                         estudiantes a la clase <b>{classDetails.alias}</b>
                       </Typography>
                     </div>
-                  </div>
+                  </>
                 </StudentsFormDetailsContainer>
               </DialogContent>
               <DialogActions>
