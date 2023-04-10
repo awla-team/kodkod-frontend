@@ -6,9 +6,7 @@ import {
   FormControl,
   TextField,
   Button,
-  Select,
-  MenuItem,
-  InputLabel,
+  Autocomplete,
 } from "@mui/material";
 import { Form, Formik, FormikHelpers } from "formik";
 import * as Yup from "yup";
@@ -217,6 +215,7 @@ const SignUp: React.FC = () => {
             handleBlur,
             touched,
             handleSubmit,
+            setFieldValue,
           }) => {
             return (
               <Form onSubmit={handleSubmit}>
@@ -306,9 +305,33 @@ const SignUp: React.FC = () => {
                   </FormControl>
 
                   <FormControl>
-                    <InputLabel id="school-label">
+                    <Autocomplete
+                      id="school"
+                      options={schools}
+                      getOptionLabel={(school) => school.name}
+                      renderOption={(props, school) => (
+                        <li {...props} key={`school-${school.id}`}>
+                          {school.name}
+                        </li>
+                      )}
+                      noOptionsText="No se encuentra el establecimiento"
+                      onChange={(_event, value) => {
+                        setFieldValue(
+                          "school",
+                          !!value ? value.id : formInitialValues.school
+                        );
+                      }}
+                      renderInput={(params) => (
+                        <TextField
+                          label="Establecimiento educacional (opcional)"
+                          name="school"
+                          {...params}
+                        />
+                      )}
+                    />
+                    {/* <InputLabel id="school-label">
                       Establecimiento educacional (opcional)
-                    </InputLabel>
+                    </InputLabel> 
                     <Select
                       labelId="school-label"
                       variant={"outlined"}
@@ -328,10 +351,29 @@ const SignUp: React.FC = () => {
                           </MenuItem>
                         );
                       })}
-                    </Select>
+                    </Select> */}
                   </FormControl>
                   <FormControl>
-                    <InputLabel id="subject-label">
+                    <Autocomplete
+                      id="subject"
+                      options={subjects}
+                      getOptionLabel={(subject) => subject}
+                      noOptionsText="No se encuentra la asignatura"
+                      onChange={(_event, value) => {
+                        setFieldValue(
+                          "subject",
+                          !!value ? value : formInitialValues.subject
+                        );
+                      }}
+                      renderInput={(params) => (
+                        <TextField
+                          label="¿Qué asignatura enseñas? (opcional)"
+                          name="subject"
+                          {...params}
+                        />
+                      )}
+                    />
+                    {/* <InputLabel id="subject-label">
                       ¿Qué asignatura enseñas? (opcional)
                     </InputLabel>
                     <Select
@@ -353,7 +395,7 @@ const SignUp: React.FC = () => {
                           </MenuItem>
                         );
                       })}
-                    </Select>
+                    </Select> */}
                   </FormControl>
 
                   <Box
