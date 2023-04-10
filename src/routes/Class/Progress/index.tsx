@@ -115,7 +115,7 @@ const Progress: FC<ProgressProps> = () => {
       
       setStudents(studentsWithTableFields);
     } catch (e: any) {
-      console.log(e);
+      Toaster("error", "Hubo un error al cargar los estudiantes");
     }
   };
 
@@ -124,7 +124,7 @@ const Progress: FC<ProgressProps> = () => {
       const missionsResponse = await getMissionsByClassAdventure(classDetails?.current_adventure?.id_class_has_adventure);
       setMissions(missionsResponse.data.responseData);
     } catch (e: any) {
-      console.log(e);
+      Toaster("error", "Hubo un error al cargar las misiones");
     }
   };
 
