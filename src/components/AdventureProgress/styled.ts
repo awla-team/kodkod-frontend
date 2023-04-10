@@ -5,6 +5,10 @@ export const KPIBox = styled(Box)`
   border: 1px solid gray;
   border-radius: 8px 8px;
   background: rgba(0, 0, 0, 0.9);
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
 
 export const AdventureProgressContainer = styled(Box)`
