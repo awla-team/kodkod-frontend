@@ -12,3 +12,7 @@ export const getRewardsByAdventure = (adventureId: number | string) =>
 export const getRewards = (filterQuery: GetRewardsFilter) => {
   return http.get("reward" + generateQueryParamsFromObject(filterQuery));
 };
+
+export const studentUseRewards = (userId: number, rewards: number[]) => {
+  return http.post(`user-use-rewards/${userId}`, rewards);
+};

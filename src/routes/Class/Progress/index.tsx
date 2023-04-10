@@ -16,6 +16,8 @@ import { GridColDef, GridSortModel } from '@mui/x-data-grid';
 import kodcoinIcon from "assets/images/kodcoin.png";
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import RewardsModal from "components/Modals/RewardsModal";
+import { studentUseRewards } from "services/rewards";
+import Toaster from "utils/Toster";
 
 const Progress: FC<ProgressProps> = () => {
   const { classDetails } = useClassContext();
@@ -84,28 +86,8 @@ const Progress: FC<ProgressProps> = () => {
 
   useEffect(() => {
     if (classDetails) {
-      (async () => {
-        try {
-          const { data }: { data: { responseData: IUser[] } } =
-            await studentsByClass(classDetails.id, {
-              missions: true,
-              role: "student",
-              rewards: true
-            });
-          const studentsWithTableFields = data.responseData.map((student) => ({ ...student, completed_missions: student.missions.length || 0, obtained_rewards: student.rewards.length || 0 }))
-          setStudents(studentsWithTableFields);
-        } catch (e: any) {
-          Toaster("error", "Hubo un error al cargar los estudiantes");
-        }
-      })();
-      (async () => {
-        try {
-          const missionsResponse = await getMissionsByClassAdventure(classDetails?.current_adventure?.id_class_has_adventure);
-          setMissions(missionsResponse.data.responseData);
-        } catch (e: any) {
-          console.log(e);
-        }
-      })();
+      getStudents();
+      getMissions();
     };
   }, [classDetails]);
 
@@ -121,9 +103,46 @@ const Progress: FC<ProgressProps> = () => {
     }
   }, [students, missions]);
 
+  const getStudents = async () => {
+    try {
+      const { data }: { data: { responseData: IUser[] } } =
+        await studentsByClass(classDetails.id, {
+          missions: true,
+          role: "student",
+          rewards: true
+        });
+      const studentsWithTableFields = data.responseData.map((student) => ({ ...student, completed_missions: student.missions.length || 0, obtained_rewards: student.user_has_rewards.length || 0 }))
+      
+      setStudents(studentsWithTableFields);
+    } catch (e: any) {
+      Toaster("error", "Hubo un error al cargar los estudiantes");
+    }
+  };
+
+  const getMissions = async () => {
+    try {
+      const missionsResponse = await getMissionsByClassAdventure(classDetails?.current_adventure?.id_class_has_adventure);
+      setMissions(missionsResponse.data.responseData);
+    } catch (e: any) {
+      Toaster("error", "Hubo un error al cargar las misiones");
+    }
+  };
+
   const handleOpenModal = (student: IUser) => {
     setSelectedStudent(student);
     setOpenModal(true);
+  };
+
+  const handleSave = async (studentId: number, selectedRewards: number[]) => {
+    try {
+      await studentUseRewards(studentId, selectedRewards);
+      Toaster("success", '¡Recompensas activadas exitosamente!');
+      setOpenModal(false);
+      getStudents();
+    } catch (error) {
+      console.log(error);
+      Toaster("error", 'Ha ocurrido un error');
+    }
   };
   
   return (
@@ -151,7 +170,7 @@ const Progress: FC<ProgressProps> = () => {
           onSortModelChange={(model) => setSortModel(model)}
         />
       </Box>
-      <RewardsModal open={openModal} student={selectedStudent} onClose={() => setOpenModal(false)} />
+      <RewardsModal open={openModal} student={selectedStudent} onClose={() => setOpenModal(false)} onSave={handleSave} />
     </ProgressContainer>
   );
 };
