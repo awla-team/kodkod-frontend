@@ -75,7 +75,8 @@ export interface IUser {
   role: string;
   id_school: number;
   academic_subject: string;
-  points: number;
+  rewards?: IReward[];
+  missions?: IMission[];
   verified: boolean;
 }
 

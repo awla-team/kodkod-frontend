@@ -8,7 +8,7 @@ import SkillPoints from "components/SkillPoints";
 import { IAdventure, IStage } from "global/interfaces";
 import { AdventureProgressContainer, KPIBox } from "./styled";
 
-const AdventureProgress: FC<{ adventure: IAdventure, progressPercentage: number }> = ({ adventure, progressPercentage = 0 }) => {
+const AdventureProgress: FC<{ adventure: IAdventure, progressPercentage: number, averageCompletedMission: number }> = ({ adventure, progressPercentage = 0, averageCompletedMission = 0 }) => {
   const { classDetails } = useClassContext();
   const [latestStage, setLatestStage] = useState<IStage>(undefined);
 
@@ -55,10 +55,16 @@ const AdventureProgress: FC<{ adventure: IAdventure, progressPercentage: number 
           </div>
         </section>
       </Box>
-      <KPIBox className="p-4">
-        <Typography variant="h3" component="h3" fontWeight="bold">{`${Math.round(progressPercentage)}%`}</Typography>
-        <Typography>de misiones completadas</Typography>
-      </KPIBox>
+      <div className="d-flex gap-2">
+        <KPIBox className="p-4">
+          <Typography variant="h3" component="h3" fontWeight="bold">{`${Math.round(progressPercentage)}%`}</Typography>
+          <Typography>de misiones completadas en la aventura</Typography>
+        </KPIBox>
+        <KPIBox className="p-4">
+          <Typography variant="h3" component="h3" fontWeight="bold">{`${Math.round(averageCompletedMission)}`}</Typography>
+          <Typography>misiones completadas por estudiante en promedio </Typography>
+        </KPIBox>
+      </div>
     </AdventureProgressContainer>
   );
 };
