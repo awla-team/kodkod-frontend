@@ -12,15 +12,21 @@ import SadIconOutlined from "components/SVG/SadIconOutlined";
 import { IScoreOption } from "./interfaces";
 
 export const challengeOptions: string[] = [
-  "Falta de atención",
-  "Retraso en el inicio de la clase",
-  "Interrupción de clase",
+  'Problemas de conducta, disciplina y comportamiento de los estudiantes en la clase',
+  'Problemas de comprensión, asimilación y retención de información por parte de los estudiantes',
+  'Desmotivación, desinterés o aburrimiento por parte de los estudiantes',
+  'Problemas relacionados con las emociones y relaciones entre los estudiantes',
+  'Problemas de logística y organización de la clase, falta de materiales o la falta de tiempo',
+  'Sin incidencias'
 ];
 
 export const mostRemarkableOptions: string[] = [
-  "Alta participación",
-  "Buena concentración",
-  "Se trabajó bien en grupo",
+  'Buen rendimiento y desempeño académico de los estudiantes',
+  'Desarrollo personal y social de los estudiantes',
+  'Innovación y creatividad, uso efectivo de recursos didácticos y tecnológicos',
+  'Promoción de la inclusión y la diversidad en el aula',
+  'Mejora en la comunicación y colaboración entre el profesor o los estudiantes',
+  'Sin novedades'
 ];
 
 export const radioOptions: IScoreOption[] = [
