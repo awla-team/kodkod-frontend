@@ -6,4 +6,5 @@ interface TeacherType extends User {
 
 export interface AuthContextType {
   user: TeacherType | null;
+  logout: () => void;
 }
