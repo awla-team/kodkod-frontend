@@ -28,18 +28,21 @@ jobs:
     if: github.event.pull_request.merged == true
     needs: lint
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.3.0]
     steps:
-      - name: Node.js 18.x setup
+      - name: Node.js ${{ matrix.node-version }} setup
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
-          cache: 'npm'
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
 
       - name: Installing dependencies
-        run: npx yarn install
+        run: yarn install
 
       - name: Building
-        run: npx yarn build
+        run: yarn build
 
       - name: Upload build as artifact
         uses: actions/upload-artifact@v3
