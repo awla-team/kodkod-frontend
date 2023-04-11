@@ -225,7 +225,7 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
                   Cancelar
                 </Button>
                 <Button
-                  disabled={isSubmitting || !isValid || !dirty}
+                  disabled={isSubmitting || !dirty || !values.code || !values.id_level || !values.alias}
                   type={"submit"}
                   variant={"contained"}
                 >
