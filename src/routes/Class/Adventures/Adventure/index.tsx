@@ -136,7 +136,6 @@ export const Adventure: React.FC = () => {
                   `recompensas?adventureId=${classDetails.current_adventure.id}`
                 )
               }
-              size="large"
             >
               Ver recompensas disponibles
             </Button>

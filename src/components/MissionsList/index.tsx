@@ -51,20 +51,21 @@ const MissionsList: FC<{ shownStage: IStage }> = ({ shownStage }) => {
         Lista de misiones
       </Typography>
 
-      <div className="d-flex flex-wrap align-items-center justify-content-center gap-5">
+      <div className="row g-5">
         {missions?.length ? (
           missions?.map((res, index) => {
             return (
-              <MissionCard
-                onClick={() => {
-                  setOpenDrawer(true);
-                  setSelectedMission(res);
-                }}
-                clickable
-                mission={res}
-                openModal={handleOpen}
-                key={`mission-${index}`}
-              />
+              <div key={`mission-${index}`} className="col-lg-6 col-12">
+                <MissionCard
+                  onClick={() => {
+                    setOpenDrawer(true);
+                    setSelectedMission(res);
+                  }}
+                  clickable
+                  mission={res}
+                  openModal={handleOpen}
+                />
+              </div>
             );
           })
         ) : (
@@ -77,7 +78,7 @@ const MissionsList: FC<{ shownStage: IStage }> = ({ shownStage }) => {
           open={open && !!selectedMission}
           onClose={handleClose}
           mission={selectedMission}
-          stage={shownStage}
+          stage={{ ...shownStage, missions }}
         />
       )}
       {openDrawer && !!selectedMission && (

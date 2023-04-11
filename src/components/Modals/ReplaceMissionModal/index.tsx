@@ -61,7 +61,7 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
 
   const handleClick = async () => {
     try {
-      setPending(true);
+      setPending(true);      
       const index = stage.missions.indexOf(mission);
       const missionsCopy = [...stage.missions];
       const body = {
@@ -133,7 +133,7 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
           </Box>
           <Box
             className="d-flex flex-column gap-3 p-4"
-            sx={{ height: "400px", overflow: "auto", marginTop: "1px" }}
+            sx={{ maxHeight: "40vh", overflow: "auto", marginTop: "1px" }}
           >
             {missions.length ? (
               missions.map((res, index) => (
