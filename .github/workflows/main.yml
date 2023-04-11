@@ -3,7 +3,7 @@ name: Kodkod frontend deploy
 on:
   push:
     branches-ignore:
-      - develop
+      - development
       - main
   pull_request:
     branches:
