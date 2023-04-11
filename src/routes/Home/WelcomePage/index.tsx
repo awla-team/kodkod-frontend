@@ -2,6 +2,7 @@ import type { FC } from "react";
 import { Box, Button, Typography } from "@mui/material";
 import styled from "styled-components";
 import { WelcomePageProps } from "./interfaces";
+import noClassesImg from 'assets/images/no-classes.png';
 
 const WelcomePage: FC<WelcomePageProps> = ({
   handleOpenModal,
@@ -9,7 +10,7 @@ const WelcomePage: FC<WelcomePageProps> = ({
   return (
     <div className="w-100 d-flex align-items-center justify-content-center p-5">
       <WelcomePageContainer className="p-5">
-        <img className="mb-5" />
+        <img className="mb-3" src={noClassesImg} />
         <div>
           <Typography
             component="h1"
@@ -48,9 +49,6 @@ const WelcomePageContainer = styled(Box)`
   border: 1px solid rgba(0, 0, 0, 0.08);
 
   img {
-    border: 1px solid lightgray;
-    border-radius: 8px;
-    width: 100%;
-    height: 250px;
+    height: 300px;
   }
 `;
