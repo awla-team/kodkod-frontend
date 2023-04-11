@@ -1,6 +1,10 @@
 name: Kodkod frontend deploy
 
 on:
+  push:
+    branches-ignore:
+      - develop
+      - main
   pull_request:
     branches:
       - development
@@ -9,18 +13,25 @@ on:
       - closed
 
 jobs:
-  build:
-    name: Build
-    if: github.event.pull_request.merged == true
+  lint:
+    name: Linting
     runs-on: ubuntu-latest
     steps:
       - name: Actions checkout
         uses: actions/checkout@v3
 
-      - name: Node.js ${{ matrix.node-version }} setup
+      - name: Check linting
+        run: npx prettier --check .
+
+  build:
+    name: Build
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Node.js 18.x setup
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: "18.x"
           cache: "npm"
 
       - name: Installing dependencies
