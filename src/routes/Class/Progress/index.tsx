@@ -92,10 +92,8 @@ const Progress: FC<ProgressProps> = () => {
   ];
 
   useEffect(() => {
-    if (classDetails) {
-      getStudents();
-      getMissions();
-    }
+    if (classDetails) getStudents();
+    if (classDetails?.current_adventure) getMissions();
   }, [classDetails]);
 
   useEffect(() => {
@@ -185,7 +183,11 @@ const Progress: FC<ProgressProps> = () => {
           progressPercentage={progressPercentage}
           averageCompletedMission={averageCompletedMission}
         />
-      ) : null}
+      ) : (
+        <div className="p-4 mb-3">
+          <Typography fontWeight="bold" textAlign="center" variant="h5">Actualmente no tienen ninguna aventura en curso</Typography>
+        </div>
+      )}
       <Box sx={{ maxHeight: "calc(100vh - 160px)", overflow: "auto" }}>
         <StickyDataGrid
           rows={students}
