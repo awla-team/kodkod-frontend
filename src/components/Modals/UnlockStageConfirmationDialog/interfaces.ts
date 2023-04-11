@@ -7,4 +7,5 @@ export interface UnlockStageConfirmationDialogProps {
   isLoading: boolean;
   onConfirm: () => void;
   unlockableStageData: IStage;
+  finishImg: string;
 }

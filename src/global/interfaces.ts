@@ -84,6 +84,7 @@ export interface IAdventure {
   id: number;
   title: string;
   thumbnail: string;
+  finish_img_url: string;
   banner: string;
   category: string;
   overview: string;

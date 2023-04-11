@@ -162,6 +162,7 @@ const StageStepper: FC<{
             open={openDialog}
             currentStage={shownStage}
             handleClose={() => setOpenDialog(false)}
+            finishImg={adventure?.finish_img_url}
             onConfirm={
               sortedStages[navigableStages.length] ? handleUnlock : handleFinish
             }
