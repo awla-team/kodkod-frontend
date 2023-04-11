@@ -130,7 +130,7 @@ export const StudentDetails: FC<{
             <Form onSubmit={handleSubmit} className={"editable_section__form"}>
               <div className={"edit__section"}>
                 <div className={"editable__field"}>
-                  <Box display={"flex"} gap={1}>
+                  <Box display={"flex"}>
                     {editState ? (
                       <FormControl error={!!errors.first_name && !!submitCount}>
                         <TextField
@@ -138,14 +138,14 @@ export const StudentDetails: FC<{
                           autoFocus
                           disabled={!editState}
                           name={"first_name"}
-                          className={"name"}
+                          className={"name me-2"}
                           placeholder={"Nombres"}
                           value={values.first_name}
                           onChange={handleChange}
                         />
                       </FormControl>
                     ) : (
-                      <Typography>{details.first_name}</Typography>
+                      <Typography>{details.first_name}&nbsp;</Typography>
                     )}
                     {editState ? (
                       <FormControl error={!!errors.last_name && !!submitCount}>
@@ -182,7 +182,7 @@ export const StudentDetails: FC<{
                       />
                     </FormControl>
                   ) : (
-                    <Typography>{details.email}</Typography>
+                    <Typography color="gray">{details.email}</Typography>
                   )}
                 </div>
                 <div className={"editable__action__section"}>

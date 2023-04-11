@@ -60,7 +60,7 @@ const MyClasses: FC<MyClassesProps> = ({
                 className={"class__level__cards__container row"}
               >
                 {rest.classes.map((teacherClass, _index) => (
-                  <div className="col-3" key={`${_index}-${index}`}>
+                  <div className="col-lg-4 col-md-6 col-12" key={`${_index}-${index}`}>
                     <ClassCard classObj={teacherClass} />
                   </div>
                 ))}
