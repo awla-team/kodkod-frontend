@@ -125,10 +125,15 @@ const AdventureSummaryDialog: React.FC<{
                 {sortedStages.map((stage, i) => (
                   <div className="d-flex gap-2 align-items-center">
                     <EmojiFlagsIcon />
-                    <Typography variant="body1">
-                      <b>{`Etapa ${i}: `}</b>
-                      {stage.title}
-                    </Typography>
+                    <div className="d-flex flex-column gap-0">
+                      <Typography variant="body1">
+                        <b>{`Etapa ${i}: `}</b>
+                        {stage.title}
+                      </Typography>
+                      <Typography variant="caption">
+                        {stage.description}
+                      </Typography>
+                    </div>
                   </div>
                 ))}
               </div>
