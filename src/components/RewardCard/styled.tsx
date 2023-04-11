@@ -1,5 +1,5 @@
-import { Card } from "@mui/material";
-import styled, { DefaultTheme } from "styled-components";
+import { Card } from '@mui/material';
+import styled, { DefaultTheme } from 'styled-components';
 
 export interface IRewardCardElementProps {
   type: string;

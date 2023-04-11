@@ -1,5 +1,5 @@
-import { IMission, IStage } from "global/interfaces";
-import { StudentsDetailsType } from "../Modals/MissionAccomplished/interfaces";
+import { IMission, IStage } from 'global/interfaces';
+import { StudentsDetailsType } from '../Modals/MissionAccomplished/interfaces';
 
 export interface StudentsSelectableListProps {
   mission: IMission;

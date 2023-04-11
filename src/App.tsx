@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
-import { CircularProgress } from "@mui/material";
-import Sidebar from "./components/Sidebar";
-import { getClassesByUser } from "services/classes";
-import { ClassInterface } from "services/classes/interfaces";
-import { AxiosResponse } from "axios";
-import { FetchStatus } from "global/enums";
-import { CreateClassModal } from "./components/Modals";
-import { sortClasses } from "./utils";
-import { getAllTheLevel } from "./services/levels";
-import Toaster from "./utils/Toster";
-import { Levels } from "./components/Modals/CreateClassModal/interfaces";
-import { useAuth } from "./contexts/AuthContext";
-import moment from "moment";
-import { useLocation } from "react-router-dom";
-import "moment/dist/locale/es";
-import "./App.css";
+import React, { useEffect, useState } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
+import { CircularProgress } from '@mui/material';
+import Sidebar from './components/Sidebar';
+import { getClassesByUser } from 'services/classes';
+import { ClassInterface } from 'services/classes/interfaces';
+import { AxiosResponse } from 'axios';
+import { FetchStatus } from 'global/enums';
+import { CreateClassModal } from './components/Modals';
+import { sortClasses } from './utils';
+import { getAllTheLevel } from './services/levels';
+import Toaster from './utils/Toster';
+import { Levels } from './components/Modals/CreateClassModal/interfaces';
+import { useAuth } from './contexts/AuthContext';
+import moment from 'moment';
+import { useLocation } from 'react-router-dom';
+import 'moment/dist/locale/es';
+import './App.css';
 
-moment.locale("es");
+moment.locale('es');
 
 const App: React.FC = () => {
   const [classes, setClasses] = useState<ClassInterface[]>([]);
@@ -45,8 +45,7 @@ const App: React.FC = () => {
 
   const getLevels = async () => {
     try {
-      const { data }: { data: { responseData: Levels[] } } =
-        await getAllTheLevel();
+      const { data }: { data: { responseData: Levels[] } } = await getAllTheLevel();
       setLevels(
         data.responseData.sort((a, b) => {
           if (a.name > b.name) return 1;
@@ -56,16 +55,16 @@ const App: React.FC = () => {
       );
     } catch (error: any) {
       console.error(error);
-      Toaster("error", "Hubo un error al cargar los niveles");
+      Toaster('error', 'Hubo un error al cargar los niveles');
     }
   };
 
   const handleClose = (
-    reason: "backdropClick" | "escapeKeyDown" | "success",
+    reason: 'backdropClick' | 'escapeKeyDown' | 'success',
     data?: ClassInterface
   ) => {
-    if (reason !== "backdropClick") setOpen(false);
-    if (reason === "success") {
+    if (reason !== 'backdropClick') setOpen(false);
+    if (reason === 'success') {
       if (data) {
         setClasses((prevState) => {
           return sortClasses([...prevState, data]);

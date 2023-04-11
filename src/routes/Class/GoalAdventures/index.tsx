@@ -1,28 +1,26 @@
-import React, { useState, useEffect } from "react";
-import Typography from "@mui/material/Typography";
-import AdventureCard from "components/AdventureCard";
-import type { IAdventure, IClassHasAdventure } from "global/interfaces";
-import { FetchStatus } from "global/enums";
-import CircularProgress from "@mui/material/CircularProgress";
-import AdventureSummaryDialog from "../../../components/Modals/AdventureSummaryDialog";
-import { Navigate, useParams, Link as RouterLink } from "react-router-dom";
-import { getGoalById } from "services/goals";
-import { GoalType } from "../Adventures/interfaces";
-import Toaster from "../../../utils/Toster";
-import { AdventureSelectionContainer } from "./styled";
-import { useClassContext } from "../context";
-import SkillPoints from "components/SkillPoints";
-import { getClassHasAdventuresByClass } from "services/classes";
-import { Button } from "@mui/material";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import React, { useState, useEffect } from 'react';
+import Typography from '@mui/material/Typography';
+import AdventureCard from 'components/AdventureCard';
+import type { IAdventure, IClassHasAdventure } from 'global/interfaces';
+import { FetchStatus } from 'global/enums';
+import CircularProgress from '@mui/material/CircularProgress';
+import AdventureSummaryDialog from '../../../components/Modals/AdventureSummaryDialog';
+import { Navigate, useParams, Link as RouterLink } from 'react-router-dom';
+import { getGoalById } from 'services/goals';
+import { GoalType } from '../Adventures/interfaces';
+import Toaster from '../../../utils/Toster';
+import { AdventureSelectionContainer } from './styled';
+import { useClassContext } from '../context';
+import SkillPoints from 'components/SkillPoints';
+import { getClassHasAdventuresByClass } from 'services/classes';
+import { Button } from '@mui/material';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 const GoalAdventures: React.FC = () => {
   const [loading, setLoading] = useState<FetchStatus>(FetchStatus.Idle);
   const { classDetails, loadingClass } = useClassContext();
   const [selectedAdventure, setSelectedAdventure] = useState<IAdventure>(null);
-  const [completedAdventures, setCompletedAdventures] = useState<
-    IClassHasAdventure[]
-  >([]);
+  const [completedAdventures, setCompletedAdventures] = useState<IClassHasAdventure[]>([]);
   const [selectedGoal, setSelectedGoal] = useState<null | GoalType>(null);
   const [sortedAdventures, setSortedAdventures] = useState<IAdventure[]>([]);
   const params = useParams();
@@ -58,7 +56,7 @@ const GoalAdventures: React.FC = () => {
         })
         .catch((error: any) => {
           console.error(error);
-          Toaster("error", "Hubo un error al cargar el objetivo");
+          Toaster('error', 'Hubo un error al cargar el objetivo');
           setLoading(FetchStatus.Error);
         });
     }
@@ -96,12 +94,7 @@ const GoalAdventures: React.FC = () => {
           className="mb-1"
           component={RouterLink}
           to={`/app/cursos/${classDetails?.id}/aventuras/iniciar`}
-          startIcon={
-            <ArrowBackIosIcon
-              sx={{ fontSize: "14px!important" }}
-              fontSize="small"
-            />
-          }
+          startIcon={<ArrowBackIosIcon sx={{ fontSize: '14px!important' }} fontSize="small" />}
         >
           Volver al paso anterior
         </Button>
@@ -110,12 +103,8 @@ const GoalAdventures: React.FC = () => {
         <b>Paso 2:</b> Escoge una aventura
       </Typography>
       <Typography variant="body1" className="mb-4">
-        ¡Muy bien! Ahora selecciona una de las siguientes aventuras creadas
-        especificamente para{" "}
-        <b style={{ textTransform: "lowercase" }}>
-          {selectedGoal?.title || ""}
-        </b>
-        .
+        ¡Muy bien! Ahora selecciona una de las siguientes aventuras creadas especificamente para{' '}
+        <b style={{ textTransform: 'lowercase' }}>{selectedGoal?.title || ''}</b>.
       </Typography>
       {selectedGoal && selectedGoal?.adventures?.length ? (
         <>
@@ -124,8 +113,7 @@ const GoalAdventures: React.FC = () => {
               <AdventureCard
                 completed={
                   !!completedAdventures.find(
-                    (completedAdventure) =>
-                      completedAdventure.id_adventure === adventure.id
+                    (completedAdventure) => completedAdventure.id_adventure === adventure.id
                   )
                 }
                 onClick={() => {

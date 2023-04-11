@@ -31,8 +31,8 @@ jobs:
       - name: Node.js 18.x setup
         uses: actions/setup-node@v3
         with:
-          node-version: "18.x"
-          cache: "npm"
+          node-version: '18.x'
+          cache: 'npm'
 
       - name: Installing dependencies
         run: npx yarn install

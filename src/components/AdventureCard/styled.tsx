@@ -1,6 +1,6 @@
-import { Card } from "@mui/material";
-import styled from "styled-components";
-import { IAdventureCardContainerProps } from "./interfaces";
+import { Card } from '@mui/material';
+import styled from 'styled-components';
+import { IAdventureCardContainerProps } from './interfaces';
 
 export const AdventureCardContainer = styled(Card)`
   width: 300px;

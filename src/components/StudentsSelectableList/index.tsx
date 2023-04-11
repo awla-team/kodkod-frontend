@@ -1,17 +1,10 @@
-import React, { useContext, useState, useEffect } from "react";
-import {
-  TextField,
-  FormControlLabel,
-  Checkbox,
-  Avatar,
-  Button,
-  Typography,
-} from "@mui/material";
-import { StudentsSelectableListProps } from "./interfaces";
-import { AdventureContext } from "routes/Class/Adventures/Adventure/provider";
-import Toaster from "utils/Toster";
-import { missionAccomplished } from "services/missions";
-import { StudentListContainer } from "./styled";
+import React, { useContext, useState, useEffect } from 'react';
+import { TextField, FormControlLabel, Checkbox, Avatar, Button, Typography } from '@mui/material';
+import { StudentsSelectableListProps } from './interfaces';
+import { AdventureContext } from 'routes/Class/Adventures/Adventure/provider';
+import Toaster from 'utils/Toster';
+import { missionAccomplished } from 'services/missions';
+import { StudentListContainer } from './styled';
 
 export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
   stage,
@@ -20,9 +13,7 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
   handleClose,
 }) => {
   const [selected, setSelected] = useState<(number | string)[]>([]);
-  const [defaultSelected, setDefaultSelected] = useState<(number | string)[]>(
-    []
-  );
+  const [defaultSelected, setDefaultSelected] = useState<(number | string)[]>([]);
   const { students: studentsList } = useContext(AdventureContext);
 
   useEffect(() => {
@@ -30,10 +21,7 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
       setDefaultSelected(mission.completed_users.map((user) => user.id));
   }, [mission]);
 
-  const handleCheck = (
-    { target }: React.ChangeEvent<HTMLInputElement>,
-    value: number | string
-  ) => {
+  const handleCheck = ({ target }: React.ChangeEvent<HTMLInputElement>, value: number | string) => {
     return setSelected((prevState) => {
       const temp = [...prevState];
       if (temp.includes(value)) {
@@ -61,18 +49,17 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
   const handleSave = async () => {
     try {
       if (!stage) return;
-      const { data }: { data: { responseData: any } } =
-        await missionAccomplished({
-          studentIds: selected,
-          id_mission: mission.id as number,
-          id_stage: stage.id as number,
-        });
-      Toaster("success", "Misión completada exitosamente");
+      const { data }: { data: { responseData: any } } = await missionAccomplished({
+        studentIds: selected,
+        id_mission: mission.id as number,
+        id_stage: stage.id as number,
+      });
+      Toaster('success', 'Misión completada exitosamente');
       onSave(stage.id);
       handleClose();
     } catch (error: any) {
       console.error(error);
-      Toaster("error", "Hubo un error al completar las misiones");
+      Toaster('error', 'Hubo un error al completar las misiones');
     }
   };
 
@@ -80,7 +67,7 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
     <StudentListContainer className="d-flex flex-column">
       <TextField
         className="mb-3"
-        variant={"standard"}
+        variant={'standard'}
         placeholder="Buscar por nombre o apellido"
         fullWidth
       />
@@ -92,15 +79,11 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
           control={
             <Checkbox
               onChange={handleAllSelect}
-              disabled={studentsList.every((student) =>
-                defaultSelected.includes(student.id)
-              )}
+              disabled={studentsList.every((student) => defaultSelected.includes(student.id))}
               checked={
                 !!studentsList.length &&
                 studentsList.every(
-                  (res, index) =>
-                    selected.includes(res.id) ||
-                    defaultSelected.includes(res.id)
+                  (res, index) => selected.includes(res.id) || defaultSelected.includes(res.id)
                 )
               }
             />
@@ -113,9 +96,7 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
               <Checkbox
                 onChange={(e) => handleCheck(e, res.id)}
                 disabled={defaultSelected.includes(res.id)}
-                checked={
-                  selected.includes(res.id) || defaultSelected.includes(res.id)
-                }
+                checked={selected.includes(res.id) || defaultSelected.includes(res.id)}
               />
               <div className="d-flex align-items-center gap-3">
                 <Avatar className="student-avatar">{`${res.first_name[0]}${res.last_name[0]}`}</Avatar>
@@ -133,26 +114,15 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
           ))}
         </div>
       </div>
-      <Typography
-        component="span"
-        variant="body2"
-        className="mb-3"
-        textAlign="end"
-      >
-        <b>
-          {Object.keys(selected).length + Object.keys(defaultSelected).length}
-        </b>{" "}
-        de <b>{studentsList.length}</b> estudiantes han cumplido esta misión
+      <Typography component="span" variant="body2" className="mb-3" textAlign="end">
+        <b>{Object.keys(selected).length + Object.keys(defaultSelected).length}</b> de{' '}
+        <b>{studentsList.length}</b> estudiantes han cumplido esta misión
       </Typography>
       <div className="d-flex gap-2 justify-content-end">
         <Button onClick={handleClose} variant="outlined">
           Cancelar
         </Button>
-        <Button
-          onClick={handleSave}
-          variant="contained"
-          disabled={!Object.keys(selected).length}
-        >
+        <Button onClick={handleSave} variant="contained" disabled={!Object.keys(selected).length}>
           Guardar cambios
         </Button>
       </div>

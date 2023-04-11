@@ -1,8 +1,8 @@
-import { IStage } from "global/interfaces";
+import { IStage } from 'global/interfaces';
 
 export interface UnlockStageConfirmationDialogProps {
   open: boolean;
-  currentStage: IStage,
+  currentStage: IStage;
   handleClose: () => void;
   isLoading: boolean;
   onConfirm: () => void;

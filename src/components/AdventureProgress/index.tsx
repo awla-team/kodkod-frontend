@@ -1,9 +1,9 @@
-import { FC, useState, useEffect } from "react";
-import { Typography, Box } from "@mui/material";
-import { useClassContext } from "routes/Class/context";
-import SkillPoints from "components/SkillPoints";
-import { IAdventure, IStage } from "global/interfaces";
-import { AdventureProgressContainer, KPIBox } from "./styled";
+import { FC, useState, useEffect } from 'react';
+import { Typography, Box } from '@mui/material';
+import { useClassContext } from 'routes/Class/context';
+import SkillPoints from 'components/SkillPoints';
+import { IAdventure, IStage } from 'global/interfaces';
+import { AdventureProgressContainer, KPIBox } from './styled';
 
 const AdventureProgress: FC<{
   adventure: IAdventure;
@@ -15,9 +15,7 @@ const AdventureProgress: FC<{
 
   useEffect(() => {
     if (classDetails?.current_adventure?.stages?.length) {
-      const filtered = classDetails.current_adventure.stages.filter(
-        (stage) => stage.active
-      );
+      const filtered = classDetails.current_adventure.stages.filter((stage) => stage.active);
       const newLatestStage = [...filtered].sort((a, b) => {
         if (a._index > b._index) return 1;
         if (a._index < b._index) return -1;
@@ -34,10 +32,10 @@ const AdventureProgress: FC<{
     >
       <Box>
         <Box
-          display={"flex"}
-          sx={{ position: "relative" }}
-          alignItems={"start"}
-          justifyContent={"space-between"}
+          display={'flex'}
+          sx={{ position: 'relative' }}
+          alignItems={'start'}
+          justifyContent={'space-between'}
         >
           <Typography
             component="h2"
@@ -63,36 +61,28 @@ const AdventureProgress: FC<{
         <section className="d-flex flex-column mb-3">
           <div className="d-flex flex-wrap flex-lg-nowrap gap-2">
             {!!classDetails.current_adventure?.skills?.length
-              ? classDetails.current_adventure.skills.map(
-                  (adventureSkill, index) => (
-                    <SkillPoints
-                      key={`${adventureSkill.id}-${adventureSkill.title}-${index}`}
-                      skill={adventureSkill}
-                    />
-                  )
-                )
+              ? classDetails.current_adventure.skills.map((adventureSkill, index) => (
+                  <SkillPoints
+                    key={`${adventureSkill.id}-${adventureSkill.title}-${index}`}
+                    skill={adventureSkill}
+                  />
+                ))
               : null}
           </div>
         </section>
       </Box>
       <div className="d-flex gap-2">
         <KPIBox className="p-4">
-          <Typography
-            variant="h3"
-            component="h3"
-            fontWeight="bold"
-          >{`${Math.round(progressPercentage)}%`}</Typography>
+          <Typography variant="h3" component="h3" fontWeight="bold">{`${Math.round(
+            progressPercentage
+          )}%`}</Typography>
           <Typography>de misiones completadas en la aventura</Typography>
         </KPIBox>
         <KPIBox className="p-4">
-          <Typography
-            variant="h3"
-            component="h3"
-            fontWeight="bold"
-          >{`${Math.round(averageCompletedMission)}`}</Typography>
-          <Typography>
-            misiones completadas por estudiante en promedio{" "}
-          </Typography>
+          <Typography variant="h3" component="h3" fontWeight="bold">{`${Math.round(
+            averageCompletedMission
+          )}`}</Typography>
+          <Typography>misiones completadas por estudiante en promedio </Typography>
         </KPIBox>
       </div>
     </AdventureProgressContainer>

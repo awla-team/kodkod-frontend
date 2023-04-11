@@ -1,5 +1,5 @@
-import { ClassInterface } from "services/classes/interfaces";
-import { IMission } from "../../global/interfaces";
+import { ClassInterface } from 'services/classes/interfaces';
+import { IMission } from '../../global/interfaces';
 
 export interface StudentType {
   id: number | string;
@@ -15,7 +15,7 @@ export interface StudentType {
 }
 
 export interface StudentUpdateDataType {
-  role: "student";
+  role: 'student';
   first_name: string;
   last_name: string;
   email: string;

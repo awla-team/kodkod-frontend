@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Button,
@@ -7,15 +7,15 @@ import {
   DialogContent,
   DialogTitle,
   Typography,
-} from "@mui/material";
-import type { IAdventure } from "global/interfaces";
-import Toaster from "utils/Toster";
-import { setCurrentAdventure } from "services/adventures";
-import { useParams, useNavigate } from "react-router-dom";
-import SkillPoints from "components/SkillPoints";
-import EmojiFlagsIcon from "@mui/icons-material/EmojiFlags";
-import { AdventureBanner } from "./styled";
-import { useClassContext } from "routes/Class/context";
+} from '@mui/material';
+import type { IAdventure } from 'global/interfaces';
+import Toaster from 'utils/Toster';
+import { setCurrentAdventure } from 'services/adventures';
+import { useParams, useNavigate } from 'react-router-dom';
+import SkillPoints from 'components/SkillPoints';
+import EmojiFlagsIcon from '@mui/icons-material/EmojiFlags';
+import { AdventureBanner } from './styled';
+import { useClassContext } from 'routes/Class/context';
 
 const AdventureSummaryDialog: React.FC<{
   selectedAdventure: IAdventure;
@@ -29,13 +29,11 @@ const AdventureSummaryDialog: React.FC<{
 
   useEffect(() => {
     if (selectedAdventure && selectedAdventure.template_stages) {
-      const newSortedStages = [...selectedAdventure.template_stages].sort(
-        (a, b) => {
-          if (a._index > b._index) return 1;
-          if (a._index < b._index) return -1;
-          return 0;
-        }
-      );
+      const newSortedStages = [...selectedAdventure.template_stages].sort((a, b) => {
+        if (a._index > b._index) return 1;
+        if (a._index < b._index) return -1;
+        return 0;
+      });
       setSortedStages(newSortedStages);
     }
   }, [selectedAdventure]);
@@ -57,10 +55,10 @@ const AdventureSummaryDialog: React.FC<{
         });
 
         navigate(`/app/cursos/${classId}/aventuras`);
-        Toaster("success", "Aventura inciciada exitosamente");
+        Toaster('success', 'Aventura inciciada exitosamente');
       } catch (error: any) {
         console.error(error);
-        Toaster("error", "Hubo un error al iniciar la aventura");
+        Toaster('error', 'Hubo un error al iniciar la aventura');
       }
     }
   };
@@ -68,9 +66,7 @@ const AdventureSummaryDialog: React.FC<{
   return (
     <Dialog open={!!selectedAdventure} onClose={handleOnCloseModal} fullWidth maxWidth="lg">
       <DialogTitle className="d-flex flex-column p-0">
-        <AdventureBanner
-          sx={{ backgroundImage: `url(${selectedAdventure?.banner})` }}
-        >
+        <AdventureBanner sx={{ backgroundImage: `url(${selectedAdventure?.banner})` }}>
           <Typography variant="h4" fontWeight="bold" className="mb-2">
             {shownAdventure?.title}
           </Typography>
@@ -95,22 +91,18 @@ const AdventureSummaryDialog: React.FC<{
               <Typography variant="subtitle1" fontWeight="bold">
                 Resumen
               </Typography>
-              <Typography variant="body1">
-                {shownAdventure?.overview}
-              </Typography>
+              <Typography variant="body1">{shownAdventure?.overview}</Typography>
             </section>
             <section className="d-flex flex-column">
               <Typography variant="subtitle1" fontWeight="bold">
                 Resultados esperados
               </Typography>
-              {!!shownAdventure?.expected_results.split("\n")?.length ? (
+              {!!shownAdventure?.expected_results.split('\n')?.length ? (
                 <ul className="ps-4 mb-0">
                   {shownAdventure.expected_results
-                    .split("\n")
+                    .split('\n')
                     .map((expectedResult: string, i: number) => (
-                      <li
-                        key={`adventure-${shownAdventure.id}-expected-result-${i}`}
-                      >
+                      <li key={`adventure-${shownAdventure.id}-expected-result-${i}`}>
                         {expectedResult}
                       </li>
                     ))}
@@ -130,9 +122,7 @@ const AdventureSummaryDialog: React.FC<{
                         <b>{`Etapa ${i}: `}</b>
                         {stage.title}
                       </Typography>
-                      <Typography variant="caption">
-                        {stage.description}
-                      </Typography>
+                      <Typography variant="caption">{stage.description}</Typography>
                     </div>
                   </div>
                 ))}
@@ -142,7 +132,7 @@ const AdventureSummaryDialog: React.FC<{
         </Box>
       </DialogContent>
       <DialogActions className="d-flex align-items-center p-4">
-        <Button variant={"outlined"} onClick={handleOnCloseModal}>
+        <Button variant={'outlined'} onClick={handleOnCloseModal}>
           Cancelar
         </Button>
         <Button variant="contained" color="primary" onClick={setAdventure}>

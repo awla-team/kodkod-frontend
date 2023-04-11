@@ -1,6 +1,6 @@
-import React, { createContext } from "react";
-import { IAdventureContext } from "./interfaces";
-import { AdventureProviderProps } from "../interfaces";
+import React, { createContext } from 'react';
+import { IAdventureContext } from './interfaces';
+import { AdventureProviderProps } from '../interfaces';
 
 export const AdventureContext = createContext<IAdventureContext>({
   adventure: undefined,

@@ -1,8 +1,8 @@
-import styled, { ThemeProps, DefaultTheme } from "styled-components";
-import { Box } from "@mui/material";
+import styled, { ThemeProps, DefaultTheme } from 'styled-components';
+import { Box } from '@mui/material';
 
 export const HomeContainer = styled.div`
-  font-family: "Arista 2.0";
+  font-family: 'Arista 2.0';
 
   img {
     height: 260px;
@@ -11,8 +11,7 @@ export const HomeContainer = styled.div`
   h1 {
     font-size: 48px;
     span {
-      color: ${(props: ThemeProps<DefaultTheme>) =>
-        props.theme.palette.primary.main};
+      color: ${(props: ThemeProps<DefaultTheme>) => props.theme.palette.primary.main};
     }
   }
 `;

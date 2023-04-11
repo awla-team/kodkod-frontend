@@ -1,19 +1,11 @@
-import { Typography, Card } from "@mui/material";
-import kodcoinIcon from "./../../assets/images/kodcoin.png";
-import { IRewardCardProps } from "./interfaces";
-import { CustomCard } from "./styled";
+import { Typography, Card } from '@mui/material';
+import kodcoinIcon from './../../assets/images/kodcoin.png';
+import { IRewardCardProps } from './interfaces';
+import { CustomCard } from './styled';
 
-const RewardCard: React.FC<IRewardCardProps> = ({
-  title,
-  icon,
-  description,
-  requiredPoints,
-}) => {
+const RewardCard: React.FC<IRewardCardProps> = ({ title, icon, description, requiredPoints }) => {
   return (
-    <CustomCard
-      variant="outlined"
-      className="d-flex flex-column py-4 px-3 mb-3 align-items-center"
-    >
+    <CustomCard variant="outlined" className="d-flex flex-column py-4 px-3 mb-3 align-items-center">
       <div className="reward-img mb-3">
         <img src={icon} />
       </div>

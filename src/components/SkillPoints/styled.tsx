@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { IIconContainerProps } from "./interfaces";
+import styled from 'styled-components';
+import { IIconContainerProps } from './interfaces';
 
 export const SkillPointsContainer = styled.div`
   img {
@@ -18,7 +18,7 @@ export const SkillPointsContainer = styled.div`
 `;
 
 export const IconContainer = styled.div`
-  background: ${(props: IIconContainerProps) => props.background || "#000"};
+  background: ${(props: IIconContainerProps) => props.background || '#000'};
   display: flex;
   align-items: center;
   justify-content: center;

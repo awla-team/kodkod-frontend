@@ -1,15 +1,15 @@
-import React from "react";
-import AngryIconFilled from "components/SVG/AngryIconFilled";
-import AngryIconOutlined from "components/SVG/AngryIconOutlined";
-import GoodIconFilled from "components/SVG/GoodIconFilled";
-import GoodIconOutlined from "components/SVG/GoodIconOutlined";
-import HappyIconFilled from "components/SVG/HappyIconFilled";
-import HappyIconOutlined from "components/SVG/HappyIconOutlined";
-import NeutralIconFilled from "components/SVG/NeutralIconFilled";
-import NeutralIconOutlined from "components/SVG/NeutralIconOutlined";
-import SadIconFilled from "components/SVG/SadIconFilled";
-import SadIconOutlined from "components/SVG/SadIconOutlined";
-import { IScoreOption } from "./interfaces";
+import React from 'react';
+import AngryIconFilled from 'components/SVG/AngryIconFilled';
+import AngryIconOutlined from 'components/SVG/AngryIconOutlined';
+import GoodIconFilled from 'components/SVG/GoodIconFilled';
+import GoodIconOutlined from 'components/SVG/GoodIconOutlined';
+import HappyIconFilled from 'components/SVG/HappyIconFilled';
+import HappyIconOutlined from 'components/SVG/HappyIconOutlined';
+import NeutralIconFilled from 'components/SVG/NeutralIconFilled';
+import NeutralIconOutlined from 'components/SVG/NeutralIconOutlined';
+import SadIconFilled from 'components/SVG/SadIconFilled';
+import SadIconOutlined from 'components/SVG/SadIconOutlined';
+import { IScoreOption } from './interfaces';
 
 export const challengeOptions: string[] = [
   'Problemas de conducta, disciplina y comportamiento de los estudiantes en la clase',
@@ -17,7 +17,7 @@ export const challengeOptions: string[] = [
   'Desmotivación, desinterés o aburrimiento por parte de los estudiantes',
   'Problemas relacionados con las emociones y relaciones entre los estudiantes',
   'Problemas de logística y organización de la clase, falta de materiales o la falta de tiempo',
-  'Sin incidencias'
+  'Sin incidencias',
 ];
 
 export const mostRemarkableOptions: string[] = [
@@ -26,36 +26,36 @@ export const mostRemarkableOptions: string[] = [
   'Innovación y creatividad, uso efectivo de recursos didácticos y tecnológicos',
   'Promoción de la inclusión y la diversidad en el aula',
   'Mejora en la comunicación y colaboración entre el profesor o los estudiantes',
-  'Sin novedades'
+  'Sin novedades',
 ];
 
 export const radioOptions: IScoreOption[] = [
   {
-    text: "Muy malo",
+    text: 'Muy malo',
     value: 0,
     icon: <AngryIconOutlined />,
     selectedIcon: <AngryIconFilled />,
   },
   {
-    text: "Malo",
+    text: 'Malo',
     value: 1,
     icon: <SadIconOutlined />,
     selectedIcon: <SadIconFilled />,
   },
   {
-    text: "Neutral",
+    text: 'Neutral',
     value: 2,
     icon: <NeutralIconOutlined />,
     selectedIcon: <NeutralIconFilled />,
   },
   {
-    text: "Bueno",
+    text: 'Bueno',
     value: 3,
     icon: <GoodIconOutlined />,
     selectedIcon: <GoodIconFilled />,
   },
   {
-    text: "Muy bueno",
+    text: 'Muy bueno',
     value: 4,
     icon: <HappyIconOutlined />,
     selectedIcon: <HappyIconFilled />,

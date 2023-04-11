@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import { Box, Checkbox as MuiCheckbox } from "@mui/material";
-import { checkboxClasses } from "@mui/material/Checkbox";
+import styled from 'styled-components';
+import { Box, Checkbox as MuiCheckbox } from '@mui/material';
+import { checkboxClasses } from '@mui/material/Checkbox';
 
 export const StudentListContainer = styled(Box)`
   height: 100%;

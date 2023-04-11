@@ -1,28 +1,26 @@
-import React, { useState, useEffect } from "react";
-import { Box, Button, CircularProgress, Typography } from "@mui/material";
-import { Navigate, Outlet, useNavigate } from "react-router-dom";
-import { GoalSelectionContainer, CardContainer, ImgContainer } from "./styled";
-import { AxiosResponse } from "axios";
-import { getGoals } from "services/goals";
-import { FetchStatus } from "global/enums";
-import { Goal } from "services/goals/interfaces";
-import { useClassContext } from "routes/Class/context";
+import React, { useState, useEffect } from 'react';
+import { Box, Button, CircularProgress, Typography } from '@mui/material';
+import { Navigate, Outlet, useNavigate } from 'react-router-dom';
+import { GoalSelectionContainer, CardContainer, ImgContainer } from './styled';
+import { AxiosResponse } from 'axios';
+import { getGoals } from 'services/goals';
+import { FetchStatus } from 'global/enums';
+import { Goal } from 'services/goals/interfaces';
+import { useClassContext } from 'routes/Class/context';
 
 const GoalSelection: React.FC = () => {
   const { classDetails, loadingClass } = useClassContext();
   const navigate = useNavigate();
   const [goals, setGoals] = useState<Goal[]>([]);
   const [selectedGoalId, setSelectedGoalId] = useState<number>(null);
-  const [loadingGoals, setLoadingGoals] = useState<FetchStatus>(
-    FetchStatus.Idle
-  );
+  const [loadingGoals, setLoadingGoals] = useState<FetchStatus>(FetchStatus.Idle);
 
   const selectAdventure = (goalId: number) => {
     if (selectedGoalId !== goalId) setSelectedGoalId(goalId);
     else setSelectedGoalId(null);
   };
 
-  const nextView = () => navigate("objetivo/" + selectedGoalId);
+  const nextView = () => navigate('objetivo/' + selectedGoalId);
 
   useEffect(() => {
     setLoadingGoals(FetchStatus.Pending);
@@ -38,11 +36,7 @@ const GoalSelection: React.FC = () => {
       });
   }, []);
 
-  if (
-    loadingGoals === FetchStatus.Idle ||
-    loadingGoals === FetchStatus.Pending ||
-    !classDetails
-  )
+  if (loadingGoals === FetchStatus.Idle || loadingGoals === FetchStatus.Pending || !classDetails)
     return (
       <div className="d-flex w-100 align-items-center justify-content-center">
         <CircularProgress />
@@ -61,10 +55,9 @@ const GoalSelection: React.FC = () => {
         <b>Paso 1:</b> Escoge un objetivo
       </Typography>
       <Typography variant="body1" className="mb-4">
-        Una aventura es una serie de misiones planificadas para{" "}
-        <b>alcanzar un objetivo</b> en concreto con tu curso. Para empezar,{" "}
-        <b>escoge el objetivo</b> que quieres alcanzar con el curso{" "}
-        <b>{classDetails.alias}</b>.
+        Una aventura es una serie de misiones planificadas para <b>alcanzar un objetivo</b> en
+        concreto con tu curso. Para empezar, <b>escoge el objetivo</b> que quieres alcanzar con el
+        curso <b>{classDetails.alias}</b>.
       </Typography>
       <div className="d-flex flex-column w-100 align-items-center justify-content-between h-100">
         <div className="d-flex justify-content-center gap-3 w-100 flex-wrap">
@@ -73,7 +66,7 @@ const GoalSelection: React.FC = () => {
                 <CardContainer
                   key={`${goal.id}-${goal.title}`}
                   className={`d-flex flex-column align-items-center position-relative ${
-                    goal.id === selectedGoalId ? "selected" : ""
+                    goal.id === selectedGoalId ? 'selected' : ''
                   }`}
                   onClick={() => selectAdventure(goal.id)}
                 >

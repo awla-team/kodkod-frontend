@@ -1,44 +1,31 @@
-import { DetailsCardContent } from "./styled";
-import { ClassDetailsCardProps } from "./interfaces";
-import React, { FC, useState, useEffect } from "react";
-import {
-  Button,
-  Typography,
-  Box,
-  IconButton,
-  Menu,
-  MenuItem,
-} from "@mui/material";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { Link, useNavigate } from "react-router-dom";
-import { CreateClassModal } from "../Modals";
-import { useClassContext } from "routes/Class/context";
-import { ClassInterface } from "../../services/classes/interfaces";
-import ConfirmationModal from "../Modals/ConfirmationModal";
-import Toaster from "../../utils/Toster";
-import { deleteClass } from "../../services/classes";
-import SkillPoints from "components/SkillPoints";
-import { IStage } from "global/interfaces";
+import { DetailsCardContent } from './styled';
+import { ClassDetailsCardProps } from './interfaces';
+import React, { FC, useState, useEffect } from 'react';
+import { Button, Typography, Box, IconButton, Menu, MenuItem } from '@mui/material';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { Link, useNavigate } from 'react-router-dom';
+import { CreateClassModal } from '../Modals';
+import { useClassContext } from 'routes/Class/context';
+import { ClassInterface } from '../../services/classes/interfaces';
+import ConfirmationModal from '../Modals/ConfirmationModal';
+import Toaster from '../../utils/Toster';
+import { deleteClass } from '../../services/classes';
+import SkillPoints from 'components/SkillPoints';
+import { IStage } from 'global/interfaces';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 
-const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
-  classDetails,
-  levels,
-}) => {
+const ClassDetailsCard: FC<ClassDetailsCardProps> = ({ classDetails, levels }) => {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState<boolean>(false);
-  const [openDeleteConfirmationDialog, setOpenDeleteConfirmationDialog] =
-    useState<boolean>(false);
+  const [openDeleteConfirmationDialog, setOpenDeleteConfirmationDialog] = useState<boolean>(false);
   const { setClassDetails } = useClassContext();
   const [loading, setLoading] = useState<boolean>(false);
   const [latestStage, setLatestStage] = useState<IStage>(undefined);
 
   useEffect(() => {
     if (classDetails?.current_adventure?.stages?.length) {
-      const filtered = classDetails.current_adventure.stages.filter(
-        (stage) => stage.active
-      );
+      const filtered = classDetails.current_adventure.stages.filter((stage) => stage.active);
       const newLatestStage = [...filtered].sort((a, b) => {
         if (a._index > b._index) return 1;
         if (a._index < b._index) return -1;
@@ -49,10 +36,10 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
   }, [classDetails]);
 
   const handleClose = (
-    reason: "backdropClick" | "escapeKeyDown" | "success",
+    reason: 'backdropClick' | 'escapeKeyDown' | 'success',
     data?: ClassInterface
   ) => {
-    if ("success") {
+    if ('success') {
       setClassDetails((prevState) => {
         return { ...prevState, ...data };
       });
@@ -78,15 +65,12 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
     try {
       setLoading(true);
       await deleteClass(classDetails.id);
-      Toaster("success", `Curso ${classDetails.alias} eliminado exitosamente`);
-      navigate("/app", { replace: true });
+      Toaster('success', `Curso ${classDetails.alias} eliminado exitosamente`);
+      navigate('/app', { replace: true });
       //window.location.reload();
     } catch (error: any) {
       console.error(error);
-      Toaster(
-        "error",
-        `Hubo un error al eliminar el curso ${classDetails.alias}`
-      );
+      Toaster('error', `Hubo un error al eliminar el curso ${classDetails.alias}`);
     } finally {
       setLoading(false);
     }
@@ -100,18 +84,18 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
             className="p-5"
             sx={{
               backgroundImage: `url(${latestStage?.icon})`,
-              borderRadius: "8px",
-              color: "#FFF",
-              boxShadow: "rgb(0, 0, 0) 0px 0px 200px 60px inset",
-              backgroundPosition: "center",
-              backgroundSize: "cover",
+              borderRadius: '8px',
+              color: '#FFF',
+              boxShadow: 'rgb(0, 0, 0) 0px 0px 200px 60px inset',
+              backgroundPosition: 'center',
+              backgroundSize: 'cover',
             }}
           >
             <Box
-              display={"flex"}
-              sx={{ position: "relative" }}
-              alignItems={"start"}
-              justifyContent={"space-between"}
+              display={'flex'}
+              sx={{ position: 'relative' }}
+              alignItems={'start'}
+              justifyContent={'space-between'}
             >
               <Typography
                 component="h2"
@@ -125,26 +109,23 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
                 {classDetails.alias}
               </Typography>
               <div className="d-flex align-items-center justify-content-center">
-                <Button variant="outlined" size="small" component={Link} to="https://www.youtube.com/watch?v=oymcbyiloIs" target="_blank" color="info" >
+                <Button
+                  variant="outlined"
+                  size="small"
+                  component={Link}
+                  to="https://www.youtube.com/watch?v=oymcbyiloIs"
+                  target="_blank"
+                  color="info"
+                >
                   <YouTubeIcon className="me-2" />
                   Ver video introductorio
                 </Button>
-                <IconButton
-                  sx={{ marginLeft: "8px" }}
-                  color="inherit"
-                  onClick={handleMenuOpen}
-                >
+                <IconButton sx={{ marginLeft: '8px' }} color="inherit" onClick={handleMenuOpen}>
                   <MoreVertIcon fontSize="large" />
                 </IconButton>
               </div>
-              <Menu
-                open={!!anchorEl}
-                anchorEl={anchorEl}
-                onClose={handleMenuClose}
-              >
-                <MenuItem onClick={() => setOpen(true)}>
-                  Editar información del curso
-                </MenuItem>
+              <Menu open={!!anchorEl} anchorEl={anchorEl} onClose={handleMenuClose}>
+                <MenuItem onClick={() => setOpen(true)}>Editar información del curso</MenuItem>
                 <MenuItem onClick={() => setOpenDeleteConfirmationDialog(true)}>
                   Eliminar curso
                 </MenuItem>
@@ -161,14 +142,12 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
             <section className="d-flex flex-column mb-3">
               <div className="d-flex flex-wrap flex-lg-nowrap gap-2">
                 {!!classDetails.current_adventure?.skills?.length
-                  ? classDetails.current_adventure.skills.map(
-                      (adventureSkill, index) => (
-                        <SkillPoints
-                          key={`${adventureSkill.id}-${adventureSkill.title}-${index}`}
-                          skill={adventureSkill}
-                        />
-                      )
-                    )
+                  ? classDetails.current_adventure.skills.map((adventureSkill, index) => (
+                      <SkillPoints
+                        key={`${adventureSkill.id}-${adventureSkill.title}-${index}`}
+                        skill={adventureSkill}
+                      />
+                    ))
                   : null}
               </div>
             </section>
@@ -181,10 +160,10 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
         ) : (
           <div className="d-flex flex-column p-5">
             <Box
-              display={"flex"}
-              sx={{ position: "relative" }}
-              alignItems={"start"}
-              justifyContent={"space-between"}
+              display={'flex'}
+              sx={{ position: 'relative' }}
+              alignItems={'start'}
+              justifyContent={'space-between'}
             >
               <Typography
                 component="h2"
@@ -198,42 +177,33 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
                 {classDetails.alias}
               </Typography>
               <div className="d-flex align-items-center justify-content-center">
-                <Button variant="outlined" size="small" component={Link} to="https://www.youtube.com/watch?v=oymcbyiloIs" target="_blank" >
+                <Button
+                  variant="outlined"
+                  size="small"
+                  component={Link}
+                  to="https://www.youtube.com/watch?v=oymcbyiloIs"
+                  target="_blank"
+                >
                   <YouTubeIcon className="me-2" />
                   Ver video introductorio
                 </Button>
-                <IconButton
-                  sx={{ marginLeft: "8px" }}
-                  color="inherit"
-                  onClick={handleMenuOpen}
-                >
+                <IconButton sx={{ marginLeft: '8px' }} color="inherit" onClick={handleMenuOpen}>
                   <MoreVertIcon fontSize="large" />
                 </IconButton>
-              </div>              
-              <Menu
-                open={!!anchorEl}
-                anchorEl={anchorEl}
-                onClose={handleMenuClose}
-              >
-                <MenuItem onClick={() => setOpen(true)}>
-                  Editar información del curso
-                </MenuItem>
+              </div>
+              <Menu open={!!anchorEl} anchorEl={anchorEl} onClose={handleMenuClose}>
+                <MenuItem onClick={() => setOpen(true)}>Editar información del curso</MenuItem>
                 <MenuItem onClick={() => setOpenDeleteConfirmationDialog(true)}>
                   Eliminar curso
                 </MenuItem>
               </Menu>
             </Box>
-            <Typography
-              component="span"
-              variant="body1"
-              fontWeight="bold"
-              mb={1}
-            >
+            <Typography component="span" variant="body1" fontWeight="bold" mb={1}>
               ¡Aún no has seleccionado una aventura!
             </Typography>
             <Typography component="span" variant="body1">
-              Presiona el botón a continuación para escoger una aventura que se
-              ajuste a tus objetivos
+              Presiona el botón a continuación para escoger una aventura que se ajuste a tus
+              objetivos
             </Typography>
             <div className="mt-4">
               <Button variant="contained" size="large" onClick={handleNavigate}>
@@ -256,9 +226,7 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
         onClose={() => setOpenDeleteConfirmationDialog(false)}
         loading={loading}
         description={
-          <Typography>
-            El curso será eliminado y el avance de la aventura se perderá.
-          </Typography>
+          <Typography>El curso será eliminado y el avance de la aventura se perderá.</Typography>
         }
       />
     </DetailsCardContent>

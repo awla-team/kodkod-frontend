@@ -1,18 +1,18 @@
-import React, { useState } from "react";
-import { useOutletContext } from "react-router-dom";
+import React, { useState } from 'react';
+import { useOutletContext } from 'react-router-dom';
 import {
   DashboardContainer,
   DashboardContainerLeftSide,
   DashboardContainerRightSide,
   DetailsCard,
-} from "./styled";
-import ClassDetailsCard from "components/ClassDetailsCard";
-import { ClassInterface } from "services/classes/interfaces";
-import StudentsList from "components/StudentsList";
-import { StudentType } from "components/StudentsList/interfaces";
-import EmotionalThermometer from "components/EmotionalThermometer";
-import { Levels } from "components/Modals/CreateClassModal/interfaces";
-import { useClassContext } from "../context";
+} from './styled';
+import ClassDetailsCard from 'components/ClassDetailsCard';
+import { ClassInterface } from 'services/classes/interfaces';
+import StudentsList from 'components/StudentsList';
+import { StudentType } from 'components/StudentsList/interfaces';
+import EmotionalThermometer from 'components/EmotionalThermometer';
+import { Levels } from 'components/Modals/CreateClassModal/interfaces';
+import { useClassContext } from '../context';
 
 const Board: React.FC<{}> = ({}) => {
   const { classDetails, students, levels } = useOutletContext() as {
@@ -25,9 +25,7 @@ const Board: React.FC<{}> = ({}) => {
     <DashboardContainer className="d-flex w-100 row">
       <div className="d-flex flex-column col-lg-6 col-12 pe-lg-3 pb-lg-0 pb-3 ">
         <DetailsCard className="mb-3">
-          {classDetails && (
-            <ClassDetailsCard classDetails={classDetails} levels={levels} />
-          )}
+          {classDetails && <ClassDetailsCard classDetails={classDetails} levels={levels} />}
         </DetailsCard>
         <DetailsCard className="p-5">
           <EmotionalThermometer classDetails={classDetails} />

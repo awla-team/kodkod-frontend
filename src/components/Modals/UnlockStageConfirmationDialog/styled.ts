@@ -3,9 +3,9 @@ import {
   DialogContent as MuiDialogContent,
   DialogTitle as MuiDialogTitle,
   DialogActions as MuiDialogActions,
-} from "@mui/material";
-import styled from "styled-components";
-import { dialogClasses } from "@mui/material/Dialog";
+} from '@mui/material';
+import styled from 'styled-components';
+import { dialogClasses } from '@mui/material/Dialog';
 
 export const Dialog = styled(MuiDialog)`
   & .${dialogClasses.paper} {

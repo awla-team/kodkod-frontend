@@ -1,11 +1,11 @@
-import { ClassInterface } from "services/classes/interfaces";
-import React, { Dispatch, SetStateAction, useState } from "react";
-import { IStage } from "../global/interfaces";
-import { generateAccessToken } from "../services/auth";
-import SignalCellularAlt1BarIcon from "@mui/icons-material/SignalCellularAlt1Bar";
-import SignalCellularAlt2BarIcon from "@mui/icons-material/SignalCellularAlt2Bar";
-import SignalCellularAltIcon from "@mui/icons-material/SignalCellularAlt";
-import CachedIcon from "@mui/icons-material/Cached";
+import { ClassInterface } from 'services/classes/interfaces';
+import React, { Dispatch, SetStateAction, useState } from 'react';
+import { IStage } from '../global/interfaces';
+import { generateAccessToken } from '../services/auth';
+import SignalCellularAlt1BarIcon from '@mui/icons-material/SignalCellularAlt1Bar';
+import SignalCellularAlt2BarIcon from '@mui/icons-material/SignalCellularAlt2Bar';
+import SignalCellularAltIcon from '@mui/icons-material/SignalCellularAlt';
+import CachedIcon from '@mui/icons-material/Cached';
 
 export const difficultyIcons = {
   easy: <SignalCellularAlt1BarIcon fontSize="small" />,
@@ -29,8 +29,8 @@ export const sortClasses = (classes?: ClassInterface[]): ClassInterface[] => {
 };
 
 export const generateQueryParamsFromObject = (obj: any): string => {
-  let finalQueryParamString = "";
-  if (typeof obj === "object" && !Array.isArray(obj)) {
+  let finalQueryParamString = '';
+  if (typeof obj === 'object' && !Array.isArray(obj)) {
     Object.keys(obj).forEach((key, index) => {
       if (index === 0) {
         finalQueryParamString += `?${key}=${obj[key]}`;
@@ -44,34 +44,34 @@ export const generateQueryParamsFromObject = (obj: any): string => {
 
 export const putDifficultyClass = (difficulty: string): string => {
   switch (difficulty) {
-    case "easy": {
-      return " level__easy";
+    case 'easy': {
+      return ' level__easy';
     }
-    case "normal": {
-      return " level__normal";
+    case 'normal': {
+      return ' level__normal';
     }
-    case "hard": {
-      return " level__hard";
+    case 'hard': {
+      return ' level__hard';
     }
     default: {
-      return " level__easy";
+      return ' level__easy';
     }
   }
 };
 
 export const difficultyToText = (difficulty: string): string => {
   switch (difficulty) {
-    case "easy": {
-      return " Fácil";
+    case 'easy': {
+      return ' Fácil';
     }
-    case "normal": {
-      return " Normal";
+    case 'normal': {
+      return ' Normal';
     }
-    case "hard": {
-      return " Difícil";
+    case 'hard': {
+      return ' Difícil';
     }
     default: {
-      return " Fácil";
+      return ' Fácil';
     }
   }
 };
@@ -86,10 +86,7 @@ export const sortStageByActiveStatus = (stages: IStage[]) => {
     });
 };
 
-export const getActiveStage = (
-  stage: IStage[],
-  sort?: boolean
-): IStage | null => {
+export const getActiveStage = (stage: IStage[], sort?: boolean): IStage | null => {
   if (stage.length) {
     let actives = stage.filter((res) => res.active);
     if (sort) {
@@ -101,10 +98,7 @@ export const getActiveStage = (
   }
 };
 
-export const getFirstNonActiveStage = (
-  stage: IStage[],
-  sort?: boolean
-): IStage | null => {
+export const getFirstNonActiveStage = (stage: IStage[], sort?: boolean): IStage | null => {
   if (stage.length) {
     let actives = stage.filter((res) => !res.active);
     if (sort) {
@@ -118,9 +112,9 @@ export const getFirstNonActiveStage = (
 
 export const getAccessTokenUsingRefreshToken = () => {
   return new Promise(async (resolve, reject) => {
-    const refreshToken = localStorage.getItem("refreshToken");
+    const refreshToken = localStorage.getItem('refreshToken');
     if (!refreshToken) {
-      return reject("Refresh token not found");
+      return reject('Refresh token not found');
     }
     try {
       const data = await generateAccessToken({ refreshToken });
