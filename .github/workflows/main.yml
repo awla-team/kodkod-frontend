@@ -3,7 +3,7 @@ name: Kodkod frontend deploy
 on:
   push:
     branches-ignore:
-      - develop
+      - development
       - main
   pull_request:
     branches:
@@ -14,7 +14,7 @@ on:
 
 jobs:
   lint:
-    name: Linting
+    name: Lint
     runs-on: ubuntu-latest
     steps:
       - name: Actions checkout
@@ -26,6 +26,7 @@ jobs:
   build:
     name: Build
     if: github.event.pull_request.merged == true
+    needs: lint
     runs-on: ubuntu-latest
     steps:
       - name: Node.js 18.x setup
@@ -47,9 +48,9 @@ jobs:
           path: dist
 
   deploy:
-    name: Production deploy
-    needs: build
+    name: app.kodkod.cl
     if: github.base_ref == 'main'
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Download build
@@ -71,9 +72,9 @@ jobs:
         run: aws cloudfront create-invalidation --distribution-id ${{ secrets.PROD_DISTRIBUTION_ID }} --paths "/*"
 
   deploy-dev:
-    name: Development deploy
-    needs: build
+    name: app-dev.kodkod.cl
     if: github.base_ref == 'development'
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Download build
