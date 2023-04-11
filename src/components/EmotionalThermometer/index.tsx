@@ -201,25 +201,25 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
     <EmotionalThermometerContainer>
       <div className="d-flex justify-content-between align-items-center mb-4">
         <div>
-          <div className="d-flex align-items-center">
-            <Typography
-              className="me-2"
-              component="h6"
-              variant="h6"
-              fontWeight="bold"
-            >
-              Termómetro socioemocional
-            </Typography>
-            <Tooltip
+          <Typography
+            display="inline"
+            className="me-1"
+            component="h6"
+            variant="h6"
+            fontWeight="bold"
+          >
+            Termómetro socioemocional
+          </Typography>
+          <Tooltip
               title="El termómetro socioemocional es una herramienta que nos permitirá hacer seguimiento del clima escolar del curso a lo largo del tiempo. ¡Es importantísimo llenarlo cada clase para poder entregarte reportes de calidad!"
               placement="right"
               TransitionComponent={Fade}
             >
               <HelpIcon
+                className="mb-1"
                 sx={{ opacity: 0.8, cursor: "pointer", fontSize: "20px" }}
               />
             </Tooltip>
-          </div>
           <div className="d-flex align-items-center">
             <Typography
               className="me-1"
@@ -245,13 +245,16 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
             onChange={(newDate) => handleDateChange(Moment(newDate))}
             renderInput={({ inputRef }) => (
               <div ref={inputRef}>
-                <Button
-                  variant="outlined"
-                  startIcon={<CalendarMonth />}
-                  onClick={() => setCalendarOpen(!calendarIsOpen)}
-                >
-                  Editar otra fecha
-                </Button>
+                <Tooltip title="Editar otra fecha" arrow>
+                  <Button
+                    sx={{ borderRadius: '100%', height: '44px', width: '44px', minWidth: 'unset' }}
+                    variant="outlined"
+                    className="px-1"
+                    onClick={() => setCalendarOpen(!calendarIsOpen)}
+                  >
+                    <CalendarMonth />
+                  </Button>
+                </Tooltip>
               </div>
             )}
           />
@@ -260,10 +263,10 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
       <>
         <Chip
           className="w-100"
-          sx={{ padding: "20px 0px" }}
+          sx={{ padding: "20px 16px" }}
           color="secondary"
           label={
-            <Typography component="span" variant="body2" fontWeight="bold">
+            <Typography component="span" variant="body2" fontWeight="bold" sx={{ overflow: 'unset', textOverflow: 'unset', whiteSpace: 'break-spaces' }}>
               ¡Completa esta sección al final de cada clase!
             </Typography>
           }

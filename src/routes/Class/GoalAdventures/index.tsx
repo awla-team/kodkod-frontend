@@ -5,7 +5,7 @@ import type { IAdventure, IClassHasAdventure } from "global/interfaces";
 import { FetchStatus } from "global/enums";
 import CircularProgress from "@mui/material/CircularProgress";
 import AdventureSummaryDialog from "../../../components/Modals/AdventureSummaryDialog";
-import { Navigate, useParams } from "react-router-dom";
+import { Navigate, useParams, Link as RouterLink } from "react-router-dom";
 import { getGoalById } from "services/goals";
 import { GoalType } from "../Adventures/interfaces";
 import Toaster from "../../../utils/Toster";
@@ -13,6 +13,8 @@ import { AdventureSelectionContainer } from "./styled";
 import { useClassContext } from "../context";
 import SkillPoints from "components/SkillPoints";
 import { getClassHasAdventuresByClass } from "services/classes";
+import { Button } from "@mui/material";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 const GoalAdventures: React.FC = () => {
   const [loading, setLoading] = useState<FetchStatus>(FetchStatus.Idle);
@@ -89,6 +91,21 @@ const GoalAdventures: React.FC = () => {
       <Typography variant="h4" fontWeight="bold" className="mb-4">
         Inicia una nueva aventura
       </Typography>
+      <div>
+        <Button
+          className="mb-1"
+          component={RouterLink}
+          to={`/app/cursos/${classDetails?.id}/aventuras/iniciar`}
+          startIcon={
+            <ArrowBackIosIcon
+              sx={{ fontSize: "14px!important" }}
+              fontSize="small"
+            />
+          }
+        >
+          Volver al paso anterior
+        </Button>
+      </div>
       <Typography variant="h5" className="mb-2">
         <b>Paso 2:</b> Escoge una aventura
       </Typography>
@@ -102,7 +119,7 @@ const GoalAdventures: React.FC = () => {
       </Typography>
       {selectedGoal && selectedGoal?.adventures?.length ? (
         <>
-          <div className="d-flex h-100 w-100 align-items-center justify-content-center justify-content-sm-start flex-wrap gap-4">
+          <div className="d-flex h-100 w-100 align-items-center justify-content-center justify-content-center flex-wrap gap-4">
             {sortedAdventures.map((adventure, index) => (
               <AdventureCard
                 completed={

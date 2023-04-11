@@ -84,6 +84,7 @@ export interface IAdventure {
   id: number;
   title: string;
   thumbnail: string;
+  finish_img_url: string;
   banner: string;
   category: string;
   overview: string;
@@ -110,6 +111,8 @@ export interface TemplateStages {
 export interface IStage extends TemplateStages {
   _index: number;
   active: boolean;
+  next_img_url: string;
+  narrative: string;
 }
 
 export interface IMission {

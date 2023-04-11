@@ -10,6 +10,7 @@ import {
   IconButton,
   Menu,
   MenuItem,
+  Box,
 } from "@mui/material";
 import AdventureProvider, { AdventureContext } from "./provider";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -136,7 +137,6 @@ export const Adventure: React.FC = () => {
                   `recompensas?adventureId=${classDetails.current_adventure.id}`
                 )
               }
-              size="large"
             >
               Ver recompensas disponibles
             </Button>
@@ -168,6 +168,12 @@ export const Adventure: React.FC = () => {
           ))}
         </div>
       </AdventureBanner>
+      {shownStage?.next_img_url && shownStage?.narrative ? (
+        <Box className="d-flex align-items-center justify-content-center px-5">
+          <img src={shownStage?.next_img_url} height="140" width="140" className="me-2" />
+          <Typography>{shownStage?.narrative}</Typography>
+        </Box>
+      ) : null}
       <div className="mt-5">
         <StageStepper
           shownStage={shownStage}

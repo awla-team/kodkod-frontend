@@ -21,7 +21,7 @@ const MissionAccomplished: FC<MissionAccomplishedProps> = ({
       open={open}
       anchor={anchor}
       onClose={onClose}
-      PaperProps={{ className: "p-5", sx: { maxWidth: "500px" } }}
+      PaperProps={{ className: "p-5" }}
     >
       <Typography
         component="h6"

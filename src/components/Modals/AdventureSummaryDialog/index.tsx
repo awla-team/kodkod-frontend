@@ -66,7 +66,7 @@ const AdventureSummaryDialog: React.FC<{
   };
 
   return (
-    <Dialog open={!!selectedAdventure} onClose={handleOnCloseModal} fullWidth>
+    <Dialog open={!!selectedAdventure} onClose={handleOnCloseModal} fullWidth maxWidth="lg">
       <DialogTitle className="d-flex flex-column p-0">
         <AdventureBanner
           sx={{ backgroundImage: `url(${selectedAdventure?.banner})` }}
@@ -125,10 +125,15 @@ const AdventureSummaryDialog: React.FC<{
                 {sortedStages.map((stage, i) => (
                   <div className="d-flex gap-2 align-items-center">
                     <EmojiFlagsIcon />
-                    <Typography variant="body1">
-                      <b>{`Etapa ${i}: `}</b>
-                      {stage.title}
-                    </Typography>
+                    <div className="d-flex flex-column gap-0">
+                      <Typography variant="body1">
+                        <b>{`Etapa ${i}: `}</b>
+                        {stage.title}
+                      </Typography>
+                      <Typography variant="caption">
+                        {stage.description}
+                      </Typography>
+                    </div>
                   </div>
                 ))}
               </div>

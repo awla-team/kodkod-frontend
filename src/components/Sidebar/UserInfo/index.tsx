@@ -4,14 +4,15 @@ import { UserInfoProps } from "./interfaces";
 import { UserInfoButton, UserInfoContainer } from "./styled";
 import ImgAvatar from "assets/images/avatar.png";
 import ExpandMore from "@mui/icons-material/ExpandMore";
-import { logout } from "services/auth";
 import Toaster from "utils/Toster";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "contexts/AuthContext";
 
 const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
+  const { logout } = useAuth()
 
   const handleClick = (event: React.SyntheticEvent<HTMLElement>) =>
     setAnchorEl(event.currentTarget);
@@ -19,22 +20,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
   const handleClose = () => setAnchorEl(null);
 
   const handleLogout = async () => {
-    try {
-      setLoading(true);
-      const refreshToken = localStorage.getItem("refreshToken");
-      if (refreshToken) {
-        await logout({ refreshToken });
-        localStorage.clear();
-        navigate("/signin", { replace: true });
-      }
-    } catch (error: any) {
-      console.error(error);
-      localStorage.clear();
-      navigate("/signin", { replace: true });
-      Toaster("error", "Hubo un error al cerrar sesión");
-    } finally {
-      setLoading(false);
-    }
+    logout();
   };
 
   return user.id ? (

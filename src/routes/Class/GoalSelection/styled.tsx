@@ -12,7 +12,7 @@ export const GoalSelectionContainer = styled(Box)`
 `;
 
 export const CardContainer = styled(Box)`
-  width: 300px;
+  
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -53,9 +53,7 @@ export const CardContainer = styled(Box)`
 `;
 
 export const ImgContainer = styled.div`
-  transition: all 0.2s ease;
-  width: 100%;
-  height: 240px;
+  transition: all 0.2s ease;  
   padding: 16px;
   background-color: rgba(0, 0, 0, 0.1);
   border-radius: 8px;

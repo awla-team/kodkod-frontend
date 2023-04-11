@@ -31,7 +31,7 @@ export const NavTabsContainer = styled(Box)`
   & > div {
     display: flex;
     flex-direction: column;
-    color: rgba(0, 0, 0, 0.4);
+    color: rgba(0, 0, 0, 0.6);
     padding: 6px;
     border-radius: 8px;
     transition: all 0.2s ease;
@@ -51,7 +51,20 @@ export const NavTabsContainer = styled(Box)`
         }
 
         &:last-child {
-          fill: rgba(0, 0, 0, 0.4);
+          fill: rgba(0, 0, 0, 0.6);
+        }
+      }
+    }
+
+    &.disabled {
+      cursor: default;
+      opacity: 0.4;
+      &:hover {
+        color: rgba(0, 0, 0, 0.6);
+        svg path {
+          &:last-child {
+            fill: rgba(0, 0, 0, 0.6);
+          }
         }
       }
     }

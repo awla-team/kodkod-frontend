@@ -12,10 +12,12 @@ import { getAuthUser as getAuthUserAction } from "services/users";
 import Toaster from "utils/Toster";
 import { User } from "services/users/interfaces";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { logout as makeLogout } from "services/auth";
 
 // const publicRoutes = ["/signin", "/signup", "/reset-password"];
 const AuthContext = createContext<AuthContextType>({
   user: null,
+  logout: () => {}
 });
 
 export const useAuth = () => useContext(AuthContext);
@@ -61,6 +63,36 @@ const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
     }
   };
 
+  const logout = async () => {
+    try {
+      const refreshToken = localStorage.getItem("refreshToken");
+      if (refreshToken) {
+        await makeLogout({ refreshToken });
+        localStorage.clear();
+        navigate("/signin", { replace: true });
+        dispatch({
+          type: "user__action",
+          payload: {
+            user: null,
+            authenticated: false,
+          },
+        });
+      }
+    } catch (error: any) {
+      console.error(error);
+      localStorage.clear();
+      dispatch({
+        type: "user__action",
+        payload: {
+          user: null,
+          authenticated: false,
+        },
+      });
+      navigate("/signin", { replace: true });
+      Toaster("error", "Hubo un error al cerrar sesión");
+    }
+  };
+
   const goToSignin = useCallback(() => {
     dispatch({
       type: "user__action",
@@ -87,6 +119,13 @@ const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
         },
       });
     } catch (error: any) {
+      dispatch({
+        type: "user__action",
+        payload: {
+          user: null,
+          authenticated: false,
+        },
+      });
       if (error?.response?.status === 401)
         Toaster("error", "Tu sesión ha caducado");
       else Toaster("error", "Ha ocurrido un error en tu sesión");
@@ -110,7 +149,7 @@ const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user, logout }}>{children}</AuthContext.Provider>
   );
 };
 
