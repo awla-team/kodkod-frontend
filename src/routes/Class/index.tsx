@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Tooltip, Typography } from "@mui/material";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { NavTabsContainer } from "./styled";
 import { useClassContext } from "./context";
@@ -25,6 +25,7 @@ const tabs = [
     svg: <ProgressIcon />,
   },
   {
+    disabled: true,
     title: "Reportes",
     path: "reportes",
     svg: <ReportsIcon />,
@@ -39,19 +40,37 @@ const Class: React.FC = () => {
     <>
       <NavTabsContainer sx={{ zIndex: 1 }}>
         {tabs.map((tab, i) => (
-          <Box
-            key={`tab-${i}`}
-            className={`nav__tab ${
-              pathname.includes(tab.path) ? "active" : ""
-            }`}
-            role="button"
-            onClick={() => navigate(tab.path)}
-          >
-            {tab.svg}
-            <Typography fontWeight="bold" component="span" variant="body2">
-              {tab.title}
-            </Typography>
-          </Box>
+          !tab.disabled ? (
+            <Box
+              key={`tab-${i}`}
+              className={`nav__tab ${
+                pathname.includes(tab.path) ? "active" : ""
+              } ${tab.disabled ? 'disabled' : ''}`}
+              role="button"
+              onClick={() => navigate(tab.path)}
+            >
+              {tab.svg}
+              <Typography fontWeight="bold" component="span" variant="body2">
+                {tab.title}
+              </Typography>
+            </Box>
+          ) : (
+            <Tooltip arrow title="¡Próximamente!">
+              <Box
+                key={`tab-${i}`}
+                className={`nav__tab ${
+                  pathname.includes(tab.path) ? "active" : ""
+                } ${tab.disabled ? 'disabled' : ''}`}
+                role="button"
+                onClick={() => {}}
+              >
+                {tab.svg}
+                <Typography fontWeight="bold" component="span" variant="body2">
+                  {tab.title}
+                </Typography>
+              </Box>
+            </Tooltip>
+          )
         ))}
       </NavTabsContainer>
       <Box
