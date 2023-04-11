@@ -7,6 +7,12 @@ export const DetailsCardContent = styled(Box)`
   flex-direction: column;
   background-color: #fff;
   overflow: hidden;
+
+  a {
+    &:hover {
+      color: #fff;
+    }
+  }
 `;
 
 export const AdventureBanner = styled(Box)`
