@@ -58,7 +58,11 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
       onClose("student", data.responseData.students);
     } catch (error: any) {
       console.error(error);
-      Toaster("error", error?.response?.data?.responseData[0] || "Hubo un error al añadir estudiantes");
+      Toaster(
+        "error",
+        error?.response?.data?.responseData[0] ||
+          "Hubo un error al añadir estudiantes"
+      );
     } finally {
       formikHelper.setSubmitting(false);
     }

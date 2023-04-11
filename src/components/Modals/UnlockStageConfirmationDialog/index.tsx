@@ -26,12 +26,14 @@ const UnlockStageConfirmationDialog: FC<UnlockStageConfirmationDialogProps> = ({
       {unlockableStageData ? (
         <div>
           <DialogTitle fontWeight="bold">
-            Desbloquear Etapa {unlockableStageData?._index}: {unlockableStageData.title}
+            Desbloquear Etapa {unlockableStageData?._index}:{" "}
+            {unlockableStageData.title}
           </DialogTitle>
           <DialogContent dividers className="py-4">
             <Typography component="p" variant="body1" className="mb-3">
               Desbloquear una nueva etapa significa que el curso ha trabajado
-              muy duro. ¡Muy buen trabajo! En la próxima etapa les esperan nuevas misiones, desafíos y recompensas.
+              muy duro. ¡Muy buen trabajo! En la próxima etapa les esperan
+              nuevas misiones, desafíos y recompensas.
             </Typography>
             <Typography textAlign="center" variant="h6" fontWeight="bold">
               ¡Buena suerte!
@@ -56,7 +58,8 @@ const UnlockStageConfirmationDialog: FC<UnlockStageConfirmationDialogProps> = ({
           <DialogContent dividers className="py-4">
             <div className="mb-3">
               <Typography component="span" variant="body1">
-                Esta fue la última etapa. ¡Felicitaciones a todas y todos por su gran esfuerzo!
+                Esta fue la última etapa. ¡Felicitaciones a todas y todos por su
+                gran esfuerzo!
               </Typography>
             </div>
           </DialogContent>

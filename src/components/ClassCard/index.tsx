@@ -39,7 +39,9 @@ const ClassCard: React.FC<{ classObj: IClass }> = ({ classObj }) => {
             {classObj.alias}
           </Typography>
           <Typography component="span" variant="body1" textAlign="center">
-            {classObj.current_adventure ? classObj.current_adventure.title : 'Sin aventura en curso'}
+            {classObj.current_adventure
+              ? classObj.current_adventure.title
+              : "Sin aventura en curso"}
           </Typography>
         </div>
       </div>
