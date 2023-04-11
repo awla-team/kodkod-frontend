@@ -110,6 +110,7 @@ export interface TemplateStages {
 export interface IStage extends TemplateStages {
   _index: number;
   active: boolean;
+  next_img_url: string;
 }
 
 export interface IMission {

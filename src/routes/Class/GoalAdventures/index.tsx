@@ -95,7 +95,7 @@ const GoalAdventures: React.FC = () => {
         <Button
           className="mb-1"
           component={RouterLink}
-          to={`/app/cursos/${classDetails.id}/aventuras/iniciar`}
+          to={`/app/cursos/${classDetails?.id}/aventuras/iniciar`}
           startIcon={
             <ArrowBackIosIcon
               sx={{ fontSize: "14px!important" }}

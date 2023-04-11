@@ -14,6 +14,7 @@ const UnlockStageConfirmationDialog: FC<UnlockStageConfirmationDialogProps> = ({
   handleClose,
   onConfirm,
   isLoading,
+  currentStage,
   unlockableStageData,
 }) => {
   return (
@@ -30,12 +31,15 @@ const UnlockStageConfirmationDialog: FC<UnlockStageConfirmationDialogProps> = ({
             {unlockableStageData.title}
           </DialogTitle>
           <DialogContent dividers className="py-4">
+            <div className="d-flex align-items-center justify-content-center mb-3">
+              <img src={currentStage?.next_img_url} height="240" width="240" />
+            </div>
             <Typography component="p" variant="body1" className="mb-3">
               Desbloquear una nueva etapa significa que el curso ha trabajado
               muy duro. ¡Muy buen trabajo! En la próxima etapa les esperan
               nuevas misiones, desafíos y recompensas.
             </Typography>
-            <Typography textAlign="center" variant="h6" fontWeight="bold">
+            <Typography textAlign="center" variant="h5" fontWeight="bold">
               ¡Buena suerte!
             </Typography>
           </DialogContent>

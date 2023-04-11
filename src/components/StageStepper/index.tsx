@@ -160,6 +160,7 @@ const StageStepper: FC<{
             unlockableStageData={sortedStages[navigableStages.length]}
             isLoading={loading}
             open={openDialog}
+            currentStage={shownStage}
             handleClose={() => setOpenDialog(false)}
             onConfirm={
               sortedStages[navigableStages.length] ? handleUnlock : handleFinish
