@@ -75,6 +75,7 @@ const Progress: FC<ProgressProps> = () => {
       field: "actions",
       type: "actions",
       flex: 1,
+      minWidth: 200,
       align: "right",
       getActions: ({ row }) => {
         return [
