@@ -1,9 +1,9 @@
-import type { PropsWithChildren, MouseEvent } from "react";
 import { ClassInterface } from "../../../services/classes/interfaces";
 
 export interface Levels {
   id: number | string;
   name: string;
+  _index: number;
 }
 
 export interface CreateClassModalProps {

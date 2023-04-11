@@ -20,6 +20,7 @@ import { createClass, updateClass } from "services/classes";
 import Toaster from "utils/Toster";
 import { ClassInterface } from "services/classes/interfaces";
 import { useAuth } from "contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const CreateClassModal: FC<CreateClassModalProps> = ({
   open,
@@ -40,6 +41,7 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
       alias: Yup.string().required(),
     });
   };
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (classDetails) {
@@ -81,8 +83,11 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
             id: classDetails.id,
           });
         onClose("success", data.responseData);
-        Toaster("success", `Updated successfully!`);
-        window.location.reload();
+        Toaster("success", `Curso editado exitosamente`);
+        // TODO: remove this workarround
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
       } else {
         const { data }: { data: { responseData: ClassInterface } } =
           await createClass({
@@ -90,18 +95,23 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
             id_user: user.id,
             id_level: values.id_level as number,
           });
+
+        navigate(`/app/cursos/${data.responseData.id}/tablero`);
         onClose("success", data.responseData);
-        Toaster("success", `You successfully added the ${values.alias} class.`);
+        Toaster("success", `Curso ${values.alias} creado exitosamente`);
       }
-    } catch (e: any) {
-      Toaster("error", e.message);
+    } catch (error: any) {
+      console.error(error);
+      Toaster("error", `Hubo un error al crear el curso ${values.alias}`);
     } finally {
       formikHelpers.setSubmitting(false);
     }
   };
   return (
     <Dialog open={open} PaperProps={{ className: "p-3" }}>
-      <DialogTitle fontWeight="bold">{classDetails ? 'Editar curso' : 'Añade un nuevo curso'}</DialogTitle>
+      <DialogTitle fontWeight="bold">
+        {classDetails ? "Editar curso" : "Añade un nuevo curso"}
+      </DialogTitle>
       <Formik
         initialValues={initialState}
         onSubmit={handleSubmit}
@@ -148,13 +158,19 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
                       <MenuItem value={""} disabled>
                         Selecciona un nivel
                       </MenuItem>
-                      {levels.map((res, index) => {
-                        return (
-                          <MenuItem key={index} value={res.id}>
-                            {res.name}
-                          </MenuItem>
-                        );
-                      })}
+                      {levels
+                        .sort((a, b) => {
+                          if (a._index > b._index) return 1;
+                          if (a._index < b._index) return -1;
+                          return 0;
+                        })
+                        .map((res, index) => {
+                          return (
+                            <MenuItem key={index} value={res.id}>
+                              {res.name}
+                            </MenuItem>
+                          );
+                        })}
                     </Select>
                   </FormControl>
                   <FormControl error={!!errors.code && !!submitCount}>
@@ -165,11 +181,11 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
                         fontWeight="bold"
                         className="me-1"
                       >
-                        Código
+                        Curso
                       </Typography>
                       <Typography component="span" variant="caption">
-                        (Es la letra que acompaña al nivel e identifica al
-                        curso)
+                        (Es la letra o nombre que acompaña al nivel e identifica
+                        al curso)
                       </Typography>
                     </div>
                     <TextField
@@ -183,7 +199,7 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
                       size="small"
                     />
                   </FormControl>
-                  <FormControl error={!!errors.alias && !!submitCount}>
+                  {/*<FormControl error={!!errors.alias && !!submitCount}>
                     <div className="d-flex align-items-end mb-1">
                       <Typography
                         component="label"
@@ -204,7 +220,7 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
                       value={values.alias}
                       size="small"
                     />
-                  </FormControl>
+                    </FormControl>*/}
                 </FormContainer>
               </DialogContent>
               <DialogActions className="pt-3">
@@ -215,11 +231,17 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
                   Cancelar
                 </Button>
                 <Button
-                  disabled={isSubmitting || !isValid || !dirty}
+                  disabled={
+                    isSubmitting ||
+                    !dirty ||
+                    !values.code ||
+                    !values.id_level ||
+                    !values.alias
+                  }
                   type={"submit"}
                   variant={"contained"}
                 >
-                  {classDetails ? 'Guardar cambios' : 'Añade un nuevo curso'}
+                  {classDetails ? "Guardar cambios" : "Añade un nuevo curso"}
                 </Button>
               </DialogActions>
             </Form>

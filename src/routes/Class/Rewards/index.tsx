@@ -2,10 +2,10 @@ import { FC, useEffect, useState } from "react";
 import { RewardsBox, RewardsList } from "./styled";
 import { Box, Button, Typography } from "@mui/material";
 import { Link as RouterLink, useParams } from "react-router-dom";
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import RewardCard from "../../../components/RewardCard";
 import { useSearchParams } from "react-router-dom";
-import { getRewards } from "../../../services/rewards";
+import { getRewardsByAdventure } from "../../../services/rewards";
 import { IReward } from "../../../global/interfaces";
 import Toaster from "../../../utils/Toster";
 
@@ -17,33 +17,55 @@ const Rewards: FC = () => {
   useEffect(() => {
     const id = searchParams.get("adventureId");
     if (id) {
-      getAllRewards(id);
+      (async (adventureId: number | string) => {
+        try {
+          const { data }: { data: { responseData: IReward[] } } =
+            await getRewardsByAdventure(adventureId);
+
+          const sorted = data.responseData.sort((a, b) => {
+            if (a.required_points > b.required_points) return 1;
+            if (a.required_points < b.required_points) return -1;
+            return 0;
+          });
+          setRewards(sorted);
+        } catch (error: any) {
+          console.error(error);
+          Toaster("error", "Hubo un error al cargar las recompensas");
+        }
+      })(id);
     }
   }, []);
-
-  const getAllRewards = async (adventureId: number | string) => {
-    try {
-      const { data }: { data: { responseData: IReward[] } } = await getRewards({
-        id_class: classId,
-        id_adventure: adventureId,
-      });
-      const sorted = data.responseData.sort((a, b) => {
-        if (a.required_points > b.required_points) return 1;
-        if (a.required_points < b.required_points) return -1;
-        return 0;
-      })
-      setRewards(sorted)
-    } catch (e: any) {
-      Toaster("error", e.message);
-    }
-  };  
 
   return (
     <Box>
       <RewardsBox className="p-5">
-        <Button className="mb-3" component={RouterLink} to={`/app/cursos/${classId}/aventuras`} size="large" startIcon={<ArrowBackIosIcon sx={{ fontSize: '16px!important' }} fontSize="small" />}>Volver a la aventura</Button>
-        <Typography component="h4" variant="h4" fontWeight="bold" className="mb-2">Recompensas</Typography>
-        <Typography component="span" variant="body1">Los estudiantes recibirán recompensas <b>automáticamente</b> cada vez que alcancen el puntaje indicado en ellas. Luego, en la vista <b>Progreso</b> puedes gestionar las recompensas de tus estudiantes.</Typography>
+        <Button
+          className="mb-3"
+          component={RouterLink}
+          to={`/app/cursos/${classId}/aventuras`}
+          size="large"
+          startIcon={
+            <ArrowBackIosIcon
+              sx={{ fontSize: "16px!important" }}
+              fontSize="small"
+            />
+          }
+        >
+          Volver a la aventura
+        </Button>
+        <Typography
+          component="h4"
+          variant="h4"
+          fontWeight="bold"
+          className="mb-2"
+        >
+          Recompensas
+        </Typography>
+        <Typography component="span" variant="body1">
+          Los estudiantes recibirán recompensas <b>automáticamente</b> cada vez
+          que alcancen el puntaje indicado en ellas. Luego, en la vista{" "}
+          <b>Progreso</b> puedes gestionar las recompensas de tus estudiantes.
+        </Typography>
         <Box className="mt-5">
           <RewardsList className="d-flex gap-5 pb-4">
             {rewards.map((res, index) => {

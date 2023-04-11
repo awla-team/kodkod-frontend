@@ -40,8 +40,8 @@ export const LinearProgress = styled(MuiLinearProgress)`
   border-radius: 8px;
   border: 1px solid #000;
   background: white;
-  & .${linearProgressClasses.bar}{
-    background: #9A9A9A;
+  & .${linearProgressClasses.bar} {
+    background: #9a9a9a;
     border-radius: 8px;
   }
 `;

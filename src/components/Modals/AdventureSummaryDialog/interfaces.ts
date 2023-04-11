@@ -1,3 +1,3 @@
 export interface IAdventureBannerProps {
-    img?: string;
+  img?: string;
 }

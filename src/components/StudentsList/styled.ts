@@ -34,7 +34,7 @@ export const DontHaveDetailsContent = styled(Box)`
     color: #4e4e4e;
     font-size: 1.125rem;
     text-align: center;
-  }  
+  }
 `;
 
 export const StudentsListDetailsContainer = styled(Box)`
@@ -74,7 +74,7 @@ export const StudentDetailBox = styled(Box)`
       display: flex;
 
       gap: 1rem;
-      align-items: center;   
+      align-items: center;
 
       & .editable__field {
         display: flex;
@@ -118,7 +118,9 @@ export const StudentRow = styled.div`
   .more-button {
     opacity: 0;
     transition: opacity 0.2s ease;
-    &:hover, &:active, &:focus {
+    &:hover,
+    &:active,
+    &:focus {
       opacity: 1;
     }
   }
@@ -129,7 +131,7 @@ export const StudentRow = styled.div`
     }
   }
 
-  .Mui-disabled {    
+  .Mui-disabled {
     -webkit-text-fill-color: #000;
     ::before {
       display: none;

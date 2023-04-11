@@ -10,6 +10,13 @@ export const ChangeMissionButton = styled(Button)`
   border-radius: 100%;
   box-shadow: 0 0 2px rgba(33, 33, 33, 0.4);
   min-width: unset;
+
+  &[disabled] {
+    background-color: #dbdbdb;
+    svg {
+      fill: gray;
+    }
+  }
 `;
 
 export const PointsContainer = styled.div`
@@ -25,8 +32,8 @@ export const PointsContainer = styled.div`
 `;
 
 export const MissionCardContainer = styled(Card)`
-  min-width: 45%;
   height: 200px;
+  max-width: 600px;
   &.MuiPaper-root {
     position: relative;
     color: #fff;
@@ -37,7 +44,7 @@ export const MissionCardContainer = styled(Card)`
     transition: opacity 0.2s ease, transform 0.2s ease;
 
     &.clickable {
-      cursor: pointer;  
+      cursor: pointer;
       &:hover {
         transform: scale(1.05);
       }

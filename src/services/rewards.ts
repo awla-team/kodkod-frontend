@@ -7,8 +7,12 @@ export interface GetRewardsFilter {
 }
 
 export const getRewardsByAdventure = (adventureId: number | string) =>
-  http.get(`rewards?adventureId=${adventureId}`);
+  http.get(`reward?id_adventure=${adventureId}`);
 
 export const getRewards = (filterQuery: GetRewardsFilter) => {
   return http.get("reward" + generateQueryParamsFromObject(filterQuery));
+};
+
+export const studentUseRewards = (userId: number, rewards: number[]) => {
+  return http.post(`user-use-rewards/${userId}`, rewards);
 };

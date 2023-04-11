@@ -1,108 +1,219 @@
 import { FC, useEffect, useState } from "react";
 import { ProgressProps } from "./interfaces";
-import * as Styled from "./styled";
-import {
-  Typography,
-  Box,
-  TableHead,
-  TableCell,
-  TableRow,
-  TableBody,
-} from "@mui/material";
-import { useParams } from "react-router-dom";
+import { Typography, Box, Button } from "@mui/material";
 import { studentsByClass } from "services/students";
 import { StudentType } from "components/StudentsList/interfaces";
+import { ProgressContainer, StickyDataGrid } from "./styled";
+import { useClassContext } from "../context";
+import { getMissionsByClassAdventure } from "services/missions";
+import { IMission, IUser } from "global/interfaces";
+import AdventureProgress from "components/AdventureProgress";
+import { GridColDef, GridSortModel } from "@mui/x-data-grid";
+import kodcoinIcon from "assets/images/kodcoin.png";
+import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
+import RewardsModal from "components/Modals/RewardsModal";
+import { studentUseRewards } from "services/rewards";
 import Toaster from "utils/Toster";
 
 const Progress: FC<ProgressProps> = () => {
-  const { classId } = useParams();
-  const [students, setStudents] = useState<StudentType[]>([]);
+  const { classDetails } = useClassContext();
+  const [students, setStudents] = useState<IUser[]>([]);
+  const [missions, setMissions] = useState<IMission[]>([]);
+  const [progressPercentage, setProgressPercentage] = useState<
+    number | undefined
+  >(undefined);
+  const [averageCompletedMission, setAverageCompletedMission] = useState<
+    number | undefined
+  >(undefined);
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [selectedStudent, setSelectedStudent] = useState<IUser>(undefined);
+  const [sortModel, setSortModel] = useState<GridSortModel>([
+    {
+      field: "last_name",
+      sort: "asc",
+    },
+  ]);
+
+  const columns: GridColDef[] = [
+    {
+      field: "first_name",
+      headerName: "Nombres",
+      width: 200,
+    },
+    {
+      field: "last_name",
+      headerName: "Apellidos",
+      width: 200,
+    },
+    {
+      field: "points",
+      headerName: "Puntos actuales",
+      width: 130,
+      type: "number",
+      renderCell: (value) => (
+        <div className="d-flex align-items-center gap-1">
+          <Typography fontWeight="bold" variant="body2">
+            {value.value}
+          </Typography>
+          <img src={kodcoinIcon} height="18" width="18" />
+        </div>
+      ),
+    },
+    {
+      field: "completed_missions",
+      headerName: "Misiones completadas",
+      width: 200,
+      type: "number",
+    },
+    {
+      field: "obtained_rewards",
+      headerName: "Recompensas obtenidas",
+      width: 200,
+      type: "number",
+    },
+    {
+      field: "actions",
+      type: "actions",
+      flex: 1,
+      minWidth: 200,
+      align: "right",
+      getActions: ({ row }) => {
+        return [
+          <Button
+            startIcon={<EmojiEventsIcon htmlColor="#FDC51A" fontSize="small" />}
+            variant="outlined"
+            size="small"
+            onClick={() => handleOpenModal(row)}
+          >
+            Activar recompensas
+          </Button>,
+        ];
+      },
+    },
+  ];
+
+  useEffect(() => {
+    if (classDetails) getStudents();
+    if (classDetails?.current_adventure) getMissions();
+  }, [classDetails]);
+
+  useEffect(() => {
+    if (students?.length && missions?.length) {
+      const completedMissions = students.reduce(
+        (accumulator, student) => accumulator + student.missions.length,
+        0
+      );
+      setProgressPercentage(
+        (completedMissions / (students.length * missions.length)) * 100
+      );
+      setAverageCompletedMission(completedMissions / students.length);
+    } else {
+      setProgressPercentage(0);
+      setAverageCompletedMission(0);
+    }
+  }, [students, missions]);
 
   const getStudents = async () => {
     try {
-      const { data }: { data: { responseData: StudentType[] } } =
-        await studentsByClass(classId, {
+      const { data }: { data: { responseData: IUser[] } } =
+        await studentsByClass(classDetails.id, {
           missions: true,
           role: "student",
-          rewards:true
+          rewards: true,
         });
-      setStudents(data.responseData);
+      const studentsWithTableFields = data.responseData.map((student) => ({
+        ...student,
+        completed_missions: student.missions.length || 0,
+        obtained_rewards: student.user_has_rewards.length || 0,
+      }));
+
+      setStudents(studentsWithTableFields);
     } catch (e: any) {
-      Toaster("error", e.message);
+      Toaster("error", "Hubo un error al cargar los estudiantes");
     }
   };
 
-  useEffect(() => {
-    if (classId) getStudents();
-  }, [classId]);
+  const getMissions = async () => {
+    try {
+      const missionsResponse = await getMissionsByClassAdventure(
+        classDetails?.current_adventure?.id_class_has_adventure
+      );
+      setMissions(missionsResponse.data.responseData);
+    } catch (e: any) {
+      Toaster("error", "Hubo un error al cargar las misiones");
+    }
+  };
+
+  const handleOpenModal = (student: IUser) => {
+    setSelectedStudent(student);
+    setOpenModal(true);
+  };
+
+  const handleSave = async (studentId: number, selectedRewards: number[]) => {
+    try {
+      await studentUseRewards(studentId, selectedRewards);
+      Toaster("success", "¡Recompensas activadas exitosamente!");
+      setOpenModal(false);
+      getStudents();
+    } catch (error) {
+      console.log(error);
+      Toaster("error", "Ha ocurrido un error");
+    }
+  };
+
   return (
-    <Styled.ProgressContainer>
-      <Box className={"title__section"}>
-        <Typography
-          variant={"h4"}
-          fontWeight={700}
-          className={"title__heading"}
-        >
-          Progress
-        </Typography>
+    <ProgressContainer className="p-5">
+      <Typography
+        variant="h4"
+        component="h4"
+        fontWeight="bold"
+        className="mb-2"
+      >
+        Progreso
+      </Typography>
+      <Typography className="mb-4">
+        En esta sección podrás ver el progreso de cada estudiante y del grupo
+        curso. Podrás ver el puntaje en la aventura actual, el número de
+        misiones completadas y las recompensas obtenidas. Además, puedes{" "}
+        <b>gestionar el uso de recompensas</b> de los estudiantes.
+      </Typography>
 
-        <Typography my={1}>
-          In this section you can see the missions and rewards that the students
-          of your class have achieved over time. You can also click on a reward
-          to mark it if it has already been claimed.
-        </Typography>
+      {classDetails?.current_adventure ? (
+        <AdventureProgress
+          adventure={classDetails.current_adventure}
+          progressPercentage={progressPercentage}
+          averageCompletedMission={averageCompletedMission}
+        />
+      ) : (
+        <div className="p-4 mb-3">
+          <Typography fontWeight="bold" textAlign="center" variant="h5">Actualmente no tienen ninguna aventura en curso</Typography>
+        </div>
+      )}
+      <Box sx={{ maxHeight: "calc(100vh - 160px)", overflow: "auto" }}>
+        <StickyDataGrid
+          rows={students}
+          columns={columns}
+          autoHeight
+          disableRowSelectionOnClick
+          disableColumnMenu
+          slotProps={{
+            pagination: {
+              labelRowsPerPage: "Estudiantes por página",
+              labelDisplayedRows: ({ from, to, count, page }) =>
+                `Total de ${count} estudiantes`,
+            },
+          }}
+          sortModel={sortModel}
+          onSortModelChange={(model) => setSortModel(model)}
+        />
       </Box>
-
-      <Styled.KPICardContainer>
-        <Styled.KPICard className={"completed__missions"}>
-          <Typography className={"count"}>64</Typography>
-          <Typography className={"text"}>Missions completed</Typography>
-        </Styled.KPICard>
-        <Styled.KPICard className={"finished__adventures"}>
-          <Typography className={"count"}>0</Typography>
-          <Typography className={"text"}>Adventures finished</Typography>
-        </Styled.KPICard>
-        <Styled.KPICard className={"rewards__obtained"}>
-          <Typography className={"count"}>20</Typography>
-          <Typography className={"text"}>Rewards obtained</Typography>
-        </Styled.KPICard>
-      </Styled.KPICardContainer>
-      <Styled.ClassLeaderboardContainer>
-        <Styled.ClassLeaderboardTable stickyHeader>
-          <TableHead>
-            <TableRow>
-              <TableCell>Full name</TableCell>
-              <TableCell>Points</TableCell>
-              <TableCell>Mission accomplished</TableCell>
-              <TableCell>Available rewards</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {students.map((res, index) => {
-              return (
-                <TableRow>
-                  <TableCell className={"name"}>
-                    {res.first_name} {res.last_name}
-                  </TableCell>
-                  <TableCell className={"points"}>{res.points}</TableCell>
-                  <TableCell className={"accomplished"}>
-                    {res?.missions?.length}
-                  </TableCell>
-                  <TableCell className={"available__rewards"}>
-                    <Box className={"reward__points__container"}>
-                      <span className={"reward__point"} />
-                      <span className={"reward__point"} />
-                      <span className={"reward__point"} />
-                      <span className={"reward__point"} />
-                    </Box>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Styled.ClassLeaderboardTable>
-      </Styled.ClassLeaderboardContainer>
-    </Styled.ProgressContainer>
+      <RewardsModal
+        open={openModal}
+        student={selectedStudent}
+        onClose={() => setOpenModal(false)}
+        onSave={handleSave}
+      />
+    </ProgressContainer>
   );
 };
 

@@ -19,12 +19,10 @@ const VerifyEmail: React.FC = () => {
     verifyEmail(token)
       .then((_response) => {
         setEmailVerified(FetchStatus.Success);
-        // Toaster("success", "You will get a verification email!");
       })
       .catch((error) => {
         console.error(error);
         setEmailVerified(FetchStatus.Error);
-        // Toaster("error", "Ha ocurrido un error");
       });
   }, [token]);
 
@@ -38,7 +36,7 @@ const VerifyEmail: React.FC = () => {
       .catch((error) => {
         console.error(error);
         setEmailSend(FetchStatus.Error);
-        Toaster("error", "Ha ocurrido un error al enviar el link");
+        Toaster("error", "Hubo un error al enviar el link");
       });
   };
 
@@ -92,7 +90,7 @@ const VerifyEmail: React.FC = () => {
               onClick={sendEmailVerification}
             >
               {emailResend === FetchStatus.Pending ? (
-                <CircularProgress />
+                <CircularProgress size={24} />
               ) : (
                 "Reenviar link de verificación"
               )}

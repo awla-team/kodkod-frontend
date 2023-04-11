@@ -12,36 +12,39 @@ const StageRequirements: FC = () => {
         <div className={"stage__requirement"}>
           <div className={"stage__requirement__name"}>
             <span>Collaborative missions accomplished</span>
-            <span>
-              0/9
-            </span>
+            <span>0/9</span>
           </div>
           <div className={"stage__requirement__progress"}>
-            <Styled.LinearProgress variant="determinate" value={(0/9)*100} />
+            <Styled.LinearProgress
+              variant="determinate"
+              value={(0 / 9) * 100}
+            />
           </div>
         </div>
 
         <div className={"stage__requirement"}>
           <div className={"stage__requirement__name"}>
             <span>Collaborative missions accomplished</span>
-            <span>
-              0/9
-            </span>
+            <span>0/9</span>
           </div>
           <div className={"stage__requirement__progress"}>
-            <Styled.LinearProgress variant="determinate" value={(4/9)*100} />
+            <Styled.LinearProgress
+              variant="determinate"
+              value={(4 / 9) * 100}
+            />
           </div>
         </div>
 
         <div className={"stage__requirement"}>
           <div className={"stage__requirement__name"}>
             <span>Collaborative missions accomplished</span>
-            <span>
-              20/20
-            </span>
+            <span>20/20</span>
           </div>
           <div className={"stage__requirement__progress"}>
-            <Styled.LinearProgress variant="determinate" value={(20/20)*100} />
+            <Styled.LinearProgress
+              variant="determinate"
+              value={(20 / 20) * 100}
+            />
           </div>
         </div>
       </div>

@@ -5,5 +5,5 @@ export interface StudentsSelectableListProps {
   mission: IMission;
   handleClose: () => void;
   stage: IStage;
-  studentsDetails: StudentsDetailsType[];
+  onSave: (stageId: number | string) => void;
 }

@@ -4,6 +4,7 @@ import { IMission, IStage } from "../../../global/interfaces";
 export interface MissionAccomplishedProps {
   open: boolean;
   anchor: "left" | "right" | "top" | "bottom";
+  onSave: (stageId: number | string) => void;
   onClose?: (event: Event | React.MouseEvent) => void;
   stage: IStage;
   mission: IMission;

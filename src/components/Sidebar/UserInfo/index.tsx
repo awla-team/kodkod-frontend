@@ -1,24 +1,18 @@
-import {
-  Avatar,
-  Divider,
-  Menu,
-  MenuItem,
-  Tooltip,
-  Typography,
-} from "@mui/material";
+import { Avatar, Divider, Menu, MenuItem, Typography } from "@mui/material";
 import { useState } from "react";
 import { UserInfoProps } from "./interfaces";
 import { UserInfoButton, UserInfoContainer } from "./styled";
 import ImgAvatar from "assets/images/avatar.png";
 import ExpandMore from "@mui/icons-material/ExpandMore";
-import { logout } from "services/auth";
 import Toaster from "utils/Toster";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "contexts/AuthContext";
 
 const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
+  const { logout } = useAuth()
 
   const handleClick = (event: React.SyntheticEvent<HTMLElement>) =>
     setAnchorEl(event.currentTarget);
@@ -26,19 +20,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
   const handleClose = () => setAnchorEl(null);
 
   const handleLogout = async () => {
-    try {
-      setLoading(true);
-      const refreshToken = localStorage.getItem("refreshToken");
-      if (refreshToken) {
-        await logout({ refreshToken });
-        localStorage.clear();
-        navigate("/signin");
-      }
-    } catch (error: any) {
-      Toaster("error", error.message);
-    } finally {
-      setLoading(false);
-    }
+    logout();
   };
 
   return user.id ? (
@@ -69,7 +51,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
             sx={{ ml: 1 }}
           >{`${user.first_name} ${user.last_name}`}</Typography>
         </MenuItem>
-        <MenuItem disabled={loading}>Configuración</MenuItem>
+        {/* <MenuItem disabled={loading}>Configuración</MenuItem> */}
         <MenuItem onClick={handleLogout} disabled={loading}>
           Cerrar sesión
         </MenuItem>

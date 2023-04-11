@@ -6,27 +6,27 @@ export const EmotionalThermometerContainer = styled(Box)`
     label {
       opacity: 0.6;
     }
-  }  
+  }
 `;
 
 export const EmojiRadio = styled(Radio)`
   svg {
     width: 32px;
     height: 32px;
-    fill: white;    
+    fill: white;
   }
 `;
 
 export const EmotionalThermometerActions = styled.div`
-  height: 54px;  
+  height: 54px;
 `;
 
-export const PickersDateContainer= styled(Box)`
+export const PickersDateContainer = styled(Box)`
   position: relative;
 
   & .tick__icon {
     text-align: center;
-    background: #2FB745;
+    background: #2fb745;
     height: 15px;
     width: 15px;
     position: absolute;
@@ -37,4 +37,4 @@ export const PickersDateContainer= styled(Box)`
     border-radius: 50%;
     padding: 0.1rem;
   }
-`
+`;

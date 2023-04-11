@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, CircularProgress, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import { Navigate, Outlet, useNavigate } from "react-router-dom";
 import { GoalSelectionContainer, CardContainer, ImgContainer } from "./styled";
 import { AxiosResponse } from "axios";
@@ -13,8 +13,10 @@ const GoalSelection: React.FC = () => {
   const navigate = useNavigate();
   const [goals, setGoals] = useState<Goal[]>([]);
   const [selectedGoalId, setSelectedGoalId] = useState<number>(null);
-  const [loadingGoals, setLoadingGoals] = useState<FetchStatus>(FetchStatus.Idle);
-  
+  const [loadingGoals, setLoadingGoals] = useState<FetchStatus>(
+    FetchStatus.Idle
+  );
+
   const selectAdventure = (goalId: number) => {
     if (selectedGoalId !== goalId) setSelectedGoalId(goalId);
     else setSelectedGoalId(null);
@@ -36,14 +38,19 @@ const GoalSelection: React.FC = () => {
       });
   }, []);
 
-  if (loadingGoals === FetchStatus.Idle || loadingGoals === FetchStatus.Pending || !classDetails)
+  if (
+    loadingGoals === FetchStatus.Idle ||
+    loadingGoals === FetchStatus.Pending ||
+    !classDetails
+  )
     return (
       <div className="d-flex w-100 align-items-center justify-content-center">
         <CircularProgress />
       </div>
     );
 
-  if (loadingClass === FetchStatus.Success && classDetails.current_adventure) return <Navigate to={`/app/cursos/${classDetails.id}/aventuras`} />
+  if (loadingClass === FetchStatus.Success && classDetails.current_adventure)
+    return <Navigate to={`/app/cursos/${classDetails.id}/aventuras`} />;
 
   return (
     <GoalSelectionContainer className="w-100 p-5">
@@ -54,30 +61,34 @@ const GoalSelection: React.FC = () => {
         <b>Paso 1:</b> Escoge un objetivo
       </Typography>
       <Typography variant="body1" className="mb-4">
-        Una aventura es una serie de misiones planificadas para <b>alcanzar un objetivo</b> en concreto con tu curso. Para empezar, <b>escoge el objetivo</b> que quieres alcanzar con el curso <b>{classDetails.alias}</b>.
+        Una aventura es una serie de misiones planificadas para{" "}
+        <b>alcanzar un objetivo</b> en concreto con tu curso. Para empezar,{" "}
+        <b>escoge el objetivo</b> que quieres alcanzar con el curso{" "}
+        <b>{classDetails.alias}</b>.
       </Typography>
       <div className="d-flex flex-column w-100 align-items-center justify-content-between h-100">
-        <div className="d-flex justify-content-center gap-4 w-100 flex-wrap">
+        <div className="d-flex justify-content-center gap-3 w-100 flex-wrap">
           {goals?.length
             ? goals.map((goal: Goal) => (
                 <CardContainer
                   key={`${goal.id}-${goal.title}`}
-                  className={`d-flex flex-column p-4 align-items-center ${
+                  className={`d-flex flex-column align-items-center position-relative ${
                     goal.id === selectedGoalId ? "selected" : ""
                   }`}
                   onClick={() => selectAdventure(goal.id)}
                 >
-                  <ImgContainer className="mb-3"></ImgContainer>
-                  <div className="d-flex align-items-center justify-content-center flex-fill">
+                  <img height={500} src={goal.image_url} width="100%" />
+                  <Box className="goal-card-text py-2 px-3 d-flex align-items-center justify-content-center flex-fill">
                     <Typography
-                      variant="body1"
+                      maxWidth="200px"
+                      variant="body2"
                       component="span"
                       textAlign="center"
-                      fontWeight="bold"                      
+                      fontWeight="bold"
                     >
                       {goal.title}
                     </Typography>
-                  </div>                  
+                  </Box>
                 </CardContainer>
               ))
             : null}
@@ -86,7 +97,7 @@ const GoalSelection: React.FC = () => {
           className="mt-4"
           variant="contained"
           size="large"
-          disabled={!(selectedGoalId >= 0)}
+          disabled={!selectedGoalId && selectedGoalId !== 0}
           onClick={nextView}
         >
           Continuar

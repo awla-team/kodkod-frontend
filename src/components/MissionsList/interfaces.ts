@@ -1,3 +1,1 @@
-export interface MissionsProps{
-
-}
+export interface MissionsProps {}

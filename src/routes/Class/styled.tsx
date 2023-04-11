@@ -23,7 +23,7 @@ export const NavTabsContainer = styled(Box)`
   width: 100%;
   background: #fff;
   position: fixed;
-  border-bottom: 1px solid rgb(33, 33, 33, 0.08);      
+  border-bottom: 1px solid rgb(33, 33, 33, 0.08);
   justify-content: center;
   align-items: center;
   gap: 24px;
@@ -31,14 +31,14 @@ export const NavTabsContainer = styled(Box)`
   & > div {
     display: flex;
     flex-direction: column;
-    color: rgba(0, 0, 0, 0.4);
+    color: rgba(0, 0, 0, 0.6);
     padding: 6px;
     border-radius: 8px;
-    transition: all 0.2s ease;    
+    transition: all 0.2s ease;
 
     svg {
       height: 24px;
-      width: auto;      
+      width: auto;
 
       path {
         transition: all 0.2s ease;
@@ -51,7 +51,20 @@ export const NavTabsContainer = styled(Box)`
         }
 
         &:last-child {
-          fill: rgba(0, 0, 0, 0.4);
+          fill: rgba(0, 0, 0, 0.6);
+        }
+      }
+    }
+
+    &.disabled {
+      cursor: default;
+      opacity: 0.4;
+      &:hover {
+        color: rgba(0, 0, 0, 0.6);
+        svg path {
+          &:last-child {
+            fill: rgba(0, 0, 0, 0.6);
+          }
         }
       }
     }
@@ -72,10 +85,9 @@ export const NavTabsContainer = styled(Box)`
           fill: ${(props) => props.theme.palette.primary.dark};
           stroke: ${(props) => props.theme.palette.primary.dark};
           stroke-width: 1px;
-        }        
+        }
         &:last-child {
           fill: ${(props) => props.theme.palette.primary.dark};
-          
         }
       }
     }

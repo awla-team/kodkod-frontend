@@ -52,12 +52,17 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
       Toaster(
         "success",
         `${noOfStudents} ${
-          noOfStudents < 2 ? "student" : "students"
-        } successfully added`
+          noOfStudents < 2 ? "estudiante" : "estudiantes"
+        } añadidos exitosamente`
       );
       onClose("student", data.responseData.students);
-    } catch (e: any) {
-      Toaster("error", e.message);
+    } catch (error: any) {
+      console.error(error);
+      Toaster(
+        "error",
+        error?.response?.data?.responseData[0] ||
+          "Hubo un error al añadir estudiantes"
+      );
     } finally {
       formikHelper.setSubmitting(false);
     }
@@ -83,44 +88,48 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
     });
   };
 
+  const addToList = (formikInitialValues: FormInitialState) => {
+    const transformedTextArray = inputFieldValue
+      .split(",")
+      .map((res) => res.trim())
+      .filter((res) => res);
+    const match = transformedTextArray
+      .join(",")
+      .match(/^([\w+-.%]+@[\w-.]+\.[A-Za-z]{2,4},?)+$/g);
+    if (match) {
+      setFormInitialState((prevState) => {
+        return {
+          students: [
+            ...formikInitialValues.students,
+            ...transformedTextArray.map((email) => ({
+              first_name: "",
+              last_name: "",
+              email,
+            })),
+          ],
+        };
+      });
+      setInputFieldValue("");
+    } else {
+      setInputFieldValueError(true);
+    }
+  };
+
   const handleStudentValues = (
     e: React.KeyboardEvent,
     formikInitialValues: FormInitialState
   ) => {
     e.stopPropagation();
     const { key } = e;
-    if (key === "Enter") {
+    if (key === "Enter" || key === ",") {
       e.preventDefault();
-      const transformedTextArray = inputFieldValue
-        .split(",")
-        .map((res) => res.trim())
-        .filter((res) => res);
-      const match = transformedTextArray
-        .join(",")
-        .match(/^([\w+-.%]+@[\w-.]+\.[A-Za-z]{2,4},?)+$/g);
-      if (match) {
-        setFormInitialState((prevState) => {
-          return {
-            students: [
-              ...formikInitialValues.students,
-              ...transformedTextArray.map((email) => ({
-                first_name: "",
-                last_name: "",
-                email,
-              })),
-            ],
-          };
-        });
-        setInputFieldValue("");
-      } else {
-        setInputFieldValueError(true);
-      }
+      addToList(formikInitialValues);
     }
   };
 
   const preventFormSubmitOnKeyDown = (e: React.KeyboardEvent) => {
     const { key } = e;
-    if (key === "Enter") {
+    if (key === "Enter" || key === ",") {
       e.preventDefault();
     }
   };
@@ -153,20 +162,38 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
             >
               <DialogContent dividers className="py-5">
                 <StudentsFormDetailsContainer>
-                  <TextField
-                    className="mb-4"
-                    error={inputFieldValueError}
-                    helperText={
-                      inputFieldValueError && "Has ingresado un email inválido"
-                    }
-                    value={inputFieldValue}
-                    onKeyDown={(event) => handleStudentValues(event, values)}
-                    onChange={handleInputFieldChange}                    
-                    fullWidth
-                    size="small"
-                    placeholder={"Ingresa los emails de tus estudiantes separados por coma"}
-                  ></TextField>
-                  <div>
+                  <div className="d-flex w-100 gap-2">
+                    <TextField
+                      className="mb-4"
+                      error={inputFieldValueError}
+                      helperText={
+                        inputFieldValueError &&
+                        "Has ingresado un email inválido"
+                      }
+                      value={inputFieldValue}
+                      onKeyDown={(event) => handleStudentValues(event, values)}
+                      onChange={handleInputFieldChange}
+                      fullWidth
+                      size="small"
+                      placeholder={
+                        "Emails de tus estudiantes separados por coma"
+                      }
+                    />
+                    <div>
+                      <Button
+                        sx={{
+                          mt: "1px",
+                        }}
+                        disabled={inputFieldValueError}
+                        variant="contained"
+                        color="primary"
+                        onClick={() => addToList(values)}
+                      >
+                        Añadir
+                      </Button>
+                    </div>
+                  </div>
+                  <>
                     <div className="details-list">
                       <FieldArray name={"students"}>
                         {({ remove }) => {
@@ -177,7 +204,11 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
                                 className="d-flex align-items-center"
                               >
                                 <div className="me-2">
-                                  <IconButton color={"inherit"} size="small" onClick={() => remove(index)}>
+                                  <IconButton
+                                    color={"inherit"}
+                                    size="small"
+                                    onClick={() => remove(index)}
+                                  >
                                     <CloseIcon fontSize="small" />
                                   </IconButton>
                                 </div>
@@ -243,7 +274,7 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
                         estudiantes a la clase <b>{classDetails.alias}</b>
                       </Typography>
                     </div>
-                  </div>
+                  </>
                 </StudentsFormDetailsContainer>
               </DialogContent>
               <DialogActions>

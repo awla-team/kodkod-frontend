@@ -16,13 +16,20 @@ interface MissionFilterType {
 }
 
 export interface MissionAccomplishedType {
-  studentIds: number[];
+  studentIds: (number | string)[];
   id_stage: number;
   id_mission: number;
 }
 
 export const getMissionsByStage = (query?: MissionFilterType) =>
   http.get(`mission` + (query ? generateQueryParamsFromObject(query) : ""));
+
+export const getMissionsByClassAdventure = (
+  classAdventureId: number | string
+) => http.get(`missions-by-class-adventure/${classAdventureId}`);
+
+export const getStageMissions = (stageId: number | string) =>
+  http.get(`stage-missions/${stageId}`);
 
 export const updateStageMission = (body: StageMissionUpdateBody) =>
   http.put("update-stage-mission", body);

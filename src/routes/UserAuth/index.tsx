@@ -1,16 +1,22 @@
-import React, { useEffect } from "react";
-import { Navigate, Outlet } from "react-router-dom";
+import React from "react";
+import { Outlet } from "react-router-dom";
+import styled from "styled-components";
 
 const UserAuthLayout: React.FC = () => {
-  const token = localStorage.getItem("accessToken");
-  if (token) {
-    return <Navigate to={"/app"} />;
-  }
   return (
-    <>
+    <UserAuthLayoutContainer>
       <Outlet />
-    </>
+    </UserAuthLayoutContainer>
   );
 };
+
+const UserAuthLayoutContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+`;
 
 export default UserAuthLayout;
