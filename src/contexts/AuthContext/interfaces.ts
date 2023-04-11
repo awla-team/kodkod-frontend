@@ -1,7 +1,7 @@
-import { User } from "../../services/users/interfaces";
+import { User } from '../../services/users/interfaces';
 
 interface TeacherType extends User {
-  role: "teacher";
+  role: 'teacher';
 }
 
 export interface AuthContextType {

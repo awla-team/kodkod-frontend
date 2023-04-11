@@ -1,4 +1,4 @@
-import { IAdventure } from "../../global/interfaces";
+import { IAdventure } from '../../global/interfaces';
 
 export interface ClassInterface {
   [index: string]: any;
@@ -16,6 +16,6 @@ export interface ClassInterface {
 
   current_adventure?: IAdventure;
 }
-export interface ClassInterfaceModified extends Omit<ClassInterface, "level"> {
+export interface ClassInterfaceModified extends Omit<ClassInterface, 'level'> {
   level: number;
 }

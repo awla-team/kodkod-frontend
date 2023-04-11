@@ -1,6 +1,6 @@
-import { Box } from "@mui/system";
-import styled from "styled-components";
-import { IAdventureBannerProps } from "./interfaces";
+import { Box } from '@mui/system';
+import styled from 'styled-components';
+import { IAdventureBannerProps } from './interfaces';
 
 export const AdventureBanner = styled(Box)`
   display: flex;

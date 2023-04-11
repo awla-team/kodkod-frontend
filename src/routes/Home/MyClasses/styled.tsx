@@ -1,5 +1,5 @@
-import { Accordion, Box } from "@mui/material";
-import styled from "styled-components";
+import { Accordion, Box } from '@mui/material';
+import styled from 'styled-components';
 
 export const LevelAccordion = styled(Accordion)`
   .MuiAccordionSummary-root {

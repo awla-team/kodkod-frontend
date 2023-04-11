@@ -1,22 +1,15 @@
-import {
-  createContext,
-  FC,
-  PropsWithChildren,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
-import { ClassInterface } from "services/classes/interfaces";
-import { getClassByID } from "services/classes";
-import Toaster from "utils/Toster";
-import { studentsByClass } from "services/students";
-import { useParams } from "react-router-dom";
-import { StudentType } from "components/StudentsList/interfaces";
-import { ClassContextType } from "./interfaces";
-import { Levels } from "components/Modals/CreateClassModal/interfaces";
-import { getAllTheLevel } from "./../../services/levels";
-import { IStage } from "global/interfaces";
-import { FetchStatus } from "global/enums";
+import { createContext, FC, PropsWithChildren, useContext, useEffect, useState } from 'react';
+import { ClassInterface } from 'services/classes/interfaces';
+import { getClassByID } from 'services/classes';
+import Toaster from 'utils/Toster';
+import { studentsByClass } from 'services/students';
+import { useParams } from 'react-router-dom';
+import { StudentType } from 'components/StudentsList/interfaces';
+import { ClassContextType } from './interfaces';
+import { Levels } from 'components/Modals/CreateClassModal/interfaces';
+import { getAllTheLevel } from './../../services/levels';
+import { IStage } from 'global/interfaces';
+import { FetchStatus } from 'global/enums';
 
 const ClassContext = createContext<ClassContextType>({
   students: [],
@@ -35,9 +28,7 @@ export const useClassContext = () => {
 };
 
 const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [classDetails, setClassDetails] = useState<
-    ClassInterface | undefined
-  >();
+  const [classDetails, setClassDetails] = useState<ClassInterface | undefined>();
   const [levels, setLevels] = useState<Levels[]>([]);
   const [students, setStudents] = useState<StudentType[]>([]);
   const [loadingClass, setLoadingClass] = useState(FetchStatus.Idle);
@@ -46,8 +37,7 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const getLevels = async () => {
     try {
-      const { data }: { data: { responseData: Levels[] } } =
-        await getAllTheLevel();
+      const { data }: { data: { responseData: Levels[] } } = await getAllTheLevel();
       setLevels(
         data.responseData.sort((a, b) => {
           if (a.name > b.name) return 1;
@@ -57,7 +47,7 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
       );
     } catch (error: any) {
       console.error(error);
-      Toaster("error", "Hubo un error al cargar los niveles");
+      Toaster('error', 'Hubo un error al cargar los niveles');
     }
   };
 
@@ -72,13 +62,12 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const getClassById = async (id: number | string) => {
     setLoadingClass(FetchStatus.Pending);
     try {
-      const { data }: { data: { responseData: ClassInterface } } =
-        await getClassByID(id);
+      const { data }: { data: { responseData: ClassInterface } } = await getClassByID(id);
       setClassDetails(data.responseData);
       setLoadingClass(FetchStatus.Success);
     } catch (error: any) {
       console.error(error);
-      Toaster("error", "Hubo un error al cargar el curso");
+      Toaster('error', 'Hubo un error al cargar el curso');
       setLoadingClass(FetchStatus.Error);
     }
   };
@@ -86,20 +75,18 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const getStudentsByClass = async (id: number | string) => {
     try {
       const { data }: { data: any } = await studentsByClass(id, {
-        role: "student",
+        role: 'student',
       });
       setStudents(data.responseData);
     } catch (error: any) {
       console.error(error);
-      Toaster("error", "Hubo un error al cargar los estudiantes");
+      Toaster('error', 'Hubo un error al cargar los estudiantes');
     }
   };
 
   const updateStageData = (stage: IStage) => {
     const stagesCopy = [...classDetails.current_adventure.stages];
-    const match = stagesCopy.find(
-      (currentStage) => currentStage.id === stage.id
-    );
+    const match = stagesCopy.find((currentStage) => currentStage.id === stage.id);
     const index = stagesCopy.indexOf(match);
     stagesCopy[index] = stage;
     stagesCopy.sort((a, b) => {
@@ -118,12 +105,12 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
   };
 
   const updateStudentsData = (
-    actionType: "delete" | "update",
+    actionType: 'delete' | 'update',
     data: StudentType | StudentType[]
   ) => {
     if (data) {
       switch (actionType) {
-        case "update":
+        case 'update':
           {
             if (Array.isArray(data)) {
               setStudents((prevState) => {
@@ -132,9 +119,7 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
             } else {
               setStudents((prevState) => {
                 const tempData = [...prevState];
-                const findIndex = tempData.findIndex(
-                  (student) => student.id === data.id
-                );
+                const findIndex = tempData.findIndex((student) => student.id === data.id);
                 if (findIndex > -1) {
                   tempData[findIndex] = data;
                 }
@@ -143,13 +128,11 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
             }
           }
           break;
-        case "delete": {
+        case 'delete': {
           if (!Array.isArray(data)) {
             setStudents((prevState) => {
               const tempData = [...prevState];
-              const findIndex = tempData.findIndex(
-                (student) => student.id === data.id
-              );
+              const findIndex = tempData.findIndex((student) => student.id === data.id);
               if (findIndex > -1) {
                 tempData.splice(findIndex, 1);
               }

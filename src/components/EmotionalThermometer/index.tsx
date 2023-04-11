@@ -1,11 +1,11 @@
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useEffect, useRef, useState } from 'react';
 import {
   EmotionalThermometerContainer,
   EmojiRadio,
   EmotionalThermometerActions,
   PickersDateContainer,
-} from "./styled";
-import Moment from "moment";
+} from './styled';
+import Moment from 'moment';
 import {
   Tooltip,
   Typography,
@@ -17,41 +17,32 @@ import {
   FormControlLabel,
   Select,
   MenuItem,
-} from "@mui/material";
-import { Formik, Form, FormikHelpers } from "formik";
-import * as Yup from "yup";
+} from '@mui/material';
+import { Formik, Form, FormikHelpers } from 'formik';
+import * as Yup from 'yup';
 import {
   EmotionalThermometerProps,
   EmotionalThermometerType,
   FormInitialValue,
-} from "./interfaces";
-import { Moment as MomentType } from "moment/moment";
-import Toaster from "../../utils/Toster";
+} from './interfaces';
+import { Moment as MomentType } from 'moment/moment';
+import Toaster from '../../utils/Toster';
 import {
   getEmotionalThermometerByClassId,
   saveEmotionalThermometerDetails,
   updateEmotionalThermometerDetails,
-} from "../../services/emotional_thermometer";
-import HelpIcon from "@mui/icons-material/Help";
-import EventAvailableIcon from "@mui/icons-material/EventAvailable";
-import {
-  radioOptions,
-  challengeOptions,
-  mostRemarkableOptions,
-} from "./form-options";
-import { CalendarMonth } from "@mui/icons-material";
-import {
-  LocalizationProvider,
-  DatePicker,
-  PickersDayProps,
-  PickersDay,
-} from "@mui/x-date-pickers";
-import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
+} from '../../services/emotional_thermometer';
+import HelpIcon from '@mui/icons-material/Help';
+import EventAvailableIcon from '@mui/icons-material/EventAvailable';
+import { radioOptions, challengeOptions, mostRemarkableOptions } from './form-options';
+import { CalendarMonth } from '@mui/icons-material';
+import { LocalizationProvider, DatePicker, PickersDayProps, PickersDay } from '@mui/x-date-pickers';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 
 const initialValues: FormInitialValue = {
   score: null,
-  challenge: "",
-  most_remarkable: "",
+  challenge: '',
+  most_remarkable: '',
 };
 
 const validationSchema = () => {
@@ -62,16 +53,11 @@ const validationSchema = () => {
   });
 };
 
-const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
-  classDetails,
-}) => {
+const EmotionalThermometer: FC<EmotionalThermometerProps> = ({ classDetails }) => {
   const [date, setDate] = useState<MomentType>(Moment());
-  const [detailsByDates, setDetailsByDates] = useState<
-    EmotionalThermometerType[]
-  >([]);
+  const [detailsByDates, setDetailsByDates] = useState<EmotionalThermometerType[]>([]);
   const [calendarIsOpen, setCalendarOpen] = useState<boolean>(false);
-  const [formInitialValue, setFormInitialValue] =
-    useState<FormInitialValue>(initialValues);
+  const [formInitialValue, setFormInitialValue] = useState<FormInitialValue>(initialValues);
   const [editable, setEditable] = useState<boolean>(false);
   const formRef = useRef(null);
 
@@ -87,11 +73,7 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
       const {
         data: { responseData },
       }: { data: { responseData: EmotionalThermometerType[] } } =
-        await getEmotionalThermometerByClassId(
-          classDetails.id,
-          date.toDate(),
-          date.toDate()
-        );
+        await getEmotionalThermometerByClassId(classDetails.id, date.toDate(), date.toDate());
 
       if (responseData.length) {
         const { id, score, most_remarkable, challenge } = responseData[0];
@@ -105,22 +87,20 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
         setFormInitialValue({
           ...{
             score: null,
-            challenge: "",
-            most_remarkable: "",
+            challenge: '',
+            most_remarkable: '',
           },
         });
       }
       setEditable(!responseData.length);
     } catch (error: any) {
       console.error(error);
-      Toaster("error", "Hubo un error al cargar los termómetros de la clase");
+      Toaster('error', 'Hubo un error al cargar los termómetros de la clase');
     }
   };
 
   const checkDate = (date: MomentType): Boolean => {
-    return detailsByDates.some((res) =>
-      Moment(res.date).startOf("day").isSame(date, "day")
-    );
+    return detailsByDates.some((res) => Moment(res.date).startOf('day').isSame(date, 'day'));
   };
 
   const handleMonthChange = async () => {
@@ -130,13 +110,13 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
       }: { data: { responseData: EmotionalThermometerType[] } } =
         await getEmotionalThermometerByClassId(
           classDetails.id,
-          Moment(date).startOf("month").toDate(),
-          Moment(date).endOf("month").toDate()
+          Moment(date).startOf('month').toDate(),
+          Moment(date).endOf('month').toDate()
         );
       setDetailsByDates(responseData);
     } catch (error: any) {
       console.error(error);
-      Toaster("error", "Hubo un error al cargar los termómetros del mes");
+      Toaster('error', 'Hubo un error al cargar los termómetros del mes');
     }
   };
 
@@ -152,10 +132,9 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
           outsideCurrentMonth={false}
           {...(pickersDayProps as PickersDayProps<MomentType>)}
         />
-        {!pickersDayProps.outsideCurrentMonth &&
-          checkDate(day as MomentType) && (
-            <span className={"tick__icon"}>&#10004;</span>
-          )}
+        {!pickersDayProps.outsideCurrentMonth && checkDate(day as MomentType) && (
+          <span className={'tick__icon'}>&#10004;</span>
+        )}
       </PickersDateContainer>
     );
   };
@@ -171,12 +150,12 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
   ) => {
     try {
       let responseData: FormInitialValue;
-      if ("id" in value) {
+      if ('id' in value) {
         const { id, ...body } = value;
         const { data }: { data: { responseData: FormInitialValue } } =
           await updateEmotionalThermometerDetails(id, body);
         responseData = data.responseData;
-        Toaster("success", "Termómetro actualizado exitosamente");
+        Toaster('success', 'Termómetro actualizado exitosamente');
       } else {
         const { data }: { data: { responseData: FormInitialValue } } =
           await saveEmotionalThermometerDetails({
@@ -185,13 +164,13 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
             id_class: classDetails.id,
           });
         responseData = data.responseData;
-        Toaster("success", "Termómetro guardado exitosamente");
+        Toaster('success', 'Termómetro guardado exitosamente');
       }
       formikHelpers.resetForm();
       setEditable(false);
     } catch (error: any) {
       console.error(error);
-      Toaster("error", "Hubo un error al guardar el termómetro");
+      Toaster('error', 'Hubo un error al guardar el termómetro');
     } finally {
       formikHelpers.setSubmitting(false);
     }
@@ -211,26 +190,18 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
             Termómetro socioemocional
           </Typography>
           <Tooltip
-              title="El termómetro socioemocional es una herramienta que nos permitirá hacer seguimiento del clima escolar del curso a lo largo del tiempo. ¡Es importantísimo llenarlo cada clase para poder entregarte reportes de calidad!"
-              placement="right"
-              TransitionComponent={Fade}
-            >
-              <HelpIcon
-                className="mb-1"
-                sx={{ opacity: 0.8, cursor: "pointer", fontSize: "20px" }}
-              />
-            </Tooltip>
+            title="El termómetro socioemocional es una herramienta que nos permitirá hacer seguimiento del clima escolar del curso a lo largo del tiempo. ¡Es importantísimo llenarlo cada clase para poder entregarte reportes de calidad!"
+            placement="right"
+            TransitionComponent={Fade}
+          >
+            <HelpIcon className="mb-1" sx={{ opacity: 0.8, cursor: 'pointer', fontSize: '20px' }} />
+          </Tooltip>
           <div className="d-flex align-items-center">
-            <Typography
-              className="me-1"
-              component="span"
-              variant="body1"
-              sx={{ opacity: "0.6" }}
-            >
-              {date.format("LL")}
+            <Typography className="me-1" component="span" variant="body1" sx={{ opacity: '0.6' }}>
+              {date.format('LL')}
             </Typography>
             {formInitialValue.id ? (
-              <EventAvailableIcon color="success" sx={{ fontSize: "18px" }} />
+              <EventAvailableIcon color="success" sx={{ fontSize: '18px' }} />
             ) : null}
           </div>
         </div>
@@ -239,7 +210,7 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
             open={calendarIsOpen}
             onClose={() => setCalendarOpen(false)}
             renderDay={customRenderDay}
-            minDate={Moment().subtract(30, "day")}
+            minDate={Moment().subtract(30, 'day')}
             maxDate={Moment()}
             value={date}
             onChange={(newDate) => handleDateChange(Moment(newDate))}
@@ -263,10 +234,15 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
       <>
         <Chip
           className="w-100"
-          sx={{ padding: "20px 16px" }}
+          sx={{ padding: '20px 16px' }}
           color="secondary"
           label={
-            <Typography component="span" variant="body2" fontWeight="bold" sx={{ overflow: 'unset', textOverflow: 'unset', whiteSpace: 'break-spaces' }}>
+            <Typography
+              component="span"
+              variant="body2"
+              fontWeight="bold"
+              sx={{ overflow: 'unset', textOverflow: 'unset', whiteSpace: 'break-spaces' }}
+            >
               ¡Completa esta sección al final de cada clase!
             </Typography>
           }
@@ -288,28 +264,21 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
               dirty,
               setFieldValue,
             }: any) => (
-              <Form className={editable ? "" : "disabled"}>
+              <Form className={editable ? '' : 'disabled'}>
                 <FormControl
                   className="d-flex flex-column mb-4"
                   error={!!errors.score && !!submitCount}
                   disabled={!editable}
                 >
-                  <Typography
-                    component="label"
-                    variant="body1"
-                    fontWeight="bold"
-                    className="mb-2"
-                  >
+                  <Typography component="label" variant="body1" fontWeight="bold" className="mb-2">
                     ¿Cómo fue el clima en el curso el día de hoy?
                   </Typography>
                   <RadioGroup
                     name="climate-meter"
                     row
                     value={values.score}
-                    onChange={(e) =>
-                      setFieldValue("score", parseInt(e.target.value))
-                    }
-                    sx={{ justifyContent: "center" }}
+                    onChange={(e) => setFieldValue('score', parseInt(e.target.value))}
+                    sx={{ justifyContent: 'center' }}
                   >
                     {radioOptions.map((option, i) => (
                       <FormControlLabel
@@ -322,10 +291,7 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
                         }
                         labelPlacement="bottom"
                         control={
-                          <EmojiRadio
-                            icon={option.icon}
-                            checkedIcon={option.selectedIcon}
-                          />
+                          <EmojiRadio icon={option.icon} checkedIcon={option.selectedIcon} />
                         }
                       />
                     ))}
@@ -336,12 +302,7 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
                   error={!!errors.challenge && !!submitCount}
                   disabled={!editable}
                 >
-                  <Typography
-                    component="label"
-                    variant="body1"
-                    fontWeight="bold"
-                    className="mb-2"
-                  >
+                  <Typography component="label" variant="body1" fontWeight="bold" className="mb-2">
                     ¿Cuál fue el mayor obstáculo de hoy?
                   </Typography>
                   <Select
@@ -366,12 +327,7 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
                   error={!!errors.most_remarkable && !!submitCount}
                   disabled={!editable}
                 >
-                  <Typography
-                    component="label"
-                    variant="body1"
-                    fontWeight="bold"
-                    className="mb-2"
-                  >
+                  <Typography component="label" variant="body1" fontWeight="bold" className="mb-2">
                     ¿Cuál fue el mayor logro de hoy?
                   </Typography>
                   <Select
@@ -385,10 +341,7 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
                       El mayor logro fue...
                     </MenuItem>
                     {mostRemarkableOptions.map((most_remarkable, i) => (
-                      <MenuItem
-                        value={most_remarkable}
-                        key={`most_remarkable-${i}`}
-                      >
+                      <MenuItem value={most_remarkable} key={`most_remarkable-${i}`}>
                         {most_remarkable}
                       </MenuItem>
                     ))}
@@ -413,8 +366,8 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
                         Ya completaste el termómetro socioemocional de hoy
                       </Typography>
                       <Button
-                        className={"again__action"}
-                        role={"button"}
+                        className={'again__action'}
+                        role={'button'}
                         onClick={() => setEditable(true)}
                       >
                         Rehacer

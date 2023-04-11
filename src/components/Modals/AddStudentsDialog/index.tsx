@@ -1,5 +1,5 @@
-import React, { FC } from "react";
-import { AddStudentsDialogProps, FormInitialState } from "./interfaces";
+import React, { FC } from 'react';
+import { AddStudentsDialogProps, FormInitialState } from './interfaces';
 import {
   Button,
   Dialog,
@@ -9,27 +9,22 @@ import {
   IconButton,
   TextField,
   Typography,
-} from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import { Formik, Form, FormikHelpers, FieldArray } from "formik";
-import { useState } from "react";
-import { addStudentsInClass } from "services/students";
-import Toaster from "utils/Toster";
-import * as Yup from "yup";
-import { StudentType } from "../../StudentsList/interfaces";
-import { StudentsFormDetailsContainer } from "./styled";
+} from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import { Formik, Form, FormikHelpers, FieldArray } from 'formik';
+import { useState } from 'react';
+import { addStudentsInClass } from 'services/students';
+import Toaster from 'utils/Toster';
+import * as Yup from 'yup';
+import { StudentType } from '../../StudentsList/interfaces';
+import { StudentsFormDetailsContainer } from './styled';
 
-const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
-  open,
-  onClose,
-  classDetails,
-}) => {
+const AddStudentsDialog: FC<AddStudentsDialogProps> = ({ open, onClose, classDetails }) => {
   const [formInitialState, setFormInitialState] = useState<FormInitialState>({
     students: [],
   });
-  const [inputFieldValue, setInputFieldValue] = useState<string>("");
-  const [inputFieldValueError, setInputFieldValueError] =
-    useState<boolean>(false);
+  const [inputFieldValue, setInputFieldValue] = useState<string>('');
+  const [inputFieldValueError, setInputFieldValueError] = useState<boolean>(false);
   const handleSubmit = async (
     values: FormInitialState,
     formikHelper: FormikHelpers<FormInitialState>
@@ -44,24 +39,21 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
               first_name,
               last_name,
               email,
-              role: "student",
+              role: 'student',
             };
           }),
         });
       const noOfStudents = values.students.length;
       Toaster(
-        "success",
-        `${noOfStudents} ${
-          noOfStudents < 2 ? "estudiante" : "estudiantes"
-        } añadidos exitosamente`
+        'success',
+        `${noOfStudents} ${noOfStudents < 2 ? 'estudiante' : 'estudiantes'} añadidos exitosamente`
       );
-      onClose("student", data.responseData.students);
+      onClose('student', data.responseData.students);
     } catch (error: any) {
       console.error(error);
       Toaster(
-        "error",
-        error?.response?.data?.responseData[0] ||
-          "Hubo un error al añadir estudiantes"
+        'error',
+        error?.response?.data?.responseData[0] || 'Hubo un error al añadir estudiantes'
       );
     } finally {
       formikHelper.setSubmitting(false);
@@ -90,38 +82,33 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
 
   const addToList = (formikInitialValues: FormInitialState) => {
     const transformedTextArray = inputFieldValue
-      .split(",")
+      .split(',')
       .map((res) => res.trim())
       .filter((res) => res);
-    const match = transformedTextArray
-      .join(",")
-      .match(/^([\w+-.%]+@[\w-.]+\.[A-Za-z]{2,4},?)+$/g);
+    const match = transformedTextArray.join(',').match(/^([\w+-.%]+@[\w-.]+\.[A-Za-z]{2,4},?)+$/g);
     if (match) {
       setFormInitialState((prevState) => {
         return {
           students: [
             ...formikInitialValues.students,
             ...transformedTextArray.map((email) => ({
-              first_name: "",
-              last_name: "",
+              first_name: '',
+              last_name: '',
               email,
             })),
           ],
         };
       });
-      setInputFieldValue("");
+      setInputFieldValue('');
     } else {
       setInputFieldValueError(true);
     }
   };
 
-  const handleStudentValues = (
-    e: React.KeyboardEvent,
-    formikInitialValues: FormInitialState
-  ) => {
+  const handleStudentValues = (e: React.KeyboardEvent, formikInitialValues: FormInitialState) => {
     e.stopPropagation();
     const { key } = e;
-    if (key === "Enter" || key === ",") {
+    if (key === 'Enter' || key === ',') {
       e.preventDefault();
       addToList(formikInitialValues);
     }
@@ -129,17 +116,12 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
 
   const preventFormSubmitOnKeyDown = (e: React.KeyboardEvent) => {
     const { key } = e;
-    if (key === "Enter" || key === ",") {
+    if (key === 'Enter' || key === ',') {
       e.preventDefault();
     }
   };
   return (
-    <Dialog
-      open={open}
-      PaperProps={{ className: "p-3" }}
-      maxWidth="sm"
-      fullWidth
-    >
+    <Dialog open={open} PaperProps={{ className: 'p-3' }} maxWidth="sm" fullWidth>
       <DialogTitle fontWeight="bold">Añadir estudiantes</DialogTitle>
       <Formik
         validationSchema={validationSchema}
@@ -147,42 +129,27 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
         initialValues={formInitialState}
         onSubmit={handleSubmit}
       >
-        {({
-          handleSubmit,
-          values,
-          handleChange,
-          isSubmitting,
-          errors,
-          submitCount,
-        }) => {
+        {({ handleSubmit, values, handleChange, isSubmitting, errors, submitCount }) => {
           return (
-            <Form
-              onSubmit={handleSubmit}
-              onKeyDown={preventFormSubmitOnKeyDown}
-            >
+            <Form onSubmit={handleSubmit} onKeyDown={preventFormSubmitOnKeyDown}>
               <DialogContent dividers className="py-5">
                 <StudentsFormDetailsContainer>
                   <div className="d-flex w-100 gap-2">
                     <TextField
                       className="mb-4"
                       error={inputFieldValueError}
-                      helperText={
-                        inputFieldValueError &&
-                        "Has ingresado un email inválido"
-                      }
+                      helperText={inputFieldValueError && 'Has ingresado un email inválido'}
                       value={inputFieldValue}
                       onKeyDown={(event) => handleStudentValues(event, values)}
                       onChange={handleInputFieldChange}
                       fullWidth
                       size="small"
-                      placeholder={
-                        "Emails de tus estudiantes separados por coma"
-                      }
+                      placeholder={'Emails de tus estudiantes separados por coma'}
                     />
                     <div>
                       <Button
                         sx={{
-                          mt: "1px",
+                          mt: '1px',
                         }}
                         disabled={inputFieldValueError}
                         variant="contained"
@@ -195,17 +162,14 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
                   </div>
                   <>
                     <div className="details-list">
-                      <FieldArray name={"students"}>
+                      <FieldArray name={'students'}>
                         {({ remove }) => {
                           return values.students.map((student, index) => {
                             return (
-                              <div
-                                key={index}
-                                className="d-flex align-items-center"
-                              >
+                              <div key={index} className="d-flex align-items-center">
                                 <div className="me-2">
                                   <IconButton
-                                    color={"inherit"}
+                                    color={'inherit'}
                                     size="small"
                                     onClick={() => remove(index)}
                                   >
@@ -215,45 +179,36 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
                                 <div className="d-flex">
                                   <div className="me-3">
                                     <TextField
-                                      error={
-                                        !!submitCount &&
-                                        !!errors?.students?.[index]
-                                      }
+                                      error={!!submitCount && !!errors?.students?.[index]}
                                       value={values.students[index].first_name}
                                       name={`students[${index}].first_name`}
                                       onChange={handleChange}
-                                      variant={"standard"}
-                                      placeholder={"Nombres"}
+                                      variant={'standard'}
+                                      placeholder={'Nombres'}
                                       fullWidth
                                     />
                                   </div>
                                   <div className="me-3">
                                     <TextField
-                                      error={
-                                        !!submitCount &&
-                                        !!errors?.students?.[index]
-                                      }
+                                      error={!!submitCount && !!errors?.students?.[index]}
                                       value={values.students[index].last_name}
                                       name={`students[${index}].last_name`}
                                       onChange={handleChange}
-                                      variant={"standard"}
-                                      placeholder={"Apellidos"}
+                                      variant={'standard'}
+                                      placeholder={'Apellidos'}
                                       fullWidth
                                     />
                                   </div>
                                 </div>
                                 <div>
                                   <TextField
-                                    error={
-                                      !!submitCount &&
-                                      !!errors?.students?.[index]
-                                    }
+                                    error={!!submitCount && !!errors?.students?.[index]}
                                     value={values.students[index].email}
                                     name={`students[${index}].email`}
                                     onChange={handleChange}
-                                    type={"email"}
-                                    variant={"standard"}
-                                    placeholder={"E-mail"}
+                                    type={'email'}
+                                    variant={'standard'}
+                                    placeholder={'E-mail'}
                                     fullWidth
                                   />
                                 </div>
@@ -270,21 +225,21 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
                         variant="body2"
                         className="mt-4 w-100"
                       >
-                        Estás añadiendo <b>{values.students.length}</b>{" "}
-                        estudiantes a la clase <b>{classDetails.alias}</b>
+                        Estás añadiendo <b>{values.students.length}</b> estudiantes a la clase{' '}
+                        <b>{classDetails.alias}</b>
                       </Typography>
                     </div>
                   </>
                 </StudentsFormDetailsContainer>
               </DialogContent>
               <DialogActions>
-                <Button variant={"outlined"} onClick={() => onClose()}>
+                <Button variant={'outlined'} onClick={() => onClose()}>
                   Cancelar
                 </Button>
                 <Button
                   disabled={!values.students.length || !!isSubmitting}
-                  variant={"contained"}
-                  type={"submit"}
+                  variant={'contained'}
+                  type={'submit'}
                 >
                   Añadir estudiantes
                 </Button>

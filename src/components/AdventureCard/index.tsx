@@ -1,20 +1,14 @@
-import React from "react";
-import { Chip, Typography } from "@mui/material";
-import { IAdventureCardProps } from "./interfaces";
-import { AdventureCardContainer } from "./styled";
+import React from 'react';
+import { Chip, Typography } from '@mui/material';
+import { IAdventureCardProps } from './interfaces';
+import { AdventureCardContainer } from './styled';
 
-const AdventureCard: React.FC<IAdventureCardProps> = ({
-  title,
-  completed,
-  img,
-  info,
-  onClick,
-}) => {
+const AdventureCard: React.FC<IAdventureCardProps> = ({ title, completed, img, info, onClick }) => {
   return (
     <AdventureCardContainer
       onClick={!completed ? onClick : () => {}}
       className={`p-4 d-flex flex-column justify-content-between ${
-        completed ? "adventure-complete" : ""
+        completed ? 'adventure-complete' : ''
       }`}
       sx={{ backgroundImage: `url(${img})` }}
       variant="outlined"

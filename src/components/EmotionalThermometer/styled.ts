@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Box, Radio } from "@mui/material";
+import styled from 'styled-components';
+import { Box, Radio } from '@mui/material';
 
 export const EmotionalThermometerContainer = styled(Box)`
   form.disabled {

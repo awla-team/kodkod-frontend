@@ -1,5 +1,5 @@
-import type { FC, ChangeEvent } from "react";
-import { CreateClassModalProps, FormInitialState } from "./interfaces";
+import type { FC, ChangeEvent } from 'react';
+import { CreateClassModalProps, FormInitialState } from './interfaces';
 import {
   Select,
   MenuItem,
@@ -11,27 +11,22 @@ import {
   DialogContent,
   DialogActions,
   Typography,
-} from "@mui/material";
-import { FormContainer } from "./styled";
-import { Formik, Form, FormikHelpers } from "formik";
-import * as Yup from "yup";
-import { useEffect, useState } from "react";
-import { createClass, updateClass } from "services/classes";
-import Toaster from "utils/Toster";
-import { ClassInterface } from "services/classes/interfaces";
-import { useAuth } from "contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
+} from '@mui/material';
+import { FormContainer } from './styled';
+import { Formik, Form, FormikHelpers } from 'formik';
+import * as Yup from 'yup';
+import { useEffect, useState } from 'react';
+import { createClass, updateClass } from 'services/classes';
+import Toaster from 'utils/Toster';
+import { ClassInterface } from 'services/classes/interfaces';
+import { useAuth } from 'contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
-const CreateClassModal: FC<CreateClassModalProps> = ({
-  open,
-  onClose,
-  levels,
-  classDetails,
-}) => {
+const CreateClassModal: FC<CreateClassModalProps> = ({ open, onClose, levels, classDetails }) => {
   const [initialState, setInitialState] = useState<FormInitialState>({
-    id_level: "",
-    code: "",
-    alias: "",
+    id_level: '',
+    code: '',
+    alias: '',
   });
   const { user } = useAuth();
   const validationSchema = () => {
@@ -56,16 +51,16 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
   const handleAliasValue = (
     e: ChangeEvent,
     values: FormInitialState,
-    setFieldValue: FormikHelpers<FormInitialState>["setFieldValue"]
+    setFieldValue: FormikHelpers<FormInitialState>['setFieldValue']
   ) => {
     if (e) {
       const { name, value } = e.target as HTMLInputElement;
-      if (name === "id_level") {
+      if (name === 'id_level') {
         const level = levels.find((level) => level.id === value);
-        setFieldValue("alias", `${level.name.charAt(0)}°${values.code}`);
+        setFieldValue('alias', `${level.name.charAt(0)}°${values.code}`);
       } else {
         const level = levels.find((level) => level.id === values.id_level);
-        if (level) setFieldValue("alias", `${level.name.charAt(0)}°${value}`);
+        if (level) setFieldValue('alias', `${level.name.charAt(0)}°${value}`);
       }
     }
   };
@@ -76,41 +71,39 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
   ) => {
     try {
       if (classDetails) {
-        const { data }: { data: { responseData: ClassInterface } } =
-          await updateClass({
-            ...values,
-            id_level: values.id_level as number,
-            id: classDetails.id,
-          });
-        onClose("success", data.responseData);
-        Toaster("success", `Curso editado exitosamente`);
+        const { data }: { data: { responseData: ClassInterface } } = await updateClass({
+          ...values,
+          id_level: values.id_level as number,
+          id: classDetails.id,
+        });
+        onClose('success', data.responseData);
+        Toaster('success', `Curso editado exitosamente`);
         // TODO: remove this workarround
         setTimeout(() => {
           window.location.reload();
         }, 500);
       } else {
-        const { data }: { data: { responseData: ClassInterface } } =
-          await createClass({
-            ...values,
-            id_user: user.id,
-            id_level: values.id_level as number,
-          });
+        const { data }: { data: { responseData: ClassInterface } } = await createClass({
+          ...values,
+          id_user: user.id,
+          id_level: values.id_level as number,
+        });
 
         navigate(`/app/cursos/${data.responseData.id}/tablero`);
-        onClose("success", data.responseData);
-        Toaster("success", `Curso ${values.alias} creado exitosamente`);
+        onClose('success', data.responseData);
+        Toaster('success', `Curso ${values.alias} creado exitosamente`);
       }
     } catch (error: any) {
       console.error(error);
-      Toaster("error", `Hubo un error al crear el curso ${values.alias}`);
+      Toaster('error', `Hubo un error al crear el curso ${values.alias}`);
     } finally {
       formikHelpers.setSubmitting(false);
     }
   };
   return (
-    <Dialog open={open} PaperProps={{ className: "p-3" }}>
+    <Dialog open={open} PaperProps={{ className: 'p-3' }}>
       <DialogTitle fontWeight="bold">
-        {classDetails ? "Editar curso" : "Añade un nuevo curso"}
+        {classDetails ? 'Editar curso' : 'Añade un nuevo curso'}
       </DialogTitle>
       <Formik
         initialValues={initialState}
@@ -142,20 +135,16 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
                       Nivel
                     </Typography>
                     <Select
-                      name={"id_level"}
+                      name={'id_level'}
                       size="small"
                       placeholder="Selecciona un nivel"
                       onChange={(e) => {
                         handleChange(e);
-                        handleAliasValue(
-                          e as ChangeEvent<HTMLInputElement>,
-                          values,
-                          setFieldValue
-                        );
+                        handleAliasValue(e as ChangeEvent<HTMLInputElement>, values, setFieldValue);
                       }}
                       value={values.id_level}
                     >
-                      <MenuItem value={""} disabled>
+                      <MenuItem value={''} disabled>
                         Selecciona un nivel
                       </MenuItem>
                       {levels
@@ -184,12 +173,11 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
                         Curso
                       </Typography>
                       <Typography component="span" variant="caption">
-                        (Es la letra o nombre que acompaña al nivel e identifica
-                        al curso)
+                        (Es la letra o nombre que acompaña al nivel e identifica al curso)
                       </Typography>
                     </div>
                     <TextField
-                      name={"code"}
+                      name={'code'}
                       placeholder="Ejemplo: A, B, C..."
                       onChange={(e) => {
                         handleAliasValue(e, values, setFieldValue);
@@ -224,24 +212,17 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
                 </FormContainer>
               </DialogContent>
               <DialogActions className="pt-3">
-                <Button
-                  variant="outlined"
-                  onClick={() => onClose("escapeKeyDown")}
-                >
+                <Button variant="outlined" onClick={() => onClose('escapeKeyDown')}>
                   Cancelar
                 </Button>
                 <Button
                   disabled={
-                    isSubmitting ||
-                    !dirty ||
-                    !values.code ||
-                    !values.id_level ||
-                    !values.alias
+                    isSubmitting || !dirty || !values.code || !values.id_level || !values.alias
                   }
-                  type={"submit"}
-                  variant={"contained"}
+                  type={'submit'}
+                  variant={'contained'}
                 >
-                  {classDetails ? "Guardar cambios" : "Añade un nuevo curso"}
+                  {classDetails ? 'Guardar cambios' : 'Añade un nuevo curso'}
                 </Button>
               </DialogActions>
             </Form>

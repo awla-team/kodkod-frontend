@@ -1,5 +1,5 @@
-import { Box } from "@mui/material";
-import styled from "styled-components";
+import { Box } from '@mui/material';
+import styled from 'styled-components';
 
 export const GoalSelectionContainer = styled(Box)`
   display: flex;
@@ -12,7 +12,6 @@ export const GoalSelectionContainer = styled(Box)`
 `;
 
 export const CardContainer = styled(Box)`
-  
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -53,7 +52,7 @@ export const CardContainer = styled(Box)`
 `;
 
 export const ImgContainer = styled.div`
-  transition: all 0.2s ease;  
+  transition: all 0.2s ease;
   padding: 16px;
   background-color: rgba(0, 0, 0, 0.1);
   border-radius: 8px;

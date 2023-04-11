@@ -1,5 +1,5 @@
-import http from "global/api";
-import { ClassInterface } from "./classes/interfaces";
+import http from 'global/api';
+import { ClassInterface } from './classes/interfaces';
 
 interface ClassMutationType {
   id?: number;
@@ -8,22 +8,20 @@ interface ClassMutationType {
   alias: string;
   id_user?: number;
 }
-export const getClassesByUser = (userId: number | string) =>
-  http.get(`classes-by-user/` + userId);
+export const getClassesByUser = (userId: number | string) => http.get(`classes-by-user/` + userId);
 
-export const createClass = (body: ClassMutationType) =>
-  http.post(`class`, body);
+export const createClass = (body: ClassMutationType) => http.post(`class`, body);
 
 export const getClassByID = (id: number | string) => {
-  return http.get("class/" + id);
+  return http.get('class/' + id);
 };
 
 export const updateClass = (body: ClassMutationType) => {
-  return http.put("class/" + body.id, body);
+  return http.put('class/' + body.id, body);
 };
 
 export const deleteClass = (id: number | string) => {
-  return http.delete("class/" + id);
+  return http.delete('class/' + id);
 };
 
 export const getClassHasAdventuresByClass = (classId: number | string) => {

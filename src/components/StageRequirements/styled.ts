@@ -1,9 +1,6 @@
-import styled from "styled-components";
-import { Box } from "@mui/material";
-import {
-  default as MuiLinearProgress,
-  linearProgressClasses,
-} from "@mui/material/LinearProgress";
+import styled from 'styled-components';
+import { Box } from '@mui/material';
+import { default as MuiLinearProgress, linearProgressClasses } from '@mui/material/LinearProgress';
 
 export const StageRequirementsContainer = styled(Box)`
   margin-block: 1rem;

@@ -1,9 +1,9 @@
-import React from "react";
-import { IMission, IStage } from "../../../global/interfaces";
+import React from 'react';
+import { IMission, IStage } from '../../../global/interfaces';
 
 export interface MissionAccomplishedProps {
   open: boolean;
-  anchor: "left" | "right" | "top" | "bottom";
+  anchor: 'left' | 'right' | 'top' | 'bottom';
   onSave: (stageId: number | string) => void;
   onClose?: (event: Event | React.MouseEvent) => void;
   stage: IStage;

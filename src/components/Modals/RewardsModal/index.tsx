@@ -1,4 +1,4 @@
-import type { FC, SyntheticEvent } from "react";
+import type { FC, SyntheticEvent } from 'react';
 import {
   Button,
   DialogTitle,
@@ -8,13 +8,13 @@ import {
   Typography,
   Tooltip,
   Checkbox,
-} from "@mui/material";
-import { RewardIcon, RewardsList } from "./styled";
-import { useEffect, useState } from "react";
-import { IUser, IUserHasReward } from "global/interfaces";
-import Moment from "moment";
-import { studentUseRewards } from "services/rewards";
-import Toaster from "utils/Toster";
+} from '@mui/material';
+import { RewardIcon, RewardsList } from './styled';
+import { useEffect, useState } from 'react';
+import { IUser, IUserHasReward } from 'global/interfaces';
+import Moment from 'moment';
+import { studentUseRewards } from 'services/rewards';
+import Toaster from 'utils/Toster';
 
 const RewardsModal: FC<{
   open: boolean;
@@ -29,24 +29,17 @@ const RewardsModal: FC<{
   useEffect(() => {
     if (student?.user_has_rewards?.length) {
       setActiveRewards(
-        student?.user_has_rewards?.filter(
-          (user_has_reward) => !user_has_reward.used_at
-        )
+        student?.user_has_rewards?.filter((user_has_reward) => !user_has_reward.used_at)
       );
       setInactiveRewards(
-        student?.user_has_rewards?.filter(
-          (user_has_reward) => user_has_reward.used_at
-        )
+        student?.user_has_rewards?.filter((user_has_reward) => user_has_reward.used_at)
       );
     }
   }, [student]);
 
   const handleCheckboxChange = (rewardId: number, value: boolean) => {
     if (value) setSelectedRewards([...selectedRewards, rewardId]);
-    else
-      setSelectedRewards(
-        [...selectedRewards].filter((reward) => reward !== rewardId)
-      );
+    else setSelectedRewards([...selectedRewards].filter((reward) => reward !== rewardId));
   };
 
   useEffect(() => {
@@ -54,7 +47,7 @@ const RewardsModal: FC<{
   }, [open]);
 
   return (
-    <Dialog open={open} PaperProps={{ className: "p-3" }} fullWidth>
+    <Dialog open={open} PaperProps={{ className: 'p-3' }} fullWidth>
       <DialogTitle fontWeight="bold">Activar recompensas</DialogTitle>
       <DialogContent dividers className="py-4">
         <div className="mb-2">
@@ -88,7 +81,7 @@ const RewardsModal: FC<{
                         user_has_reward.created_at
                       )
                         .local()
-                        .format("DD/MM/YYYY")}`}</Typography>
+                        .format('DD/MM/YYYY')}`}</Typography>
                     </div>
                   }
                 >
@@ -98,20 +91,14 @@ const RewardsModal: FC<{
                         handleCheckboxChange(user_has_reward.reward.id, value)
                       }
                       icon={<RewardIcon className="reward-icon" />}
-                      checkedIcon={
-                        <RewardIcon className="reward-icon selected" />
-                      }
+                      checkedIcon={<RewardIcon className="reward-icon selected" />}
                     />
                   </div>
                 </Tooltip>
               ))
             ) : (
               <div className="p-4 d-flex justify-content-center align-items-center w-100">
-                <Typography
-                  component="span"
-                  variant="caption"
-                  textAlign="center"
-                >
+                <Typography component="span" variant="caption" textAlign="center">
                   Este estudiante no tiene recompensas por activar
                 </Typography>
               </div>
@@ -141,12 +128,12 @@ const RewardsModal: FC<{
                         user_has_reward.created_at
                       )
                         .local()
-                        .format("DD/MM/YYYY")}`}</Typography>
+                        .format('DD/MM/YYYY')}`}</Typography>
                       <Typography variant="caption">{`Utilizada el ${Moment.utc(
                         user_has_reward.used_at
                       )
                         .local()
-                        .format("DD/MM/YYYY")}`}</Typography>
+                        .format('DD/MM/YYYY')}`}</Typography>
                     </div>
                   }
                 >

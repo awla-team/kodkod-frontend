@@ -4,28 +4,22 @@ import {
   StudentListContainer,
   StudentListContent,
   StudentsListDetailsContainer,
-} from "./styled";
-import { Dispatch, FC, SetStateAction } from "react";
-import { Button, Typography } from "@mui/material";
-import { StudentsListProps, StudentType } from "./interfaces";
-import { useState } from "react";
-import AddStudentsDialog from "../Modals/AddStudentsDialog";
-import { useClassContext } from "../../routes/Class/context";
-import { deleteStudent } from "../../services/students";
-import { StudentDetails } from "./StudentDetails";
+} from './styled';
+import { Dispatch, FC, SetStateAction } from 'react';
+import { Button, Typography } from '@mui/material';
+import { StudentsListProps, StudentType } from './interfaces';
+import { useState } from 'react';
+import AddStudentsDialog from '../Modals/AddStudentsDialog';
+import { useClassContext } from '../../routes/Class/context';
+import { deleteStudent } from '../../services/students';
+import { StudentDetails } from './StudentDetails';
 
-const StudentsList: FC<StudentsListProps> = ({
-  studentsData,
-  classDetails,
-}: StudentsListProps) => {
+const StudentsList: FC<StudentsListProps> = ({ studentsData, classDetails }: StudentsListProps) => {
   const [OpenModal, setOpenModal] = useState<boolean>(false);
   const { updateStudentsData } = useClassContext();
-  const handleModalClose = (
-    reason: "student" | undefined,
-    data?: StudentType[]
-  ) => {
-    if (reason === "student" && data) {
-      updateStudentsData("update", data);
+  const handleModalClose = (reason: 'student' | undefined, data?: StudentType[]) => {
+    if (reason === 'student' && data) {
+      updateStudentsData('update', data);
     }
     setOpenModal(false);
   };
@@ -52,7 +46,7 @@ const StudentsList: FC<StudentsListProps> = ({
       <Typography
         component="span"
         variant="body1"
-        sx={{ opacity: "0.6" }}
+        sx={{ opacity: '0.6' }}
       >{`${studentsData.length} estudiantes en total`}</Typography>
       <StudentListContent hasDetails={!!studentsData.length}>
         {studentsData.length ? (
@@ -86,11 +80,7 @@ const DontHaveDetails: FC<{
       <Typography component="span" variant="body1">
         Aún no has añadido estudiantes a tu curso
       </Typography>
-      <Button
-        size="large"
-        variant={"contained"}
-        onClick={() => setOpenModal(true)}
-      >
+      <Button size="large" variant={'contained'} onClick={() => setOpenModal(true)}>
         Añadir estudiantes
       </Button>
     </DontHaveDetailsContent>
@@ -104,7 +94,7 @@ const StudentsListDetails: FC<{
 }> = ({ setOpenModal, handleDelete, studentsData }) => {
   return (
     <StudentsListDetailsContainer>
-      <div className={"details"}>
+      <div className={'details'}>
         {studentsData
           .sort((a, b) => {
             if (a.last_name > b.last_name) return 1;
@@ -120,11 +110,7 @@ const StudentsListDetails: FC<{
           })}
       </div>
 
-      <Button
-        size="large"
-        variant={"contained"}
-        onClick={() => setOpenModal(true)}
-      >
+      <Button size="large" variant={'contained'} onClick={() => setOpenModal(true)}>
         Añadir estudiantes
       </Button>
     </StudentsListDetailsContainer>

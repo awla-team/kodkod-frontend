@@ -1,5 +1,5 @@
-import { MouseEvent } from "react";
-import { PropsWithChildren } from "react";
+import { MouseEvent } from 'react';
+import { PropsWithChildren } from 'react';
 
 export interface TabContentProps extends PropsWithChildren {
   className?: string;

@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import Stepper from "@mui/material/Stepper";
+import styled from 'styled-components';
+import Stepper from '@mui/material/Stepper';
 
 export const CustomStepper = styled(Stepper)`
   display: flex;

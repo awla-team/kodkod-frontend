@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Box } from "@mui/material";
+import styled from 'styled-components';
+import { Box } from '@mui/material';
 
 export const MissionListContainer = styled(Box)`
   display: flex;

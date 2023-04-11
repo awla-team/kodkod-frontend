@@ -1,12 +1,12 @@
-import { Typography, Chip, Tooltip } from "@mui/material";
-import { Box } from "@mui/system";
-import { IClass } from "global/interfaces";
-import { Link } from "react-router-dom";
+import { Typography, Chip, Tooltip } from '@mui/material';
+import { Box } from '@mui/system';
+import { IClass } from 'global/interfaces';
+import { Link } from 'react-router-dom';
 
 const ClassCard: React.FC<{ classObj: IClass }> = ({ classObj }) => {
   return (
     <Link to={`cursos/${classObj.id}/tablero`}>
-      <div className={"class__level__card"}>
+      <div className={'class__level__card'}>
         {classObj.current_adventure ? (
           <Box
             className="d-flex justify-content-end p-2 class-img-container"
@@ -41,7 +41,7 @@ const ClassCard: React.FC<{ classObj: IClass }> = ({ classObj }) => {
           <Typography component="span" variant="body1" textAlign="center">
             {classObj.current_adventure
               ? classObj.current_adventure.title
-              : "Sin aventura en curso"}
+              : 'Sin aventura en curso'}
           </Typography>
         </div>
       </div>

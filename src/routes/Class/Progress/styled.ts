@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 import {
   Box,
   Table,
@@ -6,8 +6,8 @@ import {
   tableHeadClasses,
   tableCellClasses,
   tableBodyClasses,
-} from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+} from '@mui/material';
+import { DataGrid } from '@mui/x-data-grid';
 
 export const ProgressContainer = styled(Box)`
   display: flex;

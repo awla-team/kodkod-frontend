@@ -1,5 +1,5 @@
-import http from "global/api";
+import http from 'global/api';
 
 export const getAllTheLevel = () => {
-  return http.get("/level");
+  return http.get('/level');
 };

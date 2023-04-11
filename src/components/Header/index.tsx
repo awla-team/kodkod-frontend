@@ -1,5 +1,5 @@
-import React from "react";
-import { HeaderContainer } from "./styled";
+import React from 'react';
+import { HeaderContainer } from './styled';
 
 const Header: React.FC = () => {
   return (

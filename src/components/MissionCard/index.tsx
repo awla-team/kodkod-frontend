@@ -1,15 +1,11 @@
-import React from "react";
-import { Tooltip, Typography } from "@mui/material";
-import kodcoinIcon from "assets/images/kodcoin.png";
-import { difficultyIcons, difficultyToText } from "utils";
-import CachedIcon from "@mui/icons-material/Cached";
-import {
-  MissionCardContainer,
-  ChangeMissionButton,
-  PointsContainer,
-} from "./styled";
-import { IMissionCardProps } from "./interfaces";
-import SchoolIcon from "@mui/icons-material/School";
+import React from 'react';
+import { Tooltip, Typography } from '@mui/material';
+import kodcoinIcon from 'assets/images/kodcoin.png';
+import { difficultyIcons, difficultyToText } from 'utils';
+import CachedIcon from '@mui/icons-material/Cached';
+import { MissionCardContainer, ChangeMissionButton, PointsContainer } from './styled';
+import { IMissionCardProps } from './interfaces';
+import SchoolIcon from '@mui/icons-material/School';
 
 const MissionCard: React.FC<IMissionCardProps> = ({
   mission,
@@ -24,15 +20,15 @@ const MissionCard: React.FC<IMissionCardProps> = ({
     <MissionCardContainer
       onClick={onClick}
       className={
-        "mission-card p-4 d-flex justify-content-between" +
-        (selected ? " selected" : "") +
-        (clickable ? " clickable" : "")
+        'mission-card p-4 d-flex justify-content-between' +
+        (selected ? ' selected' : '') +
+        (clickable ? ' clickable' : '')
       }
       variant="outlined"
       sx={{ background: mission.skill.color }}
     >
       <div className="d-flex flex-column justify-content-between w-100 pe-4">
-        <div className={"text__details"}>
+        <div className={'text__details'}>
           <Typography variant="h6" fontWeight="bold">
             {title}
           </Typography>
@@ -49,10 +45,10 @@ const MissionCard: React.FC<IMissionCardProps> = ({
             <div className="d-flex align-items-center justify-content-center gap-1">
               <div
                 style={{
-                  borderRadius: "100%",
-                  height: "12px",
-                  width: "12px",
-                  background: "#fff",
+                  borderRadius: '100%',
+                  height: '12px',
+                  width: '12px',
+                  background: '#fff',
                 }}
               />
               <Typography component="span" variant="body2">
@@ -61,9 +57,7 @@ const MissionCard: React.FC<IMissionCardProps> = ({
             </div>
           </div>
           {completed_users ? (
-            <Tooltip
-              title={`${completed_users?.length} estudiantes han completado esta misión`}
-            >
+            <Tooltip title={`${completed_users?.length} estudiantes han completado esta misión`}>
               <div className="d-flex align-items-center justify-content-center gap-1">
                 <SchoolIcon fontSize="small" />
                 <Typography component="span" variant="body2">
@@ -86,7 +80,7 @@ const MissionCard: React.FC<IMissionCardProps> = ({
               openModal(mission);
             }}
           >
-            <CachedIcon sx={{ fill: "rgba(0, 0, 0, 0.8)" }} />
+            <CachedIcon sx={{ fill: 'rgba(0, 0, 0, 0.8)' }} />
           </ChangeMissionButton>
         ) : null}
         {/* Action Buttons with absolute position end*/}

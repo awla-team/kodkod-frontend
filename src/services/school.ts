@@ -1,5 +1,5 @@
-import http from "../global/api";
+import http from '../global/api';
 
 export const getSchools = () => {
-  return http.get("school");
+  return http.get('school');
 };
