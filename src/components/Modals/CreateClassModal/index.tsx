@@ -158,13 +158,19 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
                       <MenuItem value={""} disabled>
                         Selecciona un nivel
                       </MenuItem>
-                      {levels.map((res, index) => {
-                        return (
-                          <MenuItem key={index} value={res.id}>
-                            {res.name}
-                          </MenuItem>
-                        );
-                      })}
+                      {levels
+                        .sort((a, b) => {
+                          if (a._index > b._index) return 1;
+                          if (a._index < b._index) return -1;
+                          return 0;
+                        })
+                        .map((res, index) => {
+                          return (
+                            <MenuItem key={index} value={res.id}>
+                              {res.name}
+                            </MenuItem>
+                          );
+                        })}
                     </Select>
                   </FormControl>
                   <FormControl error={!!errors.code && !!submitCount}>
