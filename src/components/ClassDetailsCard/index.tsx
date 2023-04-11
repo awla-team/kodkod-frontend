@@ -10,7 +10,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { CreateClassModal } from "../Modals";
 import { useClassContext } from "routes/Class/context";
 import { ClassInterface } from "../../services/classes/interfaces";
@@ -19,6 +19,7 @@ import Toaster from "../../utils/Toster";
 import { deleteClass } from "../../services/classes";
 import SkillPoints from "components/SkillPoints";
 import { IStage } from "global/interfaces";
+import YouTubeIcon from '@mui/icons-material/YouTube';
 
 const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
   classDetails,
@@ -123,14 +124,19 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
               >
                 {classDetails.alias}
               </Typography>
-              <IconButton
-                sx={{ top: "8px", right: 0, marginLeft: "16px" }}
-                color="inherit"
-                onClick={handleMenuOpen}
-              >
-                <MoreVertIcon fontSize="large" />
-              </IconButton>
-
+              <div className="d-flex align-items-center justify-content-center">
+                <Button variant="outlined" size="small" component={Link} to="https://www.youtube.com/watch?v=oymcbyiloIs" target="_blank" color="info" >
+                  <YouTubeIcon className="me-2" />
+                  Ver video introductorio
+                </Button>
+                <IconButton
+                  sx={{ marginLeft: "8px" }}
+                  color="inherit"
+                  onClick={handleMenuOpen}
+                >
+                  <MoreVertIcon fontSize="large" />
+                </IconButton>
+              </div>
               <Menu
                 open={!!anchorEl}
                 anchorEl={anchorEl}
@@ -191,14 +197,19 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
               >
                 {classDetails.alias}
               </Typography>
-              <IconButton
-                sx={{ top: "8px", right: 0, marginLeft: "16px" }}
-                color="inherit"
-                onClick={handleMenuOpen}
-              >
-                <MoreVertIcon fontSize="large" />
-              </IconButton>
-
+              <div className="d-flex align-items-center justify-content-center">
+                <Button variant="outlined" size="small" component={Link} to="https://www.youtube.com/watch?v=oymcbyiloIs" target="_blank" >
+                  <YouTubeIcon className="me-2" />
+                  Ver video introductorio
+                </Button>
+                <IconButton
+                  sx={{ marginLeft: "8px" }}
+                  color="inherit"
+                  onClick={handleMenuOpen}
+                >
+                  <MoreVertIcon fontSize="large" />
+                </IconButton>
+              </div>              
               <Menu
                 open={!!anchorEl}
                 anchorEl={anchorEl}
