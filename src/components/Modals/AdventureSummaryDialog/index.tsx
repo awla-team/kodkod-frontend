@@ -66,7 +66,7 @@ const AdventureSummaryDialog: React.FC<{
   };
 
   return (
-    <Dialog open={!!selectedAdventure} onClose={handleOnCloseModal} fullWidth>
+    <Dialog open={!!selectedAdventure} onClose={handleOnCloseModal} fullWidth maxWidth="lg">
       <DialogTitle className="d-flex flex-column p-0">
         <AdventureBanner
           sx={{ backgroundImage: `url(${selectedAdventure?.banner})` }}
