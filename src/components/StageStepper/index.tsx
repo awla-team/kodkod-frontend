@@ -1,6 +1,6 @@
 import { FC, useContext, useState, useEffect } from "react";
 import { CustomStepper } from "./styled";
-import { Step, Button, Typography } from "@mui/material";
+import { Step, Button, Typography, Tooltip } from "@mui/material";
 import { AdventureContext } from "../../routes/Class/Adventures/Adventure/provider";
 import { IStage } from "global/interfaces";
 import { UnlockStageConfirmationDialog } from "components/Modals";
@@ -101,22 +101,43 @@ const StageStepper: FC<{
       {sortedStages.length ? (
         <div>
           {sortedStages[navigableStages.length] ? (
-            <Button
-              variant={"contained"}
-              onClick={() => setOpenDialog(true)}
-              disabled={navigableStages.length === sortedStages.length}
-              size="large"
-            >
-              Desbloquear etapa {sortedStages[navigableStages.length]._index}
-            </Button>
+            <Tooltip arrow title={(
+              <div className="p-1">
+                ¿Qué sucederá al desbloquear la siguiente etapa?
+                <ul className="m-0">
+                  <li>Verán nuevas misiones que les permitirán sumar más puntos y recompensas</li>
+                  <li>Las misiones de las etapas anteriores seguirán disponibles para quienes aún no las hayan completado.</li>
+                </ul>
+              </div>
+            )}>
+              <Button
+                variant={"contained"}
+                onClick={() => setOpenDialog(true)}
+                disabled={navigableStages.length === sortedStages.length}
+                size="large"
+              >
+                Desbloquear etapa {sortedStages[navigableStages.length]._index}
+              </Button>
+            </Tooltip>
           ) : (
-            <Button
-              variant={"contained"}
-              onClick={() => setOpenDialog(true)}
-              size="large"
-            >
-              ¡Completar etapa y finalizar aventura!
-            </Button>
+            <Tooltip arrow title={(
+              <div className="p-1">
+                ¿Qué sucederá al finalizar la aventura?
+                <ul className="m-0">
+                  <li>Los puntos de cada estudiante volverán a 0.</li>
+                  <li>No se podrán completar más misiones en esta aventura.</li>
+                  <li>Tus estudiantes mantendrán las recompensas que ya obtuvieron.</li>
+                </ul>
+              </div>
+            )}>
+              <Button
+                variant={"contained"}
+                onClick={() => setOpenDialog(true)}
+                size="large"
+              >
+                ¡Completar etapa y finalizar aventura!
+              </Button>
+            </Tooltip>
           )}
           <UnlockStageConfirmationDialog
             unlockableStageData={sortedStages[navigableStages.length]}
