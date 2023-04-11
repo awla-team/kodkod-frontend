@@ -26,6 +26,7 @@ jobs:
   build:
     name: Build
     if: github.event.pull_request.merged == true
+    needs: lint
     runs-on: ubuntu-latest
     steps:
       - name: Node.js 18.x setup
@@ -48,8 +49,8 @@ jobs:
 
   deploy:
     name: Production deploy
-    needs: build
     if: github.base_ref == 'main'
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Download build
@@ -72,8 +73,8 @@ jobs:
 
   deploy-dev:
     name: Development deploy
-    needs: build
     if: github.base_ref == 'development'
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Download build
