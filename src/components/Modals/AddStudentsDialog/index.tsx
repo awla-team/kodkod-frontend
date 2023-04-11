@@ -117,7 +117,7 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
   ) => {
     e.stopPropagation();
     const { key } = e;
-    if (key === "Enter") {
+    if (key === "Enter" || key === ",") {
       e.preventDefault();
       addToList(formikInitialValues);
     }
@@ -125,7 +125,7 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
 
   const preventFormSubmitOnKeyDown = (e: React.KeyboardEvent) => {
     const { key } = e;
-    if (key === "Enter") {
+    if (key === "Enter" || key === ",") {
       e.preventDefault();
     }
   };
