@@ -28,9 +28,6 @@ jobs:
     if: github.event.pull_request.merged == true
     needs: lint
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [18.3.0]
     steps:
       - name: Node.js ${{ matrix.node-version }} setup
         uses: actions/setup-node@v3
