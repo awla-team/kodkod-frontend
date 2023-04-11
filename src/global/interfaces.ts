@@ -111,6 +111,7 @@ export interface IStage extends TemplateStages {
   _index: number;
   active: boolean;
   next_img_url: string;
+  narrative: string;
 }
 
 export interface IMission {
