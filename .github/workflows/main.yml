@@ -3,11 +3,11 @@ name: Kodkod frontend deploy
 on:
   push:
     branches-ignore:
-      - development
+      - develop
       - main
   pull_request:
     branches:
-      - development
+      - develop
       - main
     types:
       - closed
@@ -79,7 +79,7 @@ jobs:
 
   deploy-dev:
     name: app-dev.kodkod.cl
-    if: github.base_ref == 'development'
+    if: github.base_ref == 'develop'
     needs: build
     runs-on: ubuntu-latest
     steps:
