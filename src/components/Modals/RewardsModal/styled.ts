@@ -14,13 +14,17 @@ export const RewardsList = styled(Box)`
 `;
 
 export const RewardIcon = styled(Box)`
+  display: flex;
+  padding: 12px;
   background: #fff;
-  border: 1px solid gray;
+  border: 1px solid #dadada;
   border-radius: 100%;
   height: 64px;
   width: 64px;
+  transition: background 0.5s ease;
 
   &.selected {
-    background: ${(props) => props.theme.palette.success.light};
+    background: #2afa81;
+    border-color: #2afa81;
   }
 `;
