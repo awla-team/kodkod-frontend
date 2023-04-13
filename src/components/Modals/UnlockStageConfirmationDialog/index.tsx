@@ -1,5 +1,5 @@
-import { FC } from "react";
-import { UnlockStageConfirmationDialogProps } from "./interfaces";
+import { FC } from 'react';
+import { UnlockStageConfirmationDialogProps } from './interfaces';
 import {
   Button,
   Typography,
@@ -8,7 +8,7 @@ import {
   DialogContent,
   Dialog,
   Box,
-} from "@mui/material";
+} from '@mui/material';
 
 const UnlockStageConfirmationDialog: FC<UnlockStageConfirmationDialogProps> = ({
   open,
@@ -21,7 +21,7 @@ const UnlockStageConfirmationDialog: FC<UnlockStageConfirmationDialogProps> = ({
 }) => {
   return (
     <Dialog
-      PaperProps={{ className: "p-3" }}
+      PaperProps={{ className: 'p-3' }}
       open={open}
       disableEscapeKeyDown
       onClose={handleClose}
@@ -29,31 +29,25 @@ const UnlockStageConfirmationDialog: FC<UnlockStageConfirmationDialogProps> = ({
       {unlockableStageData ? (
         <div>
           <DialogTitle fontWeight="bold">
-            Desbloquear Etapa {unlockableStageData?._index}:{" "}
-            {unlockableStageData.title}
+            Desbloquear Etapa {unlockableStageData?._index}: {unlockableStageData.title}
           </DialogTitle>
           <DialogContent dividers className="py-4">
             <div className="d-flex align-items-center justify-content-center mb-3">
               <img src={currentStage?.next_img_url} height="240" width="240" />
             </div>
             <Typography component="p" variant="body1" className="mb-3">
-              Desbloquear una nueva etapa significa que el curso ha trabajado
-              muy duro. ¡Muy buen trabajo! En la próxima etapa les esperan
-              nuevas misiones, desafíos y recompensas.
+              Desbloquear una nueva etapa significa que el curso ha trabajado muy duro. ¡Muy buen
+              trabajo! En la próxima etapa les esperan nuevas misiones, desafíos y recompensas.
             </Typography>
             <Typography textAlign="center" variant="h5" fontWeight="bold">
               ¡Buena suerte!
             </Typography>
           </DialogContent>
           <DialogActions className="d-flex align-items-center mt-3">
-            <Button variant={"outlined"} onClick={handleClose}>
+            <Button variant={'outlined'} onClick={handleClose}>
               Cancelar
             </Button>
-            <Button
-              variant={"contained"}
-              disabled={isLoading}
-              onClick={onConfirm}
-            >
+            <Button variant={'contained'} disabled={isLoading} onClick={onConfirm}>
               Desbloquear etapa {unlockableStageData?._index}
             </Button>
           </DialogActions>
@@ -72,8 +66,8 @@ const UnlockStageConfirmationDialog: FC<UnlockStageConfirmationDialogProps> = ({
               ) : null}
               <div className="mb-4">
                 <Typography component="span" variant="body1">
-                  Esta fue la última etapa. ¡Felicitaciones a todas y todos por su
-                  gran esfuerzo, y muchas gracias por participar!
+                  Esta fue la última etapa. ¡Felicitaciones a todas y todos por su gran esfuerzo, y
+                  muchas gracias por participar!
                 </Typography>
               </div>
               <Typography variant="h5" textAlign="center" fontWeight="bold">
@@ -82,14 +76,10 @@ const UnlockStageConfirmationDialog: FC<UnlockStageConfirmationDialogProps> = ({
             </div>
           </DialogContent>
           <DialogActions className="d-flex align-items-center mt-3">
-            <Button variant={"outlined"} onClick={handleClose}>
+            <Button variant={'outlined'} onClick={handleClose}>
               Cancelar
             </Button>
-            <Button
-              variant={"contained"}
-              disabled={isLoading}
-              onClick={onConfirm}
-            >
+            <Button variant={'contained'} disabled={isLoading} onClick={onConfirm}>
               Finalizar aventura
             </Button>
           </DialogActions>

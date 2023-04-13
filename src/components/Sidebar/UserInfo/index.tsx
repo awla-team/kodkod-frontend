@@ -1,18 +1,18 @@
-import { Avatar, Divider, Menu, MenuItem, Typography } from "@mui/material";
-import { useState } from "react";
-import { UserInfoProps } from "./interfaces";
-import { UserInfoButton, UserInfoContainer } from "./styled";
-import ImgAvatar from "assets/images/avatar.png";
-import ExpandMore from "@mui/icons-material/ExpandMore";
-import Toaster from "utils/Toster";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "contexts/AuthContext";
+import { Avatar, Divider, Menu, MenuItem, Typography } from '@mui/material';
+import { useState } from 'react';
+import { UserInfoProps } from './interfaces';
+import { UserInfoButton, UserInfoContainer } from './styled';
+import ImgAvatar from 'assets/images/avatar.png';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import Toaster from 'utils/Toster';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from 'contexts/AuthContext';
 
 const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
-  const { logout } = useAuth()
+  const { logout } = useAuth();
 
   const handleClick = (event: React.SyntheticEvent<HTMLElement>) =>
     setAnchorEl(event.currentTarget);
@@ -41,15 +41,13 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
         open={!!anchorEl}
         onClose={handleClose}
         onClick={handleClose}
-        transformOrigin={{ horizontal: "right", vertical: "top" }}
-        anchorOrigin={{ horizontal: "right", vertical: "top" }}
+        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+        anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
         sx={{ left: 36, top: -16 }}
       >
         <MenuItem divider disabled={loading}>
-          <Avatar src={ImgAvatar} />{" "}
-          <Typography
-            sx={{ ml: 1 }}
-          >{`${user.first_name} ${user.last_name}`}</Typography>
+          <Avatar src={ImgAvatar} />{' '}
+          <Typography sx={{ ml: 1 }}>{`${user.first_name} ${user.last_name}`}</Typography>
         </MenuItem>
         {/* <MenuItem disabled={loading}>Configuración</MenuItem> */}
         <MenuItem onClick={handleLogout} disabled={loading}>

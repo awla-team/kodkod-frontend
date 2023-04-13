@@ -1,28 +1,28 @@
-import { toast } from "react-toastify";
-import type { ToastOptions } from "react-toastify";
+import { toast } from 'react-toastify';
+import type { ToastOptions } from 'react-toastify';
 
-const Toaster = (type = "success", message = "", options = {}) => {
+const Toaster = (type = 'success', message = '', options = {}) => {
   const _options = {
-    position: "top-right",
+    position: 'top-right',
     autoClose: 3000,
     hideProgressBar: true,
     closeOnClick: true,
     draggable: true,
-    theme: "dark",
+    theme: 'dark',
     ...options,
   };
   switch (type) {
-    case "success": {
+    case 'success': {
       return toast.success(message, _options as ToastOptions);
     }
-    case "info": {
+    case 'info': {
       return toast.info(message, _options as ToastOptions);
     }
 
-    case "warning": {
+    case 'warning': {
       return toast.warn(message, _options as ToastOptions);
     }
-    case "error": {
+    case 'error': {
       return toast.error(message, _options as ToastOptions);
     }
     default: {

@@ -1,5 +1,5 @@
-import "styled-components";
-import { Theme } from "@mui/material/styles";
+import 'styled-components';
+import { Theme } from '@mui/material/styles';
 
 interface CustomTheme {
   bg?: {
@@ -12,24 +12,24 @@ interface CustomTheme {
   };
 }
 
-declare module "@mui/material/styles" {
+declare module '@mui/material/styles' {
   interface Theme extends CustomTheme {}
 
   interface ThemeOptions extends CustomTheme {}
 }
 
-declare module "@mui/material/styles/createPalette" {
+declare module '@mui/material/styles/createPalette' {
   interface Palette {
-    highlight: Palette["primary"];
-    pink: Palette["primary"];
+    highlight: Palette['primary'];
+    pink: Palette['primary'];
   }
   interface PaletteOptions {
-    highlight: PaletteOptions["primary"];
-    pink: Palette["primary"];
+    highlight: PaletteOptions['primary'];
+    pink: Palette['primary'];
   }
 }
 
-declare module "styled-components" {
+declare module 'styled-components' {
   export interface DefaultTheme extends Theme {}
 }
 
@@ -123,7 +123,7 @@ export interface IMission {
   id_skill?: number;
   skill?: ISkill;
   completed_users: IUser[];
-  difficulty: "easy" | "normal" | "hard";
+  difficulty: 'easy' | 'normal' | 'hard';
 }
 
 export interface IReward {

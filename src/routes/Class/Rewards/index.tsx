@@ -1,13 +1,72 @@
-import { FC, useEffect, useState } from "react";
-import { RewardsBox, RewardsList } from "./styled";
-import { Box, Button, Typography } from "@mui/material";
-import { Link as RouterLink, useParams } from "react-router-dom";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import RewardCard from "../../../components/RewardCard";
-import { useSearchParams } from "react-router-dom";
-import { getRewardsByAdventure } from "../../../services/rewards";
-import { IReward } from "../../../global/interfaces";
-import Toaster from "../../../utils/Toster";
+import { FC, useEffect, useState } from 'react';
+import { RewardsBox, RewardsList } from './styled';
+import { Box, Button, Typography } from '@mui/material';
+import { Link as RouterLink, useParams } from 'react-router-dom';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import RewardCard from '../../../components/RewardCard';
+import { useSearchParams } from 'react-router-dom';
+import { getRewardsByAdventure } from '../../../services/rewards';
+import { IReward } from '../../../global/interfaces';
+import Toaster from '../../../utils/Toster';
+
+const tempRewards = [
+  {
+    title: 'Recompensa 3',
+    description: '¡Canjea esta recompensa con tu profesor/a!',
+    required_points: '?',
+    icon: 'https://kodkod-assets.s3.amazonaws.com/images/rewards/Reward_3.png',
+    type: 'Individual',
+  },
+  {
+    title: 'Recompensa 4',
+    description: '¡Canjea esta recompensa con tu profesor/a!',
+    required_points: '?',
+    icon: 'https://kodkod-assets.s3.amazonaws.com/images/rewards/Reward_4.png',
+    type: 'Individual',
+  },
+  {
+    title: 'Recompensa 5',
+    description: '¡Canjea esta recompensa con tu profesor/a!',
+    required_points: '?',
+    icon: 'https://kodkod-assets.s3.amazonaws.com/images/rewards/Reward_5.png',
+    type: 'Individual',
+  },
+  {
+    title: 'Recompensa 6',
+    description: '¡Canjea esta recompensa con tu profesor/a!',
+    required_points: '?',
+    icon: 'https://kodkod-assets.s3.amazonaws.com/images/rewards/Reward_6.png',
+    type: 'Individual',
+  },
+  {
+    title: 'Recompensa 7',
+    description: '¡Canjea esta recompensa con tu profesor/a!',
+    required_points: '?',
+    icon: 'https://kodkod-assets.s3.amazonaws.com/images/rewards/Reward_7.png',
+    type: 'Individual',
+  },
+  {
+    title: 'Recompensa 8',
+    description: '¡Canjea esta recompensa con tu profesor/a!',
+    required_points: '?',
+    icon: 'https://kodkod-assets.s3.amazonaws.com/images/rewards/Reward_8.png',
+    type: 'Individual',
+  },
+  {
+    title: 'Recompensa 9',
+    description: '¡Canjea esta recompensa con tu profesor/a!',
+    required_points: '?',
+    icon: 'https://kodkod-assets.s3.amazonaws.com/images/rewards/Reward_9.png',
+    type: 'Individual',
+  },
+  {
+    title: 'Recompensa 10',
+    description: '¡Canjea esta recompensa con tu profesor/a!',
+    required_points: '?',
+    icon: 'https://kodkod-assets.s3.amazonaws.com/images/rewards/Reward_10.png',
+    type: 'Individual',
+  },
+];
 
 const Rewards: FC = () => {
   const { classId } = useParams();
@@ -15,12 +74,13 @@ const Rewards: FC = () => {
   const [rewards, setRewards] = useState<IReward[]>([]);
 
   useEffect(() => {
-    const id = searchParams.get("adventureId");
+    const id = searchParams.get('adventureId');
     if (id) {
       (async (adventureId: number | string) => {
         try {
-          const { data }: { data: { responseData: IReward[] } } =
-            await getRewardsByAdventure(adventureId);
+          const { data }: { data: { responseData: IReward[] } } = await getRewardsByAdventure(
+            adventureId
+          );
 
           const sorted = data.responseData.sort((a, b) => {
             if (a.required_points > b.required_points) return 1;
@@ -30,7 +90,7 @@ const Rewards: FC = () => {
           setRewards(sorted);
         } catch (error: any) {
           console.error(error);
-          Toaster("error", "Hubo un error al cargar las recompensas");
+          Toaster('error', 'Hubo un error al cargar las recompensas');
         }
       })(id);
     }
@@ -44,27 +104,17 @@ const Rewards: FC = () => {
           component={RouterLink}
           to={`/app/cursos/${classId}/aventuras`}
           size="large"
-          startIcon={
-            <ArrowBackIosIcon
-              sx={{ fontSize: "16px!important" }}
-              fontSize="small"
-            />
-          }
+          startIcon={<ArrowBackIosIcon sx={{ fontSize: '16px!important' }} fontSize="small" />}
         >
           Volver a la aventura
         </Button>
-        <Typography
-          component="h4"
-          variant="h4"
-          fontWeight="bold"
-          className="mb-2"
-        >
+        <Typography component="h4" variant="h4" fontWeight="bold" className="mb-2">
           Recompensas
         </Typography>
         <Typography component="span" variant="body1">
-          Los estudiantes recibirán recompensas <b>automáticamente</b> cada vez
-          que alcancen el puntaje indicado en ellas. Luego, en la vista{" "}
-          <b>Progreso</b> puedes gestionar las recompensas de tus estudiantes.
+          Los estudiantes recibirán recompensas <b>automáticamente</b> cada vez que alcancen el
+          puntaje indicado en ellas. Luego, en la vista <b>Progreso</b> puedes gestionar las
+          recompensas de tus estudiantes.
         </Typography>
         <Box className="mt-5">
           <RewardsList className="d-flex gap-5 pb-4">
@@ -74,7 +124,19 @@ const Rewards: FC = () => {
                   key={index}
                   title={res.title}
                   description={res.description}
-                  icon={""}
+                  icon={res.icon}
+                  requiredPoints={res.required_points}
+                  type={res.type}
+                />
+              );
+            })}
+            {tempRewards.map((res, index) => {
+              return (
+                <RewardCard
+                  key={index}
+                  title={res.title}
+                  description={res.description}
+                  icon={res.icon}
                   requiredPoints={res.required_points}
                   type={res.type}
                 />

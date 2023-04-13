@@ -1,5 +1,5 @@
-import http from "../global/api";
-import { generateQueryParamsFromObject } from "../utils";
+import http from '../global/api';
+import { generateQueryParamsFromObject } from '../utils';
 
 export interface StageMissionUpdateBody {
   id_stage: number;
@@ -22,27 +22,24 @@ export interface MissionAccomplishedType {
 }
 
 export const getMissionsByStage = (query?: MissionFilterType) =>
-  http.get(`mission` + (query ? generateQueryParamsFromObject(query) : ""));
+  http.get(`mission` + (query ? generateQueryParamsFromObject(query) : ''));
 
-export const getMissionsByClassAdventure = (
-  classAdventureId: number | string
-) => http.get(`missions-by-class-adventure/${classAdventureId}`);
+export const getMissionsByClassAdventure = (classAdventureId: number | string) =>
+  http.get(`missions-by-class-adventure/${classAdventureId}`);
 
-export const getStageMissions = (stageId: number | string) =>
-  http.get(`stage-missions/${stageId}`);
+export const getStageMissions = (stageId: number | string) => http.get(`stage-missions/${stageId}`);
 
 export const updateStageMission = (body: StageMissionUpdateBody) =>
-  http.put("update-stage-mission", body);
+  http.put('update-stage-mission', body);
 
 export const missionAccomplished = (body: MissionAccomplishedType) => {
-  return http.post("mission-accomplished", body);
+  return http.post('mission-accomplished', body);
 };
 
 export const completedMissionByStudents = (
-  queryParams: Omit<MissionAccomplishedType, "studentIds">
+  queryParams: Omit<MissionAccomplishedType, 'studentIds'>
 ) => {
   return http.get(
-    "mission-student-details" +
-      (queryParams ? generateQueryParamsFromObject(queryParams) : "")
+    'mission-student-details' + (queryParams ? generateQueryParamsFromObject(queryParams) : '')
   );
 };

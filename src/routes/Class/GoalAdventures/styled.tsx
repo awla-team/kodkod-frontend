@@ -1,5 +1,5 @@
-import { Box } from "@mui/system";
-import styled from "styled-components";
+import { Box } from '@mui/system';
+import styled from 'styled-components';
 
 export const AdventureSelectionContainer = styled(Box)`
   display: flex;

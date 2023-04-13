@@ -1,18 +1,36 @@
 name: Kodkod frontend deploy
 
 on:
+  push:
+    branches-ignore:
+      - develop
+      - main
   pull_request:
     branches:
-      - development
+      - develop
       - main
     types:
       - closed
 
 jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Actions checkout
+        uses: actions/checkout@v3
+
+      - name: Check linting
+        run: npx prettier --check .
+
   build:
     name: Build
     if: github.event.pull_request.merged == true
+    needs: lint
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.3.0]
     steps:
       - name: Actions checkout
         uses: actions/checkout@v3
@@ -21,13 +39,13 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "npm"
+          cache: 'yarn'
 
       - name: Installing dependencies
-        run: npx yarn install
+        run: yarn install
 
       - name: Building
-        run: npx yarn build
+        run: yarn build
 
       - name: Upload build as artifact
         uses: actions/upload-artifact@v3
@@ -36,9 +54,9 @@ jobs:
           path: dist
 
   deploy:
-    name: Production deploy
-    needs: build
+    name: app.kodkod.cl
     if: github.base_ref == 'main'
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Download build
@@ -60,9 +78,9 @@ jobs:
         run: aws cloudfront create-invalidation --distribution-id ${{ secrets.PROD_DISTRIBUTION_ID }} --paths "/*"
 
   deploy-dev:
-    name: Development deploy
+    name: app-dev.kodkod.cl
+    if: github.base_ref == 'develop'
     needs: build
-    if: github.base_ref == 'development'
     runs-on: ubuntu-latest
     steps:
       - name: Download build

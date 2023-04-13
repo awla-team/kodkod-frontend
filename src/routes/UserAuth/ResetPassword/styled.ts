@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Box, Card } from "@mui/material";
+import styled from 'styled-components';
+import { Box, Card } from '@mui/material';
 
 export const ResetPasswordContainer = styled(Box)`
   align-items: center;

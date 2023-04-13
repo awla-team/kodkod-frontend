@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Box } from "@mui/material";
+import styled from 'styled-components';
+import { Box } from '@mui/material';
 
 export const StudentListContainer = styled(Box)`
   display: flex;
@@ -13,13 +13,12 @@ export const StudentListContainer = styled(Box)`
 
 export const StudentListContent = styled(Box).withConfig({
   shouldForwardProp: (prop, defaultValidatorFn) =>
-    !["hasDetails"].includes(prop) && defaultValidatorFn(prop),
+    !['hasDetails'].includes(prop) && defaultValidatorFn(prop),
 })<{ hasDetails?: boolean }>`
   display: flex;
   flex-direction: column;
-  justify-content: ${({ hasDetails }) =>
-    !hasDetails ? "center" : "flex-start"};
-  align-items: ${({ hasDetails }) => (!hasDetails ? "center" : "flex-start")};
+  justify-content: ${({ hasDetails }) => (!hasDetails ? 'center' : 'flex-start')};
+  align-items: ${({ hasDetails }) => (!hasDetails ? 'center' : 'flex-start')};
   height: 100%;
 `;
 
@@ -137,7 +136,7 @@ export const StudentRow = styled.div`
       display: none;
     }
 
-    & input[name="email"] {
+    & input[name='email'] {
       opacity: 0.6;
     }
   }

@@ -1,6 +1,6 @@
-import React from "react";
-import { SectionSubtitleProps } from "./interfaces";
-import { SectionSubtitleContainer } from "./styled";
+import React from 'react';
+import { SectionSubtitleProps } from './interfaces';
+import { SectionSubtitleContainer } from './styled';
 
 const SectionSubtitle: React.FC<SectionSubtitleProps> = ({
   children,
@@ -8,11 +8,7 @@ const SectionSubtitle: React.FC<SectionSubtitleProps> = ({
   textColor,
   filled,
 }) => (
-  <SectionSubtitleContainer
-    textColor={textColor}
-    lineColor={lineColor}
-    filled={filled}
-  >
+  <SectionSubtitleContainer textColor={textColor} lineColor={lineColor} filled={filled}>
     <div>{children}</div>
     <hr />
   </SectionSubtitleContainer>

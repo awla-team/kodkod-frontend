@@ -1,4 +1,4 @@
-import { ClassInterface } from "../../../services/classes/interfaces";
+import { ClassInterface } from '../../../services/classes/interfaces';
 
 export interface Levels {
   id: number | string;
@@ -8,17 +8,14 @@ export interface Levels {
 
 export interface CreateClassModalProps {
   open: boolean;
-  onClose: (
-    reason: "backdropClick" | "escapeKeyDown" | "success",
-    data?: ClassInterface
-  ) => void;
+  onClose: (reason: 'backdropClick' | 'escapeKeyDown' | 'success', data?: ClassInterface) => void;
   levels: Levels[];
 
   classDetails?: ClassInterface;
 }
 
 export interface FormInitialState {
-  id_level: number | "";
+  id_level: number | '';
   code: string;
   alias: string;
 }

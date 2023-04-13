@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { Box, Button, CircularProgress, Typography } from "@mui/material";
-import { useParams } from "react-router-dom";
-import { Link as RouterLink } from "react-router-dom";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import Toaster from "utils/Toster";
-import { resendEmailVerification, verifyEmail } from "services/auth";
-import AuthCard from "components/AuthCard";
-import { FetchStatus } from "global/enums";
-import { ForgotPasswordContainer } from "../ForgotPassword/styled";
+import React, { useEffect, useState } from 'react';
+import { Box, Button, CircularProgress, Typography } from '@mui/material';
+import { useParams } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import Toaster from 'utils/Toster';
+import { resendEmailVerification, verifyEmail } from 'services/auth';
+import AuthCard from 'components/AuthCard';
+import { FetchStatus } from 'global/enums';
+import { ForgotPasswordContainer } from '../ForgotPassword/styled';
 
 const VerifyEmail: React.FC = () => {
   const { token, userId } = useParams();
@@ -31,19 +31,16 @@ const VerifyEmail: React.FC = () => {
     resendEmailVerification(userId)
       .then((_response) => {
         setEmailSend(FetchStatus.Success);
-        Toaster("success", "Se ha enviado un nuevo link a tu email");
+        Toaster('success', 'Se ha enviado un nuevo link a tu email');
       })
       .catch((error) => {
         console.error(error);
         setEmailSend(FetchStatus.Error);
-        Toaster("error", "Hubo un error al enviar el link");
+        Toaster('error', 'Hubo un error al enviar el link');
       });
   };
 
-  if (
-    emailVerified === FetchStatus.Idle ||
-    emailVerified === FetchStatus.Pending
-  )
+  if (emailVerified === FetchStatus.Idle || emailVerified === FetchStatus.Pending)
     return (
       <div className="d-flex w-100 h-100 justify-content-center align-items-center">
         <CircularProgress />
@@ -67,8 +64,7 @@ const VerifyEmail: React.FC = () => {
           </Typography>
           <Typography component="span" variant="body2" color="gray">
             El link de verificación ha expirado. Puedes hacer clic en el botón "
-            <b>Reenviar link de verificación</b>" para enviar un nuevo link a tu
-            email.
+            <b>Reenviar link de verificación</b>" para enviar un nuevo link a tu email.
           </Typography>
           <Box
             className="action__container"
@@ -79,10 +75,7 @@ const VerifyEmail: React.FC = () => {
             mt={2}
           >
             <Button
-              disabled={
-                emailResend === FetchStatus.Pending ||
-                emailResend === FetchStatus.Success
-              }
+              disabled={emailResend === FetchStatus.Pending || emailResend === FetchStatus.Success}
               fullWidth
               size="large"
               className="submit__button"
@@ -92,7 +85,7 @@ const VerifyEmail: React.FC = () => {
               {emailResend === FetchStatus.Pending ? (
                 <CircularProgress size={24} />
               ) : (
-                "Reenviar link de verificación"
+                'Reenviar link de verificación'
               )}
             </Button>
           </Box>

@@ -1,4 +1,4 @@
-import { IStage } from "global/interfaces";
+import { IStage } from 'global/interfaces';
 
 export interface StageStepperType {
   stages: IStage[];

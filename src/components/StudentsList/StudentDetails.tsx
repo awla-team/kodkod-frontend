@@ -1,9 +1,9 @@
-import React, { FC, useEffect, useRef, useState } from "react";
-import { StudentEditInputField, StudentType } from "./interfaces";
-import { useClassContext } from "../../routes/Class/context";
-import Toaster from "../../utils/Toster";
-import { Form, Formik, FormikHelpers } from "formik";
-import { updateStudent } from "../../services/students";
+import React, { FC, useEffect, useRef, useState } from 'react';
+import { StudentEditInputField, StudentType } from './interfaces';
+import { useClassContext } from '../../routes/Class/context';
+import Toaster from '../../utils/Toster';
+import { Form, Formik, FormikHelpers } from 'formik';
+import { updateStudent } from '../../services/students';
 import {
   Avatar,
   Box,
@@ -13,12 +13,12 @@ import {
   Menu,
   MenuItem,
   Typography,
-} from "@mui/material";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import CloseIcon from "@mui/icons-material/Close";
-import CheckIcon from "@mui/icons-material/Check";
-import ConfirmationModal from "../Modals/ConfirmationModal";
-import { StudentRow } from "./styled";
+} from '@mui/material';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import CloseIcon from '@mui/icons-material/Close';
+import CheckIcon from '@mui/icons-material/Check';
+import ConfirmationModal from '../Modals/ConfirmationModal';
+import { StudentRow } from './styled';
 
 export const StudentDetails: FC<{
   details: StudentType;
@@ -44,17 +44,14 @@ export const StudentDetails: FC<{
   const handleDeleteCB = async () => {
     try {
       await handleDelete(details.id);
-      Toaster("success", `Estudiante ${details.email} eliminado exitosamente`);
+      Toaster('success', `Estudiante ${details.email} eliminado exitosamente`);
       setElRef(null);
       setOpenMenu(false);
       setOpenConfirmation(false);
-      updateStudentsData("delete", details);
+      updateStudentsData('delete', details);
     } catch (error: any) {
       console.error(error);
-      Toaster(
-        "error",
-        `Hubo un error al eliminar al estudiante ${details.email}`
-      );
+      Toaster('error', `Hubo un error al eliminar al estudiante ${details.email}`);
     }
   };
 
@@ -77,25 +74,20 @@ export const StudentDetails: FC<{
   ) => {
     try {
       const { last_name, first_name, email } = values;
-      const { data }: { data: { responseData: StudentType } } =
-        await updateStudent(details.id, {
-          role: "student",
-          email,
-          last_name,
-          first_name,
-        });
-      Toaster("success", "Estudiante actualizado exitosamente");
+      const { data }: { data: { responseData: StudentType } } = await updateStudent(details.id, {
+        role: 'student',
+        email,
+        last_name,
+        first_name,
+      });
+      Toaster('success', 'Estudiante actualizado exitosamente');
       setEditState(false);
-      updateStudentsData("update", data.responseData);
+      updateStudentsData('update', data.responseData);
     } catch (error: any) {
       console.error(error);
-      if (
-        error?.response?.data?.responseData?.includes?.(
-          "is not allowed to be empty"
-        )
-      )
-        return Toaster("error", "Todos los campos deben ser llenados");
-      Toaster("error", "Hubo un error al actualizar al estudiante");
+      if (error?.response?.data?.responseData?.includes?.('is not allowed to be empty'))
+        return Toaster('error', 'Todos los campos deben ser llenados');
+      Toaster('error', 'Hubo un error al actualizar al estudiante');
     } finally {
       formikHelper.setSubmitting(false);
     }
@@ -107,39 +99,24 @@ export const StudentDetails: FC<{
   };
 
   return (
-    <StudentRow
-      className={`d-flex align-items-center w-100 ${
-        editState ? "editable" : ""
-      }`}
-    >
+    <StudentRow className={`d-flex align-items-center w-100 ${editState ? 'editable' : ''}`}>
       <Avatar className="student-avatar me-3">{`${details.first_name[0]}${details.last_name[0]}`}</Avatar>
-      <Formik
-        initialValues={inputValues}
-        onSubmit={handleSubmit}
-        innerRef={formRef}
-      >
-        {({
-          handleSubmit,
-          values,
-          handleChange,
-          isSubmitting,
-          submitCount,
-          errors,
-        }) => {
+      <Formik initialValues={inputValues} onSubmit={handleSubmit} innerRef={formRef}>
+        {({ handleSubmit, values, handleChange, isSubmitting, submitCount, errors }) => {
           return (
-            <Form onSubmit={handleSubmit} className={"editable_section__form"}>
-              <div className={"edit__section"}>
-                <div className={"editable__field"}>
-                  <Box display={"flex"}>
+            <Form onSubmit={handleSubmit} className={'editable_section__form'}>
+              <div className={'edit__section'}>
+                <div className={'editable__field'}>
+                  <Box display={'flex'}>
                     {editState ? (
                       <FormControl error={!!errors.first_name && !!submitCount}>
                         <TextField
                           variant="standard"
                           autoFocus
                           disabled={!editState}
-                          name={"first_name"}
-                          className={"name me-2"}
-                          placeholder={"Nombres"}
+                          name={'first_name'}
+                          className={'name me-2'}
+                          placeholder={'Nombres'}
                           value={values.first_name}
                           onChange={handleChange}
                         />
@@ -152,12 +129,10 @@ export const StudentDetails: FC<{
                         <TextField
                           variant="standard"
                           disabled={!editState}
-                          name={"last_name"}
-                          className={"name"}
-                          placeholder={"Apellidos"}
-                          value={
-                            editState ? values.last_name : details.last_name
-                          }
+                          name={'last_name'}
+                          className={'name'}
+                          placeholder={'Apellidos'}
+                          value={editState ? values.last_name : details.last_name}
                           onChange={handleChange}
                         />
                       </FormControl>
@@ -166,17 +141,14 @@ export const StudentDetails: FC<{
                     )}
                   </Box>
                   {editState ? (
-                    <FormControl
-                      className="mt-2"
-                      error={!!errors.email && !!submitCount}
-                    >
+                    <FormControl className="mt-2" error={!!errors.email && !!submitCount}>
                       <TextField
                         variant="standard"
                         disabled={!editState}
-                        name={"email"}
-                        type={"email"}
-                        className={"email"}
-                        placeholder={"E-mail"}
+                        name={'email'}
+                        type={'email'}
+                        className={'email'}
+                        placeholder={'E-mail'}
                         value={values.email}
                         onChange={handleChange}
                       />
@@ -185,24 +157,20 @@ export const StudentDetails: FC<{
                     <Typography color="gray">{details.email}</Typography>
                   )}
                 </div>
-                <div className={"editable__action__section"}>
+                <div className={'editable__action__section'}>
                   {editState ? (
                     <>
-                      <IconButton
-                        disabled={isSubmitting}
-                        type={"submit"}
-                        color={"primary"}
-                      >
+                      <IconButton disabled={isSubmitting} type={'submit'} color={'primary'}>
                         <CheckIcon />
                       </IconButton>
-                      <IconButton color={"error"} onClick={cancelEditMode}>
+                      <IconButton color={'error'} onClick={cancelEditMode}>
                         <CloseIcon />
                       </IconButton>
                     </>
                   ) : (
                     <IconButton
                       className="more-button"
-                      color={"inherit"}
+                      color={'inherit'}
                       onClick={(e) => {
                         handleMenuOpen(e);
                       }}
@@ -242,7 +210,7 @@ export const StudentDetails: FC<{
       <ConfirmationModal
         description={
           <span>
-            Estás apunto de eliminar al estudiante{" "}
+            Estás apunto de eliminar al estudiante{' '}
             <b>
               {details.first_name} {details.last_name}
             </b>
