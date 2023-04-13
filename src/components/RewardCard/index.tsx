@@ -6,10 +6,10 @@ import { CustomCard } from './styled';
 const RewardCard: React.FC<IRewardCardProps> = ({ title, icon, description, requiredPoints }) => {
   return (
     <CustomCard variant="outlined" className="d-flex flex-column py-4 px-3 mb-3 align-items-center">
-      <div className="reward-img mb-3">
+      <div className="d-flex reward-img flex-fill mb-3 align-items-center justfy-content-center">
         <img src={icon} />
       </div>
-      <div className="d-flex flex-column align-items-center justify-content-between flex-fill">
+      <div className="d-flex flex-column align-items-center justify-content-end pb-5">
         <div className="d-flex flex-column align-items-center">
           <Typography className="mb-1" variant="body1" fontWeight="bold">
             {title}

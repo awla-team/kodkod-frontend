@@ -9,6 +9,65 @@ import { getRewardsByAdventure } from '../../../services/rewards';
 import { IReward } from '../../../global/interfaces';
 import Toaster from '../../../utils/Toster';
 
+const tempRewards = [
+  {
+    title: 'Recompensa 3',
+    description: '¡Canjea esta recompensa con tu profesor/a!',
+    required_points: '?',
+    icon: 'https://kodkod-assets.s3.amazonaws.com/images/rewards/Reward_3.png',
+    type: 'Individual',
+  },
+  {
+    title: 'Recompensa 4',
+    description: '¡Canjea esta recompensa con tu profesor/a!',
+    required_points: '?',
+    icon: 'https://kodkod-assets.s3.amazonaws.com/images/rewards/Reward_4.png',
+    type: 'Individual',
+  },
+  {
+    title: 'Recompensa 5',
+    description: '¡Canjea esta recompensa con tu profesor/a!',
+    required_points: '?',
+    icon: 'https://kodkod-assets.s3.amazonaws.com/images/rewards/Reward_5.png',
+    type: 'Individual',
+  },
+  {
+    title: 'Recompensa 6',
+    description: '¡Canjea esta recompensa con tu profesor/a!',
+    required_points: '?',
+    icon: 'https://kodkod-assets.s3.amazonaws.com/images/rewards/Reward_6.png',
+    type: 'Individual',
+  },
+  {
+    title: 'Recompensa 7',
+    description: '¡Canjea esta recompensa con tu profesor/a!',
+    required_points: '?',
+    icon: 'https://kodkod-assets.s3.amazonaws.com/images/rewards/Reward_7.png',
+    type: 'Individual',
+  },
+  {
+    title: 'Recompensa 8',
+    description: '¡Canjea esta recompensa con tu profesor/a!',
+    required_points: '?',
+    icon: 'https://kodkod-assets.s3.amazonaws.com/images/rewards/Reward_8.png',
+    type: 'Individual',
+  },
+  {
+    title: 'Recompensa 9',
+    description: '¡Canjea esta recompensa con tu profesor/a!',
+    required_points: '?',
+    icon: 'https://kodkod-assets.s3.amazonaws.com/images/rewards/Reward_9.png',
+    type: 'Individual',
+  },
+  {
+    title: 'Recompensa 10',
+    description: '¡Canjea esta recompensa con tu profesor/a!',
+    required_points: '?',
+    icon: 'https://kodkod-assets.s3.amazonaws.com/images/rewards/Reward_10.png',
+    type: 'Individual',
+  },
+];
+
 const Rewards: FC = () => {
   const { classId } = useParams();
   const [searchParams] = useSearchParams();
@@ -65,7 +124,19 @@ const Rewards: FC = () => {
                   key={index}
                   title={res.title}
                   description={res.description}
-                  icon={''}
+                  icon={res.icon}
+                  requiredPoints={res.required_points}
+                  type={res.type}
+                />
+              );
+            })}
+            {tempRewards.map((res, index) => {
+              return (
+                <RewardCard
+                  key={index}
+                  title={res.title}
+                  description={res.description}
+                  icon={res.icon}
                   requiredPoints={res.required_points}
                   type={res.type}
                 />
