@@ -82,7 +82,7 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({ open, onClose, classDet
 
   const addToList = (formikInitialValues: FormInitialState) => {
     const transformedTextArray = inputFieldValue
-      .split(',')
+      .split(/,|\s+/)
       .map((res) => res.trim())
       .filter((res) => res);
     const match = transformedTextArray.join(',').match(/^([\w+-.%]+@[\w-.]+\.[A-Za-z]{2,4},?)+$/g);

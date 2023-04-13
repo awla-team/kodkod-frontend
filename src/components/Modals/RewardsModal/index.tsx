@@ -27,14 +27,12 @@ const RewardsModal: FC<{
   const [selectedRewards, setSelectedRewards] = useState<number[]>([]);
 
   useEffect(() => {
-    if (student?.user_has_rewards?.length) {
-      setActiveRewards(
-        student?.user_has_rewards?.filter((user_has_reward) => !user_has_reward.used_at)
-      );
-      setInactiveRewards(
-        student?.user_has_rewards?.filter((user_has_reward) => user_has_reward.used_at)
-      );
-    }
+    setActiveRewards(
+      student?.user_has_rewards?.filter((user_has_reward) => !user_has_reward.used_at) || []
+    );
+    setInactiveRewards(
+      student?.user_has_rewards?.filter((user_has_reward) => user_has_reward.used_at) || []
+    );
   }, [student]);
 
   const handleCheckboxChange = (rewardId: number, value: boolean) => {
@@ -90,8 +88,16 @@ const RewardsModal: FC<{
                       onChange={(event, value) =>
                         handleCheckboxChange(user_has_reward.reward.id, value)
                       }
-                      icon={<RewardIcon className="reward-icon" />}
-                      checkedIcon={<RewardIcon className="reward-icon selected" />}
+                      icon={
+                        <RewardIcon className="reward-icon">
+                          <img src={user_has_reward.reward.icon} />
+                        </RewardIcon>
+                      }
+                      checkedIcon={
+                        <RewardIcon className="reward-icon selected">
+                          <img src={user_has_reward.reward.icon} />
+                        </RewardIcon>
+                      }
                     />
                   </div>
                 </Tooltip>
@@ -140,8 +146,16 @@ const RewardsModal: FC<{
                   <div>
                     <Checkbox
                       className="disabled"
-                      icon={<RewardIcon className="reward-icon" />}
-                      checkedIcon={<RewardIcon className="reward-icon" />}
+                      icon={
+                        <RewardIcon className="reward-icon">
+                          <img src={user_has_reward.reward.icon} />
+                        </RewardIcon>
+                      }
+                      checkedIcon={
+                        <RewardIcon className="reward-icon">
+                          <img src={user_has_reward.reward.icon} />
+                        </RewardIcon>
+                      }
                     />
                   </div>
                 </Tooltip>
