@@ -1,28 +1,140 @@
-import { Typography, Card } from '@mui/material';
-import kodcoinIcon from './../../assets/images/kodcoin.png';
+import React, { useState } from 'react';
+import { Typography, TextField, IconButton } from '@mui/material';
 import { IRewardCardProps } from './interfaces';
 import { CustomCard } from './styled';
+import kodcoinIcon from './../../assets/images/kodcoin.png';
+import CloseIcon from '@mui/icons-material/Close';
+import CheckIcon from '@mui/icons-material/Check';
+import EditIcon from '@mui/icons-material/Edit';
+import http from 'global/api';
 
-const RewardCard: React.FC<IRewardCardProps> = ({ title, icon, description, requiredPoints }) => {
+const RewardCard: React.FC<IRewardCardProps> = ({
+  edit,
+  rewardId,
+  title,
+  icon,
+  description,
+  requiredPoints,
+}) => {
+  const [editMode, setEditMode] = useState(false);
+  const [newTitle, setNewTitle] = useState(title);
+  const [newDescription, setNewDescription] = useState(description);
+  const [newRequiredPoints, setNewRequiredPoints] = useState(requiredPoints);
+
+  const cancelEditMode = () => {
+    setNewTitle(title);
+    setNewDescription(description);
+    setNewRequiredPoints(requiredPoints);
+    setEditMode(false);
+  };
+
+  const activateEditMode = () => {
+    setEditMode(true);
+  };
+
+  const editReward = () => {
+    edit(rewardId, newTitle, newDescription, newRequiredPoints)
+      .then((result: any) => {
+        if (result?.data?.responseData === 1) setEditMode(false);
+      })
+      .catch((err: any) => {
+        console.error(err);
+      });
+  };
+
   return (
-    <CustomCard variant="outlined" className="d-flex flex-column py-4 px-3 mb-3 align-items-center">
+    <CustomCard
+      variant="outlined"
+      className="d-flex flex-column py-4 px-3 mb-3 align-items-center position-relative"
+    >
+      {editMode ? (
+        <div
+          className="d-flex"
+          style={{
+            position: 'absolute',
+            top: '10px',
+            right: '10px',
+          }}
+        >
+          <IconButton color="primary" onClick={editReward}>
+            <CheckIcon />
+          </IconButton>
+          <IconButton color="error" onClick={cancelEditMode}>
+            <CloseIcon />
+          </IconButton>
+        </div>
+      ) : rewardId ? (
+        <IconButton
+          sx={{
+            position: 'absolute',
+            top: '10px',
+            right: '10px',
+          }}
+          color="inherit"
+          onClick={activateEditMode}
+        >
+          <EditIcon />
+        </IconButton>
+      ) : null}
       <div className="d-flex reward-img flex-fill mb-3 align-items-center justfy-content-center">
-        <img src={icon} />
+        <img src={icon} alt="" />
       </div>
       <div className="d-flex flex-column align-items-center justify-content-end pb-5">
         <div className="d-flex flex-column align-items-center">
-          <Typography className="mb-1" variant="body1" fontWeight="bold">
-            {title}
-          </Typography>
-          <Typography variant="body2" textAlign="center">
-            {description}
-          </Typography>
+          {editMode ? (
+            <TextField
+              className="mb-1"
+              size="small"
+              type="text"
+              value={newTitle}
+              placeholder={title}
+              onChange={(event) => {
+                setNewTitle(event.target.value);
+              }}
+            />
+          ) : (
+            <Typography className="mb-1" variant="body1" fontWeight="bold">
+              {title}
+            </Typography>
+          )}
+          {editMode ? (
+            <TextField
+              value={newDescription}
+              size="small"
+              type="text"
+              placeholder={description}
+              onChange={(event) => {
+                setNewDescription(event.target.value);
+              }}
+            />
+          ) : (
+            <Typography variant="body2" textAlign="center">
+              {description}
+            </Typography>
+          )}
         </div>
         <div className="d-flex points-container align-items-center gap-1 mt-2">
-          <img src={kodcoinIcon} />
-          <Typography variant="h6" fontWeight="bold">
-            {requiredPoints}
-          </Typography>
+          <img src={kodcoinIcon} alt="" />
+          {editMode ? (
+            <TextField
+              sx={{
+                maxWidth: '100px',
+              }}
+              value={newRequiredPoints}
+              size="small"
+              type="number"
+              placeholder={`${requiredPoints}`}
+              onChange={(event) => {
+                event.target?.value
+                  ? setNewRequiredPoints(parseInt(event.target.value))
+                  : setNewRequiredPoints(0);
+              }}
+            />
+          ) : (
+            <Typography variant="h6" fontWeight="bold">
+              {requiredPoints}
+            </Typography>
+          )}
         </div>
       </div>
     </CustomCard>
