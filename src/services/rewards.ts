@@ -6,8 +6,8 @@ export interface GetRewardsFilter {
   id_class?: number | string;
 }
 
-export const getRewardsByAdventure = (adventureId: number | string) =>
-  http.get(`reward?id_adventure=${adventureId}`);
+export const getRewardsByAdventure = (adventureId: number | string, classId: number | string) =>
+  http.get(`reward?id_adventure=${adventureId}&id_class=${classId}`);
 
 export const getRewards = (filterQuery: GetRewardsFilter) => {
   return http.get('reward' + generateQueryParamsFromObject(filterQuery));
