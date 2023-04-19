@@ -81,20 +81,27 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({ open, onClose, classDet
   };
 
   const addToList = (formikInitialValues: FormInitialState) => {
+    // .split(/,|\s+/)
     const transformedTextArray = inputFieldValue
-      .split(/,|\s+/)
+      .split(',')
       .map((res) => res.trim())
       .filter((res) => res);
-    const match = transformedTextArray.join(',').match(/^([\w+-.%]+@[\w-.]+\.[A-Za-z]{2,4},?)+$/g);
+    // const match = transformedTextArray.join(',').match(/^([\w+-.%]+@[\w-.]+\.[A-Za-z]{2,4},?)+$/g);
+    const match = transformedTextArray
+      .join(',')
+      .match(
+        /^[-a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+(?:\W+[-a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+){1,5}(?:\W+[-\s[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]]+)?$/g
+      );
+    console.log('transformedTextArray', transformedTextArray);
     if (match) {
       setFormInitialState((prevState) => {
         return {
           students: [
             ...formikInitialValues.students,
             ...transformedTextArray.map((email) => ({
-              first_name: '',
-              last_name: '',
-              email,
+              first_name: email.split(' ')[0],
+              last_name: email.split(' ')[1],
+              email: '',
             })),
           ],
         };
@@ -121,7 +128,7 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({ open, onClose, classDet
     }
   };
   return (
-    <Dialog open={open} PaperProps={{ className: 'p-3' }} maxWidth="sm" fullWidth>
+    <Dialog open={open} PaperProps={{ className: 'p-3' }} maxWidth="md" fullWidth>
       <DialogTitle fontWeight="bold">Añadir estudiantes</DialogTitle>
       <Formik
         validationSchema={validationSchema}
@@ -144,7 +151,7 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({ open, onClose, classDet
                       onChange={handleInputFieldChange}
                       fullWidth
                       size="small"
-                      placeholder={'Emails de tus estudiantes separados por coma'}
+                      placeholder={'Nombre y apellido de tus estudiantes, separados por coma'}
                     />
                     <div>
                       <Button
