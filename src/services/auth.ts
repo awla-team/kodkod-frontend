@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import http from 'global/api';
 
 export interface SignInBody {
@@ -41,25 +42,19 @@ export const generateAccessToken = async (body?: GenerateAccessTokenBody) => {
       }
     }
 
-    fetch('http://localhost:3000/auth/generate-access-token', {
-      method: 'post',
-      body: JSON.stringify({
-        ...(body ? { refreshToken: body.refreshToken } : { refreshToken }),
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        throw res;
+    http
+      .post(
+        '/auth/generate-access-token',
+        { ...(body ? { refreshToken: body.refreshToken } : { refreshToken }) },
+        { headers: { 'Content-Type': 'application/json' } }
+      )
+      .then((response) => {
+        if (response?.status === 200 && !!response?.data) return resolve(response.data);
+        throw response;
       })
-      .then((data) => resolve(data))
-      .catch(async (error) => {
+      .catch(async (error: AxiosError) => {
         try {
-          const data = await error.json();
+          const data: any = await error.response.data;
           if (data?.responseData === 'refreshToken expired' && data?.responseCode === 401) {
             const refreshToken = localStorage.getItem('refreshToken');
             if (refreshToken) {
