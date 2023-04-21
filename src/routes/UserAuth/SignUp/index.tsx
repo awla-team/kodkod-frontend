@@ -7,6 +7,8 @@ import {
   TextField,
   Button,
   Autocomplete,
+  Checkbox,
+  FormControlLabel,
 } from '@mui/material';
 import { Form, Formik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
@@ -32,6 +34,7 @@ const SignUp: React.FC = () => {
     confirmPassword: '',
     school: '',
     subject: '',
+    tos: false,
   });
   const [isFetching, setIsFetching] = useState(FetchStatus.Idle);
 
@@ -48,6 +51,9 @@ const SignUp: React.FC = () => {
       last_name: Yup.string().required('Last name cannot be empty.'),
       school: Yup.number(),
       subject: Yup.string(),
+      tos: Yup.boolean()
+        .required('Debes aceptar los Términos y condiciones para crear una cuenta.')
+        .oneOf([true], 'Debes aceptar los Términos y condiciones para crear una cuenta.'),
     });
   };
 
@@ -63,6 +69,7 @@ const SignUp: React.FC = () => {
       last_name: values.last_name,
       school: values.school,
       subject: values.subject,
+      tos: values.tos,
     };
     signUp(filteredValues)
       .then((_response) => {
@@ -371,6 +378,27 @@ const SignUp: React.FC = () => {
                       })}
                     </Select> */}
                   </FormControl>
+
+                  <FormControlLabel
+                    className="justify-content-center m-0"
+                    control={
+                      <Checkbox
+                        size="small"
+                        name="tos"
+                        onChange={(_event, value) => setFieldValue('tos', value)}
+                        checked={values.tos}
+                      />
+                    }
+                    label={
+                      <Typography variant="body2">
+                        He leído y acepto los{' '}
+                        <a target="_blank" href="https://www.google.cl">
+                          términos y condiciones
+                        </a>{' '}
+                        de uso de Kodkod
+                      </Typography>
+                    }
+                  />
 
                   <Box
                     className={'action__container'}

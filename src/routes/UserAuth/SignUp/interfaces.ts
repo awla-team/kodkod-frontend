@@ -6,6 +6,7 @@ export interface FormInitialValuesType {
   confirmPassword: string;
   school: number | string;
   subject: string;
+  tos: boolean;
 }
 
 export const subjects = [
