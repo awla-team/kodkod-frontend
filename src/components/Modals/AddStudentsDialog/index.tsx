@@ -81,9 +81,9 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({ open, onClose, classDet
   };
 
   const addToList = (formikInitialValues: FormInitialState) => {
-    // .split(/,|\s+/)
     const transformedTextArray = inputFieldValue
-      .split(',')
+      .split(/,|\t/)
+      // .split(',')
       .map((res) => res.trim())
       .filter((res) => res);
     // const match = transformedTextArray.join(',').match(/^([\w+-.%]+@[\w-.]+\.[A-Za-z]{2,4},?)+$/g);
@@ -92,16 +92,15 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({ open, onClose, classDet
       .match(
         /^[-a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+(?:\W+[-a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+){1,5}(?:\W+[-\s[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]]+)?$/g
       );
-    console.log('transformedTextArray', transformedTextArray);
     if (match) {
       setFormInitialState((prevState) => {
         return {
           students: [
             ...formikInitialValues.students,
-            ...transformedTextArray.map((email) => ({
-              first_name: email.split(' ')[0],
-              last_name: email.split(' ')[1],
-              email: '',
+            ...transformedTextArray.map((names) => ({
+              first_name: names.split(' ')[0],
+              last_name: names.split(' ')[1],
+              email: `${names.split(' ')[0]}@${names.split(' ')[0]}.cl`,
             })),
           ],
         };
@@ -115,7 +114,7 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({ open, onClose, classDet
   const handleStudentValues = (e: React.KeyboardEvent, formikInitialValues: FormInitialState) => {
     e.stopPropagation();
     const { key } = e;
-    if (key === 'Enter' || key === ',') {
+    if (key === 'Enter') {
       e.preventDefault();
       addToList(formikInitialValues);
     }
@@ -123,12 +122,12 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({ open, onClose, classDet
 
   const preventFormSubmitOnKeyDown = (e: React.KeyboardEvent) => {
     const { key } = e;
-    if (key === 'Enter' || key === ',') {
+    if (key === 'Enter') {
       e.preventDefault();
     }
   };
   return (
-    <Dialog open={open} PaperProps={{ className: 'p-3' }} maxWidth="md" fullWidth>
+    <Dialog open={open} PaperProps={{ className: 'p-3' }} maxWidth="sm" fullWidth>
       <DialogTitle fontWeight="bold">Añadir estudiantes</DialogTitle>
       <Formik
         validationSchema={validationSchema}
@@ -145,13 +144,13 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({ open, onClose, classDet
                     <TextField
                       className="mb-4"
                       error={inputFieldValueError}
-                      helperText={inputFieldValueError && 'Has ingresado un email inválido'}
+                      helperText={inputFieldValueError && 'Has ingresado un nombre inválido'}
                       value={inputFieldValue}
                       onKeyDown={(event) => handleStudentValues(event, values)}
                       onChange={handleInputFieldChange}
                       fullWidth
                       size="small"
-                      placeholder={'Nombre y apellido de tus estudiantes, separados por coma'}
+                      placeholder="Nombre y apellido de tus estudiantes, separados por coma"
                     />
                     <div>
                       <Button
@@ -169,55 +168,53 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({ open, onClose, classDet
                   </div>
                   <>
                     <div className="details-list">
-                      <FieldArray name={'students'}>
+                      <FieldArray name="students">
                         {({ remove }) => {
                           return values.students.map((student, index) => {
                             return (
-                              <div key={index} className="d-flex align-items-center">
-                                <div className="me-2">
-                                  <IconButton
-                                    color={'inherit'}
-                                    size="small"
-                                    onClick={() => remove(index)}
-                                  >
-                                    <CloseIcon fontSize="small" />
-                                  </IconButton>
-                                </div>
-                                <div className="d-flex">
-                                  <div className="me-3">
+                              <div key={index} className="d-flex align-items-center gap-2">
+                                <IconButton
+                                  color="inherit"
+                                  size="small"
+                                  onClick={() => remove(index)}
+                                >
+                                  <CloseIcon fontSize="small" />
+                                </IconButton>
+                                <div className="d-flex w-100 gap-4">
+                                  <div className="flex-fill">
                                     <TextField
                                       error={!!submitCount && !!errors?.students?.[index]}
                                       value={values.students[index].first_name}
                                       name={`students[${index}].first_name`}
                                       onChange={handleChange}
-                                      variant={'standard'}
-                                      placeholder={'Nombres'}
+                                      variant="standard"
+                                      placeholder="Nombres"
                                       fullWidth
                                     />
                                   </div>
-                                  <div className="me-3">
+                                  <div className="flex-fill">
                                     <TextField
                                       error={!!submitCount && !!errors?.students?.[index]}
                                       value={values.students[index].last_name}
                                       name={`students[${index}].last_name`}
                                       onChange={handleChange}
-                                      variant={'standard'}
-                                      placeholder={'Apellidos'}
+                                      variant="standard"
+                                      placeholder="Apellidos"
                                       fullWidth
                                     />
                                   </div>
-                                </div>
-                                <div>
-                                  <TextField
-                                    error={!!submitCount && !!errors?.students?.[index]}
-                                    value={values.students[index].email}
-                                    name={`students[${index}].email`}
-                                    onChange={handleChange}
-                                    type={'email'}
-                                    variant={'standard'}
-                                    placeholder={'E-mail'}
-                                    fullWidth
-                                  />
+                                  <div>
+                                    <TextField
+                                      error={!!submitCount && !!errors?.students?.[index]}
+                                      value={values.students[index].email}
+                                      name={`students[${index}].email`}
+                                      onChange={handleChange}
+                                      type="email"
+                                      variant="standard"
+                                      placeholder="E-mail"
+                                      fullWidth
+                                    />
+                                  </div>
                                 </div>
                               </div>
                             );
@@ -240,13 +237,13 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({ open, onClose, classDet
                 </StudentsFormDetailsContainer>
               </DialogContent>
               <DialogActions>
-                <Button variant={'outlined'} onClick={() => onClose()}>
+                <Button variant="outlined" onClick={() => onClose()}>
                   Cancelar
                 </Button>
                 <Button
                   disabled={!values.students.length || !!isSubmitting}
-                  variant={'contained'}
-                  type={'submit'}
+                  variant="contained"
+                  type="submit"
                 >
                   Añadir estudiantes
                 </Button>
