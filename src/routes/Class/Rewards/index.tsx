@@ -8,6 +8,7 @@ import { useSearchParams } from 'react-router-dom';
 import { getRewardsByAdventure } from '../../../services/rewards';
 import { IReward } from '../../../global/interfaces';
 import Toaster from '../../../utils/Toster';
+import http from 'global/api';
 
 const tempRewards = [
   {
@@ -73,13 +74,41 @@ const Rewards: FC = () => {
   const [searchParams] = useSearchParams();
   const [rewards, setRewards] = useState<IReward[]>([]);
 
+  const editReward = (rewardId: number | string, newTitle: string, newDescription: string) => {
+    return http
+      .put(`reward/${rewardId}`, {
+        title: newTitle,
+        description: newDescription,
+      })
+      .then((response: any) => {
+        const newRewards = [...rewards];
+        const matchReward = newRewards.findIndex((reward) => reward.id === rewardId);
+        newRewards[matchReward] = {
+          ...newRewards[matchReward],
+          title: newTitle,
+          description: newDescription,
+        };
+        setRewards(newRewards);
+        Toaster('success', 'Recompensa actualizada exitosamente');
+        return response;
+      })
+      .catch((error) => {
+        console.log(error);
+        if (error?.response?.data?.responseData === 'Empty data')
+          Toaster('error', 'Todos los campos deben ser llenados');
+        else Toaster('error', 'Hubo un error al cargar las recompensas');
+        return error;
+      });
+  };
+
   useEffect(() => {
     const id = searchParams.get('adventureId');
     if (id) {
       (async (adventureId: number | string) => {
         try {
           const { data }: { data: { responseData: IReward[] } } = await getRewardsByAdventure(
-            adventureId
+            adventureId,
+            classId
           );
 
           const sorted = data.responseData.sort((a, b) => {
@@ -121,7 +150,9 @@ const Rewards: FC = () => {
             {rewards.map((res, index) => {
               return (
                 <RewardCard
-                  key={index}
+                  edit={editReward}
+                  key={`${res.id}-${res.title}`}
+                  rewardId={res.id}
                   title={res.title}
                   description={res.description}
                   icon={res.icon}
@@ -134,6 +165,7 @@ const Rewards: FC = () => {
               return (
                 <RewardCard
                   key={index}
+                  rewardId={null}
                   title={res.title}
                   description={res.description}
                   icon={res.icon}

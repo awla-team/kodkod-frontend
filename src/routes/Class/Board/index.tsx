@@ -1,20 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useOutletContext } from 'react-router-dom';
-import {
-  DashboardContainer,
-  DashboardContainerLeftSide,
-  DashboardContainerRightSide,
-  DetailsCard,
-} from './styled';
+import { DashboardContainer, DetailsCard } from './styled';
 import ClassDetailsCard from 'components/ClassDetailsCard';
 import { ClassInterface } from 'services/classes/interfaces';
 import StudentsList from 'components/StudentsList';
 import { StudentType } from 'components/StudentsList/interfaces';
 import EmotionalThermometer from 'components/EmotionalThermometer';
 import { Levels } from 'components/Modals/CreateClassModal/interfaces';
-import { useClassContext } from '../context';
 
-const Board: React.FC<{}> = ({}) => {
+const Board: React.FC = () => {
   const { classDetails, students, levels } = useOutletContext() as {
     classDetails: ClassInterface;
     students: StudentType[];
