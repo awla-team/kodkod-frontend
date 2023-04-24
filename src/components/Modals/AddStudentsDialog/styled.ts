@@ -12,6 +12,4 @@ export const StudentsFormDetailsContainer = styled(Box)`
   }
 `;
 
-export const CustomFileInput = styled.input`
-  
-`;
+export const CustomFileInput = styled.input``;

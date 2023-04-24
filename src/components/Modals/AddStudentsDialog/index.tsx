@@ -24,11 +24,13 @@ import { read, utils, writeFile } from 'xlsx';
 
 const AddStudentsDialog: FC<AddStudentsDialogProps> = ({ open, onClose, classDetails }) => {
   const [formInitialState, setFormInitialState] = useState<FormInitialState>({
-    students: [{
-      first_name: null,
-      last_name: null,
-      email: null,
-    }],
+    students: [
+      {
+        first_name: null,
+        last_name: null,
+        email: null,
+      },
+    ],
   });
   const [inputFieldValue, setInputFieldValue] = useState<string>('');
   const [inputFieldValueError, setInputFieldValueError] = useState<boolean>(false);
@@ -69,7 +71,7 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({ open, onClose, classDet
 
   const handleImport = ($event: React.ChangeEvent<HTMLInputElement>) => {
     const files = $event.target.files;
-    
+
     if (files.length) {
       const file = files[0];
       const reader = new FileReader();
@@ -77,18 +79,21 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({ open, onClose, classDet
         const wb = read(event.target.result);
         const sheets = wb.SheetNames;
         if (sheets.length) {
-            const rows: { Nombres: string; Apellidos: string; Email: string; }[] = utils.sheet_to_json(wb.Sheets[sheets[0]]);
-            setFormInitialState({
-              students: rows.map((student) => ({ first_name: student.Nombres, last_name: student.Apellidos, email: student.Email }))
-            })
+          const rows: { Nombres: string; Apellidos: string; Email: string }[] = utils.sheet_to_json(
+            wb.Sheets[sheets[0]]
+          );
+          setFormInitialState({
+            students: rows.map((student) => ({
+              first_name: student.Nombres,
+              last_name: student.Apellidos,
+              email: student.Email,
+            })),
+          });
         }
-
-        
-        
-      }
+      };
       reader.readAsArrayBuffer(file);
     }
-  }
+  };
 
   const handleInputFieldChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -119,7 +124,7 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({ open, onClose, classDet
           first_name: null,
           last_name: null,
           email: null,
-        }
+        },
       ],
     });
   };
@@ -152,7 +157,10 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({ open, onClose, classDet
           return (
             <Form onSubmit={handleSubmit} onKeyDown={preventFormSubmitOnKeyDown}>
               <DialogContent dividers className="py-4">
-                <Typography variant="body2" className="mb-2">Añade a tus estudiantes ingresando sus nombres, apellidos y correo. También puedes subir tus estudiantes con nuestra plantilla de excel</Typography>
+                <Typography variant="body2" className="mb-2">
+                  Añade a tus estudiantes ingresando sus nombres, apellidos y correo. También puedes
+                  subir tus estudiantes con nuestra plantilla de excel
+                </Typography>
                 <div className="mb-3">
                   <Button
                     variant="outlined"
@@ -165,8 +173,22 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({ open, onClose, classDet
                   >
                     Descargar plantilla
                   </Button>
-                  <input style={{ display: 'none' }} type="file" name="file" id="inputGroupFile" onChange={handleImport} accept=".xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
-                  <Button component="label" variant="contained" size="small" htmlFor="inputGroupFile">Subir plantilla</Button>
+                  <input
+                    style={{ display: 'none' }}
+                    type="file"
+                    name="file"
+                    id="inputGroupFile"
+                    onChange={handleImport}
+                    accept=".xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                  />
+                  <Button
+                    component="label"
+                    variant="contained"
+                    size="small"
+                    htmlFor="inputGroupFile"
+                  >
+                    Subir plantilla
+                  </Button>
                   {/*<Button
                     variant="contained"
                     color="primary"
@@ -247,7 +269,7 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({ open, onClose, classDet
                         Añadir una fila
                       </Button>
                     </Box>
-                    <div className="d-flex">                      
+                    <div className="d-flex">
                       <Typography
                         textAlign="right"
                         component="span"
