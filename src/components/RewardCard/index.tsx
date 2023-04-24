@@ -19,12 +19,10 @@ const RewardCard: React.FC<IRewardCardProps> = ({
   const [editMode, setEditMode] = useState(false);
   const [newTitle, setNewTitle] = useState(title);
   const [newDescription, setNewDescription] = useState(description);
-  const [newRequiredPoints, setNewRequiredPoints] = useState(requiredPoints);
 
   const cancelEditMode = () => {
     setNewTitle(title);
     setNewDescription(description);
-    setNewRequiredPoints(requiredPoints);
     setEditMode(false);
   };
 
@@ -33,7 +31,7 @@ const RewardCard: React.FC<IRewardCardProps> = ({
   };
 
   const editReward = () => {
-    edit(rewardId, newTitle, newDescription, newRequiredPoints)
+    edit(rewardId, newTitle, newDescription)
       .then((result: any) => {
         if (result?.data?.responseData === 1) setEditMode(false);
       })
@@ -115,26 +113,9 @@ const RewardCard: React.FC<IRewardCardProps> = ({
         </div>
         <div className="d-flex points-container align-items-center gap-1 mt-2">
           <img src={kodcoinIcon} alt="" />
-          {editMode ? (
-            <TextField
-              sx={{
-                maxWidth: '100px',
-              }}
-              value={newRequiredPoints}
-              size="small"
-              type="number"
-              placeholder={`${requiredPoints}`}
-              onChange={(event) => {
-                event.target?.value
-                  ? setNewRequiredPoints(parseInt(event.target.value))
-                  : setNewRequiredPoints(0);
-              }}
-            />
-          ) : (
-            <Typography variant="h6" fontWeight="bold">
-              {requiredPoints}
-            </Typography>
-          )}
+          <Typography variant="h6" fontWeight="bold">
+            {requiredPoints}
+          </Typography>
         </div>
       </div>
     </CustomCard>

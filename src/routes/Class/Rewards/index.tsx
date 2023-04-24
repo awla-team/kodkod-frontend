@@ -78,13 +78,11 @@ const Rewards: FC = () => {
     rewardId: number | string,
     newTitle: string,
     newDescription: string,
-    newRequiredPoints: number
   ) => {
     return http
       .put(`reward/${rewardId}`, {
         title: newTitle,
         description: newDescription,
-        required_points: newRequiredPoints,
       })
       .then((response: any) => {
         const newRewards = [...rewards];
@@ -93,7 +91,6 @@ const Rewards: FC = () => {
           ...newRewards[matchReward],
           title: newTitle,
           description: newDescription,
-          required_points: newRequiredPoints,
         };
         setRewards(newRewards);
         Toaster('success', 'Recompensa actualizada exitosamente');
