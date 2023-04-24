@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { AddStudentsDialogProps, FormInitialState } from './interfaces';
 import {
+  Box,
   Button,
   Dialog,
   DialogActions,
@@ -17,11 +18,17 @@ import { addStudentsInClass } from 'services/students';
 import Toaster from 'utils/Toster';
 import * as Yup from 'yup';
 import { StudentType } from '../../StudentsList/interfaces';
-import { StudentsFormDetailsContainer } from './styled';
+import { CustomFileInput, StudentsFormDetailsContainer } from './styled';
+import { Link } from 'react-router-dom';
+import { read, utils, writeFile } from 'xlsx';
 
 const AddStudentsDialog: FC<AddStudentsDialogProps> = ({ open, onClose, classDetails }) => {
   const [formInitialState, setFormInitialState] = useState<FormInitialState>({
-    students: [],
+    students: [{
+      first_name: null,
+      last_name: null,
+      email: null,
+    }],
   });
   const [inputFieldValue, setInputFieldValue] = useState<string>('');
   const [inputFieldValueError, setInputFieldValueError] = useState<boolean>(false);
@@ -60,6 +67,29 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({ open, onClose, classDet
     }
   };
 
+  const handleImport = ($event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = $event.target.files;
+    
+    if (files.length) {
+      const file = files[0];
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const wb = read(event.target.result);
+        const sheets = wb.SheetNames;
+        if (sheets.length) {
+            const rows: { Nombres: string; Apellidos: string; Email: string; }[] = utils.sheet_to_json(wb.Sheets[sheets[0]]);
+            setFormInitialState({
+              students: rows.map((student) => ({ first_name: student.Nombres, last_name: student.Apellidos, email: student.Email }))
+            })
+        }
+
+        
+        
+      }
+      reader.readAsArrayBuffer(file);
+    }
+  }
+
   const handleInputFieldChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setInputFieldValue(value);
@@ -81,34 +111,17 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({ open, onClose, classDet
   };
 
   const addToList = (formikInitialValues: FormInitialState) => {
-    const transformedTextArray = inputFieldValue
-      .split(/,|\t/)
-      // .split(',')
-      .map((res) => res.trim())
-      .filter((res) => res);
-    // const match = transformedTextArray.join(',').match(/^([\w+-.%]+@[\w-.]+\.[A-Za-z]{2,4},?)+$/g);
-    const match = transformedTextArray
-      .join(',')
-      .match(
-        /^[-a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+(?:\W+[-a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+){1,5}(?:\W+[-\s[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]]+)?$/g
-      );
-    if (match) {
-      setFormInitialState((prevState) => {
-        return {
-          students: [
-            ...formikInitialValues.students,
-            ...transformedTextArray.map((names) => ({
-              first_name: names.split(' ')[0],
-              last_name: names.split(' ')[1],
-              email: `${names.split(' ')[0]}@${names.split(' ')[0]}.cl`,
-            })),
-          ],
-        };
-      });
-      setInputFieldValue('');
-    } else {
-      setInputFieldValueError(true);
-    }
+    setFormInitialState({
+      ...formikInitialValues,
+      students: [
+        ...formikInitialValues.students,
+        {
+          first_name: null,
+          last_name: null,
+          email: null,
+        }
+      ],
+    });
   };
 
   const handleStudentValues = (e: React.KeyboardEvent, formikInitialValues: FormInitialState) => {
@@ -138,49 +151,52 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({ open, onClose, classDet
         {({ handleSubmit, values, handleChange, isSubmitting, errors, submitCount }) => {
           return (
             <Form onSubmit={handleSubmit} onKeyDown={preventFormSubmitOnKeyDown}>
-              <DialogContent dividers className="py-5">
+              <DialogContent dividers className="py-4">
+                <Typography variant="body2" className="mb-2">Añade a tus estudiantes ingresando sus nombres, apellidos y correo. También puedes subir tus estudiantes con nuestra plantilla de excel</Typography>
+                <div className="mb-3">
+                  <Button
+                    variant="outlined"
+                    component={Link}
+                    to="https://kodkod-assets.s3.amazonaws.com/documents/plantilla_estudiantes_kodkod.xlsx"
+                    download
+                    className="me-1"
+                    color="primary"
+                    size="small"
+                  >
+                    Descargar plantilla
+                  </Button>
+                  <input style={{ display: 'none' }} type="file" name="file" id="inputGroupFile" onChange={handleImport} accept=".xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
+                  <Button component="label" variant="contained" size="small" htmlFor="inputGroupFile">Subir plantilla</Button>
+                  {/*<Button
+                    variant="contained"
+                    color="primary"
+                    size="small"
+                    onClick={(event) => handleImport(event)}
+                  >
+                    Subir excel
+                  </Button>                      */}
+                </div>
                 <StudentsFormDetailsContainer>
-                  <div className="d-flex w-100 gap-2">
-                    <TextField
-                      className="mb-4"
-                      error={inputFieldValueError}
-                      helperText={inputFieldValueError && 'Has ingresado un nombre inválido'}
-                      value={inputFieldValue}
-                      onKeyDown={(event) => handleStudentValues(event, values)}
-                      onChange={handleInputFieldChange}
-                      fullWidth
-                      size="small"
-                      placeholder="Nombre y apellido de tus estudiantes, separados por coma"
-                    />
-                    <div>
-                      <Button
-                        sx={{
-                          mt: '1px',
-                        }}
-                        disabled={inputFieldValueError}
-                        variant="contained"
-                        color="primary"
-                        onClick={() => addToList(values)}
-                      >
-                        Añadir
-                      </Button>
-                    </div>
-                  </div>
                   <>
-                    <div className="details-list">
+                    <Box className="details-list">
                       <FieldArray name="students">
-                        {({ remove }) => {
+                        {() => {
                           return values.students.map((student, index) => {
                             return (
                               <div key={index} className="d-flex align-items-center gap-2">
                                 <IconButton
                                   color="inherit"
                                   size="small"
-                                  onClick={() => remove(index)}
+                                  disabled={values.students.length === 1}
+                                  onClick={() => {
+                                    const newValues = { ...values };
+                                    newValues.students.splice(index, 1);
+                                    setFormInitialState(newValues);
+                                  }}
                                 >
                                   <CloseIcon fontSize="small" />
                                 </IconButton>
-                                <div className="d-flex w-100 gap-4">
+                                <div className="d-flex w-100 gap-3">
                                   <div className="flex-fill">
                                     <TextField
                                       error={!!submitCount && !!errors?.students?.[index]}
@@ -221,13 +237,22 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({ open, onClose, classDet
                           });
                         }}
                       </FieldArray>
-                    </div>
-                    <div className="d-flex">
+                      <Button
+                        disabled={inputFieldValueError}
+                        className="mt-2"
+                        color="primary"
+                        size="small"
+                        onClick={() => addToList(values)}
+                      >
+                        Añadir una fila
+                      </Button>
+                    </Box>
+                    <div className="d-flex">                      
                       <Typography
                         textAlign="right"
                         component="span"
                         variant="body2"
-                        className="mt-4 w-100"
+                        className="w-100 mt-2"
                       >
                         Estás añadiendo <b>{values.students.length}</b> estudiantes a la clase{' '}
                         <b>{classDetails.alias}</b>
