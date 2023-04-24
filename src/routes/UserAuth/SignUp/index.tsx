@@ -392,7 +392,7 @@ const SignUp: React.FC = () => {
                     label={
                       <Typography variant="body2">
                         He leído y acepto los{' '}
-                        <a target="_blank" href="https://www.google.cl">
+                        <a target="_blank" href="https://kodkod-assets.s3.amazonaws.com/documents/T%C3%A9rminos+y+Condiciones+de+Uso+plataforma+Kodkod.pdf">
                           términos y condiciones
                         </a>{' '}
                         de uso de Kodkod
