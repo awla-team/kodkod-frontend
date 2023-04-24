@@ -74,11 +74,7 @@ const Rewards: FC = () => {
   const [searchParams] = useSearchParams();
   const [rewards, setRewards] = useState<IReward[]>([]);
 
-  const editReward = (
-    rewardId: number | string,
-    newTitle: string,
-    newDescription: string,
-  ) => {
+  const editReward = (rewardId: number | string, newTitle: string, newDescription: string) => {
     return http
       .put(`reward/${rewardId}`, {
         title: newTitle,
