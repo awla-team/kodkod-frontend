@@ -10,7 +10,7 @@ import { IReward } from '../../../global/interfaces';
 import Toaster from '../../../utils/Toster';
 import http from 'global/api';
 
-const tempRewards = [
+/*const tempRewards = [
   {
     title: 'Recompensa 3',
     description: '¡Canjea esta recompensa con tu profesor/a!',
@@ -67,7 +67,7 @@ const tempRewards = [
     icon: 'https://kodkod-assets.s3.amazonaws.com/images/rewards/Reward_10.png',
     type: 'Individual',
   },
-];
+];*/
 
 const Rewards: FC = () => {
   const { classId } = useParams();
