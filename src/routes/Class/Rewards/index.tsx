@@ -161,7 +161,7 @@ const Rewards: FC = () => {
                 />
               );
             })}
-            {tempRewards.map((res, index) => {
+            {/*tempRewards.map((res, index) => {
               return (
                 <RewardCard
                   key={index}
@@ -173,7 +173,7 @@ const Rewards: FC = () => {
                   type={res.type}
                 />
               );
-            })}
+            })*/}
           </RewardsList>
         </Box>
       </RewardsBox>
