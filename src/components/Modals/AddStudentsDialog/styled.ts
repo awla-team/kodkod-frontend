@@ -6,8 +6,6 @@ export const StudentsFormDetailsContainer = styled(Box)`
     display: flex;
     flex-direction: column;
     gap: 12px;
-    height: 300px;
-    overflow: auto;
     padding: 0px 8px 0px 0px;
   }
 `;
