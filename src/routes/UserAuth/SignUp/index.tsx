@@ -62,14 +62,13 @@ const SignUp: React.FC = () => {
     formikHelper: FormikHelpers<FormInitialValuesType>
   ) => {
     setIsFetching(FetchStatus.Pending);
-    const filteredValues: Omit<FormInitialValuesType, 'confirmPassword'> = {
+    const filteredValues: FormInitialValuesType = {
       email: values.email,
       password: values.password,
       first_name: values.first_name,
       last_name: values.last_name,
       school: values.school,
       subject: values.subject,
-      tos: values.tos,
     };
     signUp(filteredValues)
       .then((_response) => {

@@ -55,9 +55,8 @@ const Class: React.FC = () => {
               </Typography>
             </Box>
           ) : (
-            <Tooltip arrow title="¡Próximamente!">
+            <Tooltip key={`tab-${i}`} arrow title="¡Próximamente!">
               <Box
-                key={`tab-${i}`}
                 className={`nav__tab ${pathname.includes(tab.path) ? 'active' : ''} ${
                   tab.disabled ? 'disabled' : ''
                 }`}

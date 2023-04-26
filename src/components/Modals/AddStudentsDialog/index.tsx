@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
-import { AddStudentsDialogProps, FormInitialState } from './interfaces';
+import React, { FC, useEffect } from 'react';
+import { AddStudentsDialogProps } from './interfaces';
 import {
   Box,
   Button,
@@ -12,38 +12,50 @@ import {
   Typography,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import { Formik, Form, FormikHelpers, FieldArray } from 'formik';
 import { useState } from 'react';
 import { addStudentsInClass } from 'services/students';
 import Toaster from 'utils/Toster';
-import * as Yup from 'yup';
 import { StudentType } from '../../StudentsList/interfaces';
-import { CustomFileInput, StudentsFormDetailsContainer } from './styled';
+import { StudentsFormDetailsContainer } from './styled';
 import { Link } from 'react-router-dom';
-import { read, utils, writeFile } from 'xlsx';
+import { read, utils } from 'xlsx';
+import AddIcon from '@mui/icons-material/Add';
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import FileUploadIcon from '@mui/icons-material/FileUpload';
 
 const AddStudentsDialog: FC<AddStudentsDialogProps> = ({ open, onClose, classDetails }) => {
-  const [formInitialState, setFormInitialState] = useState<FormInitialState>({
-    students: [
-      {
-        first_name: null,
-        last_name: null,
-        email: null,
-      },
-    ],
-  });
-  const [inputFieldValue, setInputFieldValue] = useState<string>('');
-  const [inputFieldValueError, setInputFieldValueError] = useState<boolean>(false);
-  const handleSubmit = async (
-    values: FormInitialState,
-    formikHelper: FormikHelpers<FormInitialState>
-  ) => {
-    // temporary approach
+  const [students, setStudents] = useState<
+    { first_name: string; last_name: string; email: string }[]
+  >(
+    Array(5)
+      .fill({})
+      .map(() => ({
+        first_name: '',
+        last_name: '',
+        email: '',
+      }))
+  );
+
+  const [filled, setFilled] = useState<{ first_name: string; last_name: string; email: string }[]>(
+    []
+  );
+
+  useEffect(() => {
+    if (students.length)
+      setFilled(
+        students.filter((student) => student.first_name || student.last_name || student.email)
+      );
+    else setFilled([]);
+  }, [students]);
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+
     try {
       const { data }: { data: { responseData: { students: StudentType[] } } } =
         await addStudentsInClass({
           id_class: classDetails.id,
-          students: values.students.map(({ first_name, last_name, email }) => {
+          students: filled.map(({ first_name, last_name, email }) => {
             return {
               first_name,
               last_name,
@@ -52,7 +64,7 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({ open, onClose, classDet
             };
           }),
         });
-      const noOfStudents = values.students.length;
+      const noOfStudents = filled.length;
       Toaster(
         'success',
         `${noOfStudents} ${noOfStudents < 2 ? 'estudiante' : 'estudiantes'} añadidos exitosamente`
@@ -64,8 +76,6 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({ open, onClose, classDet
         'error',
         error?.response?.data?.responseData[0] || 'Hubo un error al añadir estudiantes'
       );
-    } finally {
-      formikHelper.setSubmitting(false);
     }
   };
 
@@ -82,223 +92,172 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({ open, onClose, classDet
           const rows: { Nombres: string; Apellidos: string; Email: string }[] = utils.sheet_to_json(
             wb.Sheets[sheets[0]]
           );
-          setFormInitialState({
-            students: rows.map((student) => ({
-              first_name: student.Nombres,
-              last_name: student.Apellidos,
-              email: student.Email,
-            })),
-          });
+
+          setStudents(
+            rows.map((student) => ({
+              first_name: student.Nombres || '',
+              last_name: student.Apellidos || '',
+              email: student.Email || '',
+            }))
+          );
         }
       };
       reader.readAsArrayBuffer(file);
     }
   };
 
-  const handleInputFieldChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    setInputFieldValue(value);
-    if (inputFieldValueError) {
-      setInputFieldValueError(false);
-    }
-  };
-
-  const validationSchema = () => {
-    return Yup.object().shape({
-      students: Yup.array().of(
-        Yup.object().shape({
-          email: Yup.string().email().required(),
-          first_name: Yup.string().required(),
-          last_name: Yup.string().required(),
-        })
-      ),
-    });
-  };
-
-  const addToList = (formikInitialValues: FormInitialState) => {
-    setFormInitialState({
-      ...formikInitialValues,
-      students: [
-        ...formikInitialValues.students,
-        {
-          first_name: null,
-          last_name: null,
-          email: null,
-        },
-      ],
-    });
-  };
-
-  const handleStudentValues = (e: React.KeyboardEvent, formikInitialValues: FormInitialState) => {
-    e.stopPropagation();
-    const { key } = e;
-    if (key === 'Enter') {
-      e.preventDefault();
-      addToList(formikInitialValues);
-    }
-  };
-
-  const preventFormSubmitOnKeyDown = (e: React.KeyboardEvent) => {
-    const { key } = e;
-    if (key === 'Enter') {
-      e.preventDefault();
-    }
-  };
   return (
-    <Dialog open={open} PaperProps={{ className: 'p-3' }} maxWidth="sm" fullWidth>
+    <Dialog open={open} PaperProps={{ className: 'p-3' }} maxWidth="sm" fullWidth fullScreen>
       <DialogTitle fontWeight="bold">Añadir estudiantes</DialogTitle>
-      <Formik
-        validationSchema={validationSchema}
-        enableReinitialize
-        initialValues={formInitialState}
-        onSubmit={handleSubmit}
+      <form
+        className="d-flex flex-column flex-fill"
+        style={{ overflow: 'hidden' }}
+        onSubmit={(event) => handleSubmit(event)}
       >
-        {({ handleSubmit, values, handleChange, isSubmitting, errors, submitCount }) => {
-          return (
-            <Form onSubmit={handleSubmit} onKeyDown={preventFormSubmitOnKeyDown}>
-              <DialogContent dividers className="py-4">
-                <Typography variant="body2" className="mb-2">
-                  Añade a tus estudiantes ingresando sus nombres, apellidos y correo. También puedes
-                  subir tus estudiantes con nuestra plantilla de excel
-                </Typography>
-                <div className="mb-3">
-                  <Button
-                    variant="outlined"
-                    component={Link}
-                    to="https://kodkod-assets.s3.amazonaws.com/documents/plantilla_estudiantes_kodkod.xlsx"
-                    download
-                    className="me-1"
-                    color="primary"
-                    size="small"
-                  >
-                    Descargar plantilla
-                  </Button>
-                  <input
-                    style={{ display: 'none' }}
-                    type="file"
-                    name="file"
-                    id="inputGroupFile"
-                    onChange={handleImport}
-                    accept=".xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-                  />
-                  <Button
-                    component="label"
-                    variant="contained"
-                    size="small"
-                    htmlFor="inputGroupFile"
-                  >
-                    Subir plantilla
-                  </Button>
-                  {/*<Button
-                    variant="contained"
-                    color="primary"
-                    size="small"
-                    onClick={(event) => handleImport(event)}
-                  >
-                    Subir excel
-                  </Button>                      */}
-                </div>
-                <StudentsFormDetailsContainer>
-                  <>
-                    <Box className="details-list">
-                      <FieldArray name="students">
-                        {() => {
-                          return values.students.map((student, index) => {
-                            return (
-                              <div key={index} className="d-flex align-items-center gap-2">
-                                <IconButton
-                                  color="inherit"
-                                  size="small"
-                                  disabled={values.students.length === 1}
-                                  onClick={() => {
-                                    const newValues = { ...values };
-                                    newValues.students.splice(index, 1);
-                                    setFormInitialState(newValues);
-                                  }}
-                                >
-                                  <CloseIcon fontSize="small" />
-                                </IconButton>
-                                <div className="d-flex w-100 gap-3">
-                                  <div className="flex-fill">
-                                    <TextField
-                                      error={!!submitCount && !!errors?.students?.[index]}
-                                      value={values.students[index].first_name}
-                                      name={`students[${index}].first_name`}
-                                      onChange={handleChange}
-                                      variant="standard"
-                                      placeholder="Nombres"
-                                      fullWidth
-                                    />
-                                  </div>
-                                  <div className="flex-fill">
-                                    <TextField
-                                      error={!!submitCount && !!errors?.students?.[index]}
-                                      value={values.students[index].last_name}
-                                      name={`students[${index}].last_name`}
-                                      onChange={handleChange}
-                                      variant="standard"
-                                      placeholder="Apellidos"
-                                      fullWidth
-                                    />
-                                  </div>
-                                  <div>
-                                    <TextField
-                                      error={!!submitCount && !!errors?.students?.[index]}
-                                      value={values.students[index].email}
-                                      name={`students[${index}].email`}
-                                      onChange={handleChange}
-                                      type="email"
-                                      variant="standard"
-                                      placeholder="E-mail"
-                                      fullWidth
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                            );
-                          });
-                        }}
-                      </FieldArray>
-                      <Button
-                        disabled={inputFieldValueError}
-                        className="mt-2"
-                        color="primary"
-                        size="small"
-                        onClick={() => addToList(values)}
-                      >
-                        Añadir una fila
-                      </Button>
-                    </Box>
-                    <div className="d-flex">
-                      <Typography
-                        textAlign="right"
-                        component="span"
-                        variant="body2"
-                        className="w-100 mt-2"
-                      >
-                        Estás añadiendo <b>{values.students.length}</b> estudiantes a la clase{' '}
-                        <b>{classDetails.alias}</b>
-                      </Typography>
+        <DialogContent className="d-flex flex-column flex-fill">
+          <Typography variant="body2" className="mb-2">
+            Añade a tus estudiantes ingresando sus nombres, apellidos y correo. También puedes subir
+            tus estudiantes con nuestra plantilla de excel.
+          </Typography>
+          <div>
+            <Button
+              variant="outlined"
+              component={Link}
+              to="https://kodkod-assets.s3.amazonaws.com/documents/plantilla_estudiantes_kodkod.xlsx"
+              download
+              className="me-1"
+              color="primary"
+              size="small"
+              startIcon={<FileDownloadIcon />}
+            >
+              Descargar plantilla excel
+            </Button>
+            <input
+              style={{ display: 'none' }}
+              type="file"
+              name="file"
+              id="inputGroupFile"
+              onChange={handleImport}
+              accept=".xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+            />
+            <Button
+              component="label"
+              variant="contained"
+              size="small"
+              startIcon={<FileUploadIcon />}
+              htmlFor="inputGroupFile"
+            >
+              Subir plantilla excel
+            </Button>
+          </div>
+          <Box className="flex-fill my-4" sx={{ overflow: 'auto' }}>
+            <StudentsFormDetailsContainer className="d-flex flex-column justify-content-between">
+              <Box className="details-list">
+                {students.map((student, i) => (
+                  <div key={i} className="d-flex align-items-center gap-2">
+                    <IconButton
+                      color="inherit"
+                      size="small"
+                      disabled={students.length === 1}
+                      onClick={() => {
+                        const newValues = [...students];
+                        newValues.splice(i, 1);
+                        setStudents(newValues);
+                      }}
+                    >
+                      <CloseIcon fontSize="small" />
+                    </IconButton>
+                    <div className="d-flex w-100 gap-3">
+                      <div className="flex-fill">
+                        <TextField
+                          size="small"
+                          value={student.first_name}
+                          error={(student.last_name || student.email) && !student.first_name}
+                          onChange={(event) => {
+                            const newStudents = [...students];
+                            newStudents[i].first_name = event.target.value;
+                            setStudents(newStudents);
+                          }}
+                          name={`students[${i}].first_name`}
+                          variant="outlined"
+                          placeholder="Nombres"
+                          fullWidth
+                        />
+                      </div>
+                      <div className="flex-fill">
+                        <TextField
+                          size="small"
+                          value={student.last_name}
+                          error={(student.first_name || student.email) && !student.last_name}
+                          onChange={(event) => {
+                            const newStudents = [...students];
+                            newStudents[i].last_name = event.target.value;
+                            setStudents(newStudents);
+                          }}
+                          name={`students[${i}].last_name`}
+                          variant="outlined"
+                          placeholder="Apellidos"
+                          fullWidth
+                        />
+                      </div>
+                      <div className="flex-fill">
+                        <TextField
+                          size="small"
+                          value={student.email}
+                          error={(student.first_name || student.last_name) && !student.email}
+                          onChange={(event) => {
+                            const newStudents = [...students];
+                            newStudents[i].email = event.target.value;
+                            setStudents(newStudents);
+                          }}
+                          name={`students[${i}].email`}
+                          type="email"
+                          variant="outlined"
+                          placeholder="E-mail"
+                          fullWidth
+                        />
+                      </div>
                     </div>
-                  </>
-                </StudentsFormDetailsContainer>
-              </DialogContent>
-              <DialogActions>
-                <Button variant="outlined" onClick={() => onClose()}>
-                  Cancelar
-                </Button>
-                <Button
-                  disabled={!values.students.length || !!isSubmitting}
-                  variant="contained"
-                  type="submit"
-                >
-                  Añadir estudiantes
-                </Button>
-              </DialogActions>
-            </Form>
-          );
-        }}
-      </Formik>
+                  </div>
+                ))}
+              </Box>
+            </StudentsFormDetailsContainer>
+          </Box>
+          <div className="d-flex align-items-center justify-content-center">
+            <Button
+              startIcon={<AddIcon />}
+              className="w-50 mb-2"
+              color="primary"
+              onClick={() =>
+                setStudents([...students, { first_name: '', last_name: '', email: '' }])
+              }
+            >
+              Añadir una fila
+            </Button>
+          </div>
+          <div className="d-flex">
+            <Typography textAlign="right" component="span" variant="body2" className="w-100 mt-2">
+              Estás añadiendo <b>{filled.length}</b> estudiantes a la clase{' '}
+              <b>{classDetails.alias}</b>
+            </Typography>
+          </div>
+        </DialogContent>
+        <DialogActions>
+          <Button variant="outlined" onClick={() => onClose()}>
+            Cancelar
+          </Button>
+          <Button
+            variant="contained"
+            type="submit"
+            disabled={
+              !filled.length ||
+              !filled.every((student) => student.first_name && student.last_name && student.email)
+            }
+          >
+            Añadir estudiantes
+          </Button>
+        </DialogActions>
+      </form>
     </Dialog>
   );
 };

@@ -115,7 +115,7 @@ const AdventureSummaryDialog: React.FC<{
               </Typography>
               <div className="d-flex flex-column gap-2">
                 {sortedStages.map((stage, i) => (
-                  <div className="d-flex gap-2 align-items-center">
+                  <div key={`stage-${i}`} className="d-flex gap-2 align-items-center">
                     <EmojiFlagsIcon />
                     <div className="d-flex flex-column gap-0">
                       <Typography variant="body1">
