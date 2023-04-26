@@ -3,10 +3,10 @@ export interface FormInitialValuesType {
   last_name: string;
   email: string;
   password: string;
-  confirmPassword: string;
+  confirmPassword?: string;
   school: number | string;
   subject: string;
-  tos: boolean;
+  tos?: boolean;
 }
 
 export const subjects = [
