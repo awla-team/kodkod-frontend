@@ -5,7 +5,7 @@ import { UserInfoButton, UserInfoContainer } from './styled';
 import ImgAvatar from 'assets/images/avatar.png';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import Toaster from 'utils/Toster';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from 'contexts/AuthContext';
 
 const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
@@ -49,7 +49,9 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
           <Avatar src={ImgAvatar} />{' '}
           <Typography sx={{ ml: 1 }}>{`${user.first_name} ${user.last_name}`}</Typography>
         </MenuItem>
-        {/* <MenuItem disabled={loading}>Configuración</MenuItem> */}
+        <MenuItem component={Link} to="perfil/suscripciones" disabled={loading}>
+          Suscripciones
+        </MenuItem>
         <MenuItem onClick={handleLogout} disabled={loading}>
           Cerrar sesión
         </MenuItem>

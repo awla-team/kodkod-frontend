@@ -19,6 +19,7 @@ import GoalSelection from './Class/GoalSelection';
 import GoalAdventures from './Class/GoalAdventures';
 import Rewards from 'routes/Class/Rewards';
 import VerifyEmail from './UserAuth/VerifyEmail';
+import Subscriptions from './Profile/Subscriptions';
 
 const MainRouterComponent: FC = () => {
   // const { pathname } = useLocation();
@@ -77,6 +78,15 @@ export const router = createBrowserRouter([
           {
             element: <Home />,
             index: true,
+          },
+          {
+            path: 'perfil',
+            children: [
+              {
+                path: 'suscripciones',
+                element: <Subscriptions />
+              }
+            ]
           },
           {
             path: 'cursos/:classId',

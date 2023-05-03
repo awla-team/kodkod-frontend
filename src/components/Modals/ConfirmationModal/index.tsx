@@ -6,6 +6,7 @@ const ConfirmationModal: FC<ConfirmationModalProps> = ({
   open,
   onClose,
   confirmText,
+  cancelText,
   callBackFunction,
   description,
   title,
@@ -19,7 +20,7 @@ const ConfirmationModal: FC<ConfirmationModalProps> = ({
       </DialogContent>
       <DialogActions className="pt-3">
         <Button variant={'outlined'} onClick={() => onClose()}>
-          No, mantener
+          {cancelText || 'No, mantener'}
         </Button>
         <Button variant={'contained'} disabled={loading} onClick={() => callBackFunction()}>
           {confirmText || 'Sí, eliminar'}

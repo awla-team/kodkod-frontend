@@ -1,5 +1,6 @@
 import 'styled-components';
 import { Theme } from '@mui/material/styles';
+import initMercadoPago, { MercadoPagoInstance } from '@mercadopago/sdk-react/mercadoPago/initMercadoPago';
 
 interface CustomTheme {
   bg?: {
@@ -31,6 +32,18 @@ declare module '@mui/material/styles/createPalette' {
 
 declare module 'styled-components' {
   export interface DefaultTheme extends Theme {}
+}
+
+export interface ISubscription {
+  id: string;
+  reason: string;
+  auto_recurring: {
+    frequency: number;
+    transaction_amount: number;
+    start_date: string;
+  },
+  status: string;
+  init_point: string;
 }
 
 export interface ISkill {
