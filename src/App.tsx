@@ -16,6 +16,7 @@ import moment from 'moment';
 import { useLocation } from 'react-router-dom';
 import 'moment/dist/locale/es';
 import './App.css';
+import SubscribeModal from 'components/Modals/SubscribeModal';
 
 moment.locale('es');
 
@@ -23,8 +24,8 @@ const App: React.FC = () => {
   const [classes, setClasses] = useState<ClassInterface[]>([]);
   const [levels, setLevels] = useState<Levels[]>([]);
   const [fetching, setFetching] = useState<FetchStatus>(FetchStatus.Idle);
-  const [open, setOpen] = useState<boolean>(false);
-  const { user } = useAuth();
+  const [createClassModalOpen, setCreateClassModalOpen] = useState<boolean>(false);
+  const { user, checkUserSubscription } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -63,7 +64,7 @@ const App: React.FC = () => {
     reason: 'backdropClick' | 'escapeKeyDown' | 'success',
     data?: ClassInterface
   ) => {
-    if (reason !== 'backdropClick') setOpen(false);
+    if (reason !== 'backdropClick') setCreateClassModalOpen(false);
     if (reason === 'success') {
       if (data) {
         setClasses((prevState) => {
@@ -74,7 +75,11 @@ const App: React.FC = () => {
   };
 
   const handleOpenModal = () => {
-    setOpen(true);
+    if (classes.length >= 2) {
+      checkUserSubscription('Has alcanzado el límite de cursos gratuitos', () => setCreateClassModalOpen(true));
+    } else {
+      setCreateClassModalOpen(true);
+    }
   };
 
   useEffect(() => {
@@ -117,7 +122,7 @@ const App: React.FC = () => {
           <Outlet context={{ classes, handleOpenModal, getClassesData }} />
         </div>
       </div>
-      <CreateClassModal open={open} onClose={handleClose} levels={levels} />
+      <CreateClassModal open={createClassModalOpen} onClose={handleClose} levels={levels} />
     </div>
   );
 };

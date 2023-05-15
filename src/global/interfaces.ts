@@ -97,6 +97,7 @@ export interface IUser {
 
 export interface IAdventure {
   id: number;
+  demo: boolean;
   title: string;
   thumbnail: string;
   finish_img_url: string;

@@ -38,7 +38,7 @@ const SubscribeModal: FC<{ open: boolean, onClose: () => void, reason: string }>
       </DialogContent>
       <DialogActions className="pt-3 gap-2">
         <Button variant="outlined" onClick={() => onClose()}>Cerrar</Button>
-        <Button sx={{ '&:hover': { color: '#fff' } }} component={Link} to="perfil/suscripciones" onClick={() => onClose()} variant="contained">Visitar página de suscripciones</Button>
+        <Button sx={{ '&:hover': { color: '#fff' } }} component={Link} to="/app/perfil/suscripciones" onClick={() => onClose()} variant="contained">Suscribirse a Kodkod Pro</Button>
       </DialogActions>
     </Dialog>
   );

@@ -7,4 +7,5 @@ interface TeacherType extends IUser {
 export interface AuthContextType {
   user: TeacherType | null;
   logout: () => void;
+  checkUserSubscription: (reason: string, callback: () => void) => void;
 }

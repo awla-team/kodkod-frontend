@@ -6,6 +6,7 @@ import CachedIcon from '@mui/icons-material/Cached';
 import { MissionCardContainer, ChangeMissionButton, PointsContainer } from './styled';
 import { IMissionCardProps } from './interfaces';
 import SchoolIcon from '@mui/icons-material/School';
+import { useAuth } from 'contexts/AuthContext';
 
 const MissionCard: React.FC<IMissionCardProps> = ({
   mission,
@@ -14,7 +15,15 @@ const MissionCard: React.FC<IMissionCardProps> = ({
   selected,
   clickable,
 }) => {
+  const { checkUserSubscription } = useAuth();
   const { title, description, points, difficulty, completed_users } = mission;
+
+  const handleChangeMissionButton = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    checkUserSubscription('Reemplazar una misión es una funcionalidad Pro', () => {
+      openModal(mission);
+    })
+  }
 
   return (
     <MissionCardContainer
@@ -70,18 +79,17 @@ const MissionCard: React.FC<IMissionCardProps> = ({
 
         {/* Action Buttons with absolute position */}
         {openModal && !completed_users.length ? (
-          <ChangeMissionButton
-            className="d-flex align-items-center justify-content-center"
-            disabled={!!completed_users.length}
-            variant="contained"
-            color="info"
-            onClick={(e) => {
-              e.stopPropagation();
-              openModal(mission);
-            }}
-          >
-            <CachedIcon sx={{ fill: 'rgba(0, 0, 0, 0.8)' }} />
-          </ChangeMissionButton>
+          <Tooltip title="Reemplazar misión" placement="left">
+            <ChangeMissionButton
+              className="d-flex align-items-center justify-content-center"
+              disabled={!!completed_users.length}
+              variant="contained"
+              color="info"
+              onClick={handleChangeMissionButton}
+            >
+              <CachedIcon sx={{ fill: 'rgba(0, 0, 0, 0.8)' }} />
+            </ChangeMissionButton>
+          </Tooltip>
         ) : null}
         {/* Action Buttons with absolute position end*/}
       </div>

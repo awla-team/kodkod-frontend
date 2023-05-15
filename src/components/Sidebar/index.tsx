@@ -39,7 +39,7 @@ const Sidebar: FC<SidebarProps> = ({ classes, handleOpenModal }) => {
           ))}
         </LinkList>
       ) : null}
-      <RoundButton disabled={!user.is_subscription_active} sx={{ marginBottom: '74px' }} color="info" onClick={() => handleOpenModal()}>
+      <RoundButton sx={{ marginBottom: '74px' }} color="info" onClick={() => handleOpenModal()}>
         <AddIcon />
       </RoundButton>
       <UserInfo user={user} />

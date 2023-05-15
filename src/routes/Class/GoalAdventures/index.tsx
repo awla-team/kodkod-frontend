@@ -111,6 +111,7 @@ const GoalAdventures: React.FC = () => {
           <div className="d-flex h-100 w-100 align-items-center justify-content-center justify-content-center flex-wrap gap-4">
             {sortedAdventures.map((adventure, index) => (
               <AdventureCard
+                demo={adventure.demo}
                 completed={
                   !!completedAdventures.find(
                     (completedAdventure) => completedAdventure.id_adventure === adventure.id
