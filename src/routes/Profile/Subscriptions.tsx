@@ -93,6 +93,7 @@ const Subscriptions: React.FC = () => {
       setCurrentSubscription(response.data);
       Toaster('success', 'Felicitaciones! Ya eres miembro Pro!');
       setFetching(FetchStatus.Success);
+      window.location.reload();
     } catch (error: any) {
       setFetching(FetchStatus.Error);
       console.log(error);
@@ -113,6 +114,7 @@ const Subscriptions: React.FC = () => {
       Toaster('success', 'Cancelaste tu suscripción exitosamente');
       setOpenModal(false);
       setFetching(FetchStatus.Success);
+      window.location.reload();
     } catch (error: any) {
       setFetching(FetchStatus.Error);
       Toaster(
