@@ -80,8 +80,10 @@ export interface IClass {
 }
 
 export interface IUser {
-  id?: number;
+  id: number;
   first_name: string;
+  avatar?: string;
+  is_subscription_active: boolean;
   last_name: string;
   email: string;
   password: string;

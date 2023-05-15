@@ -22,9 +22,9 @@ moment.locale('es');
 const App: React.FC = () => {
   const [classes, setClasses] = useState<ClassInterface[]>([]);
   const [levels, setLevels] = useState<Levels[]>([]);
-  const { user } = useAuth();
   const [fetching, setFetching] = useState<FetchStatus>(FetchStatus.Idle);
   const [open, setOpen] = useState<boolean>(false);
+  const { user } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
 

@@ -1,6 +1,6 @@
-import { User } from '../../services/users/interfaces';
+import { IUser } from 'global/interfaces';
 
-interface TeacherType extends User {
+interface TeacherType extends IUser {
   role: 'teacher';
 }
 

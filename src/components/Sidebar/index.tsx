@@ -14,6 +14,7 @@ import { useAuth } from '../../contexts/AuthContext';
 
 const Sidebar: FC<SidebarProps> = ({ classes, handleOpenModal }) => {
   const { user } = useAuth();
+
   return (
     <SidebarContainer>
       <LogoContainer>
@@ -38,7 +39,7 @@ const Sidebar: FC<SidebarProps> = ({ classes, handleOpenModal }) => {
           ))}
         </LinkList>
       ) : null}
-      <RoundButton sx={{ marginBottom: '74px' }} color="info" onClick={() => handleOpenModal()}>
+      <RoundButton disabled={!user.is_subscription_active} sx={{ marginBottom: '74px' }} color="info" onClick={() => handleOpenModal()}>
         <AddIcon />
       </RoundButton>
       <UserInfo user={user} />
