@@ -1,6 +1,8 @@
 import 'styled-components';
 import { Theme } from '@mui/material/styles';
-import initMercadoPago, { MercadoPagoInstance } from '@mercadopago/sdk-react/mercadoPago/initMercadoPago';
+import initMercadoPago, {
+  MercadoPagoInstance,
+} from '@mercadopago/sdk-react/mercadoPago/initMercadoPago';
 
 interface CustomTheme {
   bg?: {
@@ -41,7 +43,7 @@ export interface ISubscription {
     frequency: number;
     transaction_amount: number;
     start_date: string;
-  },
+  };
   status: string;
   init_point: string;
 }

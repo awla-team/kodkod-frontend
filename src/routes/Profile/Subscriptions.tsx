@@ -1,8 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { CardPayment, Payment } from '@mercadopago/sdk-react';
-import { Box, Button, Chip, CircularProgress, FormControlLabel, Radio, RadioGroup, Typography } from '@mui/material';
-import { cancelSubscription, findSubscription, getPlans, startSubscription } from 'services/subscriptions';
+import {
+  Box,
+  Button,
+  Chip,
+  CircularProgress,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+  Typography,
+} from '@mui/material';
+import {
+  cancelSubscription,
+  findSubscription,
+  getPlans,
+  startSubscription,
+} from 'services/subscriptions';
 import { useAuth } from 'contexts/AuthContext';
 import { Link } from 'react-router-dom';
 import { FetchStatus } from 'global/enums';
@@ -27,7 +41,7 @@ const subscriptionStatus: any = {
   cancelled: {
     text: 'Subscripción cancelada',
     color: 'default',
-  }
+  },
 };
 
 const Subscriptions: React.FC = () => {
@@ -82,7 +96,10 @@ const Subscriptions: React.FC = () => {
     } catch (error: any) {
       setFetching(FetchStatus.Error);
       console.log(error);
-      Toaster('error', error.response.data.message || 'Ha ocurrido un error al procesar la suscripción');
+      Toaster(
+        'error',
+        error.response.data.message || 'Ha ocurrido un error al procesar la suscripción'
+      );
       console.log(error);
       return error;
     }
@@ -98,7 +115,10 @@ const Subscriptions: React.FC = () => {
       setFetching(FetchStatus.Success);
     } catch (error: any) {
       setFetching(FetchStatus.Error);
-      Toaster('error', error.response.data.message || 'Ha ocurrido un error al procesar la suscripción');
+      Toaster(
+        'error',
+        error.response.data.message || 'Ha ocurrido un error al procesar la suscripción'
+      );
       console.log(error);
       return error;
     }
@@ -107,28 +127,51 @@ const Subscriptions: React.FC = () => {
   return (
     <SubscriptionsContainer>
       <SubscriptionsBox className="p-5">
-        <Typography className="mb-4" variant="h4" fontWeight="bold">Mis suscripciones</Typography>
+        <Typography className="mb-4" variant="h4" fontWeight="bold">
+          Mis suscripciones
+        </Typography>
         {fetching !== FetchStatus.Pending && fetching !== FetchStatus.Idle ? (
           <>
-            {currentSubscription && currentSubscription.status !== 'cancelled'  ? (
+            {currentSubscription && currentSubscription.status !== 'cancelled' ? (
               <ActiveSubscriptionBox className="d-flex justify-content-between align-items-center p-4">
                 <div>
-                  <Chip className="mb-3" color={subscriptionStatus[currentSubscription.status].color} label={subscriptionStatus[currentSubscription.status].text} />
+                  <Chip
+                    className="mb-3"
+                    color={subscriptionStatus[currentSubscription.status].color}
+                    label={subscriptionStatus[currentSubscription.status].text}
+                  />
                   <div className="d-flex flex-column gap-2">
-                    <Typography variant="h6" fontWeight="bold">{currentSubscription.reason}</Typography>
-                    <Typography>{`$${currentSubscription.auto_recurring.transaction_amount.toLocaleString()}/${currentSubscription.auto_recurring.frequency === 1 ? 'mes' : 'año'}`}</Typography>
-                    <Typography variant="body2">{`Fecha de inicio: ${moment(currentSubscription.auto_recurring.start_date).format('DD-MM-yyyy')}`}</Typography>
+                    <Typography variant="h6" fontWeight="bold">
+                      {currentSubscription.reason}
+                    </Typography>
+                    <Typography>{`$${currentSubscription.auto_recurring.transaction_amount.toLocaleString()}/${
+                      currentSubscription.auto_recurring.frequency === 1 ? 'mes' : 'año'
+                    }`}</Typography>
+                    <Typography variant="body2">{`Fecha de inicio: ${moment(
+                      currentSubscription.auto_recurring.start_date
+                    ).format('DD-MM-yyyy')}`}</Typography>
                   </div>
                 </div>
                 <div className="d-flex flex-column gap-2">
-                  <Button component={Link} target="_blank" to={currentSubscription.init_point} variant="contained">Actualizar método de pago</Button>
-                  <Button onClick={() => setOpenModal(true)} size="small">Cancelar suscripción</Button>
+                  <Button
+                    component={Link}
+                    target="_blank"
+                    to={currentSubscription.init_point}
+                    variant="contained"
+                  >
+                    Actualizar método de pago
+                  </Button>
+                  <Button onClick={() => setOpenModal(true)} size="small">
+                    Cancelar suscripción
+                  </Button>
                 </div>
               </ActiveSubscriptionBox>
             ) : (
               <Box className="d-flex flex-column align-items-center">
                 <div>
-                  <Typography textAlign="center" className="mb-2">Selecciona un plan de suscripción</Typography>
+                  <Typography textAlign="center" className="mb-2">
+                    Selecciona un plan de suscripción
+                  </Typography>
                   <RadioGroup
                     name="plans"
                     row
@@ -145,15 +188,18 @@ const Subscriptions: React.FC = () => {
                         key={`plan-option-${i}`}
                         disabled={selectedPlan && formLoading}
                         value={plan.id}
-                        label={(
+                        label={
                           <div className="d-flex flex-column align-items-center">
                             <Typography>{plan.reason}</Typography>
                             <div className="d-flex align-items-center gap-1">
-                              <Typography fontWeight="bold" variant="h5">{`$${plan.auto_recurring.transaction_amount.toLocaleString()}`}</Typography>
+                              <Typography
+                                fontWeight="bold"
+                                variant="h5"
+                              >{`$${plan.auto_recurring.transaction_amount.toLocaleString()}`}</Typography>
                               {/*entry[1].old_price ? <Typography variant="body2" color="gray" sx={{ textDecoration: 'line-through' }}>{`$${entry[1].old_price.toLocaleString()}`}</Typography> : null*/}
                             </div>
                           </div>
-                        )}
+                        }
                         control={<Radio />}
                       />
                     ))}
@@ -165,35 +211,41 @@ const Subscriptions: React.FC = () => {
                     <Payment
                       onReady={() => setFormLoading(false)}
                       initialization={{
-                        amount: plans.find((plan) => plan.id === selectedPlan)?.auto_recurring.transaction_amount,
+                        amount: plans.find((plan) => plan.id === selectedPlan)?.auto_recurring
+                          .transaction_amount,
                         payer: {
-                          email: user.email
-                        }
+                          email: user.email,
+                        },
                       }}
                       customization={{
                         paymentMethods: {
-                          creditCard: "all",
-                          debitCard: "all",
-                          mercadoPago: "all",
+                          creditCard: 'all',
+                          debitCard: 'all',
+                          mercadoPago: 'all',
                           maxInstallments: 1,
                         },
                         visual: {
                           hideFormTitle: true,
                           defaultPaymentOption: {
-                            creditCardForm: true
+                            creditCardForm: true,
                           },
                           style: {
                             customVariables: {
                               successColor: 'transparent',
-                            }
-                          }
-                        }
+                            },
+                          },
+                        },
                       }}
                       onSubmit={async (param) => {
                         handleSubmit(param.formData.token);
                       }}
                     />
-                    {!formLoading ? <Typography variant="body2">Tu comprobante de suscripción llegará a tu correo electrónico asociado a tu cuenta Kodkod.</Typography> : null}
+                    {!formLoading ? (
+                      <Typography variant="body2">
+                        Tu comprobante de suscripción llegará a tu correo electrónico asociado a tu
+                        cuenta Kodkod.
+                      </Typography>
+                    ) : null}
                   </div>
                 ) : null}
               </Box>
@@ -212,14 +264,10 @@ const Subscriptions: React.FC = () => {
         confirmText="Sí, quiero cancelar mi suscripción"
         onClose={() => setOpenModal(false)}
         description="Esta acción pondrá fin a tu plan Pro. Podrás suscribirte nuevamente en el futuro si lo deseas."
-        
       />
     </SubscriptionsContainer>
   );
 };
-
-
-
 
 const BoxControlLabel = styled(FormControlLabel)`
   height: 200px;

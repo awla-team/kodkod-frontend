@@ -11,4 +11,5 @@ export const getPlans = () => http.get('subscription/plans');
 
 export const findSubscription = () => http.get('subscription/find');
 
-export const cancelSubscription = (subscriptionId: number | string) => http.put(`subscription/cancel/${subscriptionId}`);
+export const cancelSubscription = (subscriptionId: number | string) =>
+  http.put(`subscription/cancel/${subscriptionId}`);

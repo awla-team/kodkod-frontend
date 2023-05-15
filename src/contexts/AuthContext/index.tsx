@@ -20,7 +20,7 @@ import SubscribeModal from 'components/Modals/SubscribeModal';
 const AuthContext = createContext<AuthContextType>({
   user: null,
   logout: () => {},
-  checkUserSubscription: () => {}
+  checkUserSubscription: () => {},
 });
 
 export const useAuth = () => useContext(AuthContext);
@@ -55,7 +55,10 @@ const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
     user: null,
     authenticated: false,
   });
-  const [subscribeModalOpen, setSubscribeModalOpen] = useState<{ open: boolean, reason: string }>({ open: false, reason: 'Conviertete un miembro Pro' });
+  const [subscribeModalOpen, setSubscribeModalOpen] = useState<{ open: boolean; reason: string }>({
+    open: false,
+    reason: 'Conviertete un miembro Pro',
+  });
 
   const getAuthUser = async (): Promise<Omit<User, 'avatar'>> => {
     try {
@@ -154,10 +157,16 @@ const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
     return <Navigate to="/signin" />;
   }
 
-  return <AuthContext.Provider value={{ user, logout, checkUserSubscription }}>
-    {children}
-    <SubscribeModal open={subscribeModalOpen.open} reason={subscribeModalOpen.reason} onClose={() => setSubscribeModalOpen({ ...subscribeModalOpen, open: false })} />
-  </AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ user, logout, checkUserSubscription }}>
+      {children}
+      <SubscribeModal
+        open={subscribeModalOpen.open}
+        reason={subscribeModalOpen.reason}
+        onClose={() => setSubscribeModalOpen({ ...subscribeModalOpen, open: false })}
+      />
+    </AuthContext.Provider>
+  );
 };
 
 export default AuthContextProvider;

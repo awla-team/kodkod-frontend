@@ -4,7 +4,14 @@ import { IAdventureCardProps } from './interfaces';
 import { AdventureCardContainer } from './styled';
 import StarIcon from '@mui/icons-material/Star';
 
-const AdventureCard: React.FC<IAdventureCardProps> = ({ title, completed, demo, img, info, onClick }) => {
+const AdventureCard: React.FC<IAdventureCardProps> = ({
+  title,
+  completed,
+  demo,
+  img,
+  info,
+  onClick,
+}) => {
   return (
     <AdventureCardContainer
       onClick={!completed ? onClick : () => {}}
@@ -17,7 +24,9 @@ const AdventureCard: React.FC<IAdventureCardProps> = ({ title, completed, demo, 
       {!demo ? (
         <div className="demo-indicator gap-1">
           <StarIcon fontSize="small" sx={{ fontSize: '16px' }} />
-          <Typography fontWeight="bold" variant="body2">Pro</Typography>
+          <Typography fontWeight="bold" variant="body2">
+            Pro
+          </Typography>
         </div>
       ) : null}
       <div>

@@ -22,8 +22,8 @@ const MissionCard: React.FC<IMissionCardProps> = ({
     e.stopPropagation();
     checkUserSubscription('Reemplazar una misión es una funcionalidad Pro', () => {
       openModal(mission);
-    })
-  }
+    });
+  };
 
   return (
     <MissionCardContainer

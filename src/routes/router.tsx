@@ -84,9 +84,9 @@ export const router = createBrowserRouter([
             children: [
               {
                 path: 'suscripciones',
-                element: <Subscriptions />
-              }
-            ]
+                element: <Subscriptions />,
+              },
+            ],
           },
           {
             path: 'cursos/:classId',
