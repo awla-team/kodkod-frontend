@@ -11,6 +11,11 @@ export const UserInfoContainer = styled.div`
     font-size: 16px;
     text-align: center;
   }
+
+  .MuiChip-root {
+    background: ${(props) => props.theme.palette.highlight.main};
+    color: ${(props) => props.theme.palette.highlight.contrastText};
+  }
 `;
 
 export const UserInfoButton = styled.div`
