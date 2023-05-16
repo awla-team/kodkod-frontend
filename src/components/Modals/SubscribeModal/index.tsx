@@ -32,10 +32,9 @@ const SubscribeModal: FC<{ open: boolean; onClose: () => void; reason: string }>
               Con <b>Kodkod Pro</b> podrás:
             </Typography>
             <ul>
-              <li>Crear múltiples cursos de distintos niveles</li>
-              <li>Acceder a nuevas y fascinantes aventuras</li>
+              <li>Crear cursos ilimitados de distintos niveles</li>
+              <li>Acceder a TODAS las aventuras (¡incluyendo las que salgan a futuro!)</li>
               <li>Reemplazar misiones de aventuras</li>
-              <li>Editar las recompensas del curso</li>
               <li>Soporte preferencial</li>
               <li>¡Acceso anticipado a TODAS las nuevas funcionalidades que vienen en camino!</li>
             </ul>

@@ -47,7 +47,7 @@ const Sidebar: FC<SidebarProps> = ({ classes, handleOpenModal }) => {
       <div>
         {!user.is_subscription_active ? (
           <Button
-            className="text-center"
+            className="text-center px-0"
             component={Link}
             to="/app/perfil/suscripciones"
             sx={{ '&:hover': { color: '#fff' }, fontSize: '12px' }}

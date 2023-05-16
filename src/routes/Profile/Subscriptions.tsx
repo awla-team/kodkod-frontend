@@ -132,6 +132,20 @@ const Subscriptions: React.FC = () => {
         <Typography className="mb-4" variant="h4" fontWeight="bold">
           Mis suscripciones
         </Typography>
+        <Typography className="mb-2">
+          ¡Suscríbete ya mismo a <b>Kodkod Pro</b> y accede a nuevas funciones y características que
+          te ayudaran a convertir tu clase en un ambiente de sana convivencia!
+        </Typography>
+        <Typography>
+          Con <b>Kodkod Pro</b> podrás:
+        </Typography>
+        <ul>
+          <li>Crear cursos ilimitados de distintos niveles</li>
+          <li>Acceder a TODAS las aventuras (¡incluyendo las que salgan a futuro!)</li>
+          <li>Reemplazar misiones de aventuras</li>
+          <li>Soporte preferencial</li>
+          <li>¡Acceso anticipado a TODAS las nuevas funcionalidades que vienen en camino!</li>
+        </ul>
         {fetching !== FetchStatus.Pending && fetching !== FetchStatus.Idle ? (
           <>
             {currentSubscription && currentSubscription.status !== 'cancelled' ? (

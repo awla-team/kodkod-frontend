@@ -29,7 +29,6 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
         <Chip
           className="mb-2"
           sx={{ span: { padding: '2px 8px' } }}
-          color="primary"
           label={
             <Typography
               variant="body2"
