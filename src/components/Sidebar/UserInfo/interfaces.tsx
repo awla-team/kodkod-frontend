@@ -1,5 +1,5 @@
-import { User } from 'services/users/interfaces';
+import { IUser } from 'global/interfaces';
 
 export interface UserInfoProps {
-  user: User | null;
+  user: IUser | null;
 }

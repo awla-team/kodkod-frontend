@@ -14,4 +14,15 @@ export const AdventureBanner = styled(Box)`
   box-shadow: inset 0 0 200px 40px #000;
   border-radius: 0px;
   color: #fff;
+
+  .demo-indicator {
+    display flex;
+    width: 60px;
+    align-items: center;
+    justify-content: center;
+    background: ${(props) => props.theme.palette.highlight.main};
+    padding: 4px 8px;
+    text-align: center;
+    border-radius: 16px;
+  }
 `;

@@ -11,16 +11,19 @@ import {
 import type { IAdventure } from 'global/interfaces';
 import Toaster from 'utils/Toster';
 import { setCurrentAdventure } from 'services/adventures';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import SkillPoints from 'components/SkillPoints';
 import EmojiFlagsIcon from '@mui/icons-material/EmojiFlags';
 import { AdventureBanner } from './styled';
 import { useClassContext } from 'routes/Class/context';
+import StarIcon from '@mui/icons-material/Star';
+import { useAuth } from 'contexts/AuthContext';
 
 const AdventureSummaryDialog: React.FC<{
   selectedAdventure: IAdventure;
   handleOnCloseModal: () => void;
 }> = ({ selectedAdventure, handleOnCloseModal }) => {
+  const { user } = useAuth();
   const { classId } = useParams();
   const [shownAdventure, setShownAdventure] = useState<IAdventure>(undefined);
   const [sortedStages, setSortedStages] = useState([]);
@@ -67,6 +70,14 @@ const AdventureSummaryDialog: React.FC<{
     <Dialog open={!!selectedAdventure} onClose={handleOnCloseModal} fullWidth maxWidth="lg">
       <DialogTitle className="d-flex flex-column p-0">
         <AdventureBanner sx={{ backgroundImage: `url(${selectedAdventure?.banner})` }}>
+          {!shownAdventure?.demo ? (
+            <div className="demo-indicator gap-1 mb-3">
+              <StarIcon fontSize="small" sx={{ fontSize: '16px' }} />
+              <Typography fontWeight="bold" variant="body2">
+                Pro
+              </Typography>
+            </div>
+          ) : null}
           <Typography variant="h4" fontWeight="bold" className="mb-2">
             {shownAdventure?.title}
           </Typography>
@@ -135,9 +146,23 @@ const AdventureSummaryDialog: React.FC<{
         <Button variant={'outlined'} onClick={handleOnCloseModal}>
           Cancelar
         </Button>
-        <Button variant="contained" color="primary" onClick={setAdventure}>
-          Quiero esta aventura
-        </Button>
+        {!shownAdventure?.demo && !user.is_subscription_active ? (
+          <Button
+            className="ms-2"
+            sx={{ '&:hover': { color: '#fff' } }}
+            component={Link}
+            to="/app/perfil/suscripciones"
+            variant="contained"
+            color="primary"
+            onClick={handleOnCloseModal}
+          >
+            Suscribirse a Kodkod Pro
+          </Button>
+        ) : (
+          <Button variant="contained" color="primary" onClick={setAdventure}>
+            Quiero esta aventura
+          </Button>
+        )}
       </DialogActions>
     </Dialog>
   );

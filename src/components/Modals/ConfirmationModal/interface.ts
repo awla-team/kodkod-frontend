@@ -4,6 +4,7 @@ export interface ConfirmationModalProps {
   onClose: () => void;
   title?: string;
   confirmText?: string;
+  cancelText?: string;
   description?: string | React.ReactNode;
   loading?: boolean;
 }

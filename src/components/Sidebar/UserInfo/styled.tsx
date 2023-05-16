@@ -2,9 +2,6 @@ import { Button, Fab } from '@mui/material';
 import styled from 'styled-components';
 
 export const UserInfoContainer = styled.div`
-  position: absolute;
-  bottom: 16px;
-  height: 80px;
   display: flex;
   flex-direction: column;
   align-items: center;
