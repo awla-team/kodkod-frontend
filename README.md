@@ -9,6 +9,10 @@ Install dependencies:
 
 > yarn
 
+Edit API URL in `.env` file:
+
+> VITE_BASE_URL=apiurl
+
 Run project:
 
 > yarn dev
