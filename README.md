@@ -1,5 +1,6 @@
 # Kodkod Client
-Property of Awla SpA
+
+Property of Awla SpA  
 Developers: Álvaro Arratia Ramírez, Bastián Díaz Olave
 
 ## Getting Started
