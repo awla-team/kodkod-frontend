@@ -141,10 +141,15 @@ const Rewards: FC = () => {
           Recompensas
         </Typography>
         <Typography component="p" variant="body1" className="mb-2">
-          Para modificar el texto de las recompensas haz clic en el lápiz negro de la esquina superior derecha de cada recompensa. Puedes tomar en cuenta las sugerencias de tus estudiantes y las reglas de convivencia tu propio colegio.
+          Para modificar el texto de las recompensas haz clic en el lápiz negro de la esquina
+          superior derecha de cada recompensa. Puedes tomar en cuenta las sugerencias de tus
+          estudiantes y las reglas de convivencia tu propio colegio.
         </Typography>
         <Typography component="p" variant="body1" className="mb-2">
-          Algunas sugerencias de recompensa pueden ser desde cambiarse de puesto, tener un día adicional para entregar una tarea, poder comer en clases, una anotación positiva y/o un reconocimiento en el diario mural. Recuerda que las recompensas están ordenadas según su valor, siendo la última la más difícil de obtener.
+          Algunas sugerencias de recompensa pueden ser desde cambiarse de puesto, tener un día
+          adicional para entregar una tarea, poder comer en clases, una anotación positiva y/o un
+          reconocimiento en el diario mural. Recuerda que las recompensas están ordenadas según su
+          valor, siendo la última la más difícil de obtener.
         </Typography>
         <Typography component="p" variant="body1">
           Los estudiantes recibirán recompensas <b>automáticamente</b> cada vez que alcancen el
