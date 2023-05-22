@@ -9,6 +9,7 @@ import { MyClassesBox, LevelAccordion, MyClassesContainer } from './styled';
 const MyClasses: FC<MyClassesProps> = ({ classes, getClassesData }: MyClassesProps) => {
   const classesData = useMemo(() => {
     const totalLevel = [...new Set(classes.map((res) => res.level))].sort();
+
     return totalLevel.map((classLevel) => ({
       level: classLevel,
       classes: classes.filter((classData) => classLevel === classData.level),
