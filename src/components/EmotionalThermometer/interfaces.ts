@@ -1,9 +1,9 @@
 import { Moment } from 'moment';
 import React, { Dispatch, SetStateAction } from 'react';
-import { ClassInterface } from 'services/classes/interfaces';
+import { IClass } from 'global/interfaces';
 
 export interface EmotionalThermometerProps {
-  classDetails: ClassInterface;
+  classDetails: IClass;
 }
 
 export interface FormInitialValue {

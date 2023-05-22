@@ -3,7 +3,7 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import { CircularProgress } from '@mui/material';
 import Sidebar from './components/Sidebar';
 import { getClassesByUser } from 'services/classes';
-import { ClassInterface } from 'services/classes/interfaces';
+import { IClass } from 'global/interfaces';
 import { AxiosResponse } from 'axios';
 import { FetchStatus } from 'global/enums';
 import { CreateClassModal } from './components/Modals';
@@ -21,7 +21,7 @@ import SubscribeModal from 'components/Modals/SubscribeModal';
 moment.locale('es');
 
 const App: React.FC = () => {
-  const [classes, setClasses] = useState<ClassInterface[]>([]);
+  const [classes, setClasses] = useState<IClass[]>([]);
   const [levels, setLevels] = useState<Levels[]>([]);
   const [fetching, setFetching] = useState<FetchStatus>(FetchStatus.Idle);
   const [createClassModalOpen, setCreateClassModalOpen] = useState<boolean>(false);
@@ -34,7 +34,7 @@ const App: React.FC = () => {
       .then((response: AxiosResponse) => {
         return response?.data?.responseData;
       })
-      .then((classes: ClassInterface[]) => {
+      .then((classes: IClass[]) => {
         setClasses(!!classes ? sortClasses(classes) : []);
         setFetching(FetchStatus.Success);
       })
@@ -60,10 +60,7 @@ const App: React.FC = () => {
     }
   };
 
-  const handleClose = (
-    reason: 'backdropClick' | 'escapeKeyDown' | 'success',
-    data?: ClassInterface
-  ) => {
+  const handleClose = (reason: 'backdropClick' | 'escapeKeyDown' | 'success', data?: IClass) => {
     if (reason !== 'backdropClick') setCreateClassModalOpen(false);
     if (reason === 'success') {
       if (data) {

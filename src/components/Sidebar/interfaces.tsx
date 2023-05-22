@@ -1,4 +1,4 @@
-import { ClassInterface } from 'services/classes/interfaces';
+import { IClass } from 'global/interfaces';
 
 export interface Route {
   title: string;
@@ -7,6 +7,6 @@ export interface Route {
 }
 
 export interface SidebarProps {
-  classes?: ClassInterface[];
+  classes?: IClass[];
   handleOpenModal: () => void;
 }

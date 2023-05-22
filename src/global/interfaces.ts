@@ -48,6 +48,13 @@ export interface ISubscription {
   init_point: string;
 }
 
+export interface IGoal {
+  id: number;
+  title: string;
+  description?: string;
+  image_url: string;
+}
+
 export interface ISkill {
   id: string;
   title: string;

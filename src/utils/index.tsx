@@ -1,4 +1,4 @@
-import { ClassInterface } from 'services/classes/interfaces';
+import { IClass } from 'global/interfaces';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { IStage } from '../global/interfaces';
 import { generateAccessToken } from '../services/auth';
@@ -13,7 +13,7 @@ export const difficultyIcons = {
   hard: <SignalCellularAltIcon fontSize="small" />,
 };
 
-export const sortClasses = (classes?: ClassInterface[]): ClassInterface[] => {
+export const sortClasses = (classes?: IClass[]): IClass[] => {
   if (classes && Array.isArray(classes)) {
     return classes?.sort((a, b) => {
       if (a.alias < b.alias) {

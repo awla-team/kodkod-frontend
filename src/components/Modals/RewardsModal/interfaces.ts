@@ -1,5 +1,5 @@
 import type { PropsWithChildren, MouseEvent } from 'react';
-import { ClassInterface } from '../../../services/classes/interfaces';
+import { IClass } from 'global/interfaces';
 
 export interface Levels {
   id: number | string;
@@ -8,10 +8,10 @@ export interface Levels {
 
 export interface CreateClassModalProps {
   open: boolean;
-  onClose: (reason: 'backdropClick' | 'escapeKeyDown' | 'success', data?: ClassInterface) => void;
+  onClose: (reason: 'backdropClick' | 'escapeKeyDown' | 'success', data?: IClass) => void;
   levels: Levels[];
 
-  classDetails?: ClassInterface;
+  classDetails?: IClass;
 }
 
 export interface FormInitialState {

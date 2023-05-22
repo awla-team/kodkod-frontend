@@ -2,7 +2,7 @@ import React from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { DashboardContainer, DetailsCard } from './styled';
 import ClassDetailsCard from 'components/ClassDetailsCard';
-import { ClassInterface } from 'services/classes/interfaces';
+import { IClass } from 'global/interfaces';
 import StudentsList from 'components/StudentsList';
 import { StudentType } from 'components/StudentsList/interfaces';
 import EmotionalThermometer from 'components/EmotionalThermometer';
@@ -10,7 +10,7 @@ import { Levels } from 'components/Modals/CreateClassModal/interfaces';
 
 const Board: React.FC = () => {
   const { classDetails, students, levels } = useOutletContext() as {
-    classDetails: ClassInterface;
+    classDetails: IClass;
     students: StudentType[];
     levels: Levels[];
   };

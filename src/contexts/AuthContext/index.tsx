@@ -11,7 +11,7 @@ import {
 import { AuthContextType } from './interfaces';
 import { getAuthUser as getAuthUserAction } from 'services/users';
 import Toaster from 'utils/Toster';
-import { User } from 'services/users/interfaces';
+import { IUser } from 'global/interfaces';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { logout as makeLogout } from 'services/auth';
 import SubscribeModal from 'components/Modals/SubscribeModal';
@@ -60,9 +60,9 @@ const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
     reason: 'Conviertete un miembro Pro',
   });
 
-  const getAuthUser = async (): Promise<Omit<User, 'avatar'>> => {
+  const getAuthUser = async (): Promise<Omit<IUser, 'avatar'>> => {
     try {
-      const { data }: { data: { responseData: Omit<User, 'avatar'> } } = await getAuthUserAction();
+      const { data }: { data: { responseData: Omit<IUser, 'avatar'> } } = await getAuthUserAction();
       return data.responseData;
     } catch (e) {
       throw e;
