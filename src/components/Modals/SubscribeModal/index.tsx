@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { SubscriptionImg } from './styled';
+import subscribeImage from './../../../assets/images/subscribe.png';
 
 const SubscribeModal: FC<{ open: boolean; onClose: () => void; reason: string }> = ({
   open,
@@ -21,7 +22,7 @@ const SubscribeModal: FC<{ open: boolean; onClose: () => void; reason: string }>
       <DialogContent dividers className="py-5">
         <div className="d-flex flex-column flex-lg-row gap-4 align-items-center">
           <div>
-            <SubscriptionImg src={null} />
+            <SubscriptionImg src={subscribeImage} />
           </div>
           <div>
             <Typography className="mb-2">

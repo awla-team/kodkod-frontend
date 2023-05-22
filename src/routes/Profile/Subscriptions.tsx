@@ -69,17 +69,19 @@ const Subscriptions: React.FC = () => {
 
   useEffect(() => {
     (async () => {
-      setFetching(FetchStatus.Pending);
-      try {
-        const subscriptionResponse = await findSubscription();
-        setCurrentSubscription(subscriptionResponse.data.results[0]);
-        setFetching(FetchStatus.Success);
-      } catch (error) {
-        console.log(error);
-        setFetching(FetchStatus.Error);
+      if (user.payer_id) {
+        setFetching(FetchStatus.Pending);
+        try {
+          const subscriptionResponse = await findSubscription();
+          setCurrentSubscription(subscriptionResponse.data.results[0]);
+          setFetching(FetchStatus.Success);
+        } catch (error) {
+          console.log(error);
+          setFetching(FetchStatus.Error);
+        }
       }
     })();
-  }, []);
+  }, [user]);
 
   const handleSubmit = async (token: string) => {
     setFetching(FetchStatus.Pending);
