@@ -1,5 +1,5 @@
-import { ClassInterfaceModified } from 'services/classes/interfaces';
+import { IClass } from 'global/interfaces';
 
 export interface ClassCardProps {
-  classObj: ClassInterfaceModified;
+  classObj: IClass;
 }

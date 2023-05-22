@@ -1,5 +1,4 @@
 import { IClass } from 'global/interfaces';
-import { ClassInterfaceModified } from 'services/classes/interfaces';
 
 export interface MyClassesProps {
   classes: IClass[];
@@ -8,5 +7,5 @@ export interface MyClassesProps {
 
 export interface ClassLevelData {
   level: number;
-  classes: ClassInterfaceModified[];
+  classes: IClass[];
 }

@@ -1,9 +1,9 @@
-import { ClassInterface } from 'services/classes/interfaces';
+import { IClass } from 'global/interfaces';
 import { Levels } from '../Modals/CreateClassModal/interfaces';
 import React from 'react';
 
 export interface ClassDetailsCardProps {
-  classDetails: ClassInterface;
+  classDetails: IClass;
   levels: Levels[];
 }
 

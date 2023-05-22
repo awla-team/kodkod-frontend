@@ -1,4 +1,4 @@
-import { ClassInterface } from 'services/classes/interfaces';
+import { IClass } from 'global/interfaces';
 import { IMission } from '../../global/interfaces';
 
 export interface StudentType {
@@ -23,7 +23,7 @@ export interface StudentUpdateDataType {
 
 export interface StudentsListProps {
   studentsData: StudentType[];
-  classDetails: ClassInterface;
+  classDetails: IClass;
 }
 
 export interface StudentEditInputField {

@@ -18,7 +18,7 @@ import * as Yup from 'yup';
 import { useEffect, useState } from 'react';
 import { createClass, updateClass } from 'services/classes';
 import Toaster from 'utils/Toster';
-import { ClassInterface } from 'services/classes/interfaces';
+import { IClass } from 'global/interfaces';
 import { useAuth } from 'contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -71,7 +71,7 @@ const CreateClassModal: FC<CreateClassModalProps> = ({ open, onClose, levels, cl
   ) => {
     try {
       if (classDetails) {
-        const { data }: { data: { responseData: ClassInterface } } = await updateClass({
+        const { data }: { data: { responseData: IClass } } = await updateClass({
           ...values,
           id_level: values.id_level as number,
           id: classDetails.id,
@@ -83,7 +83,7 @@ const CreateClassModal: FC<CreateClassModalProps> = ({ open, onClose, levels, cl
           window.location.reload();
         }, 500);
       } else {
-        const { data }: { data: { responseData: ClassInterface } } = await createClass({
+        const { data }: { data: { responseData: IClass } } = await createClass({
           ...values,
           id_user: user.id,
           id_level: values.id_level as number,

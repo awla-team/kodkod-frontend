@@ -6,7 +6,7 @@ import SidebarLink from './SidebarLink';
 import AddIcon from '@mui/icons-material/Add';
 import UserInfo from './UserInfo';
 import { Button, Divider } from '@mui/material';
-import { ClassInterface } from 'services/classes/interfaces';
+import { IClass } from 'global/interfaces';
 import { RoundButton } from './RoundButton/styled';
 import HomeIcon from '@mui/icons-material/Home';
 import { Link, Link as RouterLink } from 'react-router-dom';
@@ -30,7 +30,7 @@ const Sidebar: FC<SidebarProps> = ({ classes, handleOpenModal }) => {
         </RouterLink>
         {classes.length ? (
           <LinkList>
-            {classes?.map?.((teacherClass: ClassInterface, index) => (
+            {classes?.map?.((teacherClass: IClass, index) => (
               <SidebarLink
                 key={`side-bar-${teacherClass.id}-${index}`}
                 linkId={teacherClass.id}
