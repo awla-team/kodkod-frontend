@@ -2,11 +2,11 @@ import { FC } from 'react';
 import WelcomePage from './WelcomePage';
 import MyClasses from './MyClasses';
 import { useOutletContext } from 'react-router-dom';
-import { IClass } from 'global/interfaces';
+import { ModifiedIClass } from 'global/interfaces';
 
 const HomePage: FC = () => {
   const { classes, handleOpenModal, getClassesData } = useOutletContext() as {
-    classes: Array<IClass>;
+    classes: Array<ModifiedIClass>;
     handleOpenModal: () => void;
     getClassesData: () => void;
   };

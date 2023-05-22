@@ -1,7 +1,7 @@
-import { IClass } from 'global/interfaces';
+import { IClass, ModifiedIClass } from 'global/interfaces';
 
 export interface MyClassesProps {
-  classes: IClass[];
+  classes: ModifiedIClass[];
   getClassesData: () => void;
 }
 
