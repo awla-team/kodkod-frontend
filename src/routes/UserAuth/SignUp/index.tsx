@@ -396,10 +396,7 @@ const SignUp: React.FC = () => {
                       label={
                         <Typography variant="body2">
                           He leído y acepto los{' '}
-                          <a
-                            target="_blank"
-                            href="https://kodkod.cl/terminos-y-condiciones"
-                          >
+                          <a target="_blank" href="https://kodkod.cl/terminos-y-condiciones">
                             términos y condiciones
                           </a>{' '}
                           de uso.
@@ -420,12 +417,10 @@ const SignUp: React.FC = () => {
                       label={
                         <Typography variant="body2">
                           He leído y acepto la{' '}
-                          <a
-                            target="_blank"
-                            href="https://kodkod.cl/privacidad"
-                          >
+                          <a target="_blank" href="https://kodkod.cl/privacidad">
                             política de privacidad
-                          </a>.
+                          </a>
+                          .
                         </Typography>
                       }
                     />
