@@ -186,6 +186,26 @@ export interface ISchool {
   phone: string;
 }
 
+export interface IPlan {
+  application_id: number;
+  auto_recurring: {
+    frequency: number;
+    currency_id: string;
+    transaction_amount: number;
+    frequency_type: string;
+  };
+  back_url: string;
+  collector_id: number;
+  date_created: string;
+  external_reference: string;
+  id: string;
+  init_point: string;
+  last_modified: string;
+  reason: string;
+  status: string;
+  subscribed: number;
+}
+
 export interface SignInResponseType {
   accessToken: string;
   refreshToken: string;
