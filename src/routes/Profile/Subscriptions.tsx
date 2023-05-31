@@ -204,7 +204,7 @@ const Subscriptions: React.FC = () => {
                     {plans.map((plan, i) => (
                       <BoxControlLabel
                         key={`plan-option-${i}`}
-                        disabled={selectedPlan && formLoading}
+                        disabled={!!selectedPlan && formLoading}
                         value={plan.id}
                         label={
                           <div className="d-flex flex-column align-items-center">
