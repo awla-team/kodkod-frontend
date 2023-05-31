@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { CardPayment, Payment } from '@mercadopago/sdk-react';
+import { Payment } from '@mercadopago/sdk-react';
 import {
   Box,
   Button,
@@ -20,7 +20,7 @@ import {
 import { useAuth } from 'contexts/AuthContext';
 import { Link } from 'react-router-dom';
 import { FetchStatus } from 'global/enums';
-import { ISubscription } from 'global/interfaces';
+import { IPlan, ISubscription } from 'global/interfaces';
 import ConfirmationModal from 'components/Modals/ConfirmationModal';
 import moment from 'moment';
 import Toaster from 'utils/Toster';
@@ -46,7 +46,7 @@ const subscriptionStatus: any = {
 
 const Subscriptions: React.FC = () => {
   const { user } = useAuth();
-  const [plans, setPlans] = useState([]);
+  const [plans, setPlans] = useState<IPlan[]>([]);
   const [selectedPlan, setSelectedPlan] = useState('');
   const [currentSubscription, setCurrentSubscription] = useState<ISubscription>();
   const [openModal, setOpenModal] = useState(false);
@@ -58,7 +58,13 @@ const Subscriptions: React.FC = () => {
       setFetching(FetchStatus.Pending);
       try {
         const plansResponse = await getPlans();
-        setPlans(plansResponse.data.results);
+        setPlans(
+          plansResponse.data.results.sort((a: IPlan, b: IPlan) => {
+            if (a.reason > b.reason) return -1;
+            if (a.reason < b.reason) return 1;
+            return 0;
+          })
+        );
         setFetching(FetchStatus.Success);
       } catch (error) {
         console.log(error);
