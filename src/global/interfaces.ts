@@ -184,6 +184,7 @@ export interface ISchool {
   id_address: number;
   name: string;
   phone: string;
+  commune?: string;
 }
 
 export interface IPlan {

@@ -98,28 +98,6 @@ const SignUp: React.FC = () => {
       .finally(() => {
         formikHelper.setSubmitting(false);
       });
-    // try {
-    //   delete values.confirmPassword;
-    //   await signUp(values);
-    //   Toaster("success", "You will get a verification email!");
-    //   formikHelper.resetForm();
-    // } catch (e: any) {
-    //   if (e instanceof AxiosError) {
-    //     const {
-    //       data: { responseData },
-    //     } = e.response;
-    //     if (
-    //       responseData.client === "postgres" &&
-    //       responseData?.constraint === "user_email_unique"
-    //     ) {
-    //       Toaster("error", "Email already exists");
-    //       formikHelper.setFieldError("email", "Email already exists");
-    //     }
-    //   }
-    //   Toaster("error", e.message);
-    // } finally {
-    //   formikHelper.setSubmitting(false);
-    // }
   };
 
   const getSchools = async () => {
@@ -279,7 +257,6 @@ const SignUp: React.FC = () => {
                       variant="outlined"
                     />
                   </FormControl>
-
                   <FormControl required error={!!errors.confirmPassword && touched.confirmPassword}>
                     <TextField
                       required
@@ -293,17 +270,21 @@ const SignUp: React.FC = () => {
                       variant="outlined"
                     />
                   </FormControl>
-
                   <FormControl>
                     <Autocomplete
                       id="school"
                       options={schools}
-                      getOptionLabel={(school) => school.name}
+                      getOptionLabel={(school) =>
+                        !!school?.commune ? `${school.name} (${school.commune})` : school.name
+                      }
                       renderOption={(props, school) => (
                         <li {...props} key={`school-${school.id}`}>
-                          {school.name}
+                          {!!school?.commune ? `${school.name} (${school.commune})` : school.name}
                         </li>
                       )}
+                      isOptionEqualToValue={(option: ISchool, value: ISchool) => {
+                        return option.id === value.id;
+                      }}
                       noOptionsText="No se encuentra el establecimiento"
                       onChange={(_event, value) => {
                         setFieldValue('school', !!value ? value.id : formInitialValues.school);
@@ -316,29 +297,6 @@ const SignUp: React.FC = () => {
                         />
                       )}
                     />
-                    {/* <InputLabel id="school-label">
-                      Establecimiento educacional (opcional)
-                    </InputLabel> 
-                    <Select
-                      labelId="school-label"
-                      variant={"outlined"}
-                      name={"school"}
-                      value={values.school}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      label="Establecimiento educacional (opcional)"
-                    >
-                      <MenuItem value={""} disabled>
-                        Escoge un colegio
-                      </MenuItem>
-                      {schools.map((school, index) => {
-                        return (
-                          <MenuItem key={index} value={school.id}>
-                            {school.name}
-                          </MenuItem>
-                        );
-                      })}
-                    </Select> */}
                   </FormControl>
                   <FormControl>
                     <Autocomplete
@@ -357,31 +315,7 @@ const SignUp: React.FC = () => {
                         />
                       )}
                     />
-                    {/* <InputLabel id="subject-label">
-                      ¿Qué asignatura enseñas? (opcional)
-                    </InputLabel>
-                    <Select
-                      labelId="subject-label"
-                      variant={"outlined"}
-                      name={"subject"}
-                      value={values.subject}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      label="¿Qué asignatura enseñas? (opcional)"
-                    >
-                      <MenuItem disabled value={""}>
-                        Escoge una asignatura
-                      </MenuItem>
-                      {subjects.map((subject, index) => {
-                        return (
-                          <MenuItem key={index} value={subject}>
-                            {subject}
-                          </MenuItem>
-                        );
-                      })}
-                    </Select> */}
                   </FormControl>
-
                   <div>
                     <FormControlLabel
                       className="justify-content-center m-0"
@@ -403,7 +337,6 @@ const SignUp: React.FC = () => {
                         </Typography>
                       }
                     />
-
                     <FormControlLabel
                       className="justify-content-center m-0"
                       control={
@@ -425,7 +358,6 @@ const SignUp: React.FC = () => {
                       }
                     />
                   </div>
-
                   <Box
                     className={'action__container'}
                     display={'flex'}
