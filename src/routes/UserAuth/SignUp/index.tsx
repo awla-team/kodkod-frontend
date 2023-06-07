@@ -274,10 +274,12 @@ const SignUp: React.FC = () => {
                     <Autocomplete
                       id="school"
                       options={schools}
-                      getOptionLabel={(school) => `${school.name} (${school.commune})`}
+                      getOptionLabel={(school) =>
+                        !!school?.commune ? `${school.name} (${school.commune})` : school.name
+                      }
                       renderOption={(props, school) => (
                         <li {...props} key={`school-${school.id}`}>
-                          {`${school.name} (${school.commune})`}
+                          {!!school?.commune ? `${school.name} (${school.commune})` : school.name}
                         </li>
                       )}
                       isOptionEqualToValue={(option: ISchool, value: ISchool) => {
