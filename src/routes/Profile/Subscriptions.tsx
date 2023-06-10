@@ -249,7 +249,15 @@ const Subscriptions: React.FC = () => {
                                 fontWeight="bold"
                                 variant="h5"
                               >{`$${plan.auto_recurring.transaction_amount.toLocaleString()}`}</Typography>
-                              {/*entry[1].old_price ? <Typography variant="body2" color="gray" sx={{ textDecoration: 'line-through' }}>{`$${entry[1].old_price.toLocaleString()}`}</Typography> : null*/}
+                              <Typography
+                                variant="body2"
+                                color="gray"
+                                sx={{ textDecoration: 'line-through' }}
+                              >
+                                {plan.external_reference === 'pro_anual'
+                                  ? `$${(99990).toLocaleString()}`
+                                  : `$${(9990).toLocaleString()}`}
+                              </Typography>
                             </div>
                           </div>
                         }
