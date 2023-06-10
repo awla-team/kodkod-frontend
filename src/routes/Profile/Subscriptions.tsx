@@ -156,7 +156,7 @@ const Subscriptions: React.FC = () => {
         </ul>
         {fetching !== FetchStatus.Pending && fetching !== FetchStatus.Idle ? (
           <>
-            {currentSubscription && currentSubscription.status !== 'cancelled' ? (
+            {currentSubscription && user.is_subscription_active ? (
               <ActiveSubscriptionBox className="d-flex justify-content-between align-items-center p-4">
                 <div>
                   <Chip
@@ -171,12 +171,13 @@ const Subscriptions: React.FC = () => {
                     <Typography>{`$${currentSubscription.auto_recurring.transaction_amount.toLocaleString()}/${
                       currentSubscription.auto_recurring.frequency === 1 ? 'mes' : 'año'
                     }`}</Typography>
-                    <Typography variant="body2">{`Fecha de inicio: ${moment(
-                      currentSubscription.auto_recurring.start_date
+                    <Typography variant="body2">{`${currentSubscription.status !== 'cancelled' ? 'Próxima facturación:' : 'Finaliza el:'} ${moment(
+                      user.subscription_end
                     ).format('DD-MM-yyyy')}`}</Typography>
                   </div>
                 </div>
-                <div className="d-flex flex-column gap-2">
+                {currentSubscription.status !== 'cancelled' ? (
+                  <div className="d-flex flex-column gap-2">
                   <Button
                     component={Link}
                     target="_blank"
@@ -189,8 +190,15 @@ const Subscriptions: React.FC = () => {
                     Cancelar suscripción
                   </Button>
                 </div>
+                ) : (
+                  <div className="d-flex flex-column">
+                    <Typography variant="caption">Seguirás teniendo Kodkod Pro hasta el {moment(user.subscription_end).format('DD-MM-yyyy')}</Typography>
+                    <Typography variant="caption" fontWeight="bold">¡Puedes suscribirte de nuevo después de esta fecha!</Typography>
+                  </div>
+                )}
               </ActiveSubscriptionBox>
-            ) : (
+            ) : null}
+            {!user.is_subscription_active ? (
               <Box className="d-flex flex-column align-items-center">
                 <div>
                   <Typography textAlign="center" className="mb-2">
@@ -273,7 +281,7 @@ const Subscriptions: React.FC = () => {
                   </div>
                 ) : null}
               </Box>
-            )}
+            ) : null}
           </>
         ) : (
           <div className="d-flex align-items-center justify-content-center p-5">
