@@ -156,29 +156,39 @@ const Subscriptions: React.FC = () => {
         </ul>
         {fetching !== FetchStatus.Pending && fetching !== FetchStatus.Idle ? (
           <>
-            {currentSubscription && user.is_subscription_active ? (
+            {user.is_subscription_active ? (
               <ActiveSubscriptionBox className="d-flex justify-content-between align-items-center p-4">
                 <div>
                   <Chip
                     className="mb-3"
-                    color={subscriptionStatus[currentSubscription.status].color}
-                    label={subscriptionStatus[currentSubscription.status].text}
+                    color={
+                      !currentSubscription || currentSubscription?.status !== 'cancelled'
+                        ? 'success'
+                        : 'default'
+                    }
+                    label={
+                      !currentSubscription || currentSubscription?.status !== 'cancelled'
+                        ? 'Suscripción activa'
+                        : 'Suscripción cancelada'
+                    }
                   />
                   <div className="d-flex flex-column gap-2">
                     <Typography variant="h6" fontWeight="bold">
-                      {currentSubscription.reason}
+                      {currentSubscription?.reason || 'Kodkod Pro'}
                     </Typography>
-                    <Typography>{`$${currentSubscription.auto_recurring.transaction_amount.toLocaleString()}/${
-                      currentSubscription.auto_recurring.frequency === 1 ? 'mes' : 'año'
-                    }`}</Typography>
+                    {currentSubscription ? (
+                      <Typography>{`$${currentSubscription?.auto_recurring?.transaction_amount?.toLocaleString()}/${
+                        currentSubscription?.auto_recurring?.frequency === 1 ? 'mes' : 'año'
+                      }`}</Typography>
+                    ) : null}
                     <Typography variant="body2">{`${
-                      currentSubscription.status !== 'cancelled'
+                      currentSubscription?.status !== 'cancelled'
                         ? 'Próxima facturación:'
                         : 'Finaliza el:'
                     } ${moment(user.subscription_end).format('DD-MM-yyyy')}`}</Typography>
                   </div>
                 </div>
-                {currentSubscription.status !== 'cancelled' ? (
+                {currentSubscription?.status !== 'cancelled' ? (
                   <div className="d-flex flex-column gap-2">
                     <Button
                       component={Link}
@@ -195,6 +205,11 @@ const Subscriptions: React.FC = () => {
                 ) : (
                   <div className="d-flex flex-column">
                     <Typography variant="caption">
+                      {currentSubscription
+                        ? 'Tu suscripción a Kodkod ha sido cancelada.'
+                        : 'Tienes una suscripción gestionada por tu institución.'}
+                    </Typography>
+                    <Typography variant="caption">
                       Seguirás teniendo Kodkod Pro hasta el{' '}
                       {moment(user.subscription_end).format('DD-MM-yyyy')}
                     </Typography>
@@ -204,8 +219,7 @@ const Subscriptions: React.FC = () => {
                   </div>
                 )}
               </ActiveSubscriptionBox>
-            ) : null}
-            {!user.is_subscription_active ? (
+            ) : (
               <Box className="d-flex flex-column align-items-center">
                 <div>
                   <Typography textAlign="center" className="mb-2">
@@ -288,7 +302,7 @@ const Subscriptions: React.FC = () => {
                   </div>
                 ) : null}
               </Box>
-            ) : null}
+            )}
           </>
         ) : (
           <div className="d-flex align-items-center justify-content-center p-5">
