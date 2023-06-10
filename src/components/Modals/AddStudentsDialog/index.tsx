@@ -74,7 +74,7 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({ open, onClose, classDet
       console.error(error);
       Toaster(
         'error',
-        error?.response?.data?.responseData[0] || 'Hubo un error al añadir estudiantes'
+        error?.response?.data?.responseData || 'Hubo un error al añadir estudiantes'
       );
     }
   };

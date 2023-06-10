@@ -2,9 +2,6 @@ import { Button, Fab } from '@mui/material';
 import styled from 'styled-components';
 
 export const UserInfoContainer = styled.div`
-  position: absolute;
-  bottom: 16px;
-  height: 80px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -13,6 +10,11 @@ export const UserInfoContainer = styled.div`
     font-weight: bold;
     font-size: 16px;
     text-align: center;
+  }
+
+  .MuiChip-root {
+    background: ${(props) => props.theme.palette.highlight.main};
+    color: ${(props) => props.theme.palette.highlight.contrastText};
   }
 `;
 

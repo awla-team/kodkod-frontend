@@ -1,10 +1,10 @@
-import { ClassInterface } from 'services/classes/interfaces';
+import { IClass } from 'global/interfaces';
 import { StudentType } from '../../StudentsList/interfaces';
 
 export interface AddStudentsDialogProps {
   open: boolean;
   onClose: (reason?: 'student' | undefined, data?: StudentType[]) => void;
-  classDetails: ClassInterface;
+  classDetails: IClass;
 }
 
 export interface FormInitialState {

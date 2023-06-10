@@ -34,7 +34,8 @@ const SignUp: React.FC = () => {
     confirmPassword: '',
     school: '',
     subject: '',
-    tos: false,
+    terms_and_conditions: false,
+    privacy_policy: false,
   });
   const [isFetching, setIsFetching] = useState(FetchStatus.Idle);
 
@@ -51,9 +52,12 @@ const SignUp: React.FC = () => {
       last_name: Yup.string().required('Last name cannot be empty.'),
       school: Yup.number(),
       subject: Yup.string(),
-      tos: Yup.boolean()
-        .required('Debes aceptar los Términos y condiciones para crear una cuenta.')
-        .oneOf([true], 'Debes aceptar los Términos y condiciones para crear una cuenta.'),
+      terms_and_conditions: Yup.boolean()
+        .required('Debes aceptar los términos y condiciones para crear una cuenta.')
+        .oneOf([true], 'Debes aceptar los términos y condiciones para crear una cuenta.'),
+      privacy_policy: Yup.boolean()
+        .required('Debes aceptar la política de privacidad para crear una cuenta.')
+        .oneOf([true], 'Debes aceptar la política de privacidad para crear una cuenta.'),
     });
   };
 
@@ -94,28 +98,6 @@ const SignUp: React.FC = () => {
       .finally(() => {
         formikHelper.setSubmitting(false);
       });
-    // try {
-    //   delete values.confirmPassword;
-    //   await signUp(values);
-    //   Toaster("success", "You will get a verification email!");
-    //   formikHelper.resetForm();
-    // } catch (e: any) {
-    //   if (e instanceof AxiosError) {
-    //     const {
-    //       data: { responseData },
-    //     } = e.response;
-    //     if (
-    //       responseData.client === "postgres" &&
-    //       responseData?.constraint === "user_email_unique"
-    //     ) {
-    //       Toaster("error", "Email already exists");
-    //       formikHelper.setFieldError("email", "Email already exists");
-    //     }
-    //   }
-    //   Toaster("error", e.message);
-    // } finally {
-    //   formikHelper.setSubmitting(false);
-    // }
   };
 
   const getSchools = async () => {
@@ -275,7 +257,6 @@ const SignUp: React.FC = () => {
                       variant="outlined"
                     />
                   </FormControl>
-
                   <FormControl required error={!!errors.confirmPassword && touched.confirmPassword}>
                     <TextField
                       required
@@ -289,17 +270,21 @@ const SignUp: React.FC = () => {
                       variant="outlined"
                     />
                   </FormControl>
-
                   <FormControl>
                     <Autocomplete
                       id="school"
                       options={schools}
-                      getOptionLabel={(school) => school.name}
+                      getOptionLabel={(school) =>
+                        !!school?.commune ? `${school.name} (${school.commune})` : school.name
+                      }
                       renderOption={(props, school) => (
                         <li {...props} key={`school-${school.id}`}>
-                          {school.name}
+                          {!!school?.commune ? `${school.name} (${school.commune})` : school.name}
                         </li>
                       )}
+                      isOptionEqualToValue={(option: ISchool, value: ISchool) => {
+                        return option.id === value.id;
+                      }}
                       noOptionsText="No se encuentra el establecimiento"
                       onChange={(_event, value) => {
                         setFieldValue('school', !!value ? value.id : formInitialValues.school);
@@ -312,29 +297,6 @@ const SignUp: React.FC = () => {
                         />
                       )}
                     />
-                    {/* <InputLabel id="school-label">
-                      Establecimiento educacional (opcional)
-                    </InputLabel> 
-                    <Select
-                      labelId="school-label"
-                      variant={"outlined"}
-                      name={"school"}
-                      value={values.school}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      label="Establecimiento educacional (opcional)"
-                    >
-                      <MenuItem value={""} disabled>
-                        Escoge un colegio
-                      </MenuItem>
-                      {schools.map((school, index) => {
-                        return (
-                          <MenuItem key={index} value={school.id}>
-                            {school.name}
-                          </MenuItem>
-                        );
-                      })}
-                    </Select> */}
                   </FormControl>
                   <FormControl>
                     <Autocomplete
@@ -353,55 +315,49 @@ const SignUp: React.FC = () => {
                         />
                       )}
                     />
-                    {/* <InputLabel id="subject-label">
-                      ¿Qué asignatura enseñas? (opcional)
-                    </InputLabel>
-                    <Select
-                      labelId="subject-label"
-                      variant={"outlined"}
-                      name={"subject"}
-                      value={values.subject}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      label="¿Qué asignatura enseñas? (opcional)"
-                    >
-                      <MenuItem disabled value={""}>
-                        Escoge una asignatura
-                      </MenuItem>
-                      {subjects.map((subject, index) => {
-                        return (
-                          <MenuItem key={index} value={subject}>
-                            {subject}
-                          </MenuItem>
-                        );
-                      })}
-                    </Select> */}
                   </FormControl>
-
-                  <FormControlLabel
-                    className="justify-content-center m-0"
-                    control={
-                      <Checkbox
-                        size="small"
-                        name="tos"
-                        onChange={(_event, value) => setFieldValue('tos', value)}
-                        checked={values.tos}
-                      />
-                    }
-                    label={
-                      <Typography variant="body2">
-                        He leído y acepto los{' '}
-                        <a
-                          target="_blank"
-                          href="https://kodkod-assets.s3.amazonaws.com/documents/T%C3%A9rminos+y+Condiciones+de+Uso+plataforma+Kodkod.pdf"
-                        >
-                          términos y condiciones
-                        </a>{' '}
-                        de uso de Kodkod
-                      </Typography>
-                    }
-                  />
-
+                  <div>
+                    <FormControlLabel
+                      className="justify-content-center m-0"
+                      control={
+                        <Checkbox
+                          size="small"
+                          name="terms_and_conditions"
+                          onChange={(_event, value) => setFieldValue('terms_and_conditions', value)}
+                          checked={values.terms_and_conditions}
+                        />
+                      }
+                      label={
+                        <Typography variant="body2">
+                          He leído y acepto los{' '}
+                          <a target="_blank" href="https://kodkod.cl/terminos-y-condiciones">
+                            términos y condiciones
+                          </a>{' '}
+                          de uso.
+                        </Typography>
+                      }
+                    />
+                    <FormControlLabel
+                      className="justify-content-center m-0"
+                      control={
+                        <Checkbox
+                          size="small"
+                          name="privacy_policy"
+                          onChange={(_event, value) => setFieldValue('privacy_policy', value)}
+                          checked={values.privacy_policy}
+                        />
+                      }
+                      label={
+                        <Typography variant="body2">
+                          He leído y acepto la{' '}
+                          <a target="_blank" href="https://kodkod.cl/privacidad">
+                            política de privacidad
+                          </a>
+                          .
+                        </Typography>
+                      }
+                    />
+                  </div>
                   <Box
                     className={'action__container'}
                     display={'flex'}

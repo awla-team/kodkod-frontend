@@ -3,7 +3,7 @@ import { Navigate, useOutletContext, useParams } from 'react-router-dom';
 import { FetchStatus } from 'global/enums';
 import { CircularProgress } from '@mui/material';
 import Toaster from 'utils/Toster';
-import { ClassInterface } from 'services/classes/interfaces';
+import { IClass } from 'global/interfaces';
 import AdventureWithProvider from './Adventure';
 import { getMissionsByStage, StageMissionUpdateBody } from 'services/missions';
 import { IAdventure, IMission, IStage } from 'global/interfaces';

@@ -1,5 +1,11 @@
 import axios, { AxiosError } from 'axios';
 import { generateAccessToken } from '../services/auth';
+import { initMercadoPago } from '@mercadopago/sdk-react';
+
+// TEST-c40bb3aa-a6a0-4b7c-b4d8-21423976a520
+initMercadoPago(import.meta.env.VITE_MP_PUBLIC, {
+  locale: 'es-CL',
+});
 
 const baseURL = import.meta.env.VITE_BASE_URL;
 

@@ -6,7 +6,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Link, useNavigate } from 'react-router-dom';
 import { CreateClassModal } from '../Modals';
 import { useClassContext } from 'routes/Class/context';
-import { ClassInterface } from '../../services/classes/interfaces';
+import { IClass } from 'global/interfaces';
 import ConfirmationModal from '../Modals/ConfirmationModal';
 import Toaster from '../../utils/Toster';
 import { deleteClass } from '../../services/classes';
@@ -35,10 +35,7 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({ classDetails, levels }) =
     }
   }, [classDetails]);
 
-  const handleClose = (
-    reason: 'backdropClick' | 'escapeKeyDown' | 'success',
-    data?: ClassInterface
-  ) => {
+  const handleClose = (reason: 'backdropClick' | 'escapeKeyDown' | 'success', data?: IClass) => {
     if ('success') {
       setClassDetails((prevState) => {
         return { ...prevState, ...data };

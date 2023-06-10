@@ -1,9 +1,9 @@
 import { Typography, Chip, Tooltip } from '@mui/material';
 import { Box } from '@mui/system';
-import { IClass } from 'global/interfaces';
+import { IClass, ModifiedIClass } from 'global/interfaces';
 import { Link } from 'react-router-dom';
 
-const ClassCard: React.FC<{ classObj: IClass }> = ({ classObj }) => {
+const ClassCard: React.FC<{ classObj: ModifiedIClass }> = ({ classObj }) => {
   return (
     <Link to={`cursos/${classObj.id}/tablero`}>
       <div className={'class__level__card'}>

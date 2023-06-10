@@ -1,5 +1,5 @@
 import { createContext, FC, PropsWithChildren, useContext, useEffect, useState } from 'react';
-import { ClassInterface } from 'services/classes/interfaces';
+import { IClass } from 'global/interfaces';
 import { getClassByID } from 'services/classes';
 import Toaster from 'utils/Toster';
 import { studentsByClass } from 'services/students';
@@ -28,7 +28,7 @@ export const useClassContext = () => {
 };
 
 const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [classDetails, setClassDetails] = useState<ClassInterface | undefined>();
+  const [classDetails, setClassDetails] = useState<IClass | undefined>();
   const [levels, setLevels] = useState<Levels[]>([]);
   const [students, setStudents] = useState<StudentType[]>([]);
   const [loadingClass, setLoadingClass] = useState(FetchStatus.Idle);
@@ -62,7 +62,7 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const getClassById = async (id: number | string) => {
     setLoadingClass(FetchStatus.Pending);
     try {
-      const { data }: { data: { responseData: ClassInterface } } = await getClassByID(id);
+      const { data }: { data: { responseData: IClass } } = await getClassByID(id);
       setClassDetails(data.responseData);
       setLoadingClass(FetchStatus.Success);
     } catch (error: any) {

@@ -5,13 +5,13 @@ import { GoalSelectionContainer, CardContainer, ImgContainer } from './styled';
 import { AxiosResponse } from 'axios';
 import { getGoals } from 'services/goals';
 import { FetchStatus } from 'global/enums';
-import { Goal } from 'services/goals/interfaces';
+import { IGoal } from 'global/interfaces';
 import { useClassContext } from 'routes/Class/context';
 
 const GoalSelection: React.FC = () => {
   const { classDetails, loadingClass } = useClassContext();
   const navigate = useNavigate();
-  const [goals, setGoals] = useState<Goal[]>([]);
+  const [goals, setGoals] = useState<IGoal[]>([]);
   const [selectedGoalId, setSelectedGoalId] = useState<number>(null);
   const [loadingGoals, setLoadingGoals] = useState<FetchStatus>(FetchStatus.Idle);
 
@@ -62,7 +62,7 @@ const GoalSelection: React.FC = () => {
       <div className="d-flex flex-column w-100 align-items-center justify-content-between h-100">
         <div className="d-flex justify-content-center gap-3 w-100 flex-wrap">
           {goals?.length
-            ? goals.map((goal: Goal) => (
+            ? goals.map((goal: IGoal) => (
                 <CardContainer
                   key={`${goal.id}-${goal.title}`}
                   className={`d-flex flex-column align-items-center position-relative ${

@@ -3,7 +3,7 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import { CircularProgress } from '@mui/material';
 import Sidebar from './components/Sidebar';
 import { getClassesByUser } from 'services/classes';
-import { ClassInterface } from 'services/classes/interfaces';
+import { IClass } from 'global/interfaces';
 import { AxiosResponse } from 'axios';
 import { FetchStatus } from 'global/enums';
 import { CreateClassModal } from './components/Modals';
@@ -16,15 +16,16 @@ import moment from 'moment';
 import { useLocation } from 'react-router-dom';
 import 'moment/dist/locale/es';
 import './App.css';
+import SubscribeModal from 'components/Modals/SubscribeModal';
 
 moment.locale('es');
 
 const App: React.FC = () => {
-  const [classes, setClasses] = useState<ClassInterface[]>([]);
+  const [classes, setClasses] = useState<IClass[]>([]);
   const [levels, setLevels] = useState<Levels[]>([]);
-  const { user } = useAuth();
   const [fetching, setFetching] = useState<FetchStatus>(FetchStatus.Idle);
-  const [open, setOpen] = useState<boolean>(false);
+  const [createClassModalOpen, setCreateClassModalOpen] = useState<boolean>(false);
+  const { user, checkUserSubscription } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -33,7 +34,7 @@ const App: React.FC = () => {
       .then((response: AxiosResponse) => {
         return response?.data?.responseData;
       })
-      .then((classes: ClassInterface[]) => {
+      .then((classes: IClass[]) => {
         setClasses(!!classes ? sortClasses(classes) : []);
         setFetching(FetchStatus.Success);
       })
@@ -59,11 +60,8 @@ const App: React.FC = () => {
     }
   };
 
-  const handleClose = (
-    reason: 'backdropClick' | 'escapeKeyDown' | 'success',
-    data?: ClassInterface
-  ) => {
-    if (reason !== 'backdropClick') setOpen(false);
+  const handleClose = (reason: 'backdropClick' | 'escapeKeyDown' | 'success', data?: IClass) => {
+    if (reason !== 'backdropClick') setCreateClassModalOpen(false);
     if (reason === 'success') {
       if (data) {
         setClasses((prevState) => {
@@ -74,7 +72,13 @@ const App: React.FC = () => {
   };
 
   const handleOpenModal = () => {
-    setOpen(true);
+    if (classes.length >= 2) {
+      checkUserSubscription('Has alcanzado el límite de cursos gratuitos', () =>
+        setCreateClassModalOpen(true)
+      );
+    } else {
+      setCreateClassModalOpen(true);
+    }
   };
 
   useEffect(() => {
@@ -117,7 +121,7 @@ const App: React.FC = () => {
           <Outlet context={{ classes, handleOpenModal, getClassesData }} />
         </div>
       </div>
-      <CreateClassModal open={open} onClose={handleClose} levels={levels} />
+      <CreateClassModal open={createClassModalOpen} onClose={handleClose} levels={levels} />
     </div>
   );
 };
