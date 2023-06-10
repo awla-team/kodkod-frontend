@@ -72,7 +72,7 @@ const App: React.FC = () => {
   };
 
   const handleOpenModal = () => {
-    if (classes.length >= 2) {
+    if (classes.length >= 1) {
       checkUserSubscription('Has alcanzado el límite de cursos gratuitos', () =>
         setCreateClassModalOpen(true)
       );

@@ -188,7 +188,7 @@ const Subscriptions: React.FC = () => {
                     } ${moment(user.subscription_end).format('DD-MM-yyyy')}`}</Typography>
                   </div>
                 </div>
-                {currentSubscription?.status !== 'cancelled' ? (
+                {currentSubscription && currentSubscription?.status !== 'cancelled' ? (
                   <div className="d-flex flex-column gap-2">
                     <Button
                       component={Link}
