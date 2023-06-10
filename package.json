@@ -22,6 +22,7 @@
     "@mui/x-date-pickers": "^5.0.17",
     "axios": "^1.1.2",
     "bootstrap": "5.2.1",
+    "express": "4.18.2",
     "formik": "^2.2.9",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
@@ -59,5 +60,18 @@
     "extends": [
       "react-app"
     ]
-  }
+  },
+  "description": "Property of Awla SpA  \r Developers: Álvaro Arratia Ramírez, Bastián Díaz Olave",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/awla-team/kodkod-frontend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/awla-team/kodkod-frontend/issues"
+  },
+  "homepage": "https://github.com/awla-team/kodkod-frontend#readme"
 }

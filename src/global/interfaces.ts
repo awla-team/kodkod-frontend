@@ -100,6 +100,8 @@ export interface IUser {
   first_name: string;
   payer_id: number;
   avatar?: string;
+  subscription_start: string;
+  subscription_end: string;
   is_subscription_active: boolean;
   last_name: string;
   email: string;
