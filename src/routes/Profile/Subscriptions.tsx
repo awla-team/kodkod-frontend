@@ -171,29 +171,36 @@ const Subscriptions: React.FC = () => {
                     <Typography>{`$${currentSubscription.auto_recurring.transaction_amount.toLocaleString()}/${
                       currentSubscription.auto_recurring.frequency === 1 ? 'mes' : 'año'
                     }`}</Typography>
-                    <Typography variant="body2">{`${currentSubscription.status !== 'cancelled' ? 'Próxima facturación:' : 'Finaliza el:'} ${moment(
-                      user.subscription_end
-                    ).format('DD-MM-yyyy')}`}</Typography>
+                    <Typography variant="body2">{`${
+                      currentSubscription.status !== 'cancelled'
+                        ? 'Próxima facturación:'
+                        : 'Finaliza el:'
+                    } ${moment(user.subscription_end).format('DD-MM-yyyy')}`}</Typography>
                   </div>
                 </div>
                 {currentSubscription.status !== 'cancelled' ? (
                   <div className="d-flex flex-column gap-2">
-                  <Button
-                    component={Link}
-                    target="_blank"
-                    to={currentSubscription.init_point}
-                    variant="contained"
-                  >
-                    Actualizar método de pago
-                  </Button>
-                  <Button onClick={() => setOpenModal(true)} size="small">
-                    Cancelar suscripción
-                  </Button>
-                </div>
+                    <Button
+                      component={Link}
+                      target="_blank"
+                      to={currentSubscription.init_point}
+                      variant="contained"
+                    >
+                      Actualizar método de pago
+                    </Button>
+                    <Button onClick={() => setOpenModal(true)} size="small">
+                      Cancelar suscripción
+                    </Button>
+                  </div>
                 ) : (
                   <div className="d-flex flex-column">
-                    <Typography variant="caption">Seguirás teniendo Kodkod Pro hasta el {moment(user.subscription_end).format('DD-MM-yyyy')}</Typography>
-                    <Typography variant="caption" fontWeight="bold">¡Puedes suscribirte de nuevo después de esta fecha!</Typography>
+                    <Typography variant="caption">
+                      Seguirás teniendo Kodkod Pro hasta el{' '}
+                      {moment(user.subscription_end).format('DD-MM-yyyy')}
+                    </Typography>
+                    <Typography variant="caption" fontWeight="bold">
+                      ¡Puedes suscribirte de nuevo después de esta fecha!
+                    </Typography>
                   </div>
                 )}
               </ActiveSubscriptionBox>
