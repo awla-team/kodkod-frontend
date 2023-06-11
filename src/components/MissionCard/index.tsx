@@ -78,7 +78,7 @@ const MissionCard: React.FC<IMissionCardProps> = ({
         </div>
 
         {/* Action Buttons with absolute position */}
-        {openModal && !completed_users.length ? (
+        {openModal && !completed_users.length && mission.type !== 'tutorial' ? (
           <Tooltip title="Reemplazar misión" placement="left">
             <ChangeMissionButton
               className="d-flex align-items-center justify-content-center"

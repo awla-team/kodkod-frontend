@@ -159,6 +159,7 @@ export interface IMission {
   skill?: ISkill;
   completed_users: IUser[];
   difficulty: 'easy' | 'normal' | 'hard';
+  type: 'tutorial' | 'normal';
 }
 
 export interface IReward {
