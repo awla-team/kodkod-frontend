@@ -16,7 +16,6 @@ import moment from 'moment';
 import { useLocation } from 'react-router-dom';
 import 'moment/dist/locale/es';
 import './App.css';
-import SubscribeModal from 'components/Modals/SubscribeModal';
 
 moment.locale('es');
 

@@ -16,6 +16,10 @@
   -webkit-text-size-adjust: 100%;
 }
 
+#hubspot-conversations-iframe {
+  color-scheme: light;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
