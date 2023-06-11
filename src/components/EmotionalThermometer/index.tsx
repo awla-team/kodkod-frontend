@@ -73,8 +73,11 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({ classDetails }) =
       const {
         data: { responseData },
       }: { data: { responseData: EmotionalThermometerType[] } } =
-        await getEmotionalThermometerByClassId(classDetails.id, date.toDate(), date.toDate());
-
+        await getEmotionalThermometerByClassId(
+          classDetails.id,
+          Moment(date).startOf('day'),
+          Moment(date).endOf('day')
+        );
       if (responseData.length) {
         const { id, score, most_remarkable, challenge } = responseData[0];
         setFormInitialValue({
@@ -100,7 +103,9 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({ classDetails }) =
   };
 
   const checkDate = (date: MomentType): Boolean => {
-    return detailsByDates.some((res) => Moment(res.date).startOf('day').isSame(date, 'day'));
+    return detailsByDates.some((res) => {
+      return Moment.utc(res.date).local().startOf('day').isSame(date, 'day');
+    });
   };
 
   const handleMonthChange = async () => {
@@ -110,8 +115,8 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({ classDetails }) =
       }: { data: { responseData: EmotionalThermometerType[] } } =
         await getEmotionalThermometerByClassId(
           classDetails.id,
-          Moment(date).startOf('month').toDate(),
-          Moment(date).endOf('month').toDate()
+          Moment(date).subtract(1, 'months').startOf('month'),
+          Moment(date).endOf('month')
         );
       setDetailsByDates(responseData);
     } catch (error: any) {
@@ -149,24 +154,31 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({ classDetails }) =
     formikHelpers: FormikHelpers<FormInitialValue>
   ) => {
     try {
-      let responseData: FormInitialValue;
       if ('id' in value) {
         const { id, ...body } = value;
-        const { data }: { data: { responseData: FormInitialValue } } =
+        const { data }: { data: { responseData: EmotionalThermometerType } } =
           await updateEmotionalThermometerDetails(id, body);
-        responseData = data.responseData;
+        setDetailsByDates((prevState) => {
+          const copy = [...prevState];
+          const match = copy.find((detailEntry) => detailEntry.id === id);
+          copy[copy.indexOf(match)] = data.responseData;
+          return copy;
+        });
         Toaster('success', 'Termómetro actualizado exitosamente');
       } else {
-        const { data }: { data: { responseData: FormInitialValue } } =
+        const { data }: { data: { responseData: EmotionalThermometerType } } =
           await saveEmotionalThermometerDetails({
             ...value,
-            date: date.toDate(),
+            date: date.startOf('day').utc().format(),
             id_class: classDetails.id,
           });
-        responseData = data.responseData;
+        setDetailsByDates((prevState) => {
+          const copy = [...prevState];
+          copy.push(data.responseData);
+          return copy;
+        });
         Toaster('success', 'Termómetro guardado exitosamente');
       }
-      formikHelpers.resetForm();
       setEditable(false);
     } catch (error: any) {
       console.error(error);
