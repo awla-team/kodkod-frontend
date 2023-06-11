@@ -9,6 +9,9 @@ import {
   Autocomplete,
   Checkbox,
   FormControlLabel,
+  FormHelperText,
+  IconButton,
+  InputAdornment,
 } from '@mui/material';
 import { Form, Formik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
@@ -23,6 +26,7 @@ import { signUp } from '../../../services/auth';
 import { SignUpCard } from './styled';
 import { FetchStatus } from 'global/enums';
 import AuthCard from 'components/AuthCard';
+import { VisibilityOff, Visibility } from '@mui/icons-material';
 
 const SignUp: React.FC = () => {
   const [schools, setSchools] = useState<ISchool[]>([]);
@@ -37,6 +41,7 @@ const SignUp: React.FC = () => {
     terms_and_conditions: false,
     privacy_policy: false,
   });
+  const [showPassword, setShowPassword] = useState(false);
   const [isFetching, setIsFetching] = useState(FetchStatus.Idle);
 
   const validationSchema = () => {
@@ -153,6 +158,7 @@ const SignUp: React.FC = () => {
         </AuthCard>
     );*/
 
+  console.log(showPassword);
   return (
     <SignUpCard variant="outlined">
       <CardContent className="px-5 pt-5">
@@ -166,9 +172,6 @@ const SignUp: React.FC = () => {
         </Button>
         <Typography component="h4" variant="h5" className="mb-1">
           Crea una nueva cuenta en Kodkod
-        </Typography>
-        <Typography component="span" variant="body2" color="gray">
-          Tu contraseña debe contener:
         </Typography>
         <Formik
           initialValues={formInitialValues}
@@ -189,40 +192,6 @@ const SignUp: React.FC = () => {
           }) => {
             return (
               <Form onSubmit={handleSubmit}>
-                <ul>
-                  <Typography
-                    component="li"
-                    variant="body2"
-                    color={/^.{8,16}$/.test(values.password) ? '#009900' : 'gray'}
-                    fontWeight={/^.{8,16}$/.test(values.password) ? 'bold' : 'normal'}
-                  >
-                    Entre 8 y 16 caractéres
-                  </Typography>
-                  <Typography
-                    component="li"
-                    variant="body2"
-                    color={/[a-z]/.test(values.password) ? '#009900' : 'gray'}
-                    fontWeight={/[a-z]/.test(values.password) ? 'bold' : 'normal'}
-                  >
-                    Al menos 1 minúscula
-                  </Typography>
-                  <Typography
-                    component="li"
-                    variant="body2"
-                    color={/[A-Z]/.test(values.password) ? '#009900' : 'gray'}
-                    fontWeight={/[A-Z]/.test(values.password) ? 'bold' : 'normal'}
-                  >
-                    Al menos 1 mayúscula
-                  </Typography>
-                  <Typography
-                    component="li"
-                    variant="body2"
-                    color={/\d/.test(values.password) ? '#009900' : 'gray'}
-                    fontWeight={/\d/.test(values.password) ? 'bold' : 'normal'}
-                  >
-                    Al menos 1 número
-                  </Typography>
-                </ul>
                 <Box display={'flex'} flexDirection={'column'} gap={2} mt={3}>
                   <Box display={'flex'} gap={2} flexDirection={{ xs: 'column', sm: 'row' }}>
                     <FormControl required error={!!errors.first_name && touched.first_name}>
@@ -272,11 +241,60 @@ const SignUp: React.FC = () => {
                       error={!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,16}$|^$/.test(values.password)}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      type={'password'}
+                      type={showPassword ? 'text' : 'password'}
                       placeholder={'Crea una contraseña para tu cuenta'}
                       label="Contraseña"
                       variant="outlined"
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={() => setShowPassword((prev) => !prev)}
+                              edge="end"
+                            >
+                              {showPassword ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
                     />
+                    <FormHelperText component="div" className="mx-0 mt-2">
+                      <ul className="m-0">
+                        <Typography
+                          component="li"
+                          variant="body2"
+                          color={/^.{8,16}$/.test(values.password) ? '#009900' : 'gray'}
+                          fontWeight={/^.{8,16}$/.test(values.password) ? 'bold' : 'normal'}
+                        >
+                          Entre 8 y 16 caractéres
+                        </Typography>
+                        <Typography
+                          component="li"
+                          variant="body2"
+                          color={/[a-z]/.test(values.password) ? '#009900' : 'gray'}
+                          fontWeight={/[a-z]/.test(values.password) ? 'bold' : 'normal'}
+                        >
+                          Al menos 1 minúscula
+                        </Typography>
+                        <Typography
+                          component="li"
+                          variant="body2"
+                          color={/[A-Z]/.test(values.password) ? '#009900' : 'gray'}
+                          fontWeight={/[A-Z]/.test(values.password) ? 'bold' : 'normal'}
+                        >
+                          Al menos 1 mayúscula
+                        </Typography>
+                        <Typography
+                          component="li"
+                          variant="body2"
+                          color={/\d/.test(values.password) ? '#009900' : 'gray'}
+                          fontWeight={/\d/.test(values.password) ? 'bold' : 'normal'}
+                        >
+                          Al menos 1 número
+                        </Typography>
+                      </ul>
+                    </FormHelperText>
                   </FormControl>
                   <FormControl required error={!!errors.confirmPassword && touched.confirmPassword}>
                     <TextField
@@ -291,10 +309,23 @@ const SignUp: React.FC = () => {
                       }
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      type={'password'}
+                      type={showPassword ? 'text' : 'password'}
                       placeholder={'¡Para estar seguros!'}
                       label="Repite tu contraseña"
                       variant="outlined"
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={() => setShowPassword((prev) => !prev)}
+                              edge="end"
+                            >
+                              {showPassword ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
                     />
                   </FormControl>
                   <FormControl>
