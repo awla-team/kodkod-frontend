@@ -18,7 +18,7 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
   const [studentList, setStudentList] = useState([]);
 
   useEffect(() => {
-    students?.length && setStudentList(students);
+    !!students && setStudentList(students);
   }, [students]);
 
   useEffect(() => {
