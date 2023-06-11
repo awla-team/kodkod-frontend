@@ -43,7 +43,7 @@ const SignUp: React.FC = () => {
     return Yup.object({
       email: Yup.string().email().required('Email cannot be empty.'),
       password: Yup.string()
-        .matches(/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/g)
+        .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,16}$|^$/g)
         .required('Password cannot be empty.'),
       confirmPassword: Yup.string()
         .oneOf([Yup.ref('password'), null], 'Password must match')
@@ -170,20 +170,6 @@ const SignUp: React.FC = () => {
         <Typography component="span" variant="body2" color="gray">
           Tu contraseña debe contener:
         </Typography>
-        <ul>
-          <Typography component="li" variant="body2" color="gray">
-            Entre 8 y 16 caractéres
-          </Typography>
-          <Typography component="li" variant="body2" color="gray">
-            Al menos 1 minúscula
-          </Typography>
-          <Typography component="li" variant="body2" color="gray">
-            Al menos 1 mayúscula
-          </Typography>
-          <Typography component="li" variant="body2" color="gray">
-            Al menos 1 número
-          </Typography>
-        </ul>
         <Formik
           initialValues={formInitialValues}
           onSubmit={handleSubmit}
@@ -203,6 +189,40 @@ const SignUp: React.FC = () => {
           }) => {
             return (
               <Form onSubmit={handleSubmit}>
+                <ul>
+                  <Typography
+                    component="li"
+                    variant="body2"
+                    color={/^.{8,16}$/.test(values.password) ? '#009900' : 'gray'}
+                    fontWeight={/^.{8,16}$/.test(values.password) ? 'bold' : 'normal'}
+                  >
+                    Entre 8 y 16 caractéres
+                  </Typography>
+                  <Typography
+                    component="li"
+                    variant="body2"
+                    color={/[a-z]/.test(values.password) ? '#009900' : 'gray'}
+                    fontWeight={/[a-z]/.test(values.password) ? 'bold' : 'normal'}
+                  >
+                    Al menos 1 minúscula
+                  </Typography>
+                  <Typography
+                    component="li"
+                    variant="body2"
+                    color={/[A-Z]/.test(values.password) ? '#009900' : 'gray'}
+                    fontWeight={/[A-Z]/.test(values.password) ? 'bold' : 'normal'}
+                  >
+                    Al menos 1 mayúscula
+                  </Typography>
+                  <Typography
+                    component="li"
+                    variant="body2"
+                    color={/\d/.test(values.password) ? '#009900' : 'gray'}
+                    fontWeight={/\d/.test(values.password) ? 'bold' : 'normal'}
+                  >
+                    Al menos 1 número
+                  </Typography>
+                </ul>
                 <Box display={'flex'} flexDirection={'column'} gap={2} mt={3}>
                   <Box display={'flex'} gap={2} flexDirection={{ xs: 'column', sm: 'row' }}>
                     <FormControl required error={!!errors.first_name && touched.first_name}>
@@ -249,6 +269,7 @@ const SignUp: React.FC = () => {
                       required
                       name={'password'}
                       value={values.password}
+                      error={!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,16}$|^$/.test(values.password)}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       type={'password'}
@@ -262,6 +283,12 @@ const SignUp: React.FC = () => {
                       required
                       name={'confirmPassword'}
                       value={values.confirmPassword}
+                      error={values.confirmPassword !== values.password}
+                      helperText={
+                        values.confirmPassword !== values.password
+                          ? 'Las contraseñas no coinciden'
+                          : null
+                      }
                       onChange={handleChange}
                       onBlur={handleBlur}
                       type={'password'}
