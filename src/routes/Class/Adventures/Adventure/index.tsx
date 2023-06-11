@@ -35,7 +35,7 @@ export const Adventure: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  if (!classDetails.current_adventure)
+  if (!classDetails.current_adventure) {
     return (
       <AdventureContainer className="d-flex flex-column gap-3 p-0 m-0">
         <Skeleton variant="rounded" animation="wave" className="w-100" height={360} />
@@ -43,6 +43,7 @@ export const Adventure: React.FC = () => {
         <Skeleton variant="rounded" animation="wave" className="w-100" height={280} />
       </AdventureContainer>
     );
+  }
 
   const handleVerticalButtonClick = ({ currentTarget }: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(currentTarget);
