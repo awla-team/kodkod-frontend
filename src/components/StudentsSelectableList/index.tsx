@@ -14,7 +14,12 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
 }) => {
   const [selected, setSelected] = useState<(number | string)[]>([]);
   const [defaultSelected, setDefaultSelected] = useState<(number | string)[]>([]);
-  const { students: studentsList } = useContext(AdventureContext);
+  const { students } = useContext(AdventureContext);
+  const [studentList, setStudentList] = useState([]);
+
+  useEffect(() => {
+    students?.length && setStudentList(students);
+  }, [students]);
 
   useEffect(() => {
     if (mission?.completed_users)
@@ -38,7 +43,7 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
     const { checked } = target;
     const all: (number | string)[] = [];
     if (checked) {
-      studentsList.forEach((res, index) => {
+      studentList.forEach((res, index) => {
         if (!defaultSelected.includes(res.id)) all.push(res.id);
       });
       return setSelected(all);
@@ -70,6 +75,14 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
         variant={'standard'}
         placeholder="Buscar por nombre o apellido"
         fullWidth
+        onChange={(event) => {
+          if (!event.target.value) return setStudentList(students);
+          setStudentList(
+            studentList.filter((student) =>
+              `${student.first_name} ${student.last_name}`.includes(event.target.value)
+            )
+          );
+        }}
       />
       <div className="d-flex flex-column flex-fill gap-4 overflow-hidden">
         <div className="d-flex w-100 align-items-center justify-content-between">
@@ -80,10 +93,10 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
             control={
               <Checkbox
                 onChange={handleAllSelect}
-                disabled={studentsList.every((student) => defaultSelected.includes(student.id))}
+                disabled={studentList.every((student) => defaultSelected.includes(student.id))}
                 checked={
-                  !!studentsList.length &&
-                  studentsList.every(
+                  !!studentList.length &&
+                  studentList.every(
                     (res, index) => selected.includes(res.id) || defaultSelected.includes(res.id)
                   )
                 }
@@ -105,12 +118,12 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
             </div>
             <Typography component="span" variant="body2" textAlign="end">
               <b>{Object.keys(selected).length + Object.keys(defaultSelected).length}</b> de{' '}
-              <b>{studentsList.length}</b> estudiantes han cumplido esta misión
+              <b>{students.length}</b> estudiantes han cumplido esta misión
             </Typography>
           </div>
         </div>
         <div className="d-flex flex-column gap-3 overflow-auto">
-          {studentsList.map((res, index) => (
+          {studentList.map((res, index) => (
             <div key={index} className="d-flex gap-2 align-items-center">
               <Checkbox
                 onChange={(e) => handleCheck(e, res.id)}
