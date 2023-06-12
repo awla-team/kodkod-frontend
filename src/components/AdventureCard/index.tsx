@@ -18,7 +18,7 @@ const AdventureCard: React.FC<IAdventureCardProps> = ({
       className={`p-4 d-flex flex-column justify-content-between ${
         completed ? 'adventure-complete' : ''
       }`}
-      sx={{ backgroundImage: `url(${img})` }}
+      sx={{ backgroundImage: `url(${img})`, backgroundSize: 'cover', overflow: 'visible' }}
       variant="outlined"
     >
       {!demo ? (

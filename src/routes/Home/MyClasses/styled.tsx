@@ -31,7 +31,7 @@ export const MyClassesBox = styled(Box)`
     border-radius: 8px 8px 0px 0px;
     height: 160px;
     transition: all 0.3s ease;
-    background-size: auto;
+    background-size: cover;
     background-position: center;
   }
 
