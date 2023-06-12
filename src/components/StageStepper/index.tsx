@@ -16,7 +16,7 @@ const StageStepper: FC<{
   const { adventure, updateStageData } = useContext(AdventureContext);
   const [sortedStages, setSortedStages] = useState<IStage[]>([]);
   const [navigableStages, setNavigableStages] = useState<IStage[]>([]);
-  const [activeStep, setActiveStep] = useState<number>(0);
+  const [activeStep, setActiveStep] = useState<number | undefined>(undefined);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
 
@@ -39,7 +39,7 @@ const StageStepper: FC<{
   useEffect(() => {
     // When changing step, shown the proper stage
     const match = stages.find((stage) => stage._index === activeStep);
-    onStageChange(match);
+    if (match) onStageChange(match);
   }, [activeStep]);
 
   const handleUnlock = async () => {
@@ -66,30 +66,32 @@ const StageStepper: FC<{
 
   return (
     <div className="d-flex align-items-center justify-content-between gap-4">
-      <div className="d-flex flex-column gap-3">
-        <CustomStepper activeStep={activeStep - 1}>
-          {sortedStages.map((stage) => {
-            const isNavigable = navigableStages.includes(stage);
-            const isActive = shownStage?._index === stage._index;
+      {activeStep !== undefined ? (
+        <div className="d-flex flex-column gap-3">
+          <CustomStepper activeStep={activeStep - 1}>
+            {sortedStages.map((stage) => {
+              const isNavigable = navigableStages.includes(stage);
+              const isActive = shownStage?._index === stage._index;
 
-            return (
-              <Step key={`step-${stage._index}`} completed={false} disabled={!isNavigable}>
-                <div
-                  role="button"
-                  className={`stage-step ${isNavigable ? 'navigable' : ''} ${
-                    isActive ? 'active' : ''
-                  }`}
-                  onClick={() => setActiveStep(stage._index)}
-                />
-              </Step>
-            );
-          })}
-        </CustomStepper>
-        <Typography component="span" variant="h6">
-          <b>{`Etapa ${activeStep}: `}</b>
-          {shownStage?.title}
-        </Typography>
-      </div>
+              return (
+                <Step key={`step-${stage._index}`} completed={false} disabled={!isNavigable}>
+                  <div
+                    role="button"
+                    className={`stage-step ${isNavigable ? 'navigable' : ''} ${
+                      isActive ? 'active' : ''
+                    }`}
+                    onClick={() => setActiveStep(stage._index)}
+                  />
+                </Step>
+              );
+            })}
+          </CustomStepper>
+          <Typography component="span" variant="h6">
+            <b>{`Etapa ${activeStep}: `}</b>
+            {shownStage?.title}
+          </Typography>
+        </div>
+      ) : null}
       {sortedStages.length ? (
         <div>
           {sortedStages[navigableStages.length] ? (

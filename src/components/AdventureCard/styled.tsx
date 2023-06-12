@@ -5,10 +5,8 @@ export const AdventureCardContainer = styled(Card)`
   width: 300px;
   height: 240px;
   background-position: center;
-  background-size: cover;
   box-shadow: inset 0 0 120px 30px #000;
   position: relative;
-  overflow: visible;
 
   &.adventure-complete {
     pointer-events: none;

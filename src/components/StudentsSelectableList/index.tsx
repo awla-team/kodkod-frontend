@@ -14,7 +14,12 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
 }) => {
   const [selected, setSelected] = useState<(number | string)[]>([]);
   const [defaultSelected, setDefaultSelected] = useState<(number | string)[]>([]);
-  const { students: studentsList } = useContext(AdventureContext);
+  const { students } = useContext(AdventureContext);
+  const [studentList, setStudentList] = useState([]);
+
+  useEffect(() => {
+    !!students && setStudentList(students);
+  }, [students]);
 
   useEffect(() => {
     if (mission?.completed_users)
@@ -38,7 +43,7 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
     const { checked } = target;
     const all: (number | string)[] = [];
     if (checked) {
-      studentsList.forEach((res, index) => {
+      studentList.forEach((res, index) => {
         if (!defaultSelected.includes(res.id)) all.push(res.id);
       });
       return setSelected(all);
@@ -49,7 +54,7 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
   const handleSave = async () => {
     try {
       if (!stage) return;
-      const { data }: { data: { responseData: any } } = await missionAccomplished({
+      await missionAccomplished({
         studentIds: selected,
         id_mission: mission.id as number,
         id_stage: stage.id as number,
@@ -64,34 +69,61 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
   };
 
   return (
-    <StudentListContainer className="d-flex flex-column">
+    <StudentListContainer className="d-flex flex-column overflow-hidden">
       <TextField
         className="mb-3"
         variant={'standard'}
         placeholder="Buscar por nombre o apellido"
         fullWidth
+        onChange={(event) => {
+          if (!event.target.value) return setStudentList(students);
+          setStudentList(
+            studentList.filter((student) =>
+              `${student.first_name} ${student.last_name}`.includes(event.target.value)
+            )
+          );
+        }}
       />
-      <div className="d-flex flex-column flex-fill">
-        <FormControlLabel
-          sx={{ marginLeft: 0 }}
-          label="Seleccionar a todos"
-          className="mb-3"
-          control={
-            <Checkbox
-              onChange={handleAllSelect}
-              disabled={studentsList.every((student) => defaultSelected.includes(student.id))}
-              checked={
-                !!studentsList.length &&
-                studentsList.every(
-                  (res, index) => selected.includes(res.id) || defaultSelected.includes(res.id)
-                )
-              }
-            />
-          }
-        />
-
-        <div className="d-flex flex-column gap-3">
-          {studentsList.map((res, index) => (
+      <div className="d-flex flex-column flex-fill gap-4 overflow-hidden">
+        <div className="d-flex w-100 align-items-center justify-content-between">
+          <FormControlLabel
+            sx={{ marginLeft: 0 }}
+            label="Seleccionar a todos"
+            className="mb-3"
+            control={
+              <Checkbox
+                onChange={handleAllSelect}
+                disabled={studentList.every((student) => defaultSelected.includes(student.id))}
+                checked={
+                  !!studentList.length &&
+                  studentList.every(
+                    (res, index) => selected.includes(res.id) || defaultSelected.includes(res.id)
+                  )
+                }
+              />
+            }
+          />
+          <div className="d-flex flex-column">
+            <div className="d-flex gap-2 justify-content-end">
+              <Button onClick={handleClose} variant="outlined">
+                Cancelar
+              </Button>
+              <Button
+                onClick={handleSave}
+                variant="contained"
+                disabled={!Object.keys(selected).length}
+              >
+                Guardar cambios
+              </Button>
+            </div>
+            <Typography component="span" variant="body2" textAlign="end">
+              <b>{Object.keys(selected).length + Object.keys(defaultSelected).length}</b> de{' '}
+              <b>{students.length}</b> estudiantes han cumplido esta misión
+            </Typography>
+          </div>
+        </div>
+        <div className="d-flex flex-column gap-3 overflow-auto">
+          {studentList.map((res, index) => (
             <div key={index} className="d-flex gap-2 align-items-center">
               <Checkbox
                 onChange={(e) => handleCheck(e, res.id)}
@@ -113,18 +145,6 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
             </div>
           ))}
         </div>
-      </div>
-      <Typography component="span" variant="body2" className="mb-3" textAlign="end">
-        <b>{Object.keys(selected).length + Object.keys(defaultSelected).length}</b> de{' '}
-        <b>{studentsList.length}</b> estudiantes han cumplido esta misión
-      </Typography>
-      <div className="d-flex gap-2 justify-content-end">
-        <Button onClick={handleClose} variant="outlined">
-          Cancelar
-        </Button>
-        <Button onClick={handleSave} variant="contained" disabled={!Object.keys(selected).length}>
-          Guardar cambios
-        </Button>
       </div>
     </StudentListContainer>
   );

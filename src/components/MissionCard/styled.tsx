@@ -2,14 +2,16 @@ import { Button, Card } from '@mui/material';
 import styled from 'styled-components';
 
 export const ChangeMissionButton = styled(Button)`
-  position: absolute;
-  right: 10px;
-  top: -24px;
-  height: 40px;
-  width: 40px;
-  border-radius: 100%;
-  box-shadow: 0 0 2px rgba(33, 33, 33, 0.4);
-  min-width: unset;
+  &.MuiButton-root {
+    position: absolute;
+    right: 10px;
+    top: -24px;
+    height: 40px;
+    width: 40px;
+    border-radius: 100%;
+    box-shadow: 0 0 2px rgba(33, 33, 33, 0.4);
+    min-width: unset;
+  }
 
   &[disabled] {
     background-color: #dbdbdb;
