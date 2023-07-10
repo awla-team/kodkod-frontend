@@ -22,7 +22,12 @@ import { IClass } from 'global/interfaces';
 import { useAuth } from 'contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
-const CreateClassModal: FC<CreateClassModalProps> = ({ open, onClose, levels, classDetails }) => {
+const CreateClassModal: FC<CreateClassModalProps> = ({
+  open,
+  onClose,
+  levels,
+  classDetails,
+}) => {
   const [initialState, setInitialState] = useState<FormInitialState>({
     id_level: '',
     code: '',
@@ -140,7 +145,11 @@ const CreateClassModal: FC<CreateClassModalProps> = ({ open, onClose, levels, cl
                       placeholder="Selecciona un nivel"
                       onChange={(e) => {
                         handleChange(e);
-                        handleAliasValue(e as ChangeEvent<HTMLInputElement>, values, setFieldValue);
+                        handleAliasValue(
+                          e as ChangeEvent<HTMLInputElement>,
+                          values,
+                          setFieldValue
+                        );
                       }}
                       value={values.id_level}
                     >
@@ -173,7 +182,8 @@ const CreateClassModal: FC<CreateClassModalProps> = ({ open, onClose, levels, cl
                         Curso
                       </Typography>
                       <Typography component="span" variant="caption">
-                        (Es la letra o nombre que acompaña al nivel e identifica al curso)
+                        (Es la letra o nombre que acompaña al nivel e identifica
+                        al curso)
                       </Typography>
                     </div>
                     <TextField
@@ -212,12 +222,19 @@ const CreateClassModal: FC<CreateClassModalProps> = ({ open, onClose, levels, cl
                 </FormContainer>
               </DialogContent>
               <DialogActions className="pt-3">
-                <Button variant="outlined" onClick={() => onClose('escapeKeyDown')}>
+                <Button
+                  variant="outlined"
+                  onClick={() => onClose('escapeKeyDown')}
+                >
                   Cancelar
                 </Button>
                 <Button
                   disabled={
-                    isSubmitting || !dirty || !values.code || !values.id_level || !values.alias
+                    isSubmitting ||
+                    !dirty ||
+                    !values.code ||
+                    !values.id_level ||
+                    !values.alias
                   }
                   type={'submit'}
                   variant={'contained'}

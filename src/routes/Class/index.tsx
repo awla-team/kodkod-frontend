@@ -43,9 +43,9 @@ const Class: React.FC = () => {
           !tab.disabled ? (
             <Box
               key={`tab-${i}`}
-              className={`nav__tab ${pathname.includes(tab.path) ? 'active' : ''} ${
-                tab.disabled ? 'disabled' : ''
-              }`}
+              className={`nav__tab ${
+                pathname.includes(tab.path) ? 'active' : ''
+              } ${tab.disabled ? 'disabled' : ''}`}
               role="button"
               onClick={() => navigate(tab.path)}
             >
@@ -57,9 +57,9 @@ const Class: React.FC = () => {
           ) : (
             <Tooltip key={`tab-${i}`} arrow title="¡Próximamente!">
               <Box
-                className={`nav__tab ${pathname.includes(tab.path) ? 'active' : ''} ${
-                  tab.disabled ? 'disabled' : ''
-                }`}
+                className={`nav__tab ${
+                  pathname.includes(tab.path) ? 'active' : ''
+                } ${tab.disabled ? 'disabled' : ''}`}
                 role="button"
                 onClick={() => {}}
               >

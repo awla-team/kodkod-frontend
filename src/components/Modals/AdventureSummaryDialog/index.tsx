@@ -32,11 +32,13 @@ const AdventureSummaryDialog: React.FC<{
 
   useEffect(() => {
     if (selectedAdventure && selectedAdventure.template_stages) {
-      const newSortedStages = [...selectedAdventure.template_stages].sort((a, b) => {
-        if (a._index > b._index) return 1;
-        if (a._index < b._index) return -1;
-        return 0;
-      });
+      const newSortedStages = [...selectedAdventure.template_stages].sort(
+        (a, b) => {
+          if (a._index > b._index) return 1;
+          if (a._index < b._index) return -1;
+          return 0;
+        }
+      );
       setSortedStages(newSortedStages);
     }
   }, [selectedAdventure]);
@@ -67,9 +69,16 @@ const AdventureSummaryDialog: React.FC<{
   };
 
   return (
-    <Dialog open={!!selectedAdventure} onClose={handleOnCloseModal} fullWidth maxWidth="lg">
+    <Dialog
+      open={!!selectedAdventure}
+      onClose={handleOnCloseModal}
+      fullWidth
+      maxWidth="lg"
+    >
       <DialogTitle className="d-flex flex-column p-0">
-        <AdventureBanner sx={{ backgroundImage: `url(${selectedAdventure?.banner})` }}>
+        <AdventureBanner
+          sx={{ backgroundImage: `url(${selectedAdventure?.banner})` }}
+        >
           {!shownAdventure?.demo ? (
             <div className="demo-indicator gap-1 mb-3">
               <StarIcon fontSize="small" sx={{ fontSize: '16px' }} />
@@ -102,7 +111,9 @@ const AdventureSummaryDialog: React.FC<{
               <Typography variant="subtitle1" fontWeight="bold">
                 Resumen
               </Typography>
-              <Typography variant="body1">{shownAdventure?.overview}</Typography>
+              <Typography variant="body1">
+                {shownAdventure?.overview}
+              </Typography>
             </section>
             <section className="d-flex flex-column">
               <Typography variant="subtitle1" fontWeight="bold">
@@ -113,7 +124,9 @@ const AdventureSummaryDialog: React.FC<{
                   {shownAdventure.expected_results
                     .split('\n')
                     .map((expectedResult: string, i: number) => (
-                      <li key={`adventure-${shownAdventure.id}-expected-result-${i}`}>
+                      <li
+                        key={`adventure-${shownAdventure.id}-expected-result-${i}`}
+                      >
                         {expectedResult}
                       </li>
                     ))}
@@ -126,14 +139,19 @@ const AdventureSummaryDialog: React.FC<{
               </Typography>
               <div className="d-flex flex-column gap-2">
                 {sortedStages.map((stage, i) => (
-                  <div key={`stage-${i}`} className="d-flex gap-2 align-items-center">
+                  <div
+                    key={`stage-${i}`}
+                    className="d-flex gap-2 align-items-center"
+                  >
                     <EmojiFlagsIcon />
                     <div className="d-flex flex-column gap-0">
                       <Typography variant="body1">
                         <b>{`Etapa ${i}: `}</b>
                         {stage.title}
                       </Typography>
-                      <Typography variant="caption">{stage.description}</Typography>
+                      <Typography variant="caption">
+                        {stage.description}
+                      </Typography>
                     </div>
                   </div>
                 ))}

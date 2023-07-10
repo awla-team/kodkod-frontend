@@ -1,5 +1,8 @@
 import http from 'global/api';
-import { StudentType, StudentUpdateDataType } from '../components/StudentsList/interfaces';
+import {
+  StudentType,
+  StudentUpdateDataType,
+} from '../components/StudentsList/interfaces';
 import { AddStudentsInClassBody } from './interfaces';
 import { generateQueryParamsFromObject } from '../utils';
 
@@ -9,11 +12,19 @@ export interface UserFilter {
   rewards?: true;
 }
 
-export const studentsByClass = (classId: number | string, queryObject?: UserFilter) => {
-  return http.get(`user-by-class/${classId}` + generateQueryParamsFromObject(queryObject));
+export const studentsByClass = (
+  classId: number | string,
+  queryObject?: UserFilter
+) => {
+  return http.get(
+    `user-by-class/${classId}` + generateQueryParamsFromObject(queryObject)
+  );
 };
 
-export const updateStudent = (id: number | string, body?: Partial<StudentUpdateDataType>) => {
+export const updateStudent = (
+  id: number | string,
+  body?: Partial<StudentUpdateDataType>
+) => {
   return http.put('user/' + id, body);
 };
 

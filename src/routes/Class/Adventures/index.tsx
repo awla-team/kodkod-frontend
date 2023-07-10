@@ -9,18 +9,25 @@ import { getMissionsByStage, StageMissionUpdateBody } from 'services/missions';
 import { IAdventure, IMission, IStage } from 'global/interfaces';
 import { StudentType } from 'components/StudentsList/interfaces';
 import { useClassContext } from '../context';
-import { getClassCurrentAdventure, setCurrentAdventure } from 'services/adventures';
+import {
+  getClassCurrentAdventure,
+  setCurrentAdventure,
+} from 'services/adventures';
 
 const Adventures: React.FC = () => {
   const [loading, setLoading] = useState<FetchStatus>(FetchStatus.Success);
   const [missions, setMissions] = useState<IMission[]>([]);
-  const { classDetails, students, loadingClass, updateStageData } = useClassContext();
+  const { classDetails, students, loadingClass, updateStageData } =
+    useClassContext();
 
   useEffect(() => {
     getMissions();
   }, []);
 
-  const handleUpdateCurrentAdventure = (missionData: IMission, ref: StageMissionUpdateBody) => {
+  const handleUpdateCurrentAdventure = (
+    missionData: IMission,
+    ref: StageMissionUpdateBody
+  ) => {
     /*setCurrentAdventure((prevState) => {
       if (prevState) {
         const tempData: IAdventure = JSON.parse(JSON.stringify(prevState));

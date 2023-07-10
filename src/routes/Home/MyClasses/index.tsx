@@ -1,12 +1,20 @@
 import type { FC } from 'react';
-import { AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material';
+import {
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  Typography,
+} from '@mui/material';
 import { MyClassesProps } from './interfaces';
 import { useMemo, useEffect } from 'react';
 import { ExpandMore } from '@mui/icons-material';
 import ClassCard from 'components/ClassCard';
 import { MyClassesBox, LevelAccordion, MyClassesContainer } from './styled';
 
-const MyClasses: FC<MyClassesProps> = ({ classes, getClassesData }: MyClassesProps) => {
+const MyClasses: FC<MyClassesProps> = ({
+  classes,
+  getClassesData,
+}: MyClassesProps) => {
   const classesData = useMemo(() => {
     const totalLevel = [...new Set(classes.map((res) => res.level))].sort();
 
@@ -34,15 +42,29 @@ const MyClasses: FC<MyClassesProps> = ({ classes, getClassesData }: MyClassesPro
         >{`${classes.length} cursos en total`}</Typography>
         {classesData.map(({ level, ...rest }, index) => {
           return (
-            <LevelAccordion defaultExpanded disableGutters elevation={0} key={index}>
+            <LevelAccordion
+              defaultExpanded
+              disableGutters
+              elevation={0}
+              key={index}
+            >
               <AccordionSummary expandIcon={<ExpandMore />}>
-                <Typography component="span" variant="body1" className="fw-bold">
+                <Typography
+                  component="span"
+                  variant="body1"
+                  className="fw-bold"
+                >
                   {level}
                 </Typography>
               </AccordionSummary>
-              <AccordionDetails className={'class__level__cards__container row'}>
+              <AccordionDetails
+                className={'class__level__cards__container row'}
+              >
                 {rest.classes.map((teacherClass, _index) => (
-                  <div className="col-lg-4 col-md-6 col-12" key={`${_index}-${index}`}>
+                  <div
+                    className="col-lg-4 col-md-6 col-12"
+                    key={`${_index}-${index}`}
+                  >
                     <ClassCard classObj={teacherClass} />
                   </div>
                 ))}

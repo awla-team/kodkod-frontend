@@ -1,7 +1,14 @@
 import { DetailsCardContent } from './styled';
 import { ClassDetailsCardProps } from './interfaces';
 import React, { FC, useState, useEffect } from 'react';
-import { Button, Typography, Box, IconButton, Menu, MenuItem } from '@mui/material';
+import {
+  Button,
+  Typography,
+  Box,
+  IconButton,
+  Menu,
+  MenuItem,
+} from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Link, useNavigate } from 'react-router-dom';
 import { CreateClassModal } from '../Modals';
@@ -14,18 +21,24 @@ import SkillPoints from 'components/SkillPoints';
 import { IStage } from 'global/interfaces';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 
-const ClassDetailsCard: FC<ClassDetailsCardProps> = ({ classDetails, levels }) => {
+const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
+  classDetails,
+  levels,
+}) => {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState<boolean>(false);
-  const [openDeleteConfirmationDialog, setOpenDeleteConfirmationDialog] = useState<boolean>(false);
+  const [openDeleteConfirmationDialog, setOpenDeleteConfirmationDialog] =
+    useState<boolean>(false);
   const { setClassDetails } = useClassContext();
   const [loading, setLoading] = useState<boolean>(false);
   const [latestStage, setLatestStage] = useState<IStage>(undefined);
 
   useEffect(() => {
     if (classDetails?.current_adventure?.stages?.length) {
-      const filtered = classDetails.current_adventure.stages.filter((stage) => stage.active);
+      const filtered = classDetails.current_adventure.stages.filter(
+        (stage) => stage.active
+      );
       const newLatestStage = [...filtered].sort((a, b) => {
         if (a._index > b._index) return 1;
         if (a._index < b._index) return -1;
@@ -35,7 +48,10 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({ classDetails, levels }) =
     }
   }, [classDetails]);
 
-  const handleClose = (reason: 'backdropClick' | 'escapeKeyDown' | 'success', data?: IClass) => {
+  const handleClose = (
+    reason: 'backdropClick' | 'escapeKeyDown' | 'success',
+    data?: IClass
+  ) => {
     if ('success') {
       setClassDetails((prevState) => {
         return { ...prevState, ...data };
@@ -67,7 +83,10 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({ classDetails, levels }) =
       //window.location.reload();
     } catch (error: any) {
       console.error(error);
-      Toaster('error', `Hubo un error al eliminar el curso ${classDetails.alias}`);
+      Toaster(
+        'error',
+        `Hubo un error al eliminar el curso ${classDetails.alias}`
+      );
     } finally {
       setLoading(false);
     }
@@ -117,12 +136,22 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({ classDetails, levels }) =
                   <YouTubeIcon className="me-2" />
                   Ver video introductorio
                 </Button>
-                <IconButton sx={{ marginLeft: '8px' }} color="inherit" onClick={handleMenuOpen}>
+                <IconButton
+                  sx={{ marginLeft: '8px' }}
+                  color="inherit"
+                  onClick={handleMenuOpen}
+                >
                   <MoreVertIcon fontSize="large" />
                 </IconButton>
               </div>
-              <Menu open={!!anchorEl} anchorEl={anchorEl} onClose={handleMenuClose}>
-                <MenuItem onClick={() => setOpen(true)}>Editar información del curso</MenuItem>
+              <Menu
+                open={!!anchorEl}
+                anchorEl={anchorEl}
+                onClose={handleMenuClose}
+              >
+                <MenuItem onClick={() => setOpen(true)}>
+                  Editar información del curso
+                </MenuItem>
                 <MenuItem onClick={() => setOpenDeleteConfirmationDialog(true)}>
                   Eliminar curso
                 </MenuItem>
@@ -139,12 +168,14 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({ classDetails, levels }) =
             <section className="d-flex flex-column mb-3">
               <div className="d-flex flex-wrap flex-lg-nowrap gap-2">
                 {!!classDetails.current_adventure?.skills?.length
-                  ? classDetails.current_adventure.skills.map((adventureSkill, index) => (
-                      <SkillPoints
-                        key={`${adventureSkill.id}-${adventureSkill.title}-${index}`}
-                        skill={adventureSkill}
-                      />
-                    ))
+                  ? classDetails.current_adventure.skills.map(
+                      (adventureSkill, index) => (
+                        <SkillPoints
+                          key={`${adventureSkill.id}-${adventureSkill.title}-${index}`}
+                          skill={adventureSkill}
+                        />
+                      )
+                    )
                   : null}
               </div>
             </section>
@@ -184,23 +215,38 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({ classDetails, levels }) =
                   <YouTubeIcon className="me-2" />
                   Ver video introductorio
                 </Button>
-                <IconButton sx={{ marginLeft: '8px' }} color="inherit" onClick={handleMenuOpen}>
+                <IconButton
+                  sx={{ marginLeft: '8px' }}
+                  color="inherit"
+                  onClick={handleMenuOpen}
+                >
                   <MoreVertIcon fontSize="large" />
                 </IconButton>
               </div>
-              <Menu open={!!anchorEl} anchorEl={anchorEl} onClose={handleMenuClose}>
-                <MenuItem onClick={() => setOpen(true)}>Editar información del curso</MenuItem>
+              <Menu
+                open={!!anchorEl}
+                anchorEl={anchorEl}
+                onClose={handleMenuClose}
+              >
+                <MenuItem onClick={() => setOpen(true)}>
+                  Editar información del curso
+                </MenuItem>
                 <MenuItem onClick={() => setOpenDeleteConfirmationDialog(true)}>
                   Eliminar curso
                 </MenuItem>
               </Menu>
             </Box>
-            <Typography component="span" variant="body1" fontWeight="bold" mb={1}>
+            <Typography
+              component="span"
+              variant="body1"
+              fontWeight="bold"
+              mb={1}
+            >
               ¡Aún no has seleccionado una aventura!
             </Typography>
             <Typography component="span" variant="body1">
-              Presiona el botón a continuación para escoger una aventura que se ajuste a tus
-              objetivos
+              Presiona el botón a continuación para escoger una aventura que se
+              ajuste a tus objetivos
             </Typography>
             <div className="mt-4">
               <Button variant="contained" size="large" onClick={handleNavigate}>
@@ -223,7 +269,9 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({ classDetails, levels }) =
         onClose={() => setOpenDeleteConfirmationDialog(false)}
         loading={loading}
         description={
-          <Typography>El curso será eliminado y el avance de la aventura se perderá.</Typography>
+          <Typography>
+            El curso será eliminado y el avance de la aventura se perderá.
+          </Typography>
         }
       />
     </DetailsCardContent>

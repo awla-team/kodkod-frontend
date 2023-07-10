@@ -15,7 +15,9 @@ const AdventureProgress: FC<{
 
   useEffect(() => {
     if (classDetails?.current_adventure?.stages?.length) {
-      const filtered = classDetails.current_adventure.stages.filter((stage) => stage.active);
+      const filtered = classDetails.current_adventure.stages.filter(
+        (stage) => stage.active
+      );
       const newLatestStage = [...filtered].sort((a, b) => {
         if (a._index > b._index) return 1;
         if (a._index < b._index) return -1;
@@ -61,28 +63,36 @@ const AdventureProgress: FC<{
         <section className="d-flex flex-column mb-3">
           <div className="d-flex flex-wrap flex-lg-nowrap gap-2">
             {!!classDetails.current_adventure?.skills?.length
-              ? classDetails.current_adventure.skills.map((adventureSkill, index) => (
-                  <SkillPoints
-                    key={`${adventureSkill.id}-${adventureSkill.title}-${index}`}
-                    skill={adventureSkill}
-                  />
-                ))
+              ? classDetails.current_adventure.skills.map(
+                  (adventureSkill, index) => (
+                    <SkillPoints
+                      key={`${adventureSkill.id}-${adventureSkill.title}-${index}`}
+                      skill={adventureSkill}
+                    />
+                  )
+                )
               : null}
           </div>
         </section>
       </Box>
       <div className="d-flex gap-2">
         <KPIBox className="p-4">
-          <Typography variant="h3" component="h3" fontWeight="bold">{`${Math.round(
-            progressPercentage
-          )}%`}</Typography>
+          <Typography
+            variant="h3"
+            component="h3"
+            fontWeight="bold"
+          >{`${Math.round(progressPercentage)}%`}</Typography>
           <Typography>de misiones completadas en la aventura</Typography>
         </KPIBox>
         <KPIBox className="p-4">
-          <Typography variant="h3" component="h3" fontWeight="bold">{`${Math.round(
-            averageCompletedMission
-          )}`}</Typography>
-          <Typography>misiones completadas por estudiante en promedio </Typography>
+          <Typography
+            variant="h3"
+            component="h3"
+            fontWeight="bold"
+          >{`${Math.round(averageCompletedMission)}`}</Typography>
+          <Typography>
+            misiones completadas por estudiante en promedio{' '}
+          </Typography>
         </KPIBox>
       </div>
     </AdventureProgressContainer>

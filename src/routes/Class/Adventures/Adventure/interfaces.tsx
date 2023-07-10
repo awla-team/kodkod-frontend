@@ -15,6 +15,9 @@ export interface IAdventureContext {
   missions: IMission[];
 
   students: StudentType[];
-  handleUpdateCurrentAdventure: (data: IMission, ref: StageMissionUpdateBody) => void;
+  handleUpdateCurrentAdventure: (
+    data: IMission,
+    ref: StageMissionUpdateBody
+  ) => void;
   updateStageData: (stage: IStage) => void;
 }

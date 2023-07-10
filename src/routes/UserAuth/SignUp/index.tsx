@@ -58,11 +58,21 @@ const SignUp: React.FC = () => {
       school: Yup.number(),
       subject: Yup.string(),
       terms_and_conditions: Yup.boolean()
-        .required('Debes aceptar los términos y condiciones para crear una cuenta.')
-        .oneOf([true], 'Debes aceptar los términos y condiciones para crear una cuenta.'),
+        .required(
+          'Debes aceptar los términos y condiciones para crear una cuenta.'
+        )
+        .oneOf(
+          [true],
+          'Debes aceptar los términos y condiciones para crear una cuenta.'
+        ),
       privacy_policy: Yup.boolean()
-        .required('Debes aceptar la política de privacidad para crear una cuenta.')
-        .oneOf([true], 'Debes aceptar la política de privacidad para crear una cuenta.'),
+        .required(
+          'Debes aceptar la política de privacidad para crear una cuenta.'
+        )
+        .oneOf(
+          [true],
+          'Debes aceptar la política de privacidad para crear una cuenta.'
+        ),
     });
   };
 
@@ -97,7 +107,10 @@ const SignUp: React.FC = () => {
             formikHelper.setFieldError('email', 'Email already exists');
           }
         }
-        Toaster('error', error.response.data.responseData.message || error.message);
+        Toaster(
+          'error',
+          error.response.data.responseData.message || error.message
+        );
         setIsFetching(FetchStatus.Error);
       })
       .finally(() => {
@@ -107,7 +120,8 @@ const SignUp: React.FC = () => {
 
   const getSchools = async () => {
     try {
-      const { data }: { data: { responseData: ISchool[] } } = await getSchoolAction();
+      const { data }: { data: { responseData: ISchool[] } } =
+        await getSchoolAction();
       setSchools(data.responseData);
     } catch (e: any) {
       Toaster('error', e.message);
@@ -193,8 +207,15 @@ const SignUp: React.FC = () => {
             return (
               <Form onSubmit={handleSubmit}>
                 <Box display={'flex'} flexDirection={'column'} gap={2} mt={3}>
-                  <Box display={'flex'} gap={2} flexDirection={{ xs: 'column', sm: 'row' }}>
-                    <FormControl required error={!!errors.first_name && touched.first_name}>
+                  <Box
+                    display={'flex'}
+                    gap={2}
+                    flexDirection={{ xs: 'column', sm: 'row' }}
+                  >
+                    <FormControl
+                      required
+                      error={!!errors.first_name && touched.first_name}
+                    >
                       <TextField
                         required
                         name={'first_name'}
@@ -206,7 +227,10 @@ const SignUp: React.FC = () => {
                         variant="outlined"
                       />
                     </FormControl>
-                    <FormControl required error={!!errors.last_name && touched.last_name}>
+                    <FormControl
+                      required
+                      error={!!errors.last_name && touched.last_name}
+                    >
                       <TextField
                         required
                         value={values.last_name}
@@ -233,12 +257,19 @@ const SignUp: React.FC = () => {
                       variant="outlined"
                     />
                   </FormControl>
-                  <FormControl required error={!!errors.password && touched.password}>
+                  <FormControl
+                    required
+                    error={!!errors.password && touched.password}
+                  >
                     <TextField
                       required
                       name={'password'}
                       value={values.password}
-                      error={!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,16}$|^$/.test(values.password)}
+                      error={
+                        !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,16}$|^$/.test(
+                          values.password
+                        )
+                      }
                       onChange={handleChange}
                       onBlur={handleBlur}
                       type={showPassword ? 'text' : 'password'}
@@ -253,7 +284,11 @@ const SignUp: React.FC = () => {
                               onClick={() => setShowPassword((prev) => !prev)}
                               edge="end"
                             >
-                              {showPassword ? <VisibilityOff /> : <Visibility />}
+                              {showPassword ? (
+                                <VisibilityOff />
+                              ) : (
+                                <Visibility />
+                              )}
                             </IconButton>
                           </InputAdornment>
                         ),
@@ -264,39 +299,62 @@ const SignUp: React.FC = () => {
                         <Typography
                           component="li"
                           variant="body2"
-                          color={/^.{8,16}$/.test(values.password) ? '#009900' : 'gray'}
-                          fontWeight={/^.{8,16}$/.test(values.password) ? 'bold' : 'normal'}
+                          color={
+                            /^.{8,16}$/.test(values.password)
+                              ? '#009900'
+                              : 'gray'
+                          }
+                          fontWeight={
+                            /^.{8,16}$/.test(values.password)
+                              ? 'bold'
+                              : 'normal'
+                          }
                         >
                           Entre 8 y 16 caractéres
                         </Typography>
                         <Typography
                           component="li"
                           variant="body2"
-                          color={/[a-z]/.test(values.password) ? '#009900' : 'gray'}
-                          fontWeight={/[a-z]/.test(values.password) ? 'bold' : 'normal'}
+                          color={
+                            /[a-z]/.test(values.password) ? '#009900' : 'gray'
+                          }
+                          fontWeight={
+                            /[a-z]/.test(values.password) ? 'bold' : 'normal'
+                          }
                         >
                           Al menos 1 minúscula
                         </Typography>
                         <Typography
                           component="li"
                           variant="body2"
-                          color={/[A-Z]/.test(values.password) ? '#009900' : 'gray'}
-                          fontWeight={/[A-Z]/.test(values.password) ? 'bold' : 'normal'}
+                          color={
+                            /[A-Z]/.test(values.password) ? '#009900' : 'gray'
+                          }
+                          fontWeight={
+                            /[A-Z]/.test(values.password) ? 'bold' : 'normal'
+                          }
                         >
                           Al menos 1 mayúscula
                         </Typography>
                         <Typography
                           component="li"
                           variant="body2"
-                          color={/\d/.test(values.password) ? '#009900' : 'gray'}
-                          fontWeight={/\d/.test(values.password) ? 'bold' : 'normal'}
+                          color={
+                            /\d/.test(values.password) ? '#009900' : 'gray'
+                          }
+                          fontWeight={
+                            /\d/.test(values.password) ? 'bold' : 'normal'
+                          }
                         >
                           Al menos 1 número
                         </Typography>
                       </ul>
                     </FormHelperText>
                   </FormControl>
-                  <FormControl required error={!!errors.confirmPassword && touched.confirmPassword}>
+                  <FormControl
+                    required
+                    error={!!errors.confirmPassword && touched.confirmPassword}
+                  >
                     <TextField
                       required
                       name={'confirmPassword'}
@@ -321,7 +379,11 @@ const SignUp: React.FC = () => {
                               onClick={() => setShowPassword((prev) => !prev)}
                               edge="end"
                             >
-                              {showPassword ? <VisibilityOff /> : <Visibility />}
+                              {showPassword ? (
+                                <VisibilityOff />
+                              ) : (
+                                <Visibility />
+                              )}
                             </IconButton>
                           </InputAdornment>
                         ),
@@ -333,19 +395,29 @@ const SignUp: React.FC = () => {
                       id="school"
                       options={schools}
                       getOptionLabel={(school) =>
-                        !!school?.commune ? `${school.name} (${school.commune})` : school.name
+                        !!school?.commune
+                          ? `${school.name} (${school.commune})`
+                          : school.name
                       }
                       renderOption={(props, school) => (
                         <li {...props} key={`school-${school.id}`}>
-                          {!!school?.commune ? `${school.name} (${school.commune})` : school.name}
+                          {!!school?.commune
+                            ? `${school.name} (${school.commune})`
+                            : school.name}
                         </li>
                       )}
-                      isOptionEqualToValue={(option: ISchool, value: ISchool) => {
+                      isOptionEqualToValue={(
+                        option: ISchool,
+                        value: ISchool
+                      ) => {
                         return option.id === value.id;
                       }}
                       noOptionsText="No se encuentra el establecimiento"
                       onChange={(_event, value) => {
-                        setFieldValue('school', !!value ? value.id : formInitialValues.school);
+                        setFieldValue(
+                          'school',
+                          !!value ? value.id : formInitialValues.school
+                        );
                       }}
                       renderInput={(params) => (
                         <TextField
@@ -363,7 +435,10 @@ const SignUp: React.FC = () => {
                       getOptionLabel={(subject) => subject}
                       noOptionsText="No se encuentra la asignatura"
                       onChange={(_event, value) => {
-                        setFieldValue('subject', !!value ? value : formInitialValues.subject);
+                        setFieldValue(
+                          'subject',
+                          !!value ? value : formInitialValues.subject
+                        );
                       }}
                       renderInput={(params) => (
                         <TextField
@@ -381,14 +456,19 @@ const SignUp: React.FC = () => {
                         <Checkbox
                           size="small"
                           name="terms_and_conditions"
-                          onChange={(_event, value) => setFieldValue('terms_and_conditions', value)}
+                          onChange={(_event, value) =>
+                            setFieldValue('terms_and_conditions', value)
+                          }
                           checked={values.terms_and_conditions}
                         />
                       }
                       label={
                         <Typography variant="body2">
                           He leído y acepto los{' '}
-                          <a target="_blank" href="https://kodkod.cl/terminos-y-condiciones">
+                          <a
+                            target="_blank"
+                            href="https://kodkod.cl/terminos-y-condiciones"
+                          >
                             términos y condiciones
                           </a>{' '}
                           de uso.
@@ -401,14 +481,19 @@ const SignUp: React.FC = () => {
                         <Checkbox
                           size="small"
                           name="privacy_policy"
-                          onChange={(_event, value) => setFieldValue('privacy_policy', value)}
+                          onChange={(_event, value) =>
+                            setFieldValue('privacy_policy', value)
+                          }
                           checked={values.privacy_policy}
                         />
                       }
                       label={
                         <Typography variant="body2">
                           He leído y acepto la{' '}
-                          <a target="_blank" href="https://kodkod.cl/privacidad">
+                          <a
+                            target="_blank"
+                            href="https://kodkod.cl/privacidad"
+                          >
                             política de privacidad
                           </a>
                           .

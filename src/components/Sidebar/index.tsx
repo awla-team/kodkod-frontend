@@ -40,7 +40,11 @@ const Sidebar: FC<SidebarProps> = ({ classes, handleOpenModal }) => {
             ))}
           </LinkList>
         ) : null}
-        <RoundButton sx={{ marginBottom: '74px' }} color="info" onClick={() => handleOpenModal()}>
+        <RoundButton
+          sx={{ marginBottom: '74px' }}
+          color="info"
+          onClick={() => handleOpenModal()}
+        >
           <AddIcon />
         </RoundButton>
       </div>

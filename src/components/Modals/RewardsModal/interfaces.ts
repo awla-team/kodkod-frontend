@@ -8,7 +8,10 @@ export interface Levels {
 
 export interface CreateClassModalProps {
   open: boolean;
-  onClose: (reason: 'backdropClick' | 'escapeKeyDown' | 'success', data?: IClass) => void;
+  onClose: (
+    reason: 'backdropClick' | 'escapeKeyDown' | 'success',
+    data?: IClass
+  ) => void;
   levels: Levels[];
 
   classDetails?: IClass;

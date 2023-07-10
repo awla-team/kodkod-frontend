@@ -74,7 +74,11 @@ const Rewards: FC = () => {
   const [searchParams] = useSearchParams();
   const [rewards, setRewards] = useState<IReward[]>([]);
 
-  const editReward = (rewardId: number | string, newTitle: string, newDescription: string) => {
+  const editReward = (
+    rewardId: number | string,
+    newTitle: string,
+    newDescription: string
+  ) => {
     return http
       .put(`reward/${rewardId}`, {
         title: newTitle,
@@ -82,7 +86,9 @@ const Rewards: FC = () => {
       })
       .then((response: any) => {
         const newRewards = [...rewards];
-        const matchReward = newRewards.findIndex((reward) => reward.id === rewardId);
+        const matchReward = newRewards.findIndex(
+          (reward) => reward.id === rewardId
+        );
         newRewards[matchReward] = {
           ...newRewards[matchReward],
           title: newTitle,
@@ -106,10 +112,8 @@ const Rewards: FC = () => {
     if (id) {
       (async (adventureId: number | string) => {
         try {
-          const { data }: { data: { responseData: IReward[] } } = await getRewardsByAdventure(
-            adventureId,
-            classId
-          );
+          const { data }: { data: { responseData: IReward[] } } =
+            await getRewardsByAdventure(adventureId, classId);
 
           const sorted = data.responseData.sort((a, b) => {
             if (a.required_points > b.required_points) return 1;
@@ -133,28 +137,40 @@ const Rewards: FC = () => {
           component={RouterLink}
           to={`/app/cursos/${classId}/aventuras`}
           size="large"
-          startIcon={<ArrowBackIosIcon sx={{ fontSize: '16px!important' }} fontSize="small" />}
+          startIcon={
+            <ArrowBackIosIcon
+              sx={{ fontSize: '16px!important' }}
+              fontSize="small"
+            />
+          }
         >
           Volver a la aventura
         </Button>
-        <Typography component="h4" variant="h4" fontWeight="bold" className="mb-2">
+        <Typography
+          component="h4"
+          variant="h4"
+          fontWeight="bold"
+          className="mb-2"
+        >
           Recompensas
         </Typography>
         <Typography component="p" variant="body1" className="mb-2">
-          Para modificar el texto de las recompensas haz clic en el lápiz negro de la esquina
-          superior derecha de cada recompensa. Puedes tomar en cuenta las sugerencias de tus
-          estudiantes y las reglas de convivencia tu propio colegio.
+          Para modificar el texto de las recompensas haz clic en el lápiz negro
+          de la esquina superior derecha de cada recompensa. Puedes tomar en
+          cuenta las sugerencias de tus estudiantes y las reglas de convivencia
+          tu propio colegio.
         </Typography>
         <Typography component="p" variant="body1" className="mb-2">
-          Algunas sugerencias de recompensa pueden ser desde cambiarse de puesto, tener un día
-          adicional para entregar una tarea, poder comer en clases, una anotación positiva y/o un
-          reconocimiento en el diario mural. Recuerda que las recompensas están ordenadas según su
-          valor, siendo la última la más difícil de obtener.
+          Algunas sugerencias de recompensa pueden ser desde cambiarse de
+          puesto, tener un día adicional para entregar una tarea, poder comer en
+          clases, una anotación positiva y/o un reconocimiento en el diario
+          mural. Recuerda que las recompensas están ordenadas según su valor,
+          siendo la última la más difícil de obtener.
         </Typography>
         <Typography component="p" variant="body1">
-          Los estudiantes recibirán recompensas <b>automáticamente</b> cada vez que alcancen el
-          puntaje indicado en ellas. Luego, en la vista <b>Progreso</b> puedes gestionar las
-          recompensas de tus estudiantes.
+          Los estudiantes recibirán recompensas <b>automáticamente</b> cada vez
+          que alcancen el puntaje indicado en ellas. Luego, en la vista{' '}
+          <b>Progreso</b> puedes gestionar las recompensas de tus estudiantes.
         </Typography>
         <Box className="mt-5">
           <RewardsList className="d-flex gap-5 pb-4">

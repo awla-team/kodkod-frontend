@@ -40,7 +40,10 @@ const VerifyEmail: React.FC = () => {
       });
   };
 
-  if (emailVerified === FetchStatus.Idle || emailVerified === FetchStatus.Pending)
+  if (
+    emailVerified === FetchStatus.Idle ||
+    emailVerified === FetchStatus.Pending
+  )
     return (
       <div className="d-flex w-100 h-100 justify-content-center align-items-center">
         <CircularProgress />
@@ -64,7 +67,8 @@ const VerifyEmail: React.FC = () => {
           </Typography>
           <Typography component="span" variant="body2" color="gray">
             El link de verificación ha expirado. Puedes hacer clic en el botón "
-            <b>Reenviar link de verificación</b>" para enviar un nuevo link a tu email.
+            <b>Reenviar link de verificación</b>" para enviar un nuevo link a tu
+            email.
           </Typography>
           <Box
             className="action__container"
@@ -75,7 +79,10 @@ const VerifyEmail: React.FC = () => {
             mt={2}
           >
             <Button
-              disabled={emailResend === FetchStatus.Pending || emailResend === FetchStatus.Success}
+              disabled={
+                emailResend === FetchStatus.Pending ||
+                emailResend === FetchStatus.Success
+              }
               fullWidth
               size="large"
               className="submit__button"

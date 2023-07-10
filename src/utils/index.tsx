@@ -86,7 +86,10 @@ export const sortStageByActiveStatus = (stages: IStage[]) => {
     });
 };
 
-export const getActiveStage = (stage: IStage[], sort?: boolean): IStage | null => {
+export const getActiveStage = (
+  stage: IStage[],
+  sort?: boolean
+): IStage | null => {
   if (stage.length) {
     let actives = stage.filter((res) => res.active);
     if (sort) {
@@ -98,7 +101,10 @@ export const getActiveStage = (stage: IStage[], sort?: boolean): IStage | null =
   }
 };
 
-export const getFirstNonActiveStage = (stage: IStage[], sort?: boolean): IStage | null => {
+export const getFirstNonActiveStage = (
+  stage: IStage[],
+  sort?: boolean
+): IStage | null => {
   if (stage.length) {
     let actives = stage.filter((res) => !res.active);
     if (sort) {

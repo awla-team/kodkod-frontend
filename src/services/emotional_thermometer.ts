@@ -24,7 +24,9 @@ export const getEmotionalThermometerByClassId = (
   let queryParams: string = '';
   if (dateFrom || dateTo) {
     if (dateFrom && dateTo && dateFrom.isValid() && dateTo.isValid()) {
-      queryParams = `?date_from=${dateFrom.utc().format()}&date_to=${dateTo.utc().format()}`;
+      queryParams = `?date_from=${dateFrom.utc().format()}&date_to=${dateTo
+        .utc()
+        .format()}`;
     } else {
       if (dateFrom.isValid()) {
         queryParams = `?date_from=${dateFrom.utc().format()}`;
@@ -41,6 +43,9 @@ export const saveEmotionalThermometerDetails = (body: SaveBody) => {
   return http.post('emotional-thermometer', body);
 };
 
-export const updateEmotionalThermometerDetails = (id: number | string, body: UpdateBody) => {
+export const updateEmotionalThermometerDetails = (
+  id: number | string,
+  body: UpdateBody
+) => {
   return http.put('emotional-thermometer/' + id, body);
 };

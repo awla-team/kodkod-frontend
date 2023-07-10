@@ -51,7 +51,10 @@ export const StudentDetails: FC<{
       updateStudentsData('delete', details);
     } catch (error: any) {
       console.error(error);
-      Toaster('error', `Hubo un error al eliminar al estudiante ${details.email}`);
+      Toaster(
+        'error',
+        `Hubo un error al eliminar al estudiante ${details.email}`
+      );
     }
   };
 
@@ -74,18 +77,23 @@ export const StudentDetails: FC<{
   ) => {
     try {
       const { last_name, first_name, email } = values;
-      const { data }: { data: { responseData: StudentType } } = await updateStudent(details.id, {
-        role: 'student',
-        email,
-        last_name,
-        first_name,
-      });
+      const { data }: { data: { responseData: StudentType } } =
+        await updateStudent(details.id, {
+          role: 'student',
+          email,
+          last_name,
+          first_name,
+        });
       Toaster('success', 'Estudiante actualizado exitosamente');
       setEditState(false);
       updateStudentsData('update', data.responseData);
     } catch (error: any) {
       console.error(error);
-      if (error?.response?.data?.responseData?.includes?.('is not allowed to be empty'))
+      if (
+        error?.response?.data?.responseData?.includes?.(
+          'is not allowed to be empty'
+        )
+      )
         return Toaster('error', 'Todos los campos deben ser llenados');
       Toaster('error', 'Hubo un error al actualizar al estudiante');
     } finally {
@@ -99,10 +107,25 @@ export const StudentDetails: FC<{
   };
 
   return (
-    <StudentRow className={`d-flex align-items-center w-100 ${editState ? 'editable' : ''}`}>
+    <StudentRow
+      className={`d-flex align-items-center w-100 ${
+        editState ? 'editable' : ''
+      }`}
+    >
       <Avatar className="student-avatar me-3">{`${details.first_name[0]}${details.last_name[0]}`}</Avatar>
-      <Formik initialValues={inputValues} onSubmit={handleSubmit} innerRef={formRef}>
-        {({ handleSubmit, values, handleChange, isSubmitting, submitCount, errors }) => {
+      <Formik
+        initialValues={inputValues}
+        onSubmit={handleSubmit}
+        innerRef={formRef}
+      >
+        {({
+          handleSubmit,
+          values,
+          handleChange,
+          isSubmitting,
+          submitCount,
+          errors,
+        }) => {
           return (
             <Form onSubmit={handleSubmit} className={'editable_section__form'}>
               <div className={'edit__section'}>
@@ -132,7 +155,9 @@ export const StudentDetails: FC<{
                           name={'last_name'}
                           className={'name'}
                           placeholder={'Apellidos'}
-                          value={editState ? values.last_name : details.last_name}
+                          value={
+                            editState ? values.last_name : details.last_name
+                          }
                           onChange={handleChange}
                         />
                       </FormControl>
@@ -141,7 +166,10 @@ export const StudentDetails: FC<{
                     )}
                   </Box>
                   {editState ? (
-                    <FormControl className="mt-2" error={!!errors.email && !!submitCount}>
+                    <FormControl
+                      className="mt-2"
+                      error={!!errors.email && !!submitCount}
+                    >
                       <TextField
                         variant="standard"
                         disabled={!editState}
@@ -160,7 +188,11 @@ export const StudentDetails: FC<{
                 <div className={'editable__action__section'}>
                   {editState ? (
                     <>
-                      <IconButton disabled={isSubmitting} type={'submit'} color={'primary'}>
+                      <IconButton
+                        disabled={isSubmitting}
+                        type={'submit'}
+                        color={'primary'}
+                      >
                         <CheckIcon />
                       </IconButton>
                       <IconButton color={'error'} onClick={cancelEditMode}>

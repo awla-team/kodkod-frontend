@@ -19,10 +19,12 @@ const Progress: FC<ProgressProps> = () => {
   const { classDetails } = useClassContext();
   const [students, setStudents] = useState<IUser[]>([]);
   const [missions, setMissions] = useState<IMission[]>([]);
-  const [progressPercentage, setProgressPercentage] = useState<number | undefined>(undefined);
-  const [averageCompletedMission, setAverageCompletedMission] = useState<number | undefined>(
-    undefined
-  );
+  const [progressPercentage, setProgressPercentage] = useState<
+    number | undefined
+  >(undefined);
+  const [averageCompletedMission, setAverageCompletedMission] = useState<
+    number | undefined
+  >(undefined);
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [selectedStudent, setSelectedStudent] = useState<IUser>(undefined);
   const [sortModel, setSortModel] = useState<GridSortModel>([
@@ -101,7 +103,9 @@ const Progress: FC<ProgressProps> = () => {
         (accumulator, student) => accumulator + student.missions.length,
         0
       );
-      setProgressPercentage((completedMissions / (students.length * missions.length)) * 100);
+      setProgressPercentage(
+        (completedMissions / (students.length * missions.length)) * 100
+      );
       setAverageCompletedMission(completedMissions / students.length);
     } else {
       setProgressPercentage(0);
@@ -111,11 +115,12 @@ const Progress: FC<ProgressProps> = () => {
 
   const getStudents = async () => {
     try {
-      const { data }: { data: { responseData: IUser[] } } = await studentsByClass(classDetails.id, {
-        missions: true,
-        role: 'student',
-        rewards: true,
-      });
+      const { data }: { data: { responseData: IUser[] } } =
+        await studentsByClass(classDetails.id, {
+          missions: true,
+          role: 'student',
+          rewards: true,
+        });
       const studentsWithTableFields = data.responseData.map((student) => ({
         ...student,
         completed_missions: student.missions.length || 0,
@@ -158,13 +163,19 @@ const Progress: FC<ProgressProps> = () => {
 
   return (
     <ProgressContainer className="p-5">
-      <Typography variant="h4" component="h4" fontWeight="bold" className="mb-2">
+      <Typography
+        variant="h4"
+        component="h4"
+        fontWeight="bold"
+        className="mb-2"
+      >
         Progreso
       </Typography>
       <Typography className="mb-4">
-        En esta sección podrás ver el progreso de cada estudiante y del grupo curso. Podrás ver el
-        puntaje en la aventura actual, el número de misiones completadas y las recompensas
-        obtenidas. Además, puedes <b>gestionar el uso de recompensas</b> de los estudiantes.
+        En esta sección podrás ver el progreso de cada estudiante y del grupo
+        curso. Podrás ver el puntaje en la aventura actual, el número de
+        misiones completadas y las recompensas obtenidas. Además, puedes{' '}
+        <b>gestionar el uso de recompensas</b> de los estudiantes.
       </Typography>
 
       {classDetails?.current_adventure ? (
@@ -190,7 +201,8 @@ const Progress: FC<ProgressProps> = () => {
           slotProps={{
             pagination: {
               labelRowsPerPage: 'Estudiantes por página',
-              labelDisplayedRows: ({ from, to, count, page }) => `Total de ${count} estudiantes`,
+              labelDisplayedRows: ({ from, to, count, page }) =>
+                `Total de ${count} estudiantes`,
             },
           }}
           sortModel={sortModel}

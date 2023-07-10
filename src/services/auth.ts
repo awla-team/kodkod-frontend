@@ -49,13 +49,17 @@ export const generateAccessToken = async (body?: GenerateAccessTokenBody) => {
         { headers: { 'Content-Type': 'application/json' } }
       )
       .then((response) => {
-        if (response?.status === 200 && !!response?.data) return resolve(response.data);
+        if (response?.status === 200 && !!response?.data)
+          return resolve(response.data);
         throw response;
       })
       .catch(async (error: AxiosError) => {
         try {
           const data: any = await error.response.data;
-          if (data?.responseData === 'refreshToken expired' && data?.responseCode === 401) {
+          if (
+            data?.responseData === 'refreshToken expired' &&
+            data?.responseCode === 401
+          ) {
             const refreshToken = localStorage.getItem('refreshToken');
             if (refreshToken) {
               await logout({ refreshToken });
@@ -78,7 +82,10 @@ export const verifyResetToken = (token: string) => {
   return http.get('/auth/verify-token/' + token);
 };
 
-export const resetPassword = (body: Omit<SignInBody, 'email'>, token: string) => {
+export const resetPassword = (
+  body: Omit<SignInBody, 'email'>,
+  token: string
+) => {
   return http.post('/auth/reset-password/' + token, body);
 };
 
