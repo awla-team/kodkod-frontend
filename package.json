@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "set CI=false && tsc && vite build",
     "preview": "vite preview",
     "server": "json-server --watch db.json --delay 500",
     "lint": "prettier -w .",
