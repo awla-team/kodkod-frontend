@@ -8,18 +8,29 @@
     "prettier"
   ],
   "parser": "@typescript-eslint/parser",
-  "parserOptions": { "ecmaVersion": 6, "sourceType": "module" },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  },
   "plugins": ["@typescript-eslint", "react", "react-hooks", "react-refresh"],
   "rules": {
-    "react-refresh/only-export-components": "warn",
     "no-extra-boolean-cast": "warn",
     "prefer-const": "warn",
+    "no-useless-catch": "warn",
+    "no-async-promise-executor": "error",
+    "no-constant-condition": "error",
     "@typescript-eslint/no-unused-vars": "warn",
-    "@typescript-eslint/no-empty-function": "warn",
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/no-empty-interface": "off",
+    "@typescript-eslint/no-inferrable-types": "warn",
+    "@typescript-eslint/no-namespace": "off",
+    "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/ban-types": "error",
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
     "react/display-name": "off",
     "react/no-unescaped-entities": "off",
-    "no-useless-catch": "warn"
+    "react-refresh/only-export-components": "warn"
   }
 }
