@@ -33,7 +33,7 @@ jobs:
         run: yarn global add prettier@2.8.8
 
       - name: Check linting
-        run: yarn lint-check
+        run: yarn format-check
 
   build:
     name: Build

@@ -8,8 +8,8 @@
     "build": "set CI=false && tsc && vite build",
     "preview": "vite preview",
     "server": "json-server --watch db.json --delay 500",
-    "lint": "prettier -w .",
-    "lint-check": "prettier -c ."
+    "format": "prettier -w .",
+    "format-check": "prettier -c ."
   },
   "dependencies": {
     "@emotion/react": "^11.10.4",
