@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "server": "json-server --watch db.json --delay 500",
     "format": "prettier -w .",
-    "format-check": "prettier -c ."
+    "format-check": "prettier -c .",
+    "eslint-check": "eslint . --ext .js,.jsx,.ts,.tsx,.d.ts"
   },
   "dependencies": {
     "@emotion/react": "^11.10.4",
