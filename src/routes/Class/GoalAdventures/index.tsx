@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Typography from '@mui/material/Typography';
 import AdventureCard from 'components/AdventureCard';
 import type { IAdventure, IClassHasAdventure } from 'global/interfaces';
@@ -15,10 +15,12 @@ import SkillPoints from 'components/SkillPoints';
 import { getClassHasAdventuresByClass } from 'services/classes';
 import { Button } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import { useAuth } from 'contexts/AuthContext';
 
 const GoalAdventures: React.FC = () => {
   const [loading, setLoading] = useState<FetchStatus>(FetchStatus.Idle);
   const { classDetails, loadingClass } = useClassContext();
+  const { user } = useAuth();
   const [selectedAdventure, setSelectedAdventure] = useState<IAdventure>(null);
   const [completedAdventures, setCompletedAdventures] = useState<
     IClassHasAdventure[]
@@ -122,7 +124,7 @@ const GoalAdventures: React.FC = () => {
           <div className="d-flex h-100 w-100 align-items-center justify-content-center justify-content-center flex-wrap gap-4">
             {sortedAdventures.map((adventure, index) => (
               <AdventureCard
-                demo={adventure.demo}
+                demo={adventure.demo || user?.is_superuser}
                 completed={
                   !!completedAdventures.find(
                     (completedAdventure) =>
