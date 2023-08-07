@@ -467,6 +467,7 @@ const SignUp: React.FC = () => {
                           He leído y acepto los{' '}
                           <a
                             target="_blank"
+                            rel="noreferrer"
                             href="https://kodkod.cl/terminos-y-condiciones"
                           >
                             términos y condiciones
@@ -492,6 +493,7 @@ const SignUp: React.FC = () => {
                           He leído y acepto la{' '}
                           <a
                             target="_blank"
+                            rel="noreferrer"
                             href="https://kodkod.cl/privacidad"
                           >
                             política de privacidad

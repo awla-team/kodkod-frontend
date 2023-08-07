@@ -116,7 +116,7 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
     }
   };
 
-  const checkDate = (date: MomentType): Boolean => {
+  const checkDate = (date: MomentType): boolean => {
     return detailsByDates.some((res) => {
       return Moment.utc(res.date).local().startOf('day').isSame(date, 'day');
     });
