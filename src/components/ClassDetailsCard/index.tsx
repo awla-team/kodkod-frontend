@@ -52,13 +52,11 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
     reason: 'backdropClick' | 'escapeKeyDown' | 'success',
     data?: IClass
   ) => {
-    if ('success') {
-      setClassDetails((prevState) => {
-        return { ...prevState, ...data };
-      });
-      setOpen(false);
-      setAnchorEl(null);
-    }
+    setClassDetails((prevState) => {
+      return { ...prevState, ...data };
+    });
+    setOpen(false);
+    setAnchorEl(null);
   };
 
   const handleMenuOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
