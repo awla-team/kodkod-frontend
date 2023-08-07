@@ -165,7 +165,7 @@ const Subscriptions: React.FC = () => {
         </ul>
         {fetching !== FetchStatus.Pending && fetching !== FetchStatus.Idle ? (
           <>
-            {user.is_subscription_active ? (
+            {user?.is_subscription_active || user?.is_superuser ? (
               <ActiveSubscriptionBox className="d-flex justify-content-between align-items-center p-4">
                 <div>
                   <Chip

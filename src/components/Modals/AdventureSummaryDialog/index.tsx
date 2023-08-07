@@ -79,7 +79,7 @@ const AdventureSummaryDialog: React.FC<{
         <AdventureBanner
           sx={{ backgroundImage: `url(${selectedAdventure?.banner})` }}
         >
-          {!shownAdventure?.demo ? (
+          {!shownAdventure?.demo && !user?.is_superuser ? (
             <div className="demo-indicator gap-1 mb-3">
               <StarIcon fontSize="small" sx={{ fontSize: '16px' }} />
               <Typography fontWeight="bold" variant="body2">
@@ -164,7 +164,9 @@ const AdventureSummaryDialog: React.FC<{
         <Button variant={'outlined'} onClick={handleOnCloseModal}>
           Cancelar
         </Button>
-        {!shownAdventure?.demo && !user.is_subscription_active ? (
+        {!shownAdventure?.demo &&
+        !user?.is_subscription_active &&
+        !user?.is_superuser ? (
           <Button
             className="ms-2"
             sx={{ '&:hover': { color: '#fff' } }}

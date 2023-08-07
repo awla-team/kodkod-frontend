@@ -49,7 +49,7 @@ const Sidebar: FC<SidebarProps> = ({ classes, handleOpenModal }) => {
         </RoundButton>
       </div>
       <div>
-        {!user.is_subscription_active ? (
+        {!user?.is_subscription_active && !user?.is_superuser ? (
           <Button
             className="text-center px-0"
             component={Link}

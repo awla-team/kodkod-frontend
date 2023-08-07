@@ -32,7 +32,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
   return user.id ? (
     <UserInfoContainer className="w-100">
       <Divider className="w-75 my-3" color="gray" />
-      {user.is_subscription_active ? (
+      {user?.is_subscription_active || user?.is_superuser ? (
         <Chip
           className="mb-2"
           sx={{ span: { padding: '2px 8px' } }}

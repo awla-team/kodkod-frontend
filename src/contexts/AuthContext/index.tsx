@@ -144,7 +144,7 @@ const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
   }, [goToSignin, user]);
 
   const checkUserSubscription = (reason: string, callback: () => void) => {
-    if (!user.is_subscription_active)
+    if (!user?.is_subscription_active && !user?.is_superuser)
       setSubscribeModalOpen({ open: true, reason });
     else callback();
   };
