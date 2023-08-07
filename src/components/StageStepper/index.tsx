@@ -31,7 +31,8 @@ const StageStepper: FC<{
       const navigableStages = sorted.filter((stage) => stage.active);
       setSortedStages(sorted);
       setNavigableStages(navigableStages);
-      if (shownStage) onStageChange(stages.find((stage) => stage.id === shownStage.id));
+      if (shownStage)
+        onStageChange(stages.find((stage) => stage.id === shownStage.id));
       else setActiveStep(navigableStages[navigableStages.length - 1]._index);
     }
   }, [stages]);
@@ -51,7 +52,10 @@ const StageStepper: FC<{
         }: { data: { responseData: IStage } } = await unlockStage({
           id_class_has_adventure: adventure.id_class_has_adventure,
         });
-        Toaster('success', `¡Etapa ${sortedStages[navigableStages.length]._index} desbloqueada!`);
+        Toaster(
+          'success',
+          `¡Etapa ${sortedStages[navigableStages.length]._index} desbloqueada!`
+        );
         updateStageData(responseData);
         setOpenDialog(false);
         setActiveStep(responseData._index);
@@ -74,7 +78,11 @@ const StageStepper: FC<{
               const isActive = shownStage?._index === stage._index;
 
               return (
-                <Step key={`step-${stage._index}`} completed={false} disabled={!isNavigable}>
+                <Step
+                  key={`step-${stage._index}`}
+                  completed={false}
+                  disabled={!isNavigable}
+                >
                   <div
                     role="button"
                     className={`stage-step ${isNavigable ? 'navigable' : ''} ${
@@ -101,10 +109,13 @@ const StageStepper: FC<{
                 <div className="p-1">
                   ¿Qué sucederá al desbloquear la siguiente etapa?
                   <ul className="m-0">
-                    <li>Verán nuevas misiones que les permitirán sumar más puntos y recompensas</li>
                     <li>
-                      Las misiones de las etapas anteriores seguirán disponibles para quienes aún no
-                      las hayan completado.
+                      Verán nuevas misiones que les permitirán sumar más puntos
+                      y recompensas
+                    </li>
+                    <li>
+                      Las misiones de las etapas anteriores seguirán disponibles
+                      para quienes aún no las hayan completado.
                     </li>
                   </ul>
                 </div>
@@ -127,13 +138,22 @@ const StageStepper: FC<{
                   ¿Qué sucederá al finalizar la aventura?
                   <ul className="m-0">
                     <li>Los puntos de cada estudiante volverán a 0.</li>
-                    <li>No se podrán completar más misiones en esta aventura.</li>
-                    <li>Tus estudiantes mantendrán las recompensas que ya obtuvieron.</li>
+                    <li>
+                      No se podrán completar más misiones en esta aventura.
+                    </li>
+                    <li>
+                      Tus estudiantes mantendrán las recompensas que ya
+                      obtuvieron.
+                    </li>
                   </ul>
                 </div>
               }
             >
-              <Button variant={'contained'} onClick={() => setOpenDialog(true)} size="large">
+              <Button
+                variant={'contained'}
+                onClick={() => setOpenDialog(true)}
+                size="large"
+              >
                 ¡Completar etapa y finalizar aventura!
               </Button>
             </Tooltip>
@@ -145,7 +165,9 @@ const StageStepper: FC<{
             currentStage={shownStage}
             handleClose={() => setOpenDialog(false)}
             finishImg={adventure?.finish_img_url}
-            onConfirm={sortedStages[navigableStages.length] ? handleUnlock : handleFinish}
+            onConfirm={
+              sortedStages[navigableStages.length] ? handleUnlock : handleFinish
+            }
           />
         </div>
       ) : null}

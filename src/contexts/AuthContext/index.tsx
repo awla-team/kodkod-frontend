@@ -55,14 +55,18 @@ const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
     user: null,
     authenticated: false,
   });
-  const [subscribeModalOpen, setSubscribeModalOpen] = useState<{ open: boolean; reason: string }>({
+  const [subscribeModalOpen, setSubscribeModalOpen] = useState<{
+    open: boolean;
+    reason: string;
+  }>({
     open: false,
     reason: 'Conviertete un miembro Pro',
   });
 
   const getAuthUser = async (): Promise<Omit<IUser, 'avatar'>> => {
     try {
-      const { data }: { data: { responseData: Omit<IUser, 'avatar'> } } = await getAuthUserAction();
+      const { data }: { data: { responseData: Omit<IUser, 'avatar'> } } =
+        await getAuthUserAction();
       return data.responseData;
     } catch (e) {
       throw e;
@@ -132,21 +136,24 @@ const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
           authenticated: false,
         },
       });
-      if (error?.response?.status === 401) Toaster('error', 'Tu sesión ha caducado');
+      if (error?.response?.status === 401)
+        Toaster('error', 'Tu sesión ha caducado');
       else Toaster('error', 'Ha ocurrido un error en tu sesión');
       goToSignin();
     }
   }, [goToSignin, user]);
 
   const checkUserSubscription = (reason: string, callback: () => void) => {
-    if (!user.is_subscription_active) setSubscribeModalOpen({ open: true, reason });
+    if (!user.is_subscription_active)
+      setSubscribeModalOpen({ open: true, reason });
     else callback();
   };
 
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken');
     const refreshToken = localStorage.getItem('refreshToken');
-    if (accessToken && refreshToken && pathname.includes('app')) checkAuthUser();
+    if (accessToken && refreshToken && pathname.includes('app'))
+      checkAuthUser();
   }, [pathname, checkAuthUser, goToSignin]);
 
   if (localStorage.getItem('accessToken') && pathname === '/') {
@@ -163,7 +170,9 @@ const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
       <SubscribeModal
         open={subscribeModalOpen.open}
         reason={subscribeModalOpen.reason}
-        onClose={() => setSubscribeModalOpen({ ...subscribeModalOpen, open: false })}
+        onClose={() =>
+          setSubscribeModalOpen({ ...subscribeModalOpen, open: false })
+        }
       />
     </AuthContext.Provider>
   );

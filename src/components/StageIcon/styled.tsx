@@ -7,7 +7,8 @@ export const StageIconContainer = styled.div`
   border-radius: 36px;
   border: ${(props: IStageIconContainerProps) =>
     props.selected ? '2px solid #86D448' : '2px solid #4A4A4A'};
-  background: ${(props: IStageIconContainerProps) => (props.selected ? '#FFF' : '#4A4A4A')};
+  background: ${(props: IStageIconContainerProps) =>
+    props.selected ? '#FFF' : '#4A4A4A'};
   display: flex;
   align-items: center;
   justify-content: center;

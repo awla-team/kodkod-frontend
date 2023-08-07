@@ -3,7 +3,11 @@ import { Tooltip, Typography } from '@mui/material';
 import kodcoinIcon from 'assets/images/kodcoin.png';
 import { difficultyIcons, difficultyToText } from 'utils';
 import CachedIcon from '@mui/icons-material/Cached';
-import { MissionCardContainer, ChangeMissionButton, PointsContainer } from './styled';
+import {
+  MissionCardContainer,
+  ChangeMissionButton,
+  PointsContainer,
+} from './styled';
 import { IMissionCardProps } from './interfaces';
 import SchoolIcon from '@mui/icons-material/School';
 import { useAuth } from 'contexts/AuthContext';
@@ -20,9 +24,12 @@ const MissionCard: React.FC<IMissionCardProps> = ({
 
   const handleChangeMissionButton = (e: React.MouseEvent) => {
     e.stopPropagation();
-    checkUserSubscription('Reemplazar una misión es una funcionalidad Pro', () => {
-      openModal(mission);
-    });
+    checkUserSubscription(
+      'Reemplazar una misión es una funcionalidad Pro',
+      () => {
+        openModal(mission);
+      }
+    );
   };
 
   return (
@@ -66,7 +73,9 @@ const MissionCard: React.FC<IMissionCardProps> = ({
             </div>
           </div>
           {completed_users ? (
-            <Tooltip title={`${completed_users?.length} estudiantes han completado esta misión`}>
+            <Tooltip
+              title={`${completed_users?.length} estudiantes han completado esta misión`}
+            >
               <div className="d-flex align-items-center justify-content-center gap-1">
                 <SchoolIcon fontSize="small" />
                 <Typography component="span" variant="body2">

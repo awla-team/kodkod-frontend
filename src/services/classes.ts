@@ -7,9 +7,11 @@ interface ClassMutationType {
   alias: string;
   id_user?: number;
 }
-export const getClassesByUser = (userId: number | string) => http.get(`classes-by-user/` + userId);
+export const getClassesByUser = (userId: number | string) =>
+  http.get(`classes-by-user/` + userId);
 
-export const createClass = (body: ClassMutationType) => http.post(`class`, body);
+export const createClass = (body: ClassMutationType) =>
+  http.post(`class`, body);
 
 export const getClassByID = (id: number | string) => {
   return http.get('class/' + id);

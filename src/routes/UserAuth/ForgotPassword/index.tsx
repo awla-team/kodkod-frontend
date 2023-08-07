@@ -1,7 +1,14 @@
 import { ForgotPasswordProps } from './interfaces';
 import React, { FC, useState } from 'react';
 import { ForgotPasswordCard } from './styled';
-import { Box, Button, CardContent, FormControl, TextField, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  CardContent,
+  FormControl,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { Form, Formik, FormikHelpers } from 'formik';
 import { Link as RouterLink } from 'react-router-dom';
 import { FormInitialValuesType } from './interfaces';
@@ -31,11 +38,19 @@ const ForgotPassword: FC<ForgotPasswordProps> = () => {
       formikHelper.resetForm();
     } catch (error: any) {
       if (error?.response?.data?.responseData === 'Data not found')
-        return Toaster('error', 'El email ingresado no se encuentra registrado');
-      if (error?.response?.data?.responseData?.includes?.('must be a valid email'))
+        return Toaster(
+          'error',
+          'El email ingresado no se encuentra registrado'
+        );
+      if (
+        error?.response?.data?.responseData?.includes?.('must be a valid email')
+      )
         return Toaster('error', 'El email ingresado no es válido');
       if (error?.response?.data?.responseData?.reason === 'unverified')
-        return Toaster('error', 'El email de esta cuenta no ha sido verificado');
+        return Toaster(
+          'error',
+          'El email de esta cuenta no ha sido verificado'
+        );
       Toaster('error', 'Hubo un error al enviar el correo');
     } finally {
       formikHelper.setSubmitting(false);
@@ -57,7 +72,8 @@ const ForgotPassword: FC<ForgotPasswordProps> = () => {
           Recupera tu contraseña
         </Typography>
         <Typography component="span" variant="body2" color="gray">
-          Ingresa tu email para enviarte un correo con instrucciones para recuperar tu contraseña
+          Ingresa tu email para enviarte un correo con instrucciones para
+          recuperar tu contraseña
         </Typography>
         <Formik
           initialValues={formInitialValues}

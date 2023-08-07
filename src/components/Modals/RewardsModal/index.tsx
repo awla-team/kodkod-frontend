@@ -28,16 +28,23 @@ const RewardsModal: FC<{
 
   useEffect(() => {
     setActiveRewards(
-      student?.user_has_rewards?.filter((user_has_reward) => !user_has_reward.used_at) || []
+      student?.user_has_rewards?.filter(
+        (user_has_reward) => !user_has_reward.used_at
+      ) || []
     );
     setInactiveRewards(
-      student?.user_has_rewards?.filter((user_has_reward) => user_has_reward.used_at) || []
+      student?.user_has_rewards?.filter(
+        (user_has_reward) => user_has_reward.used_at
+      ) || []
     );
   }, [student]);
 
   const handleCheckboxChange = (rewardId: number, value: boolean) => {
     if (value) setSelectedRewards([...selectedRewards, rewardId]);
-    else setSelectedRewards([...selectedRewards].filter((reward) => reward !== rewardId));
+    else
+      setSelectedRewards(
+        [...selectedRewards].filter((reward) => reward !== rewardId)
+      );
   };
 
   useEffect(() => {
@@ -104,7 +111,11 @@ const RewardsModal: FC<{
               ))
             ) : (
               <div className="p-4 d-flex justify-content-center align-items-center w-100">
-                <Typography component="span" variant="caption" textAlign="center">
+                <Typography
+                  component="span"
+                  variant="caption"
+                  textAlign="center"
+                >
                   Este estudiante no tiene recompensas por activar
                 </Typography>
               </div>

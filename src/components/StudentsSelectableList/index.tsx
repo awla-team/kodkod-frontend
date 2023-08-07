@@ -1,5 +1,12 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { TextField, FormControlLabel, Checkbox, Avatar, Button, Typography } from '@mui/material';
+import {
+  TextField,
+  FormControlLabel,
+  Checkbox,
+  Avatar,
+  Button,
+  Typography,
+} from '@mui/material';
 import { StudentsSelectableListProps } from './interfaces';
 import { AdventureContext } from 'routes/Class/Adventures/Adventure/provider';
 import Toaster from 'utils/Toster';
@@ -13,7 +20,9 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
   handleClose,
 }) => {
   const [selected, setSelected] = useState<(number | string)[]>([]);
-  const [defaultSelected, setDefaultSelected] = useState<(number | string)[]>([]);
+  const [defaultSelected, setDefaultSelected] = useState<(number | string)[]>(
+    []
+  );
   const { students } = useContext(AdventureContext);
   const [studentList, setStudentList] = useState([]);
 
@@ -26,7 +35,10 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
       setDefaultSelected(mission.completed_users.map((user) => user.id));
   }, [mission]);
 
-  const handleCheck = ({ target }: React.ChangeEvent<HTMLInputElement>, value: number | string) => {
+  const handleCheck = (
+    { target }: React.ChangeEvent<HTMLInputElement>,
+    value: number | string
+  ) => {
     return setSelected((prevState) => {
       const temp = [...prevState];
       if (temp.includes(value)) {
@@ -79,7 +91,9 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
           if (!event.target.value) return setStudentList(students);
           setStudentList(
             studentList.filter((student) =>
-              `${student.first_name} ${student.last_name}`.includes(event.target.value)
+              `${student.first_name} ${student.last_name}`.includes(
+                event.target.value
+              )
             )
           );
         }}
@@ -93,11 +107,15 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
             control={
               <Checkbox
                 onChange={handleAllSelect}
-                disabled={studentList.every((student) => defaultSelected.includes(student.id))}
+                disabled={studentList.every((student) =>
+                  defaultSelected.includes(student.id)
+                )}
                 checked={
                   !!studentList.length &&
                   studentList.every(
-                    (res, index) => selected.includes(res.id) || defaultSelected.includes(res.id)
+                    (res, index) =>
+                      selected.includes(res.id) ||
+                      defaultSelected.includes(res.id)
                   )
                 }
               />
@@ -117,8 +135,11 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
               </Button>
             </div>
             <Typography component="span" variant="body2" textAlign="end">
-              <b>{Object.keys(selected).length + Object.keys(defaultSelected).length}</b> de{' '}
-              <b>{students.length}</b> estudiantes han cumplido esta misión
+              <b>
+                {Object.keys(selected).length +
+                  Object.keys(defaultSelected).length}
+              </b>{' '}
+              de <b>{students.length}</b> estudiantes han cumplido esta misión
             </Typography>
           </div>
         </div>
@@ -128,7 +149,9 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
               <Checkbox
                 onChange={(e) => handleCheck(e, res.id)}
                 disabled={defaultSelected.includes(res.id)}
-                checked={selected.includes(res.id) || defaultSelected.includes(res.id)}
+                checked={
+                  selected.includes(res.id) || defaultSelected.includes(res.id)
+                }
               />
               <div className="d-flex align-items-center gap-3">
                 <Avatar className="student-avatar">{`${res.first_name[0]}${res.last_name[0]}`}</Avatar>

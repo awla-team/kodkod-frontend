@@ -23,7 +23,8 @@ const App: React.FC = () => {
   const [classes, setClasses] = useState<IClass[]>([]);
   const [levels, setLevels] = useState<Levels[]>([]);
   const [fetching, setFetching] = useState<FetchStatus>(FetchStatus.Idle);
-  const [createClassModalOpen, setCreateClassModalOpen] = useState<boolean>(false);
+  const [createClassModalOpen, setCreateClassModalOpen] =
+    useState<boolean>(false);
   const { user, checkUserSubscription } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
@@ -45,7 +46,8 @@ const App: React.FC = () => {
 
   const getLevels = async () => {
     try {
-      const { data }: { data: { responseData: Levels[] } } = await getAllTheLevel();
+      const { data }: { data: { responseData: Levels[] } } =
+        await getAllTheLevel();
       setLevels(
         data.responseData.sort((a, b) => {
           if (a.name > b.name) return 1;
@@ -59,7 +61,10 @@ const App: React.FC = () => {
     }
   };
 
-  const handleClose = (reason: 'backdropClick' | 'escapeKeyDown' | 'success', data?: IClass) => {
+  const handleClose = (
+    reason: 'backdropClick' | 'escapeKeyDown' | 'success',
+    data?: IClass
+  ) => {
     if (reason !== 'backdropClick') setCreateClassModalOpen(false);
     if (reason === 'success') {
       if (data) {
@@ -120,7 +125,11 @@ const App: React.FC = () => {
           <Outlet context={{ classes, handleOpenModal, getClassesData }} />
         </div>
       </div>
-      <CreateClassModal open={createClassModalOpen} onClose={handleClose} levels={levels} />
+      <CreateClassModal
+        open={createClassModalOpen}
+        onClose={handleClose}
+        levels={levels}
+      />
     </div>
   );
 };

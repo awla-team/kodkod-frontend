@@ -17,7 +17,8 @@ export const StudentListContent = styled(Box).withConfig({
 })<{ hasDetails?: boolean }>`
   display: flex;
   flex-direction: column;
-  justify-content: ${({ hasDetails }) => (!hasDetails ? 'center' : 'flex-start')};
+  justify-content: ${({ hasDetails }) =>
+    !hasDetails ? 'center' : 'flex-start'};
   align-items: ${({ hasDetails }) => (!hasDetails ? 'center' : 'flex-start')};
   height: 100%;
 `;

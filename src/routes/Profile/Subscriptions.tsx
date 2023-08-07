@@ -48,7 +48,8 @@ const Subscriptions: React.FC = () => {
   const { user } = useAuth();
   const [plans, setPlans] = useState<IPlan[]>([]);
   const [selectedPlan, setSelectedPlan] = useState('');
-  const [currentSubscription, setCurrentSubscription] = useState<ISubscription>();
+  const [currentSubscription, setCurrentSubscription] =
+    useState<ISubscription>();
   const [openModal, setOpenModal] = useState(false);
   const [fetching, setFetching] = useState<FetchStatus>(FetchStatus.Idle);
   const [formLoading, setFormLoading] = useState(true);
@@ -107,7 +108,8 @@ const Subscriptions: React.FC = () => {
       console.log(error);
       Toaster(
         'error',
-        error.response.data.message || 'Ha ocurrido un error al procesar la suscripción'
+        error.response.data.message ||
+          'Ha ocurrido un error al procesar la suscripción'
       );
       console.log(error);
       return error;
@@ -127,7 +129,8 @@ const Subscriptions: React.FC = () => {
       setFetching(FetchStatus.Error);
       Toaster(
         'error',
-        error.response.data.message || 'Ha ocurrido un error al procesar la suscripción'
+        error.response.data.message ||
+          'Ha ocurrido un error al procesar la suscripción'
       );
       console.log(error);
       return error;
@@ -141,18 +144,24 @@ const Subscriptions: React.FC = () => {
           Mis suscripciones
         </Typography>
         <Typography className="mb-2">
-          ¡Suscríbete ya mismo a <b>Kodkod Pro</b> y accede a nuevas funciones y características que
-          te ayudaran a convertir tu clase en un ambiente de sana convivencia!
+          ¡Suscríbete ya mismo a <b>Kodkod Pro</b> y accede a nuevas funciones y
+          características que te ayudaran a convertir tu clase en un ambiente de
+          sana convivencia!
         </Typography>
         <Typography>
           Con <b>Kodkod Pro</b> podrás:
         </Typography>
         <ul>
           <li>Crear cursos ilimitados de distintos niveles</li>
-          <li>Acceder a TODAS las aventuras (¡incluyendo las que salgan a futuro!)</li>
+          <li>
+            Acceder a TODAS las aventuras (¡incluyendo las que salgan a futuro!)
+          </li>
           <li>Reemplazar misiones de aventuras</li>
           <li>Soporte preferencial</li>
-          <li>¡Acceso anticipado a TODAS las nuevas funcionalidades que vienen en camino!</li>
+          <li>
+            ¡Acceso anticipado a TODAS las nuevas funcionalidades que vienen en
+            camino!
+          </li>
         </ul>
         {fetching !== FetchStatus.Pending && fetching !== FetchStatus.Idle ? (
           <>
@@ -162,12 +171,14 @@ const Subscriptions: React.FC = () => {
                   <Chip
                     className="mb-3"
                     color={
-                      !currentSubscription || currentSubscription?.status !== 'cancelled'
+                      !currentSubscription ||
+                      currentSubscription?.status !== 'cancelled'
                         ? 'success'
                         : 'default'
                     }
                     label={
-                      !currentSubscription || currentSubscription?.status !== 'cancelled'
+                      !currentSubscription ||
+                      currentSubscription?.status !== 'cancelled'
                         ? 'Suscripción activa'
                         : 'Suscripción cancelada'
                     }
@@ -178,17 +189,22 @@ const Subscriptions: React.FC = () => {
                     </Typography>
                     {currentSubscription ? (
                       <Typography>{`$${currentSubscription?.auto_recurring?.transaction_amount?.toLocaleString()}/${
-                        currentSubscription?.auto_recurring?.frequency === 1 ? 'mes' : 'año'
+                        currentSubscription?.auto_recurring?.frequency === 1
+                          ? 'mes'
+                          : 'año'
                       }`}</Typography>
                     ) : null}
                     <Typography variant="body2">{`${
                       currentSubscription?.status !== 'cancelled'
                         ? 'Próxima facturación:'
                         : 'Finaliza el:'
-                    } ${moment(user.subscription_end).format('DD-MM-yyyy')}`}</Typography>
+                    } ${moment(user.subscription_end).format(
+                      'DD-MM-yyyy'
+                    )}`}</Typography>
                   </div>
                 </div>
-                {currentSubscription && currentSubscription?.status !== 'cancelled' ? (
+                {currentSubscription &&
+                currentSubscription?.status !== 'cancelled' ? (
                   <div className="d-flex flex-column gap-2">
                     <Button
                       component={Link}
@@ -266,14 +282,16 @@ const Subscriptions: React.FC = () => {
                     ))}
                   </RadioGroup>
                 </div>
-                {selectedPlan && formLoading ? <CircularProgress className="mb-4" /> : null}
+                {selectedPlan && formLoading ? (
+                  <CircularProgress className="mb-4" />
+                ) : null}
                 {selectedPlan && plans.length ? (
                   <div className="d-flex flex-column align-items-center flex-fill w-100">
                     <Payment
                       onReady={() => setFormLoading(false)}
                       initialization={{
-                        amount: plans.find((plan) => plan.id === selectedPlan)?.auto_recurring
-                          .transaction_amount,
+                        amount: plans.find((plan) => plan.id === selectedPlan)
+                          ?.auto_recurring.transaction_amount,
                         payer: {
                           email: user.email,
                         },
@@ -303,8 +321,8 @@ const Subscriptions: React.FC = () => {
                     />
                     {!formLoading ? (
                       <Typography variant="body2">
-                        Tu comprobante de suscripción llegará a tu correo electrónico asociado a tu
-                        cuenta Kodkod.
+                        Tu comprobante de suscripción llegará a tu correo
+                        electrónico asociado a tu cuenta Kodkod.
                       </Typography>
                     ) : null}
                   </div>

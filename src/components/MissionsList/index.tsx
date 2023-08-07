@@ -42,7 +42,12 @@ const MissionsList: FC<{ shownStage: IStage }> = ({ shownStage }) => {
 
   return (
     <MissionListContainer className="p-5">
-      <Typography component="h6" variant="h6" fontWeight="bold" className="mb-5">
+      <Typography
+        component="h6"
+        variant="h6"
+        fontWeight="bold"
+        className="mb-5"
+      >
         Lista de misiones
       </Typography>
 

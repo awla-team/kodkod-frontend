@@ -1,4 +1,11 @@
-import { Avatar, Chip, Divider, Menu, MenuItem, Typography } from '@mui/material';
+import {
+  Avatar,
+  Chip,
+  Divider,
+  Menu,
+  MenuItem,
+  Typography,
+} from '@mui/material';
 import { useState } from 'react';
 import { UserInfoProps } from './interfaces';
 import { UserInfoButton, UserInfoContainer } from './styled';
@@ -61,7 +68,9 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
       >
         <MenuItem divider disabled={loading}>
           <Avatar src={ImgAvatar} />{' '}
-          <Typography sx={{ ml: 1 }}>{`${user.first_name} ${user.last_name}`}</Typography>
+          <Typography
+            sx={{ ml: 1 }}
+          >{`${user.first_name} ${user.last_name}`}</Typography>
         </MenuItem>
         <MenuItem component={Link} to="perfil/suscripciones" disabled={loading}>
           Suscripciones

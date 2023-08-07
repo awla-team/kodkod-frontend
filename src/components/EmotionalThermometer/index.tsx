@@ -34,9 +34,18 @@ import {
 } from '../../services/emotional_thermometer';
 import HelpIcon from '@mui/icons-material/Help';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
-import { radioOptions, challengeOptions, mostRemarkableOptions } from './form-options';
+import {
+  radioOptions,
+  challengeOptions,
+  mostRemarkableOptions,
+} from './form-options';
 import { CalendarMonth } from '@mui/icons-material';
-import { LocalizationProvider, DatePicker, PickersDayProps, PickersDay } from '@mui/x-date-pickers';
+import {
+  LocalizationProvider,
+  DatePicker,
+  PickersDayProps,
+  PickersDay,
+} from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 
 const initialValues: FormInitialValue = {
@@ -53,11 +62,16 @@ const validationSchema = () => {
   });
 };
 
-const EmotionalThermometer: FC<EmotionalThermometerProps> = ({ classDetails }) => {
+const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
+  classDetails,
+}) => {
   const [date, setDate] = useState<MomentType>(Moment());
-  const [detailsByDates, setDetailsByDates] = useState<EmotionalThermometerType[]>([]);
+  const [detailsByDates, setDetailsByDates] = useState<
+    EmotionalThermometerType[]
+  >([]);
   const [calendarIsOpen, setCalendarOpen] = useState<boolean>(false);
-  const [formInitialValue, setFormInitialValue] = useState<FormInitialValue>(initialValues);
+  const [formInitialValue, setFormInitialValue] =
+    useState<FormInitialValue>(initialValues);
   const [editable, setEditable] = useState<boolean>(false);
   const formRef = useRef(null);
 
@@ -102,7 +116,7 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({ classDetails }) =
     }
   };
 
-  const checkDate = (date: MomentType): Boolean => {
+  const checkDate = (date: MomentType): boolean => {
     return detailsByDates.some((res) => {
       return Moment.utc(res.date).local().startOf('day').isSame(date, 'day');
     });
@@ -137,9 +151,10 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({ classDetails }) =
           outsideCurrentMonth={false}
           {...(pickersDayProps as PickersDayProps<MomentType>)}
         />
-        {!pickersDayProps.outsideCurrentMonth && checkDate(day as MomentType) && (
-          <span className={'tick__icon'}>&#10004;</span>
-        )}
+        {!pickersDayProps.outsideCurrentMonth &&
+          checkDate(day as MomentType) && (
+            <span className={'tick__icon'}>&#10004;</span>
+          )}
       </PickersDateContainer>
     );
   };
@@ -206,10 +221,18 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({ classDetails }) =
             placement="right"
             TransitionComponent={Fade}
           >
-            <HelpIcon className="mb-1" sx={{ opacity: 0.8, cursor: 'pointer', fontSize: '20px' }} />
+            <HelpIcon
+              className="mb-1"
+              sx={{ opacity: 0.8, cursor: 'pointer', fontSize: '20px' }}
+            />
           </Tooltip>
           <div className="d-flex align-items-center">
-            <Typography className="me-1" component="span" variant="body1" sx={{ opacity: '0.6' }}>
+            <Typography
+              className="me-1"
+              component="span"
+              variant="body1"
+              sx={{ opacity: '0.6' }}
+            >
               {date.format('LL')}
             </Typography>
             {formInitialValue.id ? (
@@ -230,7 +253,12 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({ classDetails }) =
               <div ref={inputRef}>
                 <Tooltip title="Editar otra fecha" arrow>
                   <Button
-                    sx={{ borderRadius: '100%', height: '44px', width: '44px', minWidth: 'unset' }}
+                    sx={{
+                      borderRadius: '100%',
+                      height: '44px',
+                      width: '44px',
+                      minWidth: 'unset',
+                    }}
                     variant="outlined"
                     className="px-1"
                     onClick={() => setCalendarOpen(!calendarIsOpen)}
@@ -253,7 +281,11 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({ classDetails }) =
               component="span"
               variant="body2"
               fontWeight="bold"
-              sx={{ overflow: 'unset', textOverflow: 'unset', whiteSpace: 'break-spaces' }}
+              sx={{
+                overflow: 'unset',
+                textOverflow: 'unset',
+                whiteSpace: 'break-spaces',
+              }}
             >
               ¡Completa esta sección al final de cada clase!
             </Typography>
@@ -282,14 +314,21 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({ classDetails }) =
                   error={!!errors.score && !!submitCount}
                   disabled={!editable}
                 >
-                  <Typography component="label" variant="body1" fontWeight="bold" className="mb-2">
+                  <Typography
+                    component="label"
+                    variant="body1"
+                    fontWeight="bold"
+                    className="mb-2"
+                  >
                     ¿Cómo fue el clima en el curso el día de hoy?
                   </Typography>
                   <RadioGroup
                     name="climate-meter"
                     row
                     value={values.score}
-                    onChange={(e) => setFieldValue('score', parseInt(e.target.value))}
+                    onChange={(e) =>
+                      setFieldValue('score', parseInt(e.target.value))
+                    }
                     sx={{ justifyContent: 'center' }}
                   >
                     {radioOptions.map((option, i) => (
@@ -303,7 +342,10 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({ classDetails }) =
                         }
                         labelPlacement="bottom"
                         control={
-                          <EmojiRadio icon={option.icon} checkedIcon={option.selectedIcon} />
+                          <EmojiRadio
+                            icon={option.icon}
+                            checkedIcon={option.selectedIcon}
+                          />
                         }
                       />
                     ))}
@@ -314,7 +356,12 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({ classDetails }) =
                   error={!!errors.challenge && !!submitCount}
                   disabled={!editable}
                 >
-                  <Typography component="label" variant="body1" fontWeight="bold" className="mb-2">
+                  <Typography
+                    component="label"
+                    variant="body1"
+                    fontWeight="bold"
+                    className="mb-2"
+                  >
                     ¿Cuál fue el mayor obstáculo de hoy?
                   </Typography>
                   <Select
@@ -339,7 +386,12 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({ classDetails }) =
                   error={!!errors.most_remarkable && !!submitCount}
                   disabled={!editable}
                 >
-                  <Typography component="label" variant="body1" fontWeight="bold" className="mb-2">
+                  <Typography
+                    component="label"
+                    variant="body1"
+                    fontWeight="bold"
+                    className="mb-2"
+                  >
                     ¿Cuál fue el mayor logro de hoy?
                   </Typography>
                   <Select
@@ -353,7 +405,10 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({ classDetails }) =
                       El mayor logro fue...
                     </MenuItem>
                     {mostRemarkableOptions.map((most_remarkable, i) => (
-                      <MenuItem value={most_remarkable} key={`most_remarkable-${i}`}>
+                      <MenuItem
+                        value={most_remarkable}
+                        key={`most_remarkable-${i}`}
+                      >
                         {most_remarkable}
                       </MenuItem>
                     ))}

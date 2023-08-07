@@ -14,10 +14,16 @@ import { useClassContext } from '../../routes/Class/context';
 import { deleteStudent } from '../../services/students';
 import { StudentDetails } from './StudentDetails';
 
-const StudentsList: FC<StudentsListProps> = ({ studentsData, classDetails }: StudentsListProps) => {
+const StudentsList: FC<StudentsListProps> = ({
+  studentsData,
+  classDetails,
+}: StudentsListProps) => {
   const [OpenModal, setOpenModal] = useState<boolean>(false);
   const { updateStudentsData } = useClassContext();
-  const handleModalClose = (reason: 'student' | undefined, data?: StudentType[]) => {
+  const handleModalClose = (
+    reason: 'student' | undefined,
+    data?: StudentType[]
+  ) => {
     if (reason === 'student' && data) {
       updateStudentsData('update', data);
     }
@@ -80,7 +86,11 @@ const DontHaveDetails: FC<{
       <Typography component="span" variant="body1">
         Aún no has añadido estudiantes a tu curso
       </Typography>
-      <Button size="large" variant={'contained'} onClick={() => setOpenModal(true)}>
+      <Button
+        size="large"
+        variant={'contained'}
+        onClick={() => setOpenModal(true)}
+      >
         Añadir estudiantes
       </Button>
     </DontHaveDetailsContent>
@@ -110,7 +120,11 @@ const StudentsListDetails: FC<{
           })}
       </div>
 
-      <Button size="large" variant={'contained'} onClick={() => setOpenModal(true)}>
+      <Button
+        size="large"
+        variant={'contained'}
+        onClick={() => setOpenModal(true)}
+      >
         Añadir estudiantes
       </Button>
     </StudentsListDetailsContainer>
