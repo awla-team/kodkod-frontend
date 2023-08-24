@@ -1,6 +1,6 @@
-import { FC, useEffect, useState } from 'react';
-import { RewardsBox, RewardsList } from './styled';
-import { Box, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { RewardsList } from './styled';
+import { Button, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import RewardCard from '../../../components/RewardCard';
 import { useSearchParams } from 'react-router-dom';
@@ -8,11 +8,16 @@ import { getRewardsByAdventure } from '../../../services/rewards';
 import { IReward } from '../../../global/interfaces';
 import Toaster from '../../../utils/Toster';
 import http from 'global/api';
-import { AxiosResponse } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
+import { useClassContext } from '../context';
+import ContentBox from 'components/ContentBox';
+import { useNavigate } from 'react-router';
 
-const Rewards: FC = () => {
+const Rewards = () => {
+  const navigate = useNavigate();
   const { classId } = useParams();
   const [searchParams] = useSearchParams();
+  const { classDetails } = useClassContext();
   const [rewards, setRewards] = useState<IReward[]>([]);
 
   const editReward = (
@@ -39,18 +44,30 @@ const Rewards: FC = () => {
         Toaster('success', 'Recompensa actualizada exitosamente');
         return response;
       })
-      .catch((error) => {
-        console.log(error);
-        if (error?.response?.data?.responseData === 'Empty data')
-          Toaster('error', 'Todos los campos deben ser llenados');
-        else Toaster('error', 'Hubo un error al cargar las recompensas');
-        return error;
-      });
+      .catch(
+        (
+          error: AxiosError & {
+            response: {
+              data: { responseData: unknown };
+            };
+          }
+        ) => {
+          console.log(error);
+          if (error?.response?.data?.responseData === 'Empty data')
+            Toaster('error', 'Todos los campos deben ser llenados');
+          else Toaster('error', 'Hubo un error al cargar las recompensas');
+          return error;
+        }
+      );
+  };
+
+  const handleNavigate = () => {
+    navigate(`/app/cursos/${classDetails.id}/aventuras`);
   };
 
   useEffect(() => {
-    const id = searchParams.get('adventureId');
-    if (id) {
+    const currentAdventureId = classDetails?.current_adventure?.id;
+    if (currentAdventureId) {
       (async (adventureId: number | string) => {
         try {
           const { data }: { data: { responseData: IReward[] } } =
@@ -66,78 +83,96 @@ const Rewards: FC = () => {
           console.error(error);
           Toaster('error', 'Hubo un error al cargar las recompensas');
         }
-      })(id);
+      })(currentAdventureId);
     }
-  }, [classId, searchParams]);
+  }, [classId, searchParams, classDetails?.current_adventure?.id]);
 
-  return (
-    <Box>
-      <RewardsBox className="p-5">
+  if (!classDetails?.current_adventure)
+    return (
+      <ContentBox className="align-items-center p-5">
         <Typography
           component="h4"
           variant="h4"
           fontWeight="bold"
           className="mb-2"
         >
-          Recompensas
+          ¡Aún no has seleccionado una aventura!
+        </Typography>
+        <Typography component="span" variant="body1">
+          Debes seleccionar una aventura para poder ver las recompensas.
+        </Typography>
+        <div className="mt-4">
+          <Button variant="contained" size="large" onClick={handleNavigate}>
+            Selecciona una aventura
+          </Button>
+        </div>
+      </ContentBox>
+    );
+
+  return (
+    <ContentBox className="p-5">
+      <Typography
+        component="h4"
+        variant="h4"
+        fontWeight="bold"
+        className="mb-2"
+      >
+        Recompensas
+      </Typography>
+      <Typography component="p" variant="body1" className="mb-2">
+        En esta sección podrás gestionar las recompensas del curso y de tus
+        estudiantes. ¡Las recompensas son una herramienta muy útil para mantener
+        la motivación a tope!
+      </Typography>
+      <section>
+        <Typography
+          component="h5"
+          variant="h5"
+          fontWeight="bold"
+          className="mb-2"
+        >
+          Recompensas individuales
         </Typography>
         <Typography component="p" variant="body1" className="mb-2">
-          En esta sección podrás gestionar las recompensas del curso y de tus
-          estudiantes. ¡Las recompensas son una herramienta muy útil para
-          mantener la motivación a tope!
+          Las recompensas individuales se otorgan a todos los estudiantes
+          individualmente cuando alcanzan el puntaje indicado en la recompensa.
+          Puedes editarlas haciendo click en <b>“editar”</b>. Puedes marcar los
+          estudiantes que ya han utilizado su recompensa haciendo click en la
+          tarjeta.
         </Typography>
-        <section>
-          <Typography
-            component="h5"
-            variant="h5"
-            fontWeight="bold"
-            className="mb-2"
-          >
-            Recompensas individuales
-          </Typography>
-          <Typography component="p" variant="body1" className="mb-2">
-            Las recompensas individuales se otorgan a todos los estudiantes
-            individualmente cuando alcanzan el puntaje indicado en la
-            recompensa. Puedes editarlas haciendo click en “editar”. Puedes
-            marcar los estudiantes que ya han utilizado su recompensa haciendo
-            click en la tarjeta.
-          </Typography>
-        </section>
-        <section>
-          <Typography
-            component="h5"
-            variant="h5"
-            fontWeight="bold"
-            className="mb-2"
-          >
-            Recompensas de curso
-          </Typography>
-          <Typography component="p" variant="body1" className="mb-2">
-            Las recompensas de curso se otorgan a todos los estudiantes del
-            curso cuando se completan ciertos porcentajes de misiones como
-            grupo. Puedes editarlas haciendo click en “editar”
-          </Typography>
-        </section>
-        <Box className="mt-5">
-          <RewardsList className="d-flex gap-5 pb-4">
-            {rewards.map((res) => {
-              return (
-                <RewardCard
-                  edit={editReward}
-                  key={`${res.id}-${res.title}`}
-                  rewardId={res.id}
-                  title={res.title}
-                  description={res.description}
-                  icon={res.icon}
-                  requiredPoints={res.required_points}
-                  type={res.type}
-                />
-              );
-            })}
-          </RewardsList>
-        </Box>
-      </RewardsBox>
-    </Box>
+        <RewardsList>
+          {rewards.map((res) => {
+            return (
+              <RewardCard
+                edit={editReward}
+                key={`${res.id}-${res.title}`}
+                rewardId={res.id}
+                title={res.title}
+                description={res.description}
+                icon={res.icon}
+                requiredPoints={res.required_points}
+                type={res.type}
+              />
+            );
+          })}
+        </RewardsList>
+      </section>
+      <section>
+        <Typography
+          component="h5"
+          variant="h5"
+          fontWeight="bold"
+          className="mb-2"
+        >
+          Recompensas de curso
+        </Typography>
+        <Typography component="p" variant="body1" className="mb-2">
+          Las recompensas de curso se otorgan a todos los estudiantes del curso
+          cuando se completan ciertos porcentajes de misiones como grupo. Puedes
+          editarlas haciendo click en “editar”
+        </Typography>
+      </section>
+    </ContentBox>
   );
 };
 
