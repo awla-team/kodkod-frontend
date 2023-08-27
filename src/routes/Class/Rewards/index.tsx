@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { RewardsList } from './styled';
 import { Button, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
@@ -19,24 +19,20 @@ const Rewards = () => {
   const [searchParams] = useSearchParams();
   const { classId } = useParams();
   const { classDetails } = useClassContext();
-  const [students, setStudents] = useState<IUser[]>([]);
   const [rewards, setRewards] = useState<(IReward & { usedCount?: number })[]>(
     []
   );
 
-  const usedRewardCount = useCallback(
-    (rewardId: number) => {
-      let count = 0;
-      students.forEach((student) => {
-        if (student?.user_has_rewards?.length)
-          student.user_has_rewards.forEach((reward) => {
-            if (reward?.id_reward === rewardId && reward?.used_at) count++;
-          });
-      });
-      return count;
-    },
-    [students]
-  );
+  const usedRewardCount = (rewardId: number, classStudents: IUser[]) => {
+    let count = 0;
+    classStudents.forEach((student) => {
+      if (student?.user_has_rewards?.length)
+        student.user_has_rewards.forEach((reward) => {
+          if (reward?.id_reward === rewardId && reward?.used_at) count++;
+        });
+    });
+    return count;
+  };
 
   const editReward = (
     rewardId: number | string,
@@ -84,20 +80,6 @@ const Rewards = () => {
   };
 
   useEffect(() => {
-    studentsByClass(classId, {
-      role: 'student',
-      rewards: true,
-    })
-      .then((response) => {
-        if (response?.data?.responseData?.length)
-          setStudents(response.data.responseData);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, [classId]);
-
-  useEffect(() => {
     const currentAdventureId = classDetails?.current_adventure?.id;
     if (currentAdventureId) {
       (async (adventureId: number | string) => {
@@ -106,10 +88,14 @@ const Rewards = () => {
             data,
           }: { data: { responseData: (IReward & { usedCount?: number })[] } } =
             await getRewardsByAdventure(adventureId, classId);
+          const { data: studentsData } = await studentsByClass(classId, {
+            role: 'student',
+            rewards: true,
+          });
           const rewardsWithUsedCount = data.responseData.map((reward) => {
             return {
               ...reward,
-              usedCount: usedRewardCount(reward.id),
+              usedCount: usedRewardCount(reward.id, studentsData.responseData),
             };
           });
           const sorted = rewardsWithUsedCount.sort((a, b) => {
@@ -124,12 +110,7 @@ const Rewards = () => {
         }
       })(currentAdventureId);
     }
-  }, [
-    classId,
-    searchParams,
-    classDetails?.current_adventure?.id,
-    usedRewardCount,
-  ]);
+  }, [classId, searchParams, classDetails?.current_adventure?.id]);
 
   if (!classDetails?.current_adventure)
     return (
