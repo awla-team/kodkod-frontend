@@ -21,6 +21,12 @@ export const RewardCardContainer = styled(Card)`
     border: 2px solid
       ${({ theme }: { theme: DefaultTheme }) => theme.palette.highlight.dark};
   }
+
+  &.static {
+    cursor: auto;
+    border: 2px solid
+      ${({ theme }: { theme: DefaultTheme }) => theme.palette.highlight.dark};
+  }
 `;
 
 export const RewardCardHeader = styled.header`
