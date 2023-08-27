@@ -1,24 +1,42 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { RewardsList } from './styled';
 import { Button, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
-import RewardCard from '../../../components/RewardCard';
+import RewardCard from 'components/RewardCard';
 import { useSearchParams } from 'react-router-dom';
-import { getRewardsByAdventure } from '../../../services/rewards';
-import { IReward } from '../../../global/interfaces';
-import Toaster from '../../../utils/Toster';
+import { getRewardsByAdventure } from 'services/rewards';
+import { IReward, IUser } from 'global/interfaces';
+import Toaster from 'utils/Toster';
 import http from 'global/api';
 import { AxiosError, AxiosResponse } from 'axios';
 import { useClassContext } from '../context';
 import ContentBox from 'components/ContentBox';
 import { useNavigate } from 'react-router';
+import { studentsByClass } from 'services/students';
 
 const Rewards = () => {
   const navigate = useNavigate();
-  const { classId } = useParams();
   const [searchParams] = useSearchParams();
+  const { classId } = useParams();
   const { classDetails } = useClassContext();
-  const [rewards, setRewards] = useState<IReward[]>([]);
+  const [students, setStudents] = useState<IUser[]>([]);
+  const [rewards, setRewards] = useState<(IReward & { usedCount?: number })[]>(
+    []
+  );
+
+  const usedRewardCount = useCallback(
+    (rewardId: number) => {
+      let count = 0;
+      students.forEach((student) => {
+        if (student?.user_has_rewards?.length)
+          student.user_has_rewards.forEach((reward) => {
+            if (reward?.id_reward === rewardId && reward?.used_at) count++;
+          });
+      });
+      return count;
+    },
+    [students]
+  );
 
   const editReward = (
     rewardId: number | string,
@@ -62,18 +80,39 @@ const Rewards = () => {
   };
 
   const handleNavigate = () => {
-    navigate(`/app/cursos/${classDetails.id}/aventuras`);
+    navigate(`/app/cursos/${classId}/aventuras`);
   };
+
+  useEffect(() => {
+    studentsByClass(classId, {
+      role: 'student',
+      rewards: true,
+    })
+      .then((response) => {
+        if (response?.data?.responseData?.length)
+          setStudents(response.data.responseData);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [classId]);
 
   useEffect(() => {
     const currentAdventureId = classDetails?.current_adventure?.id;
     if (currentAdventureId) {
       (async (adventureId: number | string) => {
         try {
-          const { data }: { data: { responseData: IReward[] } } =
+          const {
+            data,
+          }: { data: { responseData: (IReward & { usedCount?: number })[] } } =
             await getRewardsByAdventure(adventureId, classId);
-
-          const sorted = data.responseData.sort((a, b) => {
+          const rewardsWithUsedCount = data.responseData.map((reward) => {
+            return {
+              ...reward,
+              usedCount: usedRewardCount(reward.id),
+            };
+          });
+          const sorted = rewardsWithUsedCount.sort((a, b) => {
             if (a.required_points > b.required_points) return 1;
             if (a.required_points < b.required_points) return -1;
             return 0;
@@ -85,7 +124,12 @@ const Rewards = () => {
         }
       })(currentAdventureId);
     }
-  }, [classId, searchParams, classDetails?.current_adventure?.id]);
+  }, [
+    classId,
+    searchParams,
+    classDetails?.current_adventure?.id,
+    usedRewardCount,
+  ]);
 
   if (!classDetails?.current_adventure)
     return (
@@ -141,7 +185,7 @@ const Rewards = () => {
           tarjeta.
         </Typography>
         <RewardsList>
-          {rewards.map((res) => {
+          {rewards.map((res, index) => {
             return (
               <RewardCard
                 edit={editReward}
@@ -152,25 +196,12 @@ const Rewards = () => {
                 icon={res.icon}
                 requiredPoints={res.required_points}
                 type={res.type}
+                order={index + 1}
+                usedCount={res.usedCount}
               />
             );
           })}
         </RewardsList>
-      </section>
-      <section>
-        <Typography
-          component="h5"
-          variant="h5"
-          fontWeight="bold"
-          className="mb-2"
-        >
-          Recompensas de curso
-        </Typography>
-        <Typography component="p" variant="body1" className="mb-2">
-          Las recompensas de curso se otorgan a todos los estudiantes del curso
-          cuando se completan ciertos porcentajes de misiones como grupo. Puedes
-          editarlas haciendo click en “editar”
-        </Typography>
       </section>
     </ContentBox>
   );
