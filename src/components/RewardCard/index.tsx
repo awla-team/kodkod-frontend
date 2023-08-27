@@ -16,6 +16,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import RewardPoints from './RewardPoints';
 import { AxiosError, AxiosResponse } from 'axios';
 import UsedRewardCount from './UsedRewardCount';
+import Drawer from 'components/Drawer';
 
 const RewardCard = ({
   edit,
@@ -30,6 +31,7 @@ const RewardCard = ({
   const [editMode, setEditMode] = useState(false);
   const [newTitle, setNewTitle] = useState(title);
   const [newDescription, setNewDescription] = useState(description);
+  const [openDrawer, setOpenDrawer] = useState(false);
 
   const cancelEditMode = () => {
     setNewTitle(title);
@@ -52,41 +54,160 @@ const RewardCard = ({
   };
 
   return (
-    <RewardCardContainer variant="outlined">
-      <EditRewardActionsContainer>
-        {editMode && (
-          <>
+    <>
+      <RewardCardContainer variant="outlined">
+        <EditRewardActionsContainer>
+          {editMode && (
+            <>
+              <EditRewardButton
+                color="inherit"
+                variant="contained"
+                onClick={editReward}
+                startIcon={<CheckIcon />}
+              >
+                Guardar
+              </EditRewardButton>
+              <EditRewardButton
+                color="inherit"
+                variant="contained"
+                onClick={cancelEditMode}
+                startIcon={<CloseIcon />}
+              >
+                Cancelar
+              </EditRewardButton>
+            </>
+          )}
+          {!editMode && !!rewardId && (
             <EditRewardButton
               color="inherit"
               variant="contained"
-              onClick={editReward}
-              startIcon={<CheckIcon />}
+              onClick={activateEditMode}
+              startIcon={<EditIcon />}
             >
-              Guardar
+              Editar
             </EditRewardButton>
-            <EditRewardButton
-              color="inherit"
-              variant="contained"
-              onClick={cancelEditMode}
-              startIcon={<CloseIcon />}
-            >
-              Cancelar
-            </EditRewardButton>
-          </>
-        )}
-        {!editMode && !!rewardId && (
-          <EditRewardButton
-            color="inherit"
-            variant="contained"
-            onClick={activateEditMode}
-            startIcon={<EditIcon />}
-          >
-            Editar
-          </EditRewardButton>
-        )}
-      </EditRewardActionsContainer>
+          )}
+        </EditRewardActionsContainer>
+        <div
+          className="d-flex flex-column flex-fill"
+          onClick={() => setOpenDrawer(true)}
+        >
+          <RewardCardHeader>
+            <UsedRewardCount count={usedCount} />
+            {!!order && (
+              <Typography
+                color="white"
+                variant="body1"
+                fontWeight="bold"
+                fontSize="32px"
+              >
+                {order}
+              </Typography>
+            )}
+          </RewardCardHeader>
+          <RewardCardContent>
+            <RewardImg src={icon} alt="" />
+            <div className="d-flex flex-column align-items-center justify-content-end">
+              <div className="d-flex flex-column align-items-center">
+                {editMode ? (
+                  <TextField
+                    className="mb-1"
+                    size="small"
+                    type="text"
+                    value={newTitle}
+                    placeholder={title}
+                    color="primary"
+                    sx={{
+                      input: { padding: '4px' },
+                    }}
+                    onChange={(event) => {
+                      setNewTitle(event.target.value);
+                    }}
+                  />
+                ) : (
+                  <Typography
+                    className="mb-1"
+                    variant="body1"
+                    fontWeight="bold"
+                    fontSize="20px"
+                    textAlign="center"
+                    sx={{
+                      marginBottom: '8px',
+                    }}
+                  >
+                    {title}
+                  </Typography>
+                )}
+                {editMode ? (
+                  <RewardDescriptionInput
+                    minRows={2}
+                    maxRows={4}
+                    value={newDescription}
+                    placeholder={description}
+                    onChange={(event) => {
+                      setNewDescription(event.target.value);
+                    }}
+                  />
+                ) : (
+                  <Typography
+                    variant="body2"
+                    textAlign="center"
+                    fontSize="16px"
+                    sx={{
+                      padding: '8px',
+                    }}
+                  >
+                    {description}
+                  </Typography>
+                )}
+              </div>
+              <RewardPoints points={requiredPoints as number} />
+            </div>
+          </RewardCardContent>
+        </div>
+      </RewardCardContainer>
+      <Drawer open={openDrawer} onClose={() => setOpenDrawer(false)}>
+        <Typography
+          component="h6"
+          variant="h6"
+          fontWeight="bold"
+          className="mb-1"
+        >
+          Canjeo de recompensas
+        </Typography>
+        <Typography component="span" variant="body1" className="mb-3">
+          Selecciona los estudiantes que van a canjear esta recompensa
+        </Typography>
+        <div className="d-flex justify-content-center">
+          <StaticRewardCard
+            order={order}
+            icon={icon}
+            title={title}
+            description={description}
+          />
+        </div>
+      </Drawer>
+    </>
+  );
+};
+
+export default RewardCard;
+
+const StaticRewardCard = ({
+  order,
+  icon,
+  title,
+  description,
+}: {
+  order?: number;
+  icon: string;
+  title: string;
+  description: string;
+}) => {
+  return (
+    <RewardCardContainer className="static" variant="elevation">
       <RewardCardHeader>
-        <UsedRewardCount count={usedCount} />
+        <div></div>
         {!!order && (
           <Typography
             color="white"
@@ -102,62 +223,31 @@ const RewardCard = ({
         <RewardImg src={icon} alt="" />
         <div className="d-flex flex-column align-items-center justify-content-end">
           <div className="d-flex flex-column align-items-center">
-            {editMode ? (
-              <TextField
-                className="mb-1"
-                size="small"
-                type="text"
-                value={newTitle}
-                placeholder={title}
-                color="primary"
-                sx={{
-                  input: { padding: '4px' },
-                }}
-                onChange={(event) => {
-                  setNewTitle(event.target.value);
-                }}
-              />
-            ) : (
-              <Typography
-                className="mb-1"
-                variant="body1"
-                fontWeight="bold"
-                fontSize="20px"
-                sx={{
-                  marginBottom: '8px',
-                }}
-              >
-                {title}
-              </Typography>
-            )}
-            {editMode ? (
-              <RewardDescriptionInput
-                minRows={2}
-                maxRows={4}
-                value={newDescription}
-                placeholder={description}
-                onChange={(event) => {
-                  setNewDescription(event.target.value);
-                }}
-              />
-            ) : (
-              <Typography
-                variant="body2"
-                textAlign="center"
-                fontSize="16px"
-                sx={{
-                  padding: '8px',
-                }}
-              >
-                {description}
-              </Typography>
-            )}
+            <Typography
+              className="mb-1"
+              variant="body1"
+              fontWeight="bold"
+              fontSize="20px"
+              textAlign="center"
+              sx={{
+                marginBottom: '8px',
+              }}
+            >
+              {title}
+            </Typography>
+            <Typography
+              variant="body2"
+              textAlign="center"
+              fontSize="16px"
+              sx={{
+                padding: '8px',
+              }}
+            >
+              {description}
+            </Typography>
           </div>
-          <RewardPoints points={requiredPoints as number} />
         </div>
       </RewardCardContent>
     </RewardCardContainer>
   );
 };
-
-export default RewardCard;
