@@ -11,6 +11,7 @@ export const RewardCardContainer = styled(Card)`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 224px;
   min-height: 432px;
   border-radius: 8px;
   border: 2px solid transparent;
