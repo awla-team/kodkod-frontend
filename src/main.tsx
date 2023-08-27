@@ -9,13 +9,16 @@ import theme from 'global/theme';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 import './index.css';
+import { TourProvider } from '@reactour/tour';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <MuiThemeProvider theme={theme}>
       <StyledThemeProvider theme={theme}>
-        <ToastContainer />
-        <RouterProvider router={router} />
+        <TourProvider steps={[]} onClickMask={() => {}}>
+          <ToastContainer />
+          <RouterProvider router={router} />
+        </TourProvider>
       </StyledThemeProvider>
     </MuiThemeProvider>
   </React.StrictMode>

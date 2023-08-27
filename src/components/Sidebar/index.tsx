@@ -11,13 +11,15 @@ import { RoundButton } from './RoundButton/styled';
 import HomeIcon from '@mui/icons-material/Home';
 import { Link, Link as RouterLink } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import { useTour } from '@reactour/tour';
 
 const Sidebar: FC<SidebarProps> = ({ classes, handleOpenModal }) => {
   const { user } = useAuth();
+  const { setCurrentStep } = useTour();
 
   return (
     <SidebarContainer className="justify-content-between">
-      <div className="d-flex flex-column align-items-center">
+      <div className="d-flex flex-column align-items-center" id="home-onboarding-5">
         <LogoContainer>
           <img src={logo} />
         </LogoContainer>
@@ -41,9 +43,13 @@ const Sidebar: FC<SidebarProps> = ({ classes, handleOpenModal }) => {
           </LinkList>
         ) : null}
         <RoundButton
+          id="home-onboarding-2"
           sx={{ marginBottom: '74px' }}
           color="info"
-          onClick={() => handleOpenModal()}
+          onClick={() => {
+            handleOpenModal();
+            setCurrentStep(3);
+          }}
         >
           <AddIcon />
         </RoundButton>
