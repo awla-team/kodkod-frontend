@@ -11,8 +11,8 @@ const Drawer = ({ children, onClose, ...props }: MuiDrawerProps) => {
     <MuiDrawer
       anchor="right"
       variant="temporary"
-      PaperProps={{ className: 'p-5' }}
       onClose={onClose}
+      sx={{ overflow: 'hidden' }}
       {...props}
     >
       <IconButton
@@ -26,7 +26,7 @@ const Drawer = ({ children, onClose, ...props }: MuiDrawerProps) => {
       >
         <CloseIcon />
       </IconButton>
-      {children}
+      <div className="p-5">{children}</div>
     </MuiDrawer>
   );
 };
