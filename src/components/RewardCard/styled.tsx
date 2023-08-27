@@ -15,6 +15,7 @@ export const RewardCardContainer = styled(Card)`
   border-radius: 8px;
   border: 2px solid transparent;
   background-color: transparent;
+  cursor: pointer;
 
   &:hover {
     border: 2px solid
