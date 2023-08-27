@@ -16,7 +16,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import RewardPoints from './RewardPoints';
 import { AxiosError, AxiosResponse } from 'axios';
 import UsedRewardCount from './UsedRewardCount';
-import Drawer from 'components/Drawer';
+import RedeemRewardDrawer from './RedeemRewardDrawer';
 
 const RewardCard = ({
   edit,
@@ -42,6 +42,8 @@ const RewardCard = ({
   const activateEditMode = () => {
     setEditMode(true);
   };
+
+  const onCloseDrawer = () => setOpenDrawer(false);
 
   const editReward = () => {
     edit(rewardId, newTitle, newDescription)
@@ -166,88 +168,17 @@ const RewardCard = ({
           </RewardCardContent>
         </div>
       </RewardCardContainer>
-      <Drawer open={openDrawer} onClose={() => setOpenDrawer(false)}>
-        <Typography
-          component="h6"
-          variant="h6"
-          fontWeight="bold"
-          className="mb-1"
-        >
-          Canjeo de recompensas
-        </Typography>
-        <Typography component="span" variant="body1" className="mb-3">
-          Selecciona los estudiantes que van a canjear esta recompensa
-        </Typography>
-        <div className="d-flex justify-content-center">
-          <StaticRewardCard
-            order={order}
-            icon={icon}
-            title={title}
-            description={description}
-          />
-        </div>
-      </Drawer>
+      <RedeemRewardDrawer
+        openDrawer={openDrawer}
+        onCloseDrawer={onCloseDrawer}
+        rewardId={rewardId}
+        icon={icon}
+        title={title}
+        description={description}
+        order={order}
+      />
     </>
   );
 };
 
 export default RewardCard;
-
-const StaticRewardCard = ({
-  order,
-  icon,
-  title,
-  description,
-}: {
-  order?: number;
-  icon: string;
-  title: string;
-  description: string;
-}) => {
-  return (
-    <RewardCardContainer className="static" variant="elevation">
-      <RewardCardHeader>
-        <div></div>
-        {!!order && (
-          <Typography
-            color="white"
-            variant="body1"
-            fontWeight="bold"
-            fontSize="32px"
-          >
-            {order}
-          </Typography>
-        )}
-      </RewardCardHeader>
-      <RewardCardContent>
-        <RewardImg src={icon} alt="" />
-        <div className="d-flex flex-column align-items-center justify-content-end">
-          <div className="d-flex flex-column align-items-center">
-            <Typography
-              className="mb-1"
-              variant="body1"
-              fontWeight="bold"
-              fontSize="20px"
-              textAlign="center"
-              sx={{
-                marginBottom: '8px',
-              }}
-            >
-              {title}
-            </Typography>
-            <Typography
-              variant="body2"
-              textAlign="center"
-              fontSize="16px"
-              sx={{
-                padding: '8px',
-              }}
-            >
-              {description}
-            </Typography>
-          </div>
-        </div>
-      </RewardCardContent>
-    </RewardCardContainer>
-  );
-};
