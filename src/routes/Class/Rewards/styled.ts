@@ -8,5 +8,17 @@ export const RewardsBox = styled(Box)`
 `;
 
 export const RewardsList = styled(Box)`
-  overflow: auto;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 36px;
+  margin: 24px 0;
+
+  overflow-x: auto;
+
+  min-height: 616px;
+
+  border-radius: 8px;
+  border: 1px solid #fa00ff;
+  background: #ffebff;
 `;
