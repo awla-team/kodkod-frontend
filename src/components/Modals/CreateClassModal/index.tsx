@@ -226,6 +226,7 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
               </DialogContent>
               <DialogActions className="pt-3">
                 <Button
+                  id="create-class-cancel"
                   variant="outlined"
                   onClick={() => onClose('escapeKeyDown')}
                 >
