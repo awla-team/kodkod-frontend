@@ -105,4 +105,4 @@ const EmotionalThermometerOnboarding = [
   }
 ];
   
-export { EmotionalThermometerOnboarding };
+export default EmotionalThermometerOnboarding;

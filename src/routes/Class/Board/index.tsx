@@ -8,9 +8,9 @@ import { StudentType } from 'components/StudentsList/interfaces';
 import EmotionalThermometer from 'components/EmotionalThermometer';
 import { Levels } from 'components/Modals/CreateClassModal/interfaces';
 import { useOnboarding } from 'contexts/OnboardingContext';
-import { BoardOnboarding } from 'utils/Onboardings/BoardOnboarding';
-import { StudentListOnboarding } from 'utils/Onboardings/StudentListOnboarding';
-import { EmotionalThermometerOnboarding } from 'utils/Onboardings/EmotionalThermometerOnboarding';
+import BoardOnboarding from 'utils/Onboardings/BoardOnboarding';
+import StudentListOnboarding from 'utils/Onboardings/StudentListOnboarding';
+import EmotionalThermometerOnboarding from 'utils/Onboardings/EmotionalThermometerOnboarding';
 
 const Board: React.FC = () => {
   const { classDetails, students, levels } = useOutletContext() as {
@@ -31,7 +31,7 @@ const Board: React.FC = () => {
     }, {
       name: 'El Termómetro Socioemocional',
       steps: EmotionalThermometerOnboarding,
-    }])
+    }]);
   }, []);
 
   return (

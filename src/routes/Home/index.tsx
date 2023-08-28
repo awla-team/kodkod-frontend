@@ -4,7 +4,7 @@ import MyClasses from './MyClasses';
 import { useOutletContext } from 'react-router-dom';
 import { ModifiedIClass } from 'global/interfaces';
 import { useOnboarding } from 'contexts/OnboardingContext';
-import { HomeOnboarding } from 'utils/Onboardings/HomeOnboarding';
+import HomeOnboarding from 'utils/Onboardings/HomeOnboarding';
 
 const HomePage: FC = () => {
   const { setNewAvailableTours } = useOnboarding();
