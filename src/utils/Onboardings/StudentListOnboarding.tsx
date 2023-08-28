@@ -126,4 +126,4 @@ const StudentListOnboarding = [
   }
 ];
   
-export { StudentListOnboarding };
+export default StudentListOnboarding;

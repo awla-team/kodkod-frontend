@@ -78,4 +78,4 @@ const BoardOnboarding = [
   }
 ];
   
-export { BoardOnboarding };
+export default BoardOnboarding;

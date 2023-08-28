@@ -117,4 +117,4 @@ const HomeOnboarding = [
   }
 ];
   
-export { HomeOnboarding };
+export default HomeOnboarding;
