@@ -110,8 +110,10 @@ const HomeOnboarding = [
         </OnboardingContent>
       );
     },
-    padding: 0,
+    selector: '#tour-fab-button',
     position: 'center',
+    padding: 0,
+    stepInteraction: false,
   }
 ];
   

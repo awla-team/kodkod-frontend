@@ -228,6 +228,7 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
           </Tooltip>
           <div className="d-flex align-items-center">
             <Typography
+              id="thermometer-onboarding-1"
               className="me-1"
               component="span"
               variant="body1"
@@ -250,7 +251,7 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
             value={date}
             onChange={(newDate) => handleDateChange(Moment(newDate))}
             renderInput={({ inputRef }) => (
-              <div ref={inputRef}>
+              <div ref={inputRef} id="thermometer-onboarding-4">
                 <Tooltip title="Editar otra fecha" arrow>
                   <Button
                     sx={{
@@ -291,7 +292,7 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
             </Typography>
           }
         />
-        <div className="mt-5">
+        <div className="mt-5" id="thermometer-onboarding-2">
           <Formik
             enableReinitialize
             initialValues={formInitialValue}
@@ -418,6 +419,7 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
                   {editable ? (
                     <div className="d-flex justify-content-center">
                       <Button
+                        id="thermometer-onboarding-3"
                         disabled={!isValid || !dirty}
                         color="primary"
                         variant="contained"

@@ -117,7 +117,7 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
   return (
     <Dialog
       open={open}
-      PaperProps={{ className: 'p-3' }}
+      PaperProps={{ className: 'p-3', id:"student-list-onboarding-2" }}
       maxWidth="sm"
       fullWidth
       fullScreen
@@ -133,7 +133,7 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
             Añade a tus estudiantes ingresando sus nombres, apellidos y correo.
             También puedes subir tus estudiantes con nuestra plantilla de excel.
           </Typography>
-          <div>
+          <div id="student-list-onboarding-3">
             <Button
               variant="outlined"
               component={Link}
@@ -166,7 +166,7 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
           </div>
           <Box className="flex-fill my-4" sx={{ overflow: 'auto' }}>
             <StudentsFormDetailsContainer className="d-flex flex-column justify-content-between">
-              <Box className="details-list">
+              <Box className="details-list" id="student-list-onboarding-4">
                 {students.map((student, i) => (
                   <div key={i} className="d-flex align-items-center gap-2">
                     <IconButton
@@ -274,10 +274,11 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
           </div>
         </DialogContent>
         <DialogActions>
-          <Button variant="outlined" onClick={() => onClose()}>
+          <Button variant="outlined" onClick={() => onClose()} id="add-students-cancel">
             Cancelar
           </Button>
           <Button
+            id="student-list-onboarding-5"
             variant="contained"
             type="submit"
             disabled={
