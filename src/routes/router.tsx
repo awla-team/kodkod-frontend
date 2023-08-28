@@ -121,7 +121,7 @@ export const router = createBrowserRouter([
                 element: <Adventure />,
               },
               {
-                path: 'aventuras/recompensas',
+                path: 'recompensas',
                 element: <Rewards />,
               },
             ],

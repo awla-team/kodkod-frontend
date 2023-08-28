@@ -7,6 +7,7 @@ import DashboardIcon from '@mui/icons-material/DashboardTwoTone';
 import AdventuresIcon from '@mui/icons-material/RocketLaunchTwoTone';
 import ProgressIcon from '@mui/icons-material/LeaderboardTwoTone';
 import ReportsIcon from '@mui/icons-material/PieChartTwoTone';
+import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 
 const tabs = [
   {
@@ -18,6 +19,11 @@ const tabs = [
     title: 'Aventuras',
     path: 'aventuras',
     svg: <AdventuresIcon />,
+  },
+  {
+    title: 'Recompensas',
+    path: 'recompensas',
+    svg: <WorkspacePremiumIcon />,
   },
   {
     title: 'Progreso',

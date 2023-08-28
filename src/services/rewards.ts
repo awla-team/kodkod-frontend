@@ -18,3 +18,6 @@ export const getRewards = (filterQuery: GetRewardsFilter) => {
 export const studentUseRewards = (userId: number, rewards: number[]) => {
   return http.post(`user-use-rewards/${userId}`, rewards);
 };
+
+export const studentsRedeemReward = (rewardId: number, studentsId: number[]) =>
+  http.post(`/users-redeem-reward/${rewardId}`, studentsId);

@@ -6,4 +6,6 @@ export interface IRewardCardProps {
   description: string;
   requiredPoints: number | string;
   type: string;
+  order?: number;
+  usedCount?: number;
 }

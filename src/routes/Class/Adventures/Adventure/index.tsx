@@ -135,11 +135,7 @@ export const Adventure: React.FC = () => {
             <Button
               variant={'outlined'}
               color="info"
-              onClick={() =>
-                navigate(
-                  `recompensas?adventureId=${classDetails.current_adventure.id}`
-                )
-              }
+              onClick={() => navigate(`/app/cursos/${classId}/recompensas`)}
             >
               Ver recompensas disponibles
             </Button>
