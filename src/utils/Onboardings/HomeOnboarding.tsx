@@ -38,36 +38,42 @@ const HomeOnboarding = [
     content: () => {
       return (
         <OnboardingContent>
-          <Typography>Lo primero es añadir cursos. Para hacerlo, presiona el botón <b>“+”</b> de la barra lateral.</Typography>
+          <Typography>El botón <b>“+”</b> de la barra lateral te permite abrir el cuadro de "Añadir cursos".</Typography>
         </OnboardingContent>
       );
     },
     selector: '#home-onboarding-2',
     padding: 0,
-    disableActions: true,
+    stepInteraction: false,
   },
   {
     content: () => {
       return (
         <OnboardingContent>
           <div className="d-flex flex-column gap-2">
-            <Typography>Luego, selecciona el nivel y el nombre del curso.</Typography>
+            <Typography>Al abrirse, deberás ingresar el nivel y el nombre del curso que quieres agregar.</Typography>
             <Typography>Cuando estés list@, presiona el botón <b>"Añade un nuevo curso"</b>.</Typography>
             <Typography variant="caption">Ej: Si quieres crear el curso 1° Medio A, deberías seleccionar el nivel 1° Medio, e ingresar “A” en el campo de curso.</Typography>
           </div>
         </OnboardingContent>
       );
     },
+    action: (element: HTMLElement) => {
+      document.getElementById('home-onboarding-2')?.click();
+    },
+    actionAfter: () => {
+      document.getElementById('create-class-cancel')?.click();
+    },
     selector: '#home-onboarding-3',
     position: 'left',
     padding: 0,
+    stepInteraction: false,
   },
   {
     content: () => {
       return (
         <OnboardingContent>
           <div className="d-flex flex-column gap-2">
-            <Typography>¡Bien hecho!</Typography>
             <Typography>Cada vez que añadas un curso, lo verás en la sección de <b>“Mis cursos”.</b></Typography>
           </div>
         </OnboardingContent>
@@ -96,7 +102,7 @@ const HomeOnboarding = [
   {
     content: () => {
       return (
-        <OnboardingContent>
+        <OnboardingContent title="¡Tutorial completado!">
           <div className="d-flex flex-column gap-2">
             <Typography>Recuerda que puedes acceder a este y otros tutoriales presionando el botón de ayuda.</Typography>
             <Typography fontWeight="bold">¡Hay tutoriales distintos en cada vista!</Typography>

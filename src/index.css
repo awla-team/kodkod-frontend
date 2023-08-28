@@ -20,6 +20,10 @@
   color-scheme: light;
 }
 
+.reactour__popover .reactour__close-button svg {
+  color: #000;
+}
+
 a {
   font-weight: 500;
   color: #646cff;

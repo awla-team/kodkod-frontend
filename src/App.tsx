@@ -16,6 +16,7 @@ import moment from 'moment';
 import { useLocation } from 'react-router-dom';
 import 'moment/dist/locale/es';
 import './App.css';
+import OnboardingContextProvider from 'contexts/OnboardingContext';
 
 moment.locale('es');
 
@@ -118,19 +119,21 @@ const App: React.FC = () => {
     );
 
   return (
-    <div className="app-container d-flex">
-      <Sidebar classes={classes} handleOpenModal={handleOpenModal} />
-      <div className="app-main-container d-flex flex-column flex-fill">
-        <div className="app-content container">
-          <Outlet context={{ classes, handleOpenModal, getClassesData }} />
+    <OnboardingContextProvider>
+      <div className="app-container d-flex">
+        <Sidebar classes={classes} handleOpenModal={handleOpenModal} />
+        <div className="app-main-container d-flex flex-column flex-fill">
+          <div className="app-content container" id="home-onboarding-4">
+            <Outlet context={{ classes, handleOpenModal, getClassesData }} />
+          </div>
         </div>
+        <CreateClassModal
+          open={createClassModalOpen}
+          onClose={handleClose}
+          levels={levels}
+        />
       </div>
-      <CreateClassModal
-        open={createClassModalOpen}
-        onClose={handleClose}
-        levels={levels}
-      />
-    </div>
+    </OnboardingContextProvider>
   );
 };
 

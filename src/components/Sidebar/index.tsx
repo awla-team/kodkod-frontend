@@ -11,11 +11,9 @@ import { RoundButton } from './RoundButton/styled';
 import HomeIcon from '@mui/icons-material/Home';
 import { Link, Link as RouterLink } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { useTour } from '@reactour/tour';
 
 const Sidebar: FC<SidebarProps> = ({ classes, handleOpenModal }) => {
   const { user } = useAuth();
-  const { setCurrentStep } = useTour();
 
   return (
     <SidebarContainer className="justify-content-between">
@@ -48,7 +46,6 @@ const Sidebar: FC<SidebarProps> = ({ classes, handleOpenModal }) => {
           color="info"
           onClick={() => {
             handleOpenModal();
-            setCurrentStep(3);
           }}
         >
           <AddIcon />

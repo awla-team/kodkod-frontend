@@ -3,11 +3,11 @@ import WelcomePage from './WelcomePage';
 import MyClasses from './MyClasses';
 import { useOutletContext } from 'react-router-dom';
 import { ModifiedIClass } from 'global/interfaces';
-import { useTour } from '@reactour/tour';
+import { useOnboarding } from 'contexts/OnboardingContext';
 import { HomeOnboarding } from 'utils/Onboardings/HomeOnboarding';
 
 const HomePage: FC = () => {
-  const { setIsOpen, setSteps } = useTour();
+  const { setNewAvailableTours } = useOnboarding();
   const { classes, handleOpenModal, getClassesData } = useOutletContext() as {
     classes: Array<ModifiedIClass>;
     handleOpenModal: () => void;
@@ -15,8 +15,10 @@ const HomePage: FC = () => {
   };
 
   useEffect(() => {
-    setSteps(HomeOnboarding);
-    setIsOpen(true);
+    setNewAvailableTours([{
+      name: 'Creación de cursos',
+      steps: HomeOnboarding,
+    }])
   }, []);
 
   return (
