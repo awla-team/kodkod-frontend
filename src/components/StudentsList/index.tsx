@@ -87,6 +87,7 @@ const DontHaveDetails: FC<{
         Aún no has añadido estudiantes a tu curso
       </Typography>
       <Button
+        id="student-list-onboarding-1"
         size="large"
         variant={'contained'}
         onClick={() => setOpenModal(true)}
@@ -121,6 +122,7 @@ const StudentsListDetails: FC<{
       </div>
 
       <Button
+        id="student-list-onboarding-1"
         size="large"
         variant={'contained'}
         onClick={() => setOpenModal(true)}
