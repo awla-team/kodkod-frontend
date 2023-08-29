@@ -17,6 +17,8 @@ const HomePage: FC = () => {
   useEffect(() => {
     setNewAvailableTours([{
       name: 'Creación de cursos',
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       steps: HomeOnboarding,
     }])
   }, []);

@@ -54,6 +54,8 @@ const Rewards: FC = () => {
   useEffect(() => {
     setNewAvailableTours([{
       name: 'Gestión de recompensas',
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       steps: RewardsOnboarding,
     }])
   }, []);
