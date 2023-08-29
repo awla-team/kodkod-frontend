@@ -45,7 +45,7 @@ const StudentsList: FC<StudentsListProps> = ({
     });
   };
   return (
-    <StudentListContainer>
+    <StudentListContainer className="h-100">
       <Typography component="h6" variant="h6" fontWeight="bold">
         Lista de estudiantes
       </Typography>
@@ -87,6 +87,7 @@ const DontHaveDetails: FC<{
         Aún no has añadido estudiantes a tu curso
       </Typography>
       <Button
+        id="student-list-onboarding-1"
         size="large"
         variant={'contained'}
         onClick={() => setOpenModal(true)}
@@ -121,6 +122,7 @@ const StudentsListDetails: FC<{
       </div>
 
       <Button
+        id="student-list-onboarding-1"
         size="large"
         variant={'contained'}
         onClick={() => setOpenModal(true)}

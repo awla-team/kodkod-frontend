@@ -141,7 +141,10 @@ const RedeemRewardDrawer = ({
           description={description}
         />
       </div>
-      <StudentListContainer className="d-flex flex-column overflow-hidden">
+      <StudentListContainer
+        id="reward-modal-list"
+        className="d-flex flex-column overflow-hidden"
+      >
         <TextField
           className="mb-3"
           variant={'standard'}
@@ -185,10 +188,15 @@ const RedeemRewardDrawer = ({
             />
             <div className="d-flex flex-column">
               <div className="d-flex gap-2 justify-content-end">
-                <Button onClick={onClose} variant="outlined">
+                <Button
+                  id="reward-modal-cancel"
+                  onClick={onClose}
+                  variant="outlined"
+                >
                   Cancelar
                 </Button>
                 <Button
+                  id="reward-modal-save"
                   onClick={() => handleSave(rewardId, selected)}
                   variant="contained"
                   disabled={!Object.keys(selected).length}

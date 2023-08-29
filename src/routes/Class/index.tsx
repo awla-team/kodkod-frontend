@@ -11,26 +11,31 @@ import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 
 const tabs = [
   {
+    id: 'board-tab',
     title: 'Tablero',
     path: 'tablero',
     svg: <DashboardIcon />,
   },
   {
+    id: 'adventures-tab',
     title: 'Aventuras',
     path: 'aventuras',
     svg: <AdventuresIcon />,
   },
   {
+    id: 'rewards-tab',
     title: 'Recompensas',
     path: 'recompensas',
     svg: <WorkspacePremiumIcon />,
   },
   {
+    id: 'progress-tab',
     title: 'Progreso',
     path: 'progreso',
     svg: <ProgressIcon />,
   },
   {
+    id: 'reports-tab',
     disabled: true,
     title: 'Reportes',
     path: 'reportes',
@@ -48,6 +53,7 @@ const Class: React.FC = () => {
         {tabs.map((tab, i) =>
           !tab.disabled ? (
             <Box
+              id={tab.id}
               key={`tab-${i}`}
               className={`nav__tab ${
                 pathname.includes(tab.path) ? 'active' : ''
@@ -63,6 +69,7 @@ const Class: React.FC = () => {
           ) : (
             <Tooltip key={`tab-${i}`} arrow title="¡Próximamente!">
               <Box
+                id={tab.id}
                 className={`nav__tab ${
                   pathname.includes(tab.path) ? 'active' : ''
                 } ${tab.disabled ? 'disabled' : ''}`}

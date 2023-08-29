@@ -7,7 +7,7 @@ import {
 } from '@mui/material';
 import { MyClassesProps } from './interfaces';
 import { useMemo, useEffect } from 'react';
-import { ExpandMore } from '@mui/icons-material';
+import { ExpandMore, South } from '@mui/icons-material';
 import ClassCard from 'components/ClassCard';
 import { MyClassesBox, LevelAccordion, MyClassesContainer } from './styled';
 
@@ -31,7 +31,12 @@ const MyClasses: FC<MyClassesProps> = ({
   return (
     <MyClassesContainer className="w-100">
       <MyClassesBox className="p-5">
-        <Typography component="h1" variant="h4" className="fw-bold mb-1">
+        <Typography
+          component="h1"
+          variant="h4"
+          className="fw-bold mb-1"
+          id="home-onboarding-4"
+        >
           Mis cursos
         </Typography>
         <Typography

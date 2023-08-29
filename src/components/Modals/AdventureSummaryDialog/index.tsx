@@ -104,7 +104,11 @@ const AdventureSummaryDialog: React.FC<{
           </section>
         </AdventureBanner>
       </DialogTitle>
-      <DialogContent dividers className="d-flex flex-column p-0">
+      <DialogContent
+        id="adventure-selection-onboarding-5"
+        dividers
+        className="d-flex flex-column p-0"
+      >
         <Box className="d-flex flex-column flex-fill w-100">
           <div className="d-flex flex-column gap-3 p-4">
             <section className="d-flex flex-column">
@@ -161,7 +165,11 @@ const AdventureSummaryDialog: React.FC<{
         </Box>
       </DialogContent>
       <DialogActions className="d-flex align-items-center p-4">
-        <Button variant={'outlined'} onClick={handleOnCloseModal}>
+        <Button
+          id="adventure-selection-close-modal"
+          variant={'outlined'}
+          onClick={handleOnCloseModal}
+        >
           Cancelar
         </Button>
         {!shownAdventure?.demo &&
@@ -179,7 +187,12 @@ const AdventureSummaryDialog: React.FC<{
             Suscribirse a Kodkod Pro
           </Button>
         ) : (
-          <Button variant="contained" color="primary" onClick={setAdventure}>
+          <Button
+            id="adventure-selection-onboarding-6"
+            variant="contained"
+            color="primary"
+            onClick={setAdventure}
+          >
             Quiero esta aventura
           </Button>
         )}

@@ -14,9 +14,12 @@ import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import RewardsModal from 'components/Modals/RewardsModal';
 import { studentUseRewards } from 'services/rewards';
 import Toaster from 'utils/Toster';
+import { useOnboarding } from 'contexts/OnboardingContext';
+import ProgressOnboarding from 'utils/Onboardings/ProgressOnboarding';
 
 const Progress: FC<ProgressProps> = () => {
   const { classDetails } = useClassContext();
+  const { setNewAvailableTours } = useOnboarding();
   const [students, setStudents] = useState<IUser[]>([]);
   const [missions, setMissions] = useState<IMission[]>([]);
   const [progressPercentage, setProgressPercentage] = useState<
@@ -62,35 +65,27 @@ const Progress: FC<ProgressProps> = () => {
     {
       field: 'completed_missions',
       headerName: 'Misiones completadas',
-      width: 200,
+      flex: 1,
       type: 'number',
     },
     {
       field: 'obtained_rewards',
       headerName: 'Recompensas obtenidas',
-      width: 200,
+      flex: 1,
       type: 'number',
     },
-    {
-      field: 'actions',
-      type: 'actions',
-      flex: 1,
-      minWidth: 200,
-      align: 'right',
-      getActions: ({ row }) => {
-        return [
-          <Button
-            startIcon={<EmojiEventsIcon htmlColor="#FDC51A" fontSize="small" />}
-            variant="outlined"
-            size="small"
-            onClick={() => handleOpenModal(row)}
-          >
-            Activar recompensas
-          </Button>,
-        ];
-      },
-    },
   ];
+
+  useEffect(() => {
+    setNewAvailableTours([
+      {
+        name: 'Progreso del curso',
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        steps: ProgressOnboarding,
+      },
+    ]);
+  }, []);
 
   useEffect(() => {
     if (classDetails) getStudents();
@@ -191,7 +186,10 @@ const Progress: FC<ProgressProps> = () => {
           </Typography>
         </div>
       )}
-      <Box sx={{ maxHeight: 'calc(100vh - 160px)', overflow: 'auto' }}>
+      <Box
+        id="progress-table"
+        sx={{ maxHeight: 'calc(100vh - 160px)', overflow: 'auto' }}
+      >
         <StickyDataGrid
           rows={students}
           columns={columns}

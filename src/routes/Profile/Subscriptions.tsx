@@ -24,6 +24,7 @@ import { IPlan, ISubscription } from 'global/interfaces';
 import ConfirmationModal from 'components/Modals/ConfirmationModal';
 import moment from 'moment';
 import Toaster from 'utils/Toster';
+import { useOnboarding } from 'contexts/OnboardingContext';
 
 const subscriptionStatus: any = {
   pending: {
@@ -46,6 +47,7 @@ const subscriptionStatus: any = {
 
 const Subscriptions: React.FC = () => {
   const { user } = useAuth();
+  const { setNewAvailableTours } = useOnboarding();
   const [plans, setPlans] = useState<IPlan[]>([]);
   const [selectedPlan, setSelectedPlan] = useState('');
   const [currentSubscription, setCurrentSubscription] =
@@ -53,6 +55,10 @@ const Subscriptions: React.FC = () => {
   const [openModal, setOpenModal] = useState(false);
   const [fetching, setFetching] = useState<FetchStatus>(FetchStatus.Idle);
   const [formLoading, setFormLoading] = useState(true);
+
+  useEffect(() => {
+    setNewAvailableTours([]);
+  }, []);
 
   useEffect(() => {
     (async () => {

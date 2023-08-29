@@ -13,12 +13,15 @@ import { useClassContext } from '../context';
 import ContentBox from 'components/ContentBox';
 import { useNavigate } from 'react-router';
 import { studentsByClass } from 'services/students';
+import { useOnboarding } from 'contexts/OnboardingContext';
+import RewardsOnboarding from 'utils/Onboardings/RewardsOnboarding';
 
 const Rewards = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { classId } = useParams();
   const { classDetails } = useClassContext();
+  const { setNewAvailableTours } = useOnboarding();
   const [rewards, setRewards] = useState<(IReward & { usedCount?: number })[]>(
     []
   );
@@ -78,6 +81,17 @@ const Rewards = () => {
   const handleNavigate = () => {
     navigate(`/app/cursos/${classId}/aventuras`);
   };
+
+  useEffect(() => {
+    setNewAvailableTours([
+      {
+        name: 'Gestión de recompensas',
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        steps: RewardsOnboarding,
+      },
+    ]);
+  }, []);
 
   useEffect(() => {
     const currentAdventureId = classDetails?.current_adventure?.id;
@@ -165,10 +179,11 @@ const Rewards = () => {
           estudiantes que ya han utilizado su recompensa haciendo click en la
           tarjeta.
         </Typography>
-        <RewardsList>
+        <RewardsList id="rewards-list">
           {rewards.map((res, index) => {
             return (
               <RewardCard
+                id={index}
                 edit={editReward}
                 key={`${res.id}-${res.title}`}
                 rewardId={res.id}

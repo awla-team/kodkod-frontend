@@ -5,6 +5,7 @@ export interface IAdventureCardContainerProps {
 export interface IAdventureCardProps
   extends React.PropsWithChildren,
     IAdventureCardContainerProps {
+  id?: string;
   title: string;
   completed: boolean;
   demo: boolean;

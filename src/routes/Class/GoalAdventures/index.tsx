@@ -16,10 +16,13 @@ import { getClassHasAdventuresByClass } from 'services/classes';
 import { Button } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { useAuth } from 'contexts/AuthContext';
+import { useOnboarding } from 'contexts/OnboardingContext';
+import AdventureSelectionOnboarding from 'utils/Onboardings/AdventureSelectionOnboarding';
 
 const GoalAdventures: React.FC = () => {
   const [loading, setLoading] = useState<FetchStatus>(FetchStatus.Idle);
   const { classDetails, loadingClass } = useClassContext();
+  const { setNewAvailableTours } = useOnboarding();
   const { user } = useAuth();
   const [selectedAdventure, setSelectedAdventure] = useState<IAdventure>(null);
   const [completedAdventures, setCompletedAdventures] = useState<
@@ -36,6 +39,17 @@ const GoalAdventures: React.FC = () => {
   const handleOnCloseModal = () => {
     setSelectedAdventure(null);
   };
+
+  useEffect(() => {
+    setNewAvailableTours([
+      {
+        name: 'Selección de aventura',
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        steps: AdventureSelectionOnboarding,
+      },
+    ]);
+  }, []);
 
   useEffect(() => {
     if (selectedGoal?.adventures?.length) {
@@ -95,6 +109,7 @@ const GoalAdventures: React.FC = () => {
       </Typography>
       <div>
         <Button
+          id="adventure-selection-back"
           className="mb-1"
           component={RouterLink}
           to={`/app/cursos/${classDetails?.id}/aventuras/iniciar`}
@@ -121,9 +136,13 @@ const GoalAdventures: React.FC = () => {
       </Typography>
       {selectedGoal && selectedGoal?.adventures?.length ? (
         <>
-          <div className="d-flex h-100 w-100 align-items-center justify-content-center justify-content-center flex-wrap gap-4">
+          <div
+            id="adventure-selection-onboarding-3"
+            className="d-flex h-100 w-100 align-items-center justify-content-center justify-content-center flex-wrap gap-4"
+          >
             {sortedAdventures.map((adventure, index) => (
               <AdventureCard
+                id={`adventure-card-${index}`}
                 demo={adventure.demo || user?.is_superuser}
                 completed={
                   !!completedAdventures.find(

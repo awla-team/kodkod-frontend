@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import {
   Tabs,
@@ -28,15 +28,36 @@ import MissionsList from '../../../../components/MissionsList';
 import ConfirmationModal from 'components/Modals/ConfirmationModal';
 import { useClassContext } from 'routes/Class/context';
 import moment from 'moment';
+import { useOnboarding } from 'contexts/OnboardingContext';
+import AdventureOnboarding from 'utils/Onboardings/AdventureOnboarding';
+import PointsOnboarding from 'utils/Onboardings/PointsOnboarding';
 
 export const Adventure: React.FC = () => {
   const { classId } = useParams();
   const { classDetails, setClassDetails } = useClassContext();
+  const { setNewAvailableTours } = useOnboarding();
   const [shownStage, setShownStage] = useState<IStage | undefined>(undefined);
   const [openConfirmation, setOpenConfirmation] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setNewAvailableTours([
+      {
+        name: 'Trabajando con una aventura',
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        steps: AdventureOnboarding,
+      },
+      {
+        name: 'Misiones y puntaje',
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        steps: PointsOnboarding,
+      },
+    ]);
+  }, []);
 
   if (!classDetails.current_adventure) {
     return (
@@ -132,13 +153,6 @@ export const Adventure: React.FC = () => {
             {classDetails.current_adventure.title}
           </Typography>
           <div>
-            <Button
-              variant={'outlined'}
-              color="info"
-              onClick={() => navigate(`/app/cursos/${classId}/recompensas`)}
-            >
-              Ver recompensas disponibles
-            </Button>
             <IconButton color={'inherit'} onClick={handleVerticalButtonClick}>
               <MoreVertIcon fontSize="large" />
             </IconButton>
