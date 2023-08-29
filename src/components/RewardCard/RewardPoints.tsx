@@ -21,7 +21,7 @@ const RewardPointsContainer = styled.div`
   box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.25);
 `;
 
-const RewardPoints = ({ id, points }: { points: number, id: string }) => (
+const RewardPoints = ({ id, points }: { points: number; id: string }) => (
   <RewardPointsContainer id={id}>
     <img src={kodcoinIcon} alt="" width={20} height={20} />
     <Typography color="white" variant="h6" fontWeight="bold">

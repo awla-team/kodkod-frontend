@@ -94,8 +94,12 @@ const RewardCard: React.FC<IRewardCardProps> = ({
         </EditRewardActionsContainer>
         <div
           id={`reward-card-${id}`}
-          className={`d-flex flex-column flex-fill ${editMode ? 'no-hover' : ''}`}
-          onClick={() => { if (!editMode) setOpenDrawer(true) }}
+          className={`d-flex flex-column flex-fill ${
+            editMode ? 'no-hover' : ''
+          }`}
+          onClick={() => {
+            if (!editMode) setOpenDrawer(true);
+          }}
         >
           <RewardCardHeader>
             <div id={`reward-card-indicator-${id}`}>
@@ -168,7 +172,10 @@ const RewardCard: React.FC<IRewardCardProps> = ({
                   </Typography>
                 )}
               </div>
-              <RewardPoints id={`reward-card-points-${id}`} points={requiredPoints as number} />
+              <RewardPoints
+                id={`reward-card-points-${id}`}
+                points={requiredPoints as number}
+              />
             </div>
           </RewardCardContent>
         </div>

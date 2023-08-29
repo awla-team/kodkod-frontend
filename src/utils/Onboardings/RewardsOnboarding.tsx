@@ -100,7 +100,10 @@ const RewardsOnboarding = [
       return (
         <OnboardingContent>
           <div className="d-flex flex-column gap-2">
-            <Typography variant="body1" component="p">Cuando tus estudiantes obtengan recompensas, lo verás reflejado en este indicador</Typography>
+            <Typography variant="body1" component="p">
+              Cuando tus estudiantes obtengan recompensas, lo verás reflejado en
+              este indicador
+            </Typography>
           </div>
         </OnboardingContent>
       );
@@ -110,13 +113,21 @@ const RewardsOnboarding = [
     stepInteraction: false,
   },
   {
-    action: (element: HTMLElement) => document.getElementById('reward-modal-cancel')?.click(),
+    action: (element: HTMLElement) =>
+      document.getElementById('reward-modal-cancel')?.click(),
     content: () => {
       return (
         <OnboardingContent>
           <div className="d-flex flex-column gap-2">
-            <Typography variant="body1" component="p">Cuando tus estudiantes <b>utilicen</b> sus recompensas, querrás llevar un <b>registro</b> de quienes ya las han utilizado</Typography>
-            <Typography variant="body1" component="p">Para lograrlo, puedes utilizar el <b>panel de canjeo de recompensas</b>, que se abre al hacer click en alguna de ellas.</Typography>
+            <Typography variant="body1" component="p">
+              Cuando tus estudiantes <b>utilicen</b> sus recompensas, querrás
+              llevar un <b>registro</b> de quienes ya las han utilizado
+            </Typography>
+            <Typography variant="body1" component="p">
+              Para lograrlo, puedes utilizar el{' '}
+              <b>panel de canjeo de recompensas</b>, que se abre al hacer click
+              en alguna de ellas.
+            </Typography>
           </div>
         </OnboardingContent>
       );
@@ -126,12 +137,17 @@ const RewardsOnboarding = [
     stepInteraction: false,
   },
   {
-    action: (element: HTMLElement) => document.getElementById('reward-card-0')?.click(),
+    action: (element: HTMLElement) =>
+      document.getElementById('reward-card-0')?.click(),
     content: () => {
       return (
         <OnboardingContent>
           <div className="d-flex flex-column gap-2">
-            <Typography variant="body1" component="p">En este panel verás los estudiantes que tienen la <b>recompensa disponible</b>. En la lista, debes marcar los estudiantes que <b>ya han utilizado su recompensa</b>.</Typography>
+            <Typography variant="body1" component="p">
+              En este panel verás los estudiantes que tienen la{' '}
+              <b>recompensa disponible</b>. En la lista, debes marcar los
+              estudiantes que <b>ya han utilizado su recompensa</b>.
+            </Typography>
           </div>
         </OnboardingContent>
       );
@@ -141,12 +157,16 @@ const RewardsOnboarding = [
     stepInteraction: false,
   },
   {
-    action: (element: HTMLElement) => document.getElementById('reward-card-0')?.click(),
+    action: (element: HTMLElement) =>
+      document.getElementById('reward-card-0')?.click(),
     content: () => {
       return (
         <OnboardingContent>
           <div className="d-flex flex-column gap-2">
-            <Typography variant="body1" component="p">Finalmente, se debe presionar el botón <b>“Guardar Cambios</b> para guardar el registro.</Typography>
+            <Typography variant="body1" component="p">
+              Finalmente, se debe presionar el botón <b>“Guardar Cambios</b>{' '}
+              para guardar el registro.
+            </Typography>
           </div>
         </OnboardingContent>
       );
@@ -156,7 +176,8 @@ const RewardsOnboarding = [
     stepInteraction: false,
   },
   {
-    action: (element: HTMLElement) => document.getElementById('reward-modal-cancel')?.click(),
+    action: (element: HTMLElement) =>
+      document.getElementById('reward-modal-cancel')?.click(),
     content: () => {
       return (
         <OnboardingContent title="¡Tutorial completado!">

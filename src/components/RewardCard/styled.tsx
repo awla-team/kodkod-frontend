@@ -22,7 +22,8 @@ export const RewardCardContainer = styled(Card)`
     border-radius: 8px;
     border: 2px solid transparent;
     &:hover {
-      border: 2px solid ${({ theme }: { theme: DefaultTheme }) => theme.palette.highlight.dark};
+      border: 2px solid
+        ${({ theme }: { theme: DefaultTheme }) => theme.palette.highlight.dark};
       &.no-hover {
         border: 2px solid transparent;
         cursor: default;
