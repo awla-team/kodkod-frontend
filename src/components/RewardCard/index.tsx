@@ -9,6 +9,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import http from 'global/api';
 
 const RewardCard: React.FC<IRewardCardProps> = ({
+  id,
   edit,
   rewardId,
   title,
@@ -42,11 +43,13 @@ const RewardCard: React.FC<IRewardCardProps> = ({
 
   return (
     <CustomCard
+      id={`reward-card-${id}`}
       variant="outlined"
       className="d-flex flex-column py-4 px-3 mb-3 align-items-center position-relative"
     >
       {editMode ? (
         <div
+          id={`reward-card-edit-${id}`}
           className="d-flex"
           style={{
             position: 'absolute',
@@ -63,6 +66,7 @@ const RewardCard: React.FC<IRewardCardProps> = ({
         </div>
       ) : rewardId ? (
         <IconButton
+          id={`reward-card-edit-${id}`}
           sx={{
             position: 'absolute',
             top: '10px',
@@ -111,7 +115,7 @@ const RewardCard: React.FC<IRewardCardProps> = ({
             </Typography>
           )}
         </div>
-        <div className="d-flex points-container align-items-center gap-1 mt-2">
+        <div id={`reward-card-points-${id}`} className="d-flex points-container align-items-center gap-1 mt-2">
           <img src={kodcoinIcon} alt="" />
           <Typography variant="h6" fontWeight="bold">
             {requiredPoints}

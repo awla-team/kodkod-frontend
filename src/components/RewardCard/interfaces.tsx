@@ -1,4 +1,5 @@
 export interface IRewardCardProps {
+  id?: string | number;
   edit?: any;
   rewardId: number;
   title: string;

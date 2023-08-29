@@ -9,70 +9,14 @@ import { getRewardsByAdventure } from '../../../services/rewards';
 import { IReward } from '../../../global/interfaces';
 import Toaster from '../../../utils/Toster';
 import http from 'global/api';
-
-/*const tempRewards = [
-  {
-    title: 'Recompensa 3',
-    description: '¡Canjea esta recompensa con tu profesor/a!',
-    required_points: '?',
-    icon: 'https://kodkod-assets.s3.amazonaws.com/images/rewards/Reward_3.png',
-    type: 'Individual',
-  },
-  {
-    title: 'Recompensa 4',
-    description: '¡Canjea esta recompensa con tu profesor/a!',
-    required_points: '?',
-    icon: 'https://kodkod-assets.s3.amazonaws.com/images/rewards/Reward_4.png',
-    type: 'Individual',
-  },
-  {
-    title: 'Recompensa 5',
-    description: '¡Canjea esta recompensa con tu profesor/a!',
-    required_points: '?',
-    icon: 'https://kodkod-assets.s3.amazonaws.com/images/rewards/Reward_5.png',
-    type: 'Individual',
-  },
-  {
-    title: 'Recompensa 6',
-    description: '¡Canjea esta recompensa con tu profesor/a!',
-    required_points: '?',
-    icon: 'https://kodkod-assets.s3.amazonaws.com/images/rewards/Reward_6.png',
-    type: 'Individual',
-  },
-  {
-    title: 'Recompensa 7',
-    description: '¡Canjea esta recompensa con tu profesor/a!',
-    required_points: '?',
-    icon: 'https://kodkod-assets.s3.amazonaws.com/images/rewards/Reward_7.png',
-    type: 'Individual',
-  },
-  {
-    title: 'Recompensa 8',
-    description: '¡Canjea esta recompensa con tu profesor/a!',
-    required_points: '?',
-    icon: 'https://kodkod-assets.s3.amazonaws.com/images/rewards/Reward_8.png',
-    type: 'Individual',
-  },
-  {
-    title: 'Recompensa 9',
-    description: '¡Canjea esta recompensa con tu profesor/a!',
-    required_points: '?',
-    icon: 'https://kodkod-assets.s3.amazonaws.com/images/rewards/Reward_9.png',
-    type: 'Individual',
-  },
-  {
-    title: 'Recompensa 10',
-    description: '¡Canjea esta recompensa con tu profesor/a!',
-    required_points: '?',
-    icon: 'https://kodkod-assets.s3.amazonaws.com/images/rewards/Reward_10.png',
-    type: 'Individual',
-  },
-];*/
+import { useOnboarding } from 'contexts/OnboardingContext';
+import RewardsOnboarding from 'utils/Onboardings/RewardsOnboarding';
 
 const Rewards: FC = () => {
   const { classId } = useParams();
   const [searchParams] = useSearchParams();
   const [rewards, setRewards] = useState<IReward[]>([]);
+  const { setNewAvailableTours } = useOnboarding();
 
   const editReward = (
     rewardId: number | string,
@@ -106,6 +50,13 @@ const Rewards: FC = () => {
         return error;
       });
   };
+
+  useEffect(() => {
+    setNewAvailableTours([{
+      name: 'Gestión de recompensas',
+      steps: RewardsOnboarding,
+    }])
+  }, []);
 
   useEffect(() => {
     const id = searchParams.get('adventureId');
@@ -173,10 +124,11 @@ const Rewards: FC = () => {
           <b>Progreso</b> puedes gestionar las recompensas de tus estudiantes.
         </Typography>
         <Box className="mt-5">
-          <RewardsList className="d-flex gap-5 pb-4">
+          <RewardsList id="rewards-list" className="d-flex gap-5 pb-4">
             {rewards.map((res, index) => {
               return (
                 <RewardCard
+                  id={index}
                   edit={editReward}
                   key={`${res.id}-${res.title}`}
                   rewardId={res.id}
@@ -188,19 +140,6 @@ const Rewards: FC = () => {
                 />
               );
             })}
-            {/*tempRewards.map((res, index) => {
-              return (
-                <RewardCard
-                  key={index}
-                  rewardId={null}
-                  title={res.title}
-                  description={res.description}
-                  icon={res.icon}
-                  requiredPoints={res.required_points}
-                  type={res.type}
-                />
-              );
-            })*/}
           </RewardsList>
         </Box>
       </RewardsBox>
