@@ -14,9 +14,12 @@ import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import RewardsModal from 'components/Modals/RewardsModal';
 import { studentUseRewards } from 'services/rewards';
 import Toaster from 'utils/Toster';
+import { useOnboarding } from 'contexts/OnboardingContext';
+import ProgressOnboarding from 'utils/Onboardings/ProgressOnboarding';
 
 const Progress: FC<ProgressProps> = () => {
   const { classDetails } = useClassContext();
+  const { setNewAvailableTours } = useOnboarding();
   const [students, setStudents] = useState<IUser[]>([]);
   const [missions, setMissions] = useState<IMission[]>([]);
   const [progressPercentage, setProgressPercentage] = useState<
@@ -91,6 +94,14 @@ const Progress: FC<ProgressProps> = () => {
       },
     },
   ];
+
+  useEffect(() => {
+    setNewAvailableTours([{
+      name: 'Progreso del curso',
+      // @ts-ignore
+      steps: ProgressOnboarding,
+    }])
+  }, []);
 
   useEffect(() => {
     if (classDetails) getStudents();
@@ -191,7 +202,7 @@ const Progress: FC<ProgressProps> = () => {
           </Typography>
         </div>
       )}
-      <Box sx={{ maxHeight: 'calc(100vh - 160px)', overflow: 'auto' }}>
+      <Box id="progress-table" sx={{ maxHeight: 'calc(100vh - 160px)', overflow: 'auto' }}>
         <StickyDataGrid
           rows={students}
           columns={columns}
@@ -203,7 +214,7 @@ const Progress: FC<ProgressProps> = () => {
               labelRowsPerPage: 'Estudiantes por página',
               labelDisplayedRows: ({ from, to, count, page }) =>
                 `Total de ${count} estudiantes`,
-            },
+            }
           }}
           sortModel={sortModel}
           onSortModelChange={(model) => setSortModel(model)}
