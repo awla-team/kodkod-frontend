@@ -13,6 +13,7 @@ import SchoolIcon from '@mui/icons-material/School';
 import { useAuth } from 'contexts/AuthContext';
 
 const MissionCard: React.FC<IMissionCardProps> = ({
+  id,
   mission,
   openModal,
   onClick,
@@ -34,6 +35,7 @@ const MissionCard: React.FC<IMissionCardProps> = ({
 
   return (
     <MissionCardContainer
+      id={`mission-card-${id}`}
       onClick={onClick}
       className={
         'mission-card p-4 d-flex justify-content-between' +
@@ -44,7 +46,7 @@ const MissionCard: React.FC<IMissionCardProps> = ({
       sx={{ background: mission.skill.color }}
     >
       <div className="d-flex flex-column justify-content-between w-100 pe-4">
-        <div className={'text__details'}>
+        <div id={`mission-content-${id}`} className={'text__details'}>
           <Typography variant="h6" fontWeight="bold">
             {title}
           </Typography>
@@ -58,7 +60,7 @@ const MissionCard: React.FC<IMissionCardProps> = ({
                 {difficultyToText(difficulty)}
               </Typography>
             </div>
-            <div className="d-flex align-items-center justify-content-center gap-1">
+            <div className="d-flex align-items-center justify-content-center gap-1" id={`mission-skill-${id}`}>
               <div
                 style={{
                   borderRadius: '100%',
@@ -103,7 +105,7 @@ const MissionCard: React.FC<IMissionCardProps> = ({
         {/* Action Buttons with absolute position end*/}
       </div>
       <div className="d-flex align-items-center">
-        <PointsContainer className="d-flex align-items-center justify-content-center">
+        <PointsContainer id={`mission-points-${id}`} className="d-flex align-items-center justify-content-center">
           <Typography className="me-1" variant="h5" fontWeight="bold">
             {points}
           </Typography>

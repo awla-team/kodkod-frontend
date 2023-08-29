@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import {
   Tabs,
@@ -28,15 +28,29 @@ import MissionsList from '../../../../components/MissionsList';
 import ConfirmationModal from 'components/Modals/ConfirmationModal';
 import { useClassContext } from 'routes/Class/context';
 import moment from 'moment';
+import { useOnboarding } from 'contexts/OnboardingContext';
+import AdventureOnboarding from 'utils/Onboardings/AdventureOnboarding';
+import PointsOnboarding from 'utils/Onboardings/PointsOnboarding';
 
 export const Adventure: React.FC = () => {
   const { classId } = useParams();
   const { classDetails, setClassDetails } = useClassContext();
+  const { setNewAvailableTours } = useOnboarding();
   const [shownStage, setShownStage] = useState<IStage | undefined>(undefined);
   const [openConfirmation, setOpenConfirmation] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setNewAvailableTours([{
+      name: 'Trabajando con una aventura',
+      steps: AdventureOnboarding,
+    }, {
+      name: 'Misiones y puntaje',
+      steps: PointsOnboarding,
+    }])
+  }, []);
 
   if (!classDetails.current_adventure) {
     return (
