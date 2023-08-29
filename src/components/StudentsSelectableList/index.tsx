@@ -32,7 +32,11 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
 
   useEffect(() => {
     if (mission?.completed_users)
-      setDefaultSelected(mission.completed_users.filter((user) => Boolean(user)).map((user) => user?.id));
+      setDefaultSelected(
+        mission.completed_users
+          .filter((user) => Boolean(user))
+          .map((user) => user?.id)
+      );
   }, [mission]);
 
   const handleCheck = (
@@ -81,7 +85,10 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
   };
 
   return (
-    <StudentListContainer id="mission-complete-modal-list" className="d-flex flex-column overflow-hidden">
+    <StudentListContainer
+      id="mission-complete-modal-list"
+      className="d-flex flex-column overflow-hidden"
+    >
       <TextField
         className="mb-3"
         variant={'standard'}
@@ -124,7 +131,11 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
           />
           <div className="d-flex flex-column">
             <div className="d-flex gap-2 justify-content-end">
-              <Button id="mission-complete-modal-cancel" onClick={handleClose} variant="outlined">
+              <Button
+                id="mission-complete-modal-cancel"
+                onClick={handleClose}
+                variant="outlined"
+              >
                 Cancelar
               </Button>
               <Button

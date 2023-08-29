@@ -117,7 +117,7 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
   return (
     <Dialog
       open={open}
-      PaperProps={{ className: 'p-3', id:"student-list-onboarding-2" }}
+      PaperProps={{ className: 'p-3', id: 'student-list-onboarding-2' }}
       maxWidth="sm"
       fullWidth
       fullScreen
@@ -274,7 +274,11 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
           </div>
         </DialogContent>
         <DialogActions>
-          <Button variant="outlined" onClick={() => onClose()} id="add-students-cancel">
+          <Button
+            variant="outlined"
+            onClick={() => onClose()}
+            id="add-students-cancel"
+          >
             Cancelar
           </Button>
           <Button

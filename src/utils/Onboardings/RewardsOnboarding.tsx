@@ -1,5 +1,5 @@
-import { Typography } from "@mui/material";
-import OnboardingContent from "components/OnboardingContent";
+import { Typography } from '@mui/material';
+import OnboardingContent from 'components/OnboardingContent';
 
 const RewardsOnboarding = [
   {
@@ -7,7 +7,10 @@ const RewardsOnboarding = [
       return (
         <OnboardingContent title="Gestión de Recompensas">
           <div className="d-flex flex-column gap-2">
-            <Typography variant="body1" component="p">Las <b>recompensas</b> son un elemento vital para mantener la <b>motivación</b> de tus estudiantes a tope.</Typography>
+            <Typography variant="body1" component="p">
+              Las <b>recompensas</b> son un elemento vital para mantener la{' '}
+              <b>motivación</b> de tus estudiantes a tope.
+            </Typography>
           </div>
         </OnboardingContent>
       );
@@ -21,7 +24,10 @@ const RewardsOnboarding = [
       return (
         <OnboardingContent>
           <div className="d-flex flex-column gap-2">
-            <Typography variant="body1" component="p">Las recompensas se obtienen de forma <b>automática</b> al alcanzar el <b>puntaje</b> indicado</Typography>
+            <Typography variant="body1" component="p">
+              Las recompensas se obtienen de forma <b>automática</b> al alcanzar
+              el <b>puntaje</b> indicado
+            </Typography>
           </div>
         </OnboardingContent>
       );
@@ -35,7 +41,10 @@ const RewardsOnboarding = [
       return (
         <OnboardingContent>
           <div className="d-flex flex-column gap-2">
-            <Typography variant="body1" component="p">En este caso, cuando tus estudiantes alcancen <b>40 puntos</b>, obtendrán la <b>primera recompensa</b>.</Typography>
+            <Typography variant="body1" component="p">
+              En este caso, cuando tus estudiantes alcancen <b>40 puntos</b>,
+              obtendrán la <b>primera recompensa</b>.
+            </Typography>
           </div>
         </OnboardingContent>
       );
@@ -49,8 +58,14 @@ const RewardsOnboarding = [
       return (
         <OnboardingContent>
           <div className="d-flex flex-column gap-2">
-            <Typography variant="body1" component="p">Puedes editar las recompensas presionando el botón “Editar”. El contenido de ellas queda a tu criterio. </Typography>
-            <Typography variant="body1" component="p" fontWeight="bold">¡Una manera divertida de elegirlas es hacerlo junto a tus estudiantes!</Typography>
+            <Typography variant="body1" component="p">
+              Puedes editar las recompensas presionando el botón “Editar”. El
+              contenido de ellas queda a tu criterio.{' '}
+            </Typography>
+            <Typography variant="body1" component="p" fontWeight="bold">
+              ¡Una manera divertida de elegirlas es hacerlo junto a tus
+              estudiantes!
+            </Typography>
           </div>
         </OnboardingContent>
       );
@@ -64,7 +79,12 @@ const RewardsOnboarding = [
       return (
         <OnboardingContent>
           <div className="d-flex flex-column gap-2">
-            <Typography variant="body1" component="p">Algunas sugerencias de recompensa pueden ser desde cambiarse de puesto, tener un día adicional para entregar una tarea, poder comer en clases, una anotación positiva o un reconocimiento en el diario mural.</Typography>
+            <Typography variant="body1" component="p">
+              Algunas sugerencias de recompensa pueden ser desde cambiarse de
+              puesto, tener un día adicional para entregar una tarea, poder
+              comer en clases, una anotación positiva o un reconocimiento en el
+              diario mural.
+            </Typography>
           </div>
         </OnboardingContent>
       );
@@ -135,8 +155,13 @@ const RewardsOnboarding = [
       return (
         <OnboardingContent title="¡Tutorial completado!">
           <div className="d-flex flex-column gap-2">
-            <Typography>Recuerda que puedes acceder a este y otros tutoriales presionando el botón de ayuda.</Typography>
-            <Typography fontWeight="bold">¡Hay tutoriales distintos en cada vista!</Typography>
+            <Typography>
+              Recuerda que puedes acceder a este y otros tutoriales presionando
+              el botón de ayuda.
+            </Typography>
+            <Typography fontWeight="bold">
+              ¡Hay tutoriales distintos en cada vista!
+            </Typography>
           </div>
         </OnboardingContent>
       );
@@ -145,7 +170,7 @@ const RewardsOnboarding = [
     position: 'center',
     padding: 8,
     stepInteraction: false,
-  }
+  },
 ];
-  
+
 export default RewardsOnboarding;

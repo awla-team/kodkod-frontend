@@ -1,14 +1,19 @@
-import { Typography } from "@mui/material";
-import OnboardingContent from "components/OnboardingContent";
+import { Typography } from '@mui/material';
+import OnboardingContent from 'components/OnboardingContent';
 
 const AdventureSelectionOnboarding = [
   {
-    action: (element: HTMLElement) => document.getElementById('adventure-selection-back')?.click(),
+    action: (element: HTMLElement) =>
+      document.getElementById('adventure-selection-back')?.click(),
     content: () => {
       return (
         <OnboardingContent title="Selección de aventura">
           <div className="d-flex flex-column gap-2">
-            <Typography variant="body1" component="p">Una aventura es un paquete de <b>interacciones positivas</b> planificadas y ordenadas previamente para <b>alcanzar objetivos</b> concretos con nuestros estudiantes </Typography>
+            <Typography variant="body1" component="p">
+              Una aventura es un paquete de <b>interacciones positivas</b>{' '}
+              planificadas y ordenadas previamente para{' '}
+              <b>alcanzar objetivos</b> concretos con nuestros estudiantes{' '}
+            </Typography>
           </div>
         </OnboardingContent>
       );
@@ -24,7 +29,10 @@ const AdventureSelectionOnboarding = [
       return (
         <OnboardingContent>
           <div className="d-flex flex-column gap-3">
-            <Typography variant="body1" component="p">Para encontrar la aventura que queremos para nuestro curso, primero debemos <b>seleccionar un objetivo</b>.</Typography>
+            <Typography variant="body1" component="p">
+              Para encontrar la aventura que queremos para nuestro curso,
+              primero debemos <b>seleccionar un objetivo</b>.
+            </Typography>
           </div>
         </OnboardingContent>
       );
@@ -34,12 +42,16 @@ const AdventureSelectionOnboarding = [
     padding: 8,
   },
   {
-    action: (element: HTMLElement) => document.getElementById('adventure-selection-back')?.click(),
+    action: (element: HTMLElement) =>
+      document.getElementById('adventure-selection-back')?.click(),
     content: () => {
       return (
         <OnboardingContent>
           <div className="d-flex flex-column gap-3">
-            <Typography variant="body1" component="p">Esto nos permitirá pulsar el botón <b>“Continuar”</b> para avanzar.</Typography>
+            <Typography variant="body1" component="p">
+              Esto nos permitirá pulsar el botón <b>“Continuar”</b> para
+              avanzar.
+            </Typography>
           </div>
         </OnboardingContent>
       );
@@ -49,13 +61,19 @@ const AdventureSelectionOnboarding = [
     padding: 8,
   },
   {
-    action: (element: HTMLElement) => document.getElementById('adventure-selection-onboarding-2')?.click(),
+    action: (element: HTMLElement) =>
+      document.getElementById('adventure-selection-onboarding-2')?.click(),
     content: () => {
       return (
         <OnboardingContent>
           <div className="d-flex flex-column gap-3">
-            <Typography variant="body1" component="p">Al hacerlo, se desplegará un catálogo de aventuras disponibles para ese objetivo.</Typography>
-            <Typography variant="body1" component="p"><b>¡Con el tiempo, añadiremos más y mejores aventuras!</b></Typography>
+            <Typography variant="body1" component="p">
+              Al hacerlo, se desplegará un catálogo de aventuras disponibles
+              para ese objetivo.
+            </Typography>
+            <Typography variant="body1" component="p">
+              <b>¡Con el tiempo, añadiremos más y mejores aventuras!</b>
+            </Typography>
           </div>
         </OnboardingContent>
       );
@@ -65,12 +83,15 @@ const AdventureSelectionOnboarding = [
     padding: 0,
   },
   {
-    action: (element: HTMLElement) => document.getElementById('adventure-selection-close-modal')?.click(),
+    action: (element: HTMLElement) =>
+      document.getElementById('adventure-selection-close-modal')?.click(),
     content: () => {
       return (
         <OnboardingContent>
           <div className="d-flex flex-column gap-3">
-            <Typography variant="body1" component="p">Al hacer click en una aventura, podrás previsualizarla.</Typography>
+            <Typography variant="body1" component="p">
+              Al hacer click en una aventura, podrás previsualizarla.
+            </Typography>
           </div>
         </OnboardingContent>
       );
@@ -80,12 +101,16 @@ const AdventureSelectionOnboarding = [
     padding: 8,
   },
   {
-    action: (element: HTMLElement) => document.getElementById('adventure-card-0')?.click(),
+    action: (element: HTMLElement) =>
+      document.getElementById('adventure-card-0')?.click(),
     content: () => {
       return (
         <OnboardingContent>
           <div className="d-flex flex-column gap-3">
-            <Typography variant="body1" component="p">Verás un breve <b>resumen</b>, un detalle de los <b>resultados esperados</b>, y las <b>etapas</b> de la aventura.</Typography>
+            <Typography variant="body1" component="p">
+              Verás un breve <b>resumen</b>, un detalle de los{' '}
+              <b>resultados esperados</b>, y las <b>etapas</b> de la aventura.
+            </Typography>
           </div>
         </OnboardingContent>
       );
@@ -95,12 +120,16 @@ const AdventureSelectionOnboarding = [
     padding: 0,
   },
   {
-    action: (element: HTMLElement) => document.getElementById('adventure-card-0')?.click(),
+    action: (element: HTMLElement) =>
+      document.getElementById('adventure-card-0')?.click(),
     content: () => {
       return (
         <OnboardingContent>
           <div className="d-flex flex-column gap-3">
-            <Typography variant="body1" component="p">Finalmente, cuando te decidas por una, solo debes presionar el botón <b>"Quiero esta aventura"</b></Typography>
+            <Typography variant="body1" component="p">
+              Finalmente, cuando te decidas por una, solo debes presionar el
+              botón <b>"Quiero esta aventura"</b>
+            </Typography>
           </div>
         </OnboardingContent>
       );
@@ -110,13 +139,19 @@ const AdventureSelectionOnboarding = [
     padding: 8,
   },
   {
-    action: (element: HTMLElement) => document.getElementById('adventure-selection-close-modal')?.click(),
+    action: (element: HTMLElement) =>
+      document.getElementById('adventure-selection-close-modal')?.click(),
     content: () => {
       return (
         <OnboardingContent title="¡Tutorial completado!">
           <div className="d-flex flex-column gap-2">
-            <Typography>Recuerda que puedes acceder a este y otros tutoriales presionando el botón de ayuda.</Typography>
-            <Typography fontWeight="bold">¡Hay tutoriales distintos en cada vista!</Typography>
+            <Typography>
+              Recuerda que puedes acceder a este y otros tutoriales presionando
+              el botón de ayuda.
+            </Typography>
+            <Typography fontWeight="bold">
+              ¡Hay tutoriales distintos en cada vista!
+            </Typography>
           </div>
         </OnboardingContent>
       );
@@ -125,7 +160,7 @@ const AdventureSelectionOnboarding = [
     position: 'center',
     padding: 0,
     stepInteraction: false,
-  }
+  },
 ];
-  
+
 export default AdventureSelectionOnboarding;

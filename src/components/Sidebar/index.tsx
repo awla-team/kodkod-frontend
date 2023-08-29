@@ -17,7 +17,10 @@ const Sidebar: FC<SidebarProps> = ({ classes, handleOpenModal }) => {
 
   return (
     <SidebarContainer className="justify-content-between">
-      <div className="d-flex flex-column align-items-center" id="home-onboarding-5">
+      <div
+        className="d-flex flex-column align-items-center"
+        id="home-onboarding-5"
+      >
         <LogoContainer>
           <img src={logo} />
         </LogoContainer>

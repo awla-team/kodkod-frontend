@@ -31,7 +31,12 @@ const MyClasses: FC<MyClassesProps> = ({
   return (
     <MyClassesContainer className="w-100">
       <MyClassesBox className="p-5">
-        <Typography component="h1" variant="h4" className="fw-bold mb-1" id="home-onboarding-4">
+        <Typography
+          component="h1"
+          variant="h4"
+          className="fw-bold mb-1"
+          id="home-onboarding-4"
+        >
           Mis cursos
         </Typography>
         <Typography
