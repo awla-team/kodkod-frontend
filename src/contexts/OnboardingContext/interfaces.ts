@@ -1,7 +1,6 @@
-import { StepType } from "@reactour/tour";
+import { StepType } from '@reactour/tour';
 
 export interface ITour {
-    name: string,
-    steps: StepType[],
-};
-  
+  name: string;
+  steps: StepType[];
+}

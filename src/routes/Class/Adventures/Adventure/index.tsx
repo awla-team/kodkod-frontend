@@ -43,17 +43,20 @@ export const Adventure: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setNewAvailableTours([{
-      name: 'Trabajando con una aventura',
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      steps: AdventureOnboarding,
-    }, {
-      name: 'Misiones y puntaje',
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      steps: PointsOnboarding,
-    }])
+    setNewAvailableTours([
+      {
+        name: 'Trabajando con una aventura',
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        steps: AdventureOnboarding,
+      },
+      {
+        name: 'Misiones y puntaje',
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        steps: PointsOnboarding,
+      },
+    ]);
   }, []);
 
   if (!classDetails.current_adventure) {

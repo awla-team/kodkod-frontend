@@ -109,7 +109,10 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
     }
   };
   return (
-    <Dialog open={open} PaperProps={{ className: 'p-3', id:"home-onboarding-3" }}>
+    <Dialog
+      open={open}
+      PaperProps={{ className: 'p-3', id: 'home-onboarding-3' }}
+    >
       <DialogTitle fontWeight="bold">
         {classDetails ? 'Editar curso' : 'Añade un nuevo curso'}
       </DialogTitle>

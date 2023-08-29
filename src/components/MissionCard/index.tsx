@@ -60,7 +60,10 @@ const MissionCard: React.FC<IMissionCardProps> = ({
                 {difficultyToText(difficulty)}
               </Typography>
             </div>
-            <div className="d-flex align-items-center justify-content-center gap-1" id={`mission-skill-${id}`}>
+            <div
+              className="d-flex align-items-center justify-content-center gap-1"
+              id={`mission-skill-${id}`}
+            >
               <div
                 style={{
                   borderRadius: '100%',
@@ -105,7 +108,10 @@ const MissionCard: React.FC<IMissionCardProps> = ({
         {/* Action Buttons with absolute position end*/}
       </div>
       <div className="d-flex align-items-center">
-        <PointsContainer id={`mission-points-${id}`} className="d-flex align-items-center justify-content-center">
+        <PointsContainer
+          id={`mission-points-${id}`}
+          className="d-flex align-items-center justify-content-center"
+        >
           <Typography className="me-1" variant="h5" fontWeight="bold">
             {points}
           </Typography>

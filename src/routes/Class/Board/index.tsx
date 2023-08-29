@@ -22,22 +22,26 @@ const Board: React.FC = () => {
   const { setNewAvailableTours } = useOnboarding();
 
   useEffect(() => {
-    setNewAvailableTours([{
-      name: 'El Tablero del curso',
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      steps: BoardOnboarding,
-    }, {
-      name: 'Gestión de estudiantes',
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      steps: StudentListOnboarding,
-    }, {
-      name: 'El Termómetro Socioemocional',
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      steps: EmotionalThermometerOnboarding,
-    }]);
+    setNewAvailableTours([
+      {
+        name: 'El Tablero del curso',
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        steps: BoardOnboarding,
+      },
+      {
+        name: 'Gestión de estudiantes',
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        steps: StudentListOnboarding,
+      },
+      {
+        name: 'El Termómetro Socioemocional',
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        steps: EmotionalThermometerOnboarding,
+      },
+    ]);
   }, []);
 
   return (

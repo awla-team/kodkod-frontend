@@ -96,12 +96,14 @@ const Progress: FC<ProgressProps> = () => {
   ];
 
   useEffect(() => {
-    setNewAvailableTours([{
-      name: 'Progreso del curso',
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      steps: ProgressOnboarding,
-    }])
+    setNewAvailableTours([
+      {
+        name: 'Progreso del curso',
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        steps: ProgressOnboarding,
+      },
+    ]);
   }, []);
 
   useEffect(() => {
@@ -203,7 +205,10 @@ const Progress: FC<ProgressProps> = () => {
           </Typography>
         </div>
       )}
-      <Box id="progress-table" sx={{ maxHeight: 'calc(100vh - 160px)', overflow: 'auto' }}>
+      <Box
+        id="progress-table"
+        sx={{ maxHeight: 'calc(100vh - 160px)', overflow: 'auto' }}
+      >
         <StickyDataGrid
           rows={students}
           columns={columns}
@@ -215,7 +220,7 @@ const Progress: FC<ProgressProps> = () => {
               labelRowsPerPage: 'Estudiantes por página',
               labelDisplayedRows: ({ from, to, count, page }) =>
                 `Total de ${count} estudiantes`,
-            }
+            },
           }}
           sortModel={sortModel}
           onSortModelChange={(model) => setSortModel(model)}

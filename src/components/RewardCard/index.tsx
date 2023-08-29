@@ -115,7 +115,10 @@ const RewardCard: React.FC<IRewardCardProps> = ({
             </Typography>
           )}
         </div>
-        <div id={`reward-card-points-${id}`} className="d-flex points-container align-items-center gap-1 mt-2">
+        <div
+          id={`reward-card-points-${id}`}
+          className="d-flex points-container align-items-center gap-1 mt-2"
+        >
           <img src={kodcoinIcon} alt="" />
           <Typography variant="h6" fontWeight="bold">
             {requiredPoints}

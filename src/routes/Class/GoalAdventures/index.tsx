@@ -41,12 +41,14 @@ const GoalAdventures: React.FC = () => {
   };
 
   useEffect(() => {
-    setNewAvailableTours([{
-      name: 'Selección de aventura',
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      steps: AdventureSelectionOnboarding,
-    }]);
+    setNewAvailableTours([
+      {
+        name: 'Selección de aventura',
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        steps: AdventureSelectionOnboarding,
+      },
+    ]);
   }, []);
 
   useEffect(() => {
@@ -134,7 +136,10 @@ const GoalAdventures: React.FC = () => {
       </Typography>
       {selectedGoal && selectedGoal?.adventures?.length ? (
         <>
-          <div id="adventure-selection-onboarding-3" className="d-flex h-100 w-100 align-items-center justify-content-center justify-content-center flex-wrap gap-4">
+          <div
+            id="adventure-selection-onboarding-3"
+            className="d-flex h-100 w-100 align-items-center justify-content-center justify-content-center flex-wrap gap-4"
+          >
             {sortedAdventures.map((adventure, index) => (
               <AdventureCard
                 id={`adventure-card-${index}`}
