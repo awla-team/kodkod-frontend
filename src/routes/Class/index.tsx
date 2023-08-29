@@ -7,24 +7,35 @@ import DashboardIcon from '@mui/icons-material/DashboardTwoTone';
 import AdventuresIcon from '@mui/icons-material/RocketLaunchTwoTone';
 import ProgressIcon from '@mui/icons-material/LeaderboardTwoTone';
 import ReportsIcon from '@mui/icons-material/PieChartTwoTone';
+import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 
 const tabs = [
   {
+    id: 'board-tab',
     title: 'Tablero',
     path: 'tablero',
     svg: <DashboardIcon />,
   },
   {
+    id: 'adventures-tab',
     title: 'Aventuras',
     path: 'aventuras',
     svg: <AdventuresIcon />,
   },
   {
+    id: 'rewards-tab',
+    title: 'Recompensas',
+    path: 'recompensas',
+    svg: <WorkspacePremiumIcon />,
+  },
+  {
+    id: 'progress-tab',
     title: 'Progreso',
     path: 'progreso',
     svg: <ProgressIcon />,
   },
   {
+    id: 'reports-tab',
     disabled: true,
     title: 'Reportes',
     path: 'reportes',
@@ -42,10 +53,11 @@ const Class: React.FC = () => {
         {tabs.map((tab, i) =>
           !tab.disabled ? (
             <Box
+              id={tab.id}
               key={`tab-${i}`}
-              className={`nav__tab ${pathname.includes(tab.path) ? 'active' : ''} ${
-                tab.disabled ? 'disabled' : ''
-              }`}
+              className={`nav__tab ${
+                pathname.includes(tab.path) ? 'active' : ''
+              } ${tab.disabled ? 'disabled' : ''}`}
               role="button"
               onClick={() => navigate(tab.path)}
             >
@@ -57,9 +69,10 @@ const Class: React.FC = () => {
           ) : (
             <Tooltip key={`tab-${i}`} arrow title="¡Próximamente!">
               <Box
-                className={`nav__tab ${pathname.includes(tab.path) ? 'active' : ''} ${
-                  tab.disabled ? 'disabled' : ''
-                }`}
+                id={tab.id}
+                className={`nav__tab ${
+                  pathname.includes(tab.path) ? 'active' : ''
+                } ${tab.disabled ? 'disabled' : ''}`}
                 role="button"
                 onClick={() => {}}
               >

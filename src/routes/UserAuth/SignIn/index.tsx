@@ -48,7 +48,10 @@ const SignIn: React.FC = () => {
       if (error?.response?.data?.responseData === 'Wrong credentials')
         return Toaster('error', 'Email o contraseña incorrecta');
       if (error?.response?.data?.responseData?.reason === 'unverified')
-        return Toaster('error', 'El email de esta cuenta no ha sido verificado');
+        return Toaster(
+          'error',
+          'El email de esta cuenta no ha sido verificado'
+        );
       Toaster('error', 'Hubo un error al iniciar sesión');
     } finally {
       formikHelper.setSubmitting(false);
@@ -57,7 +60,12 @@ const SignIn: React.FC = () => {
   return (
     <SignInCard variant="outlined">
       <div>
-        <CardMedia className="p-5" component="img" image={logoWhite} alt="kodkod logo" />
+        <CardMedia
+          className="p-5"
+          component="img"
+          image={logoWhite}
+          alt="kodkod logo"
+        />
       </div>
       <CardContent className="px-5 py-4">
         <Typography component="h4" variant="h5" textAlign="center">
@@ -82,7 +90,10 @@ const SignIn: React.FC = () => {
             return (
               <Form onSubmit={handleSubmit}>
                 <Box display={'flex'} flexDirection={'column'} mt={3}>
-                  <FormControl error={!!errors.email && touched.email} className="mb-3">
+                  <FormControl
+                    error={!!errors.email && touched.email}
+                    className="mb-3"
+                  >
                     <TextField
                       name={'email'}
                       value={values.email}
@@ -94,7 +105,10 @@ const SignIn: React.FC = () => {
                       variant="outlined"
                     />
                   </FormControl>
-                  <FormControl error={!!errors.password && touched.password} className="mb-2">
+                  <FormControl
+                    error={!!errors.password && touched.password}
+                    className="mb-2"
+                  >
                     <TextField
                       name={'password'}
                       value={values.password}
@@ -135,7 +149,11 @@ const SignIn: React.FC = () => {
                     </Button>
                     <Typography component="span" variant="subtitle2">
                       ¿Aún no tienes una cuenta?{' '}
-                      <Typography component={RouterLink} variant="subtitle2" to={'/signup'}>
+                      <Typography
+                        component={RouterLink}
+                        variant="subtitle2"
+                        to={'/signup'}
+                      >
                         Registrate
                       </Typography>
                     </Typography>

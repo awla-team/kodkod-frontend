@@ -23,7 +23,12 @@ export interface AdventureWithProviderProps {
   students?: StudentType[];
 
   updateStageData?: (stage: IStage) => void;
-  handleUpdateCurrentAdventure?: (data: IMission, ref: StageMissionUpdateBody) => void;
+  handleUpdateCurrentAdventure?: (
+    data: IMission,
+    ref: StageMissionUpdateBody
+  ) => void;
 }
 
-export interface AdventureProviderProps extends AdventureWithProviderProps, PropsWithChildren {}
+export interface AdventureProviderProps
+  extends AdventureWithProviderProps,
+    PropsWithChildren {}

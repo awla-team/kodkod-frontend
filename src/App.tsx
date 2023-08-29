@@ -16,6 +16,7 @@ import moment from 'moment';
 import { useLocation } from 'react-router-dom';
 import 'moment/dist/locale/es';
 import './App.css';
+import OnboardingContextProvider from 'contexts/OnboardingContext';
 
 moment.locale('es');
 
@@ -23,7 +24,8 @@ const App: React.FC = () => {
   const [classes, setClasses] = useState<IClass[]>([]);
   const [levels, setLevels] = useState<Levels[]>([]);
   const [fetching, setFetching] = useState<FetchStatus>(FetchStatus.Idle);
-  const [createClassModalOpen, setCreateClassModalOpen] = useState<boolean>(false);
+  const [createClassModalOpen, setCreateClassModalOpen] =
+    useState<boolean>(false);
   const { user, checkUserSubscription } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
@@ -45,7 +47,8 @@ const App: React.FC = () => {
 
   const getLevels = async () => {
     try {
-      const { data }: { data: { responseData: Levels[] } } = await getAllTheLevel();
+      const { data }: { data: { responseData: Levels[] } } =
+        await getAllTheLevel();
       setLevels(
         data.responseData.sort((a, b) => {
           if (a.name > b.name) return 1;
@@ -59,7 +62,10 @@ const App: React.FC = () => {
     }
   };
 
-  const handleClose = (reason: 'backdropClick' | 'escapeKeyDown' | 'success', data?: IClass) => {
+  const handleClose = (
+    reason: 'backdropClick' | 'escapeKeyDown' | 'success',
+    data?: IClass
+  ) => {
     if (reason !== 'backdropClick') setCreateClassModalOpen(false);
     if (reason === 'success') {
       if (data) {
@@ -113,15 +119,21 @@ const App: React.FC = () => {
     );
 
   return (
-    <div className="app-container d-flex">
-      <Sidebar classes={classes} handleOpenModal={handleOpenModal} />
-      <div className="app-main-container d-flex flex-column flex-fill">
-        <div className="app-content container">
-          <Outlet context={{ classes, handleOpenModal, getClassesData }} />
+    <OnboardingContextProvider>
+      <div className="app-container d-flex">
+        <Sidebar classes={classes} handleOpenModal={handleOpenModal} />
+        <div className="app-main-container d-flex flex-column flex-fill">
+          <div className="app-content container" id="home-onboarding-4">
+            <Outlet context={{ classes, handleOpenModal, getClassesData }} />
+          </div>
         </div>
+        <CreateClassModal
+          open={createClassModalOpen}
+          onClose={handleClose}
+          levels={levels}
+        />
       </div>
-      <CreateClassModal open={createClassModalOpen} onClose={handleClose} levels={levels} />
-    </div>
+    </OnboardingContextProvider>
   );
 };
 

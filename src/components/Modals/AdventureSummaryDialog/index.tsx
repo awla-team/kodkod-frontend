@@ -32,11 +32,13 @@ const AdventureSummaryDialog: React.FC<{
 
   useEffect(() => {
     if (selectedAdventure && selectedAdventure.template_stages) {
-      const newSortedStages = [...selectedAdventure.template_stages].sort((a, b) => {
-        if (a._index > b._index) return 1;
-        if (a._index < b._index) return -1;
-        return 0;
-      });
+      const newSortedStages = [...selectedAdventure.template_stages].sort(
+        (a, b) => {
+          if (a._index > b._index) return 1;
+          if (a._index < b._index) return -1;
+          return 0;
+        }
+      );
       setSortedStages(newSortedStages);
     }
   }, [selectedAdventure]);
@@ -67,10 +69,17 @@ const AdventureSummaryDialog: React.FC<{
   };
 
   return (
-    <Dialog open={!!selectedAdventure} onClose={handleOnCloseModal} fullWidth maxWidth="lg">
+    <Dialog
+      open={!!selectedAdventure}
+      onClose={handleOnCloseModal}
+      fullWidth
+      maxWidth="lg"
+    >
       <DialogTitle className="d-flex flex-column p-0">
-        <AdventureBanner sx={{ backgroundImage: `url(${selectedAdventure?.banner})` }}>
-          {!shownAdventure?.demo ? (
+        <AdventureBanner
+          sx={{ backgroundImage: `url(${selectedAdventure?.banner})` }}
+        >
+          {!shownAdventure?.demo && !user?.is_superuser ? (
             <div className="demo-indicator gap-1 mb-3">
               <StarIcon fontSize="small" sx={{ fontSize: '16px' }} />
               <Typography fontWeight="bold" variant="body2">
@@ -95,14 +104,20 @@ const AdventureSummaryDialog: React.FC<{
           </section>
         </AdventureBanner>
       </DialogTitle>
-      <DialogContent dividers className="d-flex flex-column p-0">
+      <DialogContent
+        id="adventure-selection-onboarding-5"
+        dividers
+        className="d-flex flex-column p-0"
+      >
         <Box className="d-flex flex-column flex-fill w-100">
           <div className="d-flex flex-column gap-3 p-4">
             <section className="d-flex flex-column">
               <Typography variant="subtitle1" fontWeight="bold">
                 Resumen
               </Typography>
-              <Typography variant="body1">{shownAdventure?.overview}</Typography>
+              <Typography variant="body1">
+                {shownAdventure?.overview}
+              </Typography>
             </section>
             <section className="d-flex flex-column">
               <Typography variant="subtitle1" fontWeight="bold">
@@ -113,7 +128,9 @@ const AdventureSummaryDialog: React.FC<{
                   {shownAdventure.expected_results
                     .split('\n')
                     .map((expectedResult: string, i: number) => (
-                      <li key={`adventure-${shownAdventure.id}-expected-result-${i}`}>
+                      <li
+                        key={`adventure-${shownAdventure.id}-expected-result-${i}`}
+                      >
                         {expectedResult}
                       </li>
                     ))}
@@ -126,14 +143,19 @@ const AdventureSummaryDialog: React.FC<{
               </Typography>
               <div className="d-flex flex-column gap-2">
                 {sortedStages.map((stage, i) => (
-                  <div key={`stage-${i}`} className="d-flex gap-2 align-items-center">
+                  <div
+                    key={`stage-${i}`}
+                    className="d-flex gap-2 align-items-center"
+                  >
                     <EmojiFlagsIcon />
                     <div className="d-flex flex-column gap-0">
                       <Typography variant="body1">
                         <b>{`Etapa ${i}: `}</b>
                         {stage.title}
                       </Typography>
-                      <Typography variant="caption">{stage.description}</Typography>
+                      <Typography variant="caption">
+                        {stage.description}
+                      </Typography>
                     </div>
                   </div>
                 ))}
@@ -143,10 +165,16 @@ const AdventureSummaryDialog: React.FC<{
         </Box>
       </DialogContent>
       <DialogActions className="d-flex align-items-center p-4">
-        <Button variant={'outlined'} onClick={handleOnCloseModal}>
+        <Button
+          id="adventure-selection-close-modal"
+          variant={'outlined'}
+          onClick={handleOnCloseModal}
+        >
           Cancelar
         </Button>
-        {!shownAdventure?.demo && !user.is_subscription_active ? (
+        {!shownAdventure?.demo &&
+        !user?.is_subscription_active &&
+        !user?.is_superuser ? (
           <Button
             className="ms-2"
             sx={{ '&:hover': { color: '#fff' } }}
@@ -159,7 +187,12 @@ const AdventureSummaryDialog: React.FC<{
             Suscribirse a Kodkod Pro
           </Button>
         ) : (
-          <Button variant="contained" color="primary" onClick={setAdventure}>
+          <Button
+            id="adventure-selection-onboarding-6"
+            variant="contained"
+            color="primary"
+            onClick={setAdventure}
+          >
             Quiero esta aventura
           </Button>
         )}

@@ -21,8 +21,15 @@ import Toaster from 'utils/Toster';
 import { IClass } from 'global/interfaces';
 import { useAuth } from 'contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { useTour } from '@reactour/tour';
 
-const CreateClassModal: FC<CreateClassModalProps> = ({ open, onClose, levels, classDetails }) => {
+const CreateClassModal: FC<CreateClassModalProps> = ({
+  open,
+  onClose,
+  levels,
+  classDetails,
+}) => {
+  const { setCurrentStep } = useTour();
   const [initialState, setInitialState] = useState<FormInitialState>({
     id_level: '',
     code: '',
@@ -89,7 +96,7 @@ const CreateClassModal: FC<CreateClassModalProps> = ({ open, onClose, levels, cl
           id_level: values.id_level as number,
         });
 
-        navigate(`/app/cursos/${data.responseData.id}/tablero`);
+        //navigate(`/app/cursos/${data.responseData.id}/tablero`);
         onClose('success', data.responseData);
         Toaster('success', `Curso ${values.alias} creado exitosamente`);
       }
@@ -98,10 +105,14 @@ const CreateClassModal: FC<CreateClassModalProps> = ({ open, onClose, levels, cl
       Toaster('error', `Hubo un error al crear el curso ${values.alias}`);
     } finally {
       formikHelpers.setSubmitting(false);
+      setCurrentStep(4);
     }
   };
   return (
-    <Dialog open={open} PaperProps={{ className: 'p-3' }}>
+    <Dialog
+      open={open}
+      PaperProps={{ className: 'p-3', id: 'home-onboarding-3' }}
+    >
       <DialogTitle fontWeight="bold">
         {classDetails ? 'Editar curso' : 'Añade un nuevo curso'}
       </DialogTitle>
@@ -140,7 +151,11 @@ const CreateClassModal: FC<CreateClassModalProps> = ({ open, onClose, levels, cl
                       placeholder="Selecciona un nivel"
                       onChange={(e) => {
                         handleChange(e);
-                        handleAliasValue(e as ChangeEvent<HTMLInputElement>, values, setFieldValue);
+                        handleAliasValue(
+                          e as ChangeEvent<HTMLInputElement>,
+                          values,
+                          setFieldValue
+                        );
                       }}
                       value={values.id_level}
                     >
@@ -173,7 +188,8 @@ const CreateClassModal: FC<CreateClassModalProps> = ({ open, onClose, levels, cl
                         Curso
                       </Typography>
                       <Typography component="span" variant="caption">
-                        (Es la letra o nombre que acompaña al nivel e identifica al curso)
+                        (Es la letra o nombre que acompaña al nivel e identifica
+                        al curso)
                       </Typography>
                     </div>
                     <TextField
@@ -212,12 +228,21 @@ const CreateClassModal: FC<CreateClassModalProps> = ({ open, onClose, levels, cl
                 </FormContainer>
               </DialogContent>
               <DialogActions className="pt-3">
-                <Button variant="outlined" onClick={() => onClose('escapeKeyDown')}>
+                <Button
+                  id="create-class-cancel"
+                  variant="outlined"
+                  onClick={() => onClose('escapeKeyDown')}
+                >
                   Cancelar
                 </Button>
                 <Button
+                  id="home-onboarding-5"
                   disabled={
-                    isSubmitting || !dirty || !values.code || !values.id_level || !values.alias
+                    isSubmitting ||
+                    !dirty ||
+                    !values.code ||
+                    !values.id_level ||
+                    !values.alias
                   }
                   type={'submit'}
                   variant={'contained'}

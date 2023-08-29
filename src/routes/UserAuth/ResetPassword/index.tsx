@@ -1,6 +1,13 @@
 import React, { FC, useEffect, useState } from 'react';
 import { ResetPasswordCard } from './styled';
-import { Box, Button, CardContent, FormControl, TextField, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  CardContent,
+  FormControl,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { Form, Formik, FormikHelpers } from 'formik';
 import { Link as RouterLink, useNavigate, useParams } from 'react-router-dom';
 import { FormInitialValuesType } from './interfaces';
@@ -59,7 +66,10 @@ const ResetPassword: FC = () => {
   ) => {
     try {
       delete values.confirmPassword;
-      const { data }: { data: { responseData: string } } = await resetPassword(values, token);
+      const { data }: { data: { responseData: string } } = await resetPassword(
+        values,
+        token
+      );
       // Toaster("success", data.responseData);
       Toaster('success', 'Contraseña actualizada exitosamente');
       navigate('/signin');
@@ -121,7 +131,10 @@ const ResetPassword: FC = () => {
               return (
                 <Form onSubmit={handleSubmit}>
                   <Box display={'flex'} flexDirection={'column'} gap={2} mt={3}>
-                    <FormControl required error={!!errors.password && touched.password}>
+                    <FormControl
+                      required
+                      error={!!errors.password && touched.password}
+                    >
                       <TextField
                         name={'password'}
                         value={values.password}
@@ -136,7 +149,9 @@ const ResetPassword: FC = () => {
 
                     <FormControl
                       required
-                      error={!!errors.confirmPassword && touched.confirmPassword}
+                      error={
+                        !!errors.confirmPassword && touched.confirmPassword
+                      }
                     >
                       <TextField
                         name={'confirmPassword'}
@@ -174,7 +189,11 @@ const ResetPassword: FC = () => {
             }}
           </Formik>
         ) : (
-          <Typography variant={'h5'} color={'error'} className={'invalid__token__text'}>
+          <Typography
+            variant={'h5'}
+            color={'error'}
+            className={'invalid__token__text'}
+          >
             Link no valido o expirado
           </Typography>
         )}

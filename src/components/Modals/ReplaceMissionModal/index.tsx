@@ -17,7 +17,12 @@ import { IMission } from '../../../global/interfaces';
 import { AdventureContext } from '../../../routes/Class/Adventures/Adventure/provider';
 import { Box } from '@mui/system';
 
-const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({ open, onClose, mission, stage }) => {
+const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
+  open,
+  onClose,
+  mission,
+  stage,
+}) => {
   const [selected, setSelected] = useState<null | IMission>(null);
   const [pending, setPending] = useState<boolean>(false);
   const [missions, setMissions] = useState<IMission[]>([]);
@@ -31,10 +36,11 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({ open, onClose, miss
 
   const handleGetMission = async () => {
     try {
-      const { data }: { data: { responseData: IMission[] } } = await getMissionsByStage({
-        id_skill: mission.id_skill,
-        difficulty: mission.difficulty,
-      });
+      const { data }: { data: { responseData: IMission[] } } =
+        await getMissionsByStage({
+          id_skill: mission.id_skill,
+          difficulty: mission.difficulty,
+        });
       const sorted = data.responseData.sort((a, b) => {
         if (a.title > b.title) return 1;
         if (a.title < b.title) return -1;
@@ -89,8 +95,9 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({ open, onClose, miss
       <DialogContent>
         <div className="mb-3">
           <Typography component="span" variant="body1">
-            Cambia esta misión por otra de la misma <b>habilidad</b> y <b>dificultad</b>. Recuerda
-            que no puedes reemplazar una misión que ya ha sido completada por algún estudiante.
+            Cambia esta misión por otra de la misma <b>habilidad</b> y{' '}
+            <b>dificultad</b>. Recuerda que no puedes reemplazar una misión que
+            ya ha sido completada por algún estudiante.
           </Typography>
         </div>
         <NewMissionList className="mt-2">
@@ -140,7 +147,11 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({ open, onClose, miss
               ))
             ) : (
               <div className="d-flex align-items-center justify-content-center h-100">
-                <Typography component="span" variant="subtitle1" color="#bdbdbd">
+                <Typography
+                  component="span"
+                  variant="subtitle1"
+                  color="#bdbdbd"
+                >
                   No hay misiones disponibles para reemplazar
                 </Typography>
               </div>
@@ -152,7 +163,11 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({ open, onClose, miss
         <Button variant="outlined" onClick={() => onClose('escapeKeyDown')}>
           Cancelar
         </Button>
-        <Button variant={'contained'} onClick={handleClick} disabled={pending || !selected}>
+        <Button
+          variant={'contained'}
+          onClick={handleClick}
+          disabled={pending || !selected}
+        >
           Cambiar misión
         </Button>
       </DialogActions>

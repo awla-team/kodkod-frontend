@@ -7,13 +7,18 @@ import { getGoals } from 'services/goals';
 import { FetchStatus } from 'global/enums';
 import { IGoal } from 'global/interfaces';
 import { useClassContext } from 'routes/Class/context';
+import { useOnboarding } from 'contexts/OnboardingContext';
+import AdventureSelectionOnboarding from 'utils/Onboardings/AdventureSelectionOnboarding';
 
 const GoalSelection: React.FC = () => {
   const { classDetails, loadingClass } = useClassContext();
+  const { setNewAvailableTours } = useOnboarding();
   const navigate = useNavigate();
   const [goals, setGoals] = useState<IGoal[]>([]);
   const [selectedGoalId, setSelectedGoalId] = useState<number>(null);
-  const [loadingGoals, setLoadingGoals] = useState<FetchStatus>(FetchStatus.Idle);
+  const [loadingGoals, setLoadingGoals] = useState<FetchStatus>(
+    FetchStatus.Idle
+  );
 
   const selectAdventure = (goalId: number) => {
     if (selectedGoalId !== goalId) setSelectedGoalId(goalId);
@@ -21,6 +26,17 @@ const GoalSelection: React.FC = () => {
   };
 
   const nextView = () => navigate('objetivo/' + selectedGoalId);
+
+  useEffect(() => {
+    setNewAvailableTours([
+      {
+        name: 'Selección de aventura',
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        steps: AdventureSelectionOnboarding,
+      },
+    ]);
+  }, []);
 
   useEffect(() => {
     setLoadingGoals(FetchStatus.Pending);
@@ -36,7 +52,11 @@ const GoalSelection: React.FC = () => {
       });
   }, []);
 
-  if (loadingGoals === FetchStatus.Idle || loadingGoals === FetchStatus.Pending || !classDetails)
+  if (
+    loadingGoals === FetchStatus.Idle ||
+    loadingGoals === FetchStatus.Pending ||
+    !classDetails
+  )
     return (
       <div className="d-flex w-100 align-items-center justify-content-center">
         <CircularProgress />
@@ -55,15 +75,17 @@ const GoalSelection: React.FC = () => {
         <b>Paso 1:</b> Escoge un objetivo
       </Typography>
       <Typography variant="body1" className="mb-4">
-        Una aventura es una serie de misiones planificadas para <b>alcanzar un objetivo</b> en
-        concreto con tu curso. Para empezar, <b>escoge el objetivo</b> que quieres alcanzar con el
-        curso <b>{classDetails.alias}</b>.
+        Una aventura es una serie de misiones planificadas para{' '}
+        <b>alcanzar un objetivo</b> en concreto con tu curso. Para empezar,{' '}
+        <b>escoge el objetivo</b> que quieres alcanzar con el curso{' '}
+        <b>{classDetails.alias}</b>.
       </Typography>
       <div className="d-flex flex-column w-100 align-items-center justify-content-between h-100">
         <div className="d-flex justify-content-center gap-3 w-100 flex-wrap">
           {goals?.length
-            ? goals.map((goal: IGoal) => (
+            ? goals.map((goal, i) => (
                 <CardContainer
+                  id={`goal-card-${i}`}
                   key={`${goal.id}-${goal.title}`}
                   className={`d-flex flex-column align-items-center position-relative ${
                     goal.id === selectedGoalId ? 'selected' : ''
@@ -87,6 +109,7 @@ const GoalSelection: React.FC = () => {
             : null}
         </div>
         <Button
+          id="adventure-selection-onboarding-2"
           className="mt-4"
           variant="contained"
           size="large"

@@ -17,7 +17,10 @@ const Sidebar: FC<SidebarProps> = ({ classes, handleOpenModal }) => {
 
   return (
     <SidebarContainer className="justify-content-between">
-      <div className="d-flex flex-column align-items-center">
+      <div
+        className="d-flex flex-column align-items-center"
+        id="home-onboarding-5"
+      >
         <LogoContainer>
           <img src={logo} />
         </LogoContainer>
@@ -40,12 +43,19 @@ const Sidebar: FC<SidebarProps> = ({ classes, handleOpenModal }) => {
             ))}
           </LinkList>
         ) : null}
-        <RoundButton sx={{ marginBottom: '74px' }} color="info" onClick={() => handleOpenModal()}>
+        <RoundButton
+          id="home-onboarding-2"
+          sx={{ marginBottom: '74px' }}
+          color="info"
+          onClick={() => {
+            handleOpenModal();
+          }}
+        >
           <AddIcon />
         </RoundButton>
       </div>
       <div>
-        {!user.is_subscription_active ? (
+        {!user?.is_subscription_active && !user?.is_superuser ? (
           <Button
             className="text-center px-0"
             component={Link}

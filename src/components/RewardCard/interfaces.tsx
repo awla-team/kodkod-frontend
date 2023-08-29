@@ -1,4 +1,5 @@
 export interface IRewardCardProps {
+  id?: string | number;
   edit?: any;
   rewardId: number;
   title: string;
@@ -6,4 +7,6 @@ export interface IRewardCardProps {
   description: string;
   requiredPoints: number | string;
   type: string;
+  order?: number;
+  usedCount?: number;
 }

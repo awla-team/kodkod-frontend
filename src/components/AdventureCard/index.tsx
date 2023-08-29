@@ -5,6 +5,7 @@ import { AdventureCardContainer } from './styled';
 import StarIcon from '@mui/icons-material/Star';
 
 const AdventureCard: React.FC<IAdventureCardProps> = ({
+  id,
   title,
   completed,
   demo,
@@ -14,11 +15,16 @@ const AdventureCard: React.FC<IAdventureCardProps> = ({
 }) => {
   return (
     <AdventureCardContainer
+      id={id || null}
       onClick={!completed ? onClick : () => {}}
       className={`p-4 d-flex flex-column justify-content-between ${
         completed ? 'adventure-complete' : ''
       }`}
-      sx={{ backgroundImage: `url(${img})`, backgroundSize: 'cover', overflow: 'visible' }}
+      sx={{
+        backgroundImage: `url(${img})`,
+        backgroundSize: 'cover',
+        overflow: 'visible',
+      }}
       variant="outlined"
     >
       {!demo ? (

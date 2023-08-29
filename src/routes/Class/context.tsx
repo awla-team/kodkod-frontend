@@ -1,4 +1,11 @@
-import { createContext, FC, PropsWithChildren, useContext, useEffect, useState } from 'react';
+import {
+  createContext,
+  FC,
+  PropsWithChildren,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import { IClass } from 'global/interfaces';
 import { getClassByID } from 'services/classes';
 import Toaster from 'utils/Toster';
@@ -37,7 +44,8 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const getLevels = async () => {
     try {
-      const { data }: { data: { responseData: Levels[] } } = await getAllTheLevel();
+      const { data }: { data: { responseData: Levels[] } } =
+        await getAllTheLevel();
       setLevels(
         data.responseData.sort((a, b) => {
           if (a.name > b.name) return 1;
@@ -62,7 +70,9 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const getClassById = async (id: number | string) => {
     setLoadingClass(FetchStatus.Pending);
     try {
-      const { data }: { data: { responseData: IClass } } = await getClassByID(id);
+      const { data }: { data: { responseData: IClass } } = await getClassByID(
+        id
+      );
       setClassDetails(data.responseData);
       setLoadingClass(FetchStatus.Success);
     } catch (error: any) {
@@ -86,7 +96,9 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const updateStageData = (stage: IStage) => {
     const stagesCopy = [...classDetails.current_adventure.stages];
-    const match = stagesCopy.find((currentStage) => currentStage.id === stage.id);
+    const match = stagesCopy.find(
+      (currentStage) => currentStage.id === stage.id
+    );
     const index = stagesCopy.indexOf(match);
     stagesCopy[index] = stage;
     stagesCopy.sort((a, b) => {
@@ -119,7 +131,9 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
             } else {
               setStudents((prevState) => {
                 const tempData = [...prevState];
-                const findIndex = tempData.findIndex((student) => student.id === data.id);
+                const findIndex = tempData.findIndex(
+                  (student) => student.id === data.id
+                );
                 if (findIndex > -1) {
                   tempData[findIndex] = data;
                 }
@@ -132,7 +146,9 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
           if (!Array.isArray(data)) {
             setStudents((prevState) => {
               const tempData = [...prevState];
-              const findIndex = tempData.findIndex((student) => student.id === data.id);
+              const findIndex = tempData.findIndex(
+                (student) => student.id === data.id
+              );
               if (findIndex > -1) {
                 tempData.splice(findIndex, 1);
               }

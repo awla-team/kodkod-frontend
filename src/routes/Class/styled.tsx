@@ -11,7 +11,8 @@ export const HomeContainer = styled.div`
   h1 {
     font-size: 48px;
     span {
-      color: ${(props: ThemeProps<DefaultTheme>) => props.theme.palette.primary.main};
+      color: ${(props: ThemeProps<DefaultTheme>) =>
+        props.theme.palette.primary.main};
     }
   }
 `;

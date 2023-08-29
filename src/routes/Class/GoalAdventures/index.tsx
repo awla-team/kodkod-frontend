@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Typography from '@mui/material/Typography';
 import AdventureCard from 'components/AdventureCard';
 import type { IAdventure, IClassHasAdventure } from 'global/interfaces';
@@ -15,12 +15,19 @@ import SkillPoints from 'components/SkillPoints';
 import { getClassHasAdventuresByClass } from 'services/classes';
 import { Button } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import { useAuth } from 'contexts/AuthContext';
+import { useOnboarding } from 'contexts/OnboardingContext';
+import AdventureSelectionOnboarding from 'utils/Onboardings/AdventureSelectionOnboarding';
 
 const GoalAdventures: React.FC = () => {
   const [loading, setLoading] = useState<FetchStatus>(FetchStatus.Idle);
   const { classDetails, loadingClass } = useClassContext();
+  const { setNewAvailableTours } = useOnboarding();
+  const { user } = useAuth();
   const [selectedAdventure, setSelectedAdventure] = useState<IAdventure>(null);
-  const [completedAdventures, setCompletedAdventures] = useState<IClassHasAdventure[]>([]);
+  const [completedAdventures, setCompletedAdventures] = useState<
+    IClassHasAdventure[]
+  >([]);
   const [selectedGoal, setSelectedGoal] = useState<null | GoalType>(null);
   const [sortedAdventures, setSortedAdventures] = useState<IAdventure[]>([]);
   const params = useParams();
@@ -32,6 +39,17 @@ const GoalAdventures: React.FC = () => {
   const handleOnCloseModal = () => {
     setSelectedAdventure(null);
   };
+
+  useEffect(() => {
+    setNewAvailableTours([
+      {
+        name: 'Selección de aventura',
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        steps: AdventureSelectionOnboarding,
+      },
+    ]);
+  }, []);
 
   useEffect(() => {
     if (selectedGoal?.adventures?.length) {
@@ -91,10 +109,16 @@ const GoalAdventures: React.FC = () => {
       </Typography>
       <div>
         <Button
+          id="adventure-selection-back"
           className="mb-1"
           component={RouterLink}
           to={`/app/cursos/${classDetails?.id}/aventuras/iniciar`}
-          startIcon={<ArrowBackIosIcon sx={{ fontSize: '14px!important' }} fontSize="small" />}
+          startIcon={
+            <ArrowBackIosIcon
+              sx={{ fontSize: '14px!important' }}
+              fontSize="small"
+            />
+          }
         >
           Volver al paso anterior
         </Button>
@@ -103,18 +127,27 @@ const GoalAdventures: React.FC = () => {
         <b>Paso 2:</b> Escoge una aventura
       </Typography>
       <Typography variant="body1" className="mb-4">
-        ¡Muy bien! Ahora selecciona una de las siguientes aventuras creadas especificamente para{' '}
-        <b style={{ textTransform: 'lowercase' }}>{selectedGoal?.title || ''}</b>.
+        ¡Muy bien! Ahora selecciona una de las siguientes aventuras creadas
+        especificamente para{' '}
+        <b style={{ textTransform: 'lowercase' }}>
+          {selectedGoal?.title || ''}
+        </b>
+        .
       </Typography>
       {selectedGoal && selectedGoal?.adventures?.length ? (
         <>
-          <div className="d-flex h-100 w-100 align-items-center justify-content-center justify-content-center flex-wrap gap-4">
+          <div
+            id="adventure-selection-onboarding-3"
+            className="d-flex h-100 w-100 align-items-center justify-content-center justify-content-center flex-wrap gap-4"
+          >
             {sortedAdventures.map((adventure, index) => (
               <AdventureCard
-                demo={adventure.demo}
+                id={`adventure-card-${index}`}
+                demo={adventure.demo || user?.is_superuser}
                 completed={
                   !!completedAdventures.find(
-                    (completedAdventure) => completedAdventure.id_adventure === adventure.id
+                    (completedAdventure) =>
+                      completedAdventure.id_adventure === adventure.id
                   )
                 }
                 onClick={() => {

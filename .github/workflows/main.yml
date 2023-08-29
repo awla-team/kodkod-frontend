@@ -14,14 +14,26 @@ on:
 
 jobs:
   lint:
-    name: Lint
+    name: Linting
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.3.0]
     steps:
       - name: Actions checkout
         uses: actions/checkout@v3
 
+      - name: Node.js ${{ matrix.node-version }} setup
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
+
+      - name: Install prettier
+        run: yarn global add prettier@2.8.8
+
       - name: Check linting
-        run: npx prettier --check .
+        run: yarn format-check
 
   build:
     name: Build
@@ -42,7 +54,7 @@ jobs:
           cache: 'yarn'
 
       - name: Installing dependencies
-        run: yarn install
+        run: yarn install --frozen-lockfile
 
       - name: Building for development
         if: github.base_ref == 'develop'

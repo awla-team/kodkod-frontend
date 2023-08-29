@@ -4,7 +4,7 @@ import { Box } from '@mui/material';
 export const StudentListContainer = styled(Box)`
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: auto;
   & .header__text {
     font-size: 1.25rem;
     font-weight: 700;
@@ -17,7 +17,8 @@ export const StudentListContent = styled(Box).withConfig({
 })<{ hasDetails?: boolean }>`
   display: flex;
   flex-direction: column;
-  justify-content: ${({ hasDetails }) => (!hasDetails ? 'center' : 'flex-start')};
+  justify-content: ${({ hasDetails }) =>
+    !hasDetails ? 'center' : 'flex-start'};
   align-items: ${({ hasDetails }) => (!hasDetails ? 'center' : 'flex-start')};
   height: 100%;
 `;

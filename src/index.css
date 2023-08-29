@@ -20,6 +20,10 @@
   color-scheme: light;
 }
 
+.reactour__popover .reactour__close-button svg {
+  color: #000;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
@@ -44,8 +48,9 @@ body {
   min-width: 320px;
   min-height: 100vh;
   overflow: hidden;
-  font-family: 'Quicksand', 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
-    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: 'Quicksand', 'Montserrat', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
+    'Droid Sans', 'Helvetica Neue', sans-serif;
 }
 
 h1 {

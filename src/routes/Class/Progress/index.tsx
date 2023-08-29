@@ -14,15 +14,20 @@ import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import RewardsModal from 'components/Modals/RewardsModal';
 import { studentUseRewards } from 'services/rewards';
 import Toaster from 'utils/Toster';
+import { useOnboarding } from 'contexts/OnboardingContext';
+import ProgressOnboarding from 'utils/Onboardings/ProgressOnboarding';
 
 const Progress: FC<ProgressProps> = () => {
   const { classDetails } = useClassContext();
+  const { setNewAvailableTours } = useOnboarding();
   const [students, setStudents] = useState<IUser[]>([]);
   const [missions, setMissions] = useState<IMission[]>([]);
-  const [progressPercentage, setProgressPercentage] = useState<number | undefined>(undefined);
-  const [averageCompletedMission, setAverageCompletedMission] = useState<number | undefined>(
-    undefined
-  );
+  const [progressPercentage, setProgressPercentage] = useState<
+    number | undefined
+  >(undefined);
+  const [averageCompletedMission, setAverageCompletedMission] = useState<
+    number | undefined
+  >(undefined);
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [selectedStudent, setSelectedStudent] = useState<IUser>(undefined);
   const [sortModel, setSortModel] = useState<GridSortModel>([
@@ -60,35 +65,27 @@ const Progress: FC<ProgressProps> = () => {
     {
       field: 'completed_missions',
       headerName: 'Misiones completadas',
-      width: 200,
+      flex: 1,
       type: 'number',
     },
     {
       field: 'obtained_rewards',
       headerName: 'Recompensas obtenidas',
-      width: 200,
+      flex: 1,
       type: 'number',
     },
-    {
-      field: 'actions',
-      type: 'actions',
-      flex: 1,
-      minWidth: 200,
-      align: 'right',
-      getActions: ({ row }) => {
-        return [
-          <Button
-            startIcon={<EmojiEventsIcon htmlColor="#FDC51A" fontSize="small" />}
-            variant="outlined"
-            size="small"
-            onClick={() => handleOpenModal(row)}
-          >
-            Activar recompensas
-          </Button>,
-        ];
-      },
-    },
   ];
+
+  useEffect(() => {
+    setNewAvailableTours([
+      {
+        name: 'Progreso del curso',
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        steps: ProgressOnboarding,
+      },
+    ]);
+  }, []);
 
   useEffect(() => {
     if (classDetails) getStudents();
@@ -101,7 +98,9 @@ const Progress: FC<ProgressProps> = () => {
         (accumulator, student) => accumulator + student.missions.length,
         0
       );
-      setProgressPercentage((completedMissions / (students.length * missions.length)) * 100);
+      setProgressPercentage(
+        (completedMissions / (students.length * missions.length)) * 100
+      );
       setAverageCompletedMission(completedMissions / students.length);
     } else {
       setProgressPercentage(0);
@@ -111,11 +110,12 @@ const Progress: FC<ProgressProps> = () => {
 
   const getStudents = async () => {
     try {
-      const { data }: { data: { responseData: IUser[] } } = await studentsByClass(classDetails.id, {
-        missions: true,
-        role: 'student',
-        rewards: true,
-      });
+      const { data }: { data: { responseData: IUser[] } } =
+        await studentsByClass(classDetails.id, {
+          missions: true,
+          role: 'student',
+          rewards: true,
+        });
       const studentsWithTableFields = data.responseData.map((student) => ({
         ...student,
         completed_missions: student.missions.length || 0,
@@ -158,13 +158,19 @@ const Progress: FC<ProgressProps> = () => {
 
   return (
     <ProgressContainer className="p-5">
-      <Typography variant="h4" component="h4" fontWeight="bold" className="mb-2">
+      <Typography
+        variant="h4"
+        component="h4"
+        fontWeight="bold"
+        className="mb-2"
+      >
         Progreso
       </Typography>
       <Typography className="mb-4">
-        En esta sección podrás ver el progreso de cada estudiante y del grupo curso. Podrás ver el
-        puntaje en la aventura actual, el número de misiones completadas y las recompensas
-        obtenidas. Además, puedes <b>gestionar el uso de recompensas</b> de los estudiantes.
+        En esta sección podrás ver el progreso de cada estudiante y del grupo
+        curso. Podrás ver el puntaje en la aventura actual, el número de
+        misiones completadas y las recompensas obtenidas. Además, puedes{' '}
+        <b>gestionar el uso de recompensas</b> de los estudiantes.
       </Typography>
 
       {classDetails?.current_adventure ? (
@@ -180,7 +186,10 @@ const Progress: FC<ProgressProps> = () => {
           </Typography>
         </div>
       )}
-      <Box sx={{ maxHeight: 'calc(100vh - 160px)', overflow: 'auto' }}>
+      <Box
+        id="progress-table"
+        sx={{ maxHeight: 'calc(100vh - 160px)', overflow: 'auto' }}
+      >
         <StickyDataGrid
           rows={students}
           columns={columns}
@@ -190,7 +199,8 @@ const Progress: FC<ProgressProps> = () => {
           slotProps={{
             pagination: {
               labelRowsPerPage: 'Estudiantes por página',
-              labelDisplayedRows: ({ from, to, count, page }) => `Total de ${count} estudiantes`,
+              labelDisplayedRows: ({ from, to, count, page }) =>
+                `Total de ${count} estudiantes`,
             },
           }}
           sortModel={sortModel}

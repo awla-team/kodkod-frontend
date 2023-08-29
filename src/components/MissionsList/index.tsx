@@ -41,8 +41,13 @@ const MissionsList: FC<{ shownStage: IStage }> = ({ shownStage }) => {
   };
 
   return (
-    <MissionListContainer className="p-5">
-      <Typography component="h6" variant="h6" fontWeight="bold" className="mb-5">
+    <MissionListContainer id="adventure-missions" className="p-5">
+      <Typography
+        component="h6"
+        variant="h6"
+        fontWeight="bold"
+        className="mb-5"
+      >
         Lista de misiones
       </Typography>
 
@@ -52,6 +57,7 @@ const MissionsList: FC<{ shownStage: IStage }> = ({ shownStage }) => {
             return (
               <div key={`mission-${index}`} className="col-lg-6 col-12">
                 <MissionCard
+                  id={index}
                   onClick={() => {
                     setOpenDrawer(true);
                     setSelectedMission(res);

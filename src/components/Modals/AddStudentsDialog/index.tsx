@@ -23,7 +23,11 @@ import AddIcon from '@mui/icons-material/Add';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 
-const AddStudentsDialog: FC<AddStudentsDialogProps> = ({ open, onClose, classDetails }) => {
+const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
+  open,
+  onClose,
+  classDetails,
+}) => {
   const [students, setStudents] = useState<
     { first_name: string; last_name: string; email: string }[]
   >(
@@ -36,14 +40,16 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({ open, onClose, classDet
       }))
   );
 
-  const [filled, setFilled] = useState<{ first_name: string; last_name: string; email: string }[]>(
-    []
-  );
+  const [filled, setFilled] = useState<
+    { first_name: string; last_name: string; email: string }[]
+  >([]);
 
   useEffect(() => {
     if (students.length)
       setFilled(
-        students.filter((student) => student.first_name || student.last_name || student.email)
+        students.filter(
+          (student) => student.first_name || student.last_name || student.email
+        )
       );
     else setFilled([]);
   }, [students]);
@@ -67,14 +73,17 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({ open, onClose, classDet
       const noOfStudents = filled.length;
       Toaster(
         'success',
-        `${noOfStudents} ${noOfStudents < 2 ? 'estudiante' : 'estudiantes'} añadidos exitosamente`
+        `${noOfStudents} ${
+          noOfStudents < 2 ? 'estudiante' : 'estudiantes'
+        } añadidos exitosamente`
       );
       onClose('student', data.responseData.students);
     } catch (error: any) {
       console.error(error);
       Toaster(
         'error',
-        error?.response?.data?.responseData || 'Hubo un error al añadir estudiantes'
+        error?.response?.data?.responseData ||
+          'Hubo un error al añadir estudiantes'
       );
     }
   };
@@ -89,9 +98,8 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({ open, onClose, classDet
         const wb = read(event.target.result);
         const sheets = wb.SheetNames;
         if (sheets.length) {
-          const rows: { Nombres: string; Apellidos: string; Email: string }[] = utils.sheet_to_json(
-            wb.Sheets[sheets[0]]
-          );
+          const rows: { Nombres: string; Apellidos: string; Email: string }[] =
+            utils.sheet_to_json(wb.Sheets[sheets[0]]);
 
           setStudents(
             rows.map((student) => ({
@@ -107,7 +115,13 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({ open, onClose, classDet
   };
 
   return (
-    <Dialog open={open} PaperProps={{ className: 'p-3' }} maxWidth="sm" fullWidth fullScreen>
+    <Dialog
+      open={open}
+      PaperProps={{ className: 'p-3', id: 'student-list-onboarding-2' }}
+      maxWidth="sm"
+      fullWidth
+      fullScreen
+    >
       <DialogTitle fontWeight="bold">Añadir estudiantes</DialogTitle>
       <form
         className="d-flex flex-column flex-fill"
@@ -116,10 +130,10 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({ open, onClose, classDet
       >
         <DialogContent className="d-flex flex-column flex-fill">
           <Typography variant="body2" className="mb-2">
-            Añade a tus estudiantes ingresando sus nombres, apellidos y correo. También puedes subir
-            tus estudiantes con nuestra plantilla de excel.
+            Añade a tus estudiantes ingresando sus nombres, apellidos y correo.
+            También puedes subir tus estudiantes con nuestra plantilla de excel.
           </Typography>
-          <div>
+          <div id="student-list-onboarding-3">
             <Button
               variant="outlined"
               component={Link}
@@ -152,7 +166,7 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({ open, onClose, classDet
           </div>
           <Box className="flex-fill my-4" sx={{ overflow: 'auto' }}>
             <StudentsFormDetailsContainer className="d-flex flex-column justify-content-between">
-              <Box className="details-list">
+              <Box className="details-list" id="student-list-onboarding-4">
                 {students.map((student, i) => (
                   <div key={i} className="d-flex align-items-center gap-2">
                     <IconButton
@@ -172,7 +186,10 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({ open, onClose, classDet
                         <TextField
                           size="small"
                           value={student.first_name}
-                          error={(student.last_name || student.email) && !student.first_name}
+                          error={
+                            (student.last_name || student.email) &&
+                            !student.first_name
+                          }
                           onChange={(event) => {
                             const newStudents = [...students];
                             newStudents[i].first_name = event.target.value;
@@ -188,7 +205,10 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({ open, onClose, classDet
                         <TextField
                           size="small"
                           value={student.last_name}
-                          error={(student.first_name || student.email) && !student.last_name}
+                          error={
+                            (student.first_name || student.email) &&
+                            !student.last_name
+                          }
                           onChange={(event) => {
                             const newStudents = [...students];
                             newStudents[i].last_name = event.target.value;
@@ -204,7 +224,10 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({ open, onClose, classDet
                         <TextField
                           size="small"
                           value={student.email}
-                          error={(student.first_name || student.last_name) && !student.email}
+                          error={
+                            (student.first_name || student.last_name) &&
+                            !student.email
+                          }
                           onChange={(event) => {
                             const newStudents = [...students];
                             newStudents[i].email = event.target.value;
@@ -229,29 +252,45 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({ open, onClose, classDet
               className="w-50 mb-2"
               color="primary"
               onClick={() =>
-                setStudents([...students, { first_name: '', last_name: '', email: '' }])
+                setStudents([
+                  ...students,
+                  { first_name: '', last_name: '', email: '' },
+                ])
               }
             >
               Añadir una fila
             </Button>
           </div>
           <div className="d-flex">
-            <Typography textAlign="right" component="span" variant="body2" className="w-100 mt-2">
+            <Typography
+              textAlign="right"
+              component="span"
+              variant="body2"
+              className="w-100 mt-2"
+            >
               Estás añadiendo <b>{filled.length}</b> estudiantes a la clase{' '}
               <b>{classDetails.alias}</b>
             </Typography>
           </div>
         </DialogContent>
         <DialogActions>
-          <Button variant="outlined" onClick={() => onClose()}>
+          <Button
+            variant="outlined"
+            onClick={() => onClose()}
+            id="add-students-cancel"
+          >
             Cancelar
           </Button>
           <Button
+            id="student-list-onboarding-5"
             variant="contained"
             type="submit"
             disabled={
               !filled.length ||
-              !filled.every((student) => student.first_name && student.last_name && student.email)
+              !filled.every(
+                (student) =>
+                  student.first_name && student.last_name && student.email
+              )
             }
           >
             Añadir estudiantes

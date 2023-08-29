@@ -6,8 +6,10 @@ export interface GetRewardsFilter {
   id_class?: number | string;
 }
 
-export const getRewardsByAdventure = (adventureId: number | string, classId: number | string) =>
-  http.get(`reward?id_adventure=${adventureId}&id_class=${classId}`);
+export const getRewardsByAdventure = (
+  adventureId: number | string,
+  classId: number | string
+) => http.get(`reward?id_adventure=${adventureId}&id_class=${classId}`);
 
 export const getRewards = (filterQuery: GetRewardsFilter) => {
   return http.get('reward' + generateQueryParamsFromObject(filterQuery));
@@ -16,3 +18,6 @@ export const getRewards = (filterQuery: GetRewardsFilter) => {
 export const studentUseRewards = (userId: number, rewards: number[]) => {
   return http.post(`user-use-rewards/${userId}`, rewards);
 };
+
+export const studentsRedeemReward = (rewardId: number, studentsId: number[]) =>
+  http.post(`/users-redeem-reward/${rewardId}`, studentsId);

@@ -112,6 +112,7 @@ export interface IUser {
   user_has_rewards?: IUserHasReward[];
   missions?: IMission[];
   verified: boolean;
+  is_superuser: boolean;
 }
 
 export interface IAdventure {

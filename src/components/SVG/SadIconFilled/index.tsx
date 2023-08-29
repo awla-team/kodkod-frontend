@@ -1,6 +1,13 @@
 const SadIconFilled = () => {
   return (
-    <svg version="1.1" width="512" height="512" x="0" y="0" viewBox="0 0 512 512">
+    <svg
+      version="1.1"
+      width="512"
+      height="512"
+      x="0"
+      y="0"
+      viewBox="0 0 512 512"
+    >
       <g>
         <path
           fill="#fdc51a"
