@@ -30,6 +30,8 @@ const GoalSelection: React.FC = () => {
   useEffect(() => {
     setNewAvailableTours([{
       name: 'Selección de aventura',
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       steps: AdventureSelectionOnboarding,
     }]);
   }, []);

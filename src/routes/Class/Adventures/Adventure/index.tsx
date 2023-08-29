@@ -45,9 +45,13 @@ export const Adventure: React.FC = () => {
   useEffect(() => {
     setNewAvailableTours([{
       name: 'Trabajando con una aventura',
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       steps: AdventureOnboarding,
     }, {
       name: 'Misiones y puntaje',
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       steps: PointsOnboarding,
     }])
   }, []);

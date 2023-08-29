@@ -98,6 +98,7 @@ const Progress: FC<ProgressProps> = () => {
   useEffect(() => {
     setNewAvailableTours([{
       name: 'Progreso del curso',
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       steps: ProgressOnboarding,
     }])

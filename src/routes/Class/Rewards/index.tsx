@@ -13,12 +13,14 @@ import { useClassContext } from '../context';
 import ContentBox from 'components/ContentBox';
 import { useNavigate } from 'react-router';
 import { studentsByClass } from 'services/students';
+import { useOnboarding } from 'contexts/OnboardingContext';
 
 const Rewards = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { classId } = useParams();
   const { classDetails } = useClassContext();
+  const { setNewAvailableTours } = useOnboarding();
   const [rewards, setRewards] = useState<(IReward & { usedCount?: number })[]>(
     []
   );
@@ -78,6 +80,15 @@ const Rewards = () => {
   const handleNavigate = () => {
     navigate(`/app/cursos/${classId}/aventuras`);
   };
+
+  useEffect(() => {
+    setNewAvailableTours([{
+      name: 'Gestión de recompensas',
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      steps: RewardsOnboarding,
+    }])
+  }, []);
 
   useEffect(() => {
     const currentAdventureId = classDetails?.current_adventure?.id;
