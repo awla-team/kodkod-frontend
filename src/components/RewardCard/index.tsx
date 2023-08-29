@@ -18,7 +18,8 @@ import { AxiosError, AxiosResponse } from 'axios';
 import UsedRewardCount from './UsedRewardCount';
 import RedeemRewardDrawer from './RedeemRewardDrawer';
 
-const RewardCard = ({
+const RewardCard: React.FC<IRewardCardProps> = ({
+  id,
   edit,
   rewardId,
   title,
