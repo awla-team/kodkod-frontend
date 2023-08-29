@@ -69,9 +69,9 @@ const StageStepper: FC<{
   };
 
   return (
-    <div className="d-flex align-items-center justify-content-between gap-4">
+    <div id="adventure-stages" className="d-flex align-items-center justify-content-between gap-4">
       {activeStep !== undefined ? (
-        <div className="d-flex flex-column gap-3">
+        <div className="d-flex flex-column gap-3" id="adventure-stages-stepper">
           <CustomStepper activeStep={activeStep - 1}>
             {sortedStages.map((stage) => {
               const isNavigable = navigableStages.includes(stage);
@@ -122,6 +122,7 @@ const StageStepper: FC<{
               }
             >
               <Button
+                id="adventure-stage-unlock"
                 variant={'contained'}
                 onClick={() => setOpenDialog(true)}
                 disabled={navigableStages.length === sortedStages.length}
