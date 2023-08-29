@@ -65,33 +65,14 @@ const Progress: FC<ProgressProps> = () => {
     {
       field: 'completed_missions',
       headerName: 'Misiones completadas',
-      width: 200,
+      flex: 1,
       type: 'number',
     },
     {
       field: 'obtained_rewards',
       headerName: 'Recompensas obtenidas',
-      width: 200,
-      type: 'number',
-    },
-    {
-      field: 'actions',
-      type: 'actions',
       flex: 1,
-      minWidth: 200,
-      align: 'right',
-      getActions: ({ row }) => {
-        return [
-          <Button
-            startIcon={<EmojiEventsIcon htmlColor="#FDC51A" fontSize="small" />}
-            variant="outlined"
-            size="small"
-            onClick={() => handleOpenModal(row)}
-          >
-            Activar recompensas
-          </Button>,
-        ];
-      },
+      type: 'number',
     },
   ];
 

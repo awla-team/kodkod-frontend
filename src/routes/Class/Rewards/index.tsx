@@ -14,6 +14,7 @@ import ContentBox from 'components/ContentBox';
 import { useNavigate } from 'react-router';
 import { studentsByClass } from 'services/students';
 import { useOnboarding } from 'contexts/OnboardingContext';
+import RewardsOnboarding from 'utils/Onboardings/RewardsOnboarding';
 
 const Rewards = () => {
   const navigate = useNavigate();
@@ -178,10 +179,11 @@ const Rewards = () => {
           estudiantes que ya han utilizado su recompensa haciendo click en la
           tarjeta.
         </Typography>
-        <RewardsList>
+        <RewardsList id="rewards-list">
           {rewards.map((res, index) => {
             return (
               <RewardCard
+                id={index}
                 edit={editReward}
                 key={`${res.id}-${res.title}`}
                 rewardId={res.id}

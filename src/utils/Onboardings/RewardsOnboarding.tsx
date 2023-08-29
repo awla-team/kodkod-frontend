@@ -16,6 +16,7 @@ const RewardsOnboarding = [
       );
     },
     selector: '#rewards-list',
+    position: 'top',
     padding: 8,
     stepInteraction: false,
   },
@@ -32,6 +33,7 @@ const RewardsOnboarding = [
         </OnboardingContent>
       );
     },
+    position: 'top',
     padding: 8,
     selector: '#reward-card-0',
     stepInteraction: false,
@@ -93,7 +95,7 @@ const RewardsOnboarding = [
     selector: '#reward-card-edit-0',
     stepInteraction: false,
   },
-  /*{
+  {
     content: () => {
       return (
         <OnboardingContent>
@@ -108,6 +110,7 @@ const RewardsOnboarding = [
     stepInteraction: false,
   },
   {
+    action: (element: HTMLElement) => document.getElementById('reward-modal-cancel')?.click(),
     content: () => {
       return (
         <OnboardingContent>
@@ -123,6 +126,7 @@ const RewardsOnboarding = [
     stepInteraction: false,
   },
   {
+    action: (element: HTMLElement) => document.getElementById('reward-card-0')?.click(),
     content: () => {
       return (
         <OnboardingContent>
@@ -137,11 +141,12 @@ const RewardsOnboarding = [
     stepInteraction: false,
   },
   {
+    action: (element: HTMLElement) => document.getElementById('reward-card-0')?.click(),
     content: () => {
       return (
         <OnboardingContent>
           <div className="d-flex flex-column gap-2">
-            <Typography variant="body1" component="p">Finalmente, se debe presionar el botón <b>“Canjear recompensas”</b> para guardar los cambios.</Typography>
+            <Typography variant="body1" component="p">Finalmente, se debe presionar el botón <b>“Guardar Cambios</b> para guardar el registro.</Typography>
           </div>
         </OnboardingContent>
       );
@@ -149,8 +154,9 @@ const RewardsOnboarding = [
     padding: 8,
     selector: '#reward-modal-save',
     stepInteraction: false,
-  },*/
+  },
   {
+    action: (element: HTMLElement) => document.getElementById('reward-modal-cancel')?.click(),
     content: () => {
       return (
         <OnboardingContent title="¡Tutorial completado!">

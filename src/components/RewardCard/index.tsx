@@ -82,6 +82,7 @@ const RewardCard: React.FC<IRewardCardProps> = ({
           )}
           {!editMode && !!rewardId && (
             <EditRewardButton
+              id={`reward-card-edit-${id}`}
               color="inherit"
               variant="contained"
               onClick={activateEditMode}
@@ -92,11 +93,14 @@ const RewardCard: React.FC<IRewardCardProps> = ({
           )}
         </EditRewardActionsContainer>
         <div
-          className="d-flex flex-column flex-fill"
-          onClick={() => setOpenDrawer(true)}
+          id={`reward-card-${id}`}
+          className={`d-flex flex-column flex-fill ${editMode ? 'no-hover' : ''}`}
+          onClick={() => { if (!editMode) setOpenDrawer(true) }}
         >
           <RewardCardHeader>
-            <UsedRewardCount count={usedCount} />
+            <div id={`reward-card-indicator-${id}`}>
+              <UsedRewardCount count={usedCount} />
+            </div>
             {!!order && (
               <Typography
                 color="white"
@@ -164,7 +168,7 @@ const RewardCard: React.FC<IRewardCardProps> = ({
                   </Typography>
                 )}
               </div>
-              <RewardPoints points={requiredPoints as number} />
+              <RewardPoints id={`reward-card-points-${id}`} points={requiredPoints as number} />
             </div>
           </RewardCardContent>
         </div>

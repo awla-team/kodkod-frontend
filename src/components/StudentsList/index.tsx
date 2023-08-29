@@ -45,7 +45,7 @@ const StudentsList: FC<StudentsListProps> = ({
     });
   };
   return (
-    <StudentListContainer>
+    <StudentListContainer className="h-100">
       <Typography component="h6" variant="h6" fontWeight="bold">
         Lista de estudiantes
       </Typography>

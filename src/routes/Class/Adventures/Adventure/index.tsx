@@ -153,13 +153,6 @@ export const Adventure: React.FC = () => {
             {classDetails.current_adventure.title}
           </Typography>
           <div>
-            <Button
-              variant={'outlined'}
-              color="info"
-              onClick={() => navigate(`/app/cursos/${classId}/recompensas`)}
-            >
-              Ver recompensas disponibles
-            </Button>
             <IconButton color={'inherit'} onClick={handleVerticalButtonClick}>
               <MoreVertIcon fontSize="large" />
             </IconButton>
