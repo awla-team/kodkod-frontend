@@ -32,7 +32,7 @@ const AdventureProgress: FC<{
       className="d-flex align-items-center justify-content-between p-5"
       sx={{ backgroundImage: `url(${latestStage?.icon})` }}
     >
-      <Box>
+      <Box id="progress-adventure-details">
         <Box
           display={'flex'}
           sx={{ position: 'relative' }}
@@ -76,7 +76,7 @@ const AdventureProgress: FC<{
         </section>
       </Box>
       <div className="d-flex gap-2">
-        <KPIBox className="p-4">
+        <KPIBox className="p-4" id="progress-adventure-percentage">
           <Typography
             variant="h3"
             component="h3"
@@ -84,7 +84,7 @@ const AdventureProgress: FC<{
           >{`${Math.round(progressPercentage)}%`}</Typography>
           <Typography>de misiones completadas en la aventura</Typography>
         </KPIBox>
-        <KPIBox className="p-4">
+        <KPIBox className="p-4" id="progress-adventure-avg">
           <Typography
             variant="h3"
             component="h3"
