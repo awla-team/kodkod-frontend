@@ -1,10 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
-  Tabs,
-  Tab,
-  Button,
-  Chip,
   Typography,
   Skeleton,
   IconButton,
@@ -12,11 +8,11 @@ import {
   MenuItem,
   Box,
 } from '@mui/material';
-import AdventureProvider, { AdventureContext } from './provider';
+import AdventureProvider from './provider';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { AdventureContainer, AdventureBanner } from './styled';
 import SkillPoints from 'components/SkillPoints';
-import { ISkill, IStage } from 'global/interfaces';
+import { IStage } from 'global/interfaces';
 import { AdventureWithProviderProps } from '../interfaces';
 import StageStepper from '../../../../components/StageStepper';
 import Toaster from 'utils/Toster';
@@ -31,16 +27,25 @@ import moment from 'moment';
 import { useOnboarding } from 'contexts/OnboardingContext';
 import AdventureOnboarding from 'utils/Onboardings/AdventureOnboarding';
 import PointsOnboarding from 'utils/Onboardings/PointsOnboarding';
+import { useTour } from '@reactour/tour';
 
 export const Adventure: React.FC = () => {
   const { classId } = useParams();
   const { classDetails, setClassDetails } = useClassContext();
   const { setNewAvailableTours } = useOnboarding();
+  const { setIsOpen, setSteps, setCurrentStep } = useTour();
   const [shownStage, setShownStage] = useState<IStage | undefined>(undefined);
+  const [onboardingDone, setOnboardingDone] = useState(true);
   const [openConfirmation, setOpenConfirmation] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const rawOnboardingData = localStorage.getItem('onboarding-data');
+    const onboardingData = JSON.parse(rawOnboardingData);
+    setOnboardingDone(!!onboardingData?.aventuras);
+  }, []);
 
   useEffect(() => {
     setNewAvailableTours([
@@ -58,6 +63,16 @@ export const Adventure: React.FC = () => {
       },
     ]);
   }, []);
+
+  useEffect(() => {
+    if (!onboardingDone) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      setSteps(AdventureOnboarding);
+      setCurrentStep(0);
+      setIsOpen(true);
+    }
+  }, [onboardingDone]);
 
   if (!classDetails.current_adventure) {
     return (

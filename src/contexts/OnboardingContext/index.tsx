@@ -1,15 +1,15 @@
 import { PropsWithChildren, createContext, useContext, useState } from 'react';
 import { ITour } from './interfaces';
-import { Menu, MenuItem, Typography } from '@mui/material';
+import { Menu, MenuItem } from '@mui/material';
 import { TourFab } from './styled';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import { StepType, useTour } from '@reactour/tour';
 
 const OnboardingContext = createContext<{
-  setNewAvailableTours: (tours: ITour[]) => void;
-}>({
-  setNewAvailableTours: (tours: ITour[]) => {},
-});
+  setNewAvailableTours?: (tours: ITour[]) => void;
+  handleFinish?: () => void;
+  currentView?: string;
+}>({});
 
 export const useOnboarding = () => useContext(OnboardingContext);
 
@@ -19,7 +19,6 @@ const OnboardingContextProvider: React.FC<PropsWithChildren> = ({
   const [availableTours, setAvailableTours] = useState<ITour[] | undefined>();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { setIsOpen, setSteps, setCurrentStep } = useTour();
-
   const setNewAvailableTours = (tours: ITour[]) => setAvailableTours(tours);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) =>
     setAnchorEl(event.currentTarget);
@@ -34,7 +33,11 @@ const OnboardingContextProvider: React.FC<PropsWithChildren> = ({
   return (
     <OnboardingContext.Provider value={{ setNewAvailableTours }}>
       {children}
-      <TourFab id="tour-fab-button" color="primary" onClick={handleClick}>
+      <TourFab
+        id="tour-fab-button"
+        color="primary"
+        onClick={handleClick}
+      >
         <QuestionMarkIcon />
       </TourFab>
       <Menu

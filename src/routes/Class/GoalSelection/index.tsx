@@ -9,11 +9,15 @@ import { IGoal } from 'global/interfaces';
 import { useClassContext } from 'routes/Class/context';
 import { useOnboarding } from 'contexts/OnboardingContext';
 import AdventureSelectionOnboarding from 'utils/Onboardings/AdventureSelectionOnboarding';
+import { useTour } from '@reactour/tour';
+import { useAuth } from 'contexts/AuthContext';
 
 const GoalSelection: React.FC = () => {
   const { classDetails, loadingClass } = useClassContext();
   const { setNewAvailableTours } = useOnboarding();
+  const { setIsOpen, setSteps, setCurrentStep } = useTour();
   const navigate = useNavigate();
+  const [onboardingDone, setOnboardingDone] = useState(true);
   const [goals, setGoals] = useState<IGoal[]>([]);
   const [selectedGoalId, setSelectedGoalId] = useState<number>(null);
   const [loadingGoals, setLoadingGoals] = useState<FetchStatus>(
@@ -28,6 +32,12 @@ const GoalSelection: React.FC = () => {
   const nextView = () => navigate('objetivo/' + selectedGoalId);
 
   useEffect(() => {
+    const rawOnboardingData = localStorage.getItem('onboarding-data');
+    const onboardingData = JSON.parse(rawOnboardingData);
+    setOnboardingDone(!!onboardingData?.objetivo);
+  }, []);
+
+  useEffect(() => {
     setNewAvailableTours([
       {
         name: 'Selección de aventura',
@@ -37,6 +47,16 @@ const GoalSelection: React.FC = () => {
       },
     ]);
   }, []);
+
+  useEffect(() => {
+    if (!onboardingDone) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      setSteps(AdventureSelectionOnboarding);
+      setCurrentStep(0);
+      setIsOpen(true);
+    }
+  }, [onboardingDone]);
 
   useEffect(() => {
     setLoadingGoals(FetchStatus.Pending);
