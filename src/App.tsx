@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { CircularProgress } from '@mui/material';
+import { Button, CircularProgress } from '@mui/material';
 import Sidebar from './components/Sidebar';
 import { getClassesByUser } from 'services/classes';
 import { IClass } from 'global/interfaces';
@@ -17,6 +17,10 @@ import { useLocation } from 'react-router-dom';
 import 'moment/dist/locale/es';
 import './App.css';
 import OnboardingContextProvider from 'contexts/OnboardingContext';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import DoneIcon from '@mui/icons-material/Done';
+import { TourProvider, useTour } from '@reactour/tour';
 
 moment.locale('es');
 
@@ -27,8 +31,8 @@ const App: React.FC = () => {
   const [createClassModalOpen, setCreateClassModalOpen] =
     useState<boolean>(false);
   const { user, checkUserSubscription } = useAuth();
-  const location = useLocation();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const getClassesData = () => {
     getClassesByUser(user.id)
@@ -86,6 +90,16 @@ const App: React.FC = () => {
     }
   };
 
+  const handleFinish = () => {
+    let currentView = location.pathname.match(/\/([^/]+)$/)[1];
+    if (!isNaN(currentView))
+      currentView = location.pathname.match(/\/([^/]+)\/[^/]+$/)[1];
+    const rawOnboardingData = localStorage.getItem('onboarding-data');
+    const onboardingData = JSON.parse(rawOnboardingData) || {};
+    onboardingData[currentView] = true;
+    localStorage.setItem('onboarding-data', JSON.stringify(onboardingData));
+  };
+
   useEffect(() => {
     if (location.state) {
       const { deletedClass } = location.state;
@@ -119,21 +133,71 @@ const App: React.FC = () => {
     );
 
   return (
-    <OnboardingContextProvider>
-      <div className="app-container d-flex">
-        <Sidebar classes={classes} handleOpenModal={handleOpenModal} />
-        <div className="app-main-container d-flex flex-column flex-fill">
-          <div className="app-content container" id="home-onboarding-4">
-            <Outlet context={{ classes, handleOpenModal, getClassesData }} />
+    <TourProvider
+      steps={[]}
+      onClickMask={() => {}}
+      prevButton={({ setCurrentStep, currentStep }) => (
+        <Button
+          variant="outlined"
+          className="me-2"
+          size="small"
+          startIcon={<ArrowBackIcon />}
+          disabled={currentStep === 0}
+          onClick={() => setCurrentStep(currentStep - 1)}
+          color="primary"
+        >
+          Atrás
+        </Button>
+      )}
+      nextButton={({ setIsOpen, setCurrentStep, currentStep, stepsLength }) => {
+        if (currentStep === stepsLength - 1) {
+          return (
+            <Button
+              variant="contained"
+              className="ms-2"
+              size="small"
+              startIcon={<DoneIcon />}
+              onClick={() => {
+                setIsOpen(false);
+                handleFinish();
+              }}
+              color="primary"
+            >
+              Finalizar
+            </Button>
+          );
+        } else {
+          return (
+            <Button
+              variant="outlined"
+              className="ms-2"
+              size="small"
+              endIcon={<ArrowForwardIcon />}
+              onClick={() => setCurrentStep(currentStep + 1)}
+              color="primary"
+            >
+              Siguiente
+            </Button>
+          );
+        }
+      }}
+    >
+      <OnboardingContextProvider>
+        <div className="app-container d-flex">
+          <Sidebar classes={classes} handleOpenModal={handleOpenModal} />
+          <div className="app-main-container d-flex flex-column flex-fill">
+            <div className="app-content container" id="home-onboarding-4">
+              <Outlet context={{ classes, handleOpenModal, getClassesData }} />
+            </div>
           </div>
+          <CreateClassModal
+            open={createClassModalOpen}
+            onClose={handleClose}
+            levels={levels}
+          />
         </div>
-        <CreateClassModal
-          open={createClassModalOpen}
-          onClose={handleClose}
-          levels={levels}
-        />
-      </div>
-    </OnboardingContextProvider>
+      </OnboardingContextProvider>
+    </TourProvider>
   );
 };
 

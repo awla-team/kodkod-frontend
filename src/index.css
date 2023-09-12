@@ -20,6 +20,10 @@
   color-scheme: light;
 }
 
+.reactour__popover {
+  max-width: 400px !important;
+}
+
 .reactour__popover .reactour__close-button svg {
   color: #000;
 }
