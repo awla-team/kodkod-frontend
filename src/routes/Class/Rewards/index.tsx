@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { RewardsList } from './styled';
 import { Button, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
@@ -15,6 +15,7 @@ import { useNavigate } from 'react-router';
 import { studentsByClass } from 'services/students';
 import { useOnboarding } from 'contexts/OnboardingContext';
 import RewardsOnboarding from 'utils/Onboardings/RewardsOnboarding';
+import { useTour } from '@reactour/tour';
 
 const Rewards = () => {
   const navigate = useNavigate();
@@ -22,6 +23,8 @@ const Rewards = () => {
   const { classId } = useParams();
   const { classDetails } = useClassContext();
   const { setNewAvailableTours } = useOnboarding();
+  const { setIsOpen, setSteps, setCurrentStep } = useTour();
+  const [onboardingDone, setOnboardingDone] = useState(true);
   const [rewards, setRewards] = useState<(IReward & { usedCount?: number })[]>(
     []
   );
@@ -83,6 +86,12 @@ const Rewards = () => {
   };
 
   useEffect(() => {
+    const rawOnboardingData = localStorage.getItem('onboarding-data');
+    const onboardingData = JSON.parse(rawOnboardingData);
+    setOnboardingDone(!!onboardingData?.recompensas);
+  }, []);
+
+  useEffect(() => {
     setNewAvailableTours([
       {
         name: 'Gestión de recompensas',
@@ -92,6 +101,16 @@ const Rewards = () => {
       },
     ]);
   }, []);
+
+  useEffect(() => {
+    if (!onboardingDone) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      setSteps(RewardsOnboarding);
+      setCurrentStep(0);
+      setIsOpen(true);
+    }
+  }, [onboardingDone]);
 
   useEffect(() => {
     const currentAdventureId = classDetails?.current_adventure?.id;

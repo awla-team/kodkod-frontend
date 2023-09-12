@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { DashboardContainer, DetailsCard } from './styled';
 import ClassDetailsCard from 'components/ClassDetailsCard';
@@ -11,6 +11,7 @@ import { useOnboarding } from 'contexts/OnboardingContext';
 import BoardOnboarding from 'utils/Onboardings/BoardOnboarding';
 import StudentListOnboarding from 'utils/Onboardings/StudentListOnboarding';
 import EmotionalThermometerOnboarding from 'utils/Onboardings/EmotionalThermometerOnboarding';
+import { useTour } from '@reactour/tour';
 
 const Board: React.FC = () => {
   const { classDetails, students, levels } = useOutletContext() as {
@@ -18,8 +19,15 @@ const Board: React.FC = () => {
     students: StudentType[];
     levels: Levels[];
   };
-
+  const [onboardingDone, setOnboardingDone] = useState(true);
+  const { setIsOpen, setSteps, setCurrentStep } = useTour();
   const { setNewAvailableTours } = useOnboarding();
+
+  useEffect(() => {
+    const rawOnboardingData = localStorage.getItem('onboarding-data');
+    const onboardingData = JSON.parse(rawOnboardingData);
+    setOnboardingDone(!!onboardingData?.tablero);
+  }, []);
 
   useEffect(() => {
     setNewAvailableTours([
@@ -43,6 +51,16 @@ const Board: React.FC = () => {
       },
     ]);
   }, []);
+
+  useEffect(() => {
+    if (!onboardingDone) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      setSteps(BoardOnboarding);
+      setCurrentStep(0);
+      setIsOpen(true);
+    }
+  }, [onboardingDone]);
 
   return (
     <DashboardContainer className="d-flex w-100 row">

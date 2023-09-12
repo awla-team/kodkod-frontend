@@ -1,8 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 import { ProgressProps } from './interfaces';
-import { Typography, Box, Button } from '@mui/material';
+import { Typography, Box } from '@mui/material';
 import { studentsByClass } from 'services/students';
-import { StudentType } from 'components/StudentsList/interfaces';
 import { ProgressContainer, StickyDataGrid } from './styled';
 import { useClassContext } from '../context';
 import { getMissionsByClassAdventure } from 'services/missions';
@@ -10,16 +9,18 @@ import { IMission, IUser } from 'global/interfaces';
 import AdventureProgress from 'components/AdventureProgress';
 import { GridColDef, GridSortModel } from '@mui/x-data-grid';
 import kodcoinIcon from 'assets/images/kodcoin.png';
-import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import RewardsModal from 'components/Modals/RewardsModal';
 import { studentUseRewards } from 'services/rewards';
 import Toaster from 'utils/Toster';
 import { useOnboarding } from 'contexts/OnboardingContext';
 import ProgressOnboarding from 'utils/Onboardings/ProgressOnboarding';
+import { useTour } from '@reactour/tour';
 
 const Progress: FC<ProgressProps> = () => {
   const { classDetails } = useClassContext();
   const { setNewAvailableTours } = useOnboarding();
+  const { setIsOpen, setSteps, setCurrentStep } = useTour();
+  const [onboardingDone, setOnboardingDone] = useState(true);
   const [students, setStudents] = useState<IUser[]>([]);
   const [missions, setMissions] = useState<IMission[]>([]);
   const [progressPercentage, setProgressPercentage] = useState<
@@ -77,6 +78,12 @@ const Progress: FC<ProgressProps> = () => {
   ];
 
   useEffect(() => {
+    const rawOnboardingData = localStorage.getItem('onboarding-data');
+    const onboardingData = JSON.parse(rawOnboardingData);
+    setOnboardingDone(!!onboardingData?.progreso);
+  }, []);
+
+  useEffect(() => {
     setNewAvailableTours([
       {
         name: 'Progreso del curso',
@@ -86,6 +93,16 @@ const Progress: FC<ProgressProps> = () => {
       },
     ]);
   }, []);
+
+  useEffect(() => {
+    if (!onboardingDone) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      setSteps(ProgressOnboarding);
+      setCurrentStep(0);
+      setIsOpen(true);
+    }
+  }, [onboardingDone]);
 
   useEffect(() => {
     if (classDetails) getStudents();
