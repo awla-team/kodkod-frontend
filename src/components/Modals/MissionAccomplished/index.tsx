@@ -1,8 +1,9 @@
 import { FC } from 'react';
 import { MissionAccomplishedProps } from './interfaces';
-import { Drawer, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import MissionCard from '../../MissionCard';
 import StudentsSelectableList from 'components/StudentsSelectableList';
+import { MissionAccomplishedDrawer } from './styled';
 
 const MissionAccomplished: FC<MissionAccomplishedProps> = ({
   open,
@@ -17,11 +18,11 @@ const MissionAccomplished: FC<MissionAccomplishedProps> = ({
   };
 
   return (
-    <Drawer
+    <MissionAccomplishedDrawer
       open={open}
       anchor={anchor}
       onClose={onClose}
-      PaperProps={{ className: 'p-5' }}
+      PaperProps={{ className: 'px-5 py-4' }}
     >
       <Typography
         component="h6"
@@ -44,7 +45,7 @@ const MissionAccomplished: FC<MissionAccomplishedProps> = ({
         handleClose={handleClose}
         mission={mission}
       />
-    </Drawer>
+    </MissionAccomplishedDrawer>
   );
 };
 

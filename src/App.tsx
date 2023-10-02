@@ -136,6 +136,10 @@ const App: React.FC = () => {
     <TourProvider
       steps={[]}
       onClickMask={() => {}}
+      onClickClose={({ setIsOpen }) => {
+        setIsOpen(false);
+        handleFinish(); 
+      }}
       prevButton={({ setCurrentStep, currentStep }) => (
         <Button
           variant="outlined"
