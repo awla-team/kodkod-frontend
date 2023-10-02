@@ -39,7 +39,7 @@ export const RewardCardContainer = styled(Card)`
     min-height: unset;
     border: 2px solid #dadada;
     text-align: left;
-      ${({ theme }: { theme: DefaultTheme }) => theme.palette.highlight.dark};
+    ${({ theme }: { theme: DefaultTheme }) => theme.palette.highlight.dark};
 
     > div {
       flex-direction: row;
@@ -90,7 +90,7 @@ export const EditRewardButton = styled(Button)`
     border-radius: 100px;
     border: 1px solid #fff;
     background: #fff;
-  
+
     &:hover {
       border: 1px solid
         ${({ theme }: { theme: DefaultTheme }) => theme.palette.highlight.dark};

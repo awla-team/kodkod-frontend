@@ -121,7 +121,12 @@ const RedeemRewardDrawer = ({
   }, [studentList, rewardId]);
 
   return (
-    <Drawer open={openDrawer} anchor="right" onClose={onClose} PaperProps={{ className:"px-5 py-4" }}>
+    <Drawer
+      open={openDrawer}
+      anchor="right"
+      onClose={onClose}
+      PaperProps={{ className: 'px-5 py-4' }}
+    >
       <Typography
         component="h6"
         variant="h6"

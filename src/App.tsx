@@ -138,7 +138,7 @@ const App: React.FC = () => {
       onClickMask={() => {}}
       onClickClose={({ setIsOpen }) => {
         setIsOpen(false);
-        handleFinish(); 
+        handleFinish();
       }}
       prevButton={({ setCurrentStep, currentStep }) => (
         <Button

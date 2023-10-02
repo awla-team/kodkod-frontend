@@ -47,10 +47,7 @@ const StaticRewardCard = ({
             >
               {title}
             </Typography>
-            <Typography
-              variant="body2"
-              fontSize="14px"
-            >
+            <Typography variant="body2" fontSize="14px">
               {description}
             </Typography>
           </div>
