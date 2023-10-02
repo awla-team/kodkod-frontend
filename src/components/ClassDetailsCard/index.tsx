@@ -127,7 +127,7 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
                   variant="outlined"
                   size="small"
                   component={Link}
-                  to="https://www.youtube.com/watch?v=oymcbyiloIs"
+                  to="https://www.youtube.com/watch?v=qUtkFGhnrLo"
                   target="_blank"
                   color="info"
                 >
