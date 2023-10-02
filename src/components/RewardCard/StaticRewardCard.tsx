@@ -18,7 +18,7 @@ const StaticRewardCard = ({
   description: string;
 }) => {
   return (
-    <RewardCardContainer className="static" variant="elevation">
+    <RewardCardContainer className="reward-card static" variant="outlined">
       <RewardCardHeader>
         <div></div>
         {!!order && (
@@ -26,7 +26,7 @@ const StaticRewardCard = ({
             color="white"
             variant="body1"
             fontWeight="bold"
-            fontSize="32px"
+            fontSize="20px"
           >
             {order}
           </Typography>
@@ -34,28 +34,20 @@ const StaticRewardCard = ({
       </RewardCardHeader>
       <RewardCardContent>
         <RewardImg src={icon} alt="" />
-        <div className="d-flex flex-column align-items-center justify-content-end">
-          <div className="d-flex flex-column align-items-center">
+        <div className="d-flex flex-column">
+          <div className="d-flex flex-column">
             <Typography
               className="mb-1"
               variant="body1"
               fontWeight="bold"
-              fontSize="20px"
-              textAlign="center"
+              fontSize="16px"
               sx={{
                 marginBottom: '8px',
               }}
             >
               {title}
             </Typography>
-            <Typography
-              variant="body2"
-              textAlign="center"
-              fontSize="16px"
-              sx={{
-                padding: '8px',
-              }}
-            >
+            <Typography variant="body2" fontSize="14px">
               {description}
             </Typography>
           </div>
