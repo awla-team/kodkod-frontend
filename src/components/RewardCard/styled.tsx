@@ -6,19 +6,21 @@ export interface IRewardCardElementProps {
 }
 
 export const RewardCardContainer = styled(Card)`
-  position: relative;
-  overflow: unset;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 224px;
-  min-height: 432px;
-  border-radius: 8px;
-  border: 2px solid transparent;
-  background-color: transparent;
-  cursor: pointer;
+  &.MuiCard-root {
+    position: relative;
+    overflow: unset;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 224px;
+    min-height: 432px;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background-color: transparent;
+    cursor: pointer;
+  }
 
-  > div:last-child {
+  &:not(.static) > div:last-child {
     border-radius: 8px;
     border: 2px solid transparent;
     &:hover {
@@ -33,8 +35,25 @@ export const RewardCardContainer = styled(Card)`
 
   &.static {
     cursor: auto;
-    border: 2px solid
-      ${({ theme }: { theme: DefaultTheme }) => theme.palette.highlight.dark};
+    width: auto;
+    min-height: unset;
+    border: 2px solid #dadada;
+    text-align: left;
+    ${({ theme }: { theme: DefaultTheme }) => theme.palette.highlight.dark};
+
+    > div {
+      flex-direction: row;
+      padding: 24px;
+    }
+
+    header {
+      height: auto;
+      padding: 4px 16px;
+    }
+
+    img {
+      width: 64px;
+    }
   }
 `;
 
@@ -63,17 +82,19 @@ export const RewardCardContent = styled.div`
 `;
 
 export const EditRewardButton = styled(Button)`
-  display: flex;
-  padding: 6px 12px;
-  justify-content: center;
-  align-items: center;
-  border-radius: 100px;
-  border: 1px solid #fff;
-  background: #fff;
+  &.MuiButton-root {
+    display: flex;
+    padding: 6px 12px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100px;
+    border: 1px solid #fff;
+    background: #fff;
 
-  &:hover {
-    border: 1px solid
-      ${({ theme }: { theme: DefaultTheme }) => theme.palette.highlight.dark};
+    &:hover {
+      border: 1px solid
+        ${({ theme }: { theme: DefaultTheme }) => theme.palette.highlight.dark};
+    }
   }
 `;
 

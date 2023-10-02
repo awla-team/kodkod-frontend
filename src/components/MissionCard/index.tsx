@@ -53,7 +53,7 @@ const MissionCard: React.FC<IMissionCardProps> = ({
           <Typography className="mt-1 w-100">{description}</Typography>
         </div>
         <div className="d-flex justify-content-between">
-          <div className="d-flex gap-4 align-items-center">
+          <div className="d-flex gap-4 align-items-center mt-2">
             <div className="d-flex align-items-end justify-content-center gap-1">
               {difficultyIcons[difficulty]}
               <Typography component="span" variant="body2">
@@ -110,7 +110,7 @@ const MissionCard: React.FC<IMissionCardProps> = ({
       <div className="d-flex align-items-center">
         <PointsContainer
           id={`mission-points-${id}`}
-          className="d-flex align-items-center justify-content-center"
+          className="points-container d-flex align-items-center justify-content-center"
         >
           <Typography className="me-1" variant="h5" fontWeight="bold">
             {points}

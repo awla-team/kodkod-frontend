@@ -4,9 +4,9 @@ import {
   Checkbox,
   FormControlLabel,
   TextField,
+  Drawer,
   Typography,
 } from '@mui/material';
-import Drawer from 'components/Drawer';
 import http from 'global/api';
 import { IUserHasReward } from 'global/interfaces';
 import { useState, useEffect, useCallback } from 'react';
@@ -121,7 +121,12 @@ const RedeemRewardDrawer = ({
   }, [studentList, rewardId]);
 
   return (
-    <Drawer open={openDrawer} onClose={onClose}>
+    <Drawer
+      open={openDrawer}
+      anchor="right"
+      onClose={onClose}
+      PaperProps={{ className: 'px-5 py-4' }}
+    >
       <Typography
         component="h6"
         variant="h6"
@@ -130,7 +135,7 @@ const RedeemRewardDrawer = ({
       >
         Canjeo de recompensas
       </Typography>
-      <Typography component="span" variant="body1" className="mb-3">
+      <Typography component="span" variant="body1">
         Selecciona los estudiantes que van a canjear esta recompensa
       </Typography>
       <div className="d-flex justify-content-center my-3">
