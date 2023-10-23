@@ -36,11 +36,13 @@ const GoalAdventures: React.FC = () => {
 
   const handleOnClickAdventure = (adventure: IAdventure) => {
     const completedAdventure = completedAdventures.find(
-      (completedAdventure) =>
-      completedAdventure.id_adventure === adventure.id
+      (completedAdventure) => completedAdventure.id_adventure === adventure.id
     );
 
-    if (completedAdventure) navigate(`/app/cursos/${classDetails.id}/aventuras/completed/${completedAdventure.id}`);
+    if (completedAdventure)
+      navigate(
+        `/app/cursos/${classDetails.id}/aventuras/completed/${completedAdventure.id}`
+      );
     else setSelectedAdventure(adventure);
   };
 

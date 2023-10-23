@@ -140,7 +140,9 @@ export const Adventure: React.FC = () => {
         ...classDetails,
         current_adventure: null,
       });
-      navigate(`/app/cursos/${classId}/aventuras/completed/${classDetails.current_adventure.id_class_has_adventure}`);
+      navigate(
+        `/app/cursos/${classId}/aventuras/completed/${classDetails.current_adventure.id_class_has_adventure}`
+      );
     } catch (error: any) {
       console.error(error);
       Toaster('error', 'Hubo un error al finalizar la aventura');

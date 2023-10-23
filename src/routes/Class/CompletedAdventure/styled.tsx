@@ -22,11 +22,11 @@ export const CompletedAdventureImg = styled.img`
 `;
 
 export const DataCard = styled.div`
-  border: 1px solid #BDBDBD;
+  border: 1px solid #bdbdbd;
   border-radius: 8px;
   padding: 16px;
   img {
-    width: 100px; 
+    width: 100px;
     height: 100px;
   }
 `;
