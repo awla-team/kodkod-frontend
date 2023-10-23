@@ -18,6 +18,7 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { useAuth } from 'contexts/AuthContext';
 import { useOnboarding } from 'contexts/OnboardingContext';
 import AdventureSelectionOnboarding from 'utils/Onboardings/AdventureSelectionOnboarding';
+import { useNavigate } from 'react-router-dom';
 
 const GoalAdventures: React.FC = () => {
   const [loading, setLoading] = useState<FetchStatus>(FetchStatus.Idle);
@@ -31,9 +32,18 @@ const GoalAdventures: React.FC = () => {
   const [selectedGoal, setSelectedGoal] = useState<null | GoalType>(null);
   const [sortedAdventures, setSortedAdventures] = useState<IAdventure[]>([]);
   const params = useParams();
+  const navigate = useNavigate();
 
   const handleOnClickAdventure = (adventure: IAdventure) => {
-    setSelectedAdventure(adventure);
+    const completedAdventure = completedAdventures.find(
+      (completedAdventure) => completedAdventure.id_adventure === adventure.id
+    );
+
+    if (completedAdventure)
+      navigate(
+        `/app/cursos/${classDetails.id}/aventuras/completed/${completedAdventure.id}`
+      );
+    else setSelectedAdventure(adventure);
   };
 
   const handleOnCloseModal = () => {

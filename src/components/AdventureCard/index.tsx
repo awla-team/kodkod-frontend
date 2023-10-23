@@ -16,7 +16,7 @@ const AdventureCard: React.FC<IAdventureCardProps> = ({
   return (
     <AdventureCardContainer
       id={id || null}
-      onClick={!completed ? onClick : () => {}}
+      onClick={onClick}
       className={`p-4 d-flex flex-column justify-content-between ${
         completed ? 'adventure-complete' : ''
       }`}
