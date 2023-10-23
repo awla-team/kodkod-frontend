@@ -10,6 +10,9 @@ export const getClassCurrentAdventure = (classId: number | string) =>
     `classes/${classId}/classHasAdventures?current_adventure=true&_embed=adventures`
   );
 
+export const getClassHasAdventure = (classHasAdventureId: number | string) =>
+  http.get(`classhasadventure/${classHasAdventureId}`);
+
 export const getAdventuresByGoal = (goalId: number | string) =>
   http.get(`/adventure-by-goal-id/${goalId}?goal=true`);
 

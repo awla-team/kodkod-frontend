@@ -17,6 +17,7 @@ import UserAuthLayout from './UserAuth';
 import { FC } from 'react';
 import GoalSelection from './Class/GoalSelection';
 import GoalAdventures from './Class/GoalAdventures';
+import CompletedAdventure from './Class/CompletedAdventure';
 import Rewards from 'routes/Class/Rewards';
 import VerifyEmail from './UserAuth/VerifyEmail';
 import Subscriptions from './Profile/Subscriptions';
@@ -111,6 +112,10 @@ export const router = createBrowserRouter([
               {
                 path: 'aventuras/iniciar',
                 element: <GoalSelection />,
+              },
+              {
+                path: 'aventuras/completed/:classHasAdventureId',
+                element: <CompletedAdventure />,
               },
               {
                 path: 'aventuras/iniciar/objetivo/:goalId',

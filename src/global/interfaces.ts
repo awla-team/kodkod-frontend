@@ -72,6 +72,9 @@ export interface IAdventureSkill {
 
 export interface IClassHasAdventure {
   id: number;
+  rewards_count: number;
+  missions_count: number;
+  adventure: IAdventure;
   id_class: number;
   id_adventure: number;
   date_start?: string;
