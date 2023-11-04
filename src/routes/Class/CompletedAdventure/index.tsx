@@ -140,12 +140,12 @@ const CompletedAdventure: React.FC = () => {
         <div className="d-flex align-items-center justify-content-center mt-4">
           <Button
             component={Link}
-            to={`/app/cursos/${classDetails.id}/aventuras/iniciar`}
+            to={`/app/cursos/${classDetails.id}/aventuras/completed`}
             color="primary"
             variant="contained"
             size="large"
           >
-            Regresar al catálogo de aventuras
+            Ver mis aventuras finalizadas
           </Button>
         </div>
       </CompletedAdventureContainer>

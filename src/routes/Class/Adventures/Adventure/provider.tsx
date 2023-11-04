@@ -1,27 +1,27 @@
 import React, { createContext } from 'react';
-import { IAdventureContext } from './interfaces';
-import { AdventureProviderProps } from '../interfaces';
+import { IClassHasAdventureContext } from './interfaces';
+import { ClassHasAdventureProviderProps } from '../interfaces';
 
-export const AdventureContext = createContext<IAdventureContext>({
-  adventure: undefined,
+export const ClassHasAdventureContext = createContext<IClassHasAdventureContext>({
+  classHasAdventure: undefined,
   missions: [],
   students: [],
   handleUpdateCurrentAdventure: (data) => {},
   updateStageData: (stage) => {},
 });
 
-const AdventureProvider: React.FC<AdventureProviderProps> = ({
+const ClassHasAdventureProvider: React.FC<ClassHasAdventureProviderProps> = ({
   children,
-  adventure,
+  classHasAdventure,
   missions,
   students,
   handleUpdateCurrentAdventure,
   updateStageData,
 }) => {
   return (
-    <AdventureContext.Provider
+    <ClassHasAdventureContext.Provider
       value={{
-        adventure,
+        classHasAdventure,
         missions,
         students,
         handleUpdateCurrentAdventure,
@@ -29,8 +29,8 @@ const AdventureProvider: React.FC<AdventureProviderProps> = ({
       }}
     >
       {children}
-    </AdventureContext.Provider>
+    </ClassHasAdventureContext.Provider>
   );
 };
 
-export default AdventureProvider;
+export default ClassHasAdventureProvider;

@@ -87,7 +87,7 @@ const Adventures: React.FC = () => {
   return (
     <>
       <AdventureWithProvider
-        adventure={classDetails.current_adventure}
+        classHasAdventure={classDetails.current_adventure}
         missions={missions}
         students={students}
         handleUpdateCurrentAdventure={handleUpdateCurrentAdventure}

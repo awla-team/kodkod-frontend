@@ -1,7 +1,7 @@
 import { FC, useContext, useState, useEffect } from 'react';
 import { CustomStepper } from './styled';
 import { Step, Button, Typography, Tooltip } from '@mui/material';
-import { AdventureContext } from '../../routes/Class/Adventures/Adventure/provider';
+import { ClassHasAdventureContext } from '../../routes/Class/Adventures/Adventure/provider';
 import { IStage } from 'global/interfaces';
 import { UnlockStageConfirmationDialog } from 'components/Modals';
 import { unlockStage } from 'services/stages';
@@ -13,7 +13,7 @@ const StageStepper: FC<{
   onStageChange: (stage: IStage) => void;
   handleFinish: () => void;
 }> = ({ shownStage, stages = [], onStageChange, handleFinish }) => {
-  const { adventure, updateStageData } = useContext(AdventureContext);
+  const { classHasAdventure, updateStageData } = useContext(ClassHasAdventureContext);
   const [sortedStages, setSortedStages] = useState<IStage[]>([]);
   const [navigableStages, setNavigableStages] = useState<IStage[]>([]);
   const [activeStep, setActiveStep] = useState<number | undefined>(undefined);
@@ -46,11 +46,11 @@ const StageStepper: FC<{
   const handleUnlock = async () => {
     try {
       setLoading(true);
-      if (adventure?.id_class_has_adventure) {
+      if (classHasAdventure?.id) {
         const {
           data: { responseData },
         }: { data: { responseData: IStage } } = await unlockStage({
-          id_class_has_adventure: adventure.id_class_has_adventure,
+          id_class_has_adventure: classHasAdventure.id,
         });
         Toaster(
           'success',
@@ -168,7 +168,7 @@ const StageStepper: FC<{
             open={openDialog}
             currentStage={shownStage}
             handleClose={() => setOpenDialog(false)}
-            finishImg={adventure?.finish_img_url}
+            finishImg={classHasAdventure?.adventure?.finish_img_url}
             onConfirm={
               sortedStages[navigableStages.length] ? handleUnlock : handleFinish
             }

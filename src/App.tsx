@@ -37,7 +37,7 @@ const App: React.FC = () => {
   const getClassesData = () => {
     getClassesByUser(user.id)
       .then((response: AxiosResponse) => {
-        return response?.data?.responseData;
+        return response?.data;
       })
       .then((classes: IClass[]) => {
         setClasses(!!classes ? sortClasses(classes) : []);

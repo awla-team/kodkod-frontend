@@ -54,9 +54,10 @@ const AdventureSummaryDialog: React.FC<{
           id_class: +classId,
           id_adventure: selectedAdventure.id,
         });
+
         setClassDetails({
           ...classDetails,
-          current_adventure: data.responseData.currentAdventure,
+          current_adventure: data,
         });
 
         navigate(`/app/cursos/${classId}/aventuras`);

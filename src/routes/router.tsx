@@ -21,6 +21,7 @@ import CompletedAdventure from './Class/CompletedAdventure';
 import Rewards from 'routes/Class/Rewards';
 import VerifyEmail from './UserAuth/VerifyEmail';
 import Subscriptions from './Profile/Subscriptions';
+import AllCompletedAdventures from './Class/AllCompletedAdventures';
 
 const MainRouterComponent: FC = () => {
   // const { pathname } = useLocation();
@@ -112,6 +113,10 @@ export const router = createBrowserRouter([
               {
                 path: 'aventuras/iniciar',
                 element: <GoalSelection />,
+              },
+              {
+                path: 'aventuras/completed',
+                element: <AllCompletedAdventures />,
               },
               {
                 path: 'aventuras/completed/:classHasAdventureId',

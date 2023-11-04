@@ -8,12 +8,12 @@ import {
   MenuItem,
   Box,
 } from '@mui/material';
-import AdventureProvider from './provider';
+import ClassHasAdventureProvider from './provider';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { AdventureContainer, AdventureBanner } from './styled';
 import SkillPoints from 'components/SkillPoints';
 import { IStage } from 'global/interfaces';
-import { AdventureWithProviderProps } from '../interfaces';
+import { ClassHasAdventureWithProviderProps } from '../interfaces';
 import StageStepper from '../../../../components/StageStepper';
 import Toaster from 'utils/Toster';
 import {
@@ -109,7 +109,7 @@ export const Adventure: React.FC = () => {
     try {
       setLoading(true);
       await cancelAdventureFromClass(
-        classDetails.current_adventure.id_class_has_adventure
+        classDetails.current_adventure.id
       );
       //await cancelAdventure(classDetails.current_adventure.id_class_has_adventure, { date_stop: moment().format('YYYY-MM-DD') });
       Toaster('success', 'La aventura fue cancelada');
@@ -130,7 +130,7 @@ export const Adventure: React.FC = () => {
     try {
       setLoading(true);
       await endClassHasAdventure(
-        classDetails.current_adventure.id_class_has_adventure,
+        classDetails.current_adventure.id,
         {
           date_stop: moment().format('YYYY-MM-DD'),
         }
@@ -141,7 +141,7 @@ export const Adventure: React.FC = () => {
         current_adventure: null,
       });
       navigate(
-        `/app/cursos/${classId}/aventuras/completed/${classDetails.current_adventure.id_class_has_adventure}`
+        `/app/cursos/${classId}/aventuras/completed/${classDetails.current_adventure.id}`
       );
     } catch (error: any) {
       console.error(error);
@@ -161,13 +161,13 @@ export const Adventure: React.FC = () => {
         className="d-flex flex-column px-5 justify-content-center mb-4"
         sx={{
           backgroundImage: `url(${
-            shownStage?.icon || classDetails.current_adventure.banner
+            shownStage?.icon || classDetails.current_adventure.adventure.banner
           })`,
         }}
       >
         <div className="d-flex justify-content-between align-items-end mb-3">
           <Typography variant="h4" component="h2" fontWeight="bold">
-            {classDetails.current_adventure.title}
+            {classDetails.current_adventure.adventure.title}
           </Typography>
           <div>
             <IconButton color={'inherit'} onClick={handleVerticalButtonClick}>
@@ -188,7 +188,7 @@ export const Adventure: React.FC = () => {
           </div>
         </div>
         <div className="d-flex mb-1">
-          {classDetails.current_adventure?.skills?.map((skill) => (
+          {classDetails.current_adventure?.adventure?.skills?.map((skill) => (
             <div
               className="me-2"
               key={`${classDetails.current_adventure.id}-${skill.id}`}
@@ -242,22 +242,22 @@ export const Adventure: React.FC = () => {
   );
 };
 
-const AdventureWithProvider: React.FC<AdventureWithProviderProps> = ({
-  adventure,
+const AdventureWithProvider: React.FC<ClassHasAdventureWithProviderProps> = ({
+  classHasAdventure,
   missions,
   students,
   handleUpdateCurrentAdventure,
   updateStageData,
 }) => (
-  <AdventureProvider
-    adventure={adventure}
+  <ClassHasAdventureProvider
+    classHasAdventure={classHasAdventure}
     missions={missions}
     students={students}
     handleUpdateCurrentAdventure={handleUpdateCurrentAdventure}
     updateStageData={updateStageData}
   >
     <Adventure />
-  </AdventureProvider>
+  </ClassHasAdventureProvider>
 );
 
 export default AdventureWithProvider;

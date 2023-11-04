@@ -1,4 +1,4 @@
-import { IAdventure, IMission, IStage } from 'global/interfaces';
+import { IAdventure, IClassHasAdventure, IMission, IStage } from 'global/interfaces';
 import { Dispatch, PropsWithChildren, SetStateAction } from 'react';
 import { StudentType } from 'components/StudentsList/interfaces';
 import { StageMissionUpdateBody } from 'services/missions';
@@ -17,8 +17,8 @@ export interface GoalResponseType {
   responseStatus: number;
 }
 
-export interface AdventureWithProviderProps {
-  adventure?: IAdventure;
+export interface ClassHasAdventureWithProviderProps {
+  classHasAdventure?: IClassHasAdventure;
   missions?: IMission[];
   students?: StudentType[];
 
@@ -29,6 +29,6 @@ export interface AdventureWithProviderProps {
   ) => void;
 }
 
-export interface AdventureProviderProps
-  extends AdventureWithProviderProps,
+export interface ClassHasAdventureProviderProps
+  extends ClassHasAdventureWithProviderProps,
     PropsWithChildren {}

@@ -1,4 +1,4 @@
-import { IAdventure, IMission, IStage } from 'global/interfaces';
+import { IAdventure, IClassHasAdventure, IMission, IStage } from 'global/interfaces';
 import { StudentType } from 'components/StudentsList/interfaces';
 import { StageMissionUpdateBody } from 'services/missions';
 
@@ -6,12 +6,12 @@ export interface IAdventureBannerProps {
   backgroundImg: string;
 }
 
-export interface IAdventureProviderProps extends React.PropsWithChildren {
+export interface IClassHasAdventureProviderProps extends React.PropsWithChildren {
   adventureId: string | undefined;
 }
 
-export interface IAdventureContext {
-  adventure: IAdventure | undefined;
+export interface IClassHasAdventureContext {
+  classHasAdventure: IClassHasAdventure | undefined;
   missions: IMission[];
 
   students: StudentType[];
