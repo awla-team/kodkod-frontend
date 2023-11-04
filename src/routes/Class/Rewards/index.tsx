@@ -25,9 +25,7 @@ const Rewards = () => {
   const { setNewAvailableTours } = useOnboarding();
   const { setIsOpen, setSteps, setCurrentStep } = useTour();
   const [onboardingDone, setOnboardingDone] = useState(true);
-  const [rewards, setRewards] = useState<(IReward & { usedCount?: number })[]>(
-    []
-  );
+  const [rewards, setRewards] = useState<IReward[]>([]);
 
   const usedRewardCount = (rewardId: number, classStudents: IUser[]) => {
     let count = 0;
@@ -115,17 +113,13 @@ const Rewards = () => {
   useEffect(() => {
     const currentAdventureId = classDetails?.current_adventure?.id;
     if (currentAdventureId) {
-      (async (adventureId: number | string) => {
+      (async () => {
         try {
-          const {
-            data,
-          }: { data: { responseData: (IReward & { usedCount?: number })[] } } =
-            await getRewardsByAdventure(adventureId, classId);
           const { data: studentsData } = await studentsByClass(classId, {
             role: 'student',
             rewards: true,
           });
-          const rewardsWithUsedCount = data.responseData.map((reward) => {
+          const rewardsWithUsedCount = classDetails.current_adventure.rewards.map((reward) => {
             return {
               ...reward,
               usedCount: usedRewardCount(reward.id, studentsData.responseData),
@@ -141,9 +135,9 @@ const Rewards = () => {
           console.error(error);
           Toaster('error', 'Hubo un error al cargar las recompensas');
         }
-      })(currentAdventureId);
+      })();
     }
-  }, [classId, searchParams, classDetails?.current_adventure?.id]);
+  }, [classId, searchParams, classDetails?.current_adventure]);
 
   if (!classDetails?.current_adventure)
     return (
@@ -199,20 +193,20 @@ const Rewards = () => {
           tarjeta.
         </Typography>
         <RewardsList id="rewards-list">
-          {rewards.map((res, index) => {
+          {rewards.map((reward, index) => {
             return (
               <RewardCard
                 id={index}
                 edit={editReward}
-                key={`${res.id}-${res.title}`}
-                rewardId={res.id}
-                title={res.title}
-                description={res.description}
-                icon={res.icon}
-                requiredPoints={res.required_points}
-                type={res.type}
+                key={`${reward.id}-${reward.title}`}
+                rewardId={reward.id}
+                title={reward.title}
+                description={reward.description}
+                icon={reward.icon}
+                requiredPoints={reward.required_points}
+                type={reward.type}
                 order={index + 1}
-                usedCount={res.usedCount}
+                usedCount={reward.usedCount}
               />
             );
           })}

@@ -14,7 +14,7 @@ import { difficultyIcons, difficultyToText } from 'utils';
 import Toaster from 'utils/Toster';
 import { getMissionsByStage, updateStageMission } from 'services/missions';
 import { IMission } from '../../../global/interfaces';
-import { AdventureContext } from '../../../routes/Class/Adventures/Adventure/provider';
+import { ClassHasAdventureContext } from '../../../routes/Class/Adventures/Adventure/provider';
 import { Box } from '@mui/system';
 
 const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
@@ -26,7 +26,7 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
   const [selected, setSelected] = useState<null | IMission>(null);
   const [pending, setPending] = useState<boolean>(false);
   const [missions, setMissions] = useState<IMission[]>([]);
-  const { updateStageData } = useContext(AdventureContext);
+  const { updateStageData } = useContext(ClassHasAdventureContext);
 
   useEffect(() => {
     if (mission) {

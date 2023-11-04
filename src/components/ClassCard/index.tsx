@@ -1,6 +1,6 @@
-import { Typography, Chip, Tooltip } from '@mui/material';
+import { Typography, Chip } from '@mui/material';
 import { Box } from '@mui/system';
-import { IClass, ModifiedIClass } from 'global/interfaces';
+import { ModifiedIClass } from 'global/interfaces';
 import { Link } from 'react-router-dom';
 
 const ClassCard: React.FC<{ classObj: ModifiedIClass }> = ({ classObj }) => {
@@ -11,7 +11,7 @@ const ClassCard: React.FC<{ classObj: ModifiedIClass }> = ({ classObj }) => {
           <Box
             className="d-flex justify-content-end p-2 class-img-container"
             sx={{
-              backgroundImage: `url(${classObj.current_adventure.thumbnail})`,
+              backgroundImage: `url(${classObj.current_adventure.adventure.thumbnail})`,
             }}
           >
             <Chip color="primary" label="Aventura en curso" />
@@ -40,7 +40,7 @@ const ClassCard: React.FC<{ classObj: ModifiedIClass }> = ({ classObj }) => {
           </Typography>
           <Typography component="span" variant="body1" textAlign="center">
             {classObj.current_adventure
-              ? classObj.current_adventure.title
+              ? classObj.current_adventure.adventure.title
               : 'Sin aventura en curso'}
           </Typography>
         </div>

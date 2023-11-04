@@ -1,7 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import { ProgressProps } from './interfaces';
 import { Typography, Box } from '@mui/material';
-import { studentsByClass } from 'services/students';
 import { ProgressContainer, StickyDataGrid } from './styled';
 import { useClassContext } from '../context';
 import { getMissionsByClassAdventure } from 'services/missions';
@@ -15,6 +14,7 @@ import Toaster from 'utils/Toster';
 import { useOnboarding } from 'contexts/OnboardingContext';
 import ProgressOnboarding from 'utils/Onboardings/ProgressOnboarding';
 import { useTour } from '@reactour/tour';
+import { getClassHasAdventureProgress } from 'services/adventures';
 
 const Progress: FC<ProgressProps> = () => {
   const { classDetails } = useClassContext();
@@ -112,7 +112,7 @@ const Progress: FC<ProgressProps> = () => {
   useEffect(() => {
     if (students?.length && missions?.length) {
       const completedMissions = students.reduce(
-        (accumulator, student) => accumulator + student.missions.length,
+        (accumulator, student) => accumulator + student.user_has_stage_has_missions.length,
         0
       );
       setProgressPercentage(
@@ -127,19 +127,13 @@ const Progress: FC<ProgressProps> = () => {
 
   const getStudents = async () => {
     try {
-      const { data }: { data: { responseData: IUser[] } } =
-        await studentsByClass(classDetails.id, {
-          missions: true,
-          role: 'student',
-          rewards: true,
-        });
-      const studentsWithTableFields = data.responseData.map((student) => ({
+      const students = await getClassHasAdventureProgress(classDetails.current_adventure.id);
+      const formattedStudents = students.data.map((student: IUser) => ({
         ...student,
-        completed_missions: student.missions.length || 0,
-        obtained_rewards: student.user_has_rewards.length || 0,
+        completed_missions: student.user_has_stage_has_missions?.length,
+        obtained_rewards: student.user_has_rewards?.length
       }));
-
-      setStudents(studentsWithTableFields);
+      setStudents(formattedStudents);
     } catch (e: any) {
       Toaster('error', 'Hubo un error al cargar los estudiantes');
     }
@@ -148,17 +142,12 @@ const Progress: FC<ProgressProps> = () => {
   const getMissions = async () => {
     try {
       const missionsResponse = await getMissionsByClassAdventure(
-        classDetails?.current_adventure?.id_class_has_adventure
+        classDetails?.current_adventure?.id
       );
       setMissions(missionsResponse.data.responseData);
     } catch (e: any) {
       Toaster('error', 'Hubo un error al cargar las misiones');
     }
-  };
-
-  const handleOpenModal = (student: IUser) => {
-    setSelectedStudent(student);
-    setOpenModal(true);
   };
 
   const handleSave = async (studentId: number, selectedRewards: number[]) => {
@@ -192,7 +181,7 @@ const Progress: FC<ProgressProps> = () => {
 
       {classDetails?.current_adventure ? (
         <AdventureProgress
-          adventure={classDetails.current_adventure}
+          adventure={classDetails.current_adventure.adventure}
           progressPercentage={progressPercentage}
           averageCompletedMission={averageCompletedMission}
         />

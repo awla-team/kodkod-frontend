@@ -7,7 +7,8 @@ import StarIcon from '@mui/icons-material/Star';
 const AdventureCard: React.FC<IAdventureCardProps> = ({
   id,
   title,
-  completed,
+  startDate,
+  endDate,
   demo,
   img,
   info,
@@ -17,9 +18,7 @@ const AdventureCard: React.FC<IAdventureCardProps> = ({
     <AdventureCardContainer
       id={id || null}
       onClick={onClick}
-      className={`p-4 d-flex flex-column justify-content-between ${
-        completed ? 'adventure-complete' : ''
-      }`}
+      className="p-4 d-flex flex-column justify-content-between"
       sx={{
         backgroundImage: `url(${img})`,
         backgroundSize: 'cover',
@@ -36,14 +35,13 @@ const AdventureCard: React.FC<IAdventureCardProps> = ({
         </div>
       ) : null}
       <div>
-        {completed ? (
-          <div className="adventure-complete-chip d-flex align-items-center justify-content-center">
-            <Chip color="success" label="Aventura completada" />
-          </div>
-        ) : null}
         <Typography variant="h5">
           <b>{title}</b>
         </Typography>
+        <div className="d-flex flex-column justify-content-center mt-2">
+          {startDate ? <Typography variant="body2">Iniciada: {startDate}</Typography> : null}
+          {endDate ? <Typography variant="body2">Finalizada: {endDate}</Typography> : null}
+        </div>
       </div>
       {info}
     </AdventureCardContainer>
