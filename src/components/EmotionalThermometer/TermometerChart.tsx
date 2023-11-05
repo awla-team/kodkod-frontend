@@ -3,18 +3,9 @@ import * as am5 from '@amcharts/amcharts5';
 import * as am5xy from '@amcharts/amcharts5/xy';
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
 import am5locales_es_ES from '@amcharts/amcharts5/locales/es_ES';
+import { TermometerChartProps } from './interfaces';
 
-interface TermometerData {
-  date: string;
-  category: string;
-  challenge?: string;
-}
-
-interface TermometerChartProps {
-  termometerData: TermometerData[];
-}
-
-const TermometerChart = ({ termometerData }: TermometerChartProps) => {
+const TermometerChart = ({ data }: TermometerChartProps) => {
   const chartRef = useRef(null);
 
   useLayoutEffect(() => {
@@ -23,8 +14,6 @@ const TermometerChart = ({ termometerData }: TermometerChartProps) => {
     // Set themes
     // https://www.amcharts.com/docs/v5/concepts/themes/
     root.setThemes([am5themes_Animated.new(root)]);
-
-    const data = termometerData;
 
     // Create chart
     // https://www.amcharts.com/docs/v5/charts/xy-chart/
@@ -193,7 +182,7 @@ const TermometerChart = ({ termometerData }: TermometerChartProps) => {
     return () => {
       root.dispose();
     };
-  }, [termometerData]);
+  }, [data]);
 
   return <div id="chartdiv" style={{ width: '100%', height: '300px' }} />;
 };

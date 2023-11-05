@@ -75,3 +75,16 @@ export interface ThermometerCalendarProps {
   handleDateChange: (date: Moment) => void;
   classId: number | string;
 }
+
+export interface EmotionalTermometer extends FormInitialValue {
+  date: string;
+}
+
+export interface TermometerChartData {
+  date: number;
+  category: string;
+}
+
+export interface TermometerChartProps {
+  data: TermometerChartData[];
+}
