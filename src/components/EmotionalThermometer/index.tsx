@@ -20,9 +20,10 @@ import {
 } from '@mui/material';
 import { Formik, Form, FormikHelpers } from 'formik';
 import {
-  EmotionalThermometerProps,
-  EmotionalThermometerType,
-  FormInitialValue,
+  type EmotionalThermometerProps,
+  type EmotionalThermometerType,
+  type FormInitialValue,
+  type TermometerChartData,
 } from './interfaces';
 import moment, { Moment as MomentType } from 'moment/moment';
 import Toaster from '../../utils/Toster';
@@ -59,7 +60,9 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
   classDetails,
 }) => {
   const [date, setDate] = useState<MomentType>(Moment());
-  const [termometerRecords, setTermometerRecords] = useState([]);
+  const [termometerRecords, setTermometerRecords] = useState<
+    TermometerChartData[]
+  >([]);
   const [detailsByDates, setDetailsByDates] = useState<
     EmotionalThermometerType[]
   >([]);
@@ -81,9 +84,7 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
           if (res?.data?.responseData) {
             const adaptedTermometerRecords = termometerRecordAdapter(
               res.data.responseData
-            ).toSorted(
-              (a, b) => moment(b.date).valueOf() - moment(a.date).valueOf()
-            );
+            ).sort((a, b) => b.date - a.date);
             setTermometerRecords(adaptedTermometerRecords);
           }
         })
@@ -492,7 +493,7 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
           {date.format('MMMM').charAt(0).toUpperCase() +
             date.format('MMMM').slice(1)}
         </Typography>
-        <TermometerChart termometerData={termometerRecords} />
+        <TermometerChart data={termometerRecords} />
       </>
     </EmotionalThermometerContainer>
   );
