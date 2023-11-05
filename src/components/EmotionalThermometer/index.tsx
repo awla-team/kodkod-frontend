@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState, useCallback } from 'react';
 import {
   EmotionalThermometerContainer,
   EmojiRadio,
@@ -19,13 +19,12 @@ import {
   MenuItem,
 } from '@mui/material';
 import { Formik, Form, FormikHelpers } from 'formik';
-import * as Yup from 'yup';
 import {
   EmotionalThermometerProps,
   EmotionalThermometerType,
   FormInitialValue,
 } from './interfaces';
-import { Moment as MomentType } from 'moment/moment';
+import moment, { Moment as MomentType } from 'moment/moment';
 import Toaster from '../../utils/Toster';
 import {
   getEmotionalThermometerByClassId,
@@ -47,6 +46,8 @@ import {
   PickersDay,
 } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import TermometerChart from './TermometerChart';
+import { termometerRecordAdapter, validationSchema } from './utils';
 
 const initialValues: FormInitialValue = {
   score: null,
@@ -54,18 +55,11 @@ const initialValues: FormInitialValue = {
   most_remarkable: '',
 };
 
-const validationSchema = () => {
-  return Yup.object().shape({
-    score: Yup.number().required(),
-    challenge: Yup.string().required(),
-    most_remarkable: Yup.string().required(),
-  });
-};
-
 const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
   classDetails,
 }) => {
   const [date, setDate] = useState<MomentType>(Moment());
+  const [termometerRecords, setTermometerRecords] = useState([]);
   const [detailsByDates, setDetailsByDates] = useState<
     EmotionalThermometerType[]
   >([]);
@@ -74,13 +68,31 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
     useState<FormInitialValue>(initialValues);
   const [editable, setEditable] = useState<boolean>(false);
   const formRef = useRef(null);
+  const firstRender = useRef(true);
 
-  useEffect(() => {
-    if (classDetails) {
-      handleGetThermometerDetails();
-      handleMonthChange();
-    }
-  }, [date, classDetails]);
+  const fetchEmotionalTermometers = useCallback(
+    (date: moment.Moment) => {
+      getEmotionalThermometerByClassId(
+        classDetails?.id,
+        moment(date).startOf('month'),
+        moment(date).endOf('month')
+      )
+        .then((res) => {
+          if (res?.data?.responseData) {
+            const adaptedTermometerRecords = termometerRecordAdapter(
+              res.data.responseData
+            ).toSorted(
+              (a, b) => moment(b.date).valueOf() - moment(a.date).valueOf()
+            );
+            setTermometerRecords(adaptedTermometerRecords);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+    [classDetails?.id]
+  );
 
   const handleGetThermometerDetails = async () => {
     try {
@@ -159,9 +171,15 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
     );
   };
 
-  const handleDateChange = (date: Moment.Moment) => {
+  const handleDateChange = (newDate: Moment.Moment) => {
+    if (
+      newDate?.month?.() !== date?.month?.() ||
+      newDate?.year?.() !== date?.year?.()
+    ) {
+      fetchEmotionalTermometers(newDate);
+    }
     formRef.current?.resetForm();
-    setDate(date);
+    setDate(newDate);
   };
 
   const handleSubmit = async (
@@ -194,6 +212,7 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
         });
         Toaster('success', 'Termómetro guardado exitosamente');
       }
+      fetchEmotionalTermometers(date);
       setEditable(false);
     } catch (error: any) {
       console.error(error);
@@ -202,6 +221,20 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
       formikHelpers.setSubmitting(false);
     }
   };
+
+  useEffect(() => {
+    if (!!classDetails?.id && firstRender.current) {
+      fetchEmotionalTermometers(date);
+      firstRender.current = false;
+    }
+  }, [classDetails?.id, fetchEmotionalTermometers, date]);
+
+  useEffect(() => {
+    if (classDetails) {
+      handleGetThermometerDetails();
+      handleMonthChange();
+    }
+  }, [date, classDetails]);
 
   return (
     <EmotionalThermometerContainer>
@@ -232,7 +265,7 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
               className="me-1"
               component="span"
               variant="body1"
-              sx={{ opacity: '0.6' }}
+              sx={{ opacity: 0.6 }}
             >
               {date.format('LL')}
             </Typography>
@@ -292,7 +325,7 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
             </Typography>
           }
         />
-        <div className="mt-5" id="thermometer-onboarding-2">
+        <div className="my-4" id="thermometer-onboarding-2">
           <Formik
             enableReinitialize
             initialValues={formInitialValue}
@@ -448,6 +481,18 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
             )}
           </Formik>
         </div>
+        <Typography
+          display="inline"
+          className="me-1"
+          component="h6"
+          variant="subtitle1"
+          fontWeight="bold"
+        >
+          Mes de{' '}
+          {date.format('MMMM').charAt(0).toUpperCase() +
+            date.format('MMMM').slice(1)}
+        </Typography>
+        <TermometerChart termometerData={termometerRecords} />
       </>
     </EmotionalThermometerContainer>
   );
