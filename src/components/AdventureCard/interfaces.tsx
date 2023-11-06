@@ -7,7 +7,8 @@ export interface IAdventureCardProps
     IAdventureCardContainerProps {
   id?: string;
   title: string;
-  completed: boolean;
+  startDate?: string;
+  endDate?: string;
   demo: boolean;
   stagesDuration?: number;
   info?: React.ReactNode;

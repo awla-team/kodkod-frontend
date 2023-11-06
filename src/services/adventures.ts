@@ -13,14 +13,24 @@ export const getClassCurrentAdventure = (classId: number | string) =>
 export const getClassHasAdventure = (classHasAdventureId: number | string) =>
   http.get(`classhasadventure/${classHasAdventureId}`);
 
+export const getCompletedClassHasAdventuresByClass = (
+  classId: number | string
+) => http.get(`class/${classId}/class_has_adventures?complete=true`);
+
 export const getAdventuresByGoal = (goalId: number | string) =>
   http.get(`/adventure-by-goal-id/${goalId}?goal=true`);
+
+export const getClassHasAdventureProgress = (
+  classHasAdventureId: number | string
+) => {
+  return http.get(`classhasadventure/${classHasAdventureId}/progress`);
+};
 
 export const setCurrentAdventure = (body: {
   id_class: number | string;
   id_adventure: number | string;
 }) => {
-  return http.post('/set-adventure', body);
+  return http.post('adventure/set-adventure', body);
 };
 
 export const cancelAdventureFromClass = (id: string | number) => {

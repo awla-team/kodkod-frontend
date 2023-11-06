@@ -72,6 +72,8 @@ export interface IAdventureSkill {
 
 export interface IClassHasAdventure {
   id: number;
+  stages: IStage[];
+  rewards: IReward[];
   rewards_count: number;
   missions_count: number;
   adventure: IAdventure;
@@ -91,11 +93,23 @@ export interface IClass {
   code?: string;
   alias?: string;
   id_user?: number;
-  current_adventure?: IAdventure;
+  current_adventure?: IClassHasAdventure;
 }
 
 export interface ModifiedIClass extends Omit<IClass, 'level'> {
   level: string;
+}
+
+export interface IUserHasStageHasMission {
+  id: number;
+  id_stage: number;
+  id_user: number;
+  id_mission: number;
+  prev_points: number;
+  credit_points: number;
+  new_points: number;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface IUser {
@@ -109,6 +123,7 @@ export interface IUser {
   last_name: string;
   email: string;
   password: string;
+  user_has_stage_has_missions?: IUserHasStageHasMission[];
   role: string;
   id_school: number;
   academic_subject: string;
@@ -173,6 +188,7 @@ export interface IReward {
   description: string;
   required_points: number;
   icon: string;
+  usedCount?: number;
   type: string;
 }
 

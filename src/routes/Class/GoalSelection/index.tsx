@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button, CircularProgress, Typography } from '@mui/material';
-import { Navigate, Outlet, useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { GoalSelectionContainer, CardContainer, ImgContainer } from './styled';
 import { AxiosResponse } from 'axios';
 import { getGoals } from 'services/goals';
@@ -10,7 +10,8 @@ import { useClassContext } from 'routes/Class/context';
 import { useOnboarding } from 'contexts/OnboardingContext';
 import AdventureSelectionOnboarding from 'utils/Onboardings/AdventureSelectionOnboarding';
 import { useTour } from '@reactour/tour';
-import { useAuth } from 'contexts/AuthContext';
+import FlagIcon from '@mui/icons-material/Flag';
+import { Link } from 'react-router-dom';
 
 const GoalSelection: React.FC = () => {
   const { classDetails, loadingClass } = useClassContext();
@@ -34,7 +35,7 @@ const GoalSelection: React.FC = () => {
   useEffect(() => {
     const rawOnboardingData = localStorage.getItem('onboarding-data');
     const onboardingData = JSON.parse(rawOnboardingData);
-    setOnboardingDone(!!onboardingData?.objetivo);
+    setOnboardingDone(!!onboardingData?.iniciar);
   }, []);
 
   useEffect(() => {
@@ -88,9 +89,21 @@ const GoalSelection: React.FC = () => {
 
   return (
     <GoalSelectionContainer className="w-100 p-5">
-      <Typography variant="h4" fontWeight="bold" className="mb-4">
-        Inicia una nueva aventura
-      </Typography>
+      <div className="d-flex justify-content-between align-items-center">
+        <Typography variant="h4" fontWeight="bold" className="mb-4">
+          Inicia una nueva aventura
+        </Typography>
+        <div>
+          <Button
+            component={Link}
+            to={`/app/cursos/${classDetails.id}/aventuras/completed`}
+            variant="outlined"
+            startIcon={<FlagIcon />}
+          >
+            Ver aventuras finalizadas
+          </Button>
+        </div>
+      </div>
       <Typography variant="h5" className="mb-2">
         <b>Paso 1:</b> Escoge un objetivo
       </Typography>
