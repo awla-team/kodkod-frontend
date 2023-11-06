@@ -23,5 +23,7 @@ export const studentUseRewards = (userId: number, rewards: number[]) => {
 export const studentsRedeemReward = (rewardId: number, studentsId: number[]) =>
   http.post(`/users-redeem-reward/${rewardId}`, studentsId);
 
-export const updateReward = (rewardId: number | string, body: Partial<IReward>) => 
-  http.put(`reward/${rewardId}`, body);
+export const updateReward = (
+  rewardId: number | string,
+  body: Partial<IReward>
+) => http.put(`reward/${rewardId}`, body);

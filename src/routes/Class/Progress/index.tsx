@@ -112,7 +112,8 @@ const Progress: FC<ProgressProps> = () => {
   useEffect(() => {
     if (students?.length && missions?.length) {
       const completedMissions = students.reduce(
-        (accumulator, student) => accumulator + student.user_has_stage_has_missions.length,
+        (accumulator, student) =>
+          accumulator + student.user_has_stage_has_missions.length,
         0
       );
       setProgressPercentage(
@@ -127,11 +128,13 @@ const Progress: FC<ProgressProps> = () => {
 
   const getStudents = async () => {
     try {
-      const students = await getClassHasAdventureProgress(classDetails.current_adventure.id);
+      const students = await getClassHasAdventureProgress(
+        classDetails.current_adventure.id
+      );
       const formattedStudents = students.data.map((student: IUser) => ({
         ...student,
         completed_missions: student.user_has_stage_has_missions?.length,
-        obtained_rewards: student.user_has_rewards?.length
+        obtained_rewards: student.user_has_rewards?.length,
       }));
       setStudents(formattedStudents);
     } catch (e: any) {

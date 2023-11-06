@@ -2,13 +2,14 @@ import React, { createContext } from 'react';
 import { IClassHasAdventureContext } from './interfaces';
 import { ClassHasAdventureProviderProps } from '../interfaces';
 
-export const ClassHasAdventureContext = createContext<IClassHasAdventureContext>({
-  classHasAdventure: undefined,
-  missions: [],
-  students: [],
-  handleUpdateCurrentAdventure: (data) => {},
-  updateStageData: (stage) => {},
-});
+export const ClassHasAdventureContext =
+  createContext<IClassHasAdventureContext>({
+    classHasAdventure: undefined,
+    missions: [],
+    students: [],
+    handleUpdateCurrentAdventure: (data) => {},
+    updateStageData: (stage) => {},
+  });
 
 const ClassHasAdventureProvider: React.FC<ClassHasAdventureProviderProps> = ({
   children,

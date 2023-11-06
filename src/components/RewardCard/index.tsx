@@ -60,12 +60,14 @@ const RewardCard: React.FC<IRewardCardProps> = ({
                   onSave(rewardId, {
                     title: newTitle,
                     description: newDescription,
-                  }).then(() => {
-                    setEditMode(false);
-                  }).catch((e) => {
-                    console.log(e);
-                    Toaster('error', 'Ha ocurrido un error');
                   })
+                    .then(() => {
+                      setEditMode(false);
+                    })
+                    .catch((e) => {
+                      console.log(e);
+                      Toaster('error', 'Ha ocurrido un error');
+                    });
                 }}
                 startIcon={<CheckIcon />}
               >

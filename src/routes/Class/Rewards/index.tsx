@@ -38,32 +38,34 @@ const Rewards = () => {
     return count;
   };
 
-  const handleEditReward = (rewardId: number | string, body: Partial<IReward>) => {
-    return updateReward(rewardId, body).then((response) => {
-      const newRewards = [...rewards];
-      const updatedReward = response.data;
-      const matchReward = newRewards.findIndex(
-        (reward) => reward.id === rewardId
-      );
-      newRewards[matchReward] = updatedReward;
-      setRewards(newRewards);
-      setClassDetails({
-        ...classDetails,
-        current_adventure: {
-          ...classDetails.current_adventure,
-          rewards: newRewards,
-        },
+  const handleEditReward = (
+    rewardId: number | string,
+    body: Partial<IReward>
+  ) => {
+    return updateReward(rewardId, body)
+      .then((response) => {
+        const newRewards = [...rewards];
+        const updatedReward = response.data;
+        const matchReward = newRewards.findIndex(
+          (reward) => reward.id === rewardId
+        );
+        newRewards[matchReward] = updatedReward;
+        setRewards(newRewards);
+        setClassDetails({
+          ...classDetails,
+          current_adventure: {
+            ...classDetails.current_adventure,
+            rewards: newRewards,
+          },
+        });
+        Toaster('success', 'Recompensa actualizada exitosamente');
+        return response;
       })
-      Toaster('success', 'Recompensa actualizada exitosamente');
-      return response;
-    })
-    .catch(
-      (error) => {
+      .catch((error) => {
         console.log(error);
         Toaster('error', 'Hubo un error al cargar las recompensas');
         return error;
-      }
-    );
+      });
   };
 
   const handleNavigate = () => {
@@ -106,12 +108,16 @@ const Rewards = () => {
             role: 'student',
             rewards: true,
           });
-          const rewardsWithUsedCount = classDetails.current_adventure.rewards.map((reward) => {
-            return {
-              ...reward,
-              usedCount: usedRewardCount(reward.id, studentsData.responseData),
-            };
-          });
+          const rewardsWithUsedCount =
+            classDetails.current_adventure.rewards.map((reward) => {
+              return {
+                ...reward,
+                usedCount: usedRewardCount(
+                  reward.id,
+                  studentsData.responseData
+                ),
+              };
+            });
           const sorted = rewardsWithUsedCount.sort((a, b) => {
             if (a.required_points > b.required_points) return 1;
             if (a.required_points < b.required_points) return -1;

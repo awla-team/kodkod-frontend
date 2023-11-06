@@ -16,18 +16,22 @@ const AllCompletedAdventures: React.FC = () => {
   const { classDetails, loadingClass } = useClassContext();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(FetchStatus.Idle);
-  const [completedAdventures, setCompletedAdventures] = useState<IClassHasAdventure[]>([]);
+  const [completedAdventures, setCompletedAdventures] = useState<
+    IClassHasAdventure[]
+  >([]);
 
   useEffect(() => {
     if (classDetails?.id) {
       setLoading(FetchStatus.Pending);
-      getCompletedClassHasAdventuresByClass(classDetails.id).then((response) => {
-        setCompletedAdventures(response.data);
-        setLoading(FetchStatus.Success);
-      }).catch((e) => {
-        console.log(e);
-        setLoading(FetchStatus.Error);
-      });
+      getCompletedClassHasAdventuresByClass(classDetails.id)
+        .then((response) => {
+          setCompletedAdventures(response.data);
+          setLoading(FetchStatus.Success);
+        })
+        .catch((e) => {
+          console.log(e);
+          setLoading(FetchStatus.Error);
+        });
     }
   }, [classDetails]);
 
@@ -60,27 +64,37 @@ const AllCompletedAdventures: React.FC = () => {
           Volver a selección de aventuras
         </Button>
       </div>
-      <Typography component="h1" variant="h4" className="fw-bold mb-4">{classDetails.alias} - Aventuras finalizadas</Typography>
+      <Typography component="h1" variant="h4" className="fw-bold mb-4">
+        {classDetails.alias} - Aventuras finalizadas
+      </Typography>
       <div className="d-flex h-100 w-100 align-items-center justify-content-start flex-wrap gap-4">
         {completedAdventures.map((classHasAdventure, index) => (
           <AdventureCard
             id={`adventure-card-${index}`}
             demo
-            startDate={moment(classHasAdventure.date_start).format('DD/MM/YYYY')}
+            startDate={moment(classHasAdventure.date_start).format(
+              'DD/MM/YYYY'
+            )}
             endDate={moment(classHasAdventure.date_stop).format('DD/MM/YYYY')}
-            onClick={() => navigate(`/app/cursos/${classDetails.id}/aventuras/completed/${classHasAdventure.id}`)}
+            onClick={() =>
+              navigate(
+                `/app/cursos/${classDetails.id}/aventuras/completed/${classHasAdventure.id}`
+              )
+            }
             key={index}
             title={classHasAdventure.adventure.title}
             img={classHasAdventure.adventure.thumbnail}
             info={
               <div className="d-flex gap-1 flex-wrap">
                 {!!classHasAdventure.adventure?.skills?.length
-                  ? classHasAdventure.adventure.skills.map((adventureSkill, index) => (
-                      <SkillPoints
-                        key={`${adventureSkill.id}-${adventureSkill.title}-${index}`}
-                        skill={adventureSkill}
-                      />
-                    ))
+                  ? classHasAdventure.adventure.skills.map(
+                      (adventureSkill, index) => (
+                        <SkillPoints
+                          key={`${adventureSkill.id}-${adventureSkill.title}-${index}`}
+                          skill={adventureSkill}
+                        />
+                      )
+                    )
                   : null}
               </div>
             }
