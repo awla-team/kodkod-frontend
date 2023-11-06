@@ -1,6 +1,9 @@
+import { AxiosPromise } from "axios";
+import { IReward } from "global/interfaces";
+
 export interface IRewardCardProps {
   id?: string | number;
-  edit?: any;
+  onSave: (rewardId: number | string, body: Partial<IReward>) => AxiosPromise;
   rewardId: number;
   title: string;
   icon: string;
