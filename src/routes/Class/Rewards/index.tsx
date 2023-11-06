@@ -4,7 +4,7 @@ import { Button, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import RewardCard from 'components/RewardCard';
 import { useSearchParams } from 'react-router-dom';
-import { getRewardsByAdventure } from 'services/rewards';
+import { getRewardsByAdventure, updateReward } from 'services/rewards';
 import { IReward, IUser } from 'global/interfaces';
 import Toaster from 'utils/Toster';
 import http from 'global/api';
@@ -21,7 +21,7 @@ const Rewards = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { classId } = useParams();
-  const { classDetails } = useClassContext();
+  const { classDetails, setClassDetails } = useClassContext();
   const { setNewAvailableTours } = useOnboarding();
   const { setIsOpen, setSteps, setCurrentStep } = useTour();
   const [onboardingDone, setOnboardingDone] = useState(true);
@@ -38,45 +38,32 @@ const Rewards = () => {
     return count;
   };
 
-  const editReward = (
-    rewardId: number | string,
-    newTitle: string,
-    newDescription: string
-  ) => {
-    return http
-      .put(`reward/${rewardId}`, {
-        title: newTitle,
-        description: newDescription,
-      })
-      .then((response: AxiosResponse) => {
-        const newRewards = [...rewards];
-        const matchReward = newRewards.findIndex(
-          (reward) => reward.id === rewardId
-        );
-        newRewards[matchReward] = {
-          ...newRewards[matchReward],
-          title: newTitle,
-          description: newDescription,
-        };
-        setRewards(newRewards);
-        Toaster('success', 'Recompensa actualizada exitosamente');
-        return response;
-      })
-      .catch(
-        (
-          error: AxiosError & {
-            response: {
-              data: { responseData: unknown };
-            };
-          }
-        ) => {
-          console.log(error);
-          if (error?.response?.data?.responseData === 'Empty data')
-            Toaster('error', 'Todos los campos deben ser llenados');
-          else Toaster('error', 'Hubo un error al cargar las recompensas');
-          return error;
-        }
+  const handleEditReward = (rewardId: number | string, body: Partial<IReward>) => {
+    return updateReward(rewardId, body).then((response) => {
+      const newRewards = [...rewards];
+      const updatedReward = response.data;
+      const matchReward = newRewards.findIndex(
+        (reward) => reward.id === rewardId
       );
+      newRewards[matchReward] = updatedReward;
+      setRewards(newRewards);
+      setClassDetails({
+        ...classDetails,
+        current_adventure: {
+          ...classDetails.current_adventure,
+          rewards: newRewards,
+        },
+      })
+      Toaster('success', 'Recompensa actualizada exitosamente');
+      return response;
+    })
+    .catch(
+      (error) => {
+        console.log(error);
+        Toaster('error', 'Hubo un error al cargar las recompensas');
+        return error;
+      }
+    );
   };
 
   const handleNavigate = () => {
@@ -197,7 +184,7 @@ const Rewards = () => {
             return (
               <RewardCard
                 id={index}
-                edit={editReward}
+                onSave={handleEditReward}
                 key={`${reward.id}-${reward.title}`}
                 rewardId={reward.id}
                 title={reward.title}
