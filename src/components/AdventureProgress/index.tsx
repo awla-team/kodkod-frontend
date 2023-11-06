@@ -54,7 +54,7 @@ const AdventureProgress: FC<{
         <Typography
           variant="h5"
           fontWeight="bold"
-        >{`${classDetails.current_adventure?.title}`}</Typography>
+        >{`${classDetails.current_adventure?.adventure?.title}`}</Typography>
         <Typography
           variant="body1"
           fontWeight="bold"
@@ -62,8 +62,8 @@ const AdventureProgress: FC<{
         >{`Etapa ${latestStage?._index}: ${latestStage?.title}`}</Typography>
         <section className="d-flex flex-column mb-3">
           <div className="d-flex flex-wrap flex-lg-nowrap gap-2">
-            {!!classDetails.current_adventure?.skills?.length
-              ? classDetails.current_adventure.skills.map(
+            {!!classDetails.current_adventure?.adventure?.skills?.length
+              ? classDetails.current_adventure.adventure?.skills.map(
                   (adventureSkill, index) => (
                     <SkillPoints
                       key={`${adventureSkill.id}-${adventureSkill.title}-${index}`}

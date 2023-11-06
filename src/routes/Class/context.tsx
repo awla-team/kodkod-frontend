@@ -70,10 +70,8 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const getClassById = async (id: number | string) => {
     setLoadingClass(FetchStatus.Pending);
     try {
-      const { data }: { data: { responseData: IClass } } = await getClassByID(
-        id
-      );
-      setClassDetails(data.responseData);
+      const { data }: { data: IClass } = await getClassByID(id);
+      setClassDetails(data);
       setLoadingClass(FetchStatus.Success);
     } catch (error: any) {
       console.error(error);

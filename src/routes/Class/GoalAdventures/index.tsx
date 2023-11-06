@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import Typography from '@mui/material/Typography';
 import AdventureCard from 'components/AdventureCard';
-import type { IAdventure, IClassHasAdventure } from 'global/interfaces';
+import type { IAdventure } from 'global/interfaces';
 import { FetchStatus } from 'global/enums';
 import CircularProgress from '@mui/material/CircularProgress';
 import AdventureSummaryDialog from '../../../components/Modals/AdventureSummaryDialog';
@@ -18,7 +18,8 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { useAuth } from 'contexts/AuthContext';
 import { useOnboarding } from 'contexts/OnboardingContext';
 import AdventureSelectionOnboarding from 'utils/Onboardings/AdventureSelectionOnboarding';
-import { useNavigate } from 'react-router-dom';
+import FlagIcon from '@mui/icons-material/Flag';
+import { Link } from 'react-router-dom';
 
 const GoalAdventures: React.FC = () => {
   const [loading, setLoading] = useState<FetchStatus>(FetchStatus.Idle);
@@ -26,25 +27,12 @@ const GoalAdventures: React.FC = () => {
   const { setNewAvailableTours } = useOnboarding();
   const { user } = useAuth();
   const [selectedAdventure, setSelectedAdventure] = useState<IAdventure>(null);
-  const [completedAdventures, setCompletedAdventures] = useState<
-    IClassHasAdventure[]
-  >([]);
   const [selectedGoal, setSelectedGoal] = useState<null | GoalType>(null);
   const [sortedAdventures, setSortedAdventures] = useState<IAdventure[]>([]);
   const params = useParams();
-  const navigate = useNavigate();
 
-  const handleOnClickAdventure = (adventure: IAdventure) => {
-    const completedAdventure = completedAdventures.find(
-      (completedAdventure) => completedAdventure.id_adventure === adventure.id
-    );
-
-    if (completedAdventure)
-      navigate(
-        `/app/cursos/${classDetails.id}/aventuras/completed/${completedAdventure.id}`
-      );
-    else setSelectedAdventure(adventure);
-  };
+  const handleOnClickAdventure = (adventure: IAdventure) =>
+    setSelectedAdventure(adventure);
 
   const handleOnCloseModal = () => {
     setSelectedAdventure(null);
@@ -90,16 +78,6 @@ const GoalAdventures: React.FC = () => {
     }
   }, [params]);
 
-  useEffect(() => {
-    if (classDetails) {
-      getClassHasAdventuresByClass(classDetails.id)
-        .then(({ data }) => setCompletedAdventures(data.responseData))
-        .catch((e) => {
-          console.log(e);
-        });
-    }
-  }, [classDetails]);
-
   if (loading === FetchStatus.Idle || loading === FetchStatus.Pending)
     return (
       <div className="d-flex flex-column flex-fill w-100 h-100">
@@ -114,9 +92,21 @@ const GoalAdventures: React.FC = () => {
 
   return (
     <AdventureSelectionContainer className="w-100 p-5">
-      <Typography variant="h4" fontWeight="bold" className="mb-4">
-        Inicia una nueva aventura
-      </Typography>
+      <div className="d-flex justify-content-between align-items-center">
+        <Typography variant="h4" fontWeight="bold" className="mb-4">
+          Inicia una nueva aventura
+        </Typography>
+        <div>
+          <Button
+            component={Link}
+            to={`/app/cursos/${classDetails.id}/aventuras/completed`}
+            variant="outlined"
+            startIcon={<FlagIcon />}
+          >
+            Ver aventuras finalizadas
+          </Button>
+        </div>
+      </div>
       <div>
         <Button
           id="adventure-selection-back"
@@ -154,15 +144,7 @@ const GoalAdventures: React.FC = () => {
               <AdventureCard
                 id={`adventure-card-${index}`}
                 demo={adventure.demo || user?.is_superuser}
-                completed={
-                  !!completedAdventures.find(
-                    (completedAdventure) =>
-                      completedAdventure.id_adventure === adventure.id
-                  )
-                }
-                onClick={() => {
-                  handleOnClickAdventure(adventure);
-                }}
+                onClick={() => handleOnClickAdventure(adventure)}
                 key={index}
                 title={adventure.title}
                 img={adventure.thumbnail}

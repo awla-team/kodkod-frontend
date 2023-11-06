@@ -8,7 +8,7 @@ import {
   Typography,
 } from '@mui/material';
 import { StudentsSelectableListProps } from './interfaces';
-import { AdventureContext } from 'routes/Class/Adventures/Adventure/provider';
+import { ClassHasAdventureContext } from 'routes/Class/Adventures/Adventure/provider';
 import Toaster from 'utils/Toster';
 import { missionAccomplished } from 'services/missions';
 import { StudentListContainer } from './styled';
@@ -23,7 +23,7 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
   const [defaultSelected, setDefaultSelected] = useState<(number | string)[]>(
     []
   );
-  const { students } = useContext(AdventureContext);
+  const { students } = useContext(ClassHasAdventureContext);
   const [studentList, setStudentList] = useState([]);
 
   useEffect(() => {

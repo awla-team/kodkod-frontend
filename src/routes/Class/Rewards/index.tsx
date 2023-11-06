@@ -4,7 +4,7 @@ import { Button, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import RewardCard from 'components/RewardCard';
 import { useSearchParams } from 'react-router-dom';
-import { getRewardsByAdventure } from 'services/rewards';
+import { getRewardsByAdventure, updateReward } from 'services/rewards';
 import { IReward, IUser } from 'global/interfaces';
 import Toaster from 'utils/Toster';
 import http from 'global/api';
@@ -21,13 +21,11 @@ const Rewards = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { classId } = useParams();
-  const { classDetails } = useClassContext();
+  const { classDetails, setClassDetails } = useClassContext();
   const { setNewAvailableTours } = useOnboarding();
   const { setIsOpen, setSteps, setCurrentStep } = useTour();
   const [onboardingDone, setOnboardingDone] = useState(true);
-  const [rewards, setRewards] = useState<(IReward & { usedCount?: number })[]>(
-    []
-  );
+  const [rewards, setRewards] = useState<IReward[]>([]);
 
   const usedRewardCount = (rewardId: number, classStudents: IUser[]) => {
     let count = 0;
@@ -40,45 +38,34 @@ const Rewards = () => {
     return count;
   };
 
-  const editReward = (
+  const handleEditReward = (
     rewardId: number | string,
-    newTitle: string,
-    newDescription: string
+    body: Partial<IReward>
   ) => {
-    return http
-      .put(`reward/${rewardId}`, {
-        title: newTitle,
-        description: newDescription,
-      })
-      .then((response: AxiosResponse) => {
+    return updateReward(rewardId, body)
+      .then((response) => {
         const newRewards = [...rewards];
+        const updatedReward = response.data;
         const matchReward = newRewards.findIndex(
           (reward) => reward.id === rewardId
         );
-        newRewards[matchReward] = {
-          ...newRewards[matchReward],
-          title: newTitle,
-          description: newDescription,
-        };
+        newRewards[matchReward] = updatedReward;
         setRewards(newRewards);
+        setClassDetails({
+          ...classDetails,
+          current_adventure: {
+            ...classDetails.current_adventure,
+            rewards: newRewards,
+          },
+        });
         Toaster('success', 'Recompensa actualizada exitosamente');
         return response;
       })
-      .catch(
-        (
-          error: AxiosError & {
-            response: {
-              data: { responseData: unknown };
-            };
-          }
-        ) => {
-          console.log(error);
-          if (error?.response?.data?.responseData === 'Empty data')
-            Toaster('error', 'Todos los campos deben ser llenados');
-          else Toaster('error', 'Hubo un error al cargar las recompensas');
-          return error;
-        }
-      );
+      .catch((error) => {
+        console.log(error);
+        Toaster('error', 'Hubo un error al cargar las recompensas');
+        return error;
+      });
   };
 
   const handleNavigate = () => {
@@ -115,22 +102,22 @@ const Rewards = () => {
   useEffect(() => {
     const currentAdventureId = classDetails?.current_adventure?.id;
     if (currentAdventureId) {
-      (async (adventureId: number | string) => {
+      (async () => {
         try {
-          const {
-            data,
-          }: { data: { responseData: (IReward & { usedCount?: number })[] } } =
-            await getRewardsByAdventure(adventureId, classId);
           const { data: studentsData } = await studentsByClass(classId, {
             role: 'student',
             rewards: true,
           });
-          const rewardsWithUsedCount = data.responseData.map((reward) => {
-            return {
-              ...reward,
-              usedCount: usedRewardCount(reward.id, studentsData.responseData),
-            };
-          });
+          const rewardsWithUsedCount =
+            classDetails.current_adventure.rewards.map((reward) => {
+              return {
+                ...reward,
+                usedCount: usedRewardCount(
+                  reward.id,
+                  studentsData.responseData
+                ),
+              };
+            });
           const sorted = rewardsWithUsedCount.sort((a, b) => {
             if (a.required_points > b.required_points) return 1;
             if (a.required_points < b.required_points) return -1;
@@ -141,9 +128,9 @@ const Rewards = () => {
           console.error(error);
           Toaster('error', 'Hubo un error al cargar las recompensas');
         }
-      })(currentAdventureId);
+      })();
     }
-  }, [classId, searchParams, classDetails?.current_adventure?.id]);
+  }, [classId, searchParams, classDetails?.current_adventure]);
 
   if (!classDetails?.current_adventure)
     return (
@@ -199,20 +186,20 @@ const Rewards = () => {
           tarjeta.
         </Typography>
         <RewardsList id="rewards-list">
-          {rewards.map((res, index) => {
+          {rewards.map((reward, index) => {
             return (
               <RewardCard
                 id={index}
-                edit={editReward}
-                key={`${res.id}-${res.title}`}
-                rewardId={res.id}
-                title={res.title}
-                description={res.description}
-                icon={res.icon}
-                requiredPoints={res.required_points}
-                type={res.type}
+                onSave={handleEditReward}
+                key={`${reward.id}-${reward.title}`}
+                rewardId={reward.id}
+                title={reward.title}
+                description={reward.description}
+                icon={reward.icon}
+                requiredPoints={reward.required_points}
+                type={reward.type}
                 order={index + 1}
-                usedCount={res.usedCount}
+                usedCount={reward.usedCount}
               />
             );
           })}

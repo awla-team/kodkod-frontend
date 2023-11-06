@@ -91,7 +91,6 @@ const RedeemRewardDrawer = ({
   const handleSave = async (rewardId: number, selectedStudents: number[]) => {
     try {
       const response = await studentsRedeemReward(rewardId, selectedStudents);
-      console.log('response:', response);
       Toaster('success', '¡Recompensas activadas exitosamente!');
       onClose();
       getStudents();

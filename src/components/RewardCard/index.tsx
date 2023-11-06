@@ -17,10 +17,11 @@ import RewardPoints from './RewardPoints';
 import { AxiosError, AxiosResponse } from 'axios';
 import UsedRewardCount from './UsedRewardCount';
 import RedeemRewardDrawer from './RedeemRewardDrawer';
+import Toaster from 'utils/Toster';
 
 const RewardCard: React.FC<IRewardCardProps> = ({
   id,
-  edit,
+  onSave,
   rewardId,
   title,
   icon,
@@ -46,16 +47,6 @@ const RewardCard: React.FC<IRewardCardProps> = ({
 
   const onCloseDrawer = () => setOpenDrawer(false);
 
-  const editReward = () => {
-    edit(rewardId, newTitle, newDescription)
-      .then((response: AxiosResponse) => {
-        if (response?.data?.responseData === 1) setEditMode(false);
-      })
-      .catch((error: AxiosError) => {
-        console.error(error);
-      });
-  };
-
   return (
     <>
       <RewardCardContainer variant="outlined">
@@ -65,7 +56,19 @@ const RewardCard: React.FC<IRewardCardProps> = ({
               <EditRewardButton
                 color="inherit"
                 variant="contained"
-                onClick={editReward}
+                onClick={() => {
+                  onSave(rewardId, {
+                    title: newTitle,
+                    description: newDescription,
+                  })
+                    .then(() => {
+                      setEditMode(false);
+                    })
+                    .catch((e) => {
+                      console.log(e);
+                      Toaster('error', 'Ha ocurrido un error');
+                    });
+                }}
                 startIcon={<CheckIcon />}
               >
                 Guardar
