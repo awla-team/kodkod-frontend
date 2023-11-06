@@ -31,7 +31,8 @@ const GoalAdventures: React.FC = () => {
   const [sortedAdventures, setSortedAdventures] = useState<IAdventure[]>([]);
   const params = useParams();
 
-  const handleOnClickAdventure = (adventure: IAdventure) => setSelectedAdventure(adventure);
+  const handleOnClickAdventure = (adventure: IAdventure) =>
+    setSelectedAdventure(adventure);
 
   const handleOnCloseModal = () => {
     setSelectedAdventure(null);
@@ -96,7 +97,14 @@ const GoalAdventures: React.FC = () => {
           Inicia una nueva aventura
         </Typography>
         <div>
-          <Button component={Link} to={`/app/cursos/${classDetails.id}/aventuras/completed`} variant="outlined" startIcon={<FlagIcon />}>Ver aventuras finalizadas</Button>
+          <Button
+            component={Link}
+            to={`/app/cursos/${classDetails.id}/aventuras/completed`}
+            variant="outlined"
+            startIcon={<FlagIcon />}
+          >
+            Ver aventuras finalizadas
+          </Button>
         </div>
       </div>
       <div>

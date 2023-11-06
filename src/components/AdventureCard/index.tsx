@@ -39,8 +39,12 @@ const AdventureCard: React.FC<IAdventureCardProps> = ({
           <b>{title}</b>
         </Typography>
         <div className="d-flex flex-column justify-content-center mt-2">
-          {startDate ? <Typography variant="body2">Iniciada: {startDate}</Typography> : null}
-          {endDate ? <Typography variant="body2">Finalizada: {endDate}</Typography> : null}
+          {startDate ? (
+            <Typography variant="body2">Iniciada: {startDate}</Typography>
+          ) : null}
+          {endDate ? (
+            <Typography variant="body2">Finalizada: {endDate}</Typography>
+          ) : null}
         </div>
       </div>
       {info}

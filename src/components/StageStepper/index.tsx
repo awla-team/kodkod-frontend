@@ -13,7 +13,9 @@ const StageStepper: FC<{
   onStageChange: (stage: IStage) => void;
   handleFinish: () => void;
 }> = ({ shownStage, stages = [], onStageChange, handleFinish }) => {
-  const { classHasAdventure, updateStageData } = useContext(ClassHasAdventureContext);
+  const { classHasAdventure, updateStageData } = useContext(
+    ClassHasAdventureContext
+  );
   const [sortedStages, setSortedStages] = useState<IStage[]>([]);
   const [navigableStages, setNavigableStages] = useState<IStage[]>([]);
   const [activeStep, setActiveStep] = useState<number | undefined>(undefined);

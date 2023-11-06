@@ -1,4 +1,9 @@
-import { IAdventure, IClassHasAdventure, IMission, IStage } from 'global/interfaces';
+import {
+  IAdventure,
+  IClassHasAdventure,
+  IMission,
+  IStage,
+} from 'global/interfaces';
 import { Dispatch, PropsWithChildren, SetStateAction } from 'react';
 import { StudentType } from 'components/StudentsList/interfaces';
 import { StageMissionUpdateBody } from 'services/missions';

@@ -108,9 +108,7 @@ export const Adventure: React.FC = () => {
   const cancelAdventure = async () => {
     try {
       setLoading(true);
-      await cancelAdventureFromClass(
-        classDetails.current_adventure.id
-      );
+      await cancelAdventureFromClass(classDetails.current_adventure.id);
       //await cancelAdventure(classDetails.current_adventure.id_class_has_adventure, { date_stop: moment().format('YYYY-MM-DD') });
       Toaster('success', 'La aventura fue cancelada');
       navigate(`/app/cursos/${classId}/tablero`);
@@ -129,12 +127,9 @@ export const Adventure: React.FC = () => {
   const finishAdventure = async () => {
     try {
       setLoading(true);
-      await endClassHasAdventure(
-        classDetails.current_adventure.id,
-        {
-          date_stop: moment().format('YYYY-MM-DD'),
-        }
-      );
+      await endClassHasAdventure(classDetails.current_adventure.id, {
+        date_stop: moment().format('YYYY-MM-DD'),
+      });
       Toaster('success', '¡Felicitaciones! ¡La aventura ha sido completada!');
       setClassDetails({
         ...classDetails,

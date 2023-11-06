@@ -1,4 +1,9 @@
-import { IAdventure, IClassHasAdventure, IMission, IStage } from 'global/interfaces';
+import {
+  IAdventure,
+  IClassHasAdventure,
+  IMission,
+  IStage,
+} from 'global/interfaces';
 import { StudentType } from 'components/StudentsList/interfaces';
 import { StageMissionUpdateBody } from 'services/missions';
 
@@ -6,7 +11,8 @@ export interface IAdventureBannerProps {
   backgroundImg: string;
 }
 
-export interface IClassHasAdventureProviderProps extends React.PropsWithChildren {
+export interface IClassHasAdventureProviderProps
+  extends React.PropsWithChildren {
   adventureId: string | undefined;
 }
 

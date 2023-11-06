@@ -94,7 +94,14 @@ const GoalSelection: React.FC = () => {
           Inicia una nueva aventura
         </Typography>
         <div>
-          <Button component={Link} to={`/app/cursos/${classDetails.id}/aventuras/completed`} variant="outlined" startIcon={<FlagIcon />}>Ver aventuras finalizadas</Button>
+          <Button
+            component={Link}
+            to={`/app/cursos/${classDetails.id}/aventuras/completed`}
+            variant="outlined"
+            startIcon={<FlagIcon />}
+          >
+            Ver aventuras finalizadas
+          </Button>
         </div>
       </div>
       <Typography variant="h5" className="mb-2">
