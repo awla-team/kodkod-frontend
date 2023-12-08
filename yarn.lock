@@ -970,17 +970,17 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
-"@mercadopago/sdk-js@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@mercadopago/sdk-js/-/sdk-js-0.0.3.tgz#f54eee5faa7d8d7253b5c03b0ef09dcb8229698a"
-  integrity sha512-kO48DNLHdfFAp3on12nuKdqNlEmw1x3+nM6wLd04BdWOXoFcAhkNMQV3AyUIanXdO/bB/dENakdacLT29297EQ==
+"@mercadopago/sdk-js@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@mercadopago/sdk-js/-/sdk-js-0.0.2.tgz#59c4ef1ccf5ea3b22731a916c269436e1b3e6049"
+  integrity sha512-d29DyM00f250lbXCtUm5f4UHM4ro6/0Sm3nuIJK7cFckX8orZfs2oXIBW4GwSHRSiVjPBdge6qj2yhsCCyySgw==
 
-"@mercadopago/sdk-react@0.0.15":
-  version "0.0.15"
-  resolved "https://registry.yarnpkg.com/@mercadopago/sdk-react/-/sdk-react-0.0.15.tgz#ba600b6c65e7860b599e5ca75c6bc4dfe0d20584"
-  integrity sha512-ju0+p9nglNVBhnYSkmHGa8BEqqpaC9rWIcY7PrgvfevpSRf82w3tICWxbYm00l+cEfqF/RZSvOBJwuVHW3Diww==
+"@mercadopago/sdk-react@0.0.8":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@mercadopago/sdk-react/-/sdk-react-0.0.8.tgz#1dadc1788c8cce03756c85b2e828cc7ac3fdfc1d"
+  integrity sha512-TcxNUDJFHPuiqNVPcxArjRx943FDkOxzN8cmzDCTod5ki59rrXjFONCVOnj+wxUCqGQN2vId7WzSiMVBBY8L8Q==
   dependencies:
-    "@mercadopago/sdk-js" "^0.0.3"
+    "@mercadopago/sdk-js" "^0.0.2"
 
 "@mui/base@5.0.0-beta.26":
   version "5.0.0-beta.26"
