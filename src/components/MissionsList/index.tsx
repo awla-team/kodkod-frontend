@@ -41,21 +41,21 @@ const MissionsList: FC<{ shownStage: IStage }> = ({ shownStage }) => {
   };
 
   return (
-    <MissionListContainer id="adventure-missions" className="p-5">
+    <MissionListContainer id='adventure-missions' className='p-5'>
       <Typography
-        component="h6"
-        variant="h6"
-        fontWeight="bold"
-        className="mb-5"
+        component='h6'
+        variant='h6'
+        fontWeight='bold'
+        className='mb-5'
       >
         Lista de misiones
       </Typography>
 
-      <div className="row g-5">
+      <div className='row g-5'>
         {missions?.length ? (
           missions?.map((res, index) => {
             return (
-              <div key={`mission-${index}`} className="col-lg-6 col-12">
+              <div key={`mission-${index}`} className='col-lg-6 col-12'>
                 <MissionCard
                   id={index}
                   onClick={() => {

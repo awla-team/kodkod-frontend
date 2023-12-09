@@ -33,7 +33,7 @@ const OnboardingContextProvider: React.FC<PropsWithChildren> = ({
   return (
     <OnboardingContext.Provider value={{ setNewAvailableTours }}>
       {children}
-      <TourFab id="tour-fab-button" color="primary" onClick={handleClick}>
+      <TourFab id='tour-fab-button' color='primary' onClick={handleClick}>
         <QuestionMarkIcon />
       </TourFab>
       <Menu

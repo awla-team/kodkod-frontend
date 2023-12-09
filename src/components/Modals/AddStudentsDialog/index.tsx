@@ -118,60 +118,60 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
     <Dialog
       open={open}
       PaperProps={{ className: 'p-3', id: 'student-list-onboarding-2' }}
-      maxWidth="sm"
+      maxWidth='sm'
       fullWidth
       fullScreen
     >
-      <DialogTitle fontWeight="bold">Añadir estudiantes</DialogTitle>
+      <DialogTitle fontWeight='bold'>Añadir estudiantes</DialogTitle>
       <form
-        className="d-flex flex-column flex-fill"
+        className='d-flex flex-column flex-fill'
         style={{ overflow: 'hidden' }}
         onSubmit={(event) => handleSubmit(event)}
       >
-        <DialogContent className="d-flex flex-column flex-fill">
-          <Typography variant="body2" className="mb-2">
+        <DialogContent className='d-flex flex-column flex-fill'>
+          <Typography variant='body2' className='mb-2'>
             Añade a tus estudiantes ingresando sus nombres, apellidos y correo.
             También puedes subir tus estudiantes con nuestra plantilla de excel.
           </Typography>
-          <div id="student-list-onboarding-3">
+          <div id='student-list-onboarding-3'>
             <Button
-              variant="outlined"
+              variant='outlined'
               component={Link}
-              to="https://kodkod-assets.s3.amazonaws.com/documents/plantilla_estudiantes_kodkod.xlsx"
+              to='https://kodkod-assets.s3.amazonaws.com/documents/plantilla_estudiantes_kodkod.xlsx'
               download
-              className="me-1"
-              color="primary"
-              size="small"
+              className='me-1'
+              color='primary'
+              size='small'
               startIcon={<FileDownloadIcon />}
             >
               Descargar plantilla excel
             </Button>
             <input
               style={{ display: 'none' }}
-              type="file"
-              name="file"
-              id="inputGroupFile"
+              type='file'
+              name='file'
+              id='inputGroupFile'
               onChange={handleImport}
-              accept=".xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+              accept='.xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
             />
             <Button
-              component="label"
-              variant="contained"
-              size="small"
+              component='label'
+              variant='contained'
+              size='small'
               startIcon={<FileUploadIcon />}
-              htmlFor="inputGroupFile"
+              htmlFor='inputGroupFile'
             >
               Subir plantilla excel
             </Button>
           </div>
-          <Box className="flex-fill my-4" sx={{ overflow: 'auto' }}>
-            <StudentsFormDetailsContainer className="d-flex flex-column justify-content-between">
-              <Box className="details-list" id="student-list-onboarding-4">
+          <Box className='flex-fill my-4' sx={{ overflow: 'auto' }}>
+            <StudentsFormDetailsContainer className='d-flex flex-column justify-content-between'>
+              <Box className='details-list' id='student-list-onboarding-4'>
                 {students.map((student, i) => (
-                  <div key={i} className="d-flex align-items-center gap-2">
+                  <div key={i} className='d-flex align-items-center gap-2'>
                     <IconButton
-                      color="inherit"
-                      size="small"
+                      color='inherit'
+                      size='small'
                       disabled={students.length === 1}
                       onClick={() => {
                         const newValues = [...students];
@@ -179,12 +179,12 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
                         setStudents(newValues);
                       }}
                     >
-                      <CloseIcon fontSize="small" />
+                      <CloseIcon fontSize='small' />
                     </IconButton>
-                    <div className="d-flex w-100 gap-3">
-                      <div className="flex-fill">
+                    <div className='d-flex w-100 gap-3'>
+                      <div className='flex-fill'>
                         <TextField
-                          size="small"
+                          size='small'
                           value={student.first_name}
                           error={
                             (student.last_name || student.email) &&
@@ -196,14 +196,14 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
                             setStudents(newStudents);
                           }}
                           name={`students[${i}].first_name`}
-                          variant="outlined"
-                          placeholder="Nombres"
+                          variant='outlined'
+                          placeholder='Nombres'
                           fullWidth
                         />
                       </div>
-                      <div className="flex-fill">
+                      <div className='flex-fill'>
                         <TextField
-                          size="small"
+                          size='small'
                           value={student.last_name}
                           error={
                             (student.first_name || student.email) &&
@@ -215,14 +215,14 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
                             setStudents(newStudents);
                           }}
                           name={`students[${i}].last_name`}
-                          variant="outlined"
-                          placeholder="Apellidos"
+                          variant='outlined'
+                          placeholder='Apellidos'
                           fullWidth
                         />
                       </div>
-                      <div className="flex-fill">
+                      <div className='flex-fill'>
                         <TextField
-                          size="small"
+                          size='small'
                           value={student.email}
                           error={
                             (student.first_name || student.last_name) &&
@@ -234,9 +234,9 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
                             setStudents(newStudents);
                           }}
                           name={`students[${i}].email`}
-                          type="email"
-                          variant="outlined"
-                          placeholder="E-mail"
+                          type='email'
+                          variant='outlined'
+                          placeholder='E-mail'
                           fullWidth
                         />
                       </div>
@@ -246,11 +246,11 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
               </Box>
             </StudentsFormDetailsContainer>
           </Box>
-          <div className="d-flex align-items-center justify-content-center">
+          <div className='d-flex align-items-center justify-content-center'>
             <Button
               startIcon={<AddIcon />}
-              className="w-50 mb-2"
-              color="primary"
+              className='w-50 mb-2'
+              color='primary'
               onClick={() =>
                 setStudents([
                   ...students,
@@ -261,12 +261,12 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
               Añadir una fila
             </Button>
           </div>
-          <div className="d-flex">
+          <div className='d-flex'>
             <Typography
-              textAlign="right"
-              component="span"
-              variant="body2"
-              className="w-100 mt-2"
+              textAlign='right'
+              component='span'
+              variant='body2'
+              className='w-100 mt-2'
             >
               Estás añadiendo <b>{filled.length}</b> estudiantes a la clase{' '}
               <b>{classDetails.alias}</b>
@@ -275,16 +275,16 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
         </DialogContent>
         <DialogActions>
           <Button
-            variant="outlined"
+            variant='outlined'
             onClick={() => onClose()}
-            id="add-students-cancel"
+            id='add-students-cancel'
           >
             Cancelar
           </Button>
           <Button
-            id="student-list-onboarding-5"
-            variant="contained"
-            type="submit"
+            id='student-list-onboarding-5'
+            variant='contained'
+            type='submit'
             disabled={
               !filled.length ||
               !filled.every(

@@ -43,7 +43,7 @@ const CompletedAdventure: React.FC = () => {
     (loading !== FetchStatus.Success && loading !== FetchStatus.Error)
   ) {
     return (
-      <div className="d-flex w-100 align-items-center justify-content-center">
+      <div className='d-flex w-100 align-items-center justify-content-center'>
         <CircularProgress />
       </div>
     );
@@ -51,22 +51,22 @@ const CompletedAdventure: React.FC = () => {
 
   if (classHasAdventure?.date_stop) {
     return (
-      <CompletedAdventureContainer className="w-100 p-5">
-        <div className="d-flex justify-content-between w-100">
-          <div className="d-flex gap-4 align-items-center">
+      <CompletedAdventureContainer className='w-100 p-5'>
+        <div className='d-flex justify-content-between w-100'>
+          <div className='d-flex gap-4 align-items-center'>
             <CompletedAdventureImg
               src={classHasAdventure.adventure.finish_img_url}
             />
-            <div className="d-flex flex-column">
-              <Typography component="h6" variant="h6">
+            <div className='d-flex flex-column'>
+              <Typography component='h6' variant='h6'>
                 {classDetails.alias} - {classHasAdventure.adventure.title}
               </Typography>
-              <Typography component="h4" variant="h4" fontWeight="bold">
+              <Typography component='h4' variant='h4' fontWeight='bold'>
                 ¡Aventura finalizada!
               </Typography>
             </div>
           </div>
-          <div className="d-flex flex-column align-items-end">
+          <div className='d-flex flex-column align-items-end'>
             <Typography>
               Iniciada:{' '}
               <b>{moment(classHasAdventure.date_start).format('DD/MM/YYYY')}</b>
@@ -77,40 +77,40 @@ const CompletedAdventure: React.FC = () => {
             </Typography>
           </div>
         </div>
-        <div className="d-flex mt-5 justify-content-center gap-4">
-          <DataCard className="d-flex gap-3 align-items-center">
-            <img src={ImgTeamwork} width="100" height="100" />
-            <div className="d-flex flex-column">
-              <div className="d-flex gap-2 align-items-end">
-                <Typography variant="h3" fontWeight="bold">
+        <div className='d-flex mt-5 justify-content-center gap-4'>
+          <DataCard className='d-flex gap-3 align-items-center'>
+            <img src={ImgTeamwork} width='100' height='100' />
+            <div className='d-flex flex-column'>
+              <div className='d-flex gap-2 align-items-end'>
+                <Typography variant='h3' fontWeight='bold'>
                   {classHasAdventure.missions_count}
                 </Typography>
-                <Typography variant="h6" fontWeight="bold">
+                <Typography variant='h6' fontWeight='bold'>
                   misiones
                 </Typography>
               </div>
-              <Typography variant="body1">completadas como curso</Typography>
+              <Typography variant='body1'>completadas como curso</Typography>
             </div>
           </DataCard>
-          <DataCard className="d-flex gap-3 align-items-center">
-            <img src={ImgReward} width="100" height="100" />
-            <div className="d-flex flex-column">
-              <div className="d-flex gap-2 align-items-end">
-                <Typography variant="h3" fontWeight="bold">
+          <DataCard className='d-flex gap-3 align-items-center'>
+            <img src={ImgReward} width='100' height='100' />
+            <div className='d-flex flex-column'>
+              <div className='d-flex gap-2 align-items-end'>
+                <Typography variant='h3' fontWeight='bold'>
                   {classHasAdventure.rewards_count}
                 </Typography>
-                <Typography variant="h6" fontWeight="bold">
+                <Typography variant='h6' fontWeight='bold'>
                   recompensas
                 </Typography>
               </div>
-              <Typography variant="body1">obtenidas por estudiantes</Typography>
+              <Typography variant='body1'>obtenidas por estudiantes</Typography>
             </div>
           </DataCard>
-          <DataCard className="d-flex gap-3 align-items-center">
-            <img src={ImgTime} width="100" height="100" />
-            <div className="d-flex flex-column">
-              <div className="d-flex gap-2 align-items-end">
-                <Typography variant="h3" fontWeight="bold">
+          <DataCard className='d-flex gap-3 align-items-center'>
+            <img src={ImgTime} width='100' height='100' />
+            <div className='d-flex flex-column'>
+              <div className='d-flex gap-2 align-items-end'>
+                <Typography variant='h3' fontWeight='bold'>
                   {Math.abs(
                     moment(classHasAdventure.date_stop).diff(
                       moment(classHasAdventure.date_start),
@@ -118,32 +118,32 @@ const CompletedAdventure: React.FC = () => {
                     )
                   )}
                 </Typography>
-                <Typography variant="h6" fontWeight="bold">
+                <Typography variant='h6' fontWeight='bold'>
                   semanas
                 </Typography>
               </div>
-              <Typography variant="body1">
+              <Typography variant='body1'>
                 aprendiendo de esta aventura
               </Typography>
             </div>
           </DataCard>
         </div>
-        <div className="d-flex flex-column mt-5 align-items-center gap-1">
+        <div className='d-flex flex-column mt-5 align-items-center gap-1'>
           <Typography>
             ¡Buen trabajo! Nos esperan nuevas y divertidas aventuras para seguir
             aprendiendo en conjunto.
           </Typography>
-          <Typography fontWeight="bold" variant="h6">
+          <Typography fontWeight='bold' variant='h6'>
             ¡Felicitaciones a tod@s por terminar esta aventura!
           </Typography>
         </div>
-        <div className="d-flex align-items-center justify-content-center mt-4">
+        <div className='d-flex align-items-center justify-content-center mt-4'>
           <Button
             component={Link}
             to={`/app/cursos/${classDetails.id}/aventuras/completed`}
-            color="primary"
-            variant="contained"
-            size="large"
+            color='primary'
+            variant='contained'
+            size='large'
           >
             Ver mis aventuras finalizadas
           </Button>

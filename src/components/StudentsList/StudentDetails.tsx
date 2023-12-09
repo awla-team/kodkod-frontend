@@ -112,7 +112,7 @@ export const StudentDetails: FC<{
         editState ? 'editable' : ''
       }`}
     >
-      <Avatar className="student-avatar me-3">{`${details.first_name[0]}${details.last_name[0]}`}</Avatar>
+      <Avatar className='student-avatar me-3'>{`${details.first_name[0]}${details.last_name[0]}`}</Avatar>
       <Formik
         initialValues={inputValues}
         onSubmit={handleSubmit}
@@ -134,7 +134,7 @@ export const StudentDetails: FC<{
                     {editState ? (
                       <FormControl error={!!errors.first_name && !!submitCount}>
                         <TextField
-                          variant="standard"
+                          variant='standard'
                           autoFocus
                           disabled={!editState}
                           name={'first_name'}
@@ -150,7 +150,7 @@ export const StudentDetails: FC<{
                     {editState ? (
                       <FormControl error={!!errors.last_name && !!submitCount}>
                         <TextField
-                          variant="standard"
+                          variant='standard'
                           disabled={!editState}
                           name={'last_name'}
                           className={'name'}
@@ -167,11 +167,11 @@ export const StudentDetails: FC<{
                   </Box>
                   {editState ? (
                     <FormControl
-                      className="mt-2"
+                      className='mt-2'
                       error={!!errors.email && !!submitCount}
                     >
                       <TextField
-                        variant="standard"
+                        variant='standard'
                         disabled={!editState}
                         name={'email'}
                         type={'email'}
@@ -182,7 +182,7 @@ export const StudentDetails: FC<{
                       />
                     </FormControl>
                   ) : (
-                    <Typography color="gray">{details.email}</Typography>
+                    <Typography color='gray'>{details.email}</Typography>
                   )}
                 </div>
                 <div className={'editable__action__section'}>
@@ -201,7 +201,7 @@ export const StudentDetails: FC<{
                     </>
                   ) : (
                     <IconButton
-                      className="more-button"
+                      className='more-button'
                       color={'inherit'}
                       onClick={(e) => {
                         handleMenuOpen(e);

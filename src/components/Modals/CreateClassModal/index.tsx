@@ -113,7 +113,7 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
       open={open}
       PaperProps={{ className: 'p-3', id: 'home-onboarding-3' }}
     >
-      <DialogTitle fontWeight="bold">
+      <DialogTitle fontWeight='bold'>
         {classDetails ? 'Editar curso' : 'Añade un nuevo curso'}
       </DialogTitle>
       <Formik
@@ -134,21 +134,21 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
         }) => {
           return (
             <Form onSubmit={handleSubmit}>
-              <DialogContent dividers className="py-5">
+              <DialogContent dividers className='py-5'>
                 <FormContainer>
                   <FormControl error={!!errors.id_level && !!submitCount}>
                     <Typography
-                      component="label"
-                      variant="body1"
-                      fontWeight="bold"
-                      className="mb-1"
+                      component='label'
+                      variant='body1'
+                      fontWeight='bold'
+                      className='mb-1'
                     >
                       Nivel
                     </Typography>
                     <Select
                       name={'id_level'}
-                      size="small"
-                      placeholder="Selecciona un nivel"
+                      size='small'
+                      placeholder='Selecciona un nivel'
                       onChange={(e) => {
                         handleChange(e);
                         handleAliasValue(
@@ -178,29 +178,29 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
                     </Select>
                   </FormControl>
                   <FormControl error={!!errors.code && !!submitCount}>
-                    <div className="d-flex align-items-end mb-1">
+                    <div className='d-flex align-items-end mb-1'>
                       <Typography
-                        component="label"
-                        variant="body1"
-                        fontWeight="bold"
-                        className="me-1"
+                        component='label'
+                        variant='body1'
+                        fontWeight='bold'
+                        className='me-1'
                       >
                         Curso
                       </Typography>
-                      <Typography component="span" variant="caption">
+                      <Typography component='span' variant='caption'>
                         (Es la letra o nombre que acompaña al nivel e identifica
                         al curso)
                       </Typography>
                     </div>
                     <TextField
                       name={'code'}
-                      placeholder="Ejemplo: A, B, C..."
+                      placeholder='Ejemplo: A, B, C...'
                       onChange={(e) => {
                         handleAliasValue(e, values, setFieldValue);
                         handleChange(e);
                       }}
                       value={values.code}
-                      size="small"
+                      size='small'
                     />
                   </FormControl>
                   {/*<FormControl error={!!errors.alias && !!submitCount}>
@@ -227,16 +227,16 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
                     </FormControl>*/}
                 </FormContainer>
               </DialogContent>
-              <DialogActions className="pt-3">
+              <DialogActions className='pt-3'>
                 <Button
-                  id="create-class-cancel"
-                  variant="outlined"
+                  id='create-class-cancel'
+                  variant='outlined'
                   onClick={() => onClose('escapeKeyDown')}
                 >
                   Cancelar
                 </Button>
                 <Button
-                  id="home-onboarding-5"
+                  id='home-onboarding-5'
                   disabled={
                     isSubmitting ||
                     !dirty ||

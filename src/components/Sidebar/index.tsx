@@ -16,18 +16,18 @@ const Sidebar: FC<SidebarProps> = ({ classes, handleOpenModal }) => {
   const { user } = useAuth();
 
   return (
-    <SidebarContainer className="justify-content-between">
+    <SidebarContainer className='justify-content-between'>
       <div
-        className="d-flex flex-column align-items-center"
-        id="home-onboarding-5"
+        className='d-flex flex-column align-items-center'
+        id='home-onboarding-5'
       >
         <LogoContainer>
           <img src={logo} />
         </LogoContainer>
-        <Divider className="w-75 my-4" color="gray" />
-        <span className="text-center fw-bold p-0 mb-3">Cursos</span>
+        <Divider className='w-75 my-4' color='gray' />
+        <span className='text-center fw-bold p-0 mb-3'>Cursos</span>
         <RouterLink to={'/app'}>
-          <RoundButton color="primary" className="home-button">
+          <RoundButton color='primary' className='home-button'>
             <HomeIcon />
           </RoundButton>
         </RouterLink>
@@ -44,9 +44,9 @@ const Sidebar: FC<SidebarProps> = ({ classes, handleOpenModal }) => {
           </LinkList>
         ) : null}
         <RoundButton
-          id="home-onboarding-2"
+          id='home-onboarding-2'
           sx={{ marginBottom: '74px' }}
-          color="info"
+          color='info'
           onClick={() => {
             handleOpenModal();
           }}
@@ -57,12 +57,12 @@ const Sidebar: FC<SidebarProps> = ({ classes, handleOpenModal }) => {
       <div>
         {!user?.is_subscription_active && !user?.is_superuser ? (
           <Button
-            className="text-center px-0"
+            className='text-center px-0'
             component={Link}
-            to="/app/perfil/suscripciones"
-            sx={{ '&:hover': { color: '#fff' }, fontSize: '12px' }}
-            variant="contained"
-            size="small"
+            to='/app/perfil/suscripciones'
+            sx={{ '&:hover': { color: '#fff' }, 'fontSize': '12px' }}
+            variant='contained'
+            size='small'
           >
             ¡Hazte Pro!
           </Button>

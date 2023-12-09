@@ -86,13 +86,13 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
 
   return (
     <StudentListContainer
-      id="mission-complete-modal-list"
-      className="d-flex flex-column overflow-hidden"
+      id='mission-complete-modal-list'
+      className='d-flex flex-column overflow-hidden'
     >
       <TextField
-        className="mb-3"
+        className='mb-3'
         variant={'standard'}
-        placeholder="Buscar por nombre o apellido"
+        placeholder='Buscar por nombre o apellido'
         fullWidth
         onChange={(event) => {
           if (!event.target.value) return setStudentList(students);
@@ -105,13 +105,13 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
           );
         }}
       />
-      <div className="d-flex flex-column flex-fill gap-4 overflow-hidden">
-        <div className="d-flex w-100 align-items-center justify-content-between">
+      <div className='d-flex flex-column flex-fill gap-4 overflow-hidden'>
+        <div className='d-flex w-100 align-items-center justify-content-between'>
           <FormControlLabel
-            id="mission-complete-modal-all"
+            id='mission-complete-modal-all'
             sx={{ marginLeft: 0 }}
-            label="Seleccionar a todos"
-            className="mb-3"
+            label='Seleccionar a todos'
+            className='mb-3'
             control={
               <Checkbox
                 onChange={handleAllSelect}
@@ -129,25 +129,25 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
               />
             }
           />
-          <div className="d-flex flex-column">
-            <div className="d-flex gap-2 justify-content-end">
+          <div className='d-flex flex-column'>
+            <div className='d-flex gap-2 justify-content-end'>
               <Button
-                id="mission-complete-modal-cancel"
+                id='mission-complete-modal-cancel'
                 onClick={handleClose}
-                variant="outlined"
+                variant='outlined'
               >
                 Cancelar
               </Button>
               <Button
-                id="mission-complete-modal-save"
+                id='mission-complete-modal-save'
                 onClick={handleSave}
-                variant="contained"
+                variant='contained'
                 disabled={!Object.keys(selected).length}
               >
                 Guardar cambios
               </Button>
             </div>
-            <Typography component="span" variant="body2" textAlign="end">
+            <Typography component='span' variant='body2' textAlign='end'>
               <b>
                 {Object.keys(selected).length +
                   Object.keys(defaultSelected).length}
@@ -156,9 +156,9 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
             </Typography>
           </div>
         </div>
-        <div className="d-flex flex-column gap-3 overflow-auto">
+        <div className='d-flex flex-column gap-3 overflow-auto'>
           {studentList.map((res, index) => (
-            <div key={index} className="d-flex gap-2 align-items-center">
+            <div key={index} className='d-flex gap-2 align-items-center'>
               <Checkbox
                 onChange={(e) => handleCheck(e, res.id)}
                 disabled={defaultSelected.includes(res.id)}
@@ -166,14 +166,14 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
                   selected.includes(res.id) || defaultSelected.includes(res.id)
                 }
               />
-              <div className="d-flex align-items-center gap-3">
-                <Avatar className="student-avatar">{`${res.first_name[0]}${res.last_name[0]}`}</Avatar>
-                <div className="d-flex flex-column">
+              <div className='d-flex align-items-center gap-3'>
+                <Avatar className='student-avatar'>{`${res.first_name[0]}${res.last_name[0]}`}</Avatar>
+                <div className='d-flex flex-column'>
                   <Typography
-                    component="span"
-                    variant="body1"
+                    component='span'
+                    variant='body1'
                   >{`${res.first_name} ${res.last_name}`}</Typography>
-                  <Typography component="span" variant="body2" color="#969696">
+                  <Typography component='span' variant='body2' color='#969696'>
                     {res.email}
                   </Typography>
                 </div>

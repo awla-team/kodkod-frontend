@@ -79,7 +79,7 @@ const GoalSelection: React.FC = () => {
     !classDetails
   )
     return (
-      <div className="d-flex w-100 align-items-center justify-content-center">
+      <div className='d-flex w-100 align-items-center justify-content-center'>
         <CircularProgress />
       </div>
     );
@@ -88,33 +88,33 @@ const GoalSelection: React.FC = () => {
     return <Navigate to={`/app/cursos/${classDetails.id}/aventuras`} />;
 
   return (
-    <GoalSelectionContainer className="w-100 p-5">
-      <div className="d-flex justify-content-between align-items-center">
-        <Typography variant="h4" fontWeight="bold" className="mb-4">
+    <GoalSelectionContainer className='w-100 p-5'>
+      <div className='d-flex justify-content-between align-items-center'>
+        <Typography variant='h4' fontWeight='bold' className='mb-4'>
           Inicia una nueva aventura
         </Typography>
         <div>
           <Button
             component={Link}
             to={`/app/cursos/${classDetails.id}/aventuras/completed`}
-            variant="outlined"
+            variant='outlined'
             startIcon={<FlagIcon />}
           >
             Ver aventuras finalizadas
           </Button>
         </div>
       </div>
-      <Typography variant="h5" className="mb-2">
+      <Typography variant='h5' className='mb-2'>
         <b>Paso 1:</b> Escoge un objetivo
       </Typography>
-      <Typography variant="body1" className="mb-4">
+      <Typography variant='body1' className='mb-4'>
         Una aventura es una serie de misiones planificadas para{' '}
         <b>alcanzar un objetivo</b> en concreto con tu curso. Para empezar,{' '}
         <b>escoge el objetivo</b> que quieres alcanzar con el curso{' '}
         <b>{classDetails.alias}</b>.
       </Typography>
-      <div className="d-flex flex-column w-100 align-items-center justify-content-between h-100">
-        <div className="d-flex justify-content-center gap-3 w-100 flex-wrap">
+      <div className='d-flex flex-column w-100 align-items-center justify-content-between h-100'>
+        <div className='d-flex justify-content-center gap-3 w-100 flex-wrap'>
           {goals?.length
             ? goals.map((goal, i) => (
                 <CardContainer
@@ -125,14 +125,14 @@ const GoalSelection: React.FC = () => {
                   }`}
                   onClick={() => selectAdventure(goal.id)}
                 >
-                  <img height={500} src={goal.image_url} width="100%" />
-                  <Box className="goal-card-text py-2 px-3 d-flex align-items-center justify-content-center flex-fill">
+                  <img height={500} src={goal.image_url} width='100%' />
+                  <Box className='goal-card-text py-2 px-3 d-flex align-items-center justify-content-center flex-fill'>
                     <Typography
-                      maxWidth="200px"
-                      variant="body2"
-                      component="span"
-                      textAlign="center"
-                      fontWeight="bold"
+                      maxWidth='200px'
+                      variant='body2'
+                      component='span'
+                      textAlign='center'
+                      fontWeight='bold'
                     >
                       {goal.title}
                     </Typography>
@@ -142,10 +142,10 @@ const GoalSelection: React.FC = () => {
             : null}
         </div>
         <Button
-          id="adventure-selection-onboarding-2"
-          className="mt-4"
-          variant="contained"
-          size="large"
+          id='adventure-selection-onboarding-2'
+          className='mt-4'
+          variant='contained'
+          size='large'
           disabled={!selectedGoalId && selectedGoalId !== 0}
           onClick={nextView}
         >

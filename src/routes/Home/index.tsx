@@ -45,7 +45,7 @@ const HomePage: FC = () => {
   }, [onboardingDone]);
 
   return (
-    <div className="d-flex w-100">
+    <div className='d-flex w-100'>
       {!classes?.length ? (
         <WelcomePage handleOpenModal={handleOpenModal} />
       ) : (

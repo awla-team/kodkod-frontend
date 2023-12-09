@@ -8,9 +8,9 @@ import SignalCellularAltIcon from '@mui/icons-material/SignalCellularAlt';
 import CachedIcon from '@mui/icons-material/Cached';
 
 export const difficultyIcons = {
-  easy: <SignalCellularAlt1BarIcon fontSize="small" />,
-  normal: <SignalCellularAlt2BarIcon fontSize="small" />,
-  hard: <SignalCellularAltIcon fontSize="small" />,
+  easy: <SignalCellularAlt1BarIcon fontSize='small' />,
+  normal: <SignalCellularAlt2BarIcon fontSize='small' />,
+  hard: <SignalCellularAltIcon fontSize='small' />,
 };
 
 export const sortClasses = (classes?: IClass[]): IClass[] => {

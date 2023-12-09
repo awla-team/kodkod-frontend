@@ -15,7 +15,7 @@ const SkillPoints: React.FC<ISkillPointsProps> = ({ skill, dark }) => {
           <Chip
             label={skill.title}
             sx={{ background: skill.color, color: '#FFF', fontSize: '12px' }}
-            size="small"
+            size='small'
           />
         </>
       ) : null}

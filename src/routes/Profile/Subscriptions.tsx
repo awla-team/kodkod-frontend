@@ -145,11 +145,11 @@ const Subscriptions: React.FC = () => {
 
   return (
     <SubscriptionsContainer>
-      <SubscriptionsBox className="p-5">
-        <Typography className="mb-4" variant="h4" fontWeight="bold">
+      <SubscriptionsBox className='p-5'>
+        <Typography className='mb-4' variant='h4' fontWeight='bold'>
           Mis suscripciones
         </Typography>
-        <Typography className="mb-2">
+        <Typography className='mb-2'>
           ¡Suscríbete ya mismo a <b>Kodkod Pro</b> y accede a nuevas funciones y
           características que te ayudaran a convertir tu clase en un ambiente de
           sana convivencia!
@@ -172,10 +172,10 @@ const Subscriptions: React.FC = () => {
         {fetching !== FetchStatus.Pending && fetching !== FetchStatus.Idle ? (
           <>
             {user?.is_subscription_active || user?.is_superuser ? (
-              <ActiveSubscriptionBox className="d-flex justify-content-between align-items-center p-4">
+              <ActiveSubscriptionBox className='d-flex justify-content-between align-items-center p-4'>
                 <div>
                   <Chip
-                    className="mb-3"
+                    className='mb-3'
                     color={
                       !currentSubscription ||
                       currentSubscription?.status !== 'cancelled'
@@ -189,8 +189,8 @@ const Subscriptions: React.FC = () => {
                         : 'Suscripción cancelada'
                     }
                   />
-                  <div className="d-flex flex-column gap-2">
-                    <Typography variant="h6" fontWeight="bold">
+                  <div className='d-flex flex-column gap-2'>
+                    <Typography variant='h6' fontWeight='bold'>
                       {currentSubscription?.reason || 'Kodkod Pro'}
                     </Typography>
                     {currentSubscription ? (
@@ -200,7 +200,7 @@ const Subscriptions: React.FC = () => {
                           : 'año'
                       }`}</Typography>
                     ) : null}
-                    <Typography variant="body2">{`${
+                    <Typography variant='body2'>{`${
                       currentSubscription?.status !== 'cancelled'
                         ? 'Próxima facturación:'
                         : 'Finaliza el:'
@@ -211,44 +211,44 @@ const Subscriptions: React.FC = () => {
                 </div>
                 {currentSubscription &&
                 currentSubscription?.status !== 'cancelled' ? (
-                  <div className="d-flex flex-column gap-2">
+                  <div className='d-flex flex-column gap-2'>
                     <Button
                       component={Link}
-                      target="_blank"
+                      target='_blank'
                       to={currentSubscription.init_point}
-                      variant="contained"
+                      variant='contained'
                     >
                       Actualizar método de pago
                     </Button>
-                    <Button onClick={() => setOpenModal(true)} size="small">
+                    <Button onClick={() => setOpenModal(true)} size='small'>
                       Cancelar suscripción
                     </Button>
                   </div>
                 ) : (
-                  <div className="d-flex flex-column">
-                    <Typography variant="caption">
+                  <div className='d-flex flex-column'>
+                    <Typography variant='caption'>
                       {currentSubscription
                         ? 'Tu suscripción a Kodkod ha sido cancelada.'
                         : 'Tienes una suscripción gestionada por tu institución.'}
                     </Typography>
-                    <Typography variant="caption">
+                    <Typography variant='caption'>
                       Seguirás teniendo Kodkod Pro hasta el{' '}
                       {moment(user.subscription_end).format('DD-MM-yyyy')}
                     </Typography>
-                    <Typography variant="caption" fontWeight="bold">
+                    <Typography variant='caption' fontWeight='bold'>
                       ¡Puedes suscribirte de nuevo después de esta fecha!
                     </Typography>
                   </div>
                 )}
               </ActiveSubscriptionBox>
             ) : (
-              <Box className="d-flex flex-column align-items-center">
+              <Box className='d-flex flex-column align-items-center'>
                 <div>
-                  <Typography textAlign="center" className="mb-2">
+                  <Typography textAlign='center' className='mb-2'>
                     Selecciona un plan de suscripción
                   </Typography>
                   <RadioGroup
-                    name="plans"
+                    name='plans'
                     row
                     value={selectedPlan}
                     onChange={(e) => {
@@ -256,7 +256,7 @@ const Subscriptions: React.FC = () => {
                       setFormLoading(true);
                     }}
                     sx={{ justifyContent: 'center' }}
-                    className="d-flex gap-2 mb-4"
+                    className='d-flex gap-2 mb-4'
                   >
                     {plans.map((plan, i) => (
                       <BoxControlLabel
@@ -264,16 +264,16 @@ const Subscriptions: React.FC = () => {
                         disabled={!!selectedPlan && formLoading}
                         value={plan.id}
                         label={
-                          <div className="d-flex flex-column align-items-center">
+                          <div className='d-flex flex-column align-items-center'>
                             <Typography>{plan.reason}</Typography>
-                            <div className="d-flex align-items-center gap-1">
+                            <div className='d-flex align-items-center gap-1'>
                               <Typography
-                                fontWeight="bold"
-                                variant="h5"
+                                fontWeight='bold'
+                                variant='h5'
                               >{`$${plan.auto_recurring.transaction_amount.toLocaleString()}`}</Typography>
                               <Typography
-                                variant="body2"
-                                color="gray"
+                                variant='body2'
+                                color='gray'
                                 sx={{ textDecoration: 'line-through' }}
                               >
                                 {plan.external_reference === 'pro_anual'
@@ -289,10 +289,10 @@ const Subscriptions: React.FC = () => {
                   </RadioGroup>
                 </div>
                 {selectedPlan && formLoading ? (
-                  <CircularProgress className="mb-4" />
+                  <CircularProgress className='mb-4' />
                 ) : null}
                 {selectedPlan && plans.length ? (
-                  <div className="d-flex flex-column align-items-center flex-fill w-100">
+                  <div className='d-flex flex-column align-items-center flex-fill w-100'>
                     <Payment
                       onReady={() => setFormLoading(false)}
                       initialization={{
@@ -326,7 +326,7 @@ const Subscriptions: React.FC = () => {
                       }}
                     />
                     {!formLoading ? (
-                      <Typography variant="body2">
+                      <Typography variant='body2'>
                         Tu comprobante de suscripción llegará a tu correo
                         electrónico asociado a tu cuenta Kodkod.
                       </Typography>
@@ -337,18 +337,18 @@ const Subscriptions: React.FC = () => {
             )}
           </>
         ) : (
-          <div className="d-flex align-items-center justify-content-center p-5">
+          <div className='d-flex align-items-center justify-content-center p-5'>
             <CircularProgress />
           </div>
         )}
       </SubscriptionsBox>
       <ConfirmationModal
-        title="¿Estás seguro de cancelar tu suscripción?"
+        title='¿Estás seguro de cancelar tu suscripción?'
         open={openModal}
         callBackFunction={handleCancelSubscription}
-        confirmText="Sí, quiero cancelar mi suscripción"
+        confirmText='Sí, quiero cancelar mi suscripción'
         onClose={() => setOpenModal(false)}
-        description="Esta acción pondrá fin a tu plan Pro. Podrás suscribirte nuevamente en el futuro si lo deseas."
+        description='Esta acción pondrá fin a tu plan Pro. Podrás suscribirte nuevamente en el futuro si lo deseas.'
       />
     </SubscriptionsContainer>
   );
