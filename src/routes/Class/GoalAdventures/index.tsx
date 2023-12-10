@@ -5,7 +5,12 @@ import type { IAdventure } from 'global/interfaces';
 import { FetchStatus } from 'global/enums';
 import CircularProgress from '@mui/material/CircularProgress';
 import AdventureSummaryDialog from '../../../components/Modals/AdventureSummaryDialog';
-import { Navigate, useParams, Link as RouterLink , Link } from 'react-router-dom';
+import {
+  Navigate,
+  useParams,
+  Link as RouterLink,
+  Link,
+} from 'react-router-dom';
 import { getGoalById } from 'services/goals';
 import { type GoalType } from '../Adventures/interfaces';
 import Toaster from '../../../utils/Toster';

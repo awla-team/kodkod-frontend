@@ -168,7 +168,7 @@ const AdventureSummaryDialog: React.FC<{
       <DialogActions className='d-flex align-items-center p-4'>
         <Button
           id='adventure-selection-close-modal'
-          variant="outlined"
+          variant='outlined'
           onClick={handleOnCloseModal}
         >
           Cancelar

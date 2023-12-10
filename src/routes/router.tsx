@@ -28,9 +28,7 @@ const MainRouterComponent: FC = () => {
   // if (pathname === "/") {
   //   return <Navigate to={"/app"} />;
   // }
-  return (
-    <Outlet />
-  );
+  return <Outlet />;
 };
 
 export const router = createBrowserRouter([

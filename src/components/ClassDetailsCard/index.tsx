@@ -13,7 +13,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Link, useNavigate } from 'react-router-dom';
 import { CreateClassModal } from '../Modals';
 import { useClassContext } from 'routes/Class/context';
-import { type IClass , type IStage } from 'global/interfaces';
+import { type IClass, type IStage } from 'global/interfaces';
 import ConfirmationModal from '../Modals/ConfirmationModal';
 import Toaster from '../../utils/Toster';
 import { deleteClass } from '../../services/classes';
@@ -105,10 +105,10 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
             }}
           >
             <Box
-              display="flex"
+              display='flex'
               sx={{ position: 'relative' }}
-              alignItems="start"
-              justifyContent="space-between"
+              alignItems='start'
+              justifyContent='space-between'
             >
               <Typography
                 component='h2'
@@ -185,10 +185,10 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
         ) : (
           <div className='d-flex flex-column p-5'>
             <Box
-              display="flex"
+              display='flex'
               sx={{ position: 'relative' }}
-              alignItems="start"
-              justifyContent="space-between"
+              alignItems='start'
+              justifyContent='space-between'
             >
               <Typography
                 component='h2'

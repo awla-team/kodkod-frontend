@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Outlet, useNavigate , useLocation } from 'react-router-dom';
+import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { Button, CircularProgress } from '@mui/material';
 import Sidebar from './components/Sidebar';
 import { getClassesByUser } from 'services/classes';

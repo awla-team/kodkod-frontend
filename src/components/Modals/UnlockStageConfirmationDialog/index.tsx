@@ -46,11 +46,11 @@ const UnlockStageConfirmationDialog: FC<UnlockStageConfirmationDialogProps> = ({
             </Typography>
           </DialogContent>
           <DialogActions className='d-flex align-items-center mt-3'>
-            <Button variant="outlined" onClick={handleClose}>
+            <Button variant='outlined' onClick={handleClose}>
               Cancelar
             </Button>
             <Button
-              variant="contained"
+              variant='contained'
               disabled={isLoading}
               onClick={onConfirm}
             >
@@ -82,11 +82,11 @@ const UnlockStageConfirmationDialog: FC<UnlockStageConfirmationDialogProps> = ({
             </div>
           </DialogContent>
           <DialogActions className='d-flex align-items-center mt-3'>
-            <Button variant="outlined" onClick={handleClose}>
+            <Button variant='outlined' onClick={handleClose}>
               Cancelar
             </Button>
             <Button
-              variant="contained"
+              variant='contained'
               disabled={isLoading}
               onClick={onConfirm}
             >

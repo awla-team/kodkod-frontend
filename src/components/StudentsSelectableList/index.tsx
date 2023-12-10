@@ -20,9 +20,9 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
   handleClose,
 }) => {
   const [selected, setSelected] = useState<Array<number | string>>([]);
-  const [defaultSelected, setDefaultSelected] = useState<Array<number | string>>(
-    []
-  );
+  const [defaultSelected, setDefaultSelected] = useState<
+    Array<number | string>
+  >([]);
   const { students } = useContext(ClassHasAdventureContext);
   const [studentList, setStudentList] = useState([]);
 
@@ -73,7 +73,7 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
       await missionAccomplished({
         studentIds: selected,
         id_mission: mission.id as number,
-        id_stage: stage.id ,
+        id_stage: stage.id,
       });
       Toaster('success', 'Misión completada exitosamente');
       onSave(stage.id);
@@ -91,7 +91,7 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
     >
       <TextField
         className='mb-3'
-        variant="standard"
+        variant='standard'
         placeholder='Buscar por nombre o apellido'
         fullWidth
         onChange={(event) => {

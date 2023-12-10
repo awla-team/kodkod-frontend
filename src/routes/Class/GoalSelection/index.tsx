@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button, CircularProgress, Typography } from '@mui/material';
-import { Navigate, useNavigate , Link } from 'react-router-dom';
+import { Navigate, useNavigate, Link } from 'react-router-dom';
 import { GoalSelectionContainer, CardContainer, ImgContainer } from './styled';
 import { type AxiosResponse } from 'axios';
 import { getGoals } from 'services/goals';

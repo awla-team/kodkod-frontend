@@ -20,8 +20,10 @@ export const studentUseRewards = async (userId: number, rewards: number[]) => {
   return await http.post(`user-use-rewards/${userId}`, rewards);
 };
 
-export const studentsRedeemReward = async (rewardId: number, studentsId: number[]) =>
-  await http.post(`/users-redeem-reward/${rewardId}`, studentsId);
+export const studentsRedeemReward = async (
+  rewardId: number,
+  studentsId: number[]
+) => await http.post(`/users-redeem-reward/${rewardId}`, studentsId);
 
 export const updateReward = async (
   rewardId: number | string,

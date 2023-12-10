@@ -3,15 +3,18 @@ import http from 'global/api';
 export const getAdventures = async () =>
   await http.get('adventures?_embed=adventureSkills');
 export const getAdventure = async (adventureId: number | string) =>
-  await http.get(`adventures/${adventureId}?_embed=stages&_embed=adventureSkills`);
+  await http.get(
+    `adventures/${adventureId}?_embed=stages&_embed=adventureSkills`
+  );
 
 export const getClassCurrentAdventure = async (classId: number | string) =>
   await http.get(
     `classes/${classId}/classHasAdventures?current_adventure=true&_embed=adventures`
   );
 
-export const getClassHasAdventure = async (classHasAdventureId: number | string) =>
-  await http.get(`classhasadventure/${classHasAdventureId}`);
+export const getClassHasAdventure = async (
+  classHasAdventureId: number | string
+) => await http.get(`classhasadventure/${classHasAdventureId}`);
 
 export const getCompletedClassHasAdventuresByClass = async (
   classId: number | string

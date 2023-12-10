@@ -3,9 +3,12 @@ import { Navigate, useOutletContext, useParams } from 'react-router-dom';
 import { FetchStatus } from 'global/enums';
 import { CircularProgress } from '@mui/material';
 import Toaster from 'utils/Toster';
-import { IClass , IAdventure, type IMission, IStage } from 'global/interfaces';
+import { IClass, IAdventure, type IMission, IStage } from 'global/interfaces';
 import AdventureWithProvider from './Adventure';
-import { getMissionsByStage, type StageMissionUpdateBody } from 'services/missions';
+import {
+  getMissionsByStage,
+  type StageMissionUpdateBody,
+} from 'services/missions';
 import { StudentType } from 'components/StudentsList/interfaces';
 import { useClassContext } from '../context';
 import {
@@ -85,12 +88,12 @@ const Adventures: React.FC = () => {
 
   return (
     <AdventureWithProvider
-        classHasAdventure={classDetails.current_adventure}
-        missions={missions}
-        students={students}
-        handleUpdateCurrentAdventure={handleUpdateCurrentAdventure}
-        updateStageData={updateStageData}
-      />
+      classHasAdventure={classDetails.current_adventure}
+      missions={missions}
+      students={students}
+      handleUpdateCurrentAdventure={handleUpdateCurrentAdventure}
+      updateStageData={updateStageData}
+    />
   );
 };
 

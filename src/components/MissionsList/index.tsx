@@ -86,7 +86,7 @@ const MissionsList: FC<{ shownStage: IStage }> = ({ shownStage }) => {
         <MissionAccomplishedDrawer
           open={openDrawer && !!selectedMission}
           onSave={handleGetMissions}
-          anchor="right"
+          anchor='right'
           onClose={handleDrawerClose}
           mission={selectedMission}
           stage={shownStage}

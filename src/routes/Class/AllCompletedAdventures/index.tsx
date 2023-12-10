@@ -4,7 +4,7 @@ import { Button, CircularProgress, Typography } from '@mui/material';
 import { AllCompletedAdventuresContainer } from './styled';
 import { useClassContext } from '../context';
 import AdventureCard from 'components/AdventureCard';
-import { useNavigate , Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import SkillPoints from 'components/SkillPoints';
 import { type IClassHasAdventure } from 'global/interfaces';
 import { getCompletedClassHasAdventuresByClass } from 'services/adventures';

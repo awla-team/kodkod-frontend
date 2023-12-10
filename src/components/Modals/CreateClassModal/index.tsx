@@ -1,5 +1,8 @@
 import type { FC, ChangeEvent } from 'react';
-import { type CreateClassModalProps, type FormInitialState } from './interfaces';
+import {
+  type CreateClassModalProps,
+  type FormInitialState,
+} from './interfaces';
 import {
   Select,
   MenuItem,
@@ -146,7 +149,7 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
                       Nivel
                     </Typography>
                     <Select
-                      name="id_level"
+                      name='id_level'
                       size='small'
                       placeholder='Selecciona un nivel'
                       onChange={(e) => {
@@ -159,7 +162,7 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
                       }}
                       value={values.id_level}
                     >
-                      <MenuItem value="" disabled>
+                      <MenuItem value='' disabled>
                         Selecciona un nivel
                       </MenuItem>
                       {levels
@@ -193,7 +196,7 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
                       </Typography>
                     </div>
                     <TextField
-                      name="code"
+                      name='code'
                       placeholder='Ejemplo: A, B, C...'
                       onChange={(e) => {
                         handleAliasValue(e, values, setFieldValue);
@@ -244,8 +247,8 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
                     !values.id_level ||
                     !values.alias
                   }
-                  type="submit"
-                  variant="contained"
+                  type='submit'
+                  variant='contained'
                 >
                   {classDetails ? 'Guardar cambios' : 'Añade un nuevo curso'}
                 </Button>

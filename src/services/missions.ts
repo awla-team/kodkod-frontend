@@ -22,7 +22,9 @@ export interface MissionAccomplishedType {
 }
 
 export const getMissionsByStage = async (query?: MissionFilterType) =>
-  await http.get(`mission` + (query ? generateQueryParamsFromObject(query) : ''));
+  await http.get(
+    `mission` + (query ? generateQueryParamsFromObject(query) : '')
+  );
 
 export const getMissionsByClassAdventure = async (
   classAdventureId: number | string

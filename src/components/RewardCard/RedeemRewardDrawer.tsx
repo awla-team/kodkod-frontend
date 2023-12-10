@@ -151,7 +151,7 @@ const RedeemRewardDrawer = ({
       >
         <TextField
           className='mb-3'
-          variant="standard"
+          variant='standard'
           placeholder='Buscar por nombre o apellido'
           fullWidth
           onChange={(event) => {

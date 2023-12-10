@@ -12,10 +12,10 @@ const SkillPoints: React.FC<ISkillPointsProps> = ({ skill, dark }) => {
     >
       {skill ? (
         <Chip
-            label={skill.title}
-            sx={{ background: skill.color, color: '#FFF', fontSize: '12px' }}
-            size='small'
-          />
+          label={skill.title}
+          sx={{ background: skill.color, color: '#FFF', fontSize: '12px' }}
+          size='small'
+        />
       ) : null}
     </SkillPointsContainer>
   );

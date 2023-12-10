@@ -88,7 +88,7 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
     <Dialog
       open={open}
       onClose={(event, reason) => onClose(reason)}
-      scroll="body"
+      scroll='body'
       PaperProps={{ className: 'p-3' }}
     >
       <DialogTitle fontWeight='bold'>{`Reemplazar misión "${mission.title}"`}</DialogTitle>
@@ -164,7 +164,7 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
           Cancelar
         </Button>
         <Button
-          variant="contained"
+          variant='contained'
           onClick={handleClick}
           disabled={pending || !selected}
         >

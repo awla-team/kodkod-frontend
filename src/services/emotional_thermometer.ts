@@ -36,7 +36,9 @@ export const getEmotionalThermometerByClassId = async (
       }
     }
   }
-  return await http.get(`/emotional-thermometer-by-classId/${classId}` + queryParams);
+  return await http.get(
+    `/emotional-thermometer-by-classId/${classId}` + queryParams
+  );
 };
 
 export const saveEmotionalThermometerDetails = async (body: SaveBody) => {

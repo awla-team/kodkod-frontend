@@ -1,4 +1,4 @@
-import React, { type FC, useEffect , useState } from 'react';
+import React, { type FC, useEffect, useState } from 'react';
 import { type AddStudentsDialogProps } from './interfaces';
 import {
   Box,
@@ -97,8 +97,11 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
         const wb = read(event.target.result);
         const sheets = wb.SheetNames;
         if (sheets.length) {
-          const rows: Array<{ Nombres: string; Apellidos: string; Email: string }> =
-            utils.sheet_to_json(wb.Sheets[sheets[0]]);
+          const rows: Array<{
+            Nombres: string;
+            Apellidos: string;
+            Email: string;
+          }> = utils.sheet_to_json(wb.Sheets[sheets[0]]);
 
           setStudents(
             rows.map((student) => ({

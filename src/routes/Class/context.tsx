@@ -6,7 +6,7 @@ import {
   useEffect,
   useState,
 } from 'react';
-import { type IClass , type IStage } from 'global/interfaces';
+import { type IClass, type IStage } from 'global/interfaces';
 import { getClassByID } from 'services/classes';
 import Toaster from 'utils/Toster';
 import { studentsByClass } from 'services/students';

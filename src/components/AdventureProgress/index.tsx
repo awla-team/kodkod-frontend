@@ -34,10 +34,10 @@ const AdventureProgress: FC<{
     >
       <Box id='progress-adventure-details'>
         <Box
-          display="flex"
+          display='flex'
           sx={{ position: 'relative' }}
-          alignItems="start"
-          justifyContent="space-between"
+          alignItems='start'
+          justifyContent='space-between'
         >
           <Typography
             component='h2'

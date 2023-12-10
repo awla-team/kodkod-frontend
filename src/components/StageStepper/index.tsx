@@ -128,7 +128,7 @@ const StageStepper: FC<{
             >
               <Button
                 id='adventure-stage-unlock'
-                variant="contained"
+                variant='contained'
                 onClick={() => setOpenDialog(true)}
                 disabled={navigableStages.length === sortedStages.length}
                 size='large'
@@ -156,7 +156,7 @@ const StageStepper: FC<{
               }
             >
               <Button
-                variant="contained"
+                variant='contained'
                 onClick={() => setOpenDialog(true)}
                 size='large'
               >

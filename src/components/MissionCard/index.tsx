@@ -46,7 +46,7 @@ const MissionCard: React.FC<IMissionCardProps> = ({
       sx={{ background: mission.skill.color }}
     >
       <div className='d-flex flex-column justify-content-between w-100 pe-4'>
-        <div id={`mission-content-${id}`} className="text__details">
+        <div id={`mission-content-${id}`} className='text__details'>
           <Typography variant='h6' fontWeight='bold'>
             {title}
           </Typography>

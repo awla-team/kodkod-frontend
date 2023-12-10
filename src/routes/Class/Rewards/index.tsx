@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { RewardsList } from './styled';
 import { Button, Typography } from '@mui/material';
-import { useParams , useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import RewardCard from 'components/RewardCard';
 import { getRewardsByAdventure, updateReward } from 'services/rewards';
 import { type IReward, type IUser } from 'global/interfaces';

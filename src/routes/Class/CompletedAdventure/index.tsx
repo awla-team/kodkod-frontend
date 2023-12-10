@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useClassContext } from '../context';
 import { getClassHasAdventure } from 'services/adventures';
-import { useParams , Link , Navigate } from 'react-router-dom';
+import { useParams, Link, Navigate } from 'react-router-dom';
 import { Button, CircularProgress, Typography } from '@mui/material';
 import { FetchStatus } from 'global/enums';
 import {

@@ -166,7 +166,7 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
         />
         {!pickersDayProps.outsideCurrentMonth &&
           checkDate(day as MomentType) && (
-            <span className="tick__icon">&#10004;</span>
+            <span className='tick__icon'>&#10004;</span>
           )}
       </PickersDateContainer>
     );
@@ -469,8 +469,8 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
                         Ya completaste el termómetro socioemocional de hoy
                       </Typography>
                       <Button
-                        className="again__action"
-                        role="button"
+                        className='again__action'
+                        role='button'
                         onClick={() => setEditable(true)}
                       >
                         Rehacer

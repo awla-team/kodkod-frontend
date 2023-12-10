@@ -62,9 +62,7 @@ const MyClasses: FC<MyClassesProps> = ({
                   {level}
                 </Typography>
               </AccordionSummary>
-              <AccordionDetails
-                className="class__level__cards__container row"
-              >
+              <AccordionDetails className='class__level__cards__container row'>
                 {rest.classes.map((teacherClass, _index) => (
                   <div
                     className='col-lg-4 col-md-6 col-12'

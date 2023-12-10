@@ -1,8 +1,5 @@
 export const groupBy = <T, K extends keyof any>(arr: T[], key: (i: T) => K) =>
-  arr.reduce<Record<K, T[]>>(
-    (groups, item) => {
-      (groups[key(item)] ||= []).push(item);
-      return groups;
-    },
-    {}
-  );
+  arr.reduce<Record<K, T[]>>((groups, item) => {
+    (groups[key(item)] ||= []).push(item);
+    return groups;
+  }, {});

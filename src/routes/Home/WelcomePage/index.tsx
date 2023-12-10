@@ -25,7 +25,7 @@ const WelcomePage: FC<WelcomePageProps> = ({
           </Typography>
           <Button
             onClick={handleOpenModal}
-            variant="contained"
+            variant='contained'
             className='w-100'
           >
             Añade tu primer curso

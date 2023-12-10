@@ -25,6 +25,8 @@ export const deleteClass = async (id: number | string) => {
   return await http.delete('class/' + id);
 };
 
-export const getClassHasAdventuresByClass = async (classId: number | string) => {
+export const getClassHasAdventuresByClass = async (
+  classId: number | string
+) => {
   return await http.get(`completed-class-adventures/${classId}`);
 };

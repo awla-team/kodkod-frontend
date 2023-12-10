@@ -165,7 +165,7 @@ export const Adventure: React.FC = () => {
             {classDetails.current_adventure.adventure.title}
           </Typography>
           <div>
-            <IconButton color="inherit" onClick={handleVerticalButtonClick}>
+            <IconButton color='inherit' onClick={handleVerticalButtonClick}>
               <MoreVertIcon fontSize='large' />
             </IconButton>
             <Menu

@@ -89,19 +89,19 @@ const SignIn: React.FC = () => {
           }) => {
             return (
               <Form onSubmit={handleSubmit}>
-                <Box display="flex" flexDirection="column" mt={3}>
+                <Box display='flex' flexDirection='column' mt={3}>
                   <FormControl
                     error={!!errors.email && touched.email}
                     className='mb-3'
                   >
                     <TextField
-                      name="email"
+                      name='email'
                       value={values.email}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      type="email"
+                      type='email'
                       color='primary'
-                      placeholder="Ingresa tu email"
+                      placeholder='Ingresa tu email'
                       variant='outlined'
                     />
                   </FormControl>
@@ -110,40 +110,40 @@ const SignIn: React.FC = () => {
                     className='mb-2'
                   >
                     <TextField
-                      name="password"
+                      name='password'
                       value={values.password}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       color='primary'
-                      type="password"
-                      placeholder="Ingresa tu contraseña"
+                      type='password'
+                      placeholder='Ingresa tu contraseña'
                       variant='outlined'
                     />
                   </FormControl>
                   <Typography
                     className='mb-4'
-                    textAlign="center"
+                    textAlign='center'
                     variant='subtitle2'
                     component={RouterLink}
-                    to="/forgot-password"
+                    to='/forgot-password'
                   >
                     Olvidé mi contraseña
                   </Typography>
 
                   <Box
-                    className="action__container"
-                    display="flex"
-                    flexDirection="column"
-                    alignItems="center"
+                    className='action__container'
+                    display='flex'
+                    flexDirection='column'
+                    alignItems='center'
                     gap={1}
                   >
                     <Button
                       disabled={isSubmitting || !isValid || !dirty}
                       fullWidth
                       size='large'
-                      className="login__button"
-                      variant="contained"
-                      type="submit"
+                      className='login__button'
+                      variant='contained'
+                      type='submit'
                     >
                       Iniciar sesión
                     </Button>
@@ -152,7 +152,7 @@ const SignIn: React.FC = () => {
                       <Typography
                         component={RouterLink}
                         variant='subtitle2'
-                        to="/signup"
+                        to='/signup'
                       >
                         Registrate
                       </Typography>
