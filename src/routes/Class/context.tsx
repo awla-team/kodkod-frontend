@@ -60,8 +60,14 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
 
   useEffect(() => {
     if (classId) {
+      // FIXME: fix this eslint error
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises, @typescript-eslint/no-unsafe-argument
       getClassById(classId);
+      // FIXME: fix this eslint error
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises, @typescript-eslint/no-unsafe-argument
       getStudentsByClass(classId);
+      // FIXME: fix this eslint error
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       getLevels();
     }
   }, [classId]);
@@ -84,6 +90,8 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
       const { data }: { data: any } = await studentsByClass(id, {
         role: 'student',
       });
+      // FIXME: fix this eslint error
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       setStudents(data.responseData);
     } catch (error: any) {
       console.error(error);
@@ -92,10 +100,14 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
   };
 
   const updateStageData = (stage: IStage) => {
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(18048)
     const stagesCopy = [...classDetails.current_adventure.stages];
     const match = stagesCopy.find(
       (currentStage) => currentStage.id === stage.id
     );
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(2345)
     const index = stagesCopy.indexOf(match);
     stagesCopy[index] = stage;
     stagesCopy.sort((a, b) => {
@@ -106,7 +118,11 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
 
     setClassDetails({
       ...classDetails,
+      // FIXME: fix this ts error
+      // @ts-expect-error ts-error(2322)
       current_adventure: {
+        // FIXME: fix this ts error
+        // @ts-expect-error ts-error(18048)
         ...classDetails.current_adventure,
         stages: stagesCopy,
       },
@@ -120,6 +136,8 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
     if (data) {
       switch (actionType) {
         case 'update':
+          // FIXME: fix this eslint error
+          // eslint-disable-next-line no-lone-blocks
           {
             if (Array.isArray(data)) {
               setStudents((prevState) => {
@@ -164,9 +182,15 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
   return (
     <ClassContext.Provider
       value={{
+        // FIXME: fix this ts error
+        // @ts-expect-error ts-error(2322)
         updateStudentsData,
         updateStageData,
+        // FIXME: fix this ts error
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         getClassById,
+        // FIXME: fix this ts error
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         getStudentsByClass,
         classDetails,
         loadingClass,

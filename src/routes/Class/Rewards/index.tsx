@@ -52,7 +52,11 @@ const Rewards = () => {
         setRewards(newRewards);
         setClassDetails({
           ...classDetails,
+          // FIXME: fix this ts error
+          // @ts-expect-error ts-error(2322)
           current_adventure: {
+            // FIXME: fix this ts error
+            // @ts-expect-error ts-error(18048)
             ...classDetails.current_adventure,
             rewards: newRewards,
           },
@@ -73,11 +77,15 @@ const Rewards = () => {
 
   useEffect(() => {
     const rawOnboardingData = localStorage.getItem('onboarding-data');
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(2345)
     const onboardingData = JSON.parse(rawOnboardingData);
     setOnboardingDone(!!onboardingData?.recompensas);
   }, []);
 
   useEffect(() => {
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(2722)
     setNewAvailableTours([
       {
         name: 'Gestión de recompensas',
@@ -101,18 +109,26 @@ const Rewards = () => {
   useEffect(() => {
     const currentAdventureId = classDetails?.current_adventure?.id;
     if (currentAdventureId) {
+      // FIXME: fix this eslint error
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       (async () => {
         try {
+          // FIXME: fix this eslint error
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
           const { data: studentsData } = await studentsByClass(classId, {
             role: 'student',
             rewards: true,
           });
           const rewardsWithUsedCount =
+            // FIXME: fix this ts error
+            // @ts-expect-error ts-error(18048)
             classDetails.current_adventure.rewards.map((reward) => {
               return {
                 ...reward,
                 usedCount: usedRewardCount(
                   reward.id,
+                  // FIXME: fix this eslint error
+                  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                   studentsData.responseData
                 ),
               };

@@ -30,6 +30,8 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
 
   useEffect(() => {
     if (mission) {
+      // FIXME: fix this eslint error
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       handleGetMission();
     }
   }, [mission]);
@@ -62,10 +64,16 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
   const handleClick = async () => {
     try {
       setPending(true);
+      // FIXME: fix this ts error
+      // @ts-expect-error ts-error(18048)
       const index = stage.missions.indexOf(mission);
+      // FIXME: fix this ts error
+      // @ts-expect-error ts-error(2488)
       const missionsCopy = [...stage.missions];
       const body = {
         id_stage: stage.id,
+        // FIXME: fix this ts error
+        // @ts-expect-error ts-error(18047)
         new_mission_id: selected.id as number,
         old_mission_id: mission.id as number,
       };
@@ -165,6 +173,8 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
         </Button>
         <Button
           variant='contained'
+          // FIXME: fix this eslint error
+          // eslint-disable-next-line @typescript-eslint/no-misused-promises
           onClick={handleClick}
           disabled={pending || !selected}
         >

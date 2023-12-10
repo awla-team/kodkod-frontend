@@ -31,18 +31,26 @@ const Sidebar: FC<SidebarProps> = ({ classes, handleOpenModal }) => {
             <HomeIcon />
           </RoundButton>
         </RouterLink>
-        {classes.length ? (
-          <LinkList>
-            {classes?.map?.((teacherClass: IClass, index) => (
-              <SidebarLink
-                key={`side-bar-${teacherClass.id}-${index}`}
-                linkId={teacherClass.id}
-                linkTitle={teacherClass.alias}
-                linkRoute={`cursos/${teacherClass.id}/tablero`}
-              />
-            ))}
-          </LinkList>
-        ) : null}
+        {
+          // FIXME: fix this ts error
+          // @ts-expect-error ts-error(18048)
+          classes.length ? (
+            <LinkList>
+              {classes?.map?.((teacherClass: IClass, index) => (
+                <SidebarLink
+                  key={`side-bar-${teacherClass.id}-${index}`}
+                  // FIXME: fix this ts error
+                  // @ts-expect-error ts-error(2322)
+                  linkId={teacherClass.id}
+                  // FIXME: fix this ts error
+                  // @ts-expect-error ts-error(2322)
+                  linkTitle={teacherClass.alias}
+                  linkRoute={`cursos/${teacherClass.id}/tablero`}
+                />
+              ))}
+            </LinkList>
+          ) : null
+        }
         <RoundButton
           id='home-onboarding-2'
           sx={{ marginBottom: '74px' }}

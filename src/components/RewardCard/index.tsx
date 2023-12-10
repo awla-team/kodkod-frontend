@@ -106,7 +106,11 @@ const RewardCard: React.FC<IRewardCardProps> = ({
         >
           <RewardCardHeader>
             <div id={`reward-card-indicator-${id}`}>
-              <UsedRewardCount count={usedCount} />
+              <UsedRewardCount
+                // FIXME: fix this ts error
+                // @ts-expect-error ts-error(2322)
+                count={usedCount}
+              />
             </div>
             {!!order && (
               <Typography

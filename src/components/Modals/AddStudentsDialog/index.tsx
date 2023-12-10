@@ -59,7 +59,11 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
     try {
       const { data }: { data: { responseData: { students: StudentType[] } } } =
         await addStudentsInClass({
+          // FIXME: fix this ts error
+          // @ts-expect-error ts-error(2322)
           id_class: classDetails.id,
+          // FIXME: fix this eslint error
+          // eslint-disable-next-line @typescript-eslint/naming-convention
           students: filled.map(({ first_name, last_name, email }) => {
             return {
               first_name,
@@ -81,6 +85,8 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
       console.error(error);
       Toaster(
         'error',
+        // FIXME: fix this ts error
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         error?.response?.data?.responseData ||
           'Hubo un error al añadir estudiantes'
       );
@@ -90,10 +96,16 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
   const handleImport = ($event: React.ChangeEvent<HTMLInputElement>) => {
     const files = $event.target.files;
 
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(18047)
     if (files.length) {
+      // FIXME: fix this ts error
+      // @ts-expect-error ts-error(18047)
       const file = files[0];
       const reader = new FileReader();
       reader.onload = (event) => {
+        // FIXME: fix this ts error
+        // @ts-expect-error ts-error(18047)
         const wb = read(event.target.result);
         const sheets = wb.SheetNames;
         if (sheets.length) {
@@ -128,6 +140,8 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
       <form
         className='d-flex flex-column flex-fill'
         style={{ overflow: 'hidden' }}
+        // FIXME: fix this eslint error
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         onSubmit={async (event) => await handleSubmit(event)}
       >
         <DialogContent className='d-flex flex-column flex-fill'>
@@ -188,6 +202,8 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
                         <TextField
                           size='small'
                           value={student.first_name}
+                          // FIXME: fix this ts error
+                          // @ts-expect-error ts-error(2322)
                           error={
                             (student.last_name || student.email) &&
                             !student.first_name
@@ -207,6 +223,8 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
                         <TextField
                           size='small'
                           value={student.last_name}
+                          // FIXME: fix this ts error
+                          // @ts-expect-error ts-error(2322)
                           error={
                             (student.first_name || student.email) &&
                             !student.last_name
@@ -226,6 +244,8 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
                         <TextField
                           size='small'
                           value={student.email}
+                          // FIXME: fix this ts error
+                          // @ts-expect-error ts-error(2322)
                           error={
                             (student.first_name || student.last_name) &&
                             !student.email

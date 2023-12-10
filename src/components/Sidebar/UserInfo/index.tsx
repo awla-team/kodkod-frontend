@@ -29,6 +29,8 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
     logout();
   };
 
+  // FIXME: fix this ts error
+  // @ts-expect-error ts-error(18047)
   return user.id ? (
     <UserInfoContainer className='w-100'>
       <Divider className='w-75 my-3' color='gray' />
@@ -68,14 +70,21 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
       >
         <MenuItem divider disabled={loading}>
           <Avatar src={ImgAvatar} />{' '}
-          <Typography
-            sx={{ ml: 1 }}
-          >{`${user.first_name} ${user.last_name}`}</Typography>
+          <Typography sx={{ ml: 1 }}>{
+            // FIXME: fix this ts error
+            // @ts-expect-error ts-error(18047)
+            `${user.first_name} ${user.last_name}`
+          }</Typography>
         </MenuItem>
         <MenuItem component={Link} to='perfil/suscripciones' disabled={loading}>
           Suscripciones
         </MenuItem>
-        <MenuItem onClick={handleLogout} disabled={loading}>
+        <MenuItem
+          // FIXME: fix this eslint error
+          // eslint-disable-next-line @typescript-eslint/no-misused-promises
+          onClick={handleLogout}
+          disabled={loading}
+        >
           Cerrar sesión
         </MenuItem>
       </Menu>

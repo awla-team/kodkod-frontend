@@ -28,10 +28,16 @@ export const getEmotionalThermometerByClassId = async (
         .utc()
         .format()}`;
     } else {
+      // FIXME: fix this ts error
+      // @ts-expect-error ts-error(18048)
       if (dateFrom.isValid()) {
+        // FIXME: fix this ts error
+        // @ts-expect-error ts-error(18048)
         queryParams = `?date_from=${dateFrom.utc().format()}`;
       }
       if (Moment(dateTo).isValid()) {
+        // FIXME: fix this ts error
+        // @ts-expect-error ts-error(18048)
         queryParams = `?date_to=${dateTo.utc().format()}`;
       }
     }

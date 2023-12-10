@@ -11,6 +11,8 @@ const AdventureProgress: FC<{
   averageCompletedMission: number;
 }> = ({ adventure, progressPercentage = 0, averageCompletedMission = 0 }) => {
   const { classDetails } = useClassContext();
+  // FIXME: fix this ts error
+  // @ts-expect-error ts-error(2345): argument of type 'undefined' is not assignable to parameter of type 'IStage | (() => IStage)'
   const [latestStage, setLatestStage] = useState<IStage>(undefined);
 
   useEffect(() => {
@@ -42,19 +44,26 @@ const AdventureProgress: FC<{
           <Typography
             component='h2'
             variant='h2'
+            // FIXME: fix this ts error
+            // @ts-expect-error ts-error(18048): 'classDetails' is possibly 'undefined'
             title={classDetails.alias}
             fontWeight='bold'
             className='mb-2'
             textOverflow='ellipsis'
             overflow='hidden'
           >
-            {classDetails.alias}
+            {
+              // FIXME: fix this ts error
+              // @ts-expect-error ts-error(18048): 'classDetails' is possibly 'undefined'
+              classDetails.alias
+            }
           </Typography>
         </Box>
-        <Typography
-          variant='h5'
-          fontWeight='bold'
-        >{`${classDetails.current_adventure?.adventure?.title}`}</Typography>
+        <Typography variant='h5' fontWeight='bold'>{
+          // FIXME: fix this ts error
+          // @ts-expect-error ts-error(18048): 'classDetails' is possibly 'undefined'
+          `${classDetails.current_adventure?.adventure?.title}`
+        }</Typography>
         <Typography
           variant='body1'
           fontWeight='bold'
@@ -62,16 +71,22 @@ const AdventureProgress: FC<{
         >{`Etapa ${latestStage?._index}: ${latestStage?.title}`}</Typography>
         <section className='d-flex flex-column mb-3'>
           <div className='d-flex flex-wrap flex-lg-nowrap gap-2'>
-            {classDetails.current_adventure?.adventure?.skills?.length
-              ? classDetails.current_adventure.adventure?.skills.map(
-                  (adventureSkill, index) => (
-                    <SkillPoints
-                      key={`${adventureSkill.id}-${adventureSkill.title}-${index}`}
-                      skill={adventureSkill}
-                    />
+            {
+              // FIXME: fix this ts error
+              // @ts-expect-error ts-error(18048): 'classDetails' is possibly 'undefined'
+              classDetails.current_adventure?.adventure?.skills?.length
+                ? // FIXME: fix this ts error
+                  // @ts-expect-error ts-error(18048): 'classDetails' is possibly 'undefined'
+                  classDetails.current_adventure.adventure?.skills.map(
+                    (adventureSkill, index) => (
+                      <SkillPoints
+                        key={`${adventureSkill.id}-${adventureSkill.title}-${index}`}
+                        skill={adventureSkill}
+                      />
+                    )
                   )
-                )
-              : null}
+                : null
+            }
           </div>
         </section>
       </Box>

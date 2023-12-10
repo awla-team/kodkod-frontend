@@ -16,8 +16,12 @@ export const difficultyIcons = {
 export const sortClasses = (classes?: IClass[]): IClass[] => {
   if (classes && Array.isArray(classes)) {
     return classes?.sort((a, b) => {
+      // FIXME: fix this ts error
+      // @ts-expect-error ts-error(18048)
       if (a.alias < b.alias) {
         return -1;
+        // FIXME: fix this ts error
+        // @ts-expect-error ts-error(18048)
       } else if (a.alias > b.alias) {
         return 1;
       } else {
@@ -31,6 +35,8 @@ export const sortClasses = (classes?: IClass[]): IClass[] => {
 export const generateQueryParamsFromObject = (obj: any): string => {
   let finalQueryParamString = '';
   if (typeof obj === 'object' && !Array.isArray(obj)) {
+    // FIXME: fix this eslint error
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     Object.keys(obj).forEach((key, index) => {
       if (index === 0) {
         finalQueryParamString += `?${key}=${obj[key]}`;
@@ -117,9 +123,13 @@ export const getFirstNonActiveStage = (
 };
 
 export const getAccessTokenUsingRefreshToken = async () => {
+  // FIXME: fix this eslint errors
+  // eslint-disable-next-line @typescript-eslint/no-misused-promises, no-async-promise-executor
   return await new Promise(async (resolve, reject) => {
     const refreshToken = localStorage.getItem('refreshToken');
     if (!refreshToken) {
+      // FIXME: fix this eslint error
+      // eslint-disable-next-line prefer-promise-reject-errors
       return reject('Refresh token not found');
     }
     try {

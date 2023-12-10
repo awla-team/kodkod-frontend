@@ -33,11 +33,17 @@ export const signUp = async (body: Omit<SignUpBody, 'confirmPassword'>) => {
 };
 
 export const generateAccessToken = async (body?: GenerateAccessTokenBody) => {
+  // FIXME: fix this eslint error
+  // eslint-disable-next-line @typescript-eslint/no-misused-promises, no-async-promise-executor
   return await new Promise(async (resolve, reject) => {
     let refreshToken: string;
     if (!body) {
+      // FIXME: fix this ts error
+      // @ts-expect-error ts-error(2322)
       refreshToken = localStorage.getItem('refreshToken');
       if (!refreshToken) {
+        // FIXME: fix this eslint error
+        // eslint-disable-next-line prefer-promise-reject-errors
         return reject({ reason: 'refreshTokenNull' });
       }
     }
@@ -45,16 +51,22 @@ export const generateAccessToken = async (body?: GenerateAccessTokenBody) => {
     http
       .post(
         '/auth/generate-access-token',
+        // FIXME: fix this ts error
+        // @ts-expect-error ts-error(2454)
         { ...(body ? { refreshToken: body.refreshToken } : { refreshToken }) },
         { headers: { 'Content-Type': 'application/json' } }
       )
       .then((response) => {
         if (response?.status === 200 && !!response?.data)
           return resolve(response.data);
+        // FIXME: fix this eslint error
+        // eslint-disable-next-line @typescript-eslint/no-throw-literal
         throw response;
       })
       .catch(async (error: AxiosError) => {
         try {
+          // FIXME: fix this ts error
+          // @ts-expect-error ts-error(18048)
           const data: any = await error.response.data;
           if (
             data?.responseData === 'refreshToken expired' &&

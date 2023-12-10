@@ -24,6 +24,8 @@ const AllCompletedAdventures: React.FC = () => {
       setLoading(FetchStatus.Pending);
       getCompletedClassHasAdventuresByClass(classDetails.id)
         .then((response) => {
+          // FIXME: fix this eslint error
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
           setCompletedAdventures(response.data);
           setLoading(FetchStatus.Success);
         })
@@ -64,7 +66,12 @@ const AllCompletedAdventures: React.FC = () => {
         </Button>
       </div>
       <Typography component='h1' variant='h4' className='fw-bold mb-4'>
-        {classDetails.alias} - Aventuras finalizadas
+        {
+          // FIXME: fix this ts error
+          // @ts-expect-error ts-error(18048)
+          classDetails.alias
+        }{' '}
+        - Aventuras finalizadas
       </Typography>
       <div className='d-flex h-100 w-100 align-items-center justify-content-start flex-wrap gap-4'>
         {completedAdventures.map((classHasAdventure, index) => (
@@ -77,6 +84,8 @@ const AllCompletedAdventures: React.FC = () => {
             endDate={moment(classHasAdventure.date_stop).format('DD/MM/YYYY')}
             onClick={() =>
               navigate(
+                // FIXME: fix this ts error
+                // @ts-expect-error ts-error(18048)
                 `/app/cursos/${classDetails.id}/aventuras/completed/${classHasAdventure.id}`
               )
             }

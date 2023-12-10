@@ -39,6 +39,8 @@ const StudentListOnboarding = [
     padding: 0,
   },
   {
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(2531)
     action: () => document.getElementById('student-list-onboarding-1').click(),
     content: () => {
       return (
@@ -57,6 +59,8 @@ const StudentListOnboarding = [
     padding: 0,
   },
   {
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(2531)
     action: () => document.getElementById('student-list-onboarding-1').click(),
     content: () => {
       return (
@@ -75,6 +79,8 @@ const StudentListOnboarding = [
     padding: 0,
   },
   {
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(2531)
     action: () => document.getElementById('student-list-onboarding-1').click(),
     content: () => {
       return (
@@ -93,6 +99,8 @@ const StudentListOnboarding = [
     padding: 0,
   },
   {
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(2531)
     action: () => document.getElementById('student-list-onboarding-1').click(),
     content: () => {
       return (

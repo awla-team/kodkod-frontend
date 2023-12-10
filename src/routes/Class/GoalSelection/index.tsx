@@ -19,6 +19,8 @@ const GoalSelection: React.FC = () => {
   const navigate = useNavigate();
   const [onboardingDone, setOnboardingDone] = useState(true);
   const [goals, setGoals] = useState<IGoal[]>([]);
+  // FIXME: fix this ts error
+  // @ts-expect-error ts-error(2345)
   const [selectedGoalId, setSelectedGoalId] = useState<number>(null);
   const [loadingGoals, setLoadingGoals] = useState<FetchStatus>(
     FetchStatus.Idle
@@ -26,6 +28,8 @@ const GoalSelection: React.FC = () => {
 
   const selectAdventure = (goalId: number) => {
     if (selectedGoalId !== goalId) setSelectedGoalId(goalId);
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(2345)
     else setSelectedGoalId(null);
   };
 
@@ -33,11 +37,15 @@ const GoalSelection: React.FC = () => {
 
   useEffect(() => {
     const rawOnboardingData = localStorage.getItem('onboarding-data');
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(2345)
     const onboardingData = JSON.parse(rawOnboardingData);
     setOnboardingDone(!!onboardingData?.iniciar);
   }, []);
 
   useEffect(() => {
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(2722)
     setNewAvailableTours([
       {
         name: 'Selección de aventura',
@@ -63,6 +71,8 @@ const GoalSelection: React.FC = () => {
     getGoals()
       .then((response: AxiosResponse) => response?.data)
       .then((goalsResponse: { responseData: any }) => {
+        // FIXME: fix this eslint error
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         setGoals(goalsResponse.responseData);
         setLoadingGoals(FetchStatus.Success);
       })

@@ -51,8 +51,14 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
   useEffect(() => {
     if (classDetails) {
       setInitialState({
+        // FIXME: fix this ts error
+        // @ts-expect-error ts-error(18048)
         id_level: classDetails.level.id,
+        // FIXME: fix this ts error
+        // @ts-expect-error ts-error(2322)
         code: classDetails.code,
+        // FIXME: fix this ts error
+        // @ts-expect-error ts-error(2322)
         alias: classDetails.alias,
       });
     }
@@ -67,6 +73,8 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
       const { name, value } = e.target as HTMLInputElement;
       if (name === 'id_level') {
         const level = levels.find((level) => level.id === value);
+        // FIXME: fix this ts error
+        // @ts-expect-error ts-error(18048)
         setFieldValue('alias', `${level.name.charAt(0)}°${values.code}`);
       } else {
         const level = levels.find((level) => level.id === values.id_level);
@@ -95,6 +103,8 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
       } else {
         const { data }: { data: { responseData: IClass } } = await createClass({
           ...values,
+          // FIXME: fix this ts error
+          // @ts-expect-error ts-error(18047)
           id_user: user.id,
           id_level: values.id_level as number,
         });

@@ -14,6 +14,8 @@ const MissionAccomplished: FC<MissionAccomplishedProps> = ({
   mission,
 }) => {
   const handleClose = () => {
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(2722)
     onClose(null);
   };
 

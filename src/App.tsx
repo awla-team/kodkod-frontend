@@ -34,6 +34,8 @@ const App: React.FC = () => {
   const location = useLocation();
 
   const getClassesData = () => {
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(18047): 'user' is possibly 'null'
     getClassesByUser(user.id)
       .then((response: AxiosResponse) => {
         return response?.data;
@@ -91,9 +93,13 @@ const App: React.FC = () => {
 
   const handleFinish = () => {
     let currentView = location.pathname.match(/\/([^/]+)$/)[1];
+    // FIXME: fix this eslint error
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     if (!isNaN(currentView))
       currentView = location.pathname.match(/\/([^/]+)\/[^/]+$/)[1];
     const rawOnboardingData = localStorage.getItem('onboarding-data');
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(2345): argument of type 'string | null' is not assignable to parameter of type 'string'
     const onboardingData = JSON.parse(rawOnboardingData) || {};
     onboardingData[currentView] = true;
     localStorage.setItem('onboarding-data', JSON.stringify(onboardingData));
@@ -118,6 +124,8 @@ const App: React.FC = () => {
     if (user) {
       setFetching(FetchStatus.Pending);
       getClassesData();
+      // FIXME: fix this eslint error
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       getLevels();
     }
   }, [user]);

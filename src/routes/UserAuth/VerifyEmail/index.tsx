@@ -15,6 +15,8 @@ const VerifyEmail: React.FC = () => {
 
   useEffect(() => {
     setEmailVerified(FetchStatus.Pending);
+    // FIXME: fix this eslint error
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     verifyEmail(token)
       .then((_response) => {
         setEmailVerified(FetchStatus.Success);
@@ -27,6 +29,8 @@ const VerifyEmail: React.FC = () => {
 
   const sendEmailVerification = () => {
     setEmailSend(FetchStatus.Pending);
+    // FIXME: fix this eslint error
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     resendEmailVerification(userId)
       .then((_response) => {
         setEmailSend(FetchStatus.Success);

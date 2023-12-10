@@ -15,11 +15,17 @@ const MissionsList: FC<{ shownStage: IStage }> = ({ shownStage }) => {
   // const [sortedMissions, setSortedMissions] = useState<IMission[]>([]);
 
   useEffect(() => {
-    if (shownStage) handleGetMissions(shownStage.id);
+    if (shownStage) {
+      // FIXME: fix this eslint error
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      handleGetMissions(shownStage.id);
+    }
   }, [shownStage]);
 
   const handleGetMissions = async (stageId: number | string) => {
     const response = await getStageMissions(stageId);
+    // FIXME: fix this eslint error
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     setMissions(response.data.responseData);
   };
 
@@ -85,6 +91,8 @@ const MissionsList: FC<{ shownStage: IStage }> = ({ shownStage }) => {
       {openDrawer && !!selectedMission && (
         <MissionAccomplishedDrawer
           open={openDrawer && !!selectedMission}
+          // FIXME: fix this eslint error
+          // eslint-disable-next-line @typescript-eslint/no-misused-promises
           onSave={handleGetMissions}
           anchor='right'
           onClose={handleDrawerClose}

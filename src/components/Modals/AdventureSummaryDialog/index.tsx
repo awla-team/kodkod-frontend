@@ -25,6 +25,8 @@ const AdventureSummaryDialog: React.FC<{
 }> = ({ selectedAdventure, handleOnCloseModal }) => {
   const { user } = useAuth();
   const { classId } = useParams();
+  // FIXME: fix this ts error
+  // @ts-expect-error ts-error(2345)
   const [shownAdventure, setShownAdventure] = useState<IAdventure>(undefined);
   const [sortedStages, setSortedStages] = useState([]);
   const { classDetails, setClassDetails } = useClassContext();
@@ -39,6 +41,8 @@ const AdventureSummaryDialog: React.FC<{
           return 0;
         }
       );
+      // FIXME: fix this ts error
+      // @ts-expect-error ts-error(2345)
       setSortedStages(newSortedStages);
     }
   }, [selectedAdventure]);
@@ -152,10 +156,18 @@ const AdventureSummaryDialog: React.FC<{
                     <div className='d-flex flex-column gap-0'>
                       <Typography variant='body1'>
                         <b>{`Etapa ${i}: `}</b>
-                        {stage.title}
+                        {
+                          // FIXME: fix this ts error
+                          // @ts-expect-error ts-error(2339)
+                          stage.title
+                        }
                       </Typography>
                       <Typography variant='caption'>
-                        {stage.description}
+                        {
+                          // FIXME: fix this ts error
+                          // @ts-expect-error ts-error(2339)
+                          stage.description
+                        }
                       </Typography>
                     </div>
                   </div>
@@ -192,6 +204,8 @@ const AdventureSummaryDialog: React.FC<{
             id='adventure-selection-onboarding-6'
             variant='contained'
             color='primary'
+            // FIXME: fix this eslint error
+            // eslint-disable-next-line @typescript-eslint/no-misused-promises
             onClick={setAdventure}
           >
             Quiero esta aventura

@@ -28,6 +28,8 @@ const MissionCard: React.FC<IMissionCardProps> = ({
     checkUserSubscription(
       'Reemplazar una misión es una funcionalidad Pro',
       () => {
+        // FIXME: fix this ts error
+        // @ts-expect-error ts-error(2722)
         openModal(mission);
       }
     );
@@ -43,6 +45,8 @@ const MissionCard: React.FC<IMissionCardProps> = ({
         (clickable ? ' clickable' : '')
       }
       variant='outlined'
+      // FIXME: fix this ts error
+      // @ts-expect-error ts-error(18048)
       sx={{ background: mission.skill.color }}
     >
       <div className='d-flex flex-column justify-content-between w-100 pe-4'>

@@ -103,6 +103,8 @@ export const StudentDetails: FC<{
 
   const cancelEditMode = () => {
     setEditState(false);
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(2339)
     formRef.current?.resetForm();
   };
 

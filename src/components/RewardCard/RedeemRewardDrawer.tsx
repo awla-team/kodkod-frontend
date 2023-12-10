@@ -54,7 +54,11 @@ const RedeemRewardDrawer = ({
       .get(`/students-by-class/${classId}/by-reward/${rewardId}`)
       .then((response) => {
         if (response?.data?.responseData?.length) {
+          // FIXME: fix this eslint error
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
           setStudents(response?.data?.responseData);
+          // FIXME: fix this eslint error
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
           setStudentList(response?.data?.responseData);
         }
       })
@@ -81,6 +85,9 @@ const RedeemRewardDrawer = ({
     const all: number[] = [];
     if (checked) {
       studentList.forEach((student) => {
+        // FIXME: fix this ts and eslint errors
+        // @ts-expect-error ts-error(2339)
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         if (!defaultSelected.includes(student.id)) all.push(student.id);
       });
       return setSelected(all);
@@ -106,13 +113,19 @@ const RedeemRewardDrawer = ({
 
   useEffect(() => {
     studentList.forEach((student) => {
+      // FIXME: fix this ts error
+      // @ts-expect-error ts-error(2339)
       if (student?.user_has_rewards?.length) {
+        // FIXME: fix this ts error
+        // @ts-expect-error ts-error(2339)
         const currentReward = student.user_has_rewards.find(
           (reward: IUserHasReward) => rewardId === reward.id_reward
         );
         currentReward?.used_at &&
           setDefaultSelected((defaultSelected) => [
             ...defaultSelected,
+            // FIXME: fix this ts error
+            // @ts-expect-error ts-error(2339)
             student.id,
           ]);
       }
@@ -158,6 +171,8 @@ const RedeemRewardDrawer = ({
             if (!event.target.value) return setStudentList(students);
             setStudentList(
               studentList.filter((student) =>
+                // FIXME: fix this ts error
+                // @ts-expect-error ts-error(2339)
                 `${student.first_name} ${student.last_name}`.includes(
                   event.target.value
                 )
@@ -177,13 +192,22 @@ const RedeemRewardDrawer = ({
                 <Checkbox
                   onChange={handleAllSelect}
                   disabled={studentList.every((student) =>
+                    // FIXME: fix this ts and eslint errors
+                    // @ts-expect-error ts-error(2339)
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                     defaultSelected.includes(student.id)
                   )}
                   checked={
                     !!studentList.length &&
                     studentList.every(
                       (student) =>
+                        // FIXME: fix this ts and eslint errors
+                        // @ts-expect-error ts-error(2339)
+                        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                         selected.includes(student.id) ||
+                        // FIXME: fix this ts and eslint errors
+                        // @ts-expect-error ts-error(2339)
+                        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                         defaultSelected.includes(student.id)
                     )
                   }
@@ -201,6 +225,8 @@ const RedeemRewardDrawer = ({
                 </Button>
                 <Button
                   id='reward-modal-save'
+                  // FIXME: fix this eslint error
+                  // eslint-disable-next-line @typescript-eslint/no-misused-promises
                   onClick={async () => await handleSave(rewardId, selected)}
                   variant='contained'
                   disabled={!Object.keys(selected).length}
@@ -222,26 +248,47 @@ const RedeemRewardDrawer = ({
             {studentList.map((student, index) => (
               <div key={index} className='d-flex gap-2 align-items-center'>
                 <Checkbox
+                  // FIXME: fix this ts and eslint errors
+                  // @ts-expect-error ts-error(2339)
+                  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                   onChange={() => handleCheck(student.id)}
+                  // FIXME: fix this ts and eslint errors
+                  // @ts-expect-error ts-error(2339)
+                  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                   disabled={defaultSelected.includes(student.id)}
                   checked={
+                    // FIXME: fix this ts and eslint errors
+                    // @ts-expect-error ts-error(2339)
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                     selected.includes(student.id) ||
+                    // FIXME: fix this ts and eslint errors
+                    // @ts-expect-error ts-error(2339)
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                     defaultSelected.includes(student.id)
                   }
                 />
                 <div className='d-flex align-items-center gap-3'>
-                  <Avatar className='student-avatar'>{`${student.first_name[0]}${student.last_name[0]}`}</Avatar>
+                  <Avatar className='student-avatar'>{
+                    // FIXME: fix this ts error
+                    // @ts-expect-error ts-error(2339)
+                    `${student.first_name[0]}${student.last_name[0]}`
+                  }</Avatar>
                   <div className='d-flex flex-column'>
-                    <Typography
-                      component='span'
-                      variant='body1'
-                    >{`${student.first_name} ${student.last_name}`}</Typography>
+                    <Typography component='span' variant='body1'>{
+                      // FIXME: fix this ts error
+                      // @ts-expect-error ts-error(2339)
+                      `${student.first_name} ${student.last_name}`
+                    }</Typography>
                     <Typography
                       component='span'
                       variant='body2'
                       color='#969696'
                     >
-                      {student.email}
+                      {
+                        // FIXME: fix this ts error
+                        // @ts-expect-error ts-error(2339)
+                        student.email
+                      }
                     </Typography>
                   </div>
                 </div>

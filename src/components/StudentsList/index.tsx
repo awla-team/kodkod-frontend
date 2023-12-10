@@ -31,12 +31,16 @@ const StudentsList: FC<StudentsListProps> = ({
 
   // temporary approcah
   const handleDelete = async (studentId: string | number): Promise<boolean> => {
+    // FIXME: fix this eslint errors
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises, no-async-promise-executor
     return await new Promise(async (resolve, reject) => {
       try {
         if (studentId) {
           await deleteStudent(studentId);
           resolve(true);
         }
+        // FIXME: fix this eslint error
+        // eslint-disable-next-line prefer-promise-reject-errors
         reject({ message: "Student id didn't find." });
       } catch (e: any) {
         reject(e);

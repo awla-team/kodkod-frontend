@@ -34,6 +34,8 @@ const StageStepper: FC<{
       setSortedStages(sorted);
       setNavigableStages(navigableStages);
       if (shownStage)
+        // FIXME: fix this ts error
+        // @ts-expect-error ts-error(2345)
         onStageChange(stages.find((stage) => stage.id === shownStage.id));
       else setActiveStep(navigableStages[navigableStages.length - 1]._index);
     }
@@ -170,6 +172,8 @@ const StageStepper: FC<{
             open={openDialog}
             currentStage={shownStage}
             handleClose={() => setOpenDialog(false)}
+            // FIXME: fix this ts error
+            // @ts-expect-error ts-error(2322)
             finishImg={classHasAdventure?.adventure?.finish_img_url}
             onConfirm={
               sortedStages[navigableStages.length] ? handleUnlock : handleFinish

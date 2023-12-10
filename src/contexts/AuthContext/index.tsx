@@ -153,6 +153,8 @@ const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
     const accessToken = localStorage.getItem('accessToken');
     const refreshToken = localStorage.getItem('refreshToken');
     if (accessToken && refreshToken && pathname.includes('app'))
+      // FIXME: fix this eslint error
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       checkAuthUser();
   }, [pathname, checkAuthUser, goToSignin]);
 
@@ -165,6 +167,8 @@ const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
   }
 
   return (
+    // FIXME: fix this eslint error
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     <AuthContext.Provider value={{ user, logout, checkUserSubscription }}>
       {children}
       <SubscribeModal

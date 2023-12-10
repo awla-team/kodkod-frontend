@@ -1,7 +1,11 @@
 import { useRef, useLayoutEffect } from 'react';
 import * as am5 from '@amcharts/amcharts5';
 import * as am5xy from '@amcharts/amcharts5/xy';
+// FIXME: fix this eslint error
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
+// FIXME: fix this eslint error
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import am5locales_es_ES from '@amcharts/amcharts5/locales/es_ES';
 import { type TermometerChartProps } from './interfaces';
 
@@ -123,7 +127,11 @@ const TermometerChart = ({ data }: TermometerChartProps) => {
 
     // Make stuff animate on load
     // https://www.amcharts.com/docs/v5/concepts/animations/
+    // FIXME: fix this eslint error
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     series.appear(1000, 100);
+    // FIXME: fix this eslint error
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     chart.appear(1000, 100);
 
     const createRange = (
@@ -141,12 +149,16 @@ const TermometerChart = ({ data }: TermometerChartProps) => {
       const range = yAxis.createAxisRange(rangeDataItem);
 
       if (endValue) {
+        // FIXME: fix this ts error
+        // @ts-expect-error ts-error(2532) object is possibly 'undefined'
         range.get('axisFill').setAll({
           fill: color,
           fillOpacity: 0.2,
           visible: true,
         });
       } else {
+        // FIXME: fix this ts error
+        // @ts-expect-error ts-error(2532) object is possibly 'undefined'
         range.get('grid').setAll({
           stroke: color,
           strokeOpacity: 1,
@@ -155,11 +167,15 @@ const TermometerChart = ({ data }: TermometerChartProps) => {
         });
 
         if (dashed) {
+          // FIXME: fix this ts error
+          // @ts-expect-error ts-error(2532) object is possibly 'undefined'
           range.get('grid').set('strokeDasharray', [5, 3]);
         }
       }
 
       if (label) {
+        // FIXME: fix this ts error
+        // @ts-expect-error ts-error(2532) object is possibly 'undefined'
         range.get('label').setAll({
           text: label,
           location: 1,
@@ -171,12 +187,17 @@ const TermometerChart = ({ data }: TermometerChartProps) => {
       }
     };
 
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(2345): Argument of type 'undefined' is not assignable to parameter of type 'string'
     createRange(undefined, 'Malo', undefined, am5.color('#E300001F'));
 
     root.locale = am5locales_es_ES;
 
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(18048) 'root._logo' is possibly 'undefined'
     root._logo.dispose();
-
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(2322) Type 'Root' is not assignable to type 'null'
     chartRef.current = root;
 
     return () => {

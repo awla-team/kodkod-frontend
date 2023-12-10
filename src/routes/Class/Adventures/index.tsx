@@ -23,6 +23,8 @@ const Adventures: React.FC = () => {
     useClassContext();
 
   useEffect(() => {
+    // FIXME: fix this eslint error
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     getMissions();
   }, []);
 
@@ -88,6 +90,8 @@ const Adventures: React.FC = () => {
 
   return (
     <AdventureWithProvider
+      // FIXME: fix this ts error
+      // @ts-expect-error ts-error(18048)
       classHasAdventure={classDetails.current_adventure}
       missions={missions}
       students={students}

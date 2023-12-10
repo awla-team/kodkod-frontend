@@ -57,15 +57,21 @@ const Subscriptions: React.FC = () => {
   const [formLoading, setFormLoading] = useState(true);
 
   useEffect(() => {
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(2722)
     setNewAvailableTours([]);
   }, []);
 
   useEffect(() => {
+    // FIXME: fix this eslint error
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     (async () => {
       setFetching(FetchStatus.Pending);
       try {
         const plansResponse = await getPlans();
         setPlans(
+          // FIXME: fix this eslint error
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
           plansResponse.data.results.sort((a: IPlan, b: IPlan) => {
             if (a.reason > b.reason) return -1;
             if (a.reason < b.reason) return 1;
@@ -81,11 +87,17 @@ const Subscriptions: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    // FIXME: fix this eslint error
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     (async () => {
+      // FIXME: fix this ts error
+      // @ts-expect-error ts-error(18047)
       if (user.payer_id) {
         setFetching(FetchStatus.Pending);
         try {
           const subscriptionResponse = await findSubscription();
+          // FIXME: fix this eslint error
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
           setCurrentSubscription(subscriptionResponse.data.results[0]);
           setFetching(FetchStatus.Success);
         } catch (error) {
@@ -102,9 +114,13 @@ const Subscriptions: React.FC = () => {
       const response = await startSubscription({
         preapproval_plan_id: selectedPlan,
         back_url: 'https://www.google.cl',
+        // FIXME: fix this ts error
+        // @ts-expect-error ts-error(18047)
         payer_email: user.email,
         card_token_id: token,
       });
+      // FIXME: fix this eslint error
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       setCurrentSubscription(response.data);
       Toaster('success', 'Felicitaciones! Ya eres miembro Pro!');
       setFetching(FetchStatus.Success);
@@ -114,6 +130,8 @@ const Subscriptions: React.FC = () => {
       console.log(error);
       Toaster(
         'error',
+        // FIXME: fix this eslint error
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         error.response.data.message ||
           'Ha ocurrido un error al procesar la suscripción'
       );
@@ -125,7 +143,11 @@ const Subscriptions: React.FC = () => {
   const handleCancelSubscription = async () => {
     setFetching(FetchStatus.Pending);
     try {
+      // FIXME: fix this ts error
+      // @ts-expect-error ts-error(18048)
       const response = await cancelSubscription(currentSubscription.id);
+      // FIXME: fix this eslint error
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       setCurrentSubscription(response.data);
       Toaster('success', 'Cancelaste tu suscripción exitosamente');
       setOpenModal(false);
@@ -135,6 +157,8 @@ const Subscriptions: React.FC = () => {
       setFetching(FetchStatus.Error);
       Toaster(
         'error',
+        // FIXME: fix this eslint error
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         error.response.data.message ||
           'Ha ocurrido un error al procesar la suscripción'
       );
@@ -296,9 +320,13 @@ const Subscriptions: React.FC = () => {
                     <Payment
                       onReady={() => setFormLoading(false)}
                       initialization={{
+                        // FIXME: fix this ts error
+                        // @ts-expect-error ts-error(2322)
                         amount: plans.find((plan) => plan.id === selectedPlan)
                           ?.auto_recurring.transaction_amount,
                         payer: {
+                          // FIXME: fix this ts error
+                          // @ts-expect-error ts-error(18047)
                           email: user.email,
                         },
                       }}
@@ -322,6 +350,8 @@ const Subscriptions: React.FC = () => {
                         },
                       }}
                       onSubmit={async (param) => {
+                        // FIXME: fix this eslint error
+                        // eslint-disable-next-line @typescript-eslint/no-floating-promises
                         handleSubmit(param.formData.token);
                       }}
                     />

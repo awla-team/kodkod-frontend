@@ -23,9 +23,17 @@ const ClassHasAdventureProvider: React.FC<ClassHasAdventureProviderProps> = ({
     <ClassHasAdventureContext.Provider
       value={{
         classHasAdventure,
+        // FIXME: fix this ts error
+        // @ts-expect-error ts-error(2322)
         missions,
+        // FIXME: fix this ts error
+        // @ts-expect-error ts-error(2322)
         students,
+        // FIXME: fix this ts error
+        // @ts-expect-error ts-error(2322)
         handleUpdateCurrentAdventure,
+        // FIXME: fix this ts error
+        // @ts-expect-error ts-error(2322)
         updateStageData,
       }}
     >

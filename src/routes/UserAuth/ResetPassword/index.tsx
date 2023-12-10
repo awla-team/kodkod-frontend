@@ -28,6 +28,8 @@ const ResetPassword: FC = () => {
 
   useEffect(() => {
     if (token) {
+      // FIXME: fix this eslint error
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       handleVerifyToken();
     }
   }, [token]);
@@ -37,7 +39,11 @@ const ResetPassword: FC = () => {
       setLoading(true);
       const {
         data: { responseData },
-      }: { data: { responseData: string } } = await verifyResetToken(token);
+      }: { data: { responseData: string } } = await verifyResetToken(
+        // FIXME: fix this eslint error
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        token
+      );
       if (responseData !== 'valid token') {
         setValid(false);
       }
@@ -65,9 +71,13 @@ const ResetPassword: FC = () => {
     formikHelper: FormikHelpers<FormInitialValuesType>
   ) => {
     try {
+      // FIXME: fix this ts error
+      // @ts-expect-error ts-error(2798)
       delete values.confirmPassword;
       const { data }: { data: { responseData: string } } = await resetPassword(
         values,
+        // FIXME: fix this eslint error
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         token
       );
       // Toaster("success", data.responseData);

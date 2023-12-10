@@ -10,7 +10,3 @@ export interface ClassDetailsCardProps {
 export interface IAdventureBannerProps {
   img?: string;
 }
-
-export interface IAdventureBannerProps {
-  img?: string;
-}

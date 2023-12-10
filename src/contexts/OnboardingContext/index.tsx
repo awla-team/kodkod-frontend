@@ -29,6 +29,8 @@ const OnboardingContextProvider: React.FC<PropsWithChildren> = ({
     setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
   const handleItemClick = (steps: StepType[]) => {
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(2722)
     setSteps(steps);
     setCurrentStep(0);
     setIsOpen(true);

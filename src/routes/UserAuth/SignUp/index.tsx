@@ -97,6 +97,8 @@ const SignUp: React.FC = () => {
       .catch((error) => {
         if (error instanceof AxiosError) {
           const {
+            // FIXME: fix this ts error
+            // @ts-expect-error ts-error(2339)
             data: { responseData },
           } = error.response;
           if (
@@ -109,6 +111,8 @@ const SignUp: React.FC = () => {
         }
         Toaster(
           'error',
+          // FIXME: fix this eslint error
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
           error.response.data.responseData.message || error.message
         );
         setIsFetching(FetchStatus.Error);
@@ -124,11 +128,15 @@ const SignUp: React.FC = () => {
         await getSchoolAction();
       setSchools(data.responseData);
     } catch (e: any) {
+      // FIXME: fix this eslint error
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       Toaster('error', e.message);
     }
   };
 
   useEffect(() => {
+    // FIXME: fix this eslint error
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     getSchools();
   }, []);
 

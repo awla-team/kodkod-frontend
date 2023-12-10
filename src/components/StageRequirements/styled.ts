@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { Box } from '@mui/material';
 import {
+  // FIXME: fix this eslint error
+  // eslint-disable-next-line import/no-named-default
   default as MuiLinearProgress,
   linearProgressClasses,
 } from '@mui/material/LinearProgress';
