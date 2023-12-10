@@ -64,11 +64,6 @@
     "vite-plugin-rewrite-all": "^1.0.1",
     "vite-plugin-svgr": "^3.2.0"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app"
-    ]
-  },
   "description": "Property of Awla SpA  \r Developers: Álvaro Arratia Ramírez, Bastián Díaz Olave",
   "main": "index.js",
   "repository": {
