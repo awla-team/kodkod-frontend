@@ -8,11 +8,12 @@
     "build": "vite build",
     "preview": "vite preview",
     "server": "json-server --watch db.json --delay 500",
-    "format": "prettier --write .",
-    "format-check": "prettier --check .",
+    "format": "prettier --write . --config .prettierrc",
+    "format-check": "prettier --check . --config .prettierrc",
     "eslint-check": "eslint . --ext .js,.jsx,.ts,.tsx,.d.ts --report-unused-disable-directives --color",
     "eslint-fix": "eslint . --ext .js,.jsx,.ts,.tsx,.d.ts --fix",
-    "ts-check": "tsc --noEmit"
+    "ts-check": "tsc --noEmit",
+    "lint": "yarn format-check && yarn eslint-check && yarn ts-check"
   },
   "dependencies": {
     "@amcharts/amcharts5": "^5.5.2",
