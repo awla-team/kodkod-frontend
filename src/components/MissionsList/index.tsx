@@ -1,8 +1,8 @@
-import { FC, useState, useEffect } from 'react';
+import { type FC, useState, useEffect } from 'react';
 import { MissionListContainer } from './styled';
 import MissionCard from 'components/MissionCard';
 import ReplaceMissionModal from 'components/Modals/ReplaceMissionModal';
-import { IMission, IStage } from 'global/interfaces';
+import { type IMission, type IStage } from 'global/interfaces';
 import { Typography } from '@mui/material';
 import MissionAccomplishedDrawer from 'components/Modals/MissionAccomplished';
 import { getStageMissions } from 'services/missions';
@@ -86,7 +86,7 @@ const MissionsList: FC<{ shownStage: IStage }> = ({ shownStage }) => {
         <MissionAccomplishedDrawer
           open={openDrawer && !!selectedMission}
           onSave={handleGetMissions}
-          anchor={'right'}
+          anchor="right"
           onClose={handleDrawerClose}
           mission={selectedMission}
           stage={shownStage}

@@ -3,7 +3,7 @@ import * as am5 from '@amcharts/amcharts5';
 import * as am5xy from '@amcharts/amcharts5/xy';
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
 import am5locales_es_ES from '@amcharts/amcharts5/locales/es_ES';
-import { TermometerChartProps } from './interfaces';
+import { type TermometerChartProps } from './interfaces';
 
 const TermometerChart = ({ data }: TermometerChartProps) => {
   const chartRef = useRef(null);
@@ -81,8 +81,8 @@ const TermometerChart = ({ data }: TermometerChartProps) => {
     const series = chart.series.push(
       am5xy.LineSeries.new(root, {
         minBulletDistance: 10,
-        xAxis: xAxis,
-        yAxis: yAxis,
+        xAxis,
+        yAxis,
         valueXField: 'date',
         categoryYField: 'category',
         stroke: am5.color('#3C4AC5'),
@@ -116,7 +116,7 @@ const TermometerChart = ({ data }: TermometerChartProps) => {
     const cursor = chart.set(
       'cursor',
       am5xy.XYCursor.new(root, {
-        xAxis: xAxis,
+        xAxis,
       })
     );
     cursor.lineY.set('visible', false);

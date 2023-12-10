@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate , useLocation } from 'react-router-dom';
 import { Button, CircularProgress } from '@mui/material';
 import Sidebar from './components/Sidebar';
 import { getClassesByUser } from 'services/classes';
-import { IClass } from 'global/interfaces';
-import { AxiosResponse } from 'axios';
+import { type IClass } from 'global/interfaces';
+import { type AxiosResponse } from 'axios';
 import { FetchStatus } from 'global/enums';
 import { CreateClassModal } from './components/Modals';
 import { sortClasses } from './utils';
 import { getAllTheLevel } from './services/levels';
 import Toaster from './utils/Toster';
-import { Levels } from './components/Modals/CreateClassModal/interfaces';
+import { type Levels } from './components/Modals/CreateClassModal/interfaces';
 import { useAuth } from './contexts/AuthContext';
 import moment from 'moment';
-import { useLocation } from 'react-router-dom';
 import 'moment/dist/locale/es';
 import './App.css';
 import OnboardingContextProvider from 'contexts/OnboardingContext';
@@ -40,7 +39,7 @@ const App: React.FC = () => {
         return response?.data;
       })
       .then((classes: IClass[]) => {
-        setClasses(!!classes ? sortClasses(classes) : []);
+        setClasses(classes ? sortClasses(classes) : []);
         setFetching(FetchStatus.Success);
       })
       .catch((error) => {

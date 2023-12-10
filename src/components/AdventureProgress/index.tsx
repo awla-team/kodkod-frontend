@@ -1,8 +1,8 @@
-import { FC, useState, useEffect } from 'react';
+import { type FC, useState, useEffect } from 'react';
 import { Typography, Box } from '@mui/material';
 import { useClassContext } from 'routes/Class/context';
 import SkillPoints from 'components/SkillPoints';
-import { IAdventure, IStage } from 'global/interfaces';
+import { type IAdventure, type IStage } from 'global/interfaces';
 import { AdventureProgressContainer, KPIBox } from './styled';
 
 const AdventureProgress: FC<{
@@ -34,10 +34,10 @@ const AdventureProgress: FC<{
     >
       <Box id='progress-adventure-details'>
         <Box
-          display={'flex'}
+          display="flex"
           sx={{ position: 'relative' }}
-          alignItems={'start'}
-          justifyContent={'space-between'}
+          alignItems="start"
+          justifyContent="space-between"
         >
           <Typography
             component='h2'
@@ -62,7 +62,7 @@ const AdventureProgress: FC<{
         >{`Etapa ${latestStage?._index}: ${latestStage?.title}`}</Typography>
         <section className='d-flex flex-column mb-3'>
           <div className='d-flex flex-wrap flex-lg-nowrap gap-2'>
-            {!!classDetails.current_adventure?.adventure?.skills?.length
+            {classDetails.current_adventure?.adventure?.skills?.length
               ? classDetails.current_adventure.adventure?.skills.map(
                   (adventureSkill, index) => (
                     <SkillPoints

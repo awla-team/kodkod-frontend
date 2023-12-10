@@ -16,32 +16,32 @@ interface MissionFilterType {
 }
 
 export interface MissionAccomplishedType {
-  studentIds: (number | string)[];
+  studentIds: Array<number | string>;
   id_stage: number;
   id_mission: number;
 }
 
-export const getMissionsByStage = (query?: MissionFilterType) =>
-  http.get(`mission` + (query ? generateQueryParamsFromObject(query) : ''));
+export const getMissionsByStage = async (query?: MissionFilterType) =>
+  await http.get(`mission` + (query ? generateQueryParamsFromObject(query) : ''));
 
-export const getMissionsByClassAdventure = (
+export const getMissionsByClassAdventure = async (
   classAdventureId: number | string
-) => http.get(`missions-by-class-adventure/${classAdventureId}`);
+) => await http.get(`missions-by-class-adventure/${classAdventureId}`);
 
-export const getStageMissions = (stageId: number | string) =>
-  http.get(`stage-missions/${stageId}`);
+export const getStageMissions = async (stageId: number | string) =>
+  await http.get(`stage-missions/${stageId}`);
 
-export const updateStageMission = (body: StageMissionUpdateBody) =>
-  http.put('update-stage-mission', body);
+export const updateStageMission = async (body: StageMissionUpdateBody) =>
+  await http.put('update-stage-mission', body);
 
-export const missionAccomplished = (body: MissionAccomplishedType) => {
-  return http.post('mission-accomplished', body);
+export const missionAccomplished = async (body: MissionAccomplishedType) => {
+  return await http.post('mission-accomplished', body);
 };
 
-export const completedMissionByStudents = (
+export const completedMissionByStudents = async (
   queryParams: Omit<MissionAccomplishedType, 'studentIds'>
 ) => {
-  return http.get(
+  return await http.get(
     'mission-student-details' +
       (queryParams ? generateQueryParamsFromObject(queryParams) : '')
   );

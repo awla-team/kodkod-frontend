@@ -1,5 +1,5 @@
-import { ForgotPasswordProps } from './interfaces';
-import React, { FC, useState } from 'react';
+import { type ForgotPasswordProps , type FormInitialValuesType } from './interfaces';
+import React, { type FC, useState } from 'react';
 import { ForgotPasswordCard } from './styled';
 import {
   Box,
@@ -9,9 +9,8 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { Form, Formik, FormikHelpers } from 'formik';
+import { Form, Formik, type FormikHelpers } from 'formik';
 import { Link as RouterLink } from 'react-router-dom';
-import { FormInitialValuesType } from './interfaces';
 import * as Yup from 'yup';
 import Toaster from 'utils/Toster';
 import { forgotPassword } from 'services/auth';
@@ -64,7 +63,7 @@ const ForgotPassword: FC<ForgotPasswordProps> = () => {
           className='mb-2'
           startIcon={<ArrowBackIosIcon />}
           component={RouterLink}
-          to={'/signin'}
+          to="/signin"
         >
           Volver al inicio de sesión
         </Button>
@@ -93,35 +92,35 @@ const ForgotPassword: FC<ForgotPasswordProps> = () => {
           }) => {
             return (
               <Form onSubmit={handleSubmit}>
-                <Box display={'flex'} flexDirection={'column'} gap={2} mt={2}>
+                <Box display="flex" flexDirection="column" gap={2} mt={2}>
                   <FormControl error={!!errors.email && touched.email}>
                     <TextField
                       required
-                      name={'email'}
+                      name="email"
                       value={values.email}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      type={'email'}
+                      type="email"
                       label='Email'
-                      placeholder={'Ej: juanito.perez@email.com'}
+                      placeholder="Ej: juanito.perez@email.com"
                       variant='outlined'
                     />
                   </FormControl>
 
                   <Box
-                    className={'action__container'}
-                    display={'flex'}
-                    flexDirection={'column'}
-                    alignItems={'center'}
+                    className="action__container"
+                    display="flex"
+                    flexDirection="column"
+                    alignItems="center"
                     gap={1}
                   >
                     <Button
                       disabled={isSubmitting || !isValid || !dirty}
                       fullWidth
                       size='large'
-                      className={'submit__button'}
-                      variant={'contained'}
-                      type={'submit'}
+                      className="submit__button"
+                      variant="contained"
+                      type="submit"
                     >
                       Enviar correo de recuperación
                     </Button>

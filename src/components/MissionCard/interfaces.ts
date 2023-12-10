@@ -1,4 +1,4 @@
-import { IMission } from 'global/interfaces';
+import { type IMission } from 'global/interfaces';
 
 export interface IMissionCardContainerProps {
   background?: string;

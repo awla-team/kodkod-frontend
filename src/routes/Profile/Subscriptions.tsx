@@ -20,7 +20,7 @@ import {
 import { useAuth } from 'contexts/AuthContext';
 import { Link } from 'react-router-dom';
 import { FetchStatus } from 'global/enums';
-import { IPlan, ISubscription } from 'global/interfaces';
+import { type IPlan, type ISubscription } from 'global/interfaces';
 import ConfirmationModal from 'components/Modals/ConfirmationModal';
 import moment from 'moment';
 import Toaster from 'utils/Toster';

@@ -1,21 +1,20 @@
 import {
   createContext,
-  FC,
-  PropsWithChildren,
+  type FC,
+  type PropsWithChildren,
   useContext,
   useEffect,
   useState,
 } from 'react';
-import { IClass } from 'global/interfaces';
+import { type IClass , type IStage } from 'global/interfaces';
 import { getClassByID } from 'services/classes';
 import Toaster from 'utils/Toster';
 import { studentsByClass } from 'services/students';
 import { useParams } from 'react-router-dom';
-import { StudentType } from 'components/StudentsList/interfaces';
-import { ClassContextType } from './interfaces';
-import { Levels } from 'components/Modals/CreateClassModal/interfaces';
+import { type StudentType } from 'components/StudentsList/interfaces';
+import { type ClassContextType } from './interfaces';
+import { type Levels } from 'components/Modals/CreateClassModal/interfaces';
 import { getAllTheLevel } from './../../services/levels';
-import { IStage } from 'global/interfaces';
 import { FetchStatus } from 'global/enums';
 
 const ClassContext = createContext<ClassContextType>({

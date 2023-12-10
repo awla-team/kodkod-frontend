@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState, useCallback } from 'react';
+import { type FC, useEffect, useRef, useState, useCallback } from 'react';
 import {
   EmotionalThermometerContainer,
   EmojiRadio,
@@ -18,14 +18,14 @@ import {
   Select,
   MenuItem,
 } from '@mui/material';
-import { Formik, Form, FormikHelpers } from 'formik';
+import { Formik, Form, type FormikHelpers } from 'formik';
 import {
   type EmotionalThermometerProps,
   type EmotionalThermometerType,
   type FormInitialValue,
   type TermometerChartData,
 } from './interfaces';
-import moment, { Moment as MomentType } from 'moment/moment';
+import moment, { type Moment as MomentType } from 'moment/moment';
 import Toaster from '../../utils/Toster';
 import {
   getEmotionalThermometerByClassId,
@@ -43,7 +43,7 @@ import { CalendarMonth } from '@mui/icons-material';
 import {
   LocalizationProvider,
   DatePicker,
-  PickersDayProps,
+  type PickersDayProps,
   PickersDay,
 } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
@@ -166,7 +166,7 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
         />
         {!pickersDayProps.outsideCurrentMonth &&
           checkDate(day as MomentType) && (
-            <span className={'tick__icon'}>&#10004;</span>
+            <span className="tick__icon">&#10004;</span>
           )}
       </PickersDateContainer>
     );
@@ -469,8 +469,8 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
                         Ya completaste el termómetro socioemocional de hoy
                       </Typography>
                       <Button
-                        className={'again__action'}
-                        role={'button'}
+                        className="again__action"
+                        role="button"
                         onClick={() => setEditable(true)}
                       >
                         Rehacer

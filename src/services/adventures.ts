@@ -1,45 +1,45 @@
 import http from 'global/api';
 
-export const getAdventures = () =>
-  http.get('adventures?_embed=adventureSkills');
-export const getAdventure = (adventureId: number | string) =>
-  http.get(`adventures/${adventureId}?_embed=stages&_embed=adventureSkills`);
+export const getAdventures = async () =>
+  await http.get('adventures?_embed=adventureSkills');
+export const getAdventure = async (adventureId: number | string) =>
+  await http.get(`adventures/${adventureId}?_embed=stages&_embed=adventureSkills`);
 
-export const getClassCurrentAdventure = (classId: number | string) =>
-  http.get(
+export const getClassCurrentAdventure = async (classId: number | string) =>
+  await http.get(
     `classes/${classId}/classHasAdventures?current_adventure=true&_embed=adventures`
   );
 
-export const getClassHasAdventure = (classHasAdventureId: number | string) =>
-  http.get(`classhasadventure/${classHasAdventureId}`);
+export const getClassHasAdventure = async (classHasAdventureId: number | string) =>
+  await http.get(`classhasadventure/${classHasAdventureId}`);
 
-export const getCompletedClassHasAdventuresByClass = (
+export const getCompletedClassHasAdventuresByClass = async (
   classId: number | string
-) => http.get(`class/${classId}/class_has_adventures?complete=true`);
+) => await http.get(`class/${classId}/class_has_adventures?complete=true`);
 
-export const getAdventuresByGoal = (goalId: number | string) =>
-  http.get(`/adventure-by-goal-id/${goalId}?goal=true`);
+export const getAdventuresByGoal = async (goalId: number | string) =>
+  await http.get(`/adventure-by-goal-id/${goalId}?goal=true`);
 
-export const getClassHasAdventureProgress = (
+export const getClassHasAdventureProgress = async (
   classHasAdventureId: number | string
 ) => {
-  return http.get(`classhasadventure/${classHasAdventureId}/progress`);
+  return await http.get(`classhasadventure/${classHasAdventureId}/progress`);
 };
 
-export const setCurrentAdventure = (body: {
+export const setCurrentAdventure = async (body: {
   id_class: number | string;
   id_adventure: number | string;
 }) => {
-  return http.post('adventure/set-adventure', body);
+  return await http.post('adventure/set-adventure', body);
 };
 
-export const cancelAdventureFromClass = (id: string | number) => {
-  return http.delete('/delete_adventure_from_class/' + id);
+export const cancelAdventureFromClass = async (id: string | number) => {
+  return await http.delete('/delete_adventure_from_class/' + id);
 };
 
-export const endClassHasAdventure = (
+export const endClassHasAdventure = async (
   id: string | number,
   body: { date_stop: string }
 ) => {
-  return http.put(`/classhasadventure/${id}`, body);
+  return await http.put(`/classhasadventure/${id}`, body);
 };

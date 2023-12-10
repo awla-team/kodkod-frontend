@@ -1,5 +1,5 @@
 import type { FC, ChangeEvent } from 'react';
-import { CreateClassModalProps, FormInitialState } from './interfaces';
+import { type CreateClassModalProps, type FormInitialState } from './interfaces';
 import {
   Select,
   MenuItem,
@@ -13,12 +13,12 @@ import {
   Typography,
 } from '@mui/material';
 import { FormContainer } from './styled';
-import { Formik, Form, FormikHelpers } from 'formik';
+import { Formik, Form, type FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import { useEffect, useState } from 'react';
 import { createClass, updateClass } from 'services/classes';
 import Toaster from 'utils/Toster';
-import { IClass } from 'global/interfaces';
+import { type IClass } from 'global/interfaces';
 import { useAuth } from 'contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { useTour } from '@reactour/tour';
@@ -96,7 +96,7 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
           id_level: values.id_level as number,
         });
 
-        //navigate(`/app/cursos/${data.responseData.id}/tablero`);
+        // navigate(`/app/cursos/${data.responseData.id}/tablero`);
         onClose('success', data.responseData);
         Toaster('success', `Curso ${values.alias} creado exitosamente`);
       }
@@ -146,7 +146,7 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
                       Nivel
                     </Typography>
                     <Select
-                      name={'id_level'}
+                      name="id_level"
                       size='small'
                       placeholder='Selecciona un nivel'
                       onChange={(e) => {
@@ -159,7 +159,7 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
                       }}
                       value={values.id_level}
                     >
-                      <MenuItem value={''} disabled>
+                      <MenuItem value="" disabled>
                         Selecciona un nivel
                       </MenuItem>
                       {levels
@@ -193,7 +193,7 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
                       </Typography>
                     </div>
                     <TextField
-                      name={'code'}
+                      name="code"
                       placeholder='Ejemplo: A, B, C...'
                       onChange={(e) => {
                         handleAliasValue(e, values, setFieldValue);
@@ -203,7 +203,7 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
                       size='small'
                     />
                   </FormControl>
-                  {/*<FormControl error={!!errors.alias && !!submitCount}>
+                  {/* <FormControl error={!!errors.alias && !!submitCount}>
                     <div className="d-flex align-items-end mb-1">
                       <Typography
                         component="label"
@@ -224,7 +224,7 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
                       value={values.alias}
                       size="small"
                     />
-                    </FormControl>*/}
+                    </FormControl> */}
                 </FormContainer>
               </DialogContent>
               <DialogActions className='pt-3'>
@@ -244,8 +244,8 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
                     !values.id_level ||
                     !values.alias
                   }
-                  type={'submit'}
-                  variant={'contained'}
+                  type="submit"
+                  variant="contained"
                 >
                   {classDetails ? 'Guardar cambios' : 'Añade un nuevo curso'}
                 </Button>

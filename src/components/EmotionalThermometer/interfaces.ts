@@ -1,6 +1,7 @@
-import { Moment } from 'moment';
-import React, { Dispatch, SetStateAction } from 'react';
-import { IClass } from 'global/interfaces';
+import { type Moment } from 'moment';
+import {type Dispatch, type SetStateAction} from 'react';
+import type React from 'react';
+import { type IClass } from 'global/interfaces';
 
 export interface EmotionalThermometerProps {
   classDetails: IClass;

@@ -14,7 +14,7 @@ import ResetPassword from './UserAuth/ResetPassword';
 import Error404 from '../components/Error404';
 import Progress from './Class/Progress';
 import UserAuthLayout from './UserAuth';
-import { FC } from 'react';
+import { type FC } from 'react';
 import GoalSelection from './Class/GoalSelection';
 import GoalAdventures from './Class/GoalAdventures';
 import CompletedAdventure from './Class/CompletedAdventure';
@@ -29,9 +29,7 @@ const MainRouterComponent: FC = () => {
   //   return <Navigate to={"/app"} />;
   // }
   return (
-    <>
-      <Outlet />
-    </>
+    <Outlet />
   );
 };
 

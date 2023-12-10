@@ -1,12 +1,12 @@
-import { FC, useEffect, useState } from 'react';
-import { ProgressProps } from './interfaces';
+import { type FC, useEffect, useState } from 'react';
+import { type ProgressProps } from './interfaces';
 import { Typography, Box } from '@mui/material';
 import { ProgressContainer, StickyDataGrid } from './styled';
 import { useClassContext } from '../context';
 import { getMissionsByClassAdventure } from 'services/missions';
-import { IMission, IUser } from 'global/interfaces';
+import { type IMission, type IUser } from 'global/interfaces';
 import AdventureProgress from 'components/AdventureProgress';
-import { GridColDef, GridSortModel } from '@mui/x-data-grid';
+import { type GridColDef, type GridSortModel } from '@mui/x-data-grid';
 import kodcoinIcon from 'assets/images/kodcoin.png';
 import RewardsModal from 'components/Modals/RewardsModal';
 import { studentUseRewards } from 'services/rewards';
@@ -88,7 +88,7 @@ const Progress: FC<ProgressProps> = () => {
       {
         name: 'Progreso del curso',
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
+        // @ts-expect-error
         steps: ProgressOnboarding,
       },
     ]);
@@ -97,7 +97,7 @@ const Progress: FC<ProgressProps> = () => {
   useEffect(() => {
     if (!onboardingDone) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
+      // @ts-expect-error
       setSteps(ProgressOnboarding);
       setCurrentStep(0);
       setIsOpen(true);

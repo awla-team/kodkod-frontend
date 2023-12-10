@@ -1,8 +1,8 @@
-import { FC, useContext, useState, useEffect } from 'react';
+import { type FC, useContext, useState, useEffect } from 'react';
 import { CustomStepper } from './styled';
 import { Step, Button, Typography, Tooltip } from '@mui/material';
 import { ClassHasAdventureContext } from '../../routes/Class/Adventures/Adventure/provider';
-import { IStage } from 'global/interfaces';
+import { type IStage } from 'global/interfaces';
 import { UnlockStageConfirmationDialog } from 'components/Modals';
 import { unlockStage } from 'services/stages';
 import Toaster from 'utils/Toster';
@@ -128,7 +128,7 @@ const StageStepper: FC<{
             >
               <Button
                 id='adventure-stage-unlock'
-                variant={'contained'}
+                variant="contained"
                 onClick={() => setOpenDialog(true)}
                 disabled={navigableStages.length === sortedStages.length}
                 size='large'
@@ -156,7 +156,7 @@ const StageStepper: FC<{
               }
             >
               <Button
-                variant={'contained'}
+                variant="contained"
                 onClick={() => setOpenDialog(true)}
                 size='large'
               >

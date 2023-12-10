@@ -12,8 +12,8 @@ import ClassHasAdventureProvider from './provider';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { AdventureContainer, AdventureBanner } from './styled';
 import SkillPoints from 'components/SkillPoints';
-import { IStage } from 'global/interfaces';
-import { ClassHasAdventureWithProviderProps } from '../interfaces';
+import { type IStage } from 'global/interfaces';
+import { type ClassHasAdventureWithProviderProps } from '../interfaces';
 import StageStepper from '../../../../components/StageStepper';
 import Toaster from 'utils/Toster';
 import {
@@ -52,13 +52,13 @@ export const Adventure: React.FC = () => {
       {
         name: 'Trabajando con una aventura',
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
+        // @ts-expect-error
         steps: AdventureOnboarding,
       },
       {
         name: 'Misiones y puntaje',
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
+        // @ts-expect-error
         steps: PointsOnboarding,
       },
     ]);
@@ -67,7 +67,7 @@ export const Adventure: React.FC = () => {
   useEffect(() => {
     if (!onboardingDone) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
+      // @ts-expect-error
       setSteps(AdventureOnboarding);
       setCurrentStep(0);
       setIsOpen(true);
@@ -109,7 +109,7 @@ export const Adventure: React.FC = () => {
     try {
       setLoading(true);
       await cancelAdventureFromClass(classDetails.current_adventure.id);
-      //await cancelAdventure(classDetails.current_adventure.id_class_has_adventure, { date_stop: moment().format('YYYY-MM-DD') });
+      // await cancelAdventure(classDetails.current_adventure.id_class_has_adventure, { date_stop: moment().format('YYYY-MM-DD') });
       Toaster('success', 'La aventura fue cancelada');
       navigate(`/app/cursos/${classId}/tablero`);
       setClassDetails({
@@ -165,7 +165,7 @@ export const Adventure: React.FC = () => {
             {classDetails.current_adventure.adventure.title}
           </Typography>
           <div>
-            <IconButton color={'inherit'} onClick={handleVerticalButtonClick}>
+            <IconButton color="inherit" onClick={handleVerticalButtonClick}>
               <MoreVertIcon fontSize='large' />
             </IconButton>
             <Menu

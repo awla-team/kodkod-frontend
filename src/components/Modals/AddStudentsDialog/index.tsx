@@ -1,5 +1,5 @@
-import React, { FC, useEffect } from 'react';
-import { AddStudentsDialogProps } from './interfaces';
+import React, { type FC, useEffect , useState } from 'react';
+import { type AddStudentsDialogProps } from './interfaces';
 import {
   Box,
   Button,
@@ -12,10 +12,9 @@ import {
   Typography,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import { useState } from 'react';
 import { addStudentsInClass } from 'services/students';
 import Toaster from 'utils/Toster';
-import { StudentType } from '../../StudentsList/interfaces';
+import { type StudentType } from '../../StudentsList/interfaces';
 import { StudentsFormDetailsContainer } from './styled';
 import { Link } from 'react-router-dom';
 import { read, utils } from 'xlsx';
@@ -29,7 +28,7 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
   classDetails,
 }) => {
   const [students, setStudents] = useState<
-    { first_name: string; last_name: string; email: string }[]
+    Array<{ first_name: string; last_name: string; email: string }>
   >(
     Array(5)
       .fill({})
@@ -41,7 +40,7 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
   );
 
   const [filled, setFilled] = useState<
-    { first_name: string; last_name: string; email: string }[]
+    Array<{ first_name: string; last_name: string; email: string }>
   >([]);
 
   useEffect(() => {
@@ -98,7 +97,7 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
         const wb = read(event.target.result);
         const sheets = wb.SheetNames;
         if (sheets.length) {
-          const rows: { Nombres: string; Apellidos: string; Email: string }[] =
+          const rows: Array<{ Nombres: string; Apellidos: string; Email: string }> =
             utils.sheet_to_json(wb.Sheets[sheets[0]]);
 
           setStudents(
@@ -126,7 +125,7 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
       <form
         className='d-flex flex-column flex-fill'
         style={{ overflow: 'hidden' }}
-        onSubmit={(event) => handleSubmit(event)}
+        onSubmit={async (event) => await handleSubmit(event)}
       >
         <DialogContent className='d-flex flex-column flex-fill'>
           <Typography variant='body2' className='mb-2'>

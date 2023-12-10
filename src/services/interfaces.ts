@@ -1,4 +1,4 @@
-import { StudentUpdateDataType } from 'components/StudentsList/interfaces';
+import { type StudentUpdateDataType } from 'components/StudentsList/interfaces';
 
 export interface AddStudentsInClassBody {
   id_class: string | number;

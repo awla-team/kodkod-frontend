@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { type FC, useEffect, useState } from 'react';
 import { ResetPasswordCard } from './styled';
 import {
   Box,
@@ -8,9 +8,9 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { Form, Formik, FormikHelpers } from 'formik';
+import { Form, Formik, type FormikHelpers } from 'formik';
 import { Link as RouterLink, useNavigate, useParams } from 'react-router-dom';
-import { FormInitialValuesType } from './interfaces';
+import { type FormInitialValuesType } from './interfaces';
 import * as Yup from 'yup';
 import Toaster from 'utils/Toster';
 import { resetPassword, verifyResetToken } from 'services/auth';
@@ -87,7 +87,7 @@ const ResetPassword: FC = () => {
           className='mb-2'
           startIcon={<ArrowBackIosIcon />}
           component={RouterLink}
-          to={'/signin'}
+          to="/signin"
         >
           Volver al inicio de sesión
         </Button>
@@ -130,19 +130,19 @@ const ResetPassword: FC = () => {
             }) => {
               return (
                 <Form onSubmit={handleSubmit}>
-                  <Box display={'flex'} flexDirection={'column'} gap={2} mt={3}>
+                  <Box display="flex" flexDirection="column" gap={2} mt={3}>
                     <FormControl
                       required
                       error={!!errors.password && touched.password}
                     >
                       <TextField
-                        name={'password'}
+                        name="password"
                         value={values.password}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        type={'password'}
+                        type="password"
                         label='Nueva contraseña'
-                        placeholder={'Ingresa tu nueva contraseña'}
+                        placeholder="Ingresa tu nueva contraseña"
                         variant='outlined'
                       />
                     </FormControl>
@@ -154,30 +154,30 @@ const ResetPassword: FC = () => {
                       }
                     >
                       <TextField
-                        name={'confirmPassword'}
+                        name="confirmPassword"
                         value={values.confirmPassword}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        type={'password'}
+                        type="password"
                         label='Confirma tu nueva contraseña'
-                        placeholder={'Ingresa tu nueva contraseña una vez más'}
+                        placeholder="Ingresa tu nueva contraseña una vez más"
                         variant='outlined'
                       />
                     </FormControl>
 
                     <Box
-                      className={'action__container'}
-                      display={'flex'}
-                      flexDirection={'column'}
-                      alignItems={'center'}
+                      className="action__container"
+                      display="flex"
+                      flexDirection="column"
+                      alignItems="center"
                       gap={1}
                     >
                       <Button
                         disabled={isSubmitting || !isValid || !dirty || loading}
                         fullWidth
-                        className={'submit__button'}
-                        variant={'contained'}
-                        type={'submit'}
+                        className="submit__button"
+                        variant="contained"
+                        type="submit"
                         size='large'
                       >
                         Establecer nueva contraseña
@@ -190,9 +190,9 @@ const ResetPassword: FC = () => {
           </Formik>
         ) : (
           <Typography
-            variant={'h5'}
-            color={'error'}
-            className={'invalid__token__text'}
+            variant="h5"
+            color="error"
+            className="invalid__token__text"
           >
             Link no valido o expirado
           </Typography>

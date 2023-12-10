@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Typography, TextField } from '@mui/material';
-import { IRewardCardProps } from './interfaces';
+import { type IRewardCardProps } from './interfaces';
 import {
   EditRewardActionsContainer,
   EditRewardButton,

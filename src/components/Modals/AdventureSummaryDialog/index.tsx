@@ -31,7 +31,7 @@ const AdventureSummaryDialog: React.FC<{
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (selectedAdventure && selectedAdventure.template_stages) {
+    if (selectedAdventure?.template_stages) {
       const newSortedStages = [...selectedAdventure.template_stages].sort(
         (a, b) => {
           if (a._index > b._index) return 1;
@@ -93,7 +93,7 @@ const AdventureSummaryDialog: React.FC<{
           </Typography>
           <section className='d-flex flex-column'>
             <div className='d-flex flex-wrap flex-lg-nowrap gap-2'>
-              {!!shownAdventure?.skills?.length
+              {shownAdventure?.skills?.length
                 ? shownAdventure.skills.map((adventureSkill, index) => (
                     <SkillPoints
                       key={`${adventureSkill.id}-${adventureSkill.title}-${index}`}
@@ -124,7 +124,7 @@ const AdventureSummaryDialog: React.FC<{
               <Typography variant='subtitle1' fontWeight='bold'>
                 Resultados esperados
               </Typography>
-              {!!shownAdventure?.expected_results.split('\n')?.length ? (
+              {shownAdventure?.expected_results.split('\n')?.length ? (
                 <ul className='ps-4 mb-0'>
                   {shownAdventure.expected_results
                     .split('\n')
@@ -168,7 +168,7 @@ const AdventureSummaryDialog: React.FC<{
       <DialogActions className='d-flex align-items-center p-4'>
         <Button
           id='adventure-selection-close-modal'
-          variant={'outlined'}
+          variant="outlined"
           onClick={handleOnCloseModal}
         >
           Cancelar

@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 import { RewardsList } from './styled';
 import { Button, Typography } from '@mui/material';
-import { useParams } from 'react-router-dom';
+import { useParams , useSearchParams } from 'react-router-dom';
 import RewardCard from 'components/RewardCard';
-import { useSearchParams } from 'react-router-dom';
 import { getRewardsByAdventure, updateReward } from 'services/rewards';
-import { IReward, IUser } from 'global/interfaces';
+import { type IReward, type IUser } from 'global/interfaces';
 import Toaster from 'utils/Toster';
 import http from 'global/api';
 import { AxiosError, AxiosResponse } from 'axios';
@@ -38,11 +37,11 @@ const Rewards = () => {
     return count;
   };
 
-  const handleEditReward = (
+  const handleEditReward = async (
     rewardId: number | string,
     body: Partial<IReward>
   ) => {
-    return updateReward(rewardId, body)
+    return await updateReward(rewardId, body)
       .then((response) => {
         const newRewards = [...rewards];
         const updatedReward = response.data;
@@ -83,7 +82,7 @@ const Rewards = () => {
       {
         name: 'Gestión de recompensas',
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
+        // @ts-expect-error
         steps: RewardsOnboarding,
       },
     ]);
@@ -92,7 +91,7 @@ const Rewards = () => {
   useEffect(() => {
     if (!onboardingDone) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
+      // @ts-expect-error
       setSteps(RewardsOnboarding);
       setCurrentStep(0);
       setIsOpen(true);

@@ -1,6 +1,6 @@
-import { IClass } from 'global/interfaces';
+import { type IClass } from 'global/interfaces';
 import React, { Dispatch, SetStateAction, useState } from 'react';
-import { IStage } from '../global/interfaces';
+import { type IStage } from '../global/interfaces';
 import { generateAccessToken } from '../services/auth';
 import SignalCellularAlt1BarIcon from '@mui/icons-material/SignalCellularAlt1Bar';
 import SignalCellularAlt2BarIcon from '@mui/icons-material/SignalCellularAlt2Bar';
@@ -116,8 +116,8 @@ export const getFirstNonActiveStage = (
   }
 };
 
-export const getAccessTokenUsingRefreshToken = () => {
-  return new Promise(async (resolve, reject) => {
+export const getAccessTokenUsingRefreshToken = async () => {
+  return await new Promise(async (resolve, reject) => {
     const refreshToken = localStorage.getItem('refreshToken');
     if (!refreshToken) {
       return reject('Refresh token not found');

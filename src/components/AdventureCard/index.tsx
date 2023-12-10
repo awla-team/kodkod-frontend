@@ -1,6 +1,6 @@
 import React from 'react';
 import { Chip, Typography } from '@mui/material';
-import { IAdventureCardProps } from './interfaces';
+import { type IAdventureCardProps } from './interfaces';
 import { AdventureCardContainer } from './styled';
 import StarIcon from '@mui/icons-material/Star';
 

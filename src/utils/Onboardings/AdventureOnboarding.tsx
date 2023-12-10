@@ -68,7 +68,7 @@ const AdventureOnboarding = [
     selector: '#adventure-missions',
     padding: 8,
   },
-  /*{
+  /* {
     content: () => {
       return (
         <OnboardingContent>
@@ -81,7 +81,7 @@ const AdventureOnboarding = [
     stepInteraction: false,
     selector: '#adventure-mission-change',
     padding: 8,
-  },*/
+  }, */
   {
     content: () => {
       return (

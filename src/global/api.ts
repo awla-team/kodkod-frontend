@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios';
+import axios, { type AxiosError } from 'axios';
 import { generateAccessToken } from '../services/auth';
 import { initMercadoPago } from '@mercadopago/sdk-react';
 
@@ -33,15 +33,15 @@ http.interceptors.response.use(
             if (responseData?.accessToken) {
               localStorage.setItem('accessToken', responseData.accessToken);
               const response = await http.request(error.config);
-              return Promise.resolve(response);
+              return await Promise.resolve(response);
             }
           } catch (apiError: any) {
-            return Promise.reject(error);
+            return await Promise.reject(error);
           }
         }
       }
     }
-    return Promise.reject(error);
+    return await Promise.reject(error);
   }
 );
 

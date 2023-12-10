@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button, CircularProgress, Typography } from '@mui/material';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate , Link } from 'react-router-dom';
 import { GoalSelectionContainer, CardContainer, ImgContainer } from './styled';
-import { AxiosResponse } from 'axios';
+import { type AxiosResponse } from 'axios';
 import { getGoals } from 'services/goals';
 import { FetchStatus } from 'global/enums';
-import { IGoal } from 'global/interfaces';
+import { type IGoal } from 'global/interfaces';
 import { useClassContext } from 'routes/Class/context';
 import { useOnboarding } from 'contexts/OnboardingContext';
 import AdventureSelectionOnboarding from 'utils/Onboardings/AdventureSelectionOnboarding';
 import { useTour } from '@reactour/tour';
 import FlagIcon from '@mui/icons-material/Flag';
-import { Link } from 'react-router-dom';
 
 const GoalSelection: React.FC = () => {
   const { classDetails, loadingClass } = useClassContext();
@@ -43,7 +42,7 @@ const GoalSelection: React.FC = () => {
       {
         name: 'Selección de aventura',
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
+        // @ts-expect-error
         steps: AdventureSelectionOnboarding,
       },
     ]);
@@ -52,7 +51,7 @@ const GoalSelection: React.FC = () => {
   useEffect(() => {
     if (!onboardingDone) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
+      // @ts-expect-error
       setSteps(AdventureSelectionOnboarding);
       setCurrentStep(0);
       setIsOpen(true);

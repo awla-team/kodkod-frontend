@@ -1,6 +1,6 @@
 import React, { createContext } from 'react';
-import { IClassHasAdventureContext } from './interfaces';
-import { ClassHasAdventureProviderProps } from '../interfaces';
+import { type IClassHasAdventureContext } from './interfaces';
+import { type ClassHasAdventureProviderProps } from '../interfaces';
 
 export const ClassHasAdventureContext =
   createContext<IClassHasAdventureContext>({

@@ -17,7 +17,7 @@ const StudentListOnboarding = [
     },
     padding: 0,
     stepInteraction: false,
-    selector: '#board-onboarding-2', //#student-list-onboarding-0
+    selector: '#board-onboarding-2', // #student-list-onboarding-0
     position: 'left',
   },
   {
@@ -127,7 +127,7 @@ const StudentListOnboarding = [
       );
     },
     stepInteraction: false,
-    selector: '#board-onboarding-2', //#student-list-onboarding-0
+    selector: '#board-onboarding-2', // #student-list-onboarding-0
     padding: 0,
   },
   {

@@ -5,7 +5,7 @@ import {
   Box,
   Typography,
 } from '@mui/material';
-import { MyClassesProps } from './interfaces';
+import { type MyClassesProps } from './interfaces';
 import { useMemo, useEffect } from 'react';
 import { ExpandMore, South } from '@mui/icons-material';
 import ClassCard from 'components/ClassCard';
@@ -63,7 +63,7 @@ const MyClasses: FC<MyClassesProps> = ({
                 </Typography>
               </AccordionSummary>
               <AccordionDetails
-                className={'class__level__cards__container row'}
+                className="class__level__cards__container row"
               >
                 {rest.classes.map((teacherClass, _index) => (
                   <div

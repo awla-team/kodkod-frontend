@@ -1,4 +1,4 @@
-import { IClass } from 'global/interfaces';
+import { type IClass } from 'global/interfaces';
 
 export interface Route {
   title: string;

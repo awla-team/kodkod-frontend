@@ -1,5 +1,5 @@
-import { FC, useState, useContext, useEffect } from 'react';
-import { ReplaceMissionModalProps } from './interfaces';
+import { type FC, useState, useContext, useEffect } from 'react';
+import { type ReplaceMissionModalProps } from './interfaces';
 import { NewMissionList } from './styled';
 import {
   Button,
@@ -13,7 +13,7 @@ import MissionCard from '../../MissionCard';
 import { difficultyIcons, difficultyToText } from 'utils';
 import Toaster from 'utils/Toster';
 import { getMissionsByStage, updateStageMission } from 'services/missions';
-import { IMission } from '../../../global/interfaces';
+import { type IMission } from '../../../global/interfaces';
 import { ClassHasAdventureContext } from '../../../routes/Class/Adventures/Adventure/provider';
 import { Box } from '@mui/system';
 
@@ -88,7 +88,7 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
     <Dialog
       open={open}
       onClose={(event, reason) => onClose(reason)}
-      scroll={'body'}
+      scroll="body"
       PaperProps={{ className: 'p-3' }}
     >
       <DialogTitle fontWeight='bold'>{`Reemplazar misión "${mission.title}"`}</DialogTitle>
@@ -164,7 +164,7 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
           Cancelar
         </Button>
         <Button
-          variant={'contained'}
+          variant="contained"
           onClick={handleClick}
           disabled={pending || !selected}
         >

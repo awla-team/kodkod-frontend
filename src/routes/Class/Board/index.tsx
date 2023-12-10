@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { DashboardContainer, DetailsCard } from './styled';
 import ClassDetailsCard from 'components/ClassDetailsCard';
-import { IClass } from 'global/interfaces';
+import { type IClass } from 'global/interfaces';
 import StudentsList from 'components/StudentsList';
-import { StudentType } from 'components/StudentsList/interfaces';
+import { type StudentType } from 'components/StudentsList/interfaces';
 import EmotionalThermometer from 'components/EmotionalThermometer';
-import { Levels } from 'components/Modals/CreateClassModal/interfaces';
+import { type Levels } from 'components/Modals/CreateClassModal/interfaces';
 import { useOnboarding } from 'contexts/OnboardingContext';
 import BoardOnboarding from 'utils/Onboardings/BoardOnboarding';
 import StudentListOnboarding from 'utils/Onboardings/StudentListOnboarding';
@@ -34,19 +34,19 @@ const Board: React.FC = () => {
       {
         name: 'El Tablero del curso',
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
+        // @ts-expect-error
         steps: BoardOnboarding,
       },
       {
         name: 'Gestión de estudiantes',
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
+        // @ts-expect-error
         steps: StudentListOnboarding,
       },
       {
         name: 'El Termómetro Socioemocional',
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
+        // @ts-expect-error
         steps: EmotionalThermometerOnboarding,
       },
     ]);
@@ -55,7 +55,7 @@ const Board: React.FC = () => {
   useEffect(() => {
     if (!onboardingDone) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
+      // @ts-expect-error
       setSteps(BoardOnboarding);
       setCurrentStep(0);
       setIsOpen(true);

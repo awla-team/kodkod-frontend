@@ -7,7 +7,7 @@ import {
   Typography,
 } from '@mui/material';
 import { useState } from 'react';
-import { UserInfoProps } from './interfaces';
+import { type UserInfoProps } from './interfaces';
 import { UserInfoButton, UserInfoContainer } from './styled';
 import ImgAvatar from 'assets/images/avatar.png';
 import ExpandMore from '@mui/icons-material/ExpandMore';

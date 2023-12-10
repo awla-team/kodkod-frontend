@@ -7,7 +7,7 @@ import {
   Button,
   Typography,
 } from '@mui/material';
-import { StudentsSelectableListProps } from './interfaces';
+import { type StudentsSelectableListProps } from './interfaces';
 import { ClassHasAdventureContext } from 'routes/Class/Adventures/Adventure/provider';
 import Toaster from 'utils/Toster';
 import { missionAccomplished } from 'services/missions';
@@ -19,8 +19,8 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
   onSave,
   handleClose,
 }) => {
-  const [selected, setSelected] = useState<(number | string)[]>([]);
-  const [defaultSelected, setDefaultSelected] = useState<(number | string)[]>(
+  const [selected, setSelected] = useState<Array<number | string>>([]);
+  const [defaultSelected, setDefaultSelected] = useState<Array<number | string>>(
     []
   );
   const { students } = useContext(ClassHasAdventureContext);
@@ -57,7 +57,7 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
 
   const handleAllSelect = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
     const { checked } = target;
-    const all: (number | string)[] = [];
+    const all: Array<number | string> = [];
     if (checked) {
       studentList.forEach((res, index) => {
         if (!defaultSelected.includes(res.id)) all.push(res.id);
@@ -73,7 +73,7 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
       await missionAccomplished({
         studentIds: selected,
         id_mission: mission.id as number,
-        id_stage: stage.id as number,
+        id_stage: stage.id ,
       });
       Toaster('success', 'Misión completada exitosamente');
       onSave(stage.id);
@@ -91,7 +91,7 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
     >
       <TextField
         className='mb-3'
-        variant={'standard'}
+        variant="standard"
         placeholder='Buscar por nombre o apellido'
         fullWidth
         onChange={(event) => {

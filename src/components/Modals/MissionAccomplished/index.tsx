@@ -1,5 +1,5 @@
-import { FC } from 'react';
-import { MissionAccomplishedProps } from './interfaces';
+import { type FC } from 'react';
+import { type MissionAccomplishedProps } from './interfaces';
 import { Typography } from '@mui/material';
 import MissionCard from '../../MissionCard';
 import StudentsSelectableList from 'components/StudentsSelectableList';

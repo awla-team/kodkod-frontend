@@ -8,7 +8,7 @@ import {
   Typography,
 } from '@mui/material';
 import http from 'global/api';
-import { IUserHasReward } from 'global/interfaces';
+import { type IUserHasReward } from 'global/interfaces';
 import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { studentsRedeemReward } from 'services/rewards';
@@ -151,7 +151,7 @@ const RedeemRewardDrawer = ({
       >
         <TextField
           className='mb-3'
-          variant={'standard'}
+          variant="standard"
           placeholder='Buscar por nombre o apellido'
           fullWidth
           onChange={(event) => {
@@ -201,7 +201,7 @@ const RedeemRewardDrawer = ({
                 </Button>
                 <Button
                   id='reward-modal-save'
-                  onClick={() => handleSave(rewardId, selected)}
+                  onClick={async () => await handleSave(rewardId, selected)}
                   variant='contained'
                   disabled={!Object.keys(selected).length}
                 >

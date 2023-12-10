@@ -4,10 +4,9 @@ import { Button, CircularProgress, Typography } from '@mui/material';
 import { AllCompletedAdventuresContainer } from './styled';
 import { useClassContext } from '../context';
 import AdventureCard from 'components/AdventureCard';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate , Link } from 'react-router-dom';
 import SkillPoints from 'components/SkillPoints';
-import { IClassHasAdventure } from 'global/interfaces';
-import { Link } from 'react-router-dom';
+import { type IClassHasAdventure } from 'global/interfaces';
 import { getCompletedClassHasAdventuresByClass } from 'services/adventures';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import moment from 'moment';
@@ -86,7 +85,7 @@ const AllCompletedAdventures: React.FC = () => {
             img={classHasAdventure.adventure.thumbnail}
             info={
               <div className='d-flex gap-1 flex-wrap'>
-                {!!classHasAdventure.adventure?.skills?.length
+                {classHasAdventure.adventure?.skills?.length
                   ? classHasAdventure.adventure.skills.map(
                       (adventureSkill, index) => (
                         <SkillPoints

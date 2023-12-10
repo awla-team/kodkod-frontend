@@ -5,9 +5,9 @@ import type { IAdventure } from 'global/interfaces';
 import { FetchStatus } from 'global/enums';
 import CircularProgress from '@mui/material/CircularProgress';
 import AdventureSummaryDialog from '../../../components/Modals/AdventureSummaryDialog';
-import { Navigate, useParams, Link as RouterLink } from 'react-router-dom';
+import { Navigate, useParams, Link as RouterLink , Link } from 'react-router-dom';
 import { getGoalById } from 'services/goals';
-import { GoalType } from '../Adventures/interfaces';
+import { type GoalType } from '../Adventures/interfaces';
 import Toaster from '../../../utils/Toster';
 import { AdventureSelectionContainer } from './styled';
 import { useClassContext } from '../context';
@@ -19,7 +19,6 @@ import { useAuth } from 'contexts/AuthContext';
 import { useOnboarding } from 'contexts/OnboardingContext';
 import AdventureSelectionOnboarding from 'utils/Onboardings/AdventureSelectionOnboarding';
 import FlagIcon from '@mui/icons-material/Flag';
-import { Link } from 'react-router-dom';
 
 const GoalAdventures: React.FC = () => {
   const [loading, setLoading] = useState<FetchStatus>(FetchStatus.Idle);
@@ -43,7 +42,7 @@ const GoalAdventures: React.FC = () => {
       {
         name: 'Selección de aventura',
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
+        // @ts-expect-error
         steps: AdventureSelectionOnboarding,
       },
     ]);
@@ -134,7 +133,7 @@ const GoalAdventures: React.FC = () => {
         </b>
         .
       </Typography>
-      {selectedGoal && selectedGoal?.adventures?.length ? (
+      {selectedGoal?.adventures?.length ? (
         <>
           <div
             id='adventure-selection-onboarding-3'
@@ -150,7 +149,7 @@ const GoalAdventures: React.FC = () => {
                 img={adventure.thumbnail}
                 info={
                   <div className='d-flex gap-1 flex-wrap'>
-                    {!!adventure?.skills?.length
+                    {adventure?.skills?.length
                       ? adventure.skills.map((adventureSkill, index) => (
                           <SkillPoints
                             key={`${adventureSkill.id}-${adventureSkill.title}-${index}`}

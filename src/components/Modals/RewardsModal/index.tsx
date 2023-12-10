@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import { RewardIcon, RewardsList } from './styled';
 import { useEffect, useState } from 'react';
-import { IUser, IUserHasReward } from 'global/interfaces';
+import { type IUser, type IUserHasReward } from 'global/interfaces';
 import Moment from 'moment';
 import { studentUseRewards } from 'services/rewards';
 import Toaster from 'utils/Toster';
