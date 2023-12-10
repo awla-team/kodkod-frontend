@@ -58,17 +58,17 @@ const SignIn: React.FC = () => {
     }
   };
   return (
-    <SignInCard variant="outlined">
+    <SignInCard variant='outlined'>
       <div>
         <CardMedia
-          className="p-5"
-          component="img"
+          className='p-5'
+          component='img'
           image={logoWhite}
-          alt="kodkod logo"
+          alt='kodkod logo'
         />
       </div>
-      <CardContent className="px-5 py-4">
-        <Typography component="h4" variant="h5" textAlign="center">
+      <CardContent className='px-5 py-4'>
+        <Typography component='h4' variant='h5' textAlign='center'>
           Ingresa a tu cuenta
         </Typography>
         <Formik
@@ -92,7 +92,7 @@ const SignIn: React.FC = () => {
                 <Box display={'flex'} flexDirection={'column'} mt={3}>
                   <FormControl
                     error={!!errors.email && touched.email}
-                    className="mb-3"
+                    className='mb-3'
                   >
                     <TextField
                       name={'email'}
@@ -100,30 +100,30 @@ const SignIn: React.FC = () => {
                       onChange={handleChange}
                       onBlur={handleBlur}
                       type={'email'}
-                      color="primary"
+                      color='primary'
                       placeholder={'Ingresa tu email'}
-                      variant="outlined"
+                      variant='outlined'
                     />
                   </FormControl>
                   <FormControl
                     error={!!errors.password && touched.password}
-                    className="mb-2"
+                    className='mb-2'
                   >
                     <TextField
                       name={'password'}
                       value={values.password}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      color="primary"
+                      color='primary'
                       type={'password'}
                       placeholder={'Ingresa tu contraseña'}
-                      variant="outlined"
+                      variant='outlined'
                     />
                   </FormControl>
                   <Typography
-                    className="mb-4"
+                    className='mb-4'
                     textAlign={'center'}
-                    variant="subtitle2"
+                    variant='subtitle2'
                     component={RouterLink}
                     to={'/forgot-password'}
                   >
@@ -140,18 +140,18 @@ const SignIn: React.FC = () => {
                     <Button
                       disabled={isSubmitting || !isValid || !dirty}
                       fullWidth
-                      size="large"
+                      size='large'
                       className={'login__button'}
                       variant={'contained'}
                       type={'submit'}
                     >
                       Iniciar sesión
                     </Button>
-                    <Typography component="span" variant="subtitle2">
+                    <Typography component='span' variant='subtitle2'>
                       ¿Aún no tienes una cuenta?{' '}
                       <Typography
                         component={RouterLink}
-                        variant="subtitle2"
+                        variant='subtitle2'
                         to={'/signup'}
                       >
                         Registrate

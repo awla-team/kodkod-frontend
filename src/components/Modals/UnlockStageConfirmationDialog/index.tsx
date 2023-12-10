@@ -28,24 +28,24 @@ const UnlockStageConfirmationDialog: FC<UnlockStageConfirmationDialogProps> = ({
     >
       {unlockableStageData ? (
         <div>
-          <DialogTitle fontWeight="bold">
+          <DialogTitle fontWeight='bold'>
             Desbloquear Etapa {unlockableStageData?._index}:{' '}
             {unlockableStageData.title}
           </DialogTitle>
-          <DialogContent dividers className="py-4">
-            <div className="d-flex align-items-center justify-content-center mb-3">
-              <img src={currentStage?.next_img_url} height="240" width="240" />
+          <DialogContent dividers className='py-4'>
+            <div className='d-flex align-items-center justify-content-center mb-3'>
+              <img src={currentStage?.next_img_url} height='240' width='240' />
             </div>
-            <Typography component="p" variant="body1" className="mb-3">
+            <Typography component='p' variant='body1' className='mb-3'>
               Desbloquear una nueva etapa significa que el curso ha trabajado
               muy duro. ¡Muy buen trabajo! En la próxima etapa les esperan
               nuevas misiones, desafíos y recompensas.
             </Typography>
-            <Typography textAlign="center" variant="h5" fontWeight="bold">
+            <Typography textAlign='center' variant='h5' fontWeight='bold'>
               ¡Buena suerte!
             </Typography>
           </DialogContent>
-          <DialogActions className="d-flex align-items-center mt-3">
+          <DialogActions className='d-flex align-items-center mt-3'>
             <Button variant={'outlined'} onClick={handleClose}>
               Cancelar
             </Button>
@@ -60,28 +60,28 @@ const UnlockStageConfirmationDialog: FC<UnlockStageConfirmationDialogProps> = ({
         </div>
       ) : (
         <div>
-          <DialogTitle fontWeight="bold">Finalizar aventura</DialogTitle>
-          <DialogContent dividers className="py-4">
-            <div className="mb-3">
+          <DialogTitle fontWeight='bold'>Finalizar aventura</DialogTitle>
+          <DialogContent dividers className='py-4'>
+            <div className='mb-3'>
               {finishImg ? (
-                <div className="d-flex align-items-center justify-content-center mb-3">
-                  <Box borderRadius="100%" overflow="hidden">
-                    <img src={finishImg} height="240" width="240" />
+                <div className='d-flex align-items-center justify-content-center mb-3'>
+                  <Box borderRadius='100%' overflow='hidden'>
+                    <img src={finishImg} height='240' width='240' />
                   </Box>
                 </div>
               ) : null}
-              <div className="mb-4">
-                <Typography component="span" variant="body1">
+              <div className='mb-4'>
+                <Typography component='span' variant='body1'>
                   Esta fue la última etapa. ¡Felicitaciones a todas y todos por
                   su gran esfuerzo, y muchas gracias por participar!
                 </Typography>
               </div>
-              <Typography variant="h5" textAlign="center" fontWeight="bold">
+              <Typography variant='h5' textAlign='center' fontWeight='bold'>
                 ¡Nos vemos en la próxima aventura!
               </Typography>
             </div>
           </DialogContent>
-          <DialogActions className="d-flex align-items-center mt-3">
+          <DialogActions className='d-flex align-items-center mt-3'>
             <Button variant={'outlined'} onClick={handleClose}>
               Cancelar
             </Button>

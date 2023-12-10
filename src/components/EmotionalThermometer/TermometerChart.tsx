@@ -184,7 +184,7 @@ const TermometerChart = ({ data }: TermometerChartProps) => {
     };
   }, [data]);
 
-  return <div id="chartdiv" style={{ width: '100%', height: '300px' }} />;
+  return <div id='chartdiv' style={{ width: '100%', height: '300px' }} />;
 };
 
 export default TermometerChart;

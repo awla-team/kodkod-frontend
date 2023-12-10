@@ -13,10 +13,10 @@ const UsedRewardCount = ({ count }: { count: number }) => {
     <GraduationCountContainer>
       <GraduationIcon />
       <Typography
-        color="white"
-        variant="body1"
-        fontWeight="bold"
-        fontSize="16px"
+        color='white'
+        variant='body1'
+        fontWeight='bold'
+        fontSize='16px'
       >
         {count}
       </Typography>

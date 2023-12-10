@@ -125,8 +125,8 @@ const App: React.FC = () => {
 
   if (fetching === FetchStatus.Idle || fetching === FetchStatus.Pending)
     return (
-      <div className="app-container d-flex">
-        <div className="d-flex w-100 h-100 justify-content-center align-items-center">
+      <div className='app-container d-flex'>
+        <div className='d-flex w-100 h-100 justify-content-center align-items-center'>
           <CircularProgress />
         </div>
       </div>
@@ -142,13 +142,13 @@ const App: React.FC = () => {
       }}
       prevButton={({ setCurrentStep, currentStep }) => (
         <Button
-          variant="outlined"
-          className="me-2"
-          size="small"
+          variant='outlined'
+          className='me-2'
+          size='small'
           startIcon={<ArrowBackIcon />}
           disabled={currentStep === 0}
           onClick={() => setCurrentStep(currentStep - 1)}
-          color="primary"
+          color='primary'
         >
           Atrás
         </Button>
@@ -157,15 +157,15 @@ const App: React.FC = () => {
         if (currentStep === stepsLength - 1) {
           return (
             <Button
-              variant="contained"
-              className="ms-2"
-              size="small"
+              variant='contained'
+              className='ms-2'
+              size='small'
               startIcon={<DoneIcon />}
               onClick={() => {
                 setIsOpen(false);
                 handleFinish();
               }}
-              color="primary"
+              color='primary'
             >
               Finalizar
             </Button>
@@ -173,12 +173,12 @@ const App: React.FC = () => {
         } else {
           return (
             <Button
-              variant="outlined"
-              className="ms-2"
-              size="small"
+              variant='outlined'
+              className='ms-2'
+              size='small'
               endIcon={<ArrowForwardIcon />}
               onClick={() => setCurrentStep(currentStep + 1)}
-              color="primary"
+              color='primary'
             >
               Siguiente
             </Button>
@@ -187,10 +187,10 @@ const App: React.FC = () => {
       }}
     >
       <OnboardingContextProvider>
-        <div className="app-container d-flex">
+        <div className='app-container d-flex'>
           <Sidebar classes={classes} handleOpenModal={handleOpenModal} />
-          <div className="app-main-container d-flex flex-column flex-fill">
-            <div className="app-content container" id="home-onboarding-4">
+          <div className='app-main-container d-flex flex-column flex-fill'>
+            <div className='app-content container' id='home-onboarding-4'>
               <Outlet context={{ classes, handleOpenModal, getClassesData }} />
             </div>
           </div>

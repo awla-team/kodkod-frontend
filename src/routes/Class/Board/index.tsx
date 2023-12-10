@@ -63,19 +63,19 @@ const Board: React.FC = () => {
   }, [onboardingDone]);
 
   return (
-    <DashboardContainer className="d-flex w-100 row">
-      <div className="d-flex flex-column col-lg-6 col-12 pe-lg-3 pb-lg-0 pb-3 ">
-        <DetailsCard className="mb-3" id="board-onboarding-1">
+    <DashboardContainer className='d-flex w-100 row'>
+      <div className='d-flex flex-column col-lg-6 col-12 pe-lg-3 pb-lg-0 pb-3 '>
+        <DetailsCard className='mb-3' id='board-onboarding-1'>
           {classDetails && (
             <ClassDetailsCard classDetails={classDetails} levels={levels} />
           )}
         </DetailsCard>
-        <DetailsCard className="p-5" id="board-onboarding-3">
+        <DetailsCard className='p-5' id='board-onboarding-3'>
           <EmotionalThermometer classDetails={classDetails} />
         </DetailsCard>
       </div>
-      <div className="col-lg-6 col-12" id="board-onboarding-2">
-        <DetailsCard className="h-100 p-5">
+      <div className='col-lg-6 col-12' id='board-onboarding-2'>
+        <DetailsCard className='h-100 p-5'>
           <StudentsList studentsData={students} classDetails={classDetails} />
         </DetailsCard>
       </div>
