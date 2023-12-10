@@ -8,8 +8,8 @@
     "build": "set CI=false && tsc && vite build",
     "preview": "vite preview",
     "server": "json-server --watch db.json --delay 500",
-    "format": "prettier -w .",
-    "format-check": "prettier -c .",
+    "format": "prettier --write .",
+    "format-check": "prettier --check .",
     "eslint-check": "eslint . --ext .js,.jsx,.ts,.tsx,.d.ts --report-unused-disable-directives --color",
     "eslint-fix": "eslint . --ext .js,.jsx,.ts,.tsx,.d.ts --fix"
   },
