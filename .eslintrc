@@ -33,7 +33,7 @@
   },
   "overrides": [
     {
-      "files": ["*.js", "*.jsx", "*.ts", "*.tsx"],
+      "files": ["*.js", "*.jsx", "*.ts", "*.tsx", "*.d.ts"],
       "parserOptions": {
         "project": "./tsconfig.json"
       }
