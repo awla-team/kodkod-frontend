@@ -34,7 +34,7 @@ export const signUp = async (body: Omit<SignUpBody, 'confirmPassword'>) => {
 
 export const generateAccessToken = async (body?: GenerateAccessTokenBody) => {
   // FIXME: fix this eslint error
-  // eslint-disable-next-line @typescript-eslint/no-misused-promises, no-async-promise-executor
+  // eslint-disable-next-line no-async-promise-executor
   return await new Promise(async (resolve, reject) => {
     let refreshToken: string;
     if (!body) {

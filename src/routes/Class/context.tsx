@@ -186,11 +186,7 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
         // @ts-expect-error ts-error(2322)
         updateStudentsData,
         updateStageData,
-        // FIXME: fix this ts error
-        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         getClassById,
-        // FIXME: fix this ts error
-        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         getStudentsByClass,
         classDetails,
         loadingClass,

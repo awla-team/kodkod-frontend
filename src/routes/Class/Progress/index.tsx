@@ -246,8 +246,6 @@ const Progress: FC<ProgressProps> = () => {
         open={openModal}
         student={selectedStudent}
         onClose={() => setOpenModal(false)}
-        // FIXME: fix this eslint error
-        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         onSave={handleSave}
       />
     </ProgressContainer>

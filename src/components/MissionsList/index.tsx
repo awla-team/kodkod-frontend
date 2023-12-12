@@ -91,8 +91,6 @@ const MissionsList: FC<{ shownStage: IStage }> = ({ shownStage }) => {
       {openDrawer && !!selectedMission && (
         <MissionAccomplishedDrawer
           open={openDrawer && !!selectedMission}
-          // FIXME: fix this eslint error
-          // eslint-disable-next-line @typescript-eslint/no-misused-promises
           onSave={handleGetMissions}
           anchor='right'
           onClose={handleDrawerClose}

@@ -225,8 +225,6 @@ const RedeemRewardDrawer = ({
                 </Button>
                 <Button
                   id='reward-modal-save'
-                  // FIXME: fix this eslint error
-                  // eslint-disable-next-line @typescript-eslint/no-misused-promises
                   onClick={async () => await handleSave(rewardId, selected)}
                   variant='contained'
                   disabled={!Object.keys(selected).length}

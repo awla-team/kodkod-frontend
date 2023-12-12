@@ -140,8 +140,6 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
       <form
         className='d-flex flex-column flex-fill'
         style={{ overflow: 'hidden' }}
-        // FIXME: fix this eslint error
-        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         onSubmit={async (event) => await handleSubmit(event)}
       >
         <DialogContent className='d-flex flex-column flex-fill'>

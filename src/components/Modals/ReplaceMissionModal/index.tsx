@@ -173,8 +173,6 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
         </Button>
         <Button
           variant='contained'
-          // FIXME: fix this eslint error
-          // eslint-disable-next-line @typescript-eslint/no-misused-promises
           onClick={handleClick}
           disabled={pending || !selected}
         >

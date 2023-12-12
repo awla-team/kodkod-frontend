@@ -241,8 +241,6 @@ export const Adventure: React.FC = () => {
           // @ts-expect-error ts-error(18048)
           stages={classDetails.current_adventure?.stages}
           onStageChange={handleStageChange}
-          // FIXME: fix this eslint error
-          // eslint-disable-next-line @typescript-eslint/no-misused-promises
           handleFinish={finishAdventure}
         />
       </div>

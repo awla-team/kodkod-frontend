@@ -204,8 +204,6 @@ const AdventureSummaryDialog: React.FC<{
             id='adventure-selection-onboarding-6'
             variant='contained'
             color='primary'
-            // FIXME: fix this eslint error
-            // eslint-disable-next-line @typescript-eslint/no-misused-promises
             onClick={setAdventure}
           >
             Quiero esta aventura

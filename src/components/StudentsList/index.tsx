@@ -32,7 +32,7 @@ const StudentsList: FC<StudentsListProps> = ({
   // temporary approcah
   const handleDelete = async (studentId: string | number): Promise<boolean> => {
     // FIXME: fix this eslint errors
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises, no-async-promise-executor
+    // eslint-disable-next-line no-async-promise-executor
     return await new Promise(async (resolve, reject) => {
       try {
         if (studentId) {

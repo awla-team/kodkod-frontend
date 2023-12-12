@@ -167,8 +167,6 @@ const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
   }
 
   return (
-    // FIXME: fix this eslint error
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     <AuthContext.Provider value={{ user, logout, checkUserSubscription }}>
       {children}
       <SubscribeModal

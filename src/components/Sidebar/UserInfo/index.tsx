@@ -79,12 +79,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
         <MenuItem component={Link} to='perfil/suscripciones' disabled={loading}>
           Suscripciones
         </MenuItem>
-        <MenuItem
-          // FIXME: fix this eslint error
-          // eslint-disable-next-line @typescript-eslint/no-misused-promises
-          onClick={handleLogout}
-          disabled={loading}
-        >
+        <MenuItem onClick={handleLogout} disabled={loading}>
           Cerrar sesión
         </MenuItem>
       </Menu>

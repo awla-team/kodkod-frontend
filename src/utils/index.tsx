@@ -124,7 +124,7 @@ export const getFirstNonActiveStage = (
 
 export const getAccessTokenUsingRefreshToken = async () => {
   // FIXME: fix this eslint errors
-  // eslint-disable-next-line @typescript-eslint/no-misused-promises, no-async-promise-executor
+  // eslint-disable-next-line no-async-promise-executor
   return await new Promise(async (resolve, reject) => {
     const refreshToken = localStorage.getItem('refreshToken');
     if (!refreshToken) {
