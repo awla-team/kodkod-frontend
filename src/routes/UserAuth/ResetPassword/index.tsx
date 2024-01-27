@@ -13,7 +13,7 @@ import { Link as RouterLink, useNavigate, useParams } from 'react-router-dom';
 import { type FormInitialValuesType } from './interfaces';
 import * as Yup from 'yup';
 import Toaster from 'utils/Toster';
-import { resetPassword, verifyResetToken } from 'services/auth';
+import { resetPassword, verifyResetToken } from 'api/services/auth';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 const ResetPassword: FC = () => {

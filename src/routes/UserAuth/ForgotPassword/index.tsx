@@ -16,7 +16,7 @@ import { Form, Formik, type FormikHelpers } from 'formik';
 import { Link as RouterLink } from 'react-router-dom';
 import * as Yup from 'yup';
 import Toaster from 'utils/Toster';
-import { forgotPassword } from 'services/auth';
+import { forgotPassword } from 'api/services/auth';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 const ForgotPassword: FC<ForgotPasswordProps> = () => {

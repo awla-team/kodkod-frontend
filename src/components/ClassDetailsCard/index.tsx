@@ -16,7 +16,7 @@ import { useClassContext } from 'routes/Class/context';
 import { type IClass, type IStage } from 'global/interfaces';
 import ConfirmationModal from '../Modals/ConfirmationModal';
 import Toaster from '../../utils/Toster';
-import { deleteClass } from '../../services/classes';
+import { deleteClass } from '../../api/services/classes';
 import SkillPoints from 'components/SkillPoints';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 

@@ -3,7 +3,7 @@ import { Box, Button, CircularProgress, Typography } from '@mui/material';
 import { useParams, Link as RouterLink } from 'react-router-dom';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import Toaster from 'utils/Toster';
-import { resendEmailVerification, verifyEmail } from 'services/auth';
+import { resendEmailVerification, verifyEmail } from 'api/services/auth';
 import AuthCard from 'components/AuthCard';
 import { FetchStatus } from 'global/enums';
 import { ForgotPasswordContainer } from '../ForgotPassword/styled';

@@ -12,7 +12,7 @@ import {
 import MissionCard from '../../MissionCard';
 import { difficultyIcons, difficultyToText } from 'utils';
 import Toaster from 'utils/Toster';
-import { getMissionsByStage, updateStageMission } from 'services/missions';
+import { getMissionsByStage, updateStageMission } from 'api/services/missions';
 import { type IMission } from '../../../global/interfaces';
 import { ClassHasAdventureContext } from '../../../routes/Class/Adventures/Adventure/provider';
 import { Box } from '@mui/system';

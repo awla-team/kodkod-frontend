@@ -1,4 +1,4 @@
-import http from '../api/api';
+import http from '../api';
 
 export const getSkill = async (skillId: string | number) =>
   await http.get(`skills/${skillId}`);

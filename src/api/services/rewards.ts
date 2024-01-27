@@ -1,6 +1,6 @@
 import { type IReward } from 'global/interfaces';
-import http from '../api/api';
-import { generateQueryParamsFromObject } from '../utils';
+import http from '../api';
+import { generateQueryParamsFromObject } from '../../utils';
 
 export interface GetRewardsFilter {
   id_adventure?: number | string;

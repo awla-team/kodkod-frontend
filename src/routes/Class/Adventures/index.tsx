@@ -8,13 +8,13 @@ import AdventureWithProvider from './Adventure';
 import {
   getMissionsByStage,
   type StageMissionUpdateBody,
-} from 'services/missions';
+} from 'api/services/missions';
 import { StudentType } from 'components/StudentsList/interfaces';
 import { useClassContext } from '../context';
 import {
   getClassCurrentAdventure,
   setCurrentAdventure,
-} from 'services/adventures';
+} from 'api/services/adventures';
 
 const Adventures: React.FC = () => {
   const [loading, setLoading] = useState<FetchStatus>(FetchStatus.Success);

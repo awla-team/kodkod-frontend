@@ -1,5 +1,5 @@
-import http from '../api/api';
-import { generateQueryParamsFromObject } from '../utils';
+import http from '../api';
+import { generateQueryParamsFromObject } from '../../utils';
 
 export interface StageMissionUpdateBody {
   id_stage: number;

@@ -10,7 +10,7 @@ import {
 import { type StudentsSelectableListProps } from './interfaces';
 import { ClassHasAdventureContext } from 'routes/Class/Adventures/Adventure/provider';
 import Toaster from 'utils/Toster';
-import { missionAccomplished } from 'services/missions';
+import { missionAccomplished } from 'api/services/missions';
 import { StudentListContainer } from './styled';
 
 export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({

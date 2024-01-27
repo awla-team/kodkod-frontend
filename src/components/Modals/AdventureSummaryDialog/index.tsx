@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import type { IAdventure } from 'global/interfaces';
 import Toaster from 'utils/Toster';
-import { setCurrentAdventure } from 'services/adventures';
+import { setCurrentAdventure } from 'api/services/adventures';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import SkillPoints from 'components/SkillPoints';
 import EmojiFlagsIcon from '@mui/icons-material/EmojiFlags';

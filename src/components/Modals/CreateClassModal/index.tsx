@@ -19,7 +19,7 @@ import { FormContainer } from './styled';
 import { Formik, Form, type FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import { useEffect, useState } from 'react';
-import { createClass, updateClass } from 'services/classes';
+import { createClass, updateClass } from 'api/services/classes';
 import Toaster from 'utils/Toster';
 import { type IClass } from 'global/interfaces';
 import { useAuth } from 'contexts/AuthContext';

@@ -11,7 +11,7 @@ import http from 'api/api';
 import { type IUserHasReward } from 'global/interfaces';
 import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
-import { studentsRedeemReward } from 'services/rewards';
+import { studentsRedeemReward } from 'api/services/rewards';
 import Toaster from 'utils/Toster';
 import StaticRewardCard from './StaticRewardCard';
 import { StudentListContainer } from 'components/StudentsList/styled';

@@ -1,4 +1,4 @@
-import http from '../api/api';
+import http from '../api';
 
 export const getSchools = async () => {
   return await http.get('school');

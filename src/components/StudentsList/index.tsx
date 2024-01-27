@@ -10,7 +10,7 @@ import { Button, Typography } from '@mui/material';
 import { type StudentsListProps, type StudentType } from './interfaces';
 import AddStudentsDialog from '../Modals/AddStudentsDialog';
 import { useClassContext } from '../../routes/Class/context';
-import { deleteStudent } from '../../services/students';
+import { deleteStudent } from '../../api/services/students';
 import { StudentDetails } from './StudentDetails';
 
 const StudentsList: FC<StudentsListProps> = ({

@@ -7,14 +7,14 @@ import {
   useState,
 } from 'react';
 import { type IClass, type IStage } from 'global/interfaces';
-import { getClassByID } from 'services/classes';
+import { getClassByID } from 'api/services/classes';
 import Toaster from 'utils/Toster';
-import { studentsByClass } from 'services/students';
+import { studentsByClass } from 'api/services/students';
 import { useParams } from 'react-router-dom';
 import { type StudentType } from 'components/StudentsList/interfaces';
 import { type ClassContextType } from './interfaces';
 import { type Levels } from 'components/Modals/CreateClassModal/interfaces';
-import { getAllTheLevel } from './../../services/levels';
+import { getAllTheLevel } from '../../api/services/levels';
 import { FetchStatus } from 'global/enums';
 
 const ClassContext = createContext<ClassContextType>({

@@ -1,4 +1,4 @@
-import http from '../api/api';
+import http from '../api';
 
 export const startSubscription = async (body: {
   preapproval_plan_id: string;

@@ -3,18 +3,18 @@ import { type ProgressProps } from './interfaces';
 import { Typography, Box } from '@mui/material';
 import { ProgressContainer, StickyDataGrid } from './styled';
 import { useClassContext } from '../context';
-import { getMissionsByClassAdventure } from 'services/missions';
+import { getMissionsByClassAdventure } from 'api/services/missions';
 import { type IMission, type IUser } from 'global/interfaces';
 import AdventureProgress from 'components/AdventureProgress';
 import { type GridColDef, type GridSortModel } from '@mui/x-data-grid';
 import kodcoinIcon from 'assets/images/kodcoin.png';
 import RewardsModal from 'components/Modals/RewardsModal';
-import { studentUseRewards } from 'services/rewards';
+import { studentUseRewards } from 'api/services/rewards';
 import Toaster from 'utils/Toster';
 import { useOnboarding } from 'contexts/OnboardingContext';
 import ProgressOnboarding from 'utils/Onboardings/ProgressOnboarding';
 import { useTour } from '@reactour/tour';
-import { getClassHasAdventureProgress } from 'services/adventures';
+import { getClassHasAdventureProgress } from 'api/services/adventures';
 
 const Progress: FC<ProgressProps> = () => {
   const { classDetails } = useClassContext();

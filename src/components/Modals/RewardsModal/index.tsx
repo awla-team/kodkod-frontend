@@ -13,7 +13,7 @@ import { RewardIcon, RewardsList } from './styled';
 import { useEffect, useState } from 'react';
 import { type IUser, type IUserHasReward } from 'global/interfaces';
 import Moment from 'moment';
-import { studentUseRewards } from 'services/rewards';
+import { studentUseRewards } from 'api/services/rewards';
 import Toaster from 'utils/Toster';
 
 const RewardsModal: FC<{

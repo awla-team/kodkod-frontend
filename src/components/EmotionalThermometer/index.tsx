@@ -31,7 +31,7 @@ import {
   getEmotionalThermometerByClassId,
   saveEmotionalThermometerDetails,
   updateEmotionalThermometerDetails,
-} from '../../services/emotional_thermometer';
+} from '../../api/services/emotional_thermometer';
 import HelpIcon from '@mui/icons-material/Help';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import {

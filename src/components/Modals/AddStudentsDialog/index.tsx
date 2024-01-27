@@ -12,7 +12,7 @@ import {
   Typography,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import { addStudentsInClass } from 'services/students';
+import { addStudentsInClass } from 'api/services/students';
 import Toaster from 'utils/Toster';
 import { type StudentType } from '../../StudentsList/interfaces';
 import { StudentsFormDetailsContainer } from './styled';

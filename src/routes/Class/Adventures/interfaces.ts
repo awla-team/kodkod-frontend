@@ -6,7 +6,7 @@ import {
 } from 'global/interfaces';
 import { Dispatch, type PropsWithChildren, SetStateAction } from 'react';
 import { type StudentType } from 'components/StudentsList/interfaces';
-import { type StageMissionUpdateBody } from 'services/missions';
+import { type StageMissionUpdateBody } from 'api/services/missions';
 
 export interface GoalType {
   id: number | string;

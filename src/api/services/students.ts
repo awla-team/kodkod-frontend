@@ -2,9 +2,9 @@ import http from 'api/api';
 import {
   StudentType,
   type StudentUpdateDataType,
-} from '../components/StudentsList/interfaces';
+} from '../../components/StudentsList/interfaces';
 import { type AddStudentsInClassBody } from './interfaces';
-import { generateQueryParamsFromObject } from '../utils';
+import { generateQueryParamsFromObject } from '../../utils';
 
 export interface UserFilter {
   role?: 'student' | 'teacher';

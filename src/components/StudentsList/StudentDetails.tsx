@@ -3,7 +3,7 @@ import { type StudentEditInputField, type StudentType } from './interfaces';
 import { useClassContext } from '../../routes/Class/context';
 import Toaster from '../../utils/Toster';
 import { Form, Formik, type FormikHelpers } from 'formik';
-import { updateStudent } from '../../services/students';
+import { updateStudent } from '../../api/services/students';
 import {
   Avatar,
   Box,

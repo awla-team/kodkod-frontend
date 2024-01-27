@@ -14,7 +14,7 @@ import { Formik, Form, type FormikHelpers } from 'formik';
 import { type FormInitialValuesType } from './interfaces';
 import * as Yup from 'yup';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { signIn } from 'services/auth';
+import { signIn } from 'api/services/auth';
 import Toaster from 'utils/Toster';
 import { type SignInResponseType } from '../../../global/interfaces';
 

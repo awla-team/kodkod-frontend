@@ -16,7 +16,7 @@ import {
   findSubscription,
   getPlans,
   startSubscription,
-} from 'services/subscriptions';
+} from 'api/services/subscriptions';
 import { useAuth } from 'contexts/AuthContext';
 import { Link } from 'react-router-dom';
 import { FetchStatus } from 'global/enums';

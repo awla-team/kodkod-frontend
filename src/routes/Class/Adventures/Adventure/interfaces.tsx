@@ -5,7 +5,7 @@ import {
   type IStage,
 } from 'global/interfaces';
 import { type StudentType } from 'components/StudentsList/interfaces';
-import { type StageMissionUpdateBody } from 'services/missions';
+import { type StageMissionUpdateBody } from 'api/services/missions';
 
 export interface IAdventureBannerProps {
   backgroundImg: string;

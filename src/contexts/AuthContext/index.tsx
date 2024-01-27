@@ -9,11 +9,11 @@ import {
   useState,
 } from 'react';
 import { type AuthContextType } from './interfaces';
-import { getAuthUser as getAuthUserAction } from 'services/users';
+import { getAuthUser as getAuthUserAction } from 'api/services/users';
 import Toaster from 'utils/Toster';
 import { type IUser } from 'global/interfaces';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
-import { logout as makeLogout } from 'services/auth';
+import { logout as makeLogout } from 'api/services/auth';
 import SubscribeModal from 'components/Modals/SubscribeModal';
 
 // const publicRoutes = ["/signin", "/signup", "/reset-password"];

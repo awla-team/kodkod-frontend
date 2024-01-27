@@ -19,7 +19,7 @@ import Toaster from 'utils/Toster';
 import {
   cancelAdventureFromClass,
   endClassHasAdventure,
-} from 'services/adventures';
+} from 'api/services/adventures';
 import MissionsList from '../../../../components/MissionsList';
 import ConfirmationModal from 'components/Modals/ConfirmationModal';
 import { useClassContext } from 'routes/Class/context';

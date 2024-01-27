@@ -4,7 +4,7 @@ import { Step, Button, Typography, Tooltip } from '@mui/material';
 import { ClassHasAdventureContext } from '../../routes/Class/Adventures/Adventure/provider';
 import { type IStage } from 'global/interfaces';
 import { UnlockStageConfirmationDialog } from 'components/Modals';
-import { unlockStage } from 'services/stages';
+import { unlockStage } from 'api/services/stages';
 import Toaster from 'utils/Toster';
 
 const StageStepper: FC<{

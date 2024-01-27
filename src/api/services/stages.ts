@@ -1,4 +1,4 @@
-import http from '../api/api';
+import http from '../api';
 
 export const unlockStage = async (body: { id_class_has_adventure: number }) => {
   return await http.post('unlock-next-stage', body);

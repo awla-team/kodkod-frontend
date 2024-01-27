@@ -11,13 +11,13 @@ import {
   Link as RouterLink,
   Link,
 } from 'react-router-dom';
-import { getGoalById } from 'services/goals';
+import { getGoalById } from 'api/services/goals';
 import { type GoalType } from '../Adventures/interfaces';
 import Toaster from '../../../utils/Toster';
 import { AdventureSelectionContainer } from './styled';
 import { useClassContext } from '../context';
 import SkillPoints from 'components/SkillPoints';
-import { getClassHasAdventuresByClass } from 'services/classes';
+import { getClassHasAdventuresByClass } from 'api/services/classes';
 import { Button } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { useAuth } from 'contexts/AuthContext';

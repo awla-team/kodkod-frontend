@@ -3,7 +3,7 @@ import { Box, Button, CircularProgress, Typography } from '@mui/material';
 import { Navigate, useNavigate, Link } from 'react-router-dom';
 import { GoalSelectionContainer, CardContainer, ImgContainer } from './styled';
 import { type AxiosResponse } from 'axios';
-import { getGoals } from 'services/goals';
+import { getGoals } from 'api/services/goals';
 import { FetchStatus } from 'global/enums';
 import { type IGoal } from 'global/interfaces';
 import { useClassContext } from 'routes/Class/context';

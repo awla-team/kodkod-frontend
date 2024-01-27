@@ -5,7 +5,7 @@ import ReplaceMissionModal from 'components/Modals/ReplaceMissionModal';
 import { type IMission, type IStage } from 'global/interfaces';
 import { Typography } from '@mui/material';
 import MissionAccomplishedDrawer from 'components/Modals/MissionAccomplished';
-import { getStageMissions } from 'services/missions';
+import { getStageMissions } from 'api/services/missions';
 
 const MissionsList: FC<{ shownStage: IStage }> = ({ shownStage }) => {
   const [open, setOpen] = useState<boolean>(false);

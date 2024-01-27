@@ -7,7 +7,7 @@ import AdventureCard from 'components/AdventureCard';
 import { useNavigate, Link } from 'react-router-dom';
 import SkillPoints from 'components/SkillPoints';
 import { type IClassHasAdventure } from 'global/interfaces';
-import { getCompletedClassHasAdventuresByClass } from 'services/adventures';
+import { getCompletedClassHasAdventuresByClass } from 'api/services/adventures';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import moment from 'moment';
 

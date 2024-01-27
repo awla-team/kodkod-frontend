@@ -1,6 +1,6 @@
 import http from 'api/api';
 import { type IUser } from 'global/interfaces';
-import { generateQueryParamsFromObject } from '../utils';
+import { generateQueryParamsFromObject } from '../../utils';
 
 interface UserFilter {
   role?: 'student' | 'teacher';
