@@ -1,6 +1,6 @@
 import { Tooltip } from '@mui/material';
 import { Link, useParams } from 'react-router-dom';
-import { SidebarLinkProps } from './interfaces';
+import { type SidebarLinkProps } from './interfaces';
 import { SidebarLinkContainer } from './styled';
 
 const SidebarLink: React.FC<SidebarLinkProps> = ({

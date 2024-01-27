@@ -38,7 +38,7 @@ const AdventureSelectionOnboarding = [
       );
     },
     stepInteraction: false,
-    selector: '#goal-card-0', //'#adventure-selection-onboarding-1',
+    selector: '#goal-card-0', // '#adventure-selection-onboarding-1',
     padding: 8,
   },
   {

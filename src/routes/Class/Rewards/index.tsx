@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 import { RewardsList } from './styled';
 import { Button, Typography } from '@mui/material';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import RewardCard from 'components/RewardCard';
-import { useSearchParams } from 'react-router-dom';
 import { getRewardsByAdventure, updateReward } from 'services/rewards';
-import { IReward, IUser } from 'global/interfaces';
+import { type IReward, type IUser } from 'global/interfaces';
 import Toaster from 'utils/Toster';
 import http from 'global/api';
 import { AxiosError, AxiosResponse } from 'axios';
@@ -38,11 +37,11 @@ const Rewards = () => {
     return count;
   };
 
-  const handleEditReward = (
+  const handleEditReward = async (
     rewardId: number | string,
     body: Partial<IReward>
   ) => {
-    return updateReward(rewardId, body)
+    return await updateReward(rewardId, body)
       .then((response) => {
         const newRewards = [...rewards];
         const updatedReward = response.data;
@@ -53,7 +52,11 @@ const Rewards = () => {
         setRewards(newRewards);
         setClassDetails({
           ...classDetails,
+          // FIXME: fix this ts error
+          // @ts-expect-error ts-error(2322)
           current_adventure: {
+            // FIXME: fix this ts error
+            // @ts-expect-error ts-error(18048)
             ...classDetails.current_adventure,
             rewards: newRewards,
           },
@@ -74,16 +77,20 @@ const Rewards = () => {
 
   useEffect(() => {
     const rawOnboardingData = localStorage.getItem('onboarding-data');
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(2345)
     const onboardingData = JSON.parse(rawOnboardingData);
     setOnboardingDone(!!onboardingData?.recompensas);
   }, []);
 
   useEffect(() => {
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(2722)
     setNewAvailableTours([
       {
         name: 'Gestión de recompensas',
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
+        // @ts-expect-error
         steps: RewardsOnboarding,
       },
     ]);
@@ -92,7 +99,7 @@ const Rewards = () => {
   useEffect(() => {
     if (!onboardingDone) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
+      // @ts-expect-error
       setSteps(RewardsOnboarding);
       setCurrentStep(0);
       setIsOpen(true);
@@ -102,18 +109,26 @@ const Rewards = () => {
   useEffect(() => {
     const currentAdventureId = classDetails?.current_adventure?.id;
     if (currentAdventureId) {
+      // FIXME: fix this eslint error
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       (async () => {
         try {
+          // FIXME: fix this eslint error
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
           const { data: studentsData } = await studentsByClass(classId, {
             role: 'student',
             rewards: true,
           });
           const rewardsWithUsedCount =
+            // FIXME: fix this ts error
+            // @ts-expect-error ts-error(18048)
             classDetails.current_adventure.rewards.map((reward) => {
               return {
                 ...reward,
                 usedCount: usedRewardCount(
                   reward.id,
+                  // FIXME: fix this eslint error
+                  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                   studentsData.responseData
                 ),
               };

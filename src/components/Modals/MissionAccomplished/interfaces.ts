@@ -1,5 +1,5 @@
-import React from 'react';
-import { IMission, IStage } from '../../../global/interfaces';
+import type React from 'react';
+import { type IMission, type IStage } from '../../../global/interfaces';
 
 export interface MissionAccomplishedProps {
   open: boolean;

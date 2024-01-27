@@ -1,4 +1,4 @@
-import { IStageIconProps } from './interfaces';
+import { type IStageIconProps } from './interfaces';
 import { StageIconContainer } from './styled';
 
 const StageIcon = ({ icon, selected = false }: IStageIconProps) => (

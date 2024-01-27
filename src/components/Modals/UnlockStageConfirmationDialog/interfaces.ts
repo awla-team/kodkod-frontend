@@ -1,4 +1,4 @@
-import { IStage } from 'global/interfaces';
+import { type IStage } from 'global/interfaces';
 
 export interface UnlockStageConfirmationDialogProps {
   open: boolean;

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Button, CircularProgress, Typography } from '@mui/material';
-import { useParams } from 'react-router-dom';
-import { Link as RouterLink } from 'react-router-dom';
+import { useParams, Link as RouterLink } from 'react-router-dom';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import Toaster from 'utils/Toster';
 import { resendEmailVerification, verifyEmail } from 'services/auth';
@@ -16,6 +15,8 @@ const VerifyEmail: React.FC = () => {
 
   useEffect(() => {
     setEmailVerified(FetchStatus.Pending);
+    // FIXME: fix this eslint error
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     verifyEmail(token)
       .then((_response) => {
         setEmailVerified(FetchStatus.Success);
@@ -28,6 +29,8 @@ const VerifyEmail: React.FC = () => {
 
   const sendEmailVerification = () => {
     setEmailSend(FetchStatus.Pending);
+    // FIXME: fix this eslint error
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     resendEmailVerification(userId)
       .then((_response) => {
         setEmailSend(FetchStatus.Success);

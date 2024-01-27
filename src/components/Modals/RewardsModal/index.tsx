@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import { RewardIcon, RewardsList } from './styled';
 import { useEffect, useState } from 'react';
-import { IUser, IUserHasReward } from 'global/interfaces';
+import { type IUser, type IUserHasReward } from 'global/interfaces';
 import Moment from 'moment';
 import { studentUseRewards } from 'services/rewards';
 import Toaster from 'utils/Toster';
@@ -29,11 +29,15 @@ const RewardsModal: FC<{
   useEffect(() => {
     setActiveRewards(
       student?.user_has_rewards?.filter(
+        // FIXME: fix this eslint error
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         (user_has_reward) => !user_has_reward.used_at
       ) || []
     );
     setInactiveRewards(
       student?.user_has_rewards?.filter(
+        // FIXME: fix this eslint error
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         (user_has_reward) => user_has_reward.used_at
       ) || []
     );
@@ -70,6 +74,7 @@ const RewardsModal: FC<{
         <div className='mb-2'>
           <RewardsList className='d-flex mt-2 w-100'>
             {activeRewards.length ? (
+              // eslint-disable-next-line @typescript-eslint/naming-convention
               activeRewards.map((user_has_reward) => (
                 <Tooltip
                   key={`reward-${user_has_reward.id}`}
@@ -77,10 +82,18 @@ const RewardsModal: FC<{
                   title={
                     <div className='d-flex flex-column'>
                       <Typography fontWeight='bold' variant='body2'>
-                        {user_has_reward.reward.title}
+                        {
+                          // FIXME: fix this ts error
+                          // @ts-expect-error ts-error(18048)
+                          user_has_reward.reward.title
+                        }
                       </Typography>
                       <Typography variant='body2' className='mb-2'>
-                        {user_has_reward.reward.description}
+                        {
+                          // FIXME: fix this ts error
+                          // @ts-expect-error ts-error(18048)
+                          user_has_reward.reward.description
+                        }
                       </Typography>
                       <Typography variant='caption'>{`Obtenida el ${Moment.utc(
                         user_has_reward.created_at
@@ -93,16 +106,30 @@ const RewardsModal: FC<{
                   <div>
                     <Checkbox
                       onChange={(event, value) =>
+                        // FIXME: fix this ts error
+                        // @ts-expect-error ts-error(18048)
                         handleCheckboxChange(user_has_reward.reward.id, value)
                       }
                       icon={
                         <RewardIcon className='reward-icon'>
-                          <img src={user_has_reward.reward.icon} />
+                          <img
+                            src={
+                              // FIXME: fix this ts error
+                              // @ts-expect-error ts-error(18048)
+                              user_has_reward.reward.icon
+                            }
+                          />
                         </RewardIcon>
                       }
                       checkedIcon={
                         <RewardIcon className='reward-icon selected'>
-                          <img src={user_has_reward.reward.icon} />
+                          <img
+                            src={
+                              // FIXME: fix this ts error
+                              // @ts-expect-error ts-error(18048)
+                              user_has_reward.reward.icon
+                            }
+                          />
                         </RewardIcon>
                       }
                     />
@@ -129,48 +156,72 @@ const RewardsModal: FC<{
               Recompensas inactivas
             </Typography>
             <RewardsList className='d-flex mt-2 inactive-rewards'>
-              {inactiveRewards.map((user_has_reward) => (
-                <Tooltip
-                  key={`reward-${user_has_reward.id}`}
-                  arrow
-                  title={
-                    <div className='d-flex flex-column'>
-                      <Typography fontWeight='bold' variant='body2'>
-                        {user_has_reward.reward.title}
-                      </Typography>
-                      <Typography variant='body2' className='mb-2'>
-                        {user_has_reward.reward.description}
-                      </Typography>
-                      <Typography variant='caption'>{`Obtenida el ${Moment.utc(
-                        user_has_reward.created_at
-                      )
-                        .local()
-                        .format('DD/MM/YYYY')}`}</Typography>
-                      <Typography variant='caption'>{`Utilizada el ${Moment.utc(
-                        user_has_reward.used_at
-                      )
-                        .local()
-                        .format('DD/MM/YYYY')}`}</Typography>
+              {
+                // FIXME: fix this eslint error
+                // eslint-disable-next-line @typescript-eslint/naming-convention
+                inactiveRewards.map((user_has_reward) => (
+                  <Tooltip
+                    key={`reward-${user_has_reward.id}`}
+                    arrow
+                    title={
+                      <div className='d-flex flex-column'>
+                        <Typography fontWeight='bold' variant='body2'>
+                          {
+                            // FIXME: fix this ts error
+                            // @ts-expect-error ts-error(18048)
+                            user_has_reward.reward.title
+                          }
+                        </Typography>
+                        <Typography variant='body2' className='mb-2'>
+                          {
+                            // FIXME: fix this ts error
+                            // @ts-expect-error ts-error(18048)
+                            user_has_reward.reward.description
+                          }
+                        </Typography>
+                        <Typography variant='caption'>{`Obtenida el ${Moment.utc(
+                          user_has_reward.created_at
+                        )
+                          .local()
+                          .format('DD/MM/YYYY')}`}</Typography>
+                        <Typography variant='caption'>{`Utilizada el ${Moment.utc(
+                          user_has_reward.used_at
+                        )
+                          .local()
+                          .format('DD/MM/YYYY')}`}</Typography>
+                      </div>
+                    }
+                  >
+                    <div>
+                      <Checkbox
+                        className='disabled'
+                        icon={
+                          <RewardIcon className='reward-icon'>
+                            <img
+                              src={
+                                // FIXME: fix this ts error
+                                // @ts-expect-error ts-error(18048)
+                                user_has_reward.reward.icon
+                              }
+                            />
+                          </RewardIcon>
+                        }
+                        checkedIcon={
+                          <RewardIcon className='reward-icon'>
+                            <img
+                              src={
+                                // FIXME: fix this ts error
+                                // @ts-expect-error ts-error(18048)
+                                user_has_reward.reward.icon
+                              }
+                            />
+                          </RewardIcon>
+                        }
+                      />
                     </div>
-                  }
-                >
-                  <div>
-                    <Checkbox
-                      className='disabled'
-                      icon={
-                        <RewardIcon className='reward-icon'>
-                          <img src={user_has_reward.reward.icon} />
-                        </RewardIcon>
-                      }
-                      checkedIcon={
-                        <RewardIcon className='reward-icon'>
-                          <img src={user_has_reward.reward.icon} />
-                        </RewardIcon>
-                      }
-                    />
-                  </div>
-                </Tooltip>
-              ))}
+                  </Tooltip>
+                ))
+              }
             </RewardsList>
           </div>
         ) : null}

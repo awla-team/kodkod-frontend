@@ -1,5 +1,5 @@
-import React, { FC, useEffect } from 'react';
-import { AddStudentsDialogProps } from './interfaces';
+import React, { type FC, useEffect, useState } from 'react';
+import { type AddStudentsDialogProps } from './interfaces';
 import {
   Box,
   Button,
@@ -12,10 +12,9 @@ import {
   Typography,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import { useState } from 'react';
 import { addStudentsInClass } from 'services/students';
 import Toaster from 'utils/Toster';
-import { StudentType } from '../../StudentsList/interfaces';
+import { type StudentType } from '../../StudentsList/interfaces';
 import { StudentsFormDetailsContainer } from './styled';
 import { Link } from 'react-router-dom';
 import { read, utils } from 'xlsx';
@@ -29,7 +28,7 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
   classDetails,
 }) => {
   const [students, setStudents] = useState<
-    { first_name: string; last_name: string; email: string }[]
+    Array<{ first_name: string; last_name: string; email: string }>
   >(
     Array(5)
       .fill({})
@@ -41,7 +40,7 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
   );
 
   const [filled, setFilled] = useState<
-    { first_name: string; last_name: string; email: string }[]
+    Array<{ first_name: string; last_name: string; email: string }>
   >([]);
 
   useEffect(() => {
@@ -60,7 +59,11 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
     try {
       const { data }: { data: { responseData: { students: StudentType[] } } } =
         await addStudentsInClass({
+          // FIXME: fix this ts error
+          // @ts-expect-error ts-error(2322)
           id_class: classDetails.id,
+          // FIXME: fix this eslint error
+          // eslint-disable-next-line @typescript-eslint/naming-convention
           students: filled.map(({ first_name, last_name, email }) => {
             return {
               first_name,
@@ -82,6 +85,8 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
       console.error(error);
       Toaster(
         'error',
+        // FIXME: fix this ts error
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         error?.response?.data?.responseData ||
           'Hubo un error al añadir estudiantes'
       );
@@ -91,15 +96,24 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
   const handleImport = ($event: React.ChangeEvent<HTMLInputElement>) => {
     const files = $event.target.files;
 
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(18047)
     if (files.length) {
+      // FIXME: fix this ts error
+      // @ts-expect-error ts-error(18047)
       const file = files[0];
       const reader = new FileReader();
       reader.onload = (event) => {
+        // FIXME: fix this ts error
+        // @ts-expect-error ts-error(18047)
         const wb = read(event.target.result);
         const sheets = wb.SheetNames;
         if (sheets.length) {
-          const rows: { Nombres: string; Apellidos: string; Email: string }[] =
-            utils.sheet_to_json(wb.Sheets[sheets[0]]);
+          const rows: Array<{
+            Nombres: string;
+            Apellidos: string;
+            Email: string;
+          }> = utils.sheet_to_json(wb.Sheets[sheets[0]]);
 
           setStudents(
             rows.map((student) => ({
@@ -126,7 +140,7 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
       <form
         className='d-flex flex-column flex-fill'
         style={{ overflow: 'hidden' }}
-        onSubmit={(event) => handleSubmit(event)}
+        onSubmit={async (event) => await handleSubmit(event)}
       >
         <DialogContent className='d-flex flex-column flex-fill'>
           <Typography variant='body2' className='mb-2'>
@@ -186,6 +200,8 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
                         <TextField
                           size='small'
                           value={student.first_name}
+                          // FIXME: fix this ts error
+                          // @ts-expect-error ts-error(2322)
                           error={
                             (student.last_name || student.email) &&
                             !student.first_name
@@ -205,6 +221,8 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
                         <TextField
                           size='small'
                           value={student.last_name}
+                          // FIXME: fix this ts error
+                          // @ts-expect-error ts-error(2322)
                           error={
                             (student.first_name || student.email) &&
                             !student.last_name
@@ -224,6 +242,8 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
                         <TextField
                           size='small'
                           value={student.email}
+                          // FIXME: fix this ts error
+                          // @ts-expect-error ts-error(2322)
                           error={
                             (student.first_name || student.last_name) &&
                             !student.email

@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { Button, CircularProgress } from '@mui/material';
 import Sidebar from './components/Sidebar';
 import { getClassesByUser } from 'services/classes';
-import { IClass } from 'global/interfaces';
-import { AxiosResponse } from 'axios';
+import { type IClass } from 'global/interfaces';
+import { type AxiosResponse } from 'axios';
 import { FetchStatus } from 'global/enums';
 import { CreateClassModal } from './components/Modals';
 import { sortClasses } from './utils';
 import { getAllTheLevel } from './services/levels';
 import Toaster from './utils/Toster';
-import { Levels } from './components/Modals/CreateClassModal/interfaces';
+import { type Levels } from './components/Modals/CreateClassModal/interfaces';
 import { useAuth } from './contexts/AuthContext';
 import moment from 'moment';
-import { useLocation } from 'react-router-dom';
 import 'moment/dist/locale/es';
 import './App.css';
 import OnboardingContextProvider from 'contexts/OnboardingContext';
@@ -35,12 +34,14 @@ const App: React.FC = () => {
   const location = useLocation();
 
   const getClassesData = () => {
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(18047): 'user' is possibly 'null'
     getClassesByUser(user.id)
       .then((response: AxiosResponse) => {
         return response?.data;
       })
       .then((classes: IClass[]) => {
-        setClasses(!!classes ? sortClasses(classes) : []);
+        setClasses(classes ? sortClasses(classes) : []);
         setFetching(FetchStatus.Success);
       })
       .catch((error) => {
@@ -92,9 +93,13 @@ const App: React.FC = () => {
 
   const handleFinish = () => {
     let currentView = location.pathname.match(/\/([^/]+)$/)[1];
+    // FIXME: fix this eslint error
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     if (!isNaN(currentView))
       currentView = location.pathname.match(/\/([^/]+)\/[^/]+$/)[1];
     const rawOnboardingData = localStorage.getItem('onboarding-data');
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(2345): argument of type 'string | null' is not assignable to parameter of type 'string'
     const onboardingData = JSON.parse(rawOnboardingData) || {};
     onboardingData[currentView] = true;
     localStorage.setItem('onboarding-data', JSON.stringify(onboardingData));
@@ -119,6 +124,8 @@ const App: React.FC = () => {
     if (user) {
       setFetching(FetchStatus.Pending);
       getClassesData();
+      // FIXME: fix this eslint error
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       getLevels();
     }
   }, [user]);

@@ -1,5 +1,5 @@
-import { IClass } from 'global/interfaces';
-import { IMission } from '../../global/interfaces';
+import { type IClass } from 'global/interfaces';
+import { type IMission } from '../../global/interfaces';
 
 export interface StudentType {
   id: number | string;

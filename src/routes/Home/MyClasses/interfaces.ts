@@ -1,4 +1,4 @@
-import { IClass, ModifiedIClass } from 'global/interfaces';
+import { type IClass, type ModifiedIClass } from 'global/interfaces';
 
 export interface MyClassesProps {
   classes: ModifiedIClass[];

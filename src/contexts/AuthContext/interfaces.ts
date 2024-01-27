@@ -1,4 +1,4 @@
-import { IUser } from 'global/interfaces';
+import { type IUser } from 'global/interfaces';
 
 interface TeacherType extends IUser {
   role: 'teacher';

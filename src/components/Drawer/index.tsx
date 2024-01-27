@@ -1,6 +1,6 @@
-import { MouseEventHandler } from 'react';
+import { type MouseEventHandler } from 'react';
 import {
-  DrawerProps as MuiDrawerProps,
+  type DrawerProps as MuiDrawerProps,
   Drawer as MuiDrawer,
   IconButton,
 } from '@mui/material';

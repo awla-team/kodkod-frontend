@@ -1,5 +1,5 @@
-import { FC } from 'react';
-import { MissionAccomplishedProps } from './interfaces';
+import { type FC } from 'react';
+import { type MissionAccomplishedProps } from './interfaces';
 import { Typography } from '@mui/material';
 import MissionCard from '../../MissionCard';
 import StudentsSelectableList from 'components/StudentsSelectableList';
@@ -14,6 +14,8 @@ const MissionAccomplished: FC<MissionAccomplishedProps> = ({
   mission,
 }) => {
   const handleClose = () => {
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(2722)
     onClose(null);
   };
 

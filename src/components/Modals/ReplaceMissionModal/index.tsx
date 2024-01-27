@@ -1,5 +1,5 @@
-import { FC, useState, useContext, useEffect } from 'react';
-import { ReplaceMissionModalProps } from './interfaces';
+import { type FC, useState, useContext, useEffect } from 'react';
+import { type ReplaceMissionModalProps } from './interfaces';
 import { NewMissionList } from './styled';
 import {
   Button,
@@ -13,7 +13,7 @@ import MissionCard from '../../MissionCard';
 import { difficultyIcons, difficultyToText } from 'utils';
 import Toaster from 'utils/Toster';
 import { getMissionsByStage, updateStageMission } from 'services/missions';
-import { IMission } from '../../../global/interfaces';
+import { type IMission } from '../../../global/interfaces';
 import { ClassHasAdventureContext } from '../../../routes/Class/Adventures/Adventure/provider';
 import { Box } from '@mui/system';
 
@@ -30,6 +30,8 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
 
   useEffect(() => {
     if (mission) {
+      // FIXME: fix this eslint error
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       handleGetMission();
     }
   }, [mission]);
@@ -62,10 +64,16 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
   const handleClick = async () => {
     try {
       setPending(true);
+      // FIXME: fix this ts error
+      // @ts-expect-error ts-error(18048)
       const index = stage.missions.indexOf(mission);
+      // FIXME: fix this ts error
+      // @ts-expect-error ts-error(2488)
       const missionsCopy = [...stage.missions];
       const body = {
         id_stage: stage.id,
+        // FIXME: fix this ts error
+        // @ts-expect-error ts-error(18047)
         new_mission_id: selected.id as number,
         old_mission_id: mission.id as number,
       };
@@ -88,7 +96,7 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
     <Dialog
       open={open}
       onClose={(event, reason) => onClose(reason)}
-      scroll={'body'}
+      scroll='body'
       PaperProps={{ className: 'p-3' }}
     >
       <DialogTitle fontWeight='bold'>{`Reemplazar misión "${mission.title}"`}</DialogTitle>
@@ -164,7 +172,7 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
           Cancelar
         </Button>
         <Button
-          variant={'contained'}
+          variant='contained'
           onClick={handleClick}
           disabled={pending || !selected}
         >

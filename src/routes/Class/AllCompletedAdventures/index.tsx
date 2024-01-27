@@ -4,10 +4,9 @@ import { Button, CircularProgress, Typography } from '@mui/material';
 import { AllCompletedAdventuresContainer } from './styled';
 import { useClassContext } from '../context';
 import AdventureCard from 'components/AdventureCard';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import SkillPoints from 'components/SkillPoints';
-import { IClassHasAdventure } from 'global/interfaces';
-import { Link } from 'react-router-dom';
+import { type IClassHasAdventure } from 'global/interfaces';
 import { getCompletedClassHasAdventuresByClass } from 'services/adventures';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import moment from 'moment';
@@ -25,6 +24,8 @@ const AllCompletedAdventures: React.FC = () => {
       setLoading(FetchStatus.Pending);
       getCompletedClassHasAdventuresByClass(classDetails.id)
         .then((response) => {
+          // FIXME: fix this eslint error
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
           setCompletedAdventures(response.data);
           setLoading(FetchStatus.Success);
         })
@@ -65,7 +66,12 @@ const AllCompletedAdventures: React.FC = () => {
         </Button>
       </div>
       <Typography component='h1' variant='h4' className='fw-bold mb-4'>
-        {classDetails.alias} - Aventuras finalizadas
+        {
+          // FIXME: fix this ts error
+          // @ts-expect-error ts-error(18048)
+          classDetails.alias
+        }{' '}
+        - Aventuras finalizadas
       </Typography>
       <div className='d-flex h-100 w-100 align-items-center justify-content-start flex-wrap gap-4'>
         {completedAdventures.map((classHasAdventure, index) => (
@@ -78,6 +84,8 @@ const AllCompletedAdventures: React.FC = () => {
             endDate={moment(classHasAdventure.date_stop).format('DD/MM/YYYY')}
             onClick={() =>
               navigate(
+                // FIXME: fix this ts error
+                // @ts-expect-error ts-error(18048)
                 `/app/cursos/${classDetails.id}/aventuras/completed/${classHasAdventure.id}`
               )
             }
@@ -86,7 +94,7 @@ const AllCompletedAdventures: React.FC = () => {
             img={classHasAdventure.adventure.thumbnail}
             info={
               <div className='d-flex gap-1 flex-wrap'>
-                {!!classHasAdventure.adventure?.skills?.length
+                {classHasAdventure.adventure?.skills?.length
                   ? classHasAdventure.adventure.skills.map(
                       (adventureSkill, index) => (
                         <SkillPoints

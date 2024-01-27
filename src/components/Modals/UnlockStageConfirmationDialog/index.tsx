@@ -1,5 +1,5 @@
-import { FC } from 'react';
-import { UnlockStageConfirmationDialogProps } from './interfaces';
+import { type FC } from 'react';
+import { type UnlockStageConfirmationDialogProps } from './interfaces';
 import {
   Button,
   Typography,
@@ -46,11 +46,11 @@ const UnlockStageConfirmationDialog: FC<UnlockStageConfirmationDialogProps> = ({
             </Typography>
           </DialogContent>
           <DialogActions className='d-flex align-items-center mt-3'>
-            <Button variant={'outlined'} onClick={handleClose}>
+            <Button variant='outlined' onClick={handleClose}>
               Cancelar
             </Button>
             <Button
-              variant={'contained'}
+              variant='contained'
               disabled={isLoading}
               onClick={onConfirm}
             >
@@ -82,11 +82,11 @@ const UnlockStageConfirmationDialog: FC<UnlockStageConfirmationDialogProps> = ({
             </div>
           </DialogContent>
           <DialogActions className='d-flex align-items-center mt-3'>
-            <Button variant={'outlined'} onClick={handleClose}>
+            <Button variant='outlined' onClick={handleClose}>
               Cancelar
             </Button>
             <Button
-              variant={'contained'}
+              variant='contained'
               disabled={isLoading}
               onClick={onConfirm}
             >

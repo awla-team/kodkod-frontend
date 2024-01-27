@@ -17,7 +17,7 @@ const EmotionalThermometerOnboarding = [
     },
     padding: 0,
     stepInteraction: false,
-    selector: '#board-onboarding-3', //'#thermometer-onboarding-0'
+    selector: '#board-onboarding-3', // '#thermometer-onboarding-0'
   },
   {
     content: () => {
@@ -105,7 +105,7 @@ const EmotionalThermometerOnboarding = [
     },
     padding: 0,
     stepInteraction: false,
-    selector: '#reports-tab', //'#thermometer-onboarding-5'
+    selector: '#reports-tab', // '#thermometer-onboarding-5'
   },
   {
     content: () => {

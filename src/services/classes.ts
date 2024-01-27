@@ -7,24 +7,26 @@ interface ClassMutationType {
   alias: string;
   id_user?: number;
 }
-export const getClassesByUser = (userId: number | string) =>
-  http.get(`classes-by-user/` + userId);
+export const getClassesByUser = async (userId: number | string) =>
+  await http.get(`classes-by-user/` + userId);
 
-export const createClass = (body: ClassMutationType) =>
-  http.post(`class`, body);
+export const createClass = async (body: ClassMutationType) =>
+  await http.post(`class`, body);
 
-export const getClassByID = (id: number | string) => {
-  return http.get('class/' + id);
+export const getClassByID = async (id: number | string) => {
+  return await http.get('class/' + id);
 };
 
-export const updateClass = (body: ClassMutationType) => {
-  return http.put('class/' + body.id, body);
+export const updateClass = async (body: ClassMutationType) => {
+  return await http.put('class/' + body.id, body);
 };
 
-export const deleteClass = (id: number | string) => {
-  return http.delete('class/' + id);
+export const deleteClass = async (id: number | string) => {
+  return await http.delete('class/' + id);
 };
 
-export const getClassHasAdventuresByClass = (classId: number | string) => {
-  return http.get(`completed-class-adventures/${classId}`);
+export const getClassHasAdventuresByClass = async (
+  classId: number | string
+) => {
+  return await http.get(`completed-class-adventures/${classId}`);
 };

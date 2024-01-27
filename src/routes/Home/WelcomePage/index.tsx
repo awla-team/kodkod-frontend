@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import styled from 'styled-components';
-import { WelcomePageProps } from './interfaces';
+import { type WelcomePageProps } from './interfaces';
 import noClassesImg from 'assets/images/no-classes.png';
 
 const WelcomePage: FC<WelcomePageProps> = ({
@@ -25,7 +25,7 @@ const WelcomePage: FC<WelcomePageProps> = ({
           </Typography>
           <Button
             onClick={handleOpenModal}
-            variant={'contained'}
+            variant='contained'
             className='w-100'
           >
             Añade tu primer curso

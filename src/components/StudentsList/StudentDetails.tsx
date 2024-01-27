@@ -1,8 +1,8 @@
-import React, { FC, useEffect, useRef, useState } from 'react';
-import { StudentEditInputField, StudentType } from './interfaces';
+import React, { type FC, useEffect, useRef, useState } from 'react';
+import { type StudentEditInputField, type StudentType } from './interfaces';
 import { useClassContext } from '../../routes/Class/context';
 import Toaster from '../../utils/Toster';
-import { Form, Formik, FormikHelpers } from 'formik';
+import { Form, Formik, type FormikHelpers } from 'formik';
 import { updateStudent } from '../../services/students';
 import {
   Avatar,
@@ -103,6 +103,8 @@ export const StudentDetails: FC<{
 
   const cancelEditMode = () => {
     setEditState(false);
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(2339)
     formRef.current?.resetForm();
   };
 
@@ -127,19 +129,19 @@ export const StudentDetails: FC<{
           errors,
         }) => {
           return (
-            <Form onSubmit={handleSubmit} className={'editable_section__form'}>
-              <div className={'edit__section'}>
-                <div className={'editable__field'}>
-                  <Box display={'flex'}>
+            <Form onSubmit={handleSubmit} className='editable_section__form'>
+              <div className='edit__section'>
+                <div className='editable__field'>
+                  <Box display='flex'>
                     {editState ? (
                       <FormControl error={!!errors.first_name && !!submitCount}>
                         <TextField
                           variant='standard'
                           autoFocus
                           disabled={!editState}
-                          name={'first_name'}
-                          className={'name me-2'}
-                          placeholder={'Nombres'}
+                          name='first_name'
+                          className='name me-2'
+                          placeholder='Nombres'
                           value={values.first_name}
                           onChange={handleChange}
                         />
@@ -152,9 +154,9 @@ export const StudentDetails: FC<{
                         <TextField
                           variant='standard'
                           disabled={!editState}
-                          name={'last_name'}
-                          className={'name'}
-                          placeholder={'Apellidos'}
+                          name='last_name'
+                          className='name'
+                          placeholder='Apellidos'
                           value={
                             editState ? values.last_name : details.last_name
                           }
@@ -173,10 +175,10 @@ export const StudentDetails: FC<{
                       <TextField
                         variant='standard'
                         disabled={!editState}
-                        name={'email'}
-                        type={'email'}
-                        className={'email'}
-                        placeholder={'E-mail'}
+                        name='email'
+                        type='email'
+                        className='email'
+                        placeholder='E-mail'
                         value={values.email}
                         onChange={handleChange}
                       />
@@ -185,24 +187,24 @@ export const StudentDetails: FC<{
                     <Typography color='gray'>{details.email}</Typography>
                   )}
                 </div>
-                <div className={'editable__action__section'}>
+                <div className='editable__action__section'>
                   {editState ? (
                     <>
                       <IconButton
                         disabled={isSubmitting}
-                        type={'submit'}
-                        color={'primary'}
+                        type='submit'
+                        color='primary'
                       >
                         <CheckIcon />
                       </IconButton>
-                      <IconButton color={'error'} onClick={cancelEditMode}>
+                      <IconButton color='error' onClick={cancelEditMode}>
                         <CloseIcon />
                       </IconButton>
                     </>
                   ) : (
                     <IconButton
                       className='more-button'
-                      color={'inherit'}
+                      color='inherit'
                       onClick={(e) => {
                         handleMenuOpen(e);
                       }}

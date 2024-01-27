@@ -3,10 +3,12 @@ import { Navigate, useOutletContext, useParams } from 'react-router-dom';
 import { FetchStatus } from 'global/enums';
 import { CircularProgress } from '@mui/material';
 import Toaster from 'utils/Toster';
-import { IClass } from 'global/interfaces';
+import { IClass, IAdventure, type IMission, IStage } from 'global/interfaces';
 import AdventureWithProvider from './Adventure';
-import { getMissionsByStage, StageMissionUpdateBody } from 'services/missions';
-import { IAdventure, IMission, IStage } from 'global/interfaces';
+import {
+  getMissionsByStage,
+  type StageMissionUpdateBody,
+} from 'services/missions';
 import { StudentType } from 'components/StudentsList/interfaces';
 import { useClassContext } from '../context';
 import {
@@ -21,6 +23,8 @@ const Adventures: React.FC = () => {
     useClassContext();
 
   useEffect(() => {
+    // FIXME: fix this eslint error
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     getMissions();
   }, []);
 
@@ -28,7 +32,7 @@ const Adventures: React.FC = () => {
     missionData: IMission,
     ref: StageMissionUpdateBody
   ) => {
-    /*setCurrentAdventure((prevState) => {
+    /* setCurrentAdventure((prevState) => {
       if (prevState) {
         const tempData: IAdventure = JSON.parse(JSON.stringify(prevState));
         const { old_mission_id } = ref;
@@ -40,10 +44,10 @@ const Adventures: React.FC = () => {
         return tempData;
       }
       return prevState;
-    });*/
+    }); */
   };
 
-  /*const updateStagesData = (stage: IStage) => {
+  /* const updateStagesData = (stage: IStage) => {
     if (stage) {
 
       /*setCurrentAdventure((prevState) => {
@@ -59,7 +63,7 @@ const Adventures: React.FC = () => {
         return prevState;
       });
     }
-  };*/
+  }; */
 
   const getMissions = async () => {
     try {
@@ -85,15 +89,15 @@ const Adventures: React.FC = () => {
     return <Navigate to='iniciar' />;
 
   return (
-    <>
-      <AdventureWithProvider
-        classHasAdventure={classDetails.current_adventure}
-        missions={missions}
-        students={students}
-        handleUpdateCurrentAdventure={handleUpdateCurrentAdventure}
-        updateStageData={updateStageData}
-      />
-    </>
+    <AdventureWithProvider
+      // FIXME: fix this ts error
+      // @ts-expect-error ts-error(18048)
+      classHasAdventure={classDetails.current_adventure}
+      missions={missions}
+      students={students}
+      handleUpdateCurrentAdventure={handleUpdateCurrentAdventure}
+      updateStageData={updateStageData}
+    />
   );
 };
 

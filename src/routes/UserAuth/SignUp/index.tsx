@@ -13,15 +13,15 @@ import {
   IconButton,
   InputAdornment,
 } from '@mui/material';
-import { Form, Formik, FormikHelpers } from 'formik';
+import { Form, Formik, type FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import { Link as RouterLink } from 'react-router-dom';
 import { AxiosError } from 'axios';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { FormInitialValuesType, subjects } from './interfaces';
+import { type FormInitialValuesType, subjects } from './interfaces';
 import Toaster from 'utils/Toster';
 import { getSchools as getSchoolAction } from 'services/school';
-import { ISchool } from 'global/interfaces';
+import { type ISchool } from 'global/interfaces';
 import { signUp } from '../../../services/auth';
 import { SignUpCard } from './styled';
 import { FetchStatus } from 'global/enums';
@@ -97,6 +97,8 @@ const SignUp: React.FC = () => {
       .catch((error) => {
         if (error instanceof AxiosError) {
           const {
+            // FIXME: fix this ts error
+            // @ts-expect-error ts-error(2339)
             data: { responseData },
           } = error.response;
           if (
@@ -109,6 +111,8 @@ const SignUp: React.FC = () => {
         }
         Toaster(
           'error',
+          // FIXME: fix this eslint error
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
           error.response.data.responseData.message || error.message
         );
         setIsFetching(FetchStatus.Error);
@@ -124,11 +128,15 @@ const SignUp: React.FC = () => {
         await getSchoolAction();
       setSchools(data.responseData);
     } catch (e: any) {
+      // FIXME: fix this eslint error
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       Toaster('error', e.message);
     }
   };
 
   useEffect(() => {
+    // FIXME: fix this eslint error
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     getSchools();
   }, []);
 
@@ -139,7 +147,7 @@ const SignUp: React.FC = () => {
           className='mb-2'
           startIcon={<ArrowBackIosIcon />}
           component={RouterLink}
-          to={'/signin'}
+          to='/signin'
         >
           Volver al inicio de sesión
         </Button>
@@ -152,7 +160,7 @@ const SignUp: React.FC = () => {
       </AuthCard>
     );
 
-  /*if (isFetching === FetchStatus.Error)
+  /* if (isFetching === FetchStatus.Error)
     return (
         <AuthCard>
           <Button
@@ -170,7 +178,7 @@ const SignUp: React.FC = () => {
             Por favor, inténtalo de nuevo.
           </Typography>
         </AuthCard>
-    );*/
+    ); */
 
   console.log(showPassword);
   return (
@@ -180,7 +188,7 @@ const SignUp: React.FC = () => {
           className='mb-2'
           startIcon={<ArrowBackIosIcon />}
           component={RouterLink}
-          to={'/signin'}
+          to='/signin'
         >
           Volver al inicio de sesión
         </Button>
@@ -206,9 +214,9 @@ const SignUp: React.FC = () => {
           }) => {
             return (
               <Form onSubmit={handleSubmit}>
-                <Box display={'flex'} flexDirection={'column'} gap={2} mt={3}>
+                <Box display='flex' flexDirection='column' gap={2} mt={3}>
                   <Box
-                    display={'flex'}
+                    display='flex'
                     gap={2}
                     flexDirection={{ xs: 'column', sm: 'row' }}
                   >
@@ -218,11 +226,11 @@ const SignUp: React.FC = () => {
                     >
                       <TextField
                         required
-                        name={'first_name'}
+                        name='first_name'
                         value={values.first_name}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        placeholder={'Ej: Juan Andrés'}
+                        placeholder='Ej: Juan Andrés'
                         label='Nombre'
                         variant='outlined'
                       />
@@ -236,9 +244,9 @@ const SignUp: React.FC = () => {
                         value={values.last_name}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        type={'last_name'}
+                        type='last_name'
                         name='last_name'
-                        placeholder={'Ej: Gómez Pérez'}
+                        placeholder='Ej: Gómez Pérez'
                         label='Apellido'
                         variant='outlined'
                       />
@@ -246,13 +254,13 @@ const SignUp: React.FC = () => {
                   </Box>
                   <FormControl required error={!!errors.email && touched.email}>
                     <TextField
-                      name={'email'}
+                      name='email'
                       value={values.email}
                       required
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      type={'email'}
-                      placeholder={'Ej: juanito.perez@email.com'}
+                      type='email'
+                      placeholder='Ej: juanito.perez@email.com'
                       label='Email'
                       variant='outlined'
                     />
@@ -263,7 +271,7 @@ const SignUp: React.FC = () => {
                   >
                     <TextField
                       required
-                      name={'password'}
+                      name='password'
                       value={values.password}
                       error={
                         !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,16}$|^$/.test(
@@ -273,7 +281,7 @@ const SignUp: React.FC = () => {
                       onChange={handleChange}
                       onBlur={handleBlur}
                       type={showPassword ? 'text' : 'password'}
-                      placeholder={'Crea una contraseña para tu cuenta'}
+                      placeholder='Crea una contraseña para tu cuenta'
                       label='Contraseña'
                       variant='outlined'
                       InputProps={{
@@ -357,7 +365,7 @@ const SignUp: React.FC = () => {
                   >
                     <TextField
                       required
-                      name={'confirmPassword'}
+                      name='confirmPassword'
                       value={values.confirmPassword}
                       error={values.confirmPassword !== values.password}
                       helperText={
@@ -368,7 +376,7 @@ const SignUp: React.FC = () => {
                       onChange={handleChange}
                       onBlur={handleBlur}
                       type={showPassword ? 'text' : 'password'}
-                      placeholder={'¡Para estar seguros!'}
+                      placeholder='¡Para estar seguros!'
                       label='Repite tu contraseña'
                       variant='outlined'
                       InputProps={{
@@ -395,13 +403,13 @@ const SignUp: React.FC = () => {
                       id='school'
                       options={schools}
                       getOptionLabel={(school) =>
-                        !!school?.commune
+                        school?.commune
                           ? `${school.name} (${school.commune})`
                           : school.name
                       }
                       renderOption={(props, school) => (
                         <li {...props} key={`school-${school.id}`}>
-                          {!!school?.commune
+                          {school?.commune
                             ? `${school.name} (${school.commune})`
                             : school.name}
                         </li>
@@ -414,9 +422,11 @@ const SignUp: React.FC = () => {
                       }}
                       noOptionsText='No se encuentra el establecimiento'
                       onChange={(_event, value) => {
+                        // FIXME: fix this eslint error
+                        // eslint-disable-next-line @typescript-eslint/no-floating-promises
                         setFieldValue(
                           'school',
-                          !!value ? value.id : formInitialValues.school
+                          value ? value.id : formInitialValues.school
                         );
                       }}
                       renderInput={(params) => (
@@ -435,9 +445,11 @@ const SignUp: React.FC = () => {
                       getOptionLabel={(subject) => subject}
                       noOptionsText='No se encuentra la asignatura'
                       onChange={(_event, value) => {
+                        // FIXME: fix this eslint error
+                        // eslint-disable-next-line @typescript-eslint/no-floating-promises
                         setFieldValue(
                           'subject',
-                          !!value ? value : formInitialValues.subject
+                          value || formInitialValues.subject
                         );
                       }}
                       renderInput={(params) => (
@@ -456,8 +468,11 @@ const SignUp: React.FC = () => {
                         <Checkbox
                           size='small'
                           name='terms_and_conditions'
-                          onChange={(_event, value) =>
-                            setFieldValue('terms_and_conditions', value)
+                          onChange={
+                            // FIXME: fix this eslint error
+                            // eslint-disable-next-line @typescript-eslint/promise-function-async
+                            (_event, value) =>
+                              setFieldValue('terms_and_conditions', value)
                           }
                           checked={values.terms_and_conditions}
                         />
@@ -482,8 +497,11 @@ const SignUp: React.FC = () => {
                         <Checkbox
                           size='small'
                           name='privacy_policy'
-                          onChange={(_event, value) =>
-                            setFieldValue('privacy_policy', value)
+                          onChange={
+                            // FIXME: fix this eslint error
+                            // eslint-disable-next-line @typescript-eslint/promise-function-async
+                            (_event, value) =>
+                              setFieldValue('privacy_policy', value)
                           }
                           checked={values.privacy_policy}
                         />
@@ -504,19 +522,19 @@ const SignUp: React.FC = () => {
                     />
                   </div>
                   <Box
-                    className={'action__container'}
-                    display={'flex'}
-                    flexDirection={'column'}
-                    alignItems={'center'}
+                    className='action__container'
+                    display='flex'
+                    flexDirection='column'
+                    alignItems='center'
                     gap={1}
                   >
                     <Button
                       disabled={isSubmitting || !isValid || !dirty}
                       fullWidth
                       size='large'
-                      className={'login__button'}
-                      variant={'contained'}
-                      type={'submit'}
+                      className='login__button'
+                      variant='contained'
+                      type='submit'
                     >
                       Crear cuenta
                     </Button>
