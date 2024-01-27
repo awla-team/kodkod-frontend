@@ -1,12 +1,12 @@
 import { Typography, Chip } from '@mui/material';
 import { Box } from '@mui/system';
-import { ModifiedIClass } from 'global/interfaces';
+import { type ModifiedIClass } from 'global/interfaces';
 import { Link } from 'react-router-dom';
 
 const ClassCard: React.FC<{ classObj: ModifiedIClass }> = ({ classObj }) => {
   return (
     <Link to={`cursos/${classObj.id}/tablero`}>
-      <div className={'class__level__card'}>
+      <div className='class__level__card'>
         {classObj.current_adventure ? (
           <Box
             className='d-flex justify-content-end p-2 class-img-container'

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useClassContext } from '../context';
 import { getClassHasAdventure } from 'services/adventures';
-import { useParams } from 'react-router-dom';
+import { useParams, Link, Navigate } from 'react-router-dom';
 import { Button, CircularProgress, Typography } from '@mui/material';
 import { FetchStatus } from 'global/enums';
 import {
@@ -9,13 +9,11 @@ import {
   CompletedAdventureImg,
   DataCard,
 } from './styled';
-import { IClassHasAdventure } from 'global/interfaces';
+import { type IClassHasAdventure } from 'global/interfaces';
 import ImgTeamwork from 'assets/images/teamwork.png';
 import ImgTime from 'assets/images/time.png';
 import ImgReward from 'assets/images/reward.png';
 import moment from 'moment';
-import { Link } from 'react-router-dom';
-import { Navigate } from 'react-router-dom';
 
 const CompletedAdventure: React.FC = () => {
   const { classDetails, loadingClass } = useClassContext();
@@ -26,8 +24,12 @@ const CompletedAdventure: React.FC = () => {
 
   useEffect(() => {
     setLoading(FetchStatus.Pending);
+    // FIXME: fix this eslint error
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     getClassHasAdventure(classHasAdventureId)
       .then((response) => {
+        // FIXME: fix this eslint error
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         setClasHasAdventure(response.data.responseData);
         setLoading(FetchStatus.Success);
       })
@@ -59,7 +61,12 @@ const CompletedAdventure: React.FC = () => {
             />
             <div className='d-flex flex-column'>
               <Typography component='h6' variant='h6'>
-                {classDetails.alias} - {classHasAdventure.adventure.title}
+                {
+                  // FIXME: fix this ts error
+                  // @ts-expect-error ts-error(18048)
+                  classDetails.alias
+                }{' '}
+                - {classHasAdventure.adventure.title}
               </Typography>
               <Typography component='h4' variant='h4' fontWeight='bold'>
                 ¡Aventura finalizada!
@@ -140,6 +147,8 @@ const CompletedAdventure: React.FC = () => {
         <div className='d-flex align-items-center justify-content-center mt-4'>
           <Button
             component={Link}
+            // FIXME: fix this ts error
+            // @ts-expect-error ts-error(18048)
             to={`/app/cursos/${classDetails.id}/aventuras/completed`}
             color='primary'
             variant='contained'
@@ -151,6 +160,8 @@ const CompletedAdventure: React.FC = () => {
       </CompletedAdventureContainer>
     );
   } else {
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(18048)
     return <Navigate to={`/app/cursos/${classDetails.id}/aventuras/iniciar`} />;
   }
 };

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { IIconContainerProps } from './interfaces';
+import { type IIconContainerProps } from './interfaces';
 
 export const SkillPointsContainer = styled.div`
   img {

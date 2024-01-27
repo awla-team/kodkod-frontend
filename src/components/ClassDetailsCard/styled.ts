@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Box } from '@mui/material';
-import { IAdventureBannerProps } from './interfaces';
+import { type IAdventureBannerProps } from './interfaces';
 
 export const DetailsCardContent = styled(Box)`
   display: flex;

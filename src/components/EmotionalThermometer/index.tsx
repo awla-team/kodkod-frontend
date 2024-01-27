@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState, useCallback } from 'react';
+import { type FC, useEffect, useRef, useState, useCallback } from 'react';
 import {
   EmotionalThermometerContainer,
   EmojiRadio,
@@ -18,14 +18,14 @@ import {
   Select,
   MenuItem,
 } from '@mui/material';
-import { Formik, Form, FormikHelpers } from 'formik';
+import { Formik, Form, type FormikHelpers } from 'formik';
 import {
   type EmotionalThermometerProps,
   type EmotionalThermometerType,
   type FormInitialValue,
   type TermometerChartData,
 } from './interfaces';
-import moment, { Moment as MomentType } from 'moment/moment';
+import moment, { type Moment as MomentType } from 'moment/moment';
 import Toaster from '../../utils/Toster';
 import {
   getEmotionalThermometerByClassId,
@@ -43,7 +43,7 @@ import { CalendarMonth } from '@mui/icons-material';
 import {
   LocalizationProvider,
   DatePicker,
-  PickersDayProps,
+  type PickersDayProps,
   PickersDay,
 } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
@@ -51,6 +51,8 @@ import TermometerChart from './TermometerChart';
 import { termometerRecordAdapter, validationSchema } from './utils';
 
 const initialValues: FormInitialValue = {
+  // FIXME: fix this ts error
+  // @ts-expect-error ts-error(2322)
   score: null,
   challenge: '',
   most_remarkable: '',
@@ -76,6 +78,8 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
   const fetchEmotionalTermometers = useCallback(
     (date: moment.Moment) => {
       getEmotionalThermometerByClassId(
+        // FIXME: fix this ts error
+        // @ts-expect-error ts-error(2345)
         classDetails?.id,
         moment(date).startOf('month'),
         moment(date).endOf('month')
@@ -83,6 +87,8 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
         .then((res) => {
           if (res?.data?.responseData) {
             const adaptedTermometerRecords = termometerRecordAdapter(
+              // FIXME: fix this eslint error
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
               res.data.responseData
             ).sort((a, b) => b.date - a.date);
             setTermometerRecords(adaptedTermometerRecords);
@@ -101,6 +107,8 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
         data: { responseData },
       }: { data: { responseData: EmotionalThermometerType[] } } =
         await getEmotionalThermometerByClassId(
+          // FIXME: fix this ts error
+          // @ts-expect-error ts-error(2345)
           classDetails.id,
           Moment(date).startOf('day'),
           Moment(date).endOf('day')
@@ -114,6 +122,8 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
           challenge,
         });
       } else {
+        // FIXME: fix this ts error
+        // @ts-expect-error ts-error(2345)
         setFormInitialValue({
           ...{
             score: null,
@@ -141,6 +151,8 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
         data: { responseData },
       }: { data: { responseData: EmotionalThermometerType[] } } =
         await getEmotionalThermometerByClassId(
+          // FIXME: fix this ts error
+          // @ts-expect-error ts-error(2345)
           classDetails.id,
           Moment(date).subtract(1, 'months').startOf('month'),
           Moment(date).endOf('month')
@@ -160,13 +172,17 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
     return (
       <PickersDateContainer key={pickersDayProps.key}>
         <PickersDay
+          // FIXME: fix this ts error
+          // @ts-expect-error ts-error(2783)
           day={day}
+          // FIXME: fix this ts error
+          // @ts-expect-error ts-error(2783)
           outsideCurrentMonth={false}
           {...(pickersDayProps as PickersDayProps<MomentType>)}
         />
         {!pickersDayProps.outsideCurrentMonth &&
           checkDate(day as MomentType) && (
-            <span className={'tick__icon'}>&#10004;</span>
+            <span className='tick__icon'>&#10004;</span>
           )}
       </PickersDateContainer>
     );
@@ -179,6 +195,8 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
     ) {
       fetchEmotionalTermometers(newDate);
     }
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(2339)
     formRef.current?.resetForm();
     setDate(newDate);
   };
@@ -191,10 +209,14 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
       if ('id' in value) {
         const { id, ...body } = value;
         const { data }: { data: { responseData: EmotionalThermometerType } } =
+          // FIXME: fix this ts error
+          // @ts-expect-error ts-error(2345)
           await updateEmotionalThermometerDetails(id, body);
         setDetailsByDates((prevState) => {
           const copy = [...prevState];
           const match = copy.find((detailEntry) => detailEntry.id === id);
+          // FIXME: fix this ts error
+          // @ts-expect-error ts-error(2345)
           copy[copy.indexOf(match)] = data.responseData;
           return copy;
         });
@@ -204,6 +226,8 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
           await saveEmotionalThermometerDetails({
             ...value,
             date: date.startOf('day').utc().format(),
+            // FIXME: fix this ts error
+            // @ts-expect-error ts-error(2322)
             id_class: classDetails.id,
           });
         setDetailsByDates((prevState) => {
@@ -232,7 +256,11 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
 
   useEffect(() => {
     if (classDetails) {
+      // FIXME: fix this eslint error
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       handleGetThermometerDetails();
+      // FIXME: fix this eslint error
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       handleMonthChange();
     }
   }, [date, classDetails]);
@@ -439,14 +467,18 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
                     <MenuItem value='' disabled>
                       El mayor logro fue...
                     </MenuItem>
-                    {mostRemarkableOptions.map((most_remarkable, i) => (
-                      <MenuItem
-                        value={most_remarkable}
-                        key={`most_remarkable-${i}`}
-                      >
-                        {most_remarkable}
-                      </MenuItem>
-                    ))}
+                    {
+                      // FIXME: fix this eslint error
+                      // eslint-disable-next-line @typescript-eslint/naming-convention
+                      mostRemarkableOptions.map((most_remarkable, i) => (
+                        <MenuItem
+                          value={most_remarkable}
+                          key={`most_remarkable-${i}`}
+                        >
+                          {most_remarkable}
+                        </MenuItem>
+                      ))
+                    }
                   </Select>
                 </FormControl>
                 <EmotionalThermometerActions className='d-flex align-items-end justify-content-center'>
@@ -469,8 +501,8 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
                         Ya completaste el termómetro socioemocional de hoy
                       </Typography>
                       <Button
-                        className={'again__action'}
-                        role={'button'}
+                        className='again__action'
+                        role='button'
                         onClick={() => setEditable(true)}
                       >
                         Rehacer

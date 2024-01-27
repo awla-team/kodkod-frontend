@@ -1,4 +1,4 @@
-import { IMission, IStage } from '../../../global/interfaces';
+import { type IMission, type IStage } from '../../../global/interfaces';
 
 export interface ReplaceMissionModalProps {
   open: boolean;

@@ -1,11 +1,11 @@
 import {
   IAdventure,
-  IClassHasAdventure,
-  IMission,
-  IStage,
+  type IClassHasAdventure,
+  type IMission,
+  type IStage,
 } from 'global/interfaces';
-import { StudentType } from 'components/StudentsList/interfaces';
-import { StageMissionUpdateBody } from 'services/missions';
+import { type StudentType } from 'components/StudentsList/interfaces';
+import { type StageMissionUpdateBody } from 'services/missions';
 
 export interface IAdventureBannerProps {
   backgroundImg: string;

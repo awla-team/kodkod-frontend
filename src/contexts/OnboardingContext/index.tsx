@@ -1,9 +1,14 @@
-import { PropsWithChildren, createContext, useContext, useState } from 'react';
-import { ITour } from './interfaces';
+import {
+  type PropsWithChildren,
+  createContext,
+  useContext,
+  useState,
+} from 'react';
+import { type ITour } from './interfaces';
 import { Menu, MenuItem } from '@mui/material';
 import { TourFab } from './styled';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
-import { StepType, useTour } from '@reactour/tour';
+import { type StepType, useTour } from '@reactour/tour';
 
 const OnboardingContext = createContext<{
   setNewAvailableTours?: (tours: ITour[]) => void;
@@ -24,6 +29,8 @@ const OnboardingContextProvider: React.FC<PropsWithChildren> = ({
     setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
   const handleItemClick = (steps: StepType[]) => {
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(2722)
     setSteps(steps);
     setCurrentStep(0);
     setIsOpen(true);

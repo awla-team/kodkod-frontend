@@ -25,13 +25,15 @@ const AdventureSummaryDialog: React.FC<{
 }> = ({ selectedAdventure, handleOnCloseModal }) => {
   const { user } = useAuth();
   const { classId } = useParams();
+  // FIXME: fix this ts error
+  // @ts-expect-error ts-error(2345)
   const [shownAdventure, setShownAdventure] = useState<IAdventure>(undefined);
   const [sortedStages, setSortedStages] = useState([]);
   const { classDetails, setClassDetails } = useClassContext();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (selectedAdventure && selectedAdventure.template_stages) {
+    if (selectedAdventure?.template_stages) {
       const newSortedStages = [...selectedAdventure.template_stages].sort(
         (a, b) => {
           if (a._index > b._index) return 1;
@@ -39,6 +41,8 @@ const AdventureSummaryDialog: React.FC<{
           return 0;
         }
       );
+      // FIXME: fix this ts error
+      // @ts-expect-error ts-error(2345)
       setSortedStages(newSortedStages);
     }
   }, [selectedAdventure]);
@@ -93,7 +97,7 @@ const AdventureSummaryDialog: React.FC<{
           </Typography>
           <section className='d-flex flex-column'>
             <div className='d-flex flex-wrap flex-lg-nowrap gap-2'>
-              {!!shownAdventure?.skills?.length
+              {shownAdventure?.skills?.length
                 ? shownAdventure.skills.map((adventureSkill, index) => (
                     <SkillPoints
                       key={`${adventureSkill.id}-${adventureSkill.title}-${index}`}
@@ -124,7 +128,7 @@ const AdventureSummaryDialog: React.FC<{
               <Typography variant='subtitle1' fontWeight='bold'>
                 Resultados esperados
               </Typography>
-              {!!shownAdventure?.expected_results.split('\n')?.length ? (
+              {shownAdventure?.expected_results.split('\n')?.length ? (
                 <ul className='ps-4 mb-0'>
                   {shownAdventure.expected_results
                     .split('\n')
@@ -152,10 +156,18 @@ const AdventureSummaryDialog: React.FC<{
                     <div className='d-flex flex-column gap-0'>
                       <Typography variant='body1'>
                         <b>{`Etapa ${i}: `}</b>
-                        {stage.title}
+                        {
+                          // FIXME: fix this ts error
+                          // @ts-expect-error ts-error(2339)
+                          stage.title
+                        }
                       </Typography>
                       <Typography variant='caption'>
-                        {stage.description}
+                        {
+                          // FIXME: fix this ts error
+                          // @ts-expect-error ts-error(2339)
+                          stage.description
+                        }
                       </Typography>
                     </div>
                   </div>
@@ -168,7 +180,7 @@ const AdventureSummaryDialog: React.FC<{
       <DialogActions className='d-flex align-items-center p-4'>
         <Button
           id='adventure-selection-close-modal'
-          variant={'outlined'}
+          variant='outlined'
           onClick={handleOnCloseModal}
         >
           Cancelar

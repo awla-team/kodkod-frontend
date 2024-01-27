@@ -1,6 +1,6 @@
 import { DetailsCardContent } from './styled';
-import { ClassDetailsCardProps } from './interfaces';
-import React, { FC, useState, useEffect } from 'react';
+import { type ClassDetailsCardProps } from './interfaces';
+import React, { type FC, useState, useEffect } from 'react';
 import {
   Button,
   Typography,
@@ -13,12 +13,11 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Link, useNavigate } from 'react-router-dom';
 import { CreateClassModal } from '../Modals';
 import { useClassContext } from 'routes/Class/context';
-import { IClass } from 'global/interfaces';
+import { type IClass, type IStage } from 'global/interfaces';
 import ConfirmationModal from '../Modals/ConfirmationModal';
 import Toaster from '../../utils/Toster';
 import { deleteClass } from '../../services/classes';
 import SkillPoints from 'components/SkillPoints';
-import { IStage } from 'global/interfaces';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 
 const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
@@ -32,6 +31,8 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
     useState<boolean>(false);
   const { setClassDetails } = useClassContext();
   const [loading, setLoading] = useState<boolean>(false);
+  // FIXME: fix this ts error
+  // @ts-expect-error ts-error(2345): argument of type 'undefined' is not assignable to parameter of type 'IStage | (() => IStage)'
   const [latestStage, setLatestStage] = useState<IStage>(undefined);
 
   useEffect(() => {
@@ -61,6 +62,8 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
 
   const handleMenuOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
     const { currentTarget } = e;
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(2345): argument of type 'EventTarget & HTMLButtonElement' is not assignable to parameter of type 'SetStateAction<null>'
     setAnchorEl(currentTarget);
   };
 
@@ -75,10 +78,12 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
   const handleDelete = async () => {
     try {
       setLoading(true);
+      // FIXME: fix this ts error
+      // @ts-expect-error ts-error(2345): 'undefined' is not assignable to type 'string | number'
       await deleteClass(classDetails.id);
       Toaster('success', `Curso ${classDetails.alias} eliminado exitosamente`);
       navigate('/app', { replace: true });
-      //window.location.reload();
+      // window.location.reload();
     } catch (error: any) {
       console.error(error);
       Toaster(
@@ -106,10 +111,10 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
             }}
           >
             <Box
-              display={'flex'}
+              display='flex'
               sx={{ position: 'relative' }}
-              alignItems={'start'}
-              justifyContent={'space-between'}
+              alignItems='start'
+              justifyContent='space-between'
             >
               <Typography
                 component='h2'
@@ -165,7 +170,7 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
             >{`Etapa ${latestStage?._index}: ${latestStage?.title}`}</Typography>
             <section className='d-flex flex-column mb-3'>
               <div className='d-flex flex-wrap flex-lg-nowrap gap-2'>
-                {!!classDetails.current_adventure?.adventure?.skills?.length
+                {classDetails.current_adventure?.adventure?.skills?.length
                   ? classDetails.current_adventure?.adventure?.skills.map(
                       (adventureSkill, index) => (
                         <SkillPoints
@@ -186,10 +191,10 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
         ) : (
           <div className='d-flex flex-column p-5'>
             <Box
-              display={'flex'}
+              display='flex'
               sx={{ position: 'relative' }}
-              alignItems={'start'}
-              justifyContent={'space-between'}
+              alignItems='start'
+              justifyContent='space-between'
             >
               <Typography
                 component='h2'

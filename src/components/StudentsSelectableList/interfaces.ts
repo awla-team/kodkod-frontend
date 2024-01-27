@@ -1,4 +1,4 @@
-import { IMission, IStage } from 'global/interfaces';
+import { type IMission, type IStage } from 'global/interfaces';
 import { StudentsDetailsType } from '../Modals/MissionAccomplished/interfaces';
 
 export interface StudentsSelectableListProps {

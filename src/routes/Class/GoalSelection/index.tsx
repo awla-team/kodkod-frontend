@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button, CircularProgress, Typography } from '@mui/material';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate, Link } from 'react-router-dom';
 import { GoalSelectionContainer, CardContainer, ImgContainer } from './styled';
-import { AxiosResponse } from 'axios';
+import { type AxiosResponse } from 'axios';
 import { getGoals } from 'services/goals';
 import { FetchStatus } from 'global/enums';
-import { IGoal } from 'global/interfaces';
+import { type IGoal } from 'global/interfaces';
 import { useClassContext } from 'routes/Class/context';
 import { useOnboarding } from 'contexts/OnboardingContext';
 import AdventureSelectionOnboarding from 'utils/Onboardings/AdventureSelectionOnboarding';
 import { useTour } from '@reactour/tour';
 import FlagIcon from '@mui/icons-material/Flag';
-import { Link } from 'react-router-dom';
 
 const GoalSelection: React.FC = () => {
   const { classDetails, loadingClass } = useClassContext();
@@ -20,6 +19,8 @@ const GoalSelection: React.FC = () => {
   const navigate = useNavigate();
   const [onboardingDone, setOnboardingDone] = useState(true);
   const [goals, setGoals] = useState<IGoal[]>([]);
+  // FIXME: fix this ts error
+  // @ts-expect-error ts-error(2345)
   const [selectedGoalId, setSelectedGoalId] = useState<number>(null);
   const [loadingGoals, setLoadingGoals] = useState<FetchStatus>(
     FetchStatus.Idle
@@ -27,6 +28,8 @@ const GoalSelection: React.FC = () => {
 
   const selectAdventure = (goalId: number) => {
     if (selectedGoalId !== goalId) setSelectedGoalId(goalId);
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(2345)
     else setSelectedGoalId(null);
   };
 
@@ -34,16 +37,20 @@ const GoalSelection: React.FC = () => {
 
   useEffect(() => {
     const rawOnboardingData = localStorage.getItem('onboarding-data');
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(2345)
     const onboardingData = JSON.parse(rawOnboardingData);
     setOnboardingDone(!!onboardingData?.iniciar);
   }, []);
 
   useEffect(() => {
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(2722)
     setNewAvailableTours([
       {
         name: 'Selección de aventura',
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
+        // @ts-expect-error
         steps: AdventureSelectionOnboarding,
       },
     ]);
@@ -52,7 +59,7 @@ const GoalSelection: React.FC = () => {
   useEffect(() => {
     if (!onboardingDone) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
+      // @ts-expect-error
       setSteps(AdventureSelectionOnboarding);
       setCurrentStep(0);
       setIsOpen(true);
@@ -64,6 +71,8 @@ const GoalSelection: React.FC = () => {
     getGoals()
       .then((response: AxiosResponse) => response?.data)
       .then((goalsResponse: { responseData: any }) => {
+        // FIXME: fix this eslint error
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         setGoals(goalsResponse.responseData);
         setLoadingGoals(FetchStatus.Success);
       })

@@ -5,12 +5,15 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "set CI=false && tsc && vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "server": "json-server --watch db.json --delay 500",
-    "format": "prettier -w .",
-    "format-check": "prettier -c .",
-    "eslint-check": "eslint . --ext .js,.jsx,.ts,.tsx,.d.ts"
+    "format": "prettier --write . --config .prettierrc",
+    "format-check": "prettier --check . --config .prettierrc",
+    "eslint-check": "eslint . --ext .js,.jsx,.ts,.tsx,.d.ts --report-unused-disable-directives --color",
+    "eslint-fix": "eslint . --ext .js,.jsx,.ts,.tsx,.d.ts --fix",
+    "ts-check": "tsc --noEmit --pretty",
+    "lint": "yarn format-check && yarn eslint-check && yarn ts-check"
   },
   "dependencies": {
     "@amcharts/amcharts5": "5.6.2",
@@ -46,7 +49,10 @@
     "@vitejs/plugin-react": "4.2.1",
     "eslint": "8.55.0",
     "eslint-config-prettier": "9.1.0",
-    "eslint-plugin-jsx-a11y": "6.8.0",
+    "eslint-config-standard-with-typescript": "42.0.0",
+    "eslint-plugin-import": "2.29.0",
+    "eslint-plugin-n": "16.3.1",
+    "eslint-plugin-promise": "6.1.1",
     "eslint-plugin-react": "7.33.2",
     "eslint-plugin-react-hooks": "4.6.0",
     "eslint-plugin-react-refresh": "0.4.5",
@@ -57,11 +63,6 @@
     "vite-plugin-rewrite-all": "1.0.2",
     "vite-plugin-svgr": "4.2.0",
     "vite-tsconfig-paths": "4.2.2"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app"
-    ]
   },
   "description": "Property of Awla SpA  \r Developers: Álvaro Arratia Ramírez, Bastián Díaz Olave",
   "main": "index.js",

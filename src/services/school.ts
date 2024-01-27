@@ -1,5 +1,5 @@
 import http from '../global/api';
 
-export const getSchools = () => {
-  return http.get('school');
+export const getSchools = async () => {
+  return await http.get('school');
 };

@@ -12,8 +12,8 @@ import ClassHasAdventureProvider from './provider';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { AdventureContainer, AdventureBanner } from './styled';
 import SkillPoints from 'components/SkillPoints';
-import { IStage } from 'global/interfaces';
-import { ClassHasAdventureWithProviderProps } from '../interfaces';
+import { type IStage } from 'global/interfaces';
+import { type ClassHasAdventureWithProviderProps } from '../interfaces';
 import StageStepper from '../../../../components/StageStepper';
 import Toaster from 'utils/Toster';
 import {
@@ -43,22 +43,26 @@ export const Adventure: React.FC = () => {
 
   useEffect(() => {
     const rawOnboardingData = localStorage.getItem('onboarding-data');
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(2345)
     const onboardingData = JSON.parse(rawOnboardingData);
     setOnboardingDone(!!onboardingData?.aventuras);
   }, []);
 
   useEffect(() => {
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(2722)
     setNewAvailableTours([
       {
         name: 'Trabajando con una aventura',
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
+        // @ts-expect-error
         steps: AdventureOnboarding,
       },
       {
         name: 'Misiones y puntaje',
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
+        // @ts-expect-error
         steps: PointsOnboarding,
       },
     ]);
@@ -67,13 +71,15 @@ export const Adventure: React.FC = () => {
   useEffect(() => {
     if (!onboardingDone) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
+      // @ts-expect-error
       setSteps(AdventureOnboarding);
       setCurrentStep(0);
       setIsOpen(true);
     }
   }, [onboardingDone]);
 
+  // FIXME: fix this ts error
+  // @ts-expect-error ts-error(18048)
   if (!classDetails.current_adventure) {
     return (
       <AdventureContainer className='d-flex flex-column gap-3 p-0 m-0'>
@@ -102,18 +108,24 @@ export const Adventure: React.FC = () => {
   const handleVerticalButtonClick = ({
     currentTarget,
   }: React.MouseEvent<HTMLButtonElement>) => {
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(2345)
     setAnchorEl(currentTarget);
   };
 
   const cancelAdventure = async () => {
     try {
       setLoading(true);
+      // FIXME: fix this ts error
+      // @ts-expect-error ts-error(18048)
       await cancelAdventureFromClass(classDetails.current_adventure.id);
-      //await cancelAdventure(classDetails.current_adventure.id_class_has_adventure, { date_stop: moment().format('YYYY-MM-DD') });
+      // await cancelAdventure(classDetails.current_adventure.id_class_has_adventure, { date_stop: moment().format('YYYY-MM-DD') });
       Toaster('success', 'La aventura fue cancelada');
       navigate(`/app/cursos/${classId}/tablero`);
       setClassDetails({
         ...classDetails,
+        // FIXME: fix this ts error
+        // @ts-expect-error ts-error(2322)
         current_adventure: null,
       });
     } catch (error: any) {
@@ -127,15 +139,21 @@ export const Adventure: React.FC = () => {
   const finishAdventure = async () => {
     try {
       setLoading(true);
+      // FIXME: fix this ts error
+      // @ts-expect-error ts-error(18048)
       await endClassHasAdventure(classDetails.current_adventure.id, {
         date_stop: moment().format('YYYY-MM-DD'),
       });
       Toaster('success', '¡Felicitaciones! ¡La aventura ha sido completada!');
       setClassDetails({
         ...classDetails,
+        // FIXME: fix this ts error
+        // @ts-expect-error ts-error(2322)
         current_adventure: null,
       });
       navigate(
+        // FIXME: fix this ts error
+        // @ts-expect-error ts-error(18048)
         `/app/cursos/${classId}/aventuras/completed/${classDetails.current_adventure.id}`
       );
     } catch (error: any) {
@@ -156,16 +174,22 @@ export const Adventure: React.FC = () => {
         className='d-flex flex-column px-5 justify-content-center mb-4'
         sx={{
           backgroundImage: `url(${
+            // FIXME: fix this ts error
+            // @ts-expect-error ts-error(18048)
             shownStage?.icon || classDetails.current_adventure.adventure.banner
           })`,
         }}
       >
         <div className='d-flex justify-content-between align-items-end mb-3'>
           <Typography variant='h4' component='h2' fontWeight='bold'>
-            {classDetails.current_adventure.adventure.title}
+            {
+              // FIXME: fix this ts error
+              // @ts-expect-error ts-error(18048)
+              classDetails.current_adventure.adventure.title
+            }
           </Typography>
           <div>
-            <IconButton color={'inherit'} onClick={handleVerticalButtonClick}>
+            <IconButton color='inherit' onClick={handleVerticalButtonClick}>
               <MoreVertIcon fontSize='large' />
             </IconButton>
             <Menu
@@ -183,9 +207,13 @@ export const Adventure: React.FC = () => {
           </div>
         </div>
         <div className='d-flex mb-1'>
-          {classDetails.current_adventure?.adventure?.skills?.map((skill) => (
+          {// FIXME: fix this ts error
+          // @ts-expect-error ts-error(18048)
+          classDetails.current_adventure?.adventure?.skills?.map((skill) => (
             <div
               className='me-2'
+              // FIXME: fix this ts error
+              // @ts-expect-error ts-error(18048)
               key={`${classDetails.current_adventure.id}-${skill.id}`}
             >
               <SkillPoints skill={skill} />
@@ -206,7 +234,11 @@ export const Adventure: React.FC = () => {
       ) : null}
       <div className='mt-5'>
         <StageStepper
+          // FIXME: fix this ts error
+          // @ts-expect-error ts-error(2322)
           shownStage={shownStage}
+          // FIXME: fix this ts error
+          // @ts-expect-error ts-error(18048)
           stages={classDetails.current_adventure?.stages}
           onStageChange={handleStageChange}
           handleFinish={finishAdventure}
@@ -218,7 +250,11 @@ export const Adventure: React.FC = () => {
           StageRequirements ends */}
 
       <div className='mt-4'>
-        <MissionsList shownStage={shownStage} />
+        <MissionsList
+          // FIXME: fix this ts error
+          // @ts-expect-error ts-error(2322)
+          shownStage={shownStage}
+        />
       </div>
       <ConfirmationModal
         title='¿Estás seguro de terminar la aventura?'

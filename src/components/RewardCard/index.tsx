@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Typography, TextField } from '@mui/material';
-import { IRewardCardProps } from './interfaces';
+import { type IRewardCardProps } from './interfaces';
 import {
   EditRewardActionsContainer,
   EditRewardButton,
@@ -106,7 +106,11 @@ const RewardCard: React.FC<IRewardCardProps> = ({
         >
           <RewardCardHeader>
             <div id={`reward-card-indicator-${id}`}>
-              <UsedRewardCount count={usedCount} />
+              <UsedRewardCount
+                // FIXME: fix this ts error
+                // @ts-expect-error ts-error(2322)
+                count={usedCount}
+              />
             </div>
             {!!order && (
               <Typography

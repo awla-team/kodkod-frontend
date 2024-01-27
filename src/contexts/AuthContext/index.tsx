@@ -1,17 +1,17 @@
 import {
   createContext,
-  FC,
+  type FC,
   useContext,
-  PropsWithChildren,
+  type PropsWithChildren,
   useReducer,
   useEffect,
   useCallback,
   useState,
 } from 'react';
-import { AuthContextType } from './interfaces';
+import { type AuthContextType } from './interfaces';
 import { getAuthUser as getAuthUserAction } from 'services/users';
 import Toaster from 'utils/Toster';
-import { IUser } from 'global/interfaces';
+import { type IUser } from 'global/interfaces';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { logout as makeLogout } from 'services/auth';
 import SubscribeModal from 'components/Modals/SubscribeModal';
@@ -153,6 +153,8 @@ const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
     const accessToken = localStorage.getItem('accessToken');
     const refreshToken = localStorage.getItem('refreshToken');
     if (accessToken && refreshToken && pathname.includes('app'))
+      // FIXME: fix this eslint error
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       checkAuthUser();
   }, [pathname, checkAuthUser, goToSignin]);
 

@@ -1,5 +1,5 @@
-import { IClass } from 'global/interfaces';
-import { StudentType } from '../../StudentsList/interfaces';
+import { type IClass } from 'global/interfaces';
+import { type StudentType } from '../../StudentsList/interfaces';
 
 export interface AddStudentsDialogProps {
   open: boolean;
@@ -8,9 +8,9 @@ export interface AddStudentsDialogProps {
 }
 
 export interface FormInitialState {
-  students: {
+  students: Array<{
     email: string;
     first_name: string;
     last_name: string;
-  }[];
+  }>;
 }

@@ -8,7 +8,7 @@ import {
   ChangeMissionButton,
   PointsContainer,
 } from './styled';
-import { IMissionCardProps } from './interfaces';
+import { type IMissionCardProps } from './interfaces';
 import SchoolIcon from '@mui/icons-material/School';
 import { useAuth } from 'contexts/AuthContext';
 
@@ -28,6 +28,8 @@ const MissionCard: React.FC<IMissionCardProps> = ({
     checkUserSubscription(
       'Reemplazar una misión es una funcionalidad Pro',
       () => {
+        // FIXME: fix this ts error
+        // @ts-expect-error ts-error(2722)
         openModal(mission);
       }
     );
@@ -43,10 +45,12 @@ const MissionCard: React.FC<IMissionCardProps> = ({
         (clickable ? ' clickable' : '')
       }
       variant='outlined'
+      // FIXME: fix this ts error
+      // @ts-expect-error ts-error(18048)
       sx={{ background: mission.skill.color }}
     >
       <div className='d-flex flex-column justify-content-between w-100 pe-4'>
-        <div id={`mission-content-${id}`} className={'text__details'}>
+        <div id={`mission-content-${id}`} className='text__details'>
           <Typography variant='h6' fontWeight='bold'>
             {title}
           </Typography>
@@ -105,7 +109,7 @@ const MissionCard: React.FC<IMissionCardProps> = ({
             </ChangeMissionButton>
           </Tooltip>
         ) : null}
-        {/* Action Buttons with absolute position end*/}
+        {/* Action Buttons with absolute position end */}
       </div>
       <div className='d-flex align-items-center'>
         <PointsContainer

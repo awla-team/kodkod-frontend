@@ -5,9 +5,14 @@ import type { IAdventure } from 'global/interfaces';
 import { FetchStatus } from 'global/enums';
 import CircularProgress from '@mui/material/CircularProgress';
 import AdventureSummaryDialog from '../../../components/Modals/AdventureSummaryDialog';
-import { Navigate, useParams, Link as RouterLink } from 'react-router-dom';
+import {
+  Navigate,
+  useParams,
+  Link as RouterLink,
+  Link,
+} from 'react-router-dom';
 import { getGoalById } from 'services/goals';
-import { GoalType } from '../Adventures/interfaces';
+import { type GoalType } from '../Adventures/interfaces';
 import Toaster from '../../../utils/Toster';
 import { AdventureSelectionContainer } from './styled';
 import { useClassContext } from '../context';
@@ -19,13 +24,14 @@ import { useAuth } from 'contexts/AuthContext';
 import { useOnboarding } from 'contexts/OnboardingContext';
 import AdventureSelectionOnboarding from 'utils/Onboardings/AdventureSelectionOnboarding';
 import FlagIcon from '@mui/icons-material/Flag';
-import { Link } from 'react-router-dom';
 
 const GoalAdventures: React.FC = () => {
   const [loading, setLoading] = useState<FetchStatus>(FetchStatus.Idle);
   const { classDetails, loadingClass } = useClassContext();
   const { setNewAvailableTours } = useOnboarding();
   const { user } = useAuth();
+  // FIXME: fix this ts error
+  // @ts-expect-error ts-error(2345)
   const [selectedAdventure, setSelectedAdventure] = useState<IAdventure>(null);
   const [selectedGoal, setSelectedGoal] = useState<null | GoalType>(null);
   const [sortedAdventures, setSortedAdventures] = useState<IAdventure[]>([]);
@@ -35,15 +41,19 @@ const GoalAdventures: React.FC = () => {
     setSelectedAdventure(adventure);
 
   const handleOnCloseModal = () => {
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(2345)
     setSelectedAdventure(null);
   };
 
   useEffect(() => {
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(2722)
     setNewAvailableTours([
       {
         name: 'Selección de aventura',
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
+        // @ts-expect-error
         steps: AdventureSelectionOnboarding,
       },
     ]);
@@ -65,6 +75,8 @@ const GoalAdventures: React.FC = () => {
     const id = params.goalId;
     if (id) {
       setLoading(FetchStatus.Pending);
+      // FIXME: fix this eslint error
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       getGoalById(id)
         .then(({ data }: { data: { responseData: GoalType } }) => {
           setSelectedGoal(data.responseData);
@@ -87,7 +99,11 @@ const GoalAdventures: React.FC = () => {
       </div>
     );
 
+  // FIXME: fix this ts error
+  // @ts-expect-error ts-error(18048)
   if (loadingClass === FetchStatus.Success && classDetails.current_adventure)
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(18048)
     return <Navigate to={`/app/cursos/${classDetails.id}/aventuras`} />;
 
   return (
@@ -99,6 +115,8 @@ const GoalAdventures: React.FC = () => {
         <div>
           <Button
             component={Link}
+            // FIXME: fix this ts error
+            // @ts-expect-error ts-error(18048)
             to={`/app/cursos/${classDetails.id}/aventuras/completed`}
             variant='outlined'
             startIcon={<FlagIcon />}
@@ -134,7 +152,7 @@ const GoalAdventures: React.FC = () => {
         </b>
         .
       </Typography>
-      {selectedGoal && selectedGoal?.adventures?.length ? (
+      {selectedGoal?.adventures?.length ? (
         <>
           <div
             id='adventure-selection-onboarding-3'
@@ -143,6 +161,8 @@ const GoalAdventures: React.FC = () => {
             {sortedAdventures.map((adventure, index) => (
               <AdventureCard
                 id={`adventure-card-${index}`}
+                // FIXME: fix this ts error
+                // @ts-expect-error ts-error(2322)
                 demo={adventure.demo || user?.is_superuser}
                 onClick={() => handleOnClickAdventure(adventure)}
                 key={index}
@@ -150,7 +170,7 @@ const GoalAdventures: React.FC = () => {
                 img={adventure.thumbnail}
                 info={
                   <div className='d-flex gap-1 flex-wrap'>
-                    {!!adventure?.skills?.length
+                    {adventure?.skills?.length
                       ? adventure.skills.map((adventureSkill, index) => (
                           <SkillPoints
                             key={`${adventureSkill.id}-${adventureSkill.title}-${index}`}

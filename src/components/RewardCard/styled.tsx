@@ -1,5 +1,5 @@
 import { Button, Card, TextareaAutosize } from '@mui/material';
-import styled, { DefaultTheme } from 'styled-components';
+import styled, { type DefaultTheme } from 'styled-components';
 
 export interface IRewardCardElementProps {
   type: string;

@@ -1,5 +1,5 @@
 import type { PropsWithChildren, MouseEvent } from 'react';
-import { IClass } from 'global/interfaces';
+import { type IClass } from 'global/interfaces';
 
 export interface Levels {
   id: number | string;

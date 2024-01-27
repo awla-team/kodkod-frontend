@@ -1,9 +1,9 @@
 import http from 'global/api';
 import {
   StudentType,
-  StudentUpdateDataType,
+  type StudentUpdateDataType,
 } from '../components/StudentsList/interfaces';
-import { AddStudentsInClassBody } from './interfaces';
+import { type AddStudentsInClassBody } from './interfaces';
 import { generateQueryParamsFromObject } from '../utils';
 
 export interface UserFilter {
@@ -12,26 +12,26 @@ export interface UserFilter {
   rewards?: true;
 }
 
-export const studentsByClass = (
+export const studentsByClass = async (
   classId: number | string,
   queryObject?: UserFilter
 ) => {
-  return http.get(
+  return await http.get(
     `user-by-class/${classId}` + generateQueryParamsFromObject(queryObject)
   );
 };
 
-export const updateStudent = (
+export const updateStudent = async (
   id: number | string,
   body?: Partial<StudentUpdateDataType>
 ) => {
-  return http.put('user/' + id, body);
+  return await http.put('user/' + id, body);
 };
 
-export const addStudentsInClass = (body: AddStudentsInClassBody) => {
-  return http.post('add-students', body);
+export const addStudentsInClass = async (body: AddStudentsInClassBody) => {
+  return await http.post('add-students', body);
 };
 
-export const deleteStudent = (id: number | string) => {
-  return http.delete('user/' + id);
+export const deleteStudent = async (id: number | string) => {
+  return await http.delete('user/' + id);
 };

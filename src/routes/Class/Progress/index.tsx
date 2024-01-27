@@ -1,12 +1,12 @@
-import { FC, useEffect, useState } from 'react';
-import { ProgressProps } from './interfaces';
+import { type FC, useEffect, useState } from 'react';
+import { type ProgressProps } from './interfaces';
 import { Typography, Box } from '@mui/material';
 import { ProgressContainer, StickyDataGrid } from './styled';
 import { useClassContext } from '../context';
 import { getMissionsByClassAdventure } from 'services/missions';
-import { IMission, IUser } from 'global/interfaces';
+import { type IMission, type IUser } from 'global/interfaces';
 import AdventureProgress from 'components/AdventureProgress';
-import { GridColDef, GridSortModel } from '@mui/x-data-grid';
+import { type GridColDef, type GridSortModel } from '@mui/x-data-grid';
 import kodcoinIcon from 'assets/images/kodcoin.png';
 import RewardsModal from 'components/Modals/RewardsModal';
 import { studentUseRewards } from 'services/rewards';
@@ -30,6 +30,8 @@ const Progress: FC<ProgressProps> = () => {
     number | undefined
   >(undefined);
   const [openModal, setOpenModal] = useState<boolean>(false);
+  // FIXME: fix this ts error
+  // @ts-expect-error ts-error(2345)
   const [selectedStudent, setSelectedStudent] = useState<IUser>(undefined);
   const [sortModel, setSortModel] = useState<GridSortModel>([
     {
@@ -79,16 +81,20 @@ const Progress: FC<ProgressProps> = () => {
 
   useEffect(() => {
     const rawOnboardingData = localStorage.getItem('onboarding-data');
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(2345)
     const onboardingData = JSON.parse(rawOnboardingData);
     setOnboardingDone(!!onboardingData?.progreso);
   }, []);
 
   useEffect(() => {
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(2722)
     setNewAvailableTours([
       {
         name: 'Progreso del curso',
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
+        // @ts-expect-error
         steps: ProgressOnboarding,
       },
     ]);
@@ -97,7 +103,7 @@ const Progress: FC<ProgressProps> = () => {
   useEffect(() => {
     if (!onboardingDone) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
+      // @ts-expect-error
       setSteps(ProgressOnboarding);
       setCurrentStep(0);
       setIsOpen(true);
@@ -105,7 +111,11 @@ const Progress: FC<ProgressProps> = () => {
   }, [onboardingDone]);
 
   useEffect(() => {
+    // FIXME: fix this eslint error
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     if (classDetails) getStudents();
+    // FIXME: fix this eslint error
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     if (classDetails?.current_adventure) getMissions();
   }, [classDetails]);
 
@@ -113,6 +123,8 @@ const Progress: FC<ProgressProps> = () => {
     if (students?.length && missions?.length) {
       const completedMissions = students.reduce(
         (accumulator, student) =>
+          // FIXME: fix this ts error
+          // @ts-expect-error ts-error(18048)
           accumulator + student.user_has_stage_has_missions.length,
         0
       );
@@ -129,6 +141,8 @@ const Progress: FC<ProgressProps> = () => {
   const getStudents = async () => {
     try {
       const students = await getClassHasAdventureProgress(
+        // FIXME: fix this ts error
+        // @ts-expect-error ts-error(18048)
         classDetails.current_adventure.id
       );
       const formattedStudents = students.data.map((student: IUser) => ({
@@ -136,6 +150,8 @@ const Progress: FC<ProgressProps> = () => {
         completed_missions: student.user_has_stage_has_missions?.length,
         obtained_rewards: student.user_has_rewards?.length,
       }));
+      // FIXME: fix this eslint error
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       setStudents(formattedStudents);
     } catch (e: any) {
       Toaster('error', 'Hubo un error al cargar los estudiantes');
@@ -145,8 +161,12 @@ const Progress: FC<ProgressProps> = () => {
   const getMissions = async () => {
     try {
       const missionsResponse = await getMissionsByClassAdventure(
+        // FIXME: fix this ts error
+        // @ts-expect-error ts-error(2345)
         classDetails?.current_adventure?.id
       );
+      // FIXME: fix this eslint error
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       setMissions(missionsResponse.data.responseData);
     } catch (e: any) {
       Toaster('error', 'Hubo un error al cargar las misiones');
@@ -158,6 +178,8 @@ const Progress: FC<ProgressProps> = () => {
       await studentUseRewards(studentId, selectedRewards);
       Toaster('success', '¡Recompensas activadas exitosamente!');
       setOpenModal(false);
+      // FIXME: fix this eslint error
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       getStudents();
     } catch (error) {
       console.log(error);
@@ -185,7 +207,11 @@ const Progress: FC<ProgressProps> = () => {
       {classDetails?.current_adventure ? (
         <AdventureProgress
           adventure={classDetails.current_adventure.adventure}
+          // FIXME: fix this ts error
+          // @ts-expect-error ts-error(2322)
           progressPercentage={progressPercentage}
+          // FIXME: fix this ts error
+          // @ts-expect-error ts-error(2322)
           averageCompletedMission={averageCompletedMission}
         />
       ) : (

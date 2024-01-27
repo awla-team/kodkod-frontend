@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { IStageIconContainerProps } from './interfaces';
+import { type IStageIconContainerProps } from './interfaces';
 
 export const StageIconContainer = styled.div`
   width: 36px;

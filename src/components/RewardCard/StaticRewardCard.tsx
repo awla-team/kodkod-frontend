@@ -20,7 +20,7 @@ const StaticRewardCard = ({
   return (
     <RewardCardContainer className='reward-card static' variant='outlined'>
       <RewardCardHeader>
-        <div></div>
+        <div />
         {!!order && (
           <Typography
             color='white'

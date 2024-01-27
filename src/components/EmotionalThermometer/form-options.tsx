@@ -9,7 +9,7 @@ import NeutralIconFilled from 'components/SVG/NeutralIconFilled';
 import NeutralIconOutlined from 'components/SVG/NeutralIconOutlined';
 import SadIconFilled from 'components/SVG/SadIconFilled';
 import SadIconOutlined from 'components/SVG/SadIconOutlined';
-import { IScoreOption } from './interfaces';
+import { type IScoreOption } from './interfaces';
 
 export const challengeOptions: string[] = [
   'Problemas de conducta, disciplina y comportamiento de los estudiantes en la clase',

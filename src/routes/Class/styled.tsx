@@ -1,4 +1,4 @@
-import styled, { ThemeProps, DefaultTheme } from 'styled-components';
+import styled, { type ThemeProps, type DefaultTheme } from 'styled-components';
 import { Box } from '@mui/material';
 
 export const HomeContainer = styled.div`
