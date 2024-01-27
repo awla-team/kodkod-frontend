@@ -18,9 +18,9 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({
       <Link
         to={linkRoute}
         replace
-        className="d-flex flex-column align-items-center justify-content-center position-relative"
+        className='d-flex flex-column align-items-center justify-content-center position-relative'
       >
-        <div className="text-center">
+        <div className='text-center'>
           <span>{linkTitle}</span>
         </div>
       </Link>

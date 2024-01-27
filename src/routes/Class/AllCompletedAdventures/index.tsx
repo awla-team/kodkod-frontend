@@ -41,33 +41,33 @@ const AllCompletedAdventures: React.FC = () => {
     (loading !== FetchStatus.Success && loading !== FetchStatus.Error)
   ) {
     return (
-      <div className="d-flex w-100 align-items-center justify-content-center">
+      <div className='d-flex w-100 align-items-center justify-content-center'>
         <CircularProgress />
       </div>
     );
   }
 
   return (
-    <AllCompletedAdventuresContainer className="p-5">
+    <AllCompletedAdventuresContainer className='p-5'>
       <div>
         <Button
-          className="mb-2"
+          className='mb-2'
           component={Link}
           to={`/app/cursos/${classDetails?.id}/aventuras/iniciar`}
           startIcon={
             <ArrowBackIosIcon
               sx={{ fontSize: '14px!important' }}
-              fontSize="small"
+              fontSize='small'
             />
           }
         >
           Volver a selección de aventuras
         </Button>
       </div>
-      <Typography component="h1" variant="h4" className="fw-bold mb-4">
+      <Typography component='h1' variant='h4' className='fw-bold mb-4'>
         {classDetails.alias} - Aventuras finalizadas
       </Typography>
-      <div className="d-flex h-100 w-100 align-items-center justify-content-start flex-wrap gap-4">
+      <div className='d-flex h-100 w-100 align-items-center justify-content-start flex-wrap gap-4'>
         {completedAdventures.map((classHasAdventure, index) => (
           <AdventureCard
             id={`adventure-card-${index}`}
@@ -85,7 +85,7 @@ const AllCompletedAdventures: React.FC = () => {
             title={classHasAdventure.adventure.title}
             img={classHasAdventure.adventure.thumbnail}
             info={
-              <div className="d-flex gap-1 flex-wrap">
+              <div className='d-flex gap-1 flex-wrap'>
                 {!!classHasAdventure.adventure?.skills?.length
                   ? classHasAdventure.adventure.skills.map(
                       (adventureSkill, index) => (

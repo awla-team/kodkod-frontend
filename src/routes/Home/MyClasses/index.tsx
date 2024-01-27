@@ -29,21 +29,21 @@ const MyClasses: FC<MyClassesProps> = ({
   }, []);
 
   return (
-    <MyClassesContainer className="w-100">
-      <MyClassesBox className="p-5">
+    <MyClassesContainer className='w-100'>
+      <MyClassesBox className='p-5'>
         <Typography
-          component="h1"
-          variant="h4"
-          className="fw-bold mb-1"
-          id="home-onboarding-4"
+          component='h1'
+          variant='h4'
+          className='fw-bold mb-1'
+          id='home-onboarding-4'
         >
           Mis cursos
         </Typography>
         <Typography
-          component="span"
-          variant="body2"
-          color="primary"
-          className="fw-bold mb-4"
+          component='span'
+          variant='body2'
+          color='primary'
+          className='fw-bold mb-4'
         >{`${classes.length} cursos en total`}</Typography>
         {classesData.map(({ level, ...rest }, index) => {
           return (
@@ -55,9 +55,9 @@ const MyClasses: FC<MyClassesProps> = ({
             >
               <AccordionSummary expandIcon={<ExpandMore />}>
                 <Typography
-                  component="span"
-                  variant="body1"
-                  className="fw-bold"
+                  component='span'
+                  variant='body1'
+                  className='fw-bold'
                 >
                   {level}
                 </Typography>
@@ -67,7 +67,7 @@ const MyClasses: FC<MyClassesProps> = ({
               >
                 {rest.classes.map((teacherClass, _index) => (
                   <div
-                    className="col-lg-4 col-md-6 col-12"
+                    className='col-lg-4 col-md-6 col-12'
                     key={`${_index}-${index}`}
                   >
                     <ClassCard classObj={teacherClass} />

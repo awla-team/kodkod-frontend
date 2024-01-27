@@ -8,25 +8,25 @@ const WelcomePage: FC<WelcomePageProps> = ({
   handleOpenModal,
 }: WelcomePageProps) => {
   return (
-    <div className="w-100 d-flex align-items-center justify-content-center p-5">
-      <WelcomePageContainer className="p-5">
-        <img className="mb-3" src={noClassesImg} />
+    <div className='w-100 d-flex align-items-center justify-content-center p-5'>
+      <WelcomePageContainer className='p-5'>
+        <img className='mb-3' src={noClassesImg} />
         <div>
           <Typography
-            component="h1"
-            variant="h5"
-            className="fw-bold text-center mb-3"
+            component='h1'
+            variant='h5'
+            className='fw-bold text-center mb-3'
           >
             ¡Vamos a añadir tus cursos!
           </Typography>
-          <Typography component="div" variant="body1" className="mb-4">
+          <Typography component='div' variant='body1' className='mb-4'>
             En tus cursos, podrás escoger divertidas aventuras para trabajar en
             el desarrollo socioemocional de tus estudiantes.
           </Typography>
           <Button
             onClick={handleOpenModal}
             variant={'contained'}
-            className="w-100"
+            className='w-100'
           >
             Añade tu primer curso
           </Button>

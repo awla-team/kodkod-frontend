@@ -157,11 +157,11 @@ const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
   }, [pathname, checkAuthUser, goToSignin]);
 
   if (localStorage.getItem('accessToken') && pathname === '/') {
-    return <Navigate to="/app" />;
+    return <Navigate to='/app' />;
   }
 
   if (!localStorage.getItem('accessToken') && pathname === '/') {
-    return <Navigate to="/signin" />;
+    return <Navigate to='/signin' />;
   }
 
   return (

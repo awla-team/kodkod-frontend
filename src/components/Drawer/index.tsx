@@ -9,8 +9,8 @@ import CloseIcon from '@mui/icons-material/Close';
 const Drawer = ({ children, onClose, ...props }: MuiDrawerProps) => {
   return (
     <MuiDrawer
-      anchor="right"
-      variant="temporary"
+      anchor='right'
+      variant='temporary'
       onClose={onClose}
       sx={{ overflow: 'hidden' }}
       {...props}
@@ -26,7 +26,7 @@ const Drawer = ({ children, onClose, ...props }: MuiDrawerProps) => {
       >
         <CloseIcon />
       </IconButton>
-      <div className="p-5">{children}</div>
+      <div className='p-5'>{children}</div>
     </MuiDrawer>
   );
 };

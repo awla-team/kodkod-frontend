@@ -30,16 +30,16 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
   };
 
   return user.id ? (
-    <UserInfoContainer className="w-100">
-      <Divider className="w-75 my-3" color="gray" />
+    <UserInfoContainer className='w-100'>
+      <Divider className='w-75 my-3' color='gray' />
       {user?.is_subscription_active || user?.is_superuser ? (
         <Chip
-          className="mb-2"
+          className='mb-2'
           sx={{ span: { padding: '2px 8px' } }}
           label={
             <Typography
-              variant="body2"
-              className="d-flex align-items-center justify-content-center gap-1"
+              variant='body2'
+              className='d-flex align-items-center justify-content-center gap-1'
             >
               <StarIcon sx={{ fontSize: '16px' }} />
               Pro
@@ -48,17 +48,17 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
         />
       ) : null}
       <UserInfoButton
-        role="button"
+        role='button'
         tabIndex={0}
-        className="d-flex justify-content-center align-items-center"
+        className='d-flex justify-content-center align-items-center'
         onClick={handleClick}
       >
-        <img src={ImgAvatar} alt="avatar" />
-        <ExpandMore fontSize="small" />
+        <img src={ImgAvatar} alt='avatar' />
+        <ExpandMore fontSize='small' />
       </UserInfoButton>
       <Menu
         anchorEl={anchorEl}
-        id="user-menu"
+        id='user-menu'
         open={!!anchorEl}
         onClose={handleClose}
         onClick={handleClose}
@@ -72,7 +72,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
             sx={{ ml: 1 }}
           >{`${user.first_name} ${user.last_name}`}</Typography>
         </MenuItem>
-        <MenuItem component={Link} to="perfil/suscripciones" disabled={loading}>
+        <MenuItem component={Link} to='perfil/suscripciones' disabled={loading}>
           Suscripciones
         </MenuItem>
         <MenuItem onClick={handleLogout} disabled={loading}>

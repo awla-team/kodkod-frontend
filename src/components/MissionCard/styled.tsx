@@ -43,7 +43,9 @@ export const MissionCardContainer = styled(Card)`
     overflow: visible;
     box-shadow: 0px 0px 10px rgba(33, 33, 33, 0.5);
 
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease;
 
     &.clickable {
       cursor: pointer;
