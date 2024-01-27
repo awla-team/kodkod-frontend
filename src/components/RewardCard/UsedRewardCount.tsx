@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material';
 import styled from 'styled-components';
-import { ReactComponent as GraduationIcon } from 'assets/images/graduation-icon.svg';
+import GraduationIcon from 'assets/images/graduation-icon.svg?react';
 
 const GraduationCountContainer = styled.div`
   display: flex;
