@@ -11,7 +11,7 @@ Install dependencies:
 
 Edit API URL in `.env` file:
 
-> VITE_BASE_URL=apiurl
+> VITE_API_BASE_URL=apiurl
 
 Run project:
 
