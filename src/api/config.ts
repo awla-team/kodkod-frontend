@@ -9,9 +9,22 @@ initMercadoPago(import.meta.env.VITE_MERCADO_PAGO_KEY, {
   locale: 'es-CL',
 });
 
-const baseURL = import.meta.env.VITE_API_BASE_URL;
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const HEADERS: Readonly<Record<string, string>> = {
+  'Content-Type': 'application/json',
+  'X-Requested-With': 'XMLHttpRequest',
+};
+const xsrfHeaderName: Readonly<string> = 'X-CSRFTOKEN';
+const xsrfCookieName: Readonly<string> = 'csrftoken';
+const withCredentials: Readonly<boolean> = true;
 
-const http = axios.create({ baseURL });
+const http = axios.create({
+  baseURL: BASE_URL,
+  headers: HEADERS,
+  withCredentials,
+  xsrfCookieName,
+  xsrfHeaderName,
+});
 
 http.interceptors.request.use(async (reqConfig) => {
   const accessToken = localStorage.getItem('accessToken');
