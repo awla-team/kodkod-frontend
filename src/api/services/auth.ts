@@ -1,5 +1,5 @@
 import { type AxiosError } from 'axios';
-import http from 'api/api';
+import http from 'api/config';
 
 export interface SignInBody {
   email: string;

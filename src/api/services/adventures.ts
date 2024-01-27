@@ -1,4 +1,4 @@
-import http from 'api/api';
+import http from 'api/config';
 
 export const getAdventures = async () =>
   await http.get('adventures?_embed=adventureSkills');

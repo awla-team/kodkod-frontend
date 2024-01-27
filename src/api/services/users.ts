@@ -1,4 +1,4 @@
-import http from 'api/api';
+import http from 'api/config';
 import { type IUser } from 'global/interfaces';
 import { generateQueryParamsFromObject } from '../../utils';
 
