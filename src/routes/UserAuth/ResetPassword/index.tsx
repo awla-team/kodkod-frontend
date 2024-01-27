@@ -81,33 +81,33 @@ const ResetPassword: FC = () => {
     }
   };
   return (
-    <ResetPasswordCard variant="outlined">
-      <CardContent className="p-5">
+    <ResetPasswordCard variant='outlined'>
+      <CardContent className='p-5'>
         <Button
-          className="mb-2"
+          className='mb-2'
           startIcon={<ArrowBackIosIcon />}
           component={RouterLink}
           to={'/signin'}
         >
           Volver al inicio de sesión
         </Button>
-        <Typography component="h4" variant="h5" className="mb-1">
+        <Typography component='h4' variant='h5' className='mb-1'>
           Crea una nueva contraseña
         </Typography>
-        <Typography component="span" variant="body2" color="gray">
+        <Typography component='span' variant='body2' color='gray'>
           Tu nueva contraseña debe contener:
         </Typography>
         <ul>
-          <Typography component="li" variant="body2" color="gray">
+          <Typography component='li' variant='body2' color='gray'>
             Entre 8 y 16 caractéres
           </Typography>
-          <Typography component="li" variant="body2" color="gray">
+          <Typography component='li' variant='body2' color='gray'>
             Al menos 1 minúscula
           </Typography>
-          <Typography component="li" variant="body2" color="gray">
+          <Typography component='li' variant='body2' color='gray'>
             Al menos 1 mayúscula
           </Typography>
-          <Typography component="li" variant="body2" color="gray">
+          <Typography component='li' variant='body2' color='gray'>
             Al menos 1 número
           </Typography>
         </ul>
@@ -141,9 +141,9 @@ const ResetPassword: FC = () => {
                         onChange={handleChange}
                         onBlur={handleBlur}
                         type={'password'}
-                        label="Nueva contraseña"
+                        label='Nueva contraseña'
                         placeholder={'Ingresa tu nueva contraseña'}
-                        variant="outlined"
+                        variant='outlined'
                       />
                     </FormControl>
 
@@ -159,9 +159,9 @@ const ResetPassword: FC = () => {
                         onChange={handleChange}
                         onBlur={handleBlur}
                         type={'password'}
-                        label="Confirma tu nueva contraseña"
+                        label='Confirma tu nueva contraseña'
                         placeholder={'Ingresa tu nueva contraseña una vez más'}
-                        variant="outlined"
+                        variant='outlined'
                       />
                     </FormControl>
 
@@ -178,7 +178,7 @@ const ResetPassword: FC = () => {
                         className={'submit__button'}
                         variant={'contained'}
                         type={'submit'}
-                        size="large"
+                        size='large'
                       >
                         Establecer nueva contraseña
                       </Button>

@@ -5,9 +5,9 @@ const PointsOnboarding = [
   {
     content: () => {
       return (
-        <OnboardingContent title="Misiones y puntaje">
-          <div className="d-flex flex-column gap-2">
-            <Typography variant="body1" component="p">
+        <OnboardingContent title='Misiones y puntaje'>
+          <div className='d-flex flex-column gap-2'>
+            <Typography variant='body1' component='p'>
               Las misiones son <b>interacciones positivas</b> que los
               estudiantes deben realizar <b>durante la clase.</b>
             </Typography>
@@ -23,8 +23,8 @@ const PointsOnboarding = [
     content: () => {
       return (
         <OnboardingContent>
-          <div className="d-flex flex-column gap-2">
-            <Typography variant="body1" component="p">
+          <div className='d-flex flex-column gap-2'>
+            <Typography variant='body1' component='p'>
               Están compuestas por un <b>título</b> y una{' '}
               <b>descripción de la interacción positiva</b> a realizar.
             </Typography>
@@ -40,8 +40,8 @@ const PointsOnboarding = [
     content: () => {
       return (
         <OnboardingContent>
-          <div className="d-flex flex-column gap-2">
-            <Typography variant="body1" component="p">
+          <div className='d-flex flex-column gap-2'>
+            <Typography variant='body1' component='p'>
               Además, las misiones están asociadas a{' '}
               <b>habilidades específicas</b> que queremos desarrollar en
               nuestros estudiantes.
@@ -58,8 +58,8 @@ const PointsOnboarding = [
     content: () => {
       return (
         <OnboardingContent>
-          <div className="d-flex flex-column gap-2">
-            <Typography variant="body1" component="p">
+          <div className='d-flex flex-column gap-2'>
+            <Typography variant='body1' component='p'>
               También tienen un <b>puntaje</b>, que depende de la{' '}
               <b>dificultad de la misión</b>. Este puntaje se le otorga a
               aquellos estudiantes que la completan, y les permitirá{' '}
@@ -79,8 +79,8 @@ const PointsOnboarding = [
     content: () => {
       return (
         <OnboardingContent>
-          <div className="d-flex flex-column gap-2">
-            <Typography variant="body1" component="p">
+          <div className='d-flex flex-column gap-2'>
+            <Typography variant='body1' component='p'>
               Cuando alguno de tus estudiantes complete una misión, puedes hacer
               click en ella para abrir el <b>panel de puntajes.</b>
             </Typography>
@@ -98,8 +98,8 @@ const PointsOnboarding = [
     content: () => {
       return (
         <OnboardingContent>
-          <div className="d-flex flex-column gap-2">
-            <Typography variant="body1" component="p">
+          <div className='d-flex flex-column gap-2'>
+            <Typography variant='body1' component='p'>
               En él, puedes registrar aquellos estudiantes que han terminado la
               misión.
             </Typography>
@@ -117,8 +117,8 @@ const PointsOnboarding = [
     content: () => {
       return (
         <OnboardingContent>
-          <div className="d-flex flex-column gap-2">
-            <Typography variant="body1" component="p">
+          <div className='d-flex flex-column gap-2'>
+            <Typography variant='body1' component='p'>
               Incluso puedes <b>seleccionarlos a todos</b> rápidamente si es que
               todo el curso completó la misión
             </Typography>
@@ -136,8 +136,8 @@ const PointsOnboarding = [
     content: () => {
       return (
         <OnboardingContent>
-          <div className="d-flex flex-column gap-2">
-            <Typography variant="body1" component="p">
+          <div className='d-flex flex-column gap-2'>
+            <Typography variant='body1' component='p'>
               Finalmente, se debe presionar el botón <b>"Guardar Cambios"</b>{' '}
               para guardar el registro.
             </Typography>
@@ -154,13 +154,13 @@ const PointsOnboarding = [
       document.getElementById('mission-complete-modal-cancel')?.click(),
     content: () => {
       return (
-        <OnboardingContent title="¡Tutorial completado!">
-          <div className="d-flex flex-column gap-2">
+        <OnboardingContent title='¡Tutorial completado!'>
+          <div className='d-flex flex-column gap-2'>
             <Typography>
               Recuerda que puedes acceder a este y otros tutoriales presionando
               el botón de ayuda.
             </Typography>
-            <Typography fontWeight="bold">
+            <Typography fontWeight='bold'>
               ¡Hay tutoriales distintos en cada vista!
             </Typography>
           </div>

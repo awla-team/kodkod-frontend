@@ -49,13 +49,13 @@ const RewardCard: React.FC<IRewardCardProps> = ({
 
   return (
     <>
-      <RewardCardContainer variant="outlined">
+      <RewardCardContainer variant='outlined'>
         <EditRewardActionsContainer>
           {editMode && (
             <>
               <EditRewardButton
-                color="inherit"
-                variant="contained"
+                color='inherit'
+                variant='contained'
                 onClick={() => {
                   onSave(rewardId, {
                     title: newTitle,
@@ -74,8 +74,8 @@ const RewardCard: React.FC<IRewardCardProps> = ({
                 Guardar
               </EditRewardButton>
               <EditRewardButton
-                color="inherit"
-                variant="contained"
+                color='inherit'
+                variant='contained'
                 onClick={cancelEditMode}
                 startIcon={<CloseIcon />}
               >
@@ -86,8 +86,8 @@ const RewardCard: React.FC<IRewardCardProps> = ({
           {!editMode && !!rewardId && (
             <EditRewardButton
               id={`reward-card-edit-${id}`}
-              color="inherit"
-              variant="contained"
+              color='inherit'
+              variant='contained'
               onClick={activateEditMode}
               startIcon={<EditIcon />}
             >
@@ -110,27 +110,27 @@ const RewardCard: React.FC<IRewardCardProps> = ({
             </div>
             {!!order && (
               <Typography
-                color="white"
-                variant="body1"
-                fontWeight="bold"
-                fontSize="32px"
+                color='white'
+                variant='body1'
+                fontWeight='bold'
+                fontSize='32px'
               >
                 {order}
               </Typography>
             )}
           </RewardCardHeader>
           <RewardCardContent>
-            <RewardImg src={icon} alt="" />
-            <div className="d-flex flex-column align-items-center justify-content-end">
-              <div className="d-flex flex-column align-items-center">
+            <RewardImg src={icon} alt='' />
+            <div className='d-flex flex-column align-items-center justify-content-end'>
+              <div className='d-flex flex-column align-items-center'>
                 {editMode ? (
                   <TextField
-                    className="mb-1"
-                    size="small"
-                    type="text"
+                    className='mb-1'
+                    size='small'
+                    type='text'
                     value={newTitle}
                     placeholder={title}
-                    color="primary"
+                    color='primary'
                     sx={{
                       input: { padding: '4px' },
                     }}
@@ -140,11 +140,11 @@ const RewardCard: React.FC<IRewardCardProps> = ({
                   />
                 ) : (
                   <Typography
-                    className="mb-1"
-                    variant="body1"
-                    fontWeight="bold"
-                    fontSize="20px"
-                    textAlign="center"
+                    className='mb-1'
+                    variant='body1'
+                    fontWeight='bold'
+                    fontSize='20px'
+                    textAlign='center'
                     sx={{
                       marginBottom: '8px',
                     }}
@@ -164,9 +164,9 @@ const RewardCard: React.FC<IRewardCardProps> = ({
                   />
                 ) : (
                   <Typography
-                    variant="body2"
-                    textAlign="center"
-                    fontSize="16px"
+                    variant='body2'
+                    textAlign='center'
+                    fontSize='16px'
                     sx={{
                       padding: '8px',
                     }}

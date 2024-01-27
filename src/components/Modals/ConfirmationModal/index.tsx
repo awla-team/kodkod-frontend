@@ -19,12 +19,12 @@ const ConfirmationModal: FC<ConfirmationModalProps> = ({
   loading,
 }) => {
   return (
-    <Dialog open={open} PaperProps={{ className: 'p-3' }} maxWidth="sm">
-      <DialogTitle fontWeight="bold">{title || 'Confirmación'}</DialogTitle>
-      <DialogContent className="py-4">
+    <Dialog open={open} PaperProps={{ className: 'p-3' }} maxWidth='sm'>
+      <DialogTitle fontWeight='bold'>{title || 'Confirmación'}</DialogTitle>
+      <DialogContent className='py-4'>
         <div>{description}</div>
       </DialogContent>
-      <DialogActions className="pt-3">
+      <DialogActions className='pt-3'>
         <Button variant={'outlined'} onClick={() => onClose()}>
           {cancelText || 'No, mantener'}
         </Button>

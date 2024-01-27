@@ -76,13 +76,13 @@ const Adventures: React.FC = () => {
 
   if (loadingClass !== FetchStatus.Success)
     return (
-      <div className="d-flex w-100 align-items-center justify-content-center">
+      <div className='d-flex w-100 align-items-center justify-content-center'>
         <CircularProgress />
       </div>
     );
 
   if (!classDetails?.current_adventure && loadingClass === FetchStatus.Success)
-    return <Navigate to="iniciar" />;
+    return <Navigate to='iniciar' />;
 
   return (
     <>

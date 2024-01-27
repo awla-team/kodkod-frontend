@@ -76,23 +76,23 @@ export const Adventure: React.FC = () => {
 
   if (!classDetails.current_adventure) {
     return (
-      <AdventureContainer className="d-flex flex-column gap-3 p-0 m-0">
+      <AdventureContainer className='d-flex flex-column gap-3 p-0 m-0'>
         <Skeleton
-          variant="rounded"
-          animation="wave"
-          className="w-100"
+          variant='rounded'
+          animation='wave'
+          className='w-100'
           height={360}
         />
         <Skeleton
-          variant="rounded"
-          animation="wave"
-          className="w-100"
+          variant='rounded'
+          animation='wave'
+          className='w-100'
           height={40}
         />
         <Skeleton
-          variant="rounded"
-          animation="wave"
-          className="w-100"
+          variant='rounded'
+          animation='wave'
+          className='w-100'
           height={280}
         />
       </AdventureContainer>
@@ -151,22 +151,22 @@ export const Adventure: React.FC = () => {
   };
 
   return (
-    <AdventureContainer className="p-0 m-0">
+    <AdventureContainer className='p-0 m-0'>
       <AdventureBanner
-        className="d-flex flex-column px-5 justify-content-center mb-4"
+        className='d-flex flex-column px-5 justify-content-center mb-4'
         sx={{
           backgroundImage: `url(${
             shownStage?.icon || classDetails.current_adventure.adventure.banner
           })`,
         }}
       >
-        <div className="d-flex justify-content-between align-items-end mb-3">
-          <Typography variant="h4" component="h2" fontWeight="bold">
+        <div className='d-flex justify-content-between align-items-end mb-3'>
+          <Typography variant='h4' component='h2' fontWeight='bold'>
             {classDetails.current_adventure.adventure.title}
           </Typography>
           <div>
             <IconButton color={'inherit'} onClick={handleVerticalButtonClick}>
-              <MoreVertIcon fontSize="large" />
+              <MoreVertIcon fontSize='large' />
             </IconButton>
             <Menu
               open={!!anchorEl}
@@ -182,10 +182,10 @@ export const Adventure: React.FC = () => {
             </Menu>
           </div>
         </div>
-        <div className="d-flex mb-1">
+        <div className='d-flex mb-1'>
           {classDetails.current_adventure?.adventure?.skills?.map((skill) => (
             <div
-              className="me-2"
+              className='me-2'
               key={`${classDetails.current_adventure.id}-${skill.id}`}
             >
               <SkillPoints skill={skill} />
@@ -194,17 +194,17 @@ export const Adventure: React.FC = () => {
         </div>
       </AdventureBanner>
       {shownStage?.next_img_url && shownStage?.narrative ? (
-        <Box className="d-flex align-items-center justify-content-center px-5">
+        <Box className='d-flex align-items-center justify-content-center px-5'>
           <img
             src={shownStage?.next_img_url}
-            height="140"
-            width="140"
-            className="me-2"
+            height='140'
+            width='140'
+            className='me-2'
           />
           <Typography>{shownStage?.narrative}</Typography>
         </Box>
       ) : null}
-      <div className="mt-5">
+      <div className='mt-5'>
         <StageStepper
           shownStage={shownStage}
           stages={classDetails.current_adventure?.stages}
@@ -217,11 +217,11 @@ export const Adventure: React.FC = () => {
         <StageRequirements />
           StageRequirements ends */}
 
-      <div className="mt-4">
+      <div className='mt-4'>
         <MissionsList shownStage={shownStage} />
       </div>
       <ConfirmationModal
-        title="¿Estás seguro de terminar la aventura?"
+        title='¿Estás seguro de terminar la aventura?'
         description={
           <span>
             Esta aventura se terminará y los puntajes de l@s estudiantes
@@ -229,7 +229,7 @@ export const Adventure: React.FC = () => {
           </span>
         }
         open={openConfirmation}
-        confirmText="Sí, terminar"
+        confirmText='Sí, terminar'
         callBackFunction={cancelAdventure}
         onClose={() => setOpenConfirmation(false)}
       />

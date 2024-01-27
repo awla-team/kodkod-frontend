@@ -122,22 +122,22 @@ const RedeemRewardDrawer = ({
   return (
     <Drawer
       open={openDrawer}
-      anchor="right"
+      anchor='right'
       onClose={onClose}
       PaperProps={{ className: 'px-5 py-4' }}
     >
       <Typography
-        component="h6"
-        variant="h6"
-        fontWeight="bold"
-        className="mb-1"
+        component='h6'
+        variant='h6'
+        fontWeight='bold'
+        className='mb-1'
       >
         Canjeo de recompensas
       </Typography>
-      <Typography component="span" variant="body1">
+      <Typography component='span' variant='body1'>
         Selecciona los estudiantes que van a canjear esta recompensa
       </Typography>
-      <div className="d-flex justify-content-center my-3">
+      <div className='d-flex justify-content-center my-3'>
         <StaticRewardCard
           order={order}
           icon={icon}
@@ -146,13 +146,13 @@ const RedeemRewardDrawer = ({
         />
       </div>
       <StudentListContainer
-        id="reward-modal-list"
-        className="d-flex flex-column overflow-hidden"
+        id='reward-modal-list'
+        className='d-flex flex-column overflow-hidden'
       >
         <TextField
-          className="mb-3"
+          className='mb-3'
           variant={'standard'}
-          placeholder="Buscar por nombre o apellido"
+          placeholder='Buscar por nombre o apellido'
           fullWidth
           onChange={(event) => {
             if (!event.target.value) return setStudentList(students);
@@ -165,14 +165,14 @@ const RedeemRewardDrawer = ({
             );
           }}
         />
-        <div className="d-flex flex-column flex-fill gap-4 overflow-hidden">
-          <div className="d-flex w-100 align-items-center justify-content-between">
+        <div className='d-flex flex-column flex-fill gap-4 overflow-hidden'>
+          <div className='d-flex w-100 align-items-center justify-content-between'>
             <FormControlLabel
               sx={{
                 marginLeft: 0,
               }}
-              label="Seleccionar a todos"
-              className="mb-3"
+              label='Seleccionar a todos'
+              className='mb-3'
               control={
                 <Checkbox
                   onChange={handleAllSelect}
@@ -190,25 +190,25 @@ const RedeemRewardDrawer = ({
                 />
               }
             />
-            <div className="d-flex flex-column">
-              <div className="d-flex gap-2 justify-content-end">
+            <div className='d-flex flex-column'>
+              <div className='d-flex gap-2 justify-content-end'>
                 <Button
-                  id="reward-modal-cancel"
+                  id='reward-modal-cancel'
                   onClick={onClose}
-                  variant="outlined"
+                  variant='outlined'
                 >
                   Cancelar
                 </Button>
                 <Button
-                  id="reward-modal-save"
+                  id='reward-modal-save'
                   onClick={() => handleSave(rewardId, selected)}
-                  variant="contained"
+                  variant='contained'
                   disabled={!Object.keys(selected).length}
                 >
                   Guardar cambios
                 </Button>
               </div>
-              <Typography component="span" variant="body2" textAlign="end">
+              <Typography component='span' variant='body2' textAlign='end'>
                 <b>
                   {Object.keys(selected).length +
                     Object.keys(defaultSelected).length}
@@ -218,9 +218,9 @@ const RedeemRewardDrawer = ({
               </Typography>
             </div>
           </div>
-          <div className="d-flex flex-column gap-3 overflow-auto">
+          <div className='d-flex flex-column gap-3 overflow-auto'>
             {studentList.map((student, index) => (
-              <div key={index} className="d-flex gap-2 align-items-center">
+              <div key={index} className='d-flex gap-2 align-items-center'>
                 <Checkbox
                   onChange={() => handleCheck(student.id)}
                   disabled={defaultSelected.includes(student.id)}
@@ -229,17 +229,17 @@ const RedeemRewardDrawer = ({
                     defaultSelected.includes(student.id)
                   }
                 />
-                <div className="d-flex align-items-center gap-3">
-                  <Avatar className="student-avatar">{`${student.first_name[0]}${student.last_name[0]}`}</Avatar>
-                  <div className="d-flex flex-column">
+                <div className='d-flex align-items-center gap-3'>
+                  <Avatar className='student-avatar'>{`${student.first_name[0]}${student.last_name[0]}`}</Avatar>
+                  <div className='d-flex flex-column'>
                     <Typography
-                      component="span"
-                      variant="body1"
+                      component='span'
+                      variant='body1'
                     >{`${student.first_name} ${student.last_name}`}</Typography>
                     <Typography
-                      component="span"
-                      variant="body2"
-                      color="#969696"
+                      component='span'
+                      variant='body2'
+                      color='#969696'
                     >
                       {student.email}
                     </Typography>

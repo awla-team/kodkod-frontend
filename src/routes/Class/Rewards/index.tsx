@@ -134,20 +134,20 @@ const Rewards = () => {
 
   if (!classDetails?.current_adventure)
     return (
-      <ContentBox className="align-items-center p-5">
+      <ContentBox className='align-items-center p-5'>
         <Typography
-          component="h4"
-          variant="h4"
-          fontWeight="bold"
-          className="mb-2"
+          component='h4'
+          variant='h4'
+          fontWeight='bold'
+          className='mb-2'
         >
           ¡Aún no has seleccionado una aventura!
         </Typography>
-        <Typography component="span" variant="body1">
+        <Typography component='span' variant='body1'>
           Debes seleccionar una aventura para poder ver las recompensas.
         </Typography>
-        <div className="mt-4">
-          <Button variant="contained" size="large" onClick={handleNavigate}>
+        <div className='mt-4'>
+          <Button variant='contained' size='large' onClick={handleNavigate}>
             Selecciona una aventura
           </Button>
         </div>
@@ -155,37 +155,37 @@ const Rewards = () => {
     );
 
   return (
-    <ContentBox className="p-5">
+    <ContentBox className='p-5'>
       <Typography
-        component="h4"
-        variant="h4"
-        fontWeight="bold"
-        className="mb-2"
+        component='h4'
+        variant='h4'
+        fontWeight='bold'
+        className='mb-2'
       >
         Recompensas
       </Typography>
-      <Typography component="p" variant="body1" className="mb-2">
+      <Typography component='p' variant='body1' className='mb-2'>
         En esta sección podrás gestionar las recompensas del curso y de tus
         estudiantes. ¡Las recompensas son una herramienta muy útil para mantener
         la motivación a tope!
       </Typography>
       <section>
         <Typography
-          component="h5"
-          variant="h5"
-          fontWeight="bold"
-          className="mb-2"
+          component='h5'
+          variant='h5'
+          fontWeight='bold'
+          className='mb-2'
         >
           Recompensas individuales
         </Typography>
-        <Typography component="p" variant="body1" className="mb-2">
+        <Typography component='p' variant='body1' className='mb-2'>
           Las recompensas individuales se otorgan a todos los estudiantes
           individualmente cuando alcanzan el puntaje indicado en la recompensa.
           Puedes editarlas haciendo click en <b>“editar”</b>. Puedes marcar los
           estudiantes que ya han utilizado su recompensa haciendo click en la
           tarjeta.
         </Typography>
-        <RewardsList id="rewards-list">
+        <RewardsList id='rewards-list'>
           {rewards.map((reward, index) => {
             return (
               <RewardCard

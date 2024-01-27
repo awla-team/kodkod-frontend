@@ -80,8 +80,8 @@ const GoalAdventures: React.FC = () => {
 
   if (loading === FetchStatus.Idle || loading === FetchStatus.Pending)
     return (
-      <div className="d-flex flex-column flex-fill w-100 h-100">
-        <div className="d-flex flex-fill h-100 w-100 align-items-center justify-content-center">
+      <div className='d-flex flex-column flex-fill w-100 h-100'>
+        <div className='d-flex flex-fill h-100 w-100 align-items-center justify-content-center'>
           <CircularProgress />
         </div>
       </div>
@@ -91,16 +91,16 @@ const GoalAdventures: React.FC = () => {
     return <Navigate to={`/app/cursos/${classDetails.id}/aventuras`} />;
 
   return (
-    <AdventureSelectionContainer className="w-100 p-5">
-      <div className="d-flex justify-content-between align-items-center">
-        <Typography variant="h4" fontWeight="bold" className="mb-4">
+    <AdventureSelectionContainer className='w-100 p-5'>
+      <div className='d-flex justify-content-between align-items-center'>
+        <Typography variant='h4' fontWeight='bold' className='mb-4'>
           Inicia una nueva aventura
         </Typography>
         <div>
           <Button
             component={Link}
             to={`/app/cursos/${classDetails.id}/aventuras/completed`}
-            variant="outlined"
+            variant='outlined'
             startIcon={<FlagIcon />}
           >
             Ver aventuras finalizadas
@@ -109,24 +109,24 @@ const GoalAdventures: React.FC = () => {
       </div>
       <div>
         <Button
-          id="adventure-selection-back"
-          className="mb-1"
+          id='adventure-selection-back'
+          className='mb-1'
           component={RouterLink}
           to={`/app/cursos/${classDetails?.id}/aventuras/iniciar`}
           startIcon={
             <ArrowBackIosIcon
               sx={{ fontSize: '14px!important' }}
-              fontSize="small"
+              fontSize='small'
             />
           }
         >
           Volver al paso anterior
         </Button>
       </div>
-      <Typography variant="h5" className="mb-2">
+      <Typography variant='h5' className='mb-2'>
         <b>Paso 2:</b> Escoge una aventura
       </Typography>
-      <Typography variant="body1" className="mb-4">
+      <Typography variant='body1' className='mb-4'>
         ¡Muy bien! Ahora selecciona una de las siguientes aventuras creadas
         especificamente para{' '}
         <b style={{ textTransform: 'lowercase' }}>
@@ -137,8 +137,8 @@ const GoalAdventures: React.FC = () => {
       {selectedGoal && selectedGoal?.adventures?.length ? (
         <>
           <div
-            id="adventure-selection-onboarding-3"
-            className="d-flex h-100 w-100 align-items-center justify-content-center justify-content-center flex-wrap gap-4"
+            id='adventure-selection-onboarding-3'
+            className='d-flex h-100 w-100 align-items-center justify-content-center justify-content-center flex-wrap gap-4'
           >
             {sortedAdventures.map((adventure, index) => (
               <AdventureCard
@@ -149,7 +149,7 @@ const GoalAdventures: React.FC = () => {
                 title={adventure.title}
                 img={adventure.thumbnail}
                 info={
-                  <div className="d-flex gap-1 flex-wrap">
+                  <div className='d-flex gap-1 flex-wrap'>
                     {!!adventure?.skills?.length
                       ? adventure.skills.map((adventureSkill, index) => (
                           <SkillPoints
@@ -169,8 +169,8 @@ const GoalAdventures: React.FC = () => {
           />
         </>
       ) : (
-        <div className="d-flex flex-fill h-100 w-100 align-items-center justify-content-center">
-          <Typography variant="h6" className="mb-2">
+        <div className='d-flex flex-fill h-100 w-100 align-items-center justify-content-center'>
+          <Typography variant='h6' className='mb-2'>
             No hay aventuras disponibles para este objetivo
           </Typography>
         </div>

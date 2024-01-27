@@ -58,20 +58,20 @@ const ForgotPassword: FC<ForgotPasswordProps> = () => {
   };
 
   return (
-    <ForgotPasswordCard variant="outlined">
-      <CardContent className="p-5">
+    <ForgotPasswordCard variant='outlined'>
+      <CardContent className='p-5'>
         <Button
-          className="mb-2"
+          className='mb-2'
           startIcon={<ArrowBackIosIcon />}
           component={RouterLink}
           to={'/signin'}
         >
           Volver al inicio de sesión
         </Button>
-        <Typography component="h4" variant="h5" className="mb-1">
+        <Typography component='h4' variant='h5' className='mb-1'>
           Recupera tu contraseña
         </Typography>
-        <Typography component="span" variant="body2" color="gray">
+        <Typography component='span' variant='body2' color='gray'>
           Ingresa tu email para enviarte un correo con instrucciones para
           recuperar tu contraseña
         </Typography>
@@ -102,9 +102,9 @@ const ForgotPassword: FC<ForgotPasswordProps> = () => {
                       onChange={handleChange}
                       onBlur={handleBlur}
                       type={'email'}
-                      label="Email"
+                      label='Email'
                       placeholder={'Ej: juanito.perez@email.com'}
-                      variant="outlined"
+                      variant='outlined'
                     />
                   </FormControl>
 
@@ -118,7 +118,7 @@ const ForgotPassword: FC<ForgotPasswordProps> = () => {
                     <Button
                       disabled={isSubmitting || !isValid || !dirty}
                       fullWidth
-                      size="large"
+                      size='large'
                       className={'submit__button'}
                       variant={'contained'}
                       type={'submit'}

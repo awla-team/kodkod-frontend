@@ -91,24 +91,24 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
       scroll={'body'}
       PaperProps={{ className: 'p-3' }}
     >
-      <DialogTitle fontWeight="bold">{`Reemplazar misión "${mission.title}"`}</DialogTitle>
+      <DialogTitle fontWeight='bold'>{`Reemplazar misión "${mission.title}"`}</DialogTitle>
       <DialogContent>
-        <div className="mb-3">
-          <Typography component="span" variant="body1">
+        <div className='mb-3'>
+          <Typography component='span' variant='body1'>
             Cambia esta misión por otra de la misma <b>habilidad</b> y{' '}
             <b>dificultad</b>. Recuerda que no puedes reemplazar una misión que
             ya ha sido completada por algún estudiante.
           </Typography>
         </div>
-        <NewMissionList className="mt-2">
+        <NewMissionList className='mt-2'>
           <Box
-            className="d-flex align-items-center justify-content-center p-3"
+            className='d-flex align-items-center justify-content-center p-3'
             sx={{ boxShadow: '0 0 2px rgba(33, 33, 33, 0.5);' }}
           >
-            <Typography component="span" variant="body2" className="me-2">
+            <Typography component='span' variant='body2' className='me-2'>
               Mostrando misiones de
             </Typography>
-            <div className="d-flex align-items-center justify-content-center gap-1 me-2">
+            <div className='d-flex align-items-center justify-content-center gap-1 me-2'>
               <div
                 style={{
                   borderRadius: '100%',
@@ -117,22 +117,22 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
                   background: '#bdbdbd',
                 }}
               />
-              <Typography component="span" variant="body2" fontWeight="bold">
+              <Typography component='span' variant='body2' fontWeight='bold'>
                 {mission?.skill?.title}
               </Typography>
             </div>
-            <Typography component="span" variant="body2" className="me-1">
+            <Typography component='span' variant='body2' className='me-1'>
               de dificultad
             </Typography>
-            <div className="d-flex align-items-center">
+            <div className='d-flex align-items-center'>
               {difficultyIcons[mission.difficulty]}
-              <Typography component="span" variant="body2" fontWeight="bold">
+              <Typography component='span' variant='body2' fontWeight='bold'>
                 {difficultyToText(mission.difficulty)}
               </Typography>
             </div>
           </Box>
           <Box
-            className="d-flex flex-column gap-3 p-4"
+            className='d-flex flex-column gap-3 p-4'
             sx={{ maxHeight: '40vh', overflow: 'auto', marginTop: '1px' }}
           >
             {missions.length ? (
@@ -146,11 +146,11 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
                 </div>
               ))
             ) : (
-              <div className="d-flex align-items-center justify-content-center h-100">
+              <div className='d-flex align-items-center justify-content-center h-100'>
                 <Typography
-                  component="span"
-                  variant="subtitle1"
-                  color="#bdbdbd"
+                  component='span'
+                  variant='subtitle1'
+                  color='#bdbdbd'
                 >
                   No hay misiones disponibles para reemplazar
                 </Typography>
@@ -160,7 +160,7 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
         </NewMissionList>
       </DialogContent>
       <DialogActions>
-        <Button variant="outlined" onClick={() => onClose('escapeKeyDown')}>
+        <Button variant='outlined' onClick={() => onClose('escapeKeyDown')}>
           Cancelar
         </Button>
         <Button

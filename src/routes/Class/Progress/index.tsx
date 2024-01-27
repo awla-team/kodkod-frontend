@@ -55,11 +55,11 @@ const Progress: FC<ProgressProps> = () => {
       width: 130,
       type: 'number',
       renderCell: (value) => (
-        <div className="d-flex align-items-center gap-1">
-          <Typography fontWeight="bold" variant="body2">
+        <div className='d-flex align-items-center gap-1'>
+          <Typography fontWeight='bold' variant='body2'>
             {value.value}
           </Typography>
-          <img src={kodcoinIcon} height="18" width="18" />
+          <img src={kodcoinIcon} height='18' width='18' />
         </div>
       ),
     },
@@ -166,16 +166,16 @@ const Progress: FC<ProgressProps> = () => {
   };
 
   return (
-    <ProgressContainer className="p-5">
+    <ProgressContainer className='p-5'>
       <Typography
-        variant="h4"
-        component="h4"
-        fontWeight="bold"
-        className="mb-2"
+        variant='h4'
+        component='h4'
+        fontWeight='bold'
+        className='mb-2'
       >
         Progreso
       </Typography>
-      <Typography className="mb-4">
+      <Typography className='mb-4'>
         En esta sección podrás ver el progreso de cada estudiante y del grupo
         curso. Podrás ver el puntaje en la aventura actual, el número de
         misiones completadas y las recompensas obtenidas. Además, puedes{' '}
@@ -189,14 +189,14 @@ const Progress: FC<ProgressProps> = () => {
           averageCompletedMission={averageCompletedMission}
         />
       ) : (
-        <div className="p-4 mb-3">
-          <Typography fontWeight="bold" textAlign="center" variant="h5">
+        <div className='p-4 mb-3'>
+          <Typography fontWeight='bold' textAlign='center' variant='h5'>
             Actualmente no tienen ninguna aventura en curso
           </Typography>
         </div>
       )}
       <Box
-        id="progress-table"
+        id='progress-table'
         sx={{ maxHeight: 'calc(100vh - 160px)', overflow: 'auto' }}
       >
         <StickyDataGrid

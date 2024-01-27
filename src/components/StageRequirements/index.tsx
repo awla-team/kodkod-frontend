@@ -16,7 +16,7 @@ const StageRequirements: FC = () => {
           </div>
           <div className={'stage__requirement__progress'}>
             <Styled.LinearProgress
-              variant="determinate"
+              variant='determinate'
               value={(0 / 9) * 100}
             />
           </div>
@@ -29,7 +29,7 @@ const StageRequirements: FC = () => {
           </div>
           <div className={'stage__requirement__progress'}>
             <Styled.LinearProgress
-              variant="determinate"
+              variant='determinate'
               value={(4 / 9) * 100}
             />
           </div>
@@ -42,7 +42,7 @@ const StageRequirements: FC = () => {
           </div>
           <div className={'stage__requirement__progress'}>
             <Styled.LinearProgress
-              variant="determinate"
+              variant='determinate'
               value={(20 / 20) * 100}
             />
           </div>

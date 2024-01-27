@@ -136,17 +136,17 @@ const SignUp: React.FC = () => {
     return (
       <AuthCard>
         <Button
-          className="mb-2"
+          className='mb-2'
           startIcon={<ArrowBackIosIcon />}
           component={RouterLink}
           to={'/signin'}
         >
           Volver al inicio de sesión
         </Button>
-        <Typography component="h4" variant="h5" className="mb-1">
+        <Typography component='h4' variant='h5' className='mb-1'>
           Cuenta creada con éxito
         </Typography>
-        <Typography component="span" variant="body2" color="gray">
+        <Typography component='span' variant='body2' color='gray'>
           Te hemos enviado un correo electrónico para verificar tu email.
         </Typography>
       </AuthCard>
@@ -174,17 +174,17 @@ const SignUp: React.FC = () => {
 
   console.log(showPassword);
   return (
-    <SignUpCard variant="outlined">
-      <CardContent className="px-5 pt-5">
+    <SignUpCard variant='outlined'>
+      <CardContent className='px-5 pt-5'>
         <Button
-          className="mb-2"
+          className='mb-2'
           startIcon={<ArrowBackIosIcon />}
           component={RouterLink}
           to={'/signin'}
         >
           Volver al inicio de sesión
         </Button>
-        <Typography component="h4" variant="h5" className="mb-1">
+        <Typography component='h4' variant='h5' className='mb-1'>
           Crea una nueva cuenta en Kodkod
         </Typography>
         <Formik
@@ -223,8 +223,8 @@ const SignUp: React.FC = () => {
                         onChange={handleChange}
                         onBlur={handleBlur}
                         placeholder={'Ej: Juan Andrés'}
-                        label="Nombre"
-                        variant="outlined"
+                        label='Nombre'
+                        variant='outlined'
                       />
                     </FormControl>
                     <FormControl
@@ -237,10 +237,10 @@ const SignUp: React.FC = () => {
                         onChange={handleChange}
                         onBlur={handleBlur}
                         type={'last_name'}
-                        name="last_name"
+                        name='last_name'
                         placeholder={'Ej: Gómez Pérez'}
-                        label="Apellido"
-                        variant="outlined"
+                        label='Apellido'
+                        variant='outlined'
                       />
                     </FormControl>
                   </Box>
@@ -253,8 +253,8 @@ const SignUp: React.FC = () => {
                       onBlur={handleBlur}
                       type={'email'}
                       placeholder={'Ej: juanito.perez@email.com'}
-                      label="Email"
-                      variant="outlined"
+                      label='Email'
+                      variant='outlined'
                     />
                   </FormControl>
                   <FormControl
@@ -274,15 +274,15 @@ const SignUp: React.FC = () => {
                       onBlur={handleBlur}
                       type={showPassword ? 'text' : 'password'}
                       placeholder={'Crea una contraseña para tu cuenta'}
-                      label="Contraseña"
-                      variant="outlined"
+                      label='Contraseña'
+                      variant='outlined'
                       InputProps={{
                         endAdornment: (
-                          <InputAdornment position="end">
+                          <InputAdornment position='end'>
                             <IconButton
-                              aria-label="toggle password visibility"
+                              aria-label='toggle password visibility'
                               onClick={() => setShowPassword((prev) => !prev)}
-                              edge="end"
+                              edge='end'
                             >
                               {showPassword ? (
                                 <VisibilityOff />
@@ -294,11 +294,11 @@ const SignUp: React.FC = () => {
                         ),
                       }}
                     />
-                    <FormHelperText component="div" className="mx-0 mt-2">
-                      <ul className="m-0">
+                    <FormHelperText component='div' className='mx-0 mt-2'>
+                      <ul className='m-0'>
                         <Typography
-                          component="li"
-                          variant="body2"
+                          component='li'
+                          variant='body2'
                           color={
                             /^.{8,16}$/.test(values.password)
                               ? '#009900'
@@ -313,8 +313,8 @@ const SignUp: React.FC = () => {
                           Entre 8 y 16 caractéres
                         </Typography>
                         <Typography
-                          component="li"
-                          variant="body2"
+                          component='li'
+                          variant='body2'
                           color={
                             /[a-z]/.test(values.password) ? '#009900' : 'gray'
                           }
@@ -325,8 +325,8 @@ const SignUp: React.FC = () => {
                           Al menos 1 minúscula
                         </Typography>
                         <Typography
-                          component="li"
-                          variant="body2"
+                          component='li'
+                          variant='body2'
                           color={
                             /[A-Z]/.test(values.password) ? '#009900' : 'gray'
                           }
@@ -337,8 +337,8 @@ const SignUp: React.FC = () => {
                           Al menos 1 mayúscula
                         </Typography>
                         <Typography
-                          component="li"
-                          variant="body2"
+                          component='li'
+                          variant='body2'
                           color={
                             /\d/.test(values.password) ? '#009900' : 'gray'
                           }
@@ -369,15 +369,15 @@ const SignUp: React.FC = () => {
                       onBlur={handleBlur}
                       type={showPassword ? 'text' : 'password'}
                       placeholder={'¡Para estar seguros!'}
-                      label="Repite tu contraseña"
-                      variant="outlined"
+                      label='Repite tu contraseña'
+                      variant='outlined'
                       InputProps={{
                         endAdornment: (
-                          <InputAdornment position="end">
+                          <InputAdornment position='end'>
                             <IconButton
-                              aria-label="toggle password visibility"
+                              aria-label='toggle password visibility'
                               onClick={() => setShowPassword((prev) => !prev)}
-                              edge="end"
+                              edge='end'
                             >
                               {showPassword ? (
                                 <VisibilityOff />
@@ -392,7 +392,7 @@ const SignUp: React.FC = () => {
                   </FormControl>
                   <FormControl>
                     <Autocomplete
-                      id="school"
+                      id='school'
                       options={schools}
                       getOptionLabel={(school) =>
                         !!school?.commune
@@ -412,7 +412,7 @@ const SignUp: React.FC = () => {
                       ) => {
                         return option.id === value.id;
                       }}
-                      noOptionsText="No se encuentra el establecimiento"
+                      noOptionsText='No se encuentra el establecimiento'
                       onChange={(_event, value) => {
                         setFieldValue(
                           'school',
@@ -421,8 +421,8 @@ const SignUp: React.FC = () => {
                       }}
                       renderInput={(params) => (
                         <TextField
-                          label="Establecimiento educacional (opcional)"
-                          name="school"
+                          label='Establecimiento educacional (opcional)'
+                          name='school'
                           {...params}
                         />
                       )}
@@ -430,10 +430,10 @@ const SignUp: React.FC = () => {
                   </FormControl>
                   <FormControl>
                     <Autocomplete
-                      id="subject"
+                      id='subject'
                       options={subjects}
                       getOptionLabel={(subject) => subject}
-                      noOptionsText="No se encuentra la asignatura"
+                      noOptionsText='No se encuentra la asignatura'
                       onChange={(_event, value) => {
                         setFieldValue(
                           'subject',
@@ -442,8 +442,8 @@ const SignUp: React.FC = () => {
                       }}
                       renderInput={(params) => (
                         <TextField
-                          label="¿Qué asignatura enseñas? (opcional)"
-                          name="subject"
+                          label='¿Qué asignatura enseñas? (opcional)'
+                          name='subject'
                           {...params}
                         />
                       )}
@@ -451,11 +451,11 @@ const SignUp: React.FC = () => {
                   </FormControl>
                   <div>
                     <FormControlLabel
-                      className="justify-content-center m-0"
+                      className='justify-content-center m-0'
                       control={
                         <Checkbox
-                          size="small"
-                          name="terms_and_conditions"
+                          size='small'
+                          name='terms_and_conditions'
                           onChange={(_event, value) =>
                             setFieldValue('terms_and_conditions', value)
                           }
@@ -463,12 +463,12 @@ const SignUp: React.FC = () => {
                         />
                       }
                       label={
-                        <Typography variant="body2">
+                        <Typography variant='body2'>
                           He leído y acepto los{' '}
                           <a
-                            target="_blank"
-                            rel="noreferrer"
-                            href="https://kodkod.cl/terminos-y-condiciones"
+                            target='_blank'
+                            rel='noreferrer'
+                            href='https://kodkod.cl/terminos-y-condiciones'
                           >
                             términos y condiciones
                           </a>{' '}
@@ -477,11 +477,11 @@ const SignUp: React.FC = () => {
                       }
                     />
                     <FormControlLabel
-                      className="justify-content-center m-0"
+                      className='justify-content-center m-0'
                       control={
                         <Checkbox
-                          size="small"
-                          name="privacy_policy"
+                          size='small'
+                          name='privacy_policy'
                           onChange={(_event, value) =>
                             setFieldValue('privacy_policy', value)
                           }
@@ -489,12 +489,12 @@ const SignUp: React.FC = () => {
                         />
                       }
                       label={
-                        <Typography variant="body2">
+                        <Typography variant='body2'>
                           He leído y acepto la{' '}
                           <a
-                            target="_blank"
-                            rel="noreferrer"
-                            href="https://kodkod.cl/privacidad"
+                            target='_blank'
+                            rel='noreferrer'
+                            href='https://kodkod.cl/privacidad'
                           >
                             política de privacidad
                           </a>
@@ -513,7 +513,7 @@ const SignUp: React.FC = () => {
                     <Button
                       disabled={isSubmitting || !isValid || !dirty}
                       fullWidth
-                      size="large"
+                      size='large'
                       className={'login__button'}
                       variant={'contained'}
                       type={'submit'}

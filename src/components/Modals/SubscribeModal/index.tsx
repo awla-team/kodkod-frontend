@@ -17,15 +17,15 @@ const SubscribeModal: FC<{
   reason: string;
 }> = ({ open, onClose, reason = 'Conviertete en un miembro Pro' }) => {
   return (
-    <Dialog open={open} PaperProps={{ className: 'p-3' }} maxWidth="md">
-      <DialogTitle fontWeight="bold">{reason}</DialogTitle>
-      <DialogContent dividers className="py-5">
-        <div className="d-flex flex-column flex-lg-row gap-4 align-items-center">
+    <Dialog open={open} PaperProps={{ className: 'p-3' }} maxWidth='md'>
+      <DialogTitle fontWeight='bold'>{reason}</DialogTitle>
+      <DialogContent dividers className='py-5'>
+        <div className='d-flex flex-column flex-lg-row gap-4 align-items-center'>
           <div>
             <SubscriptionImg src={subscribeImage} />
           </div>
           <div>
-            <Typography className="mb-2">
+            <Typography className='mb-2'>
               ¡Suscríbete ya mismo a <b>Kodkod Pro</b> y accede a nuevas
               funciones y características que te ayudaran a convertir tu clase
               en un ambiente de sana convivencia!
@@ -46,23 +46,23 @@ const SubscribeModal: FC<{
                 en camino!
               </li>
             </ul>
-            <Typography fontWeight="bold">
+            <Typography fontWeight='bold'>
               ¿Qué estás esperando? Visita la página de suscripciones y elige la
               que más te convenga
             </Typography>
           </div>
         </div>
       </DialogContent>
-      <DialogActions className="pt-3 gap-2">
-        <Button variant="outlined" onClick={() => onClose()}>
+      <DialogActions className='pt-3 gap-2'>
+        <Button variant='outlined' onClick={() => onClose()}>
           Cerrar
         </Button>
         <Button
           sx={{ '&:hover': { color: '#fff' } }}
           component={Link}
-          to="/app/perfil/suscripciones"
+          to='/app/perfil/suscripciones'
           onClick={() => onClose()}
-          variant="contained"
+          variant='contained'
         >
           Suscribirse a Kodkod Pro
         </Button>

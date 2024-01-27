@@ -74,25 +74,25 @@ const AdventureSummaryDialog: React.FC<{
       open={!!selectedAdventure}
       onClose={handleOnCloseModal}
       fullWidth
-      maxWidth="lg"
+      maxWidth='lg'
     >
-      <DialogTitle className="d-flex flex-column p-0">
+      <DialogTitle className='d-flex flex-column p-0'>
         <AdventureBanner
           sx={{ backgroundImage: `url(${selectedAdventure?.banner})` }}
         >
           {!shownAdventure?.demo && !user?.is_superuser ? (
-            <div className="demo-indicator gap-1 mb-3">
-              <StarIcon fontSize="small" sx={{ fontSize: '16px' }} />
-              <Typography fontWeight="bold" variant="body2">
+            <div className='demo-indicator gap-1 mb-3'>
+              <StarIcon fontSize='small' sx={{ fontSize: '16px' }} />
+              <Typography fontWeight='bold' variant='body2'>
                 Pro
               </Typography>
             </div>
           ) : null}
-          <Typography variant="h4" fontWeight="bold" className="mb-2">
+          <Typography variant='h4' fontWeight='bold' className='mb-2'>
             {shownAdventure?.title}
           </Typography>
-          <section className="d-flex flex-column">
-            <div className="d-flex flex-wrap flex-lg-nowrap gap-2">
+          <section className='d-flex flex-column'>
+            <div className='d-flex flex-wrap flex-lg-nowrap gap-2'>
               {!!shownAdventure?.skills?.length
                 ? shownAdventure.skills.map((adventureSkill, index) => (
                     <SkillPoints
@@ -106,26 +106,26 @@ const AdventureSummaryDialog: React.FC<{
         </AdventureBanner>
       </DialogTitle>
       <DialogContent
-        id="adventure-selection-onboarding-5"
+        id='adventure-selection-onboarding-5'
         dividers
-        className="d-flex flex-column p-0"
+        className='d-flex flex-column p-0'
       >
-        <Box className="d-flex flex-column flex-fill w-100">
-          <div className="d-flex flex-column gap-3 p-4">
-            <section className="d-flex flex-column">
-              <Typography variant="subtitle1" fontWeight="bold">
+        <Box className='d-flex flex-column flex-fill w-100'>
+          <div className='d-flex flex-column gap-3 p-4'>
+            <section className='d-flex flex-column'>
+              <Typography variant='subtitle1' fontWeight='bold'>
                 Resumen
               </Typography>
-              <Typography variant="body1">
+              <Typography variant='body1'>
                 {shownAdventure?.overview}
               </Typography>
             </section>
-            <section className="d-flex flex-column">
-              <Typography variant="subtitle1" fontWeight="bold">
+            <section className='d-flex flex-column'>
+              <Typography variant='subtitle1' fontWeight='bold'>
                 Resultados esperados
               </Typography>
               {!!shownAdventure?.expected_results.split('\n')?.length ? (
-                <ul className="ps-4 mb-0">
+                <ul className='ps-4 mb-0'>
                   {shownAdventure.expected_results
                     .split('\n')
                     .map((expectedResult: string, i: number) => (
@@ -138,23 +138,23 @@ const AdventureSummaryDialog: React.FC<{
                 </ul>
               ) : null}
             </section>
-            <section className="d-flex flex-column gap-2">
-              <Typography variant="subtitle1" fontWeight="bold">
+            <section className='d-flex flex-column gap-2'>
+              <Typography variant='subtitle1' fontWeight='bold'>
                 Etapas de la aventura
               </Typography>
-              <div className="d-flex flex-column gap-2">
+              <div className='d-flex flex-column gap-2'>
                 {sortedStages.map((stage, i) => (
                   <div
                     key={`stage-${i}`}
-                    className="d-flex gap-2 align-items-center"
+                    className='d-flex gap-2 align-items-center'
                   >
                     <EmojiFlagsIcon />
-                    <div className="d-flex flex-column gap-0">
-                      <Typography variant="body1">
+                    <div className='d-flex flex-column gap-0'>
+                      <Typography variant='body1'>
                         <b>{`Etapa ${i}: `}</b>
                         {stage.title}
                       </Typography>
-                      <Typography variant="caption">
+                      <Typography variant='caption'>
                         {stage.description}
                       </Typography>
                     </div>
@@ -165,9 +165,9 @@ const AdventureSummaryDialog: React.FC<{
           </div>
         </Box>
       </DialogContent>
-      <DialogActions className="d-flex align-items-center p-4">
+      <DialogActions className='d-flex align-items-center p-4'>
         <Button
-          id="adventure-selection-close-modal"
+          id='adventure-selection-close-modal'
           variant={'outlined'}
           onClick={handleOnCloseModal}
         >
@@ -177,21 +177,21 @@ const AdventureSummaryDialog: React.FC<{
         !user?.is_subscription_active &&
         !user?.is_superuser ? (
           <Button
-            className="ms-2"
+            className='ms-2'
             sx={{ '&:hover': { color: '#fff' } }}
             component={Link}
-            to="/app/perfil/suscripciones"
-            variant="contained"
-            color="primary"
+            to='/app/perfil/suscripciones'
+            variant='contained'
+            color='primary'
             onClick={handleOnCloseModal}
           >
             Suscribirse a Kodkod Pro
           </Button>
         ) : (
           <Button
-            id="adventure-selection-onboarding-6"
-            variant="contained"
-            color="primary"
+            id='adventure-selection-onboarding-6'
+            variant='contained'
+            color='primary'
             onClick={setAdventure}
           >
             Quiero esta aventura

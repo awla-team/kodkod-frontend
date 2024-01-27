@@ -95,7 +95,7 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
       <div>
         {classDetails.current_adventure ? (
           <Box
-            className="p-5"
+            className='p-5'
             sx={{
               backgroundImage: `url(${latestStage?.icon})`,
               borderRadius: '8px',
@@ -112,34 +112,34 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
               justifyContent={'space-between'}
             >
               <Typography
-                component="h2"
+                component='h2'
                 title={classDetails.alias}
-                variant="h2"
-                fontWeight="bold"
-                className="mb-2"
-                textOverflow="ellipsis"
-                overflow="hidden"
+                variant='h2'
+                fontWeight='bold'
+                className='mb-2'
+                textOverflow='ellipsis'
+                overflow='hidden'
               >
                 {classDetails.alias}
               </Typography>
-              <div className="d-flex align-items-center justify-content-center">
+              <div className='d-flex align-items-center justify-content-center'>
                 <Button
-                  variant="outlined"
-                  size="small"
+                  variant='outlined'
+                  size='small'
                   component={Link}
-                  to="https://www.youtube.com/watch?v=qUtkFGhnrLo"
-                  target="_blank"
-                  color="info"
+                  to='https://www.youtube.com/watch?v=qUtkFGhnrLo'
+                  target='_blank'
+                  color='info'
                 >
-                  <YouTubeIcon className="me-2" />
+                  <YouTubeIcon className='me-2' />
                   Ver video introductorio
                 </Button>
                 <IconButton
                   sx={{ marginLeft: '8px' }}
-                  color="inherit"
+                  color='inherit'
                   onClick={handleMenuOpen}
                 >
-                  <MoreVertIcon fontSize="large" />
+                  <MoreVertIcon fontSize='large' />
                 </IconButton>
               </div>
               <Menu
@@ -156,15 +156,15 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
               </Menu>
             </Box>
             <Typography
-              variant="h6"
-              fontWeight="bold"
+              variant='h6'
+              fontWeight='bold'
             >{`${classDetails.current_adventure?.adventure?.title}`}</Typography>
             <Typography
-              variant="body1"
-              className="mb-2"
+              variant='body1'
+              className='mb-2'
             >{`Etapa ${latestStage?._index}: ${latestStage?.title}`}</Typography>
-            <section className="d-flex flex-column mb-3">
-              <div className="d-flex flex-wrap flex-lg-nowrap gap-2">
+            <section className='d-flex flex-column mb-3'>
+              <div className='d-flex flex-wrap flex-lg-nowrap gap-2'>
                 {!!classDetails.current_adventure?.adventure?.skills?.length
                   ? classDetails.current_adventure?.adventure?.skills.map(
                       (adventureSkill, index) => (
@@ -177,14 +177,14 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
                   : null}
               </div>
             </section>
-            <div className="mt-2">
-              <Button variant="contained" onClick={handleNavigate}>
+            <div className='mt-2'>
+              <Button variant='contained' onClick={handleNavigate}>
                 Continuar aventura
               </Button>
             </div>
           </Box>
         ) : (
-          <div className="d-flex flex-column p-5">
+          <div className='d-flex flex-column p-5'>
             <Box
               display={'flex'}
               sx={{ position: 'relative' }}
@@ -192,33 +192,33 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
               justifyContent={'space-between'}
             >
               <Typography
-                component="h2"
+                component='h2'
                 title={classDetails.alias}
-                variant="h2"
-                fontWeight="bold"
-                className="mb-2"
-                textOverflow="ellipsis"
-                overflow="hidden"
+                variant='h2'
+                fontWeight='bold'
+                className='mb-2'
+                textOverflow='ellipsis'
+                overflow='hidden'
               >
                 {classDetails.alias}
               </Typography>
-              <div className="d-flex align-items-center justify-content-center">
+              <div className='d-flex align-items-center justify-content-center'>
                 <Button
-                  variant="outlined"
-                  size="small"
+                  variant='outlined'
+                  size='small'
                   component={Link}
-                  to="https://www.youtube.com/watch?v=oymcbyiloIs"
-                  target="_blank"
+                  to='https://www.youtube.com/watch?v=oymcbyiloIs'
+                  target='_blank'
                 >
-                  <YouTubeIcon className="me-2" />
+                  <YouTubeIcon className='me-2' />
                   Ver video introductorio
                 </Button>
                 <IconButton
                   sx={{ marginLeft: '8px' }}
-                  color="inherit"
+                  color='inherit'
                   onClick={handleMenuOpen}
                 >
-                  <MoreVertIcon fontSize="large" />
+                  <MoreVertIcon fontSize='large' />
                 </IconButton>
               </div>
               <Menu
@@ -235,19 +235,19 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
               </Menu>
             </Box>
             <Typography
-              component="span"
-              variant="body1"
-              fontWeight="bold"
+              component='span'
+              variant='body1'
+              fontWeight='bold'
               mb={1}
             >
               ¡Aún no has seleccionado una aventura!
             </Typography>
-            <Typography component="span" variant="body1">
+            <Typography component='span' variant='body1'>
               Presiona el botón a continuación para escoger una aventura que se
               ajuste a tus objetivos
             </Typography>
-            <div className="mt-4">
-              <Button variant="contained" size="large" onClick={handleNavigate}>
+            <div className='mt-4'>
+              <Button variant='contained' size='large' onClick={handleNavigate}>
                 Selecciona una aventura
               </Button>
             </div>
