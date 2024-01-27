@@ -73,12 +73,17 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
       const { name, value } = e.target as HTMLInputElement;
       if (name === 'id_level') {
         const level = levels.find((level) => level.id === value);
-        // FIXME: fix this ts error
+        // FIXME: fix this errors
         // @ts-expect-error ts-error(18048)
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
         setFieldValue('alias', `${level.name.charAt(0)}°${values.code}`);
       } else {
         const level = levels.find((level) => level.id === values.id_level);
-        if (level) setFieldValue('alias', `${level.name.charAt(0)}°${value}`);
+        if (level) {
+          // FIXME: fix this eslint error
+          // eslint-disable-next-line @typescript-eslint/no-floating-promises
+          setFieldValue('alias', `${level.name.charAt(0)}°${value}`);
+        }
       }
     }
   };

@@ -422,6 +422,8 @@ const SignUp: React.FC = () => {
                       }}
                       noOptionsText='No se encuentra el establecimiento'
                       onChange={(_event, value) => {
+                        // FIXME: fix this eslint error
+                        // eslint-disable-next-line @typescript-eslint/no-floating-promises
                         setFieldValue(
                           'school',
                           value ? value.id : formInitialValues.school
@@ -443,6 +445,8 @@ const SignUp: React.FC = () => {
                       getOptionLabel={(subject) => subject}
                       noOptionsText='No se encuentra la asignatura'
                       onChange={(_event, value) => {
+                        // FIXME: fix this eslint error
+                        // eslint-disable-next-line @typescript-eslint/no-floating-promises
                         setFieldValue(
                           'subject',
                           value || formInitialValues.subject
@@ -464,8 +468,11 @@ const SignUp: React.FC = () => {
                         <Checkbox
                           size='small'
                           name='terms_and_conditions'
-                          onChange={(_event, value) =>
-                            setFieldValue('terms_and_conditions', value)
+                          onChange={
+                            // FIXME: fix this eslint error
+                            // eslint-disable-next-line @typescript-eslint/promise-function-async
+                            (_event, value) =>
+                              setFieldValue('terms_and_conditions', value)
                           }
                           checked={values.terms_and_conditions}
                         />
@@ -490,8 +497,11 @@ const SignUp: React.FC = () => {
                         <Checkbox
                           size='small'
                           name='privacy_policy'
-                          onChange={(_event, value) =>
-                            setFieldValue('privacy_policy', value)
+                          onChange={
+                            // FIXME: fix this eslint error
+                            // eslint-disable-next-line @typescript-eslint/promise-function-async
+                            (_event, value) =>
+                              setFieldValue('privacy_policy', value)
                           }
                           checked={values.privacy_policy}
                         />
