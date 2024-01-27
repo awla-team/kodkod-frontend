@@ -13,7 +13,7 @@ on:
       - closed
 
 env:
-  NODE_VERSION: 18.3.0
+  NODE_VERSION: 20.11.0
   CACHE_PACKAGE_MANAGER: 'yarn'
 
 jobs:
@@ -22,10 +22,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Actions checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Node.js ${{ env.NODE_VERSION }} setup
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: ${{ env.CACHE_PACKAGE_MANAGER }}
@@ -49,10 +49,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Actions checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Node.js ${{ env.NODE_VERSION }} setup
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: ${{ env.CACHE_PACKAGE_MANAGER }}
