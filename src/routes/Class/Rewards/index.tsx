@@ -6,7 +6,7 @@ import RewardCard from 'components/RewardCard';
 import { getRewardsByAdventure, updateReward } from 'services/rewards';
 import { type IReward, type IUser } from 'global/interfaces';
 import Toaster from 'utils/Toster';
-import http from 'global/api';
+import http from 'api/api';
 import { AxiosError, AxiosResponse } from 'axios';
 import { useClassContext } from '../context';
 import ContentBox from 'components/ContentBox';

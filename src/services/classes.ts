@@ -1,4 +1,4 @@
-import http from 'global/api';
+import http from 'api/api';
 
 interface ClassMutationType {
   id?: number;

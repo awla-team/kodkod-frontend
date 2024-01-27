@@ -1,4 +1,4 @@
-import http from 'global/api';
+import http from 'api/api';
 
 export const getGoals = async () => await http.get('goal');
 

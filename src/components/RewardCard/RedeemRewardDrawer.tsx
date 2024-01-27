@@ -7,7 +7,7 @@ import {
   Drawer,
   Typography,
 } from '@mui/material';
-import http from 'global/api';
+import http from 'api/api';
 import { type IUserHasReward } from 'global/interfaces';
 import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';

@@ -1,4 +1,4 @@
-import http from 'global/api';
+import http from 'api/api';
 import {
   StudentType,
   type StudentUpdateDataType,

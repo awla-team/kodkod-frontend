@@ -1,4 +1,4 @@
-import http from 'global/api';
+import http from 'api/api';
 import Moment from 'moment';
 import { type Moment as MomentType } from 'moment/moment';
 

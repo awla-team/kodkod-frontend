@@ -1,5 +1,5 @@
 import { type IReward } from 'global/interfaces';
-import http from '../global/api';
+import http from '../api/api';
 import { generateQueryParamsFromObject } from '../utils';
 
 export interface GetRewardsFilter {

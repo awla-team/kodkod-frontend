@@ -1,4 +1,4 @@
-import http from '../global/api';
+import http from '../api/api';
 import { generateQueryParamsFromObject } from '../utils';
 
 export interface StageMissionUpdateBody {
