@@ -62,7 +62,7 @@ jobs:
 
       - name: Building for development
         if: github.base_ref == 'develop'
-        run: yarn build -- --mode staging
+        run: yarn build --mode staging
 
       - name: Building for production
         if: github.base_ref == 'main'
