@@ -20,7 +20,6 @@ import GoalAdventures from './Class/GoalAdventures';
 import CompletedAdventure from './Class/CompletedAdventure';
 import Rewards from 'routes/Class/Rewards';
 import VerifyEmail from './UserAuth/VerifyEmail';
-import Subscriptions from './Profile/Subscriptions';
 import AllCompletedAdventures from './Class/AllCompletedAdventures';
 
 const MainRouterComponent: FC = () => {
@@ -79,12 +78,6 @@ export const router = createBrowserRouter([
           },
           {
             path: 'perfil',
-            children: [
-              {
-                path: 'suscripciones',
-                element: <Subscriptions />,
-              },
-            ],
           },
           {
             path: 'cursos/:classId',

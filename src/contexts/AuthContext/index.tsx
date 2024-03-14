@@ -14,13 +14,11 @@ import Toaster from 'utils/Toster';
 import { type IUser } from 'global/interfaces';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { logout as makeLogout } from 'services/auth';
-import SubscribeModal from 'components/Modals/SubscribeModal';
 
 // const publicRoutes = ["/signin", "/signup", "/reset-password"];
 const AuthContext = createContext<AuthContextType>({
   user: null,
   logout: () => {},
-  checkUserSubscription: () => {},
 });
 
 export const useAuth = () => useContext(AuthContext);
@@ -54,13 +52,6 @@ const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const [{ user }, dispatch] = useReducer(reducer, {
     user: null,
     authenticated: false,
-  });
-  const [subscribeModalOpen, setSubscribeModalOpen] = useState<{
-    open: boolean;
-    reason: string;
-  }>({
-    open: false,
-    reason: 'Conviertete un miembro Pro',
   });
 
   const getAuthUser = async (): Promise<Omit<IUser, 'avatar'>> => {
@@ -143,12 +134,6 @@ const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
     }
   }, [goToSignin, user]);
 
-  const checkUserSubscription = (reason: string, callback: () => void) => {
-    if (!user?.is_subscription_active && !user?.is_superuser)
-      setSubscribeModalOpen({ open: true, reason });
-    else callback();
-  };
-
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken');
     const refreshToken = localStorage.getItem('refreshToken');
@@ -167,15 +152,8 @@ const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ user, logout, checkUserSubscription }}>
+    <AuthContext.Provider value={{ user, logout }}>
       {children}
-      <SubscribeModal
-        open={subscribeModalOpen.open}
-        reason={subscribeModalOpen.reason}
-        onClose={() =>
-          setSubscribeModalOpen({ ...subscribeModalOpen, open: false })
-        }
-      />
     </AuthContext.Provider>
   );
 };

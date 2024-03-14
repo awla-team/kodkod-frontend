@@ -19,7 +19,6 @@
     "@amcharts/amcharts5": "5.6.2",
     "@emotion/react": "11.11.1",
     "@emotion/styled": "11.11.0",
-    "@mercadopago/sdk-react": "0.0.8",
     "@mui/icons-material": "5.14.19",
     "@mui/material": "5.14.20",
     "@mui/styled-engine-sc": "5.14.12",
