@@ -20,19 +20,11 @@ const MissionCard: React.FC<IMissionCardProps> = ({
   selected,
   clickable,
 }) => {
-  const { checkUserSubscription } = useAuth();
   const { title, description, points, difficulty, completed_users } = mission;
 
   const handleChangeMissionButton = (e: React.MouseEvent) => {
     e.stopPropagation();
-    checkUserSubscription(
-      'Reemplazar una misión es una funcionalidad Pro',
-      () => {
-        // FIXME: fix this ts error
-        // @ts-expect-error ts-error(2722)
-        openModal(mission);
-      }
-    );
+    if (openModal) openModal(mission);
   };
 
   return (

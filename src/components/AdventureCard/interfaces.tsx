@@ -9,7 +9,6 @@ export interface IAdventureCardProps
   title: string;
   startDate?: string;
   endDate?: string;
-  demo: boolean;
   stagesDuration?: number;
   info?: React.ReactNode;
   onClick?: () => void;
