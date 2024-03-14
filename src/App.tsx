@@ -29,7 +29,7 @@ const App: React.FC = () => {
   const [fetching, setFetching] = useState<FetchStatus>(FetchStatus.Idle);
   const [createClassModalOpen, setCreateClassModalOpen] =
     useState<boolean>(false);
-  const { user, checkUserSubscription } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -82,13 +82,7 @@ const App: React.FC = () => {
   };
 
   const handleOpenModal = () => {
-    if (classes.length >= 1) {
-      checkUserSubscription('Has alcanzado el límite de cursos gratuitos', () =>
-        setCreateClassModalOpen(true)
-      );
-    } else {
-      setCreateClassModalOpen(true);
-    }
+    setCreateClassModalOpen(true);
   };
 
   const handleFinish = () => {

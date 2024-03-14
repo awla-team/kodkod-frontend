@@ -33,18 +33,4 @@ export const AdventureCardContainer = styled(Card)`
       border-radius: 36px;
     }
   }
-
-  .demo-indicator {
-    display flex;
-    width: 60px;
-    align-items: center;
-    justify-content: center;
-    background: ${(props) => props.theme.palette.highlight.main};    
-    padding: 4px 8px;
-    text-align: center;
-    position: absolute;
-    top: -14px;
-    left: 20px;
-    border-radius: 16px;
-  }
 `;

@@ -1,13 +1,5 @@
 import axios, { type AxiosError } from 'axios';
 import { generateAccessToken } from '../services/auth';
-import { initMercadoPago } from '@mercadopago/sdk-react';
-
-// TEST-c40bb3aa-a6a0-4b7c-b4d8-21423976a520
-// FIXME: fix this eslint error
-// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-initMercadoPago(import.meta.env.VITE_MERCADO_PAGO_KEY, {
-  locale: 'es-CL',
-});
 
 const baseURL = import.meta.env.VITE_API_BASE_URL;
 
