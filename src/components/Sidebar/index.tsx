@@ -63,18 +63,6 @@ const Sidebar: FC<SidebarProps> = ({ classes, handleOpenModal }) => {
         </RoundButton>
       </div>
       <div>
-        {!user?.is_subscription_active && !user?.is_superuser ? (
-          <Button
-            className='text-center px-0'
-            component={Link}
-            to='/app/perfil/suscripciones'
-            sx={{ '&:hover': { color: '#fff' }, 'fontSize': '12px' }}
-            variant='contained'
-            size='small'
-          >
-            ¡Hazte Pro!
-          </Button>
-        ) : null}
         <UserInfo user={user} />
       </div>
     </SidebarContainer>

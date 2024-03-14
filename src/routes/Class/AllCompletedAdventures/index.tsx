@@ -77,7 +77,6 @@ const AllCompletedAdventures: React.FC = () => {
         {completedAdventures.map((classHasAdventure, index) => (
           <AdventureCard
             id={`adventure-card-${index}`}
-            demo
             startDate={moment(classHasAdventure.date_start).format(
               'DD/MM/YYYY'
             )}
