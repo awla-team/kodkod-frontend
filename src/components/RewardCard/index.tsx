@@ -194,7 +194,9 @@ const RewardCard: React.FC<IRewardCardProps> = ({
                   }}
                   onChange={(event) => {
                     const value = Number(event.target.value);
-                    setPoints(value);
+                    if (value >= 0) {
+                      setPoints(value);
+                    }
                   }}
                 />
               ) : (
