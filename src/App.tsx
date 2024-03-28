@@ -20,7 +20,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import DoneIcon from '@mui/icons-material/Done';
 import { TourProvider, useTour } from '@reactour/tour';
-import { updateUserOnboardingStatus } from 'services/users';
+import { patchUserById } from 'services/users';
 
 moment.locale('es');
 
@@ -54,11 +54,11 @@ const App: React.FC = () => {
   const updateOnboardingStatus = () => {
     const completed_onboarding = localStorage.getItem('onboarding-data') || '';
     if (user) {
-      updateUserOnboardingStatus(user?.id, { completed_onboarding })
+      patchUserById(user?.id, { completed_onboarding })
         .then((response: AxiosResponse) => {
           return response?.data;
         })
-        .catch((error) => {
+        .catch((error: Error) => {
           setFetching(FetchStatus.Error);
           console.error(error);
         });
