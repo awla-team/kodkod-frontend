@@ -21,9 +21,6 @@ export const getUsersByEmail = async (params: {
   return await http.get<IUser>('/users-by-email', { params });
 };
 
-export const updateUserOnboardingStatus = async (
-  userId: number,
-  body: { completed_onboarding: string }
-) => {
-  return await http.patch('/user/update-onboarding-status/' + userId, body);
+export const patchUserById = async (userId: number, body: Partial<IUser>) => {
+  return await http.patch('/user/' + userId, body);
 };
