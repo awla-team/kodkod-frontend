@@ -34,6 +34,7 @@ const RewardCard: React.FC<IRewardCardProps> = ({
   const [newTitle, setNewTitle] = useState(title);
   const [newDescription, setNewDescription] = useState(description);
   const [openDrawer, setOpenDrawer] = useState(false);
+  const [newPoints, setNewPoints] = useState<number>(requiredPoints as number);
 
   const cancelEditMode = () => {
     setNewTitle(title);
@@ -60,6 +61,7 @@ const RewardCard: React.FC<IRewardCardProps> = ({
                   onSave(rewardId, {
                     title: newTitle,
                     description: newDescription,
+                    required_points: newPoints,
                   })
                     .then(() => {
                       setEditMode(false);
@@ -182,6 +184,11 @@ const RewardCard: React.FC<IRewardCardProps> = ({
               <RewardPoints
                 id={`reward-card-points-${id}`}
                 points={requiredPoints as number}
+                editMode={editMode}
+                newPoints={newPoints}
+                onChangeNewPoints={(value: number) => {
+                  setNewPoints(value);
+                }}
               />
             </div>
           </RewardCardContent>
