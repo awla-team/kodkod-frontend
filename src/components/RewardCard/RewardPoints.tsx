@@ -46,7 +46,7 @@ const RewardPoints = ({
         size='small'
         type='number'
         value={newPoints}
-        placeholder={points}
+        placeholder={`${points}`}
         color='info'
         sx={{
           input: { padding: '2px', backgroundColor: 'white', width: '3rem' },

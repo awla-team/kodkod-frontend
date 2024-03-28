@@ -61,7 +61,7 @@ const RewardCard: React.FC<IRewardCardProps> = ({
                   onSave(rewardId, {
                     title: newTitle,
                     description: newDescription,
-                    // required_points: newPoints,
+                    required_points: newPoints,
                   })
                     .then(() => {
                       setEditMode(false);
