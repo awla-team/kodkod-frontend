@@ -82,19 +82,18 @@ const Progress: FC<ProgressProps> = () => {
   ];
 
   useEffect(() => {
-    let rawOnboardingData: string | null = "";
+    let rawOnboardingData: string | null = '';
     if (user?.completed_onboarding) {
       localStorage.setItem('onboarding-data', user.completed_onboarding);
       rawOnboardingData = user.completed_onboarding;
-    }
-    else {
+    } else {
       rawOnboardingData = localStorage.getItem('onboarding-data');
     }
     if (rawOnboardingData !== null) {
       const onboardingData = JSON.parse(rawOnboardingData);
       setOnboardingDone(!!onboardingData?.progreso);
     } else {
-      setOnboardingDone(false); 
+      setOnboardingDone(false);
     }
   }, [user?.completed_onboarding]);
 
