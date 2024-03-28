@@ -51,19 +51,19 @@ const App: React.FC = () => {
       });
   };
 
-  const updateOnboardingStatus = ()=>{
-    const completed_onboarding = localStorage.getItem('onboarding-data')||'';    
+  const updateOnboardingStatus = () => {
+    const completed_onboarding = localStorage.getItem('onboarding-data') || '';
     if (user) {
-      updateUserOnboardingStatus(user?.id,{completed_onboarding})
-      .then((response: AxiosResponse) => {
-        return response?.data;
-      })
-      .catch((error) => {
-        setFetching(FetchStatus.Error);
-        console.error(error);
-      });
-      }
-  }
+      updateUserOnboardingStatus(user?.id, { completed_onboarding })
+        .then((response: AxiosResponse) => {
+          return response?.data;
+        })
+        .catch((error) => {
+          setFetching(FetchStatus.Error);
+          console.error(error);
+        });
+    }
+  };
 
   const getLevels = async () => {
     try {
