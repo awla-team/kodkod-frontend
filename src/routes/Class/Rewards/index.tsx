@@ -15,8 +15,10 @@ import { studentsByClass } from 'services/students';
 import { useOnboarding } from 'contexts/OnboardingContext';
 import RewardsOnboarding from 'utils/Onboardings/RewardsOnboarding';
 import { useTour } from '@reactour/tour';
+import { useAuth } from 'contexts/AuthContext';
 
 const Rewards = () => {
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { classId } = useParams();
@@ -76,12 +78,21 @@ const Rewards = () => {
   };
 
   useEffect(() => {
-    const rawOnboardingData = localStorage.getItem('onboarding-data');
-    // FIXME: fix this ts error
-    // @ts-expect-error ts-error(2345)
-    const onboardingData = JSON.parse(rawOnboardingData);
-    setOnboardingDone(!!onboardingData?.recompensas);
-  }, []);
+    let rawOnboardingData: string | null = "";
+    if (user?.completed_onboarding) {
+      localStorage.setItem('onboarding-data', user.completed_onboarding);
+      rawOnboardingData = user.completed_onboarding;
+    }
+    else {
+      rawOnboardingData = localStorage.getItem('onboarding-data')||'';
+    }
+    if (rawOnboardingData !== null) {
+      const onboardingData = JSON.parse(rawOnboardingData);
+      setOnboardingDone(!!onboardingData?.recompensas);
+    } else {
+      setOnboardingDone(false); 
+    }
+  }, [user?.completed_onboarding]);
 
   useEffect(() => {
     // FIXME: fix this ts error

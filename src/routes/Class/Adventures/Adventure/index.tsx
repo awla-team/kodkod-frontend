@@ -28,8 +28,10 @@ import { useOnboarding } from 'contexts/OnboardingContext';
 import AdventureOnboarding from 'utils/Onboardings/AdventureOnboarding';
 import PointsOnboarding from 'utils/Onboardings/PointsOnboarding';
 import { useTour } from '@reactour/tour';
+import { useAuth } from 'contexts/AuthContext';
 
 export const Adventure: React.FC = () => {
+  const { user } = useAuth();
   const { classId } = useParams();
   const { classDetails, setClassDetails } = useClassContext();
   const { setNewAvailableTours } = useOnboarding();
@@ -42,12 +44,21 @@ export const Adventure: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const rawOnboardingData = localStorage.getItem('onboarding-data');
-    // FIXME: fix this ts error
-    // @ts-expect-error ts-error(2345)
-    const onboardingData = JSON.parse(rawOnboardingData);
-    setOnboardingDone(!!onboardingData?.aventuras);
-  }, []);
+    let rawOnboardingData: string | null = "";
+    if (user?.completed_onboarding) {
+      localStorage.setItem('onboarding-data', user.completed_onboarding);
+      rawOnboardingData = user.completed_onboarding;
+    }
+    else {
+      rawOnboardingData = localStorage.getItem('onboarding-data') ||"";
+    }
+    if (rawOnboardingData !== null) {
+      const onboardingData = JSON.parse(rawOnboardingData);
+      setOnboardingDone(!!onboardingData?.aventuras);
+    } else {
+      setOnboardingDone(false); 
+    }
+  }, [user?.completed_onboarding]);
 
   useEffect(() => {
     // FIXME: fix this ts error
