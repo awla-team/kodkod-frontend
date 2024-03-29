@@ -15,8 +15,10 @@ import { useOnboarding } from 'contexts/OnboardingContext';
 import ProgressOnboarding from 'utils/Onboardings/ProgressOnboarding';
 import { useTour } from '@reactour/tour';
 import { getClassHasAdventureProgress } from 'services/adventures';
+import { useAuth } from 'contexts/AuthContext';
 
 const Progress: FC<ProgressProps> = () => {
+  const { user } = useAuth();
   const { classDetails } = useClassContext();
   const { setNewAvailableTours } = useOnboarding();
   const { setIsOpen, setSteps, setCurrentStep } = useTour();
@@ -80,12 +82,20 @@ const Progress: FC<ProgressProps> = () => {
   ];
 
   useEffect(() => {
-    const rawOnboardingData = localStorage.getItem('onboarding-data');
-    // FIXME: fix this ts error
-    // @ts-expect-error ts-error(2345)
-    const onboardingData = JSON.parse(rawOnboardingData);
-    setOnboardingDone(!!onboardingData?.progreso);
-  }, []);
+    let rawOnboardingData: string | null = '';
+    if (user?.completed_onboarding) {
+      localStorage.setItem('onboarding-data', user.completed_onboarding);
+      rawOnboardingData = user.completed_onboarding;
+    } else {
+      rawOnboardingData = localStorage.getItem('onboarding-data');
+    }
+    if (rawOnboardingData !== null) {
+      const onboardingData = JSON.parse(rawOnboardingData);
+      setOnboardingDone(!!onboardingData?.progreso);
+    } else {
+      setOnboardingDone(false);
+    }
+  }, [user?.completed_onboarding]);
 
   useEffect(() => {
     // FIXME: fix this ts error

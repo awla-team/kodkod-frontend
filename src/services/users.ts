@@ -20,3 +20,7 @@ export const getUsersByEmail = async (params: {
 }) => {
   return await http.get<IUser>('/users-by-email', { params });
 };
+
+export const patchUserById = async (userId: number, body: Partial<IUser>) => {
+  return await http.patch('/user/' + userId, body);
+};

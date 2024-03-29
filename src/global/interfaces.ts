@@ -129,6 +129,7 @@ export interface IUser {
   academic_subject: string;
   user_has_rewards?: IUserHasReward[];
   missions?: IMission[];
+  completed_onboarding?: string;
   verified: boolean;
   is_superuser: boolean;
 }

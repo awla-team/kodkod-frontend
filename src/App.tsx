@@ -20,6 +20,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import DoneIcon from '@mui/icons-material/Done';
 import { TourProvider, useTour } from '@reactour/tour';
+import { patchUserById } from 'services/users';
 
 moment.locale('es');
 
@@ -48,6 +49,20 @@ const App: React.FC = () => {
         setFetching(FetchStatus.Error);
         console.error(error);
       });
+  };
+
+  const updateOnboardingStatus = () => {
+    const completed_onboarding = localStorage.getItem('onboarding-data') || '';
+    if (user) {
+      patchUserById(user?.id, { completed_onboarding })
+        .then((response: AxiosResponse) => {
+          return response?.data;
+        })
+        .catch((error: Error) => {
+          setFetching(FetchStatus.Error);
+          console.error(error);
+        });
+    }
   };
 
   const getLevels = async () => {
@@ -97,12 +112,14 @@ const App: React.FC = () => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     if (!isNaN(currentView))
       currentView = location.pathname.match(/\/([^/]+)\/[^/]+$/)[1];
+
     const rawOnboardingData = localStorage.getItem('onboarding-data');
     // FIXME: fix this ts error
     // @ts-expect-error ts-error(2345): argument of type 'string | null' is not assignable to parameter of type 'string'
     const onboardingData = JSON.parse(rawOnboardingData) || {};
     onboardingData[currentView] = true;
     localStorage.setItem('onboarding-data', JSON.stringify(onboardingData));
+    updateOnboardingStatus();
   };
 
   useEffect(() => {

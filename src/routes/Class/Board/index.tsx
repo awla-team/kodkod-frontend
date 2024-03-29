@@ -12,8 +12,10 @@ import BoardOnboarding from 'utils/Onboardings/BoardOnboarding';
 import StudentListOnboarding from 'utils/Onboardings/StudentListOnboarding';
 import EmotionalThermometerOnboarding from 'utils/Onboardings/EmotionalThermometerOnboarding';
 import { useTour } from '@reactour/tour';
+import { useAuth } from 'contexts/AuthContext';
 
 const Board: React.FC = () => {
+  const { user } = useAuth();
   const { classDetails, students, levels } = useOutletContext() as {
     classDetails: IClass;
     students: StudentType[];
@@ -24,12 +26,20 @@ const Board: React.FC = () => {
   const { setNewAvailableTours } = useOnboarding();
 
   useEffect(() => {
-    const rawOnboardingData = localStorage.getItem('onboarding-data');
-    // FIXME: fix this ts error
-    // @ts-expect-error ts-error(2345)
-    const onboardingData = JSON.parse(rawOnboardingData);
-    setOnboardingDone(!!onboardingData?.tablero);
-  }, []);
+    let rawOnboardingData: string | null = '';
+    if (user?.completed_onboarding) {
+      localStorage.setItem('onboarding-data', user.completed_onboarding);
+      rawOnboardingData = user.completed_onboarding;
+    } else {
+      rawOnboardingData = localStorage.getItem('onboarding-data') || '';
+    }
+    if (rawOnboardingData !== null) {
+      const onboardingData = JSON.parse(rawOnboardingData);
+      setOnboardingDone(!!onboardingData?.tablero);
+    } else {
+      setOnboardingDone(false);
+    }
+  }, [user?.completed_onboarding]);
 
   useEffect(() => {
     // FIXME: fix this ts error
