@@ -12,6 +12,7 @@ import { ClassHasAdventureContext } from 'routes/Class/Adventures/Adventure/prov
 import Toaster from 'utils/Toster';
 import { missionAccomplished } from 'services/missions';
 import { StudentListContainer } from './styled';
+import { type StudentType } from 'components/StudentsList/interfaces';
 
 export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
   stage,
@@ -24,11 +25,9 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
     Array<number | string>
   >([]);
   const { students } = useContext(ClassHasAdventureContext);
-  const [studentList, setStudentList] = useState([]);
+  const [studentList, setStudentList] = useState<StudentType[]>([]);
 
   useEffect(() => {
-    // FIXME: fix this ts error
-    // @ts-expect-error ts-error(2345)
     !!students && setStudentList(students);
   }, [students]);
 
@@ -61,10 +60,7 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
     const { checked } = target;
     const all: Array<number | string> = [];
     if (checked) {
-      studentList.forEach((res, index) => {
-        // FIXME: fix this eslint error
-        // @ts-expect-error ts-error(2339)
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      studentList.forEach((res) => {
         if (!defaultSelected.includes(res.id)) all.push(res.id);
       });
       return setSelected(all);
@@ -83,7 +79,7 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
       Toaster('success', 'Misión completada exitosamente');
       onSave(stage.id);
       handleClose();
-    } catch (error: any) {
+    } catch (error) {
       console.error(error);
       Toaster('error', 'Hubo un error al completar las misiones');
     }
@@ -100,16 +96,16 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
         placeholder='Buscar por nombre o apellido'
         fullWidth
         onChange={(event) => {
-          // FIXME: fix this ts error
-          // @ts-expect-error ts-error(2345)
           if (!event.target.value) return setStudentList(students);
           setStudentList(
-            studentList.filter((student) =>
-              // FIXME: fix this ts error
-              // @ts-expect-error ts-error(2339)
-              `${student.first_name} ${student.last_name}`.includes(
-                event.target.value
-              )
+            studentList.filter(
+              (student) =>
+                `${student.first_name}`
+                  .toLowerCase()
+                  .startsWith(event.target.value.toLowerCase()) ||
+                `${student.last_name}`
+                  .toLowerCase()
+                  .startsWith(event.target.value.toLowerCase())
             )
           );
         }}
@@ -125,22 +121,13 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
               <Checkbox
                 onChange={handleAllSelect}
                 disabled={studentList.every((student) =>
-                  // FIXME: fix this ts and eslint errors
-                  // @ts-expect-error ts-error(2339)
-                  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                   defaultSelected.includes(student.id)
                 )}
                 checked={
                   !!studentList.length &&
                   studentList.every(
-                    (res, index) =>
-                      // FIXME: fix this ts and eslint errors
-                      // @ts-expect-error ts-error(2339)
-                      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+                    (res) =>
                       selected.includes(res.id) ||
-                      // FIXME: fix this ts and eslint errors
-                      // @ts-expect-error ts-error(2339)
-                      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                       defaultSelected.includes(res.id)
                   )
                 }
@@ -178,39 +165,21 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
           {studentList.map((res, index) => (
             <div key={index} className='d-flex gap-2 align-items-center'>
               <Checkbox
-                // FIXME: fix this ts and eslint errors
-                // @ts-expect-error ts-error(2339)
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                 onChange={(e) => handleCheck(e, res.id)}
-                // FIXME: fix this ts and eslint errors
-                // @ts-expect-error ts-error(2339)
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                 disabled={defaultSelected.includes(res.id)}
                 checked={
-                  // FIXME: fix this ts and eslint errors
-                  // @ts-expect-error ts-error(2339)
-                  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                   selected.includes(res.id) || defaultSelected.includes(res.id)
                 }
               />
               <div className='d-flex align-items-center gap-3'>
-                <Avatar className='student-avatar'>{
-                  // FIXME: fix this ts error
-                  // @ts-expect-error ts-error(2339)
-                  `${res.first_name[0]}${res.last_name[0]}`
-                }</Avatar>
+                <Avatar className='student-avatar'>{`${res.first_name[0]}${res.last_name[0]}`}</Avatar>
                 <div className='d-flex flex-column'>
-                  <Typography component='span' variant='body1'>{
-                    // FIXME: fix this ts error
-                    // @ts-expect-error ts-error(2339)
-                    `${res.first_name} ${res.last_name}`
-                  }</Typography>
+                  <Typography
+                    component='span'
+                    variant='body1'
+                  >{`${res.first_name} ${res.last_name}`}</Typography>
                   <Typography component='span' variant='body2' color='#969696'>
-                    {
-                      // FIXME: fix this ts error
-                      // @ts-expect-error ts-error(2339)
-                      res.email
-                    }
+                    {res.email}
                   </Typography>
                 </div>
               </div>
