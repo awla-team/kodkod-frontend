@@ -71,6 +71,7 @@ const MissionsList: FC<{ shownStage: IStage }> = ({ shownStage }) => {
                   clickable
                   mission={res}
                   openModal={handleOpen}
+                  stage={{ ...shownStage, missions }}
                 />
               </div>
             );

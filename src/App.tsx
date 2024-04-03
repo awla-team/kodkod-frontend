@@ -21,6 +21,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import DoneIcon from '@mui/icons-material/Done';
 import { TourProvider, useTour } from '@reactour/tour';
 import { patchUserById } from 'services/users';
+import { ModalContextProvider } from 'contexts/ZustandContext/modal-context';
 
 moment.locale('es');
 
@@ -211,19 +212,23 @@ const App: React.FC = () => {
       }}
     >
       <OnboardingContextProvider>
-        <div className='app-container d-flex'>
-          <Sidebar classes={classes} handleOpenModal={handleOpenModal} />
-          <div className='app-main-container d-flex flex-column flex-fill'>
-            <div className='app-content container' id='home-onboarding-4'>
-              <Outlet context={{ classes, handleOpenModal, getClassesData }} />
+        <ModalContextProvider>
+          <div className='app-container d-flex'>
+            <Sidebar classes={classes} handleOpenModal={handleOpenModal} />
+            <div className='app-main-container d-flex flex-column flex-fill'>
+              <div className='app-content container' id='home-onboarding-4'>
+                <Outlet
+                  context={{ classes, handleOpenModal, getClassesData }}
+                />
+              </div>
             </div>
+            <CreateClassModal
+              open={createClassModalOpen}
+              onClose={handleClose}
+              levels={levels}
+            />
           </div>
-          <CreateClassModal
-            open={createClassModalOpen}
-            onClose={handleClose}
-            levels={levels}
-          />
-        </div>
+        </ModalContextProvider>
       </OnboardingContextProvider>
     </TourProvider>
   );
