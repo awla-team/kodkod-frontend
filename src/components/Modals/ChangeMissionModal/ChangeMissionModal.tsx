@@ -8,9 +8,10 @@ import ReplaceMissionModal from '../ReplaceMissionModal';
 interface Props {
   mission: IMission;
   stage: IStage;
+  updateMissions: () => void;
 }
 
-const ChangeMissionModal: FC<Props> = ({ mission, stage }) => {
+const ChangeMissionModal: FC<Props> = ({ mission, stage, updateMissions }) => {
   const { setContentModal } = useModalStore();
   const { checkUserSubscription } = useAuth();
 
@@ -29,6 +30,7 @@ const ChangeMissionModal: FC<Props> = ({ mission, stage }) => {
               // onClose={handleClose}
               mission={mission}
               stage={stage}
+              updateMissions={updateMissions}
             />
           ),
           withActions: true,

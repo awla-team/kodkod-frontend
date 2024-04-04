@@ -20,6 +20,7 @@ const MissionCard: React.FC<IMissionCardProps> = ({
   selected,
   clickable,
   stage,
+  updateMissions,
 }) => {
   const { title, description, points, difficulty, completed_users } = mission;
   const { openModal } = useModalStore();
@@ -29,7 +30,13 @@ const MissionCard: React.FC<IMissionCardProps> = ({
 
     openModal({
       title: 'Reemplazar misión',
-      content: <ChangeMissionModal mission={mission} stage={stage} />,
+      content: (
+        <ChangeMissionModal
+          mission={mission}
+          stage={stage}
+          updateMissions={updateMissions}
+        />
+      ),
       maxWidth: 'sm',
     });
   };

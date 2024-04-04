@@ -6,4 +6,5 @@ export interface ReplaceMissionModalProps {
   mission: IMission;
 
   stage: IStage;
+  updateMissions: () => void;
 }

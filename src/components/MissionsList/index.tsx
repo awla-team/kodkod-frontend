@@ -13,6 +13,7 @@ const MissionsList: FC<{ shownStage: IStage }> = ({ shownStage }) => {
   const [selectedMission, setSelectedMission] = useState<null | IMission>(null);
   const [missions, setMissions] = useState<IMission[]>([]);
   // const [sortedMissions, setSortedMissions] = useState<IMission[]>([]);
+  const [reloadMissions, setReloadMissions] = useState(false);
 
   useEffect(() => {
     if (shownStage) {
@@ -20,7 +21,15 @@ const MissionsList: FC<{ shownStage: IStage }> = ({ shownStage }) => {
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
       handleGetMissions(shownStage.id);
     }
-  }, [shownStage]);
+
+    return () => {
+      setReloadMissions(false);
+    };
+  }, [shownStage, reloadMissions]);
+
+  const updateMissions = () => {
+    setReloadMissions(true);
+  };
 
   const handleGetMissions = async (stageId: number | string) => {
     const response = await getStageMissions(stageId);
@@ -72,6 +81,7 @@ const MissionsList: FC<{ shownStage: IStage }> = ({ shownStage }) => {
                   mission={res}
                   openModal={handleOpen}
                   stage={{ ...shownStage, missions }}
+                  updateMissions={updateMissions}
                 />
               </div>
             );

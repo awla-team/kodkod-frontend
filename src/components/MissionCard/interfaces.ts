@@ -20,4 +20,5 @@ export interface IMissionCardProps {
   clickable?: boolean;
   onClick?: (e: React.MouseEvent) => void;
   stage: IStage;
+  updateMissions: () => void;
 }

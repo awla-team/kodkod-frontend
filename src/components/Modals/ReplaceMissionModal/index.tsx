@@ -1,14 +1,7 @@
 import { type FC, useState, useContext, useEffect } from 'react';
 import { type ReplaceMissionModalProps } from './interfaces';
 import { NewMissionList } from './styled';
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Typography,
-} from '@mui/material';
+import { Typography } from '@mui/material';
 import MissionCard from '../../MissionCard';
 import { difficultyIcons, difficultyToText } from 'utils';
 import Toaster from 'utils/Toster';
@@ -23,9 +16,10 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
   // onClose,
   mission,
   stage,
+  updateMissions,
 }) => {
   const [selected, setSelected] = useState<null | IMission>(null);
-  const [pending, setPending] = useState<boolean>(false);
+  // const [pending, setPending] = useState<boolean>(false);
   const [missions, setMissions] = useState<IMission[]>([]);
   const { updateStageData } = useContext(ClassHasAdventureContext);
   const { setConfirmActions, setIsDisabledCofirmBtn, closeModal } =
@@ -48,11 +42,10 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
 
   const handleGetMission = async () => {
     try {
-      const { data }: { data: { responseData: IMission[] } } =
-        await getMissionsByStage({
-          id_skill: mission.id_skill,
-          difficulty: mission.difficulty,
-        });
+      const { data } = await getMissionsByStage({
+        id_skill: mission.id_skill,
+        difficulty: mission.difficulty,
+      });
       const sorted = data.responseData.sort((a, b) => {
         if (a.title > b.title) return 1;
         if (a.title < b.title) return -1;
@@ -103,6 +96,8 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
         ...stage,
         missions: missionsCopy,
       });
+      // funcion to reload useEffect to get missions again with new changes
+      updateMissions();
       Toaster('success', 'Misión reemplazada exitosamente');
       closeModal();
     } catch (error: any) {
