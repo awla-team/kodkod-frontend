@@ -16,7 +16,38 @@ const MissionAccomplished: FC<MissionAccomplishedProps> = ({
   const handleClose = () => {
     onClose();
   };
-
+  if (mission) {
+    return (
+      <MissionAccomplishedDrawer
+        open={open}
+        anchor={anchor}
+        onClose={handleClose}
+        PaperProps={{ className: 'px-5 py-4' }}
+      >
+        <Typography
+          component='h6'
+          variant='h6'
+          fontWeight='bold'
+          className='mb-3'
+        >
+          ¡Misión cumplida!
+        </Typography>
+        <div className='mb-4'>
+          <MissionCard mission={mission} />
+        </div>
+        <Typography component='span' variant='body1' className='mb-3'>
+          Registra a los estudiantes que ya han cumplido con la misión
+          seleccionada.
+        </Typography>
+        <StudentsSelectableList
+          stage={stage}
+          onSave={onSave}
+          handleClose={handleClose}
+          mission={mission}
+        />
+      </MissionAccomplishedDrawer>
+    );
+  }
   return (
     <MissionAccomplishedDrawer
       open={open}
@@ -30,21 +61,8 @@ const MissionAccomplished: FC<MissionAccomplishedProps> = ({
         fontWeight='bold'
         className='mb-3'
       >
-        ¡Misión cumplida!
+        No existen datos
       </Typography>
-      <div className='mb-4'>
-        <MissionCard mission={mission} />
-      </div>
-      <Typography component='span' variant='body1' className='mb-3'>
-        Registra a los estudiantes que ya han cumplido con la misión
-        seleccionada.
-      </Typography>
-      <StudentsSelectableList
-        stage={stage}
-        onSave={onSave}
-        handleClose={handleClose}
-        mission={mission}
-      />
     </MissionAccomplishedDrawer>
   );
 };
