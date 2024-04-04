@@ -7,7 +7,7 @@ export interface MissionAccomplishedProps {
   onSave: (stageId: number | string) => void;
   onClose: () => void;
   stage: IStage;
-  mission?: IMission | null;
+  mission?: IMission;
 }
 
 export interface StudentsDetailsType {
