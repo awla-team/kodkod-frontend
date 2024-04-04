@@ -6,6 +6,7 @@ import SignalCellularAlt1BarIcon from '@mui/icons-material/SignalCellularAlt1Bar
 import SignalCellularAlt2BarIcon from '@mui/icons-material/SignalCellularAlt2Bar';
 import SignalCellularAltIcon from '@mui/icons-material/SignalCellularAlt';
 import CachedIcon from '@mui/icons-material/Cached';
+import { type StudentType } from 'components/StudentsList/interfaces';
 
 export const difficultyIcons = {
   easy: <SignalCellularAlt1BarIcon fontSize='small' />,
@@ -139,4 +140,46 @@ export const getAccessTokenUsingRefreshToken = async () => {
       return reject(e);
     }
   });
+};
+
+export const isStudentValid = (
+  students: Array<{ first_name: string; last_name: string; email: string }>,
+  index: number,
+  existingStudents: StudentType[]
+) => {
+  const currentStudent = students[index];
+  return (
+    students.some(
+      (student, i) =>
+        i !== index &&
+        student.first_name === currentStudent.first_name &&
+        student.last_name === currentStudent.last_name &&
+        student.email === currentStudent.email
+    ) ||
+    students.some(
+      (student, i) =>
+        i !== index &&
+        student.first_name.trim() === '' &&
+        student.last_name.trim() === '' &&
+        student.email.trim() === ''
+    ) ||
+    existingStudents.some(
+      (student, i) =>
+        i !== index &&
+        student.first_name === currentStudent.first_name &&
+        student.last_name === currentStudent.last_name &&
+        student.email === currentStudent.email
+    ) ||
+    students.some((student) => !isValidEmail(student.email))
+  );
+};
+
+/**
+ * Valida si el string proporcionado tiene formato de correo electrónico.
+ * @param {string} email El correo electrónico a validar.
+ * @returns {boolean} `true` si el formato es válido, `false` en caso contrario.
+ */
+export const isValidEmail = (email: string) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
 };

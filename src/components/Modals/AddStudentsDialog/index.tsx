@@ -14,6 +14,7 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import { addStudentsInClass } from 'services/students';
 import Toaster from 'utils/Toster';
+import { isStudentValid, isValidEmail } from 'utils';
 import { type StudentType } from '../../StudentsList/interfaces';
 import { StudentsFormDetailsContainer } from './styled';
 import { Link } from 'react-router-dom';
@@ -21,13 +22,14 @@ import { read, utils } from 'xlsx';
 import AddIcon from '@mui/icons-material/Add';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
+import { useClassContext } from 'routes/Class/context';
 
 const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
   open,
   onClose,
   classDetails,
 }) => {
-  const [students, setStudents] = useState<
+  const [newStudentsList, setStudents] = useState<
     Array<{ first_name: string; last_name: string; email: string }>
   >(
     Array(5)
@@ -38,20 +40,20 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
         email: '',
       }))
   );
-
+  const { students } = useClassContext();
   const [filled, setFilled] = useState<
     Array<{ first_name: string; last_name: string; email: string }>
   >([]);
 
   useEffect(() => {
-    if (students.length)
+    if (newStudentsList.length)
       setFilled(
-        students.filter(
+        newStudentsList.filter(
           (student) => student.first_name || student.last_name || student.email
         )
       );
     else setFilled([]);
-  }, [students]);
+  }, [newStudentsList]);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -181,14 +183,14 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
           <Box className='flex-fill my-4' sx={{ overflow: 'auto' }}>
             <StudentsFormDetailsContainer className='d-flex flex-column justify-content-between'>
               <Box className='details-list' id='student-list-onboarding-4'>
-                {students.map((student, i) => (
+                {newStudentsList.map((student, i) => (
                   <div key={i} className='d-flex align-items-center gap-2'>
                     <IconButton
                       color='inherit'
                       size='small'
-                      disabled={students.length === 1}
+                      disabled={newStudentsList.length === 1}
                       onClick={() => {
-                        const newValues = [...students];
+                        const newValues = [...newStudentsList];
                         newValues.splice(i, 1);
                         setStudents(newValues);
                       }}
@@ -200,14 +202,13 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
                         <TextField
                           size='small'
                           value={student.first_name}
-                          // FIXME: fix this ts error
-                          // @ts-expect-error ts-error(2322)
                           error={
-                            (student.last_name || student.email) &&
-                            !student.first_name
+                            ((student.last_name || student.email) &&
+                              !student.first_name) ||
+                            isStudentValid(newStudentsList, i, students)
                           }
                           onChange={(event) => {
-                            const newStudents = [...students];
+                            const newStudents = [...newStudentsList];
                             newStudents[i].first_name = event.target.value;
                             setStudents(newStudents);
                           }}
@@ -221,14 +222,13 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
                         <TextField
                           size='small'
                           value={student.last_name}
-                          // FIXME: fix this ts error
-                          // @ts-expect-error ts-error(2322)
                           error={
-                            (student.first_name || student.email) &&
-                            !student.last_name
+                            ((student.first_name || student.email) &&
+                              !student.last_name) ||
+                            isStudentValid(newStudentsList, i, students)
                           }
                           onChange={(event) => {
-                            const newStudents = [...students];
+                            const newStudents = [...newStudentsList];
                             newStudents[i].last_name = event.target.value;
                             setStudents(newStudents);
                           }}
@@ -242,14 +242,14 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
                         <TextField
                           size='small'
                           value={student.email}
-                          // FIXME: fix this ts error
-                          // @ts-expect-error ts-error(2322)
                           error={
-                            (student.first_name || student.last_name) &&
-                            !student.email
+                            ((student.first_name || student.last_name) &&
+                              !student.email) ||
+                            isStudentValid(newStudentsList, i, students) ||
+                            !isValidEmail(student.email)
                           }
                           onChange={(event) => {
-                            const newStudents = [...students];
+                            const newStudents = [...newStudentsList];
                             newStudents[i].email = event.target.value;
                             setStudents(newStudents);
                           }}
@@ -266,6 +266,14 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
               </Box>
             </StudentsFormDetailsContainer>
           </Box>
+          {newStudentsList.some((student, i) =>
+            isStudentValid(newStudentsList, i, students)
+          ) && (
+            <Typography variant='body2' className='mb-2'>
+              Asegurese de que los campos no contienen datos vacios, repetidos o
+              de alumnos existentes
+            </Typography>
+          )}
           <div className='d-flex align-items-center justify-content-center'>
             <Button
               startIcon={<AddIcon />}
@@ -273,7 +281,7 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
               color='primary'
               onClick={() =>
                 setStudents([
-                  ...students,
+                  ...newStudentsList,
                   { first_name: '', last_name: '', email: '' },
                 ])
               }
@@ -310,6 +318,9 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
               !filled.every(
                 (student) =>
                   student.first_name && student.last_name && student.email
+              ) ||
+              newStudentsList.some((student, i) =>
+                isStudentValid(newStudentsList, i, students)
               )
             }
           >
