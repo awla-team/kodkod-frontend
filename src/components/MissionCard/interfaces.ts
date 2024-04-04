@@ -14,7 +14,7 @@ export interface MissionCardType {
 
 export interface IMissionCardProps {
   id?: number | string;
-  mission: IMission;
+  mission?: IMission;
   openModal?: (mission: IMission) => void;
   selected?: boolean;
   clickable?: boolean;
