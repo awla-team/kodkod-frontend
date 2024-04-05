@@ -110,7 +110,7 @@ export const ModalContextProvider: React.FC<PropsWithChildren> = ({
       <Dialog open={isOpen} onClose={closeModal} maxWidth={maxWidth} fullWidth>
         <DialogTitle fontWeight='bold'>{title}</DialogTitle>
 
-        <DialogContent>{content}</DialogContent>
+        <DialogContent sx={{ marginBottom: '10px' }}>{content}</DialogContent>
 
         {withActions && (
           <DialogActions>

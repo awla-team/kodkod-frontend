@@ -4,6 +4,7 @@ import { useModalStore } from 'contexts/ZustandContext/modal-context';
 import { type IStage, type IMission } from 'global/interfaces';
 import { type FC } from 'react';
 import ReplaceMissionModal from '../ReplaceMissionModal';
+import { CreateMissionModal } from '../CreateMissionModal';
 
 interface Props {
   mission: IMission;
@@ -12,7 +13,7 @@ interface Props {
 }
 
 const ChangeMissionModal: FC<Props> = ({ mission, stage, updateMissions }) => {
-  const { setContentModal } = useModalStore();
+  const { setContentModal, openModal, setConfirmActions } = useModalStore();
   const { checkUserSubscription } = useAuth();
 
   const openActualMissionModal = () => {
@@ -39,6 +40,15 @@ const ChangeMissionModal: FC<Props> = ({ mission, stage, updateMissions }) => {
     );
   };
 
+  const openCreateMissionModal = () => {
+    openModal({
+      title: 'Crear y reemplazar por una nueva misión',
+      content: <CreateMissionModal />,
+      maxWidth: 'sm',
+      wuthActions: false,
+    });
+  };
+
   return (
     <>
       <Typography variant='body2' className='mb-2'>
@@ -58,7 +68,7 @@ const ChangeMissionModal: FC<Props> = ({ mission, stage, updateMissions }) => {
         <Button
           variant='contained'
           color='success'
-          onClick={() => setContentModal(<p>reemplazar por nueva mision</p>)}
+          onClick={openCreateMissionModal}
         >
           Crear y reemplazar por una nueva misión
         </Button>
