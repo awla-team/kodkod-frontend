@@ -32,7 +32,7 @@ const AddStudentsDialog: FC<AddStudentsDialogProps> = ({
   const [newStudentsList, setStudents] = useState<
     Array<{ first_name: string; last_name: string; email: string }>
   >(
-    Array(5)
+    Array(1)
       .fill({})
       .map(() => ({
         first_name: '',
