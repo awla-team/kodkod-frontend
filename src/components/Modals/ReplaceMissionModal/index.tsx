@@ -159,6 +159,8 @@ const ReplaceMissionModal: FC<ReplaceMissionModalProps> = ({
                   onClick={() => handleSelection(res)}
                   selected={res.id === selected?.id}
                   mission={res}
+                  updateMissions={() => {}}
+                  stage={stage}
                 />
               </div>
             ))

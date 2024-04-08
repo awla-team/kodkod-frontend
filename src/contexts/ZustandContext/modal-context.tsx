@@ -6,13 +6,13 @@ import {
   DialogActions,
   Button,
 } from '@mui/material';
-import { type PropsWithChildren } from 'react';
+import { type PropsWithChildren, type ReactNode } from 'react';
 import { create } from 'zustand';
 
 interface Store {
   isOpen: boolean;
   title: string;
-  content: JSX;
+  content: ReactNode;
   maxWidth: Breakpoint;
   withActions: boolean;
   confirmAction: {
@@ -30,9 +30,9 @@ interface Action {
     withActions,
   }: {
     title?: string;
-    content: JSX;
+    content: ReactNode;
     maxWidth?: Breakpoint;
-    wuthActions?: boolean;
+    withActions?: boolean;
   }) => void;
   closeModal: () => void;
   setTitle: (title: string) => void;
@@ -41,7 +41,7 @@ interface Action {
     withActions,
     confirmAction,
   }: {
-    content: JSX;
+    content: ReactNode;
     withActions?: boolean;
     confirmAction: {
       title?: string;

@@ -35,7 +35,11 @@ const MissionAccomplished: FC<MissionAccomplishedProps> = ({
         ¡Misión cumplida!
       </Typography>
       <div className='mb-4'>
-        <MissionCard mission={mission} />
+        <MissionCard
+          mission={mission}
+          updateMissions={() => {}}
+          stage={stage}
+        />
       </div>
       <Typography component='span' variant='body1' className='mb-3'>
         Registra a los estudiantes que ya han cumplido con la misión

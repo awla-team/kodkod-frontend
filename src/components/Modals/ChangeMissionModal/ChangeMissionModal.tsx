@@ -29,7 +29,7 @@ const ChangeMissionModal: FC<Props> = ({ mission, stage, updateMissions }) => {
         setContentModal({
           content: (
             <ReplaceMissionModal
-              // open={open && !!selectedMission}
+              open={true}
               // onClose={handleClose}
               mission={mission}
               stage={stage}
@@ -47,7 +47,7 @@ const ChangeMissionModal: FC<Props> = ({ mission, stage, updateMissions }) => {
       title: 'Crear y reemplazar por una nueva misión',
       content: <CreateMissionModal />,
       maxWidth: 'sm',
-      wuthActions: false,
+      withActions: false,
     });
   };
 

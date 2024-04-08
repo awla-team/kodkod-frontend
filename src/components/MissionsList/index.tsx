@@ -91,14 +91,14 @@ const MissionsList: FC<{ shownStage: IStage }> = ({ shownStage }) => {
         )}
       </div>
 
-      {open && !!selectedMission && (
+      {/* {open && !!selectedMission && (
         <ReplaceMissionModal
           open={open && !!selectedMission}
           onClose={handleClose}
           mission={selectedMission}
           stage={{ ...shownStage, missions }}
         />
-      )}
+      )} */}
       {openDrawer && !!selectedMission && (
         <MissionAccomplishedDrawer
           open={openDrawer && !!selectedMission}
