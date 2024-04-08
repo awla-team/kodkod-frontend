@@ -5,6 +5,8 @@ import { type IStage, type IMission } from 'global/interfaces';
 import { type FC } from 'react';
 import ReplaceMissionModal from '../ReplaceMissionModal';
 import { CreateMissionModal } from '../CreateMissionModal';
+import list from 'assets/images/list.png';
+import idea from 'assets/images/idea.png';
 
 interface Props {
   mission: IMission;
@@ -60,16 +62,42 @@ const ChangeMissionModal: FC<Props> = ({ mission, stage, updateMissions }) => {
       <Box display='flex' gap={2}>
         <Button
           variant='contained'
-          color='primary'
+          color='info'
           onClick={openActualMissionModal}
+          sx={{
+            color: 'black',
+            fontWeight: 'bold',
+            border: '1px solid black',
+            display: 'flex',
+            flexDirection: 'column',
+            padding: '10px',
+          }}
         >
+          <img
+            alt='list'
+            src={list}
+            style={{ width: '40px', objectFit: 'cover' }}
+          />
           Reemplazar por una misión existente
         </Button>
         <Button
           variant='contained'
-          color='success'
+          color='info'
           onClick={openCreateMissionModal}
+          sx={{
+            color: 'black',
+            fontWeight: 'bold',
+            border: '1px solid black',
+            display: 'flex',
+            flexDirection: 'column',
+            padding: '10px',
+          }}
         >
+          <img
+            alt='list'
+            src={idea}
+            style={{ width: '40px', objectFit: 'cover' }}
+          />
           Crear y reemplazar por una nueva misión
         </Button>
       </Box>
