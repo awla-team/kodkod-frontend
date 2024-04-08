@@ -10,7 +10,7 @@ import { getStageMissions } from 'services/missions';
 const MissionsList: FC<{ shownStage: IStage }> = ({ shownStage }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [openDrawer, setOpenDrawer] = useState<boolean>(false);
-  const [selectedMission, setSelectedMission] = useState<null | IMission>(null);
+  const [selectedMission, setSelectedMission] = useState<IMission>();
   const [missions, setMissions] = useState<IMission[]>([]);
   // const [sortedMissions, setSortedMissions] = useState<IMission[]>([]);
   const [reloadMissions, setReloadMissions] = useState(false);
@@ -46,13 +46,11 @@ const MissionsList: FC<{ shownStage: IStage }> = ({ shownStage }) => {
   const handleClose = (reason?: 'backdropClick' | 'escapeKeyDown') => {
     if (reason !== 'backdropClick') {
       setOpen(false);
-      setSelectedMission(null);
     }
   };
 
   const handleDrawerClose = () => {
     setOpenDrawer(false);
-    setSelectedMission(null);
   };
 
   return (
@@ -99,16 +97,14 @@ const MissionsList: FC<{ shownStage: IStage }> = ({ shownStage }) => {
           stage={{ ...shownStage, missions }}
         />
       )} */}
-      {openDrawer && !!selectedMission && (
-        <MissionAccomplishedDrawer
-          open={openDrawer && !!selectedMission}
-          onSave={handleGetMissions}
-          anchor='right'
-          onClose={handleDrawerClose}
-          mission={selectedMission}
-          stage={shownStage}
-        />
-      )}
+      <MissionAccomplishedDrawer
+        open={openDrawer && !!selectedMission}
+        onSave={handleGetMissions}
+        anchor='right'
+        onClose={handleDrawerClose}
+        mission={selectedMission}
+        stage={shownStage}
+      />
     </MissionListContainer>
   );
 };
