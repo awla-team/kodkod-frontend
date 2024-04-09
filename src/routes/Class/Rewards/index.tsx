@@ -137,8 +137,6 @@ const Rewards = () => {
                 ...reward,
                 usedCount: usedRewardCount(
                   reward.id,
-                  // FIXME: fix this eslint error
-                  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                   studentsData.responseData
                 ),
               };
