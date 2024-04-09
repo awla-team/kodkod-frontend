@@ -1,10 +1,11 @@
 import http from 'global/api';
 import {
-  StudentType,
+  type StudentType,
   type StudentUpdateDataType,
 } from '../components/StudentsList/interfaces';
 import { type AddStudentsInClassBody } from './interfaces';
 import { generateQueryParamsFromObject } from '../utils';
+import { type KodkodResponse } from 'api/types/custom-response';
 
 export interface UserFilter {
   role?: 'student' | 'teacher';
@@ -12,11 +13,11 @@ export interface UserFilter {
   rewards?: true;
 }
 
-export const studentsByClass = async (
+export const studentsByClass = async <T = StudentType>(
   classId: number | string,
   queryObject?: UserFilter
 ) => {
-  return await http.get(
+  return await http.get<KodkodResponse<T[]>>(
     `user-by-class/${classId}` + generateQueryParamsFromObject(queryObject)
   );
 };
