@@ -161,9 +161,6 @@ const GoalAdventures: React.FC = () => {
             {sortedAdventures.map((adventure, index) => (
               <AdventureCard
                 id={`adventure-card-${index}`}
-                // FIXME: fix this ts error
-                // @ts-expect-error ts-error(2322)
-                demo={adventure.demo || user?.is_superuser}
                 onClick={() => handleOnClickAdventure(adventure)}
                 key={index}
                 title={adventure.title}
