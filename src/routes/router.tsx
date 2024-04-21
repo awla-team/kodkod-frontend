@@ -1,7 +1,6 @@
 import { createBrowserRouter, Outlet } from 'react-router-dom';
 import AuthContextProvider from 'contexts/AuthContext';
 import SignIn from './UserAuth/SignIn';
-import SignUp from './UserAuth/SignUp';
 import Home from './Home';
 import ClassContextProvider from './Class/context';
 import Class from './Class';
@@ -49,10 +48,6 @@ export const router = createBrowserRouter([
             path: '/signin',
             index: true,
             element: <SignIn />,
-          },
-          {
-            path: '/signup',
-            element: <SignUp />,
           },
           {
             path: '/forgot-password',

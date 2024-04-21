@@ -15,7 +15,7 @@ import { type IUser } from 'global/interfaces';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { logout as makeLogout } from 'services/auth';
 
-// const publicRoutes = ["/signin", "/signup", "/reset-password"];
+// const publicRoutes = ["/signin", "/reset-password"];
 const AuthContext = createContext<AuthContextType>({
   user: null,
   logout: () => {},

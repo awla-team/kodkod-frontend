@@ -147,16 +147,6 @@ const SignIn: React.FC = () => {
                     >
                       Iniciar sesión
                     </Button>
-                    <Typography component='span' variant='subtitle2'>
-                      ¿Aún no tienes una cuenta?{' '}
-                      <Typography
-                        component={RouterLink}
-                        variant='subtitle2'
-                        to='/signup'
-                      >
-                        Registrate
-                      </Typography>
-                    </Typography>
                   </Box>
                 </Box>
               </Form>
