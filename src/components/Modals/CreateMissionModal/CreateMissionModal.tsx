@@ -50,10 +50,7 @@ const CreateMissionModal = () => {
     fetchSkills();
   }, [fetchSkills]);
 
-  const onSubmit = async (
-    values: FormInput,
-    formikHelper: FormikHelpers<FormInput>
-  ) => {
+  const onSubmit = async () => {
     console.log('submit');
   };
 

@@ -15,7 +15,7 @@ interface Props {
 }
 
 const ChangeMissionModal: FC<Props> = ({ mission, stage, updateMissions }) => {
-  const { setContentModal, openModal, setConfirmActions } = useModalStore();
+  const { setContentModal, openModal } = useModalStore();
   const { checkUserSubscription } = useAuth();
 
   const openActualMissionModal = () => {
@@ -24,13 +24,11 @@ const ChangeMissionModal: FC<Props> = ({ mission, stage, updateMissions }) => {
       () => {
         // FIXME: fix this ts error
         // @ts-expect-error ts-error(2722)
-        // openModal();
         // open new modal
         setContentModal({
           content: (
             <ReplaceMissionModal
               open={true}
-              // onClose={handleClose}
               mission={mission}
               stage={stage}
               updateMissions={updateMissions}
