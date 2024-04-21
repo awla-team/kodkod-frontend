@@ -16,28 +16,22 @@ interface Props {
 
 const ChangeMissionModal: FC<Props> = ({ mission, stage, updateMissions }) => {
   const { setContentModal, openModal } = useModalStore();
-  const { checkUserSubscription } = useAuth();
 
   const openActualMissionModal = () => {
-    checkUserSubscription(
-      'Reemplazar una misión es una funcionalidad Pro',
-      () => {
-        // FIXME: fix this ts error
-        // @ts-expect-error ts-error(2722)
-        // open new modal
-        setContentModal({
-          content: (
-            <ReplaceMissionModal
-              open={true}
-              mission={mission}
-              stage={stage}
-              updateMissions={updateMissions}
-            />
-          ),
-          withActions: true,
-        });
-      }
-    );
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(2722)
+    // open new modal
+    setContentModal({
+      content: (
+        <ReplaceMissionModal
+          open={true}
+          mission={mission}
+          stage={stage}
+          updateMissions={updateMissions}
+        />
+      ),
+      withActions: true,
+    });
   };
 
   const openCreateMissionModal = () => {
