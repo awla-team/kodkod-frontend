@@ -9,16 +9,13 @@ const AdventureCard: React.FC<IAdventureCardProps> = ({
   title,
   startDate,
   endDate,
-  demo,
   img,
   info,
   onClick,
 }) => {
   return (
     <AdventureCardContainer
-      // FIXME: fix this ts error
-      // @ts-expect-error ts-error(2769): Type 'string | null' is not assignable to type 'string | undefined'.
-      id={id || null}
+      id={id || undefined}
       onClick={onClick}
       className='p-4 d-flex flex-column justify-content-between'
       sx={{
@@ -28,14 +25,6 @@ const AdventureCard: React.FC<IAdventureCardProps> = ({
       }}
       variant='outlined'
     >
-      {!demo ? (
-        <div className='demo-indicator gap-1'>
-          <StarIcon fontSize='small' sx={{ fontSize: '16px' }} />
-          <Typography fontWeight='bold' variant='body2'>
-            Pro
-          </Typography>
-        </div>
-      ) : null}
       <div>
         <Typography variant='h5'>
           <b>{title}</b>

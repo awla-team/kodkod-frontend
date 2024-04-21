@@ -84,14 +84,6 @@ const AdventureSummaryDialog: React.FC<{
         <AdventureBanner
           sx={{ backgroundImage: `url(${selectedAdventure?.banner})` }}
         >
-          {!shownAdventure?.demo && !user?.is_superuser ? (
-            <div className='demo-indicator gap-1 mb-3'>
-              <StarIcon fontSize='small' sx={{ fontSize: '16px' }} />
-              <Typography fontWeight='bold' variant='body2'>
-                Pro
-              </Typography>
-            </div>
-          ) : null}
           <Typography variant='h4' fontWeight='bold' className='mb-2'>
             {shownAdventure?.title}
           </Typography>
@@ -185,30 +177,14 @@ const AdventureSummaryDialog: React.FC<{
         >
           Cancelar
         </Button>
-        {!shownAdventure?.demo &&
-        !user?.is_subscription_active &&
-        !user?.is_superuser ? (
-          <Button
-            className='ms-2'
-            sx={{ '&:hover': { color: '#fff' } }}
-            component={Link}
-            to='/app/perfil/suscripciones'
-            variant='contained'
-            color='primary'
-            onClick={handleOnCloseModal}
-          >
-            Suscribirse a Kodkod Pro
-          </Button>
-        ) : (
-          <Button
-            id='adventure-selection-onboarding-6'
-            variant='contained'
-            color='primary'
-            onClick={setAdventure}
-          >
-            Quiero esta aventura
-          </Button>
-        )}
+        <Button
+          id='adventure-selection-onboarding-6'
+          variant='contained'
+          color='primary'
+          onClick={setAdventure}
+        >
+          Quiero esta aventura
+        </Button>
       </DialogActions>
     </Dialog>
   );

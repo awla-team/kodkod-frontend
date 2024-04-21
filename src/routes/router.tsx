@@ -1,7 +1,6 @@
 import { createBrowserRouter, Outlet } from 'react-router-dom';
 import AuthContextProvider from 'contexts/AuthContext';
 import SignIn from './UserAuth/SignIn';
-import SignUp from './UserAuth/SignUp';
 import Home from './Home';
 import ClassContextProvider from './Class/context';
 import Class from './Class';
@@ -20,7 +19,6 @@ import GoalAdventures from './Class/GoalAdventures';
 import CompletedAdventure from './Class/CompletedAdventure';
 import Rewards from 'routes/Class/Rewards';
 import VerifyEmail from './UserAuth/VerifyEmail';
-import Subscriptions from './Profile/Subscriptions';
 import AllCompletedAdventures from './Class/AllCompletedAdventures';
 
 const MainRouterComponent: FC = () => {
@@ -52,10 +50,6 @@ export const router = createBrowserRouter([
             element: <SignIn />,
           },
           {
-            path: '/signup',
-            element: <SignUp />,
-          },
-          {
             path: '/forgot-password',
             element: <ForgotPassword />,
           },
@@ -79,12 +73,6 @@ export const router = createBrowserRouter([
           },
           {
             path: 'perfil',
-            children: [
-              {
-                path: 'suscripciones',
-                element: <Subscriptions />,
-              },
-            ],
           },
           {
             path: 'cursos/:classId',

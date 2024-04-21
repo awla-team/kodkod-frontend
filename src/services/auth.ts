@@ -12,24 +12,12 @@ export interface GenerateAccessTokenBody {
 
 export interface LogoutBody extends GenerateAccessTokenBody {}
 
-export interface SignUpBody extends SignInBody {
-  first_name: string;
-  last_name: string;
-  confirmPassword: string;
-  school: number | string;
-  subject: string;
-}
-
 export const signIn = async (body: SignInBody) => {
   return await http.post('/auth/sign-in', body);
 };
 
 export const logout = async (body: LogoutBody) => {
   return await http.post('/auth/logout', body);
-};
-
-export const signUp = async (body: Omit<SignUpBody, 'confirmPassword'>) => {
-  return await http.post('/auth/signup', body);
 };
 
 export const generateAccessToken = async (body?: GenerateAccessTokenBody) => {
