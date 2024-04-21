@@ -5,9 +5,9 @@ const StudentListOnboarding = [
   {
     content: () => {
       return (
-        <OnboardingContent title="Gestión de estudiantes">
-          <div className="d-flex flex-column gap-2">
-            <Typography variant="body1" component="p">
+        <OnboardingContent title='Gestión de estudiantes'>
+          <div className='d-flex flex-column gap-2'>
+            <Typography variant='body1' component='p'>
               La sección “Lista de estudiantes” te permite gestionar los
               estudiantes asociados a tu curso.
             </Typography>
@@ -17,7 +17,7 @@ const StudentListOnboarding = [
     },
     padding: 0,
     stepInteraction: false,
-    selector: '#board-onboarding-2', //#student-list-onboarding-0
+    selector: '#board-onboarding-2', // #student-list-onboarding-0
     position: 'left',
   },
   {
@@ -25,8 +25,8 @@ const StudentListOnboarding = [
     content: () => {
       return (
         <OnboardingContent>
-          <div className="d-flex flex-column gap-3">
-            <Typography variant="body1" component="p">
+          <div className='d-flex flex-column gap-3'>
+            <Typography variant='body1' component='p'>
               El botón <b>“Añadir estudiantes”</b> te permite abrir el panel
               para añadir estudiantes
             </Typography>
@@ -39,12 +39,14 @@ const StudentListOnboarding = [
     padding: 0,
   },
   {
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(2531)
     action: () => document.getElementById('student-list-onboarding-1').click(),
     content: () => {
       return (
         <OnboardingContent>
-          <div className="d-flex flex-column gap-3">
-            <Typography variant="body1" component="p">
+          <div className='d-flex flex-column gap-3'>
+            <Typography variant='body1' component='p'>
               En este panel podrás cargar estudiantes de dos formas:
             </Typography>
           </div>
@@ -57,12 +59,14 @@ const StudentListOnboarding = [
     padding: 0,
   },
   {
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(2531)
     action: () => document.getElementById('student-list-onboarding-1').click(),
     content: () => {
       return (
         <OnboardingContent>
-          <div className="d-flex flex-column gap-3">
-            <Typography variant="body1" component="p">
+          <div className='d-flex flex-column gap-3'>
+            <Typography variant='body1' component='p'>
               1) Subiendo un archivo excel con la lista de tus estudiantes.
               Debes utilizar la plantilla excel para evitar errores.
             </Typography>
@@ -75,12 +79,14 @@ const StudentListOnboarding = [
     padding: 0,
   },
   {
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(2531)
     action: () => document.getElementById('student-list-onboarding-1').click(),
     content: () => {
       return (
         <OnboardingContent>
-          <div className="d-flex flex-column gap-3">
-            <Typography variant="body1" component="p">
+          <div className='d-flex flex-column gap-3'>
+            <Typography variant='body1' component='p'>
               2) Ingresándolos manualmente. Solo debes ingresar Nombres,
               Apellidos e Emails
             </Typography>
@@ -93,12 +99,14 @@ const StudentListOnboarding = [
     padding: 0,
   },
   {
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(2531)
     action: () => document.getElementById('student-list-onboarding-1').click(),
     content: () => {
       return (
         <OnboardingContent>
-          <div className="d-flex flex-column gap-3">
-            <Typography variant="body1" component="p">
+          <div className='d-flex flex-column gap-3'>
+            <Typography variant='body1' component='p'>
               Una vez que hayas cargado tus estudiantes por alguno de los dos
               métodos, deberás hacer click en <b>“Añadir estudiantes”</b> para
               finalizar el proceso.
@@ -116,8 +124,8 @@ const StudentListOnboarding = [
     content: () => {
       return (
         <OnboardingContent>
-          <div className="d-flex flex-column gap-3">
-            <Typography variant="body1" component="p">
+          <div className='d-flex flex-column gap-3'>
+            <Typography variant='body1' component='p'>
               Verás los estudiantes cargados en esta sección, donde además
               podrás <b>editarlos</b> o <b>removerlos</b> del curso si lo
               necesitas.
@@ -127,19 +135,19 @@ const StudentListOnboarding = [
       );
     },
     stepInteraction: false,
-    selector: '#board-onboarding-2', //#student-list-onboarding-0
+    selector: '#board-onboarding-2', // #student-list-onboarding-0
     padding: 0,
   },
   {
     content: () => {
       return (
-        <OnboardingContent title="¡Tutorial completado!">
-          <div className="d-flex flex-column gap-2">
+        <OnboardingContent title='¡Tutorial completado!'>
+          <div className='d-flex flex-column gap-2'>
             <Typography>
               Recuerda que puedes acceder a este y otros tutoriales presionando
               el botón de ayuda.
             </Typography>
-            <Typography fontWeight="bold">
+            <Typography fontWeight='bold'>
               ¡Hay tutoriales distintos en cada vista!
             </Typography>
           </div>

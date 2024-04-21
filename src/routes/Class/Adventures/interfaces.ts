@@ -1,12 +1,12 @@
 import {
-  IAdventure,
-  IClassHasAdventure,
-  IMission,
-  IStage,
+  type IAdventure,
+  type IClassHasAdventure,
+  type IMission,
+  type IStage,
 } from 'global/interfaces';
-import { Dispatch, PropsWithChildren, SetStateAction } from 'react';
-import { StudentType } from 'components/StudentsList/interfaces';
-import { StageMissionUpdateBody } from 'services/missions';
+import { Dispatch, type PropsWithChildren, SetStateAction } from 'react';
+import { type StudentType } from 'components/StudentsList/interfaces';
+import { type StageMissionUpdateBody } from 'services/missions';
 
 export interface GoalType {
   id: number | string;

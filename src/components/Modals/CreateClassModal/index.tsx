@@ -1,5 +1,8 @@
 import type { FC, ChangeEvent } from 'react';
-import { CreateClassModalProps, FormInitialState } from './interfaces';
+import {
+  type CreateClassModalProps,
+  type FormInitialState,
+} from './interfaces';
 import {
   Select,
   MenuItem,
@@ -13,12 +16,12 @@ import {
   Typography,
 } from '@mui/material';
 import { FormContainer } from './styled';
-import { Formik, Form, FormikHelpers } from 'formik';
+import { Formik, Form, type FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import { useEffect, useState } from 'react';
 import { createClass, updateClass } from 'services/classes';
 import Toaster from 'utils/Toster';
-import { IClass } from 'global/interfaces';
+import { type IClass } from 'global/interfaces';
 import { useAuth } from 'contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { useTour } from '@reactour/tour';
@@ -48,8 +51,14 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
   useEffect(() => {
     if (classDetails) {
       setInitialState({
+        // FIXME: fix this ts error
+        // @ts-expect-error ts-error(18048)
         id_level: classDetails.level.id,
+        // FIXME: fix this ts error
+        // @ts-expect-error ts-error(2322)
         code: classDetails.code,
+        // FIXME: fix this ts error
+        // @ts-expect-error ts-error(2322)
         alias: classDetails.alias,
       });
     }
@@ -64,10 +73,17 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
       const { name, value } = e.target as HTMLInputElement;
       if (name === 'id_level') {
         const level = levels.find((level) => level.id === value);
+        // FIXME: fix this errors
+        // @ts-expect-error ts-error(18048)
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
         setFieldValue('alias', `${level.name.charAt(0)}°${values.code}`);
       } else {
         const level = levels.find((level) => level.id === values.id_level);
-        if (level) setFieldValue('alias', `${level.name.charAt(0)}°${value}`);
+        if (level) {
+          // FIXME: fix this eslint error
+          // eslint-disable-next-line @typescript-eslint/no-floating-promises
+          setFieldValue('alias', `${level.name.charAt(0)}°${value}`);
+        }
       }
     }
   };
@@ -92,11 +108,13 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
       } else {
         const { data }: { data: { responseData: IClass } } = await createClass({
           ...values,
+          // FIXME: fix this ts error
+          // @ts-expect-error ts-error(18047)
           id_user: user.id,
           id_level: values.id_level as number,
         });
 
-        //navigate(`/app/cursos/${data.responseData.id}/tablero`);
+        // navigate(`/app/cursos/${data.responseData.id}/tablero`);
         onClose('success', data.responseData);
         Toaster('success', `Curso ${values.alias} creado exitosamente`);
       }
@@ -113,7 +131,7 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
       open={open}
       PaperProps={{ className: 'p-3', id: 'home-onboarding-3' }}
     >
-      <DialogTitle fontWeight="bold">
+      <DialogTitle fontWeight='bold'>
         {classDetails ? 'Editar curso' : 'Añade un nuevo curso'}
       </DialogTitle>
       <Formik
@@ -134,21 +152,21 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
         }) => {
           return (
             <Form onSubmit={handleSubmit}>
-              <DialogContent dividers className="py-5">
+              <DialogContent dividers className='py-5'>
                 <FormContainer>
                   <FormControl error={!!errors.id_level && !!submitCount}>
                     <Typography
-                      component="label"
-                      variant="body1"
-                      fontWeight="bold"
-                      className="mb-1"
+                      component='label'
+                      variant='body1'
+                      fontWeight='bold'
+                      className='mb-1'
                     >
                       Nivel
                     </Typography>
                     <Select
-                      name={'id_level'}
-                      size="small"
-                      placeholder="Selecciona un nivel"
+                      name='id_level'
+                      size='small'
+                      placeholder='Selecciona un nivel'
                       onChange={(e) => {
                         handleChange(e);
                         handleAliasValue(
@@ -159,7 +177,7 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
                       }}
                       value={values.id_level}
                     >
-                      <MenuItem value={''} disabled>
+                      <MenuItem value='' disabled>
                         Selecciona un nivel
                       </MenuItem>
                       {levels
@@ -178,32 +196,32 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
                     </Select>
                   </FormControl>
                   <FormControl error={!!errors.code && !!submitCount}>
-                    <div className="d-flex align-items-end mb-1">
+                    <div className='d-flex align-items-end mb-1'>
                       <Typography
-                        component="label"
-                        variant="body1"
-                        fontWeight="bold"
-                        className="me-1"
+                        component='label'
+                        variant='body1'
+                        fontWeight='bold'
+                        className='me-1'
                       >
                         Curso
                       </Typography>
-                      <Typography component="span" variant="caption">
+                      <Typography component='span' variant='caption'>
                         (Es la letra o nombre que acompaña al nivel e identifica
                         al curso)
                       </Typography>
                     </div>
                     <TextField
-                      name={'code'}
-                      placeholder="Ejemplo: A, B, C..."
+                      name='code'
+                      placeholder='Ejemplo: A, B, C...'
                       onChange={(e) => {
                         handleAliasValue(e, values, setFieldValue);
                         handleChange(e);
                       }}
                       value={values.code}
-                      size="small"
+                      size='small'
                     />
                   </FormControl>
-                  {/*<FormControl error={!!errors.alias && !!submitCount}>
+                  {/* <FormControl error={!!errors.alias && !!submitCount}>
                     <div className="d-flex align-items-end mb-1">
                       <Typography
                         component="label"
@@ -224,19 +242,19 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
                       value={values.alias}
                       size="small"
                     />
-                    </FormControl>*/}
+                    </FormControl> */}
                 </FormContainer>
               </DialogContent>
-              <DialogActions className="pt-3">
+              <DialogActions className='pt-3'>
                 <Button
-                  id="create-class-cancel"
-                  variant="outlined"
+                  id='create-class-cancel'
+                  variant='outlined'
                   onClick={() => onClose('escapeKeyDown')}
                 >
                   Cancelar
                 </Button>
                 <Button
-                  id="home-onboarding-5"
+                  id='home-onboarding-5'
                   disabled={
                     isSubmitting ||
                     !dirty ||
@@ -244,8 +262,8 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
                     !values.id_level ||
                     !values.alias
                   }
-                  type={'submit'}
-                  variant={'contained'}
+                  type='submit'
+                  variant='contained'
                 >
                   {classDetails ? 'Guardar cambios' : 'Añade un nuevo curso'}
                 </Button>

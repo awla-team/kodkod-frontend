@@ -5,9 +5,9 @@ const EmotionalThermometerOnboarding = [
   {
     content: () => {
       return (
-        <OnboardingContent title="El Termómetro Socioemocional">
-          <div className="d-flex flex-column gap-2">
-            <Typography variant="body1" component="p">
+        <OnboardingContent title='El Termómetro Socioemocional'>
+          <div className='d-flex flex-column gap-2'>
+            <Typography variant='body1' component='p'>
               En la sección “Termómetro socioemocional”, encontrarás una pequeña
               encuesta que debes completar al final de cada clase.{' '}
             </Typography>
@@ -17,14 +17,14 @@ const EmotionalThermometerOnboarding = [
     },
     padding: 0,
     stepInteraction: false,
-    selector: '#board-onboarding-3', //'#thermometer-onboarding-0'
+    selector: '#board-onboarding-3', // '#thermometer-onboarding-0'
   },
   {
     content: () => {
       return (
         <OnboardingContent>
-          <div className="d-flex flex-column gap-2">
-            <Typography variant="body1" component="p">
+          <div className='d-flex flex-column gap-2'>
+            <Typography variant='body1' component='p'>
               Para empezar, asegúrate de que estás completando el registro de la
               fecha correcta.
             </Typography>
@@ -40,8 +40,8 @@ const EmotionalThermometerOnboarding = [
     content: () => {
       return (
         <OnboardingContent>
-          <div className="d-flex flex-column gap-2">
-            <Typography variant="body1" component="p">
+          <div className='d-flex flex-column gap-2'>
+            <Typography variant='body1' component='p'>
               Luego, ingresa tus respuestas a las preguntas.
             </Typography>
           </div>
@@ -56,8 +56,8 @@ const EmotionalThermometerOnboarding = [
     content: () => {
       return (
         <OnboardingContent>
-          <div className="d-flex flex-column gap-2">
-            <Typography variant="body1" component="p">
+          <div className='d-flex flex-column gap-2'>
+            <Typography variant='body1' component='p'>
               Finalmente, haz click en el botón “Guardar termómetro
               socioemocional”
             </Typography>
@@ -73,8 +73,8 @@ const EmotionalThermometerOnboarding = [
     content: () => {
       return (
         <OnboardingContent>
-          <div className="d-flex flex-column gap-2">
-            <Typography variant="body1" component="p">
+          <div className='d-flex flex-column gap-2'>
+            <Typography variant='body1' component='p'>
               Puedes editar registros anteriores de <b>hasta hace un mes</b>{' '}
               navegando a través del botón de calendario.
             </Typography>
@@ -90,13 +90,13 @@ const EmotionalThermometerOnboarding = [
     content: () => {
       return (
         <OnboardingContent>
-          <div className="d-flex flex-column gap-2">
-            <Typography variant="body1" component="p">
+          <div className='d-flex flex-column gap-2'>
+            <Typography variant='body1' component='p'>
               ¡Listo! Recuerda que utilizamos esta información para entregar
               reportes que te ayuden a{' '}
               <b>mejorar el clima escolar de tu clase.</b>
             </Typography>
-            <Typography variant="body1" component="p">
+            <Typography variant='body1' component='p'>
               <b>¡Mientras más lo uses, obtendrás mejores reportes!</b>
             </Typography>
           </div>
@@ -105,18 +105,18 @@ const EmotionalThermometerOnboarding = [
     },
     padding: 0,
     stepInteraction: false,
-    selector: '#reports-tab', //'#thermometer-onboarding-5'
+    selector: '#reports-tab', // '#thermometer-onboarding-5'
   },
   {
     content: () => {
       return (
-        <OnboardingContent title="¡Tutorial completado!">
-          <div className="d-flex flex-column gap-2">
+        <OnboardingContent title='¡Tutorial completado!'>
+          <div className='d-flex flex-column gap-2'>
             <Typography>
               Recuerda que puedes acceder a este y otros tutoriales presionando
               el botón de ayuda.
             </Typography>
-            <Typography fontWeight="bold">
+            <Typography fontWeight='bold'>
               ¡Hay tutoriales distintos en cada vista!
             </Typography>
           </div>

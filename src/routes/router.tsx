@@ -1,7 +1,6 @@
 import { createBrowserRouter, Outlet } from 'react-router-dom';
 import AuthContextProvider from 'contexts/AuthContext';
 import SignIn from './UserAuth/SignIn';
-import SignUp from './UserAuth/SignUp';
 import Home from './Home';
 import ClassContextProvider from './Class/context';
 import Class from './Class';
@@ -14,13 +13,12 @@ import ResetPassword from './UserAuth/ResetPassword';
 import Error404 from '../components/Error404';
 import Progress from './Class/Progress';
 import UserAuthLayout from './UserAuth';
-import { FC } from 'react';
+import { type FC } from 'react';
 import GoalSelection from './Class/GoalSelection';
 import GoalAdventures from './Class/GoalAdventures';
 import CompletedAdventure from './Class/CompletedAdventure';
 import Rewards from 'routes/Class/Rewards';
 import VerifyEmail from './UserAuth/VerifyEmail';
-import Subscriptions from './Profile/Subscriptions';
 import AllCompletedAdventures from './Class/AllCompletedAdventures';
 
 const MainRouterComponent: FC = () => {
@@ -28,11 +26,7 @@ const MainRouterComponent: FC = () => {
   // if (pathname === "/") {
   //   return <Navigate to={"/app"} />;
   // }
-  return (
-    <>
-      <Outlet />
-    </>
-  );
+  return <Outlet />;
 };
 
 export const router = createBrowserRouter([
@@ -54,10 +48,6 @@ export const router = createBrowserRouter([
             path: '/signin',
             index: true,
             element: <SignIn />,
-          },
-          {
-            path: '/signup',
-            element: <SignUp />,
           },
           {
             path: '/forgot-password',
@@ -83,12 +73,6 @@ export const router = createBrowserRouter([
           },
           {
             path: 'perfil',
-            children: [
-              {
-                path: 'suscripciones',
-                element: <Subscriptions />,
-              },
-            ],
           },
           {
             path: 'cursos/:classId',

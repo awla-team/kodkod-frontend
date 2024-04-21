@@ -1,22 +1,26 @@
 import http from 'global/api';
-import { IUser } from 'global/interfaces';
+import { type IUser } from 'global/interfaces';
 import { generateQueryParamsFromObject } from '../utils';
 
 interface UserFilter {
   role?: 'student' | 'teacher';
 }
 
-export const getAuthUser = () => {
-  return http.get('/get-auth-user');
+export const getAuthUser = async () => {
+  return await http.get('/get-auth-user');
 };
 
-export const getUsers = (filter: UserFilter) => {
-  return http.get('/user' + generateQueryParamsFromObject(filter));
+export const getUsers = async (filter: UserFilter) => {
+  return await http.get('/user' + generateQueryParamsFromObject(filter));
 };
 
-export const getUsersByEmail = (params: {
+export const getUsersByEmail = async (params: {
   role: string;
   email_list: string[];
 }) => {
-  return http.get<IUser>('/users-by-email', { params: params });
+  return await http.get<IUser>('/users-by-email', { params });
+};
+
+export const patchUserById = async (userId: number, body: Partial<IUser>) => {
+  return await http.patch('/user/' + userId, body);
 };

@@ -1,4 +1,4 @@
-import { IUser } from 'global/interfaces';
+import { type IUser } from 'global/interfaces';
 
 interface TeacherType extends IUser {
   role: 'teacher';
@@ -7,5 +7,4 @@ interface TeacherType extends IUser {
 export interface AuthContextType {
   user: TeacherType | null;
   logout: () => void;
-  checkUserSubscription: (reason: string, callback: () => void) => void;
 }

@@ -10,13 +10,13 @@ import {
   CardMedia,
 } from '@mui/material';
 import logoWhite from 'assets/images/logo-white.png';
-import { Formik, Form, FormikHelpers } from 'formik';
-import { FormInitialValuesType } from './interfaces';
+import { Formik, Form, type FormikHelpers } from 'formik';
+import { type FormInitialValuesType } from './interfaces';
 import * as Yup from 'yup';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { signIn } from 'services/auth';
 import Toaster from 'utils/Toster';
-import { SignInResponseType } from '../../../global/interfaces';
+import { type SignInResponseType } from '../../../global/interfaces';
 
 const SignIn: React.FC = () => {
   const [formInitialValues] = useState<FormInitialValuesType>({
@@ -58,17 +58,17 @@ const SignIn: React.FC = () => {
     }
   };
   return (
-    <SignInCard variant="outlined">
+    <SignInCard variant='outlined'>
       <div>
         <CardMedia
-          className="p-5"
-          component="img"
+          className='p-5'
+          component='img'
           image={logoWhite}
-          alt="kodkod logo"
+          alt='kodkod logo'
         />
       </div>
-      <CardContent className="px-5 py-4">
-        <Typography component="h4" variant="h5" textAlign="center">
+      <CardContent className='px-5 py-4'>
+        <Typography component='h4' variant='h5' textAlign='center'>
           Ingresa a tu cuenta
         </Typography>
         <Formik
@@ -89,74 +89,64 @@ const SignIn: React.FC = () => {
           }) => {
             return (
               <Form onSubmit={handleSubmit}>
-                <Box display={'flex'} flexDirection={'column'} mt={3}>
+                <Box display='flex' flexDirection='column' mt={3}>
                   <FormControl
                     error={!!errors.email && touched.email}
-                    className="mb-3"
+                    className='mb-3'
                   >
                     <TextField
-                      name={'email'}
+                      name='email'
                       value={values.email}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      type={'email'}
-                      color="primary"
-                      placeholder={'Ingresa tu email'}
-                      variant="outlined"
+                      type='email'
+                      color='primary'
+                      placeholder='Ingresa tu email'
+                      variant='outlined'
                     />
                   </FormControl>
                   <FormControl
                     error={!!errors.password && touched.password}
-                    className="mb-2"
+                    className='mb-2'
                   >
                     <TextField
-                      name={'password'}
+                      name='password'
                       value={values.password}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      color="primary"
-                      type={'password'}
-                      placeholder={'Ingresa tu contraseña'}
-                      variant="outlined"
+                      color='primary'
+                      type='password'
+                      placeholder='Ingresa tu contraseña'
+                      variant='outlined'
                     />
                   </FormControl>
                   <Typography
-                    className="mb-4"
-                    textAlign={'center'}
-                    variant="subtitle2"
+                    className='mb-4'
+                    textAlign='center'
+                    variant='subtitle2'
                     component={RouterLink}
-                    to={'/forgot-password'}
+                    to='/forgot-password'
                   >
                     Olvidé mi contraseña
                   </Typography>
 
                   <Box
-                    className={'action__container'}
-                    display={'flex'}
-                    flexDirection={'column'}
-                    alignItems={'center'}
+                    className='action__container'
+                    display='flex'
+                    flexDirection='column'
+                    alignItems='center'
                     gap={1}
                   >
                     <Button
                       disabled={isSubmitting || !isValid || !dirty}
                       fullWidth
-                      size="large"
-                      className={'login__button'}
-                      variant={'contained'}
-                      type={'submit'}
+                      size='large'
+                      className='login__button'
+                      variant='contained'
+                      type='submit'
                     >
                       Iniciar sesión
                     </Button>
-                    <Typography component="span" variant="subtitle2">
-                      ¿Aún no tienes una cuenta?{' '}
-                      <Typography
-                        component={RouterLink}
-                        variant="subtitle2"
-                        to={'/signup'}
-                      >
-                        Registrate
-                      </Typography>
-                    </Typography>
                   </Box>
                 </Box>
               </Form>

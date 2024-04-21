@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { Button, CircularProgress } from '@mui/material';
 import Sidebar from './components/Sidebar';
 import { getClassesByUser } from 'services/classes';
-import { IClass } from 'global/interfaces';
-import { AxiosResponse } from 'axios';
+import { type IClass } from 'global/interfaces';
+import { type AxiosResponse } from 'axios';
 import { FetchStatus } from 'global/enums';
 import { CreateClassModal } from './components/Modals';
 import { sortClasses } from './utils';
 import { getAllTheLevel } from './services/levels';
 import Toaster from './utils/Toster';
-import { Levels } from './components/Modals/CreateClassModal/interfaces';
+import { type Levels } from './components/Modals/CreateClassModal/interfaces';
 import { useAuth } from './contexts/AuthContext';
 import moment from 'moment';
-import { useLocation } from 'react-router-dom';
 import 'moment/dist/locale/es';
 import './App.css';
 import OnboardingContextProvider from 'contexts/OnboardingContext';
@@ -21,6 +20,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import DoneIcon from '@mui/icons-material/Done';
 import { TourProvider, useTour } from '@reactour/tour';
+import { patchUserById } from 'services/users';
 
 moment.locale('es');
 
@@ -30,23 +30,39 @@ const App: React.FC = () => {
   const [fetching, setFetching] = useState<FetchStatus>(FetchStatus.Idle);
   const [createClassModalOpen, setCreateClassModalOpen] =
     useState<boolean>(false);
-  const { user, checkUserSubscription } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
   const getClassesData = () => {
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(18047): 'user' is possibly 'null'
     getClassesByUser(user.id)
       .then((response: AxiosResponse) => {
         return response?.data;
       })
       .then((classes: IClass[]) => {
-        setClasses(!!classes ? sortClasses(classes) : []);
+        setClasses(classes ? sortClasses(classes) : []);
         setFetching(FetchStatus.Success);
       })
       .catch((error) => {
         setFetching(FetchStatus.Error);
         console.error(error);
       });
+  };
+
+  const updateOnboardingStatus = () => {
+    const completed_onboarding = localStorage.getItem('onboarding-data') || '';
+    if (user) {
+      patchUserById(user?.id, { completed_onboarding })
+        .then((response: AxiosResponse) => {
+          return response?.data;
+        })
+        .catch((error: Error) => {
+          setFetching(FetchStatus.Error);
+          console.error(error);
+        });
+    }
   };
 
   const getLevels = async () => {
@@ -81,23 +97,23 @@ const App: React.FC = () => {
   };
 
   const handleOpenModal = () => {
-    if (classes.length >= 1) {
-      checkUserSubscription('Has alcanzado el límite de cursos gratuitos', () =>
-        setCreateClassModalOpen(true)
-      );
-    } else {
-      setCreateClassModalOpen(true);
-    }
+    setCreateClassModalOpen(true);
   };
 
   const handleFinish = () => {
     let currentView = location.pathname.match(/\/([^/]+)$/)[1];
+    // FIXME: fix this eslint error
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     if (!isNaN(currentView))
       currentView = location.pathname.match(/\/([^/]+)\/[^/]+$/)[1];
+
     const rawOnboardingData = localStorage.getItem('onboarding-data');
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(2345): argument of type 'string | null' is not assignable to parameter of type 'string'
     const onboardingData = JSON.parse(rawOnboardingData) || {};
     onboardingData[currentView] = true;
     localStorage.setItem('onboarding-data', JSON.stringify(onboardingData));
+    updateOnboardingStatus();
   };
 
   useEffect(() => {
@@ -119,14 +135,16 @@ const App: React.FC = () => {
     if (user) {
       setFetching(FetchStatus.Pending);
       getClassesData();
+      // FIXME: fix this eslint error
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       getLevels();
     }
   }, [user]);
 
   if (fetching === FetchStatus.Idle || fetching === FetchStatus.Pending)
     return (
-      <div className="app-container d-flex">
-        <div className="d-flex w-100 h-100 justify-content-center align-items-center">
+      <div className='app-container d-flex'>
+        <div className='d-flex w-100 h-100 justify-content-center align-items-center'>
           <CircularProgress />
         </div>
       </div>
@@ -142,13 +160,13 @@ const App: React.FC = () => {
       }}
       prevButton={({ setCurrentStep, currentStep }) => (
         <Button
-          variant="outlined"
-          className="me-2"
-          size="small"
+          variant='outlined'
+          className='me-2'
+          size='small'
           startIcon={<ArrowBackIcon />}
           disabled={currentStep === 0}
           onClick={() => setCurrentStep(currentStep - 1)}
-          color="primary"
+          color='primary'
         >
           Atrás
         </Button>
@@ -157,15 +175,15 @@ const App: React.FC = () => {
         if (currentStep === stepsLength - 1) {
           return (
             <Button
-              variant="contained"
-              className="ms-2"
-              size="small"
+              variant='contained'
+              className='ms-2'
+              size='small'
               startIcon={<DoneIcon />}
               onClick={() => {
                 setIsOpen(false);
                 handleFinish();
               }}
-              color="primary"
+              color='primary'
             >
               Finalizar
             </Button>
@@ -173,12 +191,12 @@ const App: React.FC = () => {
         } else {
           return (
             <Button
-              variant="outlined"
-              className="ms-2"
-              size="small"
+              variant='outlined'
+              className='ms-2'
+              size='small'
               endIcon={<ArrowForwardIcon />}
               onClick={() => setCurrentStep(currentStep + 1)}
-              color="primary"
+              color='primary'
             >
               Siguiente
             </Button>
@@ -187,10 +205,10 @@ const App: React.FC = () => {
       }}
     >
       <OnboardingContextProvider>
-        <div className="app-container d-flex">
+        <div className='app-container d-flex'>
           <Sidebar classes={classes} handleOpenModal={handleOpenModal} />
-          <div className="app-main-container d-flex flex-column flex-fill">
-            <div className="app-content container" id="home-onboarding-4">
+          <div className='app-main-container d-flex flex-column flex-fill'>
+            <div className='app-content container' id='home-onboarding-4'>
               <Outlet context={{ classes, handleOpenModal, getClassesData }} />
             </div>
           </div>

@@ -1,5 +1,5 @@
-import { AxiosPromise } from 'axios';
-import { IReward } from 'global/interfaces';
+import { type AxiosPromise } from 'axios';
+import { type IReward } from 'global/interfaces';
 
 export interface IRewardCardProps {
   id?: string | number;

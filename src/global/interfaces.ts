@@ -1,8 +1,5 @@
 import 'styled-components';
-import { Theme } from '@mui/material/styles';
-import initMercadoPago, {
-  MercadoPagoInstance,
-} from '@mercadopago/sdk-react/mercadoPago/initMercadoPago';
+import { type Theme } from '@mui/material/styles';
 
 interface CustomTheme {
   bg?: {
@@ -34,18 +31,6 @@ declare module '@mui/material/styles/createPalette' {
 
 declare module 'styled-components' {
   export interface DefaultTheme extends Theme {}
-}
-
-export interface ISubscription {
-  id: string;
-  reason: string;
-  auto_recurring: {
-    frequency: number;
-    transaction_amount: number;
-    start_date: string;
-  };
-  status: string;
-  init_point: string;
 }
 
 export interface IGoal {
@@ -117,9 +102,6 @@ export interface IUser {
   first_name: string;
   payer_id: number;
   avatar?: string;
-  subscription_start: string;
-  subscription_end: string;
-  is_subscription_active: boolean;
   last_name: string;
   email: string;
   password: string;
@@ -129,13 +111,13 @@ export interface IUser {
   academic_subject: string;
   user_has_rewards?: IUserHasReward[];
   missions?: IMission[];
+  completed_onboarding?: string;
   verified: boolean;
   is_superuser: boolean;
 }
 
 export interface IAdventure {
   id: number;
-  demo: boolean;
   title: string;
   thumbnail: string;
   finish_img_url: string;
@@ -208,26 +190,6 @@ export interface ISchool {
   name: string;
   phone: string;
   commune?: string;
-}
-
-export interface IPlan {
-  application_id: number;
-  auto_recurring: {
-    frequency: number;
-    currency_id: string;
-    transaction_amount: number;
-    frequency_type: string;
-  };
-  back_url: string;
-  collector_id: number;
-  date_created: string;
-  external_reference: string;
-  id: string;
-  init_point: string;
-  last_modified: string;
-  reason: string;
-  status: string;
-  subscribed: number;
 }
 
 export interface SignInResponseType {

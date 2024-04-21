@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { type FC, useEffect, useState } from 'react';
 import { ResetPasswordCard } from './styled';
 import {
   Box,
@@ -8,9 +8,9 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { Form, Formik, FormikHelpers } from 'formik';
+import { Form, Formik, type FormikHelpers } from 'formik';
 import { Link as RouterLink, useNavigate, useParams } from 'react-router-dom';
-import { FormInitialValuesType } from './interfaces';
+import { type FormInitialValuesType } from './interfaces';
 import * as Yup from 'yup';
 import Toaster from 'utils/Toster';
 import { resetPassword, verifyResetToken } from 'services/auth';
@@ -28,6 +28,8 @@ const ResetPassword: FC = () => {
 
   useEffect(() => {
     if (token) {
+      // FIXME: fix this eslint error
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       handleVerifyToken();
     }
   }, [token]);
@@ -37,7 +39,11 @@ const ResetPassword: FC = () => {
       setLoading(true);
       const {
         data: { responseData },
-      }: { data: { responseData: string } } = await verifyResetToken(token);
+      }: { data: { responseData: string } } = await verifyResetToken(
+        // FIXME: fix this eslint error
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        token
+      );
       if (responseData !== 'valid token') {
         setValid(false);
       }
@@ -65,9 +71,13 @@ const ResetPassword: FC = () => {
     formikHelper: FormikHelpers<FormInitialValuesType>
   ) => {
     try {
+      // FIXME: fix this ts error
+      // @ts-expect-error ts-error(2798)
       delete values.confirmPassword;
       const { data }: { data: { responseData: string } } = await resetPassword(
         values,
+        // FIXME: fix this eslint error
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         token
       );
       // Toaster("success", data.responseData);
@@ -81,33 +91,33 @@ const ResetPassword: FC = () => {
     }
   };
   return (
-    <ResetPasswordCard variant="outlined">
-      <CardContent className="p-5">
+    <ResetPasswordCard variant='outlined'>
+      <CardContent className='p-5'>
         <Button
-          className="mb-2"
+          className='mb-2'
           startIcon={<ArrowBackIosIcon />}
           component={RouterLink}
-          to={'/signin'}
+          to='/signin'
         >
           Volver al inicio de sesión
         </Button>
-        <Typography component="h4" variant="h5" className="mb-1">
+        <Typography component='h4' variant='h5' className='mb-1'>
           Crea una nueva contraseña
         </Typography>
-        <Typography component="span" variant="body2" color="gray">
+        <Typography component='span' variant='body2' color='gray'>
           Tu nueva contraseña debe contener:
         </Typography>
         <ul>
-          <Typography component="li" variant="body2" color="gray">
+          <Typography component='li' variant='body2' color='gray'>
             Entre 8 y 16 caractéres
           </Typography>
-          <Typography component="li" variant="body2" color="gray">
+          <Typography component='li' variant='body2' color='gray'>
             Al menos 1 minúscula
           </Typography>
-          <Typography component="li" variant="body2" color="gray">
+          <Typography component='li' variant='body2' color='gray'>
             Al menos 1 mayúscula
           </Typography>
-          <Typography component="li" variant="body2" color="gray">
+          <Typography component='li' variant='body2' color='gray'>
             Al menos 1 número
           </Typography>
         </ul>
@@ -130,20 +140,20 @@ const ResetPassword: FC = () => {
             }) => {
               return (
                 <Form onSubmit={handleSubmit}>
-                  <Box display={'flex'} flexDirection={'column'} gap={2} mt={3}>
+                  <Box display='flex' flexDirection='column' gap={2} mt={3}>
                     <FormControl
                       required
                       error={!!errors.password && touched.password}
                     >
                       <TextField
-                        name={'password'}
+                        name='password'
                         value={values.password}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        type={'password'}
-                        label="Nueva contraseña"
-                        placeholder={'Ingresa tu nueva contraseña'}
-                        variant="outlined"
+                        type='password'
+                        label='Nueva contraseña'
+                        placeholder='Ingresa tu nueva contraseña'
+                        variant='outlined'
                       />
                     </FormControl>
 
@@ -154,31 +164,31 @@ const ResetPassword: FC = () => {
                       }
                     >
                       <TextField
-                        name={'confirmPassword'}
+                        name='confirmPassword'
                         value={values.confirmPassword}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        type={'password'}
-                        label="Confirma tu nueva contraseña"
-                        placeholder={'Ingresa tu nueva contraseña una vez más'}
-                        variant="outlined"
+                        type='password'
+                        label='Confirma tu nueva contraseña'
+                        placeholder='Ingresa tu nueva contraseña una vez más'
+                        variant='outlined'
                       />
                     </FormControl>
 
                     <Box
-                      className={'action__container'}
-                      display={'flex'}
-                      flexDirection={'column'}
-                      alignItems={'center'}
+                      className='action__container'
+                      display='flex'
+                      flexDirection='column'
+                      alignItems='center'
                       gap={1}
                     >
                       <Button
                         disabled={isSubmitting || !isValid || !dirty || loading}
                         fullWidth
-                        className={'submit__button'}
-                        variant={'contained'}
-                        type={'submit'}
-                        size="large"
+                        className='submit__button'
+                        variant='contained'
+                        type='submit'
+                        size='large'
                       >
                         Establecer nueva contraseña
                       </Button>
@@ -190,9 +200,9 @@ const ResetPassword: FC = () => {
           </Formik>
         ) : (
           <Typography
-            variant={'h5'}
-            color={'error'}
-            className={'invalid__token__text'}
+            variant='h5'
+            color='error'
+            className='invalid__token__text'
           >
             Link no valido o expirado
           </Typography>

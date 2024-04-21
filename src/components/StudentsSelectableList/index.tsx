@@ -7,11 +7,12 @@ import {
   Button,
   Typography,
 } from '@mui/material';
-import { StudentsSelectableListProps } from './interfaces';
+import { type StudentsSelectableListProps } from './interfaces';
 import { ClassHasAdventureContext } from 'routes/Class/Adventures/Adventure/provider';
 import Toaster from 'utils/Toster';
 import { missionAccomplished } from 'services/missions';
 import { StudentListContainer } from './styled';
+import { type StudentType } from 'components/StudentsList/interfaces';
 
 export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
   stage,
@@ -19,12 +20,12 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
   onSave,
   handleClose,
 }) => {
-  const [selected, setSelected] = useState<(number | string)[]>([]);
-  const [defaultSelected, setDefaultSelected] = useState<(number | string)[]>(
-    []
-  );
+  const [selected, setSelected] = useState<Array<number | string>>([]);
+  const [defaultSelected, setDefaultSelected] = useState<
+    Array<number | string>
+  >([]);
   const { students } = useContext(ClassHasAdventureContext);
-  const [studentList, setStudentList] = useState([]);
+  const [studentList, setStudentList] = useState<StudentType[]>([]);
 
   useEffect(() => {
     !!students && setStudentList(students);
@@ -57,9 +58,9 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
 
   const handleAllSelect = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
     const { checked } = target;
-    const all: (number | string)[] = [];
+    const all: Array<number | string> = [];
     if (checked) {
-      studentList.forEach((res, index) => {
+      studentList.forEach((res) => {
         if (!defaultSelected.includes(res.id)) all.push(res.id);
       });
       return setSelected(all);
@@ -73,12 +74,12 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
       await missionAccomplished({
         studentIds: selected,
         id_mission: mission.id as number,
-        id_stage: stage.id as number,
+        id_stage: stage.id,
       });
       Toaster('success', 'Misión completada exitosamente');
       onSave(stage.id);
       handleClose();
-    } catch (error: any) {
+    } catch (error) {
       console.error(error);
       Toaster('error', 'Hubo un error al completar las misiones');
     }
@@ -86,32 +87,36 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
 
   return (
     <StudentListContainer
-      id="mission-complete-modal-list"
-      className="d-flex flex-column overflow-hidden"
+      id='mission-complete-modal-list'
+      className='d-flex flex-column overflow-hidden'
     >
       <TextField
-        className="mb-3"
-        variant={'standard'}
-        placeholder="Buscar por nombre o apellido"
+        className='mb-3'
+        variant='standard'
+        placeholder='Buscar por nombre o apellido'
         fullWidth
         onChange={(event) => {
           if (!event.target.value) return setStudentList(students);
           setStudentList(
-            studentList.filter((student) =>
-              `${student.first_name} ${student.last_name}`.includes(
-                event.target.value
-              )
+            studentList.filter(
+              (student) =>
+                `${student.first_name}`
+                  .toLowerCase()
+                  .startsWith(event.target.value.toLowerCase()) ||
+                `${student.last_name}`
+                  .toLowerCase()
+                  .startsWith(event.target.value.toLowerCase())
             )
           );
         }}
       />
-      <div className="d-flex flex-column flex-fill gap-4 overflow-hidden">
-        <div className="d-flex w-100 align-items-center justify-content-between">
+      <div className='d-flex flex-column flex-fill gap-4 overflow-hidden'>
+        <div className='d-flex w-100 align-items-center justify-content-between'>
           <FormControlLabel
-            id="mission-complete-modal-all"
+            id='mission-complete-modal-all'
             sx={{ marginLeft: 0 }}
-            label="Seleccionar a todos"
-            className="mb-3"
+            label='Seleccionar a todos'
+            className='mb-3'
             control={
               <Checkbox
                 onChange={handleAllSelect}
@@ -121,7 +126,7 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
                 checked={
                   !!studentList.length &&
                   studentList.every(
-                    (res, index) =>
+                    (res) =>
                       selected.includes(res.id) ||
                       defaultSelected.includes(res.id)
                   )
@@ -129,25 +134,25 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
               />
             }
           />
-          <div className="d-flex flex-column">
-            <div className="d-flex gap-2 justify-content-end">
+          <div className='d-flex flex-column'>
+            <div className='d-flex gap-2 justify-content-end'>
               <Button
-                id="mission-complete-modal-cancel"
+                id='mission-complete-modal-cancel'
                 onClick={handleClose}
-                variant="outlined"
+                variant='outlined'
               >
                 Cancelar
               </Button>
               <Button
-                id="mission-complete-modal-save"
+                id='mission-complete-modal-save'
                 onClick={handleSave}
-                variant="contained"
+                variant='contained'
                 disabled={!Object.keys(selected).length}
               >
                 Guardar cambios
               </Button>
             </div>
-            <Typography component="span" variant="body2" textAlign="end">
+            <Typography component='span' variant='body2' textAlign='end'>
               <b>
                 {Object.keys(selected).length +
                   Object.keys(defaultSelected).length}
@@ -156,9 +161,9 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
             </Typography>
           </div>
         </div>
-        <div className="d-flex flex-column gap-3 overflow-auto">
+        <div className='d-flex flex-column gap-3 overflow-auto'>
           {studentList.map((res, index) => (
-            <div key={index} className="d-flex gap-2 align-items-center">
+            <div key={index} className='d-flex gap-2 align-items-center'>
               <Checkbox
                 onChange={(e) => handleCheck(e, res.id)}
                 disabled={defaultSelected.includes(res.id)}
@@ -166,14 +171,14 @@ export const StudentsSelectableList: React.FC<StudentsSelectableListProps> = ({
                   selected.includes(res.id) || defaultSelected.includes(res.id)
                 }
               />
-              <div className="d-flex align-items-center gap-3">
-                <Avatar className="student-avatar">{`${res.first_name[0]}${res.last_name[0]}`}</Avatar>
-                <div className="d-flex flex-column">
+              <div className='d-flex align-items-center gap-3'>
+                <Avatar className='student-avatar'>{`${res.first_name[0]}${res.last_name[0]}`}</Avatar>
+                <div className='d-flex flex-column'>
                   <Typography
-                    component="span"
-                    variant="body1"
+                    component='span'
+                    variant='body1'
                   >{`${res.first_name} ${res.last_name}`}</Typography>
-                  <Typography component="span" variant="body2" color="#969696">
+                  <Typography component='span' variant='body2' color='#969696'>
                     {res.email}
                   </Typography>
                 </div>

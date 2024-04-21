@@ -58,26 +58,26 @@ const Class: React.FC = () => {
               className={`nav__tab ${
                 pathname.includes(tab.path) ? 'active' : ''
               } ${tab.disabled ? 'disabled' : ''}`}
-              role="button"
+              role='button'
               onClick={() => navigate(tab.path)}
             >
               {tab.svg}
-              <Typography fontWeight="bold" component="span" variant="body2">
+              <Typography fontWeight='bold' component='span' variant='body2'>
                 {tab.title}
               </Typography>
             </Box>
           ) : (
-            <Tooltip key={`tab-${i}`} arrow title="¡Próximamente!">
+            <Tooltip key={`tab-${i}`} arrow title='¡Próximamente!'>
               <Box
                 id={tab.id}
                 className={`nav__tab ${
                   pathname.includes(tab.path) ? 'active' : ''
                 } ${tab.disabled ? 'disabled' : ''}`}
-                role="button"
+                role='button'
                 onClick={() => {}}
               >
                 {tab.svg}
-                <Typography fontWeight="bold" component="span" variant="body2">
+                <Typography fontWeight='bold' component='span' variant='body2'>
                   {tab.title}
                 </Typography>
               </Box>
@@ -86,8 +86,8 @@ const Class: React.FC = () => {
         )}
       </NavTabsContainer>
       <Box
-        role="tabpanel"
-        className="w-100 overflow-auto"
+        role='tabpanel'
+        className='w-100 overflow-auto'
         sx={{ marginTop: 'calc(64px + 36px)', paddingBottom: '36px' }}
       >
         <Outlet context={{ classDetails, students, levels }} />

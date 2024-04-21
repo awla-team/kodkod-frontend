@@ -1,5 +1,5 @@
-import { FC } from 'react';
-import { ConfirmationModalProps } from './interface';
+import { type FC } from 'react';
+import { type ConfirmationModalProps } from './interface';
 import {
   Button,
   Dialog,
@@ -19,17 +19,17 @@ const ConfirmationModal: FC<ConfirmationModalProps> = ({
   loading,
 }) => {
   return (
-    <Dialog open={open} PaperProps={{ className: 'p-3' }} maxWidth="sm">
-      <DialogTitle fontWeight="bold">{title || 'Confirmación'}</DialogTitle>
-      <DialogContent className="py-4">
+    <Dialog open={open} PaperProps={{ className: 'p-3' }} maxWidth='sm'>
+      <DialogTitle fontWeight='bold'>{title || 'Confirmación'}</DialogTitle>
+      <DialogContent className='py-4'>
         <div>{description}</div>
       </DialogContent>
-      <DialogActions className="pt-3">
-        <Button variant={'outlined'} onClick={() => onClose()}>
+      <DialogActions className='pt-3'>
+        <Button variant='outlined' onClick={() => onClose()}>
           {cancelText || 'No, mantener'}
         </Button>
         <Button
-          variant={'contained'}
+          variant='contained'
           disabled={loading}
           onClick={() => callBackFunction()}
         >

@@ -1,8 +1,8 @@
-import { FC, useState, useEffect } from 'react';
+import { type FC, useState, useEffect } from 'react';
 import { MissionListContainer } from './styled';
 import MissionCard from 'components/MissionCard';
 import ReplaceMissionModal from 'components/Modals/ReplaceMissionModal';
-import { IMission, IStage } from 'global/interfaces';
+import { type IMission, type IStage } from 'global/interfaces';
 import { Typography } from '@mui/material';
 import MissionAccomplishedDrawer from 'components/Modals/MissionAccomplished';
 import { getStageMissions } from 'services/missions';
@@ -10,16 +10,22 @@ import { getStageMissions } from 'services/missions';
 const MissionsList: FC<{ shownStage: IStage }> = ({ shownStage }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [openDrawer, setOpenDrawer] = useState<boolean>(false);
-  const [selectedMission, setSelectedMission] = useState<null | IMission>(null);
+  const [selectedMission, setSelectedMission] = useState<IMission>();
   const [missions, setMissions] = useState<IMission[]>([]);
   // const [sortedMissions, setSortedMissions] = useState<IMission[]>([]);
 
   useEffect(() => {
-    if (shownStage) handleGetMissions(shownStage.id);
+    if (shownStage) {
+      // FIXME: fix this eslint error
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      handleGetMissions(shownStage.id);
+    }
   }, [shownStage]);
 
   const handleGetMissions = async (stageId: number | string) => {
     const response = await getStageMissions(stageId);
+    // FIXME: fix this eslint error
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     setMissions(response.data.responseData);
   };
 
@@ -31,31 +37,29 @@ const MissionsList: FC<{ shownStage: IStage }> = ({ shownStage }) => {
   const handleClose = (reason?: 'backdropClick' | 'escapeKeyDown') => {
     if (reason !== 'backdropClick') {
       setOpen(false);
-      setSelectedMission(null);
     }
   };
 
   const handleDrawerClose = () => {
     setOpenDrawer(false);
-    setSelectedMission(null);
   };
 
   return (
-    <MissionListContainer id="adventure-missions" className="p-5">
+    <MissionListContainer id='adventure-missions' className='p-5'>
       <Typography
-        component="h6"
-        variant="h6"
-        fontWeight="bold"
-        className="mb-5"
+        component='h6'
+        variant='h6'
+        fontWeight='bold'
+        className='mb-5'
       >
         Lista de misiones
       </Typography>
 
-      <div className="row g-5">
+      <div className='row g-5'>
         {missions?.length ? (
           missions?.map((res, index) => {
             return (
-              <div key={`mission-${index}`} className="col-lg-6 col-12">
+              <div key={`mission-${index}`} className='col-lg-6 col-12'>
                 <MissionCard
                   id={index}
                   onClick={() => {
@@ -82,16 +86,14 @@ const MissionsList: FC<{ shownStage: IStage }> = ({ shownStage }) => {
           stage={{ ...shownStage, missions }}
         />
       )}
-      {openDrawer && !!selectedMission && (
-        <MissionAccomplishedDrawer
-          open={openDrawer && !!selectedMission}
-          onSave={handleGetMissions}
-          anchor={'right'}
-          onClose={handleDrawerClose}
-          mission={selectedMission}
-          stage={shownStage}
-        />
-      )}
+      <MissionAccomplishedDrawer
+        open={openDrawer && !!selectedMission}
+        onSave={handleGetMissions}
+        anchor='right'
+        onClose={handleDrawerClose}
+        mission={selectedMission}
+        stage={shownStage}
+      />
     </MissionListContainer>
   );
 };

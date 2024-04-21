@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Typography, TextField } from '@mui/material';
-import { IRewardCardProps } from './interfaces';
+import { type IRewardCardProps } from './interfaces';
 import {
   EditRewardActionsContainer,
   EditRewardButton,
@@ -34,6 +34,7 @@ const RewardCard: React.FC<IRewardCardProps> = ({
   const [newTitle, setNewTitle] = useState(title);
   const [newDescription, setNewDescription] = useState(description);
   const [openDrawer, setOpenDrawer] = useState(false);
+  const [newPoints, setNewPoints] = useState<number>(requiredPoints as number);
 
   const cancelEditMode = () => {
     setNewTitle(title);
@@ -49,17 +50,18 @@ const RewardCard: React.FC<IRewardCardProps> = ({
 
   return (
     <>
-      <RewardCardContainer variant="outlined">
+      <RewardCardContainer variant='outlined'>
         <EditRewardActionsContainer>
           {editMode && (
             <>
               <EditRewardButton
-                color="inherit"
-                variant="contained"
+                color='inherit'
+                variant='contained'
                 onClick={() => {
                   onSave(rewardId, {
                     title: newTitle,
                     description: newDescription,
+                    required_points: newPoints,
                   })
                     .then(() => {
                       setEditMode(false);
@@ -74,8 +76,8 @@ const RewardCard: React.FC<IRewardCardProps> = ({
                 Guardar
               </EditRewardButton>
               <EditRewardButton
-                color="inherit"
-                variant="contained"
+                color='inherit'
+                variant='contained'
                 onClick={cancelEditMode}
                 startIcon={<CloseIcon />}
               >
@@ -86,8 +88,8 @@ const RewardCard: React.FC<IRewardCardProps> = ({
           {!editMode && !!rewardId && (
             <EditRewardButton
               id={`reward-card-edit-${id}`}
-              color="inherit"
-              variant="contained"
+              color='inherit'
+              variant='contained'
               onClick={activateEditMode}
               startIcon={<EditIcon />}
             >
@@ -106,31 +108,35 @@ const RewardCard: React.FC<IRewardCardProps> = ({
         >
           <RewardCardHeader>
             <div id={`reward-card-indicator-${id}`}>
-              <UsedRewardCount count={usedCount} />
+              <UsedRewardCount
+                // FIXME: fix this ts error
+                // @ts-expect-error ts-error(2322)
+                count={usedCount}
+              />
             </div>
             {!!order && (
               <Typography
-                color="white"
-                variant="body1"
-                fontWeight="bold"
-                fontSize="32px"
+                color='white'
+                variant='body1'
+                fontWeight='bold'
+                fontSize='32px'
               >
                 {order}
               </Typography>
             )}
           </RewardCardHeader>
           <RewardCardContent>
-            <RewardImg src={icon} alt="" />
-            <div className="d-flex flex-column align-items-center justify-content-end">
-              <div className="d-flex flex-column align-items-center">
+            <RewardImg src={icon} alt='' />
+            <div className='d-flex flex-column align-items-center justify-content-end'>
+              <div className='d-flex flex-column align-items-center'>
                 {editMode ? (
                   <TextField
-                    className="mb-1"
-                    size="small"
-                    type="text"
+                    className='mb-1'
+                    size='small'
+                    type='text'
                     value={newTitle}
                     placeholder={title}
-                    color="primary"
+                    color='primary'
                     sx={{
                       input: { padding: '4px' },
                     }}
@@ -140,11 +146,11 @@ const RewardCard: React.FC<IRewardCardProps> = ({
                   />
                 ) : (
                   <Typography
-                    className="mb-1"
-                    variant="body1"
-                    fontWeight="bold"
-                    fontSize="20px"
-                    textAlign="center"
+                    className='mb-1'
+                    variant='body1'
+                    fontWeight='bold'
+                    fontSize='20px'
+                    textAlign='center'
                     sx={{
                       marginBottom: '8px',
                     }}
@@ -164,9 +170,9 @@ const RewardCard: React.FC<IRewardCardProps> = ({
                   />
                 ) : (
                   <Typography
-                    variant="body2"
-                    textAlign="center"
-                    fontSize="16px"
+                    variant='body2'
+                    textAlign='center'
+                    fontSize='16px'
                     sx={{
                       padding: '8px',
                     }}
@@ -178,6 +184,11 @@ const RewardCard: React.FC<IRewardCardProps> = ({
               <RewardPoints
                 id={`reward-card-points-${id}`}
                 points={requiredPoints as number}
+                editMode={editMode}
+                newPoints={newPoints}
+                onChangeNewPoints={(value: number) => {
+                  setNewPoints(value);
+                }}
               />
             </div>
           </RewardCardContent>

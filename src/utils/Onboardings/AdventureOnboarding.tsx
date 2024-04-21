@@ -5,20 +5,20 @@ const AdventureOnboarding = [
   {
     content: () => {
       return (
-        <OnboardingContent title="Trabajando con una aventura">
-          <div className="d-flex flex-column gap-2">
-            <Typography variant="body1" component="p">
+        <OnboardingContent title='Trabajando con una aventura'>
+          <div className='d-flex flex-column gap-2'>
+            <Typography variant='body1' component='p'>
               Aquí la dinámica es simple:
             </Typography>
-            <Typography variant="body1" component="p">
+            <Typography variant='body1' component='p'>
               Tú proyectas las misiones, los estudiantes las completan, avanzan
               de etapas y obtienen recompensas.
             </Typography>
-            <Typography variant="body1" component="p">
+            <Typography variant='body1' component='p'>
               Todo esto mientras aumentan su motivación y desarrollan
               habilidades transversales.
             </Typography>
-            <Typography variant="body1" component="p">
+            <Typography variant='body1' component='p'>
               Para entenderlas mejor, te mostraremos la estructura de una
               aventura.
             </Typography>
@@ -33,8 +33,8 @@ const AdventureOnboarding = [
     content: () => {
       return (
         <OnboardingContent>
-          <div className="d-flex flex-column gap-3">
-            <Typography variant="body1" component="p">
+          <div className='d-flex flex-column gap-3'>
+            <Typography variant='body1' component='p'>
               En primer lugar, una aventura está compuesta por <b>etapas</b>.
               Las etapas nos permiten <b>dosificar el trabajo</b> temporalmente
               y avanzar al <b>ritmo de la clase</b>.
@@ -51,13 +51,13 @@ const AdventureOnboarding = [
     content: () => {
       return (
         <OnboardingContent>
-          <div className="d-flex flex-column gap-3">
-            <Typography variant="body1" component="p">
+          <div className='d-flex flex-column gap-3'>
+            <Typography variant='body1' component='p'>
               A su vez, las etapas están compuestas por <b>misiones</b>. Las
               misiones son <b>interacciones positivas</b> que los estudiantes
               deben realizar <b>durante la clase.</b>
             </Typography>
-            <Typography variant="body1" component="p" fontWeight="bold">
+            <Typography variant='body1' component='p' fontWeight='bold'>
               ¡Te recomendamos proyectarlas al inicio de cada clase!
             </Typography>
           </div>
@@ -68,7 +68,7 @@ const AdventureOnboarding = [
     selector: '#adventure-missions',
     padding: 8,
   },
-  /*{
+  /* {
     content: () => {
       return (
         <OnboardingContent>
@@ -81,13 +81,13 @@ const AdventureOnboarding = [
     stepInteraction: false,
     selector: '#adventure-mission-change',
     padding: 8,
-  },*/
+  }, */
   {
     content: () => {
       return (
         <OnboardingContent>
-          <div className="d-flex flex-column gap-3">
-            <Typography variant="body1" component="p">
+          <div className='d-flex flex-column gap-3'>
+            <Typography variant='body1' component='p'>
               Cuando veas que el curso ha completado la mayoría de las misiones
               de la etapa, puedes <b>desbloquear</b> la siguiente, con nuevas y
               divertidas misiones.
@@ -104,8 +104,8 @@ const AdventureOnboarding = [
     content: () => {
       return (
         <OnboardingContent>
-          <div className="d-flex flex-column gap-3">
-            <Typography variant="body1" component="p">
+          <div className='d-flex flex-column gap-3'>
+            <Typography variant='body1' component='p'>
               Desbloquear una nueva etapa queda a tu criterio ¡Pero no te
               preocupes!{' '}
               <b>
@@ -126,14 +126,14 @@ const AdventureOnboarding = [
     content: () => {
       return (
         <OnboardingContent>
-          <div className="d-flex flex-column gap-3">
-            <Typography variant="body1" component="p">
+          <div className='d-flex flex-column gap-3'>
+            <Typography variant='body1' component='p'>
               Finalmente, cuando llegues a la última etapa, podrás ponerle fin a
               la aventura presionando el botón <b>“Finalizar aventura”</b>. Al
               hacerlo, te mostraremos un <b>resumen del trabajo realizado</b>{' '}
               por tus estudiantes.
             </Typography>
-            <Typography variant="body1" component="p">
+            <Typography variant='body1' component='p'>
               ¡Es una oportunidad genial para{' '}
               <b>
                 proyectarlo frente al curso, reconocer el esfuerzo de tus
@@ -152,13 +152,13 @@ const AdventureOnboarding = [
   {
     content: () => {
       return (
-        <OnboardingContent title="¡Tutorial completado!">
-          <div className="d-flex flex-column gap-2">
+        <OnboardingContent title='¡Tutorial completado!'>
+          <div className='d-flex flex-column gap-2'>
             <Typography>
               Recuerda que puedes acceder a este y otros tutoriales presionando
               el botón de ayuda.
             </Typography>
-            <Typography fontWeight="bold">
+            <Typography fontWeight='bold'>
               ¡Hay tutoriales distintos en cada vista!
             </Typography>
           </div>

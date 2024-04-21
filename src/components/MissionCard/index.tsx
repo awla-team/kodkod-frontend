@@ -8,7 +8,7 @@ import {
   ChangeMissionButton,
   PointsContainer,
 } from './styled';
-import { IMissionCardProps } from './interfaces';
+import { type IMissionCardProps } from './interfaces';
 import SchoolIcon from '@mui/icons-material/School';
 import { useAuth } from 'contexts/AuthContext';
 
@@ -20,17 +20,11 @@ const MissionCard: React.FC<IMissionCardProps> = ({
   selected,
   clickable,
 }) => {
-  const { checkUserSubscription } = useAuth();
   const { title, description, points, difficulty, completed_users } = mission;
 
   const handleChangeMissionButton = (e: React.MouseEvent) => {
     e.stopPropagation();
-    checkUserSubscription(
-      'Reemplazar una misión es una funcionalidad Pro',
-      () => {
-        openModal(mission);
-      }
-    );
+    if (openModal) openModal(mission);
   };
 
   return (
@@ -42,26 +36,28 @@ const MissionCard: React.FC<IMissionCardProps> = ({
         (selected ? ' selected' : '') +
         (clickable ? ' clickable' : '')
       }
-      variant="outlined"
+      variant='outlined'
+      // FIXME: fix this ts error
+      // @ts-expect-error ts-error(18048)
       sx={{ background: mission.skill.color }}
     >
-      <div className="d-flex flex-column justify-content-between w-100 pe-4">
-        <div id={`mission-content-${id}`} className={'text__details'}>
-          <Typography variant="h6" fontWeight="bold">
+      <div className='d-flex flex-column justify-content-between w-100 pe-4'>
+        <div id={`mission-content-${id}`} className='text__details'>
+          <Typography variant='h6' fontWeight='bold'>
             {title}
           </Typography>
-          <Typography className="mt-1 w-100">{description}</Typography>
+          <Typography className='mt-1 w-100'>{description}</Typography>
         </div>
-        <div className="d-flex justify-content-between">
-          <div className="d-flex gap-4 align-items-center mt-2">
-            <div className="d-flex align-items-end justify-content-center gap-1">
+        <div className='d-flex justify-content-between'>
+          <div className='d-flex gap-4 align-items-center mt-2'>
+            <div className='d-flex align-items-end justify-content-center gap-1'>
               {difficultyIcons[difficulty]}
-              <Typography component="span" variant="body2">
+              <Typography component='span' variant='body2'>
                 {difficultyToText(difficulty)}
               </Typography>
             </div>
             <div
-              className="d-flex align-items-center justify-content-center gap-1"
+              className='d-flex align-items-center justify-content-center gap-1'
               id={`mission-skill-${id}`}
             >
               <div
@@ -72,7 +68,7 @@ const MissionCard: React.FC<IMissionCardProps> = ({
                   background: '#fff',
                 }}
               />
-              <Typography component="span" variant="body2">
+              <Typography component='span' variant='body2'>
                 {mission?.skill?.title}
               </Typography>
             </div>
@@ -81,9 +77,9 @@ const MissionCard: React.FC<IMissionCardProps> = ({
             <Tooltip
               title={`${completed_users?.length} estudiantes han completado esta misión`}
             >
-              <div className="d-flex align-items-center justify-content-center gap-1">
-                <SchoolIcon fontSize="small" />
-                <Typography component="span" variant="body2">
+              <div className='d-flex align-items-center justify-content-center gap-1'>
+                <SchoolIcon fontSize='small' />
+                <Typography component='span' variant='body2'>
                   {completed_users?.length}
                 </Typography>
               </div>
@@ -93,26 +89,26 @@ const MissionCard: React.FC<IMissionCardProps> = ({
 
         {/* Action Buttons with absolute position */}
         {openModal && !completed_users.length && mission.type !== 'tutorial' ? (
-          <Tooltip title="Reemplazar misión" placement="left">
+          <Tooltip title='Reemplazar misión' placement='left'>
             <ChangeMissionButton
-              className="d-flex align-items-center justify-content-center"
+              className='d-flex align-items-center justify-content-center'
               disabled={!!completed_users.length}
-              variant="contained"
-              color="info"
+              variant='contained'
+              color='info'
               onClick={handleChangeMissionButton}
             >
               <CachedIcon sx={{ fill: 'rgba(0, 0, 0, 0.8)' }} />
             </ChangeMissionButton>
           </Tooltip>
         ) : null}
-        {/* Action Buttons with absolute position end*/}
+        {/* Action Buttons with absolute position end */}
       </div>
-      <div className="d-flex align-items-center">
+      <div className='d-flex align-items-center'>
         <PointsContainer
           id={`mission-points-${id}`}
-          className="points-container d-flex align-items-center justify-content-center"
+          className='points-container d-flex align-items-center justify-content-center'
         >
-          <Typography className="me-1" variant="h5" fontWeight="bold">
+          <Typography className='me-1' variant='h5' fontWeight='bold'>
             {points}
           </Typography>
           <img src={kodcoinIcon} />

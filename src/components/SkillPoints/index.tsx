@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ISkillPointsProps } from './interfaces';
+import { type ISkillPointsProps } from './interfaces';
 import { IconContainer, SkillPointsContainer } from './styled';
 import { Box, Chip, Typography } from '@mui/material';
 
@@ -11,13 +11,11 @@ const SkillPoints: React.FC<ISkillPointsProps> = ({ skill, dark }) => {
       }`}
     >
       {skill ? (
-        <>
-          <Chip
-            label={skill.title}
-            sx={{ background: skill.color, color: '#FFF', fontSize: '12px' }}
-            size="small"
-          />
-        </>
+        <Chip
+          label={skill.title}
+          sx={{ background: skill.color, color: '#FFF', fontSize: '12px' }}
+          size='small'
+        />
       ) : null}
     </SkillPointsContainer>
   );

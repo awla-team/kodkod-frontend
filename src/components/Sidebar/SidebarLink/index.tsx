@@ -1,6 +1,6 @@
 import { Tooltip } from '@mui/material';
 import { Link, useParams } from 'react-router-dom';
-import { SidebarLinkProps } from './interfaces';
+import { type SidebarLinkProps } from './interfaces';
 import { SidebarLinkContainer } from './styled';
 
 const SidebarLink: React.FC<SidebarLinkProps> = ({
@@ -18,9 +18,9 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({
       <Link
         to={linkRoute}
         replace
-        className="d-flex flex-column align-items-center justify-content-center position-relative"
+        className='d-flex flex-column align-items-center justify-content-center position-relative'
       >
-        <div className="text-center">
+        <div className='text-center'>
           <span>{linkTitle}</span>
         </div>
       </Link>

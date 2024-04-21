@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from 'react';
+import { type FC, useEffect, useRef, useState, useCallback } from 'react';
 import {
   EmotionalThermometerContainer,
   EmojiRadio,
@@ -18,14 +18,14 @@ import {
   Select,
   MenuItem,
 } from '@mui/material';
-import { Formik, Form, FormikHelpers } from 'formik';
-import * as Yup from 'yup';
+import { Formik, Form, type FormikHelpers } from 'formik';
 import {
-  EmotionalThermometerProps,
-  EmotionalThermometerType,
-  FormInitialValue,
+  type EmotionalThermometerProps,
+  type EmotionalThermometerType,
+  type FormInitialValue,
+  type TermometerChartData,
 } from './interfaces';
-import { Moment as MomentType } from 'moment/moment';
+import moment, { type Moment as MomentType } from 'moment/moment';
 import Toaster from '../../utils/Toster';
 import {
   getEmotionalThermometerByClassId,
@@ -43,29 +43,28 @@ import { CalendarMonth } from '@mui/icons-material';
 import {
   LocalizationProvider,
   DatePicker,
-  PickersDayProps,
+  type PickersDayProps,
   PickersDay,
 } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import TermometerChart from './TermometerChart';
+import { termometerRecordAdapter, validationSchema } from './utils';
 
 const initialValues: FormInitialValue = {
+  // FIXME: fix this ts error
+  // @ts-expect-error ts-error(2322)
   score: null,
   challenge: '',
   most_remarkable: '',
-};
-
-const validationSchema = () => {
-  return Yup.object().shape({
-    score: Yup.number().required(),
-    challenge: Yup.string().required(),
-    most_remarkable: Yup.string().required(),
-  });
 };
 
 const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
   classDetails,
 }) => {
   const [date, setDate] = useState<MomentType>(Moment());
+  const [termometerRecords, setTermometerRecords] = useState<
+    TermometerChartData[]
+  >([]);
   const [detailsByDates, setDetailsByDates] = useState<
     EmotionalThermometerType[]
   >([]);
@@ -74,13 +73,33 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
     useState<FormInitialValue>(initialValues);
   const [editable, setEditable] = useState<boolean>(false);
   const formRef = useRef(null);
+  const firstRender = useRef(true);
 
-  useEffect(() => {
-    if (classDetails) {
-      handleGetThermometerDetails();
-      handleMonthChange();
-    }
-  }, [date, classDetails]);
+  const fetchEmotionalTermometers = useCallback(
+    (date: moment.Moment) => {
+      getEmotionalThermometerByClassId(
+        // FIXME: fix this ts error
+        // @ts-expect-error ts-error(2345)
+        classDetails?.id,
+        moment(date).startOf('month'),
+        moment(date).endOf('month')
+      )
+        .then((res) => {
+          if (res?.data?.responseData) {
+            const adaptedTermometerRecords = termometerRecordAdapter(
+              // FIXME: fix this eslint error
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+              res.data.responseData
+            ).sort((a, b) => b.date - a.date);
+            setTermometerRecords(adaptedTermometerRecords);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+    [classDetails?.id]
+  );
 
   const handleGetThermometerDetails = async () => {
     try {
@@ -88,6 +107,8 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
         data: { responseData },
       }: { data: { responseData: EmotionalThermometerType[] } } =
         await getEmotionalThermometerByClassId(
+          // FIXME: fix this ts error
+          // @ts-expect-error ts-error(2345)
           classDetails.id,
           Moment(date).startOf('day'),
           Moment(date).endOf('day')
@@ -101,6 +122,8 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
           challenge,
         });
       } else {
+        // FIXME: fix this ts error
+        // @ts-expect-error ts-error(2345)
         setFormInitialValue({
           ...{
             score: null,
@@ -128,6 +151,8 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
         data: { responseData },
       }: { data: { responseData: EmotionalThermometerType[] } } =
         await getEmotionalThermometerByClassId(
+          // FIXME: fix this ts error
+          // @ts-expect-error ts-error(2345)
           classDetails.id,
           Moment(date).subtract(1, 'months').startOf('month'),
           Moment(date).endOf('month')
@@ -147,21 +172,33 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
     return (
       <PickersDateContainer key={pickersDayProps.key}>
         <PickersDay
+          // FIXME: fix this ts error
+          // @ts-expect-error ts-error(2783)
           day={day}
+          // FIXME: fix this ts error
+          // @ts-expect-error ts-error(2783)
           outsideCurrentMonth={false}
           {...(pickersDayProps as PickersDayProps<MomentType>)}
         />
         {!pickersDayProps.outsideCurrentMonth &&
           checkDate(day as MomentType) && (
-            <span className={'tick__icon'}>&#10004;</span>
+            <span className='tick__icon'>&#10004;</span>
           )}
       </PickersDateContainer>
     );
   };
 
-  const handleDateChange = (date: Moment.Moment) => {
+  const handleDateChange = (newDate: Moment.Moment) => {
+    if (
+      newDate?.month?.() !== date?.month?.() ||
+      newDate?.year?.() !== date?.year?.()
+    ) {
+      fetchEmotionalTermometers(newDate);
+    }
+    // FIXME: fix this ts error
+    // @ts-expect-error ts-error(2339)
     formRef.current?.resetForm();
-    setDate(date);
+    setDate(newDate);
   };
 
   const handleSubmit = async (
@@ -172,10 +209,14 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
       if ('id' in value) {
         const { id, ...body } = value;
         const { data }: { data: { responseData: EmotionalThermometerType } } =
+          // FIXME: fix this ts error
+          // @ts-expect-error ts-error(2345)
           await updateEmotionalThermometerDetails(id, body);
         setDetailsByDates((prevState) => {
           const copy = [...prevState];
           const match = copy.find((detailEntry) => detailEntry.id === id);
+          // FIXME: fix this ts error
+          // @ts-expect-error ts-error(2345)
           copy[copy.indexOf(match)] = data.responseData;
           return copy;
         });
@@ -185,6 +226,8 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
           await saveEmotionalThermometerDetails({
             ...value,
             date: date.startOf('day').utc().format(),
+            // FIXME: fix this ts error
+            // @ts-expect-error ts-error(2322)
             id_class: classDetails.id,
           });
         setDetailsByDates((prevState) => {
@@ -194,6 +237,7 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
         });
         Toaster('success', 'Termómetro guardado exitosamente');
       }
+      fetchEmotionalTermometers(date);
       setEditable(false);
     } catch (error: any) {
       console.error(error);
@@ -203,41 +247,59 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
     }
   };
 
+  useEffect(() => {
+    if (!!classDetails?.id && firstRender.current) {
+      fetchEmotionalTermometers(date);
+      firstRender.current = false;
+    }
+  }, [classDetails?.id, fetchEmotionalTermometers, date]);
+
+  useEffect(() => {
+    if (classDetails) {
+      // FIXME: fix this eslint error
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      handleGetThermometerDetails();
+      // FIXME: fix this eslint error
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      handleMonthChange();
+    }
+  }, [date, classDetails]);
+
   return (
     <EmotionalThermometerContainer>
-      <div className="d-flex justify-content-between align-items-center mb-4">
+      <div className='d-flex justify-content-between align-items-center mb-4'>
         <div>
           <Typography
-            display="inline"
-            className="me-1"
-            component="h6"
-            variant="h6"
-            fontWeight="bold"
+            display='inline'
+            className='me-1'
+            component='h6'
+            variant='h6'
+            fontWeight='bold'
           >
             Termómetro socioemocional
           </Typography>
           <Tooltip
-            title="El termómetro socioemocional es una herramienta que nos permitirá hacer seguimiento del clima escolar del curso a lo largo del tiempo. ¡Es importantísimo llenarlo cada clase para poder entregarte reportes de calidad!"
-            placement="right"
+            title='El termómetro socioemocional es una herramienta que nos permitirá hacer seguimiento del clima escolar del curso a lo largo del tiempo. ¡Es importantísimo llenarlo cada clase para poder entregarte reportes de calidad!'
+            placement='right'
             TransitionComponent={Fade}
           >
             <HelpIcon
-              className="mb-1"
+              className='mb-1'
               sx={{ opacity: 0.8, cursor: 'pointer', fontSize: '20px' }}
             />
           </Tooltip>
-          <div className="d-flex align-items-center">
+          <div className='d-flex align-items-center'>
             <Typography
-              id="thermometer-onboarding-1"
-              className="me-1"
-              component="span"
-              variant="body1"
-              sx={{ opacity: '0.6' }}
+              id='thermometer-onboarding-1'
+              className='me-1'
+              component='span'
+              variant='body1'
+              sx={{ opacity: 0.6 }}
             >
               {date.format('LL')}
             </Typography>
             {formInitialValue.id ? (
-              <EventAvailableIcon color="success" sx={{ fontSize: '18px' }} />
+              <EventAvailableIcon color='success' sx={{ fontSize: '18px' }} />
             ) : null}
           </div>
         </div>
@@ -251,8 +313,8 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
             value={date}
             onChange={(newDate) => handleDateChange(Moment(newDate))}
             renderInput={({ inputRef }) => (
-              <div ref={inputRef} id="thermometer-onboarding-4">
-                <Tooltip title="Editar otra fecha" arrow>
+              <div ref={inputRef} id='thermometer-onboarding-4'>
+                <Tooltip title='Editar otra fecha' arrow>
                   <Button
                     sx={{
                       borderRadius: '100%',
@@ -260,8 +322,8 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
                       width: '44px',
                       minWidth: 'unset',
                     }}
-                    variant="outlined"
-                    className="px-1"
+                    variant='outlined'
+                    className='px-1'
                     onClick={() => setCalendarOpen(!calendarIsOpen)}
                   >
                     <CalendarMonth />
@@ -274,14 +336,14 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
       </div>
       <>
         <Chip
-          className="w-100"
+          className='w-100'
           sx={{ padding: '20px 16px' }}
-          color="secondary"
+          color='secondary'
           label={
             <Typography
-              component="span"
-              variant="body2"
-              fontWeight="bold"
+              component='span'
+              variant='body2'
+              fontWeight='bold'
               sx={{
                 overflow: 'unset',
                 textOverflow: 'unset',
@@ -292,7 +354,7 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
             </Typography>
           }
         />
-        <div className="mt-5" id="thermometer-onboarding-2">
+        <div className='my-4' id='thermometer-onboarding-2'>
           <Formik
             enableReinitialize
             initialValues={formInitialValue}
@@ -311,20 +373,20 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
             }: any) => (
               <Form className={editable ? '' : 'disabled'}>
                 <FormControl
-                  className="d-flex flex-column mb-4"
+                  className='d-flex flex-column mb-4'
                   error={!!errors.score && !!submitCount}
                   disabled={!editable}
                 >
                   <Typography
-                    component="label"
-                    variant="body1"
-                    fontWeight="bold"
-                    className="mb-2"
+                    component='label'
+                    variant='body1'
+                    fontWeight='bold'
+                    className='mb-2'
                   >
                     ¿Cómo fue el clima en el curso el día de hoy?
                   </Typography>
                   <RadioGroup
-                    name="climate-meter"
+                    name='climate-meter'
                     row
                     value={values.score}
                     onChange={(e) =>
@@ -337,11 +399,11 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
                         key={`radio-option-${i}`}
                         value={option.value}
                         label={
-                          <Typography component="span" variant="caption">
+                          <Typography component='span' variant='caption'>
                             {option.text}
                           </Typography>
                         }
-                        labelPlacement="bottom"
+                        labelPlacement='bottom'
                         control={
                           <EmojiRadio
                             icon={option.icon}
@@ -353,26 +415,26 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
                   </RadioGroup>
                 </FormControl>
                 <FormControl
-                  className="w-100 mb-4"
+                  className='w-100 mb-4'
                   error={!!errors.challenge && !!submitCount}
                   disabled={!editable}
                 >
                   <Typography
-                    component="label"
-                    variant="body1"
-                    fontWeight="bold"
-                    className="mb-2"
+                    component='label'
+                    variant='body1'
+                    fontWeight='bold'
+                    className='mb-2'
                   >
                     ¿Cuál fue el mayor obstáculo de hoy?
                   </Typography>
                   <Select
-                    name="challenge"
-                    size="small"
-                    placeholder="El mayor obstáculo fue..."
+                    name='challenge'
+                    size='small'
+                    placeholder='El mayor obstáculo fue...'
                     onChange={handleChange}
                     value={values.challenge}
                   >
-                    <MenuItem value="" disabled>
+                    <MenuItem value='' disabled>
                       El mayor obstáculo fue...
                     </MenuItem>
                     {challengeOptions.map((challenge, i) => (
@@ -383,60 +445,64 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
                   </Select>
                 </FormControl>
                 <FormControl
-                  className="w-100 mb-4"
+                  className='w-100 mb-4'
                   error={!!errors.most_remarkable && !!submitCount}
                   disabled={!editable}
                 >
                   <Typography
-                    component="label"
-                    variant="body1"
-                    fontWeight="bold"
-                    className="mb-2"
+                    component='label'
+                    variant='body1'
+                    fontWeight='bold'
+                    className='mb-2'
                   >
                     ¿Cuál fue el mayor logro de hoy?
                   </Typography>
                   <Select
-                    name="most_remarkable"
-                    size="small"
-                    placeholder="El mayor logro fue..."
+                    name='most_remarkable'
+                    size='small'
+                    placeholder='El mayor logro fue...'
                     onChange={handleChange}
                     value={values.most_remarkable}
                   >
-                    <MenuItem value="" disabled>
+                    <MenuItem value='' disabled>
                       El mayor logro fue...
                     </MenuItem>
-                    {mostRemarkableOptions.map((most_remarkable, i) => (
-                      <MenuItem
-                        value={most_remarkable}
-                        key={`most_remarkable-${i}`}
-                      >
-                        {most_remarkable}
-                      </MenuItem>
-                    ))}
+                    {
+                      // FIXME: fix this eslint error
+                      // eslint-disable-next-line @typescript-eslint/naming-convention
+                      mostRemarkableOptions.map((most_remarkable, i) => (
+                        <MenuItem
+                          value={most_remarkable}
+                          key={`most_remarkable-${i}`}
+                        >
+                          {most_remarkable}
+                        </MenuItem>
+                      ))
+                    }
                   </Select>
                 </FormControl>
-                <EmotionalThermometerActions className="d-flex align-items-end justify-content-center">
+                <EmotionalThermometerActions className='d-flex align-items-end justify-content-center'>
                   {editable ? (
-                    <div className="d-flex justify-content-center">
+                    <div className='d-flex justify-content-center'>
                       <Button
-                        id="thermometer-onboarding-3"
+                        id='thermometer-onboarding-3'
                         disabled={!isValid || !dirty}
-                        color="primary"
-                        variant="contained"
-                        size="large"
-                        type="submit"
+                        color='primary'
+                        variant='contained'
+                        size='large'
+                        type='submit'
                       >
                         Guardar Termómetro Socioemocional
                       </Button>
                     </div>
                   ) : (
-                    <div className="d-flex flex-column align-items-center">
-                      <Typography component="span" variant="body2">
+                    <div className='d-flex flex-column align-items-center'>
+                      <Typography component='span' variant='body2'>
                         Ya completaste el termómetro socioemocional de hoy
                       </Typography>
                       <Button
-                        className={'again__action'}
-                        role={'button'}
+                        className='again__action'
+                        role='button'
                         onClick={() => setEditable(true)}
                       >
                         Rehacer
@@ -448,6 +514,18 @@ const EmotionalThermometer: FC<EmotionalThermometerProps> = ({
             )}
           </Formik>
         </div>
+        <Typography
+          display='inline'
+          className='me-1'
+          component='h6'
+          variant='subtitle1'
+          fontWeight='bold'
+        >
+          Mes de{' '}
+          {date.format('MMMM').charAt(0).toUpperCase() +
+            date.format('MMMM').slice(1)}
+        </Typography>
+        <TermometerChart data={termometerRecords} />
       </>
     </EmotionalThermometerContainer>
   );

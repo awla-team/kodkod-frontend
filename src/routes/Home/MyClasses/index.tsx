@@ -5,7 +5,7 @@ import {
   Box,
   Typography,
 } from '@mui/material';
-import { MyClassesProps } from './interfaces';
+import { type MyClassesProps } from './interfaces';
 import { useMemo, useEffect } from 'react';
 import { ExpandMore, South } from '@mui/icons-material';
 import ClassCard from 'components/ClassCard';
@@ -29,21 +29,21 @@ const MyClasses: FC<MyClassesProps> = ({
   }, []);
 
   return (
-    <MyClassesContainer className="w-100">
-      <MyClassesBox className="p-5">
+    <MyClassesContainer className='w-100'>
+      <MyClassesBox className='p-5'>
         <Typography
-          component="h1"
-          variant="h4"
-          className="fw-bold mb-1"
-          id="home-onboarding-4"
+          component='h1'
+          variant='h4'
+          className='fw-bold mb-1'
+          id='home-onboarding-4'
         >
           Mis cursos
         </Typography>
         <Typography
-          component="span"
-          variant="body2"
-          color="primary"
-          className="fw-bold mb-4"
+          component='span'
+          variant='body2'
+          color='primary'
+          className='fw-bold mb-4'
         >{`${classes.length} cursos en total`}</Typography>
         {classesData.map(({ level, ...rest }, index) => {
           return (
@@ -55,19 +55,17 @@ const MyClasses: FC<MyClassesProps> = ({
             >
               <AccordionSummary expandIcon={<ExpandMore />}>
                 <Typography
-                  component="span"
-                  variant="body1"
-                  className="fw-bold"
+                  component='span'
+                  variant='body1'
+                  className='fw-bold'
                 >
                   {level}
                 </Typography>
               </AccordionSummary>
-              <AccordionDetails
-                className={'class__level__cards__container row'}
-              >
+              <AccordionDetails className='class__level__cards__container row'>
                 {rest.classes.map((teacherClass, _index) => (
                   <div
-                    className="col-lg-4 col-md-6 col-12"
+                    className='col-lg-4 col-md-6 col-12'
                     key={`${_index}-${index}`}
                   >
                     <ClassCard classObj={teacherClass} />

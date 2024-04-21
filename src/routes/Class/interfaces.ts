@@ -1,13 +1,10 @@
-import { IClass } from 'global/interfaces';
-import { StudentType } from 'components/StudentsList/interfaces';
-import { Levels } from 'components/Modals/CreateClassModal/interfaces';
-import React from 'react';
-import { FetchStatus } from 'global/enums';
-import { IStage } from 'global/interfaces';
+import { type IClass, type IStage } from 'global/interfaces';
+import { type StudentType } from 'components/StudentsList/interfaces';
+import { type Levels } from 'components/Modals/CreateClassModal/interfaces';
+import type React from 'react';
+import { type FetchStatus } from 'global/enums';
 
-export interface TabPaths {
-  [index: number]: string;
-}
+export type TabPaths = Record<number, string>;
 
 export interface ClassContextType {
   getClassById: (id: number | string) => void;

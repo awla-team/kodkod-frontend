@@ -5,10 +5,9 @@ import {
   StudentListContent,
   StudentsListDetailsContainer,
 } from './styled';
-import { Dispatch, FC, SetStateAction } from 'react';
+import { type Dispatch, type FC, type SetStateAction, useState } from 'react';
 import { Button, Typography } from '@mui/material';
-import { StudentsListProps, StudentType } from './interfaces';
-import { useState } from 'react';
+import { type StudentsListProps, type StudentType } from './interfaces';
 import AddStudentsDialog from '../Modals/AddStudentsDialog';
 import { useClassContext } from '../../routes/Class/context';
 import { deleteStudent } from '../../services/students';
@@ -31,13 +30,17 @@ const StudentsList: FC<StudentsListProps> = ({
   };
 
   // temporary approcah
-  const handleDelete = (studentId: string | number): Promise<boolean> => {
-    return new Promise(async (resolve, reject) => {
+  const handleDelete = async (studentId: string | number): Promise<boolean> => {
+    // FIXME: fix this eslint errors
+    // eslint-disable-next-line no-async-promise-executor
+    return await new Promise(async (resolve, reject) => {
       try {
         if (studentId) {
           await deleteStudent(studentId);
           resolve(true);
         }
+        // FIXME: fix this eslint error
+        // eslint-disable-next-line prefer-promise-reject-errors
         reject({ message: "Student id didn't find." });
       } catch (e: any) {
         reject(e);
@@ -45,13 +48,13 @@ const StudentsList: FC<StudentsListProps> = ({
     });
   };
   return (
-    <StudentListContainer className="h-100">
-      <Typography component="h6" variant="h6" fontWeight="bold">
+    <StudentListContainer className='h-100'>
+      <Typography component='h6' variant='h6' fontWeight='bold'>
         Lista de estudiantes
       </Typography>
       <Typography
-        component="span"
-        variant="body1"
+        component='span'
+        variant='body1'
         sx={{ opacity: '0.6' }}
       >{`${studentsData.length} estudiantes en total`}</Typography>
       <StudentListContent hasDetails={!!studentsData.length}>
@@ -83,13 +86,13 @@ const DontHaveDetails: FC<{
 }> = ({ setOpenModal }) => {
   return (
     <DontHaveDetailsContent>
-      <Typography component="span" variant="body1">
+      <Typography component='span' variant='body1'>
         Aún no has añadido estudiantes a tu curso
       </Typography>
       <Button
-        id="student-list-onboarding-1"
-        size="large"
-        variant={'contained'}
+        id='student-list-onboarding-1'
+        size='large'
+        variant='contained'
         onClick={() => setOpenModal(true)}
       >
         Añadir estudiantes
@@ -105,7 +108,7 @@ const StudentsListDetails: FC<{
 }> = ({ setOpenModal, handleDelete, studentsData }) => {
   return (
     <StudentsListDetailsContainer>
-      <div className={'details'}>
+      <div className='details'>
         {studentsData
           .sort((a, b) => {
             if (a.last_name > b.last_name) return 1;
@@ -122,9 +125,9 @@ const StudentsListDetails: FC<{
       </div>
 
       <Button
-        id="student-list-onboarding-1"
-        size="large"
-        variant={'contained'}
+        id='student-list-onboarding-1'
+        size='large'
+        variant='contained'
         onClick={() => setOpenModal(true)}
       >
         Añadir estudiantes

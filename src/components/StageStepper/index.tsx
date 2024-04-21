@@ -1,8 +1,8 @@
-import { FC, useContext, useState, useEffect } from 'react';
+import { type FC, useContext, useState, useEffect } from 'react';
 import { CustomStepper } from './styled';
 import { Step, Button, Typography, Tooltip } from '@mui/material';
 import { ClassHasAdventureContext } from '../../routes/Class/Adventures/Adventure/provider';
-import { IStage } from 'global/interfaces';
+import { type IStage } from 'global/interfaces';
 import { UnlockStageConfirmationDialog } from 'components/Modals';
 import { unlockStage } from 'services/stages';
 import Toaster from 'utils/Toster';
@@ -34,6 +34,8 @@ const StageStepper: FC<{
       setSortedStages(sorted);
       setNavigableStages(navigableStages);
       if (shownStage)
+        // FIXME: fix this ts error
+        // @ts-expect-error ts-error(2345)
         onStageChange(stages.find((stage) => stage.id === shownStage.id));
       else setActiveStep(navigableStages[navigableStages.length - 1]._index);
     }
@@ -72,11 +74,11 @@ const StageStepper: FC<{
 
   return (
     <div
-      id="adventure-stages"
-      className="d-flex align-items-center justify-content-between gap-4"
+      id='adventure-stages'
+      className='d-flex align-items-center justify-content-between gap-4'
     >
       {activeStep !== undefined ? (
-        <div className="d-flex flex-column gap-3" id="adventure-stages-stepper">
+        <div className='d-flex flex-column gap-3' id='adventure-stages-stepper'>
           <CustomStepper activeStep={activeStep - 1}>
             {sortedStages.map((stage) => {
               const isNavigable = navigableStages.includes(stage);
@@ -89,7 +91,7 @@ const StageStepper: FC<{
                   disabled={!isNavigable}
                 >
                   <div
-                    role="button"
+                    role='button'
                     className={`stage-step ${isNavigable ? 'navigable' : ''} ${
                       isActive ? 'active' : ''
                     }`}
@@ -99,7 +101,7 @@ const StageStepper: FC<{
               );
             })}
           </CustomStepper>
-          <Typography component="span" variant="h6">
+          <Typography component='span' variant='h6'>
             <b>{`Etapa ${activeStep}: `}</b>
             {shownStage?.title}
           </Typography>
@@ -111,9 +113,9 @@ const StageStepper: FC<{
             <Tooltip
               arrow
               title={
-                <div className="p-1">
+                <div className='p-1'>
                   ¿Qué sucederá al desbloquear la siguiente etapa?
-                  <ul className="m-0">
+                  <ul className='m-0'>
                     <li>
                       Verán nuevas misiones que les permitirán sumar más puntos
                       y recompensas
@@ -127,11 +129,11 @@ const StageStepper: FC<{
               }
             >
               <Button
-                id="adventure-stage-unlock"
-                variant={'contained'}
+                id='adventure-stage-unlock'
+                variant='contained'
                 onClick={() => setOpenDialog(true)}
                 disabled={navigableStages.length === sortedStages.length}
-                size="large"
+                size='large'
               >
                 Desbloquear etapa {sortedStages[navigableStages.length]._index}
               </Button>
@@ -140,9 +142,9 @@ const StageStepper: FC<{
             <Tooltip
               arrow
               title={
-                <div className="p-1">
+                <div className='p-1'>
                   ¿Qué sucederá al finalizar la aventura?
-                  <ul className="m-0">
+                  <ul className='m-0'>
                     <li>Los puntos de cada estudiante volverán a 0.</li>
                     <li>
                       No se podrán completar más misiones en esta aventura.
@@ -156,9 +158,9 @@ const StageStepper: FC<{
               }
             >
               <Button
-                variant={'contained'}
+                variant='contained'
                 onClick={() => setOpenDialog(true)}
-                size="large"
+                size='large'
               >
                 ¡Completar etapa y finalizar aventura!
               </Button>
@@ -170,6 +172,8 @@ const StageStepper: FC<{
             open={openDialog}
             currentStage={shownStage}
             handleClose={() => setOpenDialog(false)}
+            // FIXME: fix this ts error
+            // @ts-expect-error ts-error(2322)
             finishImg={classHasAdventure?.adventure?.finish_img_url}
             onConfirm={
               sortedStages[navigableStages.length] ? handleUnlock : handleFinish

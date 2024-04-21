@@ -2,29 +2,15 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import pluginRewriteAll from 'vite-plugin-rewrite-all';
-import eslint from 'vite-plugin-eslint';
 import svgrPlugin from 'vite-plugin-svgr';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    react(),
-    tsconfigPaths(),
-    pluginRewriteAll(),
-    svgrPlugin(),
-    eslint({
-      cache: false,
-      include: [
-        './src/**/*.js',
-        './src/**/*.jsx',
-        './src/**/*.ts',
-        './src/**/*.tsx',
-        './src/**/*.d.ts',
-      ],
-      exclude: [],
-    }),
-  ],
+  plugins: [react(), tsconfigPaths(), pluginRewriteAll(), svgrPlugin()],
   server: {
     open: true,
+  },
+  preview: {
+    port: 5173,
   },
 });

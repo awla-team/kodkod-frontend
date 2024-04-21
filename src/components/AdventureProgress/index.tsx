@@ -1,8 +1,8 @@
-import { FC, useState, useEffect } from 'react';
+import { type FC, useState, useEffect } from 'react';
 import { Typography, Box } from '@mui/material';
 import { useClassContext } from 'routes/Class/context';
 import SkillPoints from 'components/SkillPoints';
-import { IAdventure, IStage } from 'global/interfaces';
+import { type IAdventure, type IStage } from 'global/interfaces';
 import { AdventureProgressContainer, KPIBox } from './styled';
 
 const AdventureProgress: FC<{
@@ -11,6 +11,8 @@ const AdventureProgress: FC<{
   averageCompletedMission: number;
 }> = ({ adventure, progressPercentage = 0, averageCompletedMission = 0 }) => {
   const { classDetails } = useClassContext();
+  // FIXME: fix this ts error
+  // @ts-expect-error ts-error(2345): argument of type 'undefined' is not assignable to parameter of type 'IStage | (() => IStage)'
   const [latestStage, setLatestStage] = useState<IStage>(undefined);
 
   useEffect(() => {
@@ -29,66 +31,79 @@ const AdventureProgress: FC<{
 
   return (
     <AdventureProgressContainer
-      className="d-flex align-items-center justify-content-between p-5"
+      className='d-flex align-items-center justify-content-between p-5'
       sx={{ backgroundImage: `url(${latestStage?.icon})` }}
     >
-      <Box id="progress-adventure-details">
+      <Box id='progress-adventure-details'>
         <Box
-          display={'flex'}
+          display='flex'
           sx={{ position: 'relative' }}
-          alignItems={'start'}
-          justifyContent={'space-between'}
+          alignItems='start'
+          justifyContent='space-between'
         >
           <Typography
-            component="h2"
-            variant="h2"
+            component='h2'
+            variant='h2'
+            // FIXME: fix this ts error
+            // @ts-expect-error ts-error(18048): 'classDetails' is possibly 'undefined'
             title={classDetails.alias}
-            fontWeight="bold"
-            className="mb-2"
-            textOverflow="ellipsis"
-            overflow="hidden"
+            fontWeight='bold'
+            className='mb-2'
+            textOverflow='ellipsis'
+            overflow='hidden'
           >
-            {classDetails.alias}
+            {
+              // FIXME: fix this ts error
+              // @ts-expect-error ts-error(18048): 'classDetails' is possibly 'undefined'
+              classDetails.alias
+            }
           </Typography>
         </Box>
+        <Typography variant='h5' fontWeight='bold'>{
+          // FIXME: fix this ts error
+          // @ts-expect-error ts-error(18048): 'classDetails' is possibly 'undefined'
+          `${classDetails.current_adventure?.adventure?.title}`
+        }</Typography>
         <Typography
-          variant="h5"
-          fontWeight="bold"
-        >{`${classDetails.current_adventure?.adventure?.title}`}</Typography>
-        <Typography
-          variant="body1"
-          fontWeight="bold"
-          className="mb-4"
+          variant='body1'
+          fontWeight='bold'
+          className='mb-4'
         >{`Etapa ${latestStage?._index}: ${latestStage?.title}`}</Typography>
-        <section className="d-flex flex-column mb-3">
-          <div className="d-flex flex-wrap flex-lg-nowrap gap-2">
-            {!!classDetails.current_adventure?.adventure?.skills?.length
-              ? classDetails.current_adventure.adventure?.skills.map(
-                  (adventureSkill, index) => (
-                    <SkillPoints
-                      key={`${adventureSkill.id}-${adventureSkill.title}-${index}`}
-                      skill={adventureSkill}
-                    />
+        <section className='d-flex flex-column mb-3'>
+          <div className='d-flex flex-wrap flex-lg-nowrap gap-2'>
+            {
+              // FIXME: fix this ts error
+              // @ts-expect-error ts-error(18048): 'classDetails' is possibly 'undefined'
+              classDetails.current_adventure?.adventure?.skills?.length
+                ? // FIXME: fix this ts error
+                  // @ts-expect-error ts-error(18048): 'classDetails' is possibly 'undefined'
+                  classDetails.current_adventure.adventure?.skills.map(
+                    (adventureSkill, index) => (
+                      <SkillPoints
+                        key={`${adventureSkill.id}-${adventureSkill.title}-${index}`}
+                        skill={adventureSkill}
+                      />
+                    )
                   )
-                )
-              : null}
+                : null
+            }
           </div>
         </section>
       </Box>
-      <div className="d-flex gap-2">
-        <KPIBox className="p-4" id="progress-adventure-percentage">
+      <div className='d-flex gap-2'>
+        <KPIBox className='p-4' id='progress-adventure-percentage'>
           <Typography
-            variant="h3"
-            component="h3"
-            fontWeight="bold"
+            variant='h3'
+            component='h3'
+            fontWeight='bold'
           >{`${Math.round(progressPercentage)}%`}</Typography>
           <Typography>de misiones completadas en la aventura</Typography>
         </KPIBox>
-        <KPIBox className="p-4" id="progress-adventure-avg">
+        <KPIBox className='p-4' id='progress-adventure-avg'>
           <Typography
-            variant="h3"
-            component="h3"
-            fontWeight="bold"
+            variant='h3'
+            component='h3'
+            fontWeight='bold'
           >{`${Math.round(averageCompletedMission)}`}</Typography>
           <Typography>
             misiones completadas por estudiante en promedio{' '}

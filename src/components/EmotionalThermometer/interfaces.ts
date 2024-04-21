@@ -1,6 +1,7 @@
-import { Moment } from 'moment';
-import React, { Dispatch, SetStateAction } from 'react';
-import { IClass } from 'global/interfaces';
+import { type Moment } from 'moment';
+import { type Dispatch, type SetStateAction } from 'react';
+import type React from 'react';
+import { type IClass } from 'global/interfaces';
 
 export interface EmotionalThermometerProps {
   classDetails: IClass;
@@ -46,32 +47,18 @@ export interface TodayReviewsProps {
 export interface ThermometerCalendarProps {
   date: Moment;
   handleDateChange: (date: Moment) => void;
-}
-
-export interface EmotionalThermometerFormProps {
-  editable: boolean;
-  setEditable: (editable: boolean) => void;
-}
-
-export interface IScoreOption {
-  text: string;
-  value: number;
-  icon: React.ReactNode;
-  selectedIcon: React.ReactNode;
-}
-
-export interface ClassClimateMeterProps {
-  editable: boolean;
-}
-
-export interface TodayReviewsProps {
-  editable: boolean;
-
-  setEditable: Dispatch<SetStateAction<boolean>>;
-}
-
-export interface ThermometerCalendarProps {
-  date: Moment;
-  handleDateChange: (date: Moment) => void;
   classId: number | string;
+}
+
+export interface EmotionalTermometer extends FormInitialValue {
+  date: string;
+}
+
+export interface TermometerChartData {
+  date: number;
+  category: string;
+}
+
+export interface TermometerChartProps {
+  data: TermometerChartData[];
 }
