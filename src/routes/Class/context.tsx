@@ -87,12 +87,13 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const getStudentsByClass = async (id: number | string) => {
     try {
-      const { data }: { data: any } = await studentsByClass(id, {
+      const { data } = await studentsByClass<StudentType>(id, {
         role: 'student',
       });
-      // FIXME: fix this eslint error
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-      setStudents(data.responseData);
+      const orderByLastname = data.responseData.sort((a, b) =>
+        a.last_name.localeCompare(b.last_name)
+      );
+      setStudents(orderByLastname);
     } catch (error: any) {
       console.error(error);
       Toaster('error', 'Hubo un error al cargar los estudiantes');

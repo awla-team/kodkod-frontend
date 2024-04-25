@@ -125,7 +125,7 @@ const Rewards = () => {
         try {
           // FIXME: fix this eslint error
           // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-          const { data: studentsData } = await studentsByClass(classId, {
+          const { data: studentsData } = await studentsByClass<IUser>(classId, {
             role: 'student',
             rewards: true,
           });
@@ -137,8 +137,6 @@ const Rewards = () => {
                 ...reward,
                 usedCount: usedRewardCount(
                   reward.id,
-                  // FIXME: fix this eslint error
-                  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                   studentsData.responseData
                 ),
               };
