@@ -69,7 +69,7 @@ const Adventures: React.FC = () => {
     try {
       const {
         data: { responseData },
-      }: { data: { responseData: IMission[] } } = await getMissionsByStage();
+      } = await getMissionsByStage();
 
       setMissions(responseData);
     } catch (error: any) {

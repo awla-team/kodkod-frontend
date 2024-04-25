@@ -1,5 +1,7 @@
+import { type IMission } from 'global/interfaces';
 import http from '../global/api';
 import { generateQueryParamsFromObject } from '../utils';
+import { type KodkodResponse } from 'api/types/custom-response';
 
 export interface StageMissionUpdateBody {
   id_stage: number;
@@ -22,7 +24,7 @@ export interface MissionAccomplishedType {
 }
 
 export const getMissionsByStage = async (query?: MissionFilterType) =>
-  await http.get(
+  await http.get<KodkodResponse<IMission[]>>(
     `mission` + (query ? generateQueryParamsFromObject(query) : '')
   );
 

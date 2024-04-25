@@ -1,4 +1,4 @@
-import { type IMission } from 'global/interfaces';
+import { type IStage, type IMission } from 'global/interfaces';
 
 export interface IMissionCardContainerProps {
   background?: string;
@@ -19,4 +19,6 @@ export interface IMissionCardProps {
   selected?: boolean;
   clickable?: boolean;
   onClick?: (e: React.MouseEvent) => void;
+  stage: IStage;
+  updateMissions: () => void;
 }

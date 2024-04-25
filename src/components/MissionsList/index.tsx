@@ -13,6 +13,7 @@ const MissionsList: FC<{ shownStage: IStage }> = ({ shownStage }) => {
   const [selectedMission, setSelectedMission] = useState<IMission>();
   const [missions, setMissions] = useState<IMission[]>([]);
   // const [sortedMissions, setSortedMissions] = useState<IMission[]>([]);
+  const [reloadMissions, setReloadMissions] = useState(false);
 
   useEffect(() => {
     if (shownStage) {
@@ -20,7 +21,15 @@ const MissionsList: FC<{ shownStage: IStage }> = ({ shownStage }) => {
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
       handleGetMissions(shownStage.id);
     }
-  }, [shownStage]);
+
+    return () => {
+      setReloadMissions(false);
+    };
+  }, [shownStage, reloadMissions]);
+
+  const updateMissions = () => {
+    setReloadMissions(true);
+  };
 
   const handleGetMissions = async (stageId: number | string) => {
     const response = await getStageMissions(stageId);
@@ -69,6 +78,8 @@ const MissionsList: FC<{ shownStage: IStage }> = ({ shownStage }) => {
                   clickable
                   mission={res}
                   openModal={handleOpen}
+                  stage={{ ...shownStage, missions }}
+                  updateMissions={updateMissions}
                 />
               </div>
             );
@@ -78,14 +89,14 @@ const MissionsList: FC<{ shownStage: IStage }> = ({ shownStage }) => {
         )}
       </div>
 
-      {open && !!selectedMission && (
+      {/* {open && !!selectedMission && (
         <ReplaceMissionModal
           open={open && !!selectedMission}
           onClose={handleClose}
           mission={selectedMission}
           stage={{ ...shownStage, missions }}
         />
-      )}
+      )} */}
       <MissionAccomplishedDrawer
         open={openDrawer && !!selectedMission}
         onSave={handleGetMissions}

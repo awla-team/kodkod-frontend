@@ -10,21 +10,35 @@ import {
 } from './styled';
 import { type IMissionCardProps } from './interfaces';
 import SchoolIcon from '@mui/icons-material/School';
-import { useAuth } from 'contexts/AuthContext';
+import { useModalStore } from 'contexts/ZustandContext/modal-context';
+import { ChangeMissionModal } from 'components/Modals/ChangeMissionModal';
 
 const MissionCard: React.FC<IMissionCardProps> = ({
   id,
   mission,
-  openModal,
   onClick,
   selected,
   clickable,
+  stage,
+  updateMissions,
 }) => {
   const { title, description, points, difficulty, completed_users } = mission;
+  const { openModal } = useModalStore();
 
   const handleChangeMissionButton = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (openModal) openModal(mission);
+
+    openModal({
+      title: 'Reemplazar misión',
+      content: (
+        <ChangeMissionModal
+          mission={mission}
+          stage={stage}
+          updateMissions={updateMissions}
+        />
+      ),
+      maxWidth: 'sm',
+    });
   };
 
   return (
@@ -88,11 +102,11 @@ const MissionCard: React.FC<IMissionCardProps> = ({
         </div>
 
         {/* Action Buttons with absolute position */}
-        {openModal && !completed_users.length && mission.type !== 'tutorial' ? (
+        {!completed_users?.length && mission.type !== 'tutorial' ? (
           <Tooltip title='Reemplazar misión' placement='left'>
             <ChangeMissionButton
               className='d-flex align-items-center justify-content-center'
-              disabled={!!completed_users.length}
+              disabled={!!(completed_users?.length || 0)}
               variant='contained'
               color='info'
               onClick={handleChangeMissionButton}
