@@ -19,7 +19,7 @@ import OnboardingContextProvider from 'contexts/OnboardingContext';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import DoneIcon from '@mui/icons-material/Done';
-import { TourProvider, useTour } from '@reactour/tour';
+import { TourProvider } from '@reactour/tour';
 import { patchUserById } from 'services/users';
 
 moment.locale('es');
@@ -206,7 +206,7 @@ const App: React.FC = () => {
     >
       <OnboardingContextProvider>
         <div className='app-container d-flex'>
-          <Sidebar classes={classes} handleOpenModal={handleOpenModal} />
+          <Sidebar classes={classes} /* handleOpenModal={handleOpenModal} */ />
           <div className='app-main-container d-flex flex-column flex-fill'>
             <div className='app-content container' id='home-onboarding-4'>
               <Outlet context={{ classes, handleOpenModal, getClassesData }} />
