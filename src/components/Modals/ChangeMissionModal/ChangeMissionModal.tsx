@@ -37,7 +37,13 @@ const ChangeMissionModal: FC<Props> = ({ mission, stage, updateMissions }) => {
   const openCreateMissionModal = () => {
     openModal({
       title: 'Crear y reemplazar por una nueva misión',
-      content: <CreateMissionModal />,
+      content: (
+        <CreateMissionModal
+          mission={mission}
+          stage={stage}
+          updateMissions={updateMissions}
+        />
+      ),
       maxWidth: 'sm',
       withActions: false,
     });
