@@ -8,5 +8,5 @@ export interface Route {
 
 export interface SidebarProps {
   classes?: IClass[];
-  handleOpenModal: () => void;
+  // handleOpenModal: () => void;
 }

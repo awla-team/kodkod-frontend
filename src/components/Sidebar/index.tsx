@@ -3,16 +3,15 @@ import { type SidebarProps } from './interfaces';
 import logo from 'assets/images/logo.png';
 import { SidebarContainer, LinkList, LogoContainer } from './styled';
 import SidebarLink from './SidebarLink';
-import AddIcon from '@mui/icons-material/Add';
 import UserInfo from './UserInfo';
-import { Button, Divider } from '@mui/material';
+import { Divider } from '@mui/material';
 import { type IClass } from 'global/interfaces';
 import { RoundButton } from './RoundButton/styled';
 import HomeIcon from '@mui/icons-material/Home';
-import { Link, Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 
-const Sidebar: FC<SidebarProps> = ({ classes, handleOpenModal }) => {
+const Sidebar: FC<SidebarProps> = ({ classes /* handleOpenModal */ }) => {
   const { user } = useAuth();
 
   return (
@@ -51,7 +50,7 @@ const Sidebar: FC<SidebarProps> = ({ classes, handleOpenModal }) => {
             </LinkList>
           ) : null
         }
-        <RoundButton
+        {/* <RoundButton
           id='home-onboarding-2'
           sx={{ marginBottom: '74px' }}
           color='info'
@@ -60,7 +59,7 @@ const Sidebar: FC<SidebarProps> = ({ classes, handleOpenModal }) => {
           }}
         >
           <AddIcon />
-        </RoundButton>
+        </RoundButton> */}
       </div>
       <div>
         <UserInfo user={user} />
