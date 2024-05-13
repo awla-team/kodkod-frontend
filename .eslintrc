@@ -25,7 +25,8 @@
     "babel.config.js",
     "jest.config.js",
     "jest-setup.ts",
-    "tailwind.config.js"
+    "tailwind.config.js",
+    "postcss.config.js"
   ],
   "parserOptions": {
     "ecmaVersion": "latest",
