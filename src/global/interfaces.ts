@@ -149,6 +149,13 @@ export interface IStage extends TemplateStages {
   active: boolean;
   next_img_url: string;
   narrative: string;
+  learningObjetives?: ILearningObjetive[];
+}
+
+export interface ILearningObjetive {
+  id: number;
+  details: string;
+  id_stage: number;
 }
 
 export interface IMission {
