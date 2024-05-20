@@ -1,5 +1,5 @@
 import { type FC } from 'react';
-import { type ViewLearningObjetivesDialogProps } from './interfaces';
+import { type ViewLearningGoalsDialogProps } from './interfaces';
 import {
   Button,
   Typography,
@@ -9,7 +9,7 @@ import {
   Dialog,
 } from '@mui/material';
 
-const ViewLearningObjetivesDialog: FC<ViewLearningObjetivesDialogProps> = ({
+const ViewLearningGoalsDialog: FC<ViewLearningGoalsDialogProps> = ({
   open,
   handleClose,
   isLoading,
@@ -31,16 +31,16 @@ const ViewLearningObjetivesDialog: FC<ViewLearningObjetivesDialogProps> = ({
             <Typography textAlign='center' variant='h6' fontWeight='bold'>
               Objetivos de Aprendizaje
             </Typography>
-            {currentStage.learningObjetives?.length ? (
-              currentStage.learningObjetives?.map((learningObjetive) => {
+            {currentStage.learning_goals?.length ? (
+              currentStage.learning_goals?.map((learningGoal) => {
                 return (
                   <Typography
-                    key={learningObjetive.id}
+                    key={learningGoal.id}
                     component='p'
                     variant='body1'
                     className='mb-3'
                   >
-                    {'- ' + learningObjetive.details}
+                    {'- ' + learningGoal.details}
                   </Typography>
                 );
               })
@@ -83,4 +83,4 @@ const ViewLearningObjetivesDialog: FC<ViewLearningObjetivesDialogProps> = ({
   );
 };
 
-export default ViewLearningObjetivesDialog;
+export default ViewLearningGoalsDialog;

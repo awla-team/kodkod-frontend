@@ -4,7 +4,7 @@ import { Step, Button, Typography, Tooltip } from '@mui/material';
 import { ClassHasAdventureContext } from '../../routes/Class/Adventures/Adventure/provider';
 import { type IStage } from 'global/interfaces';
 import { UnlockStageConfirmationDialog } from 'components/Modals';
-import ViewLearningObjetivesDialog from 'components/Modals/ViewLearningObjetivesDialog';
+import ViewLearningGoalsDialog from 'components/Modals/ViewLearningGoalsDialog';
 import { unlockStage } from 'services/stages';
 import Toaster from 'utils/Toster';
 
@@ -203,7 +203,7 @@ const StageStepper: FC<{
               sortedStages[navigableStages.length] ? handleUnlock : handleFinish
             }
           />
-          <ViewLearningObjetivesDialog
+          <ViewLearningGoalsDialog
             isLoading={loading}
             open={openLearningObjetives}
             currentStage={shownStage}
