@@ -23,6 +23,33 @@ export interface MissionAccomplishedType {
   id_mission: number;
 }
 
+export enum MissionDifficultyEnum {
+  EASY = 'easy',
+  NORMAL = 'normal',
+  HARD = 'hard',
+}
+
+export enum MissionTypeEnum {
+  NORMAL = 'normal',
+  TUTORIAL = 'tutorial',
+}
+
+export interface CreateMissionAndReplace {
+  old_mission: {
+    id_stage: number;
+    old_mission_id: number;
+  };
+  new_mission: {
+    id_skill: number;
+    title: string;
+    description: string;
+    difficulty: string;
+    points: number;
+    type: MissionTypeEnum;
+    custom: boolean;
+  };
+}
+
 export const getMissionsByStage = async (query?: MissionFilterType) =>
   await http.get<KodkodResponse<IMission[]>>(
     `mission` + (query ? generateQueryParamsFromObject(query) : '')
@@ -50,3 +77,6 @@ export const completedMissionByStudents = async (
       (queryParams ? generateQueryParamsFromObject(queryParams) : '')
   );
 };
+
+export const createMissionAndReplace = async (body: CreateMissionAndReplace) =>
+  await http.post('create-update-stage-mission', body);

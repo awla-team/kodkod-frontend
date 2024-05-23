@@ -1,7 +1,6 @@
 import { type FC, useState, useEffect } from 'react';
 import { MissionListContainer } from './styled';
 import MissionCard from 'components/MissionCard';
-import ReplaceMissionModal from 'components/Modals/ReplaceMissionModal';
 import { type IMission, type IStage } from 'global/interfaces';
 import { Typography } from '@mui/material';
 import MissionAccomplishedDrawer from 'components/Modals/MissionAccomplished';
