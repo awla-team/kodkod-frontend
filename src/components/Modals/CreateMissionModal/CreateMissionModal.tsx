@@ -136,11 +136,11 @@ const CreateMissionModal = ({ mission, stage, updateMissions }: Props) => {
                   onChange={(e) => {
                     handleChange(e);
                     const value = e.target.value;
-                    if (value === 'facil') {
+                    if (value === 'easy') {
                       setPoints(10);
                     } else if (value === 'normal') {
                       setPoints(20);
-                    } else {
+                    } else if (value === 'hard') {
                       setPoints(30);
                     }
                   }}
