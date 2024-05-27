@@ -10,8 +10,14 @@ import {
 import { useModalStore } from 'contexts/ZustandContext/modal-context';
 import kodcoinIcon from 'assets/images/kodcoin.png';
 import { getSkills } from 'services/skills';
-import { type ISkill } from 'global/interfaces';
+import { type IStage, type IMission, type ISkill } from 'global/interfaces';
 import { Formik, type FormikHelpers } from 'formik';
+import {
+  type CreateMissionAndReplace,
+  createMissionAndReplace,
+  MissionTypeEnum,
+} from 'services/missions';
+import Toaster from 'utils/Toster';
 
 interface FormInput {
   title: string;
@@ -20,7 +26,13 @@ interface FormInput {
   skill: string;
 }
 
-const CreateMissionModal = () => {
+interface Props {
+  mission: IMission;
+  stage: IStage;
+  updateMissions: () => void;
+}
+
+const CreateMissionModal = ({ mission, stage, updateMissions }: Props) => {
   const { closeModal } = useModalStore();
   const [skills, setSkills] = useState<ISkill[]>([]);
   const [points, setPoints] = useState<number>(10);
@@ -50,8 +62,34 @@ const CreateMissionModal = () => {
     fetchSkills();
   }, [fetchSkills]);
 
-  const onSubmit = async () => {
-    console.log('submit');
+  const onSubmit = async (values: FormInput) => {
+    try {
+      const dto: CreateMissionAndReplace = {
+        old_mission: {
+          id_stage: stage.id,
+          old_mission_id: mission.id as number,
+        },
+        new_mission: {
+          id_skill: Number(values.skill),
+          title: values.title,
+          description: values.description,
+          difficulty: values.difficulty,
+          points,
+          custom: true,
+          type: MissionTypeEnum.NORMAL,
+        },
+      };
+      const { status } = await createMissionAndReplace(dto);
+
+      if (status === 200) {
+        Toaster('success', 'Misión creada y reemplazada exitosamente');
+        updateMissions();
+        closeModal();
+      }
+    } catch (e) {
+      console.log(e);
+      Toaster('error', 'Error al crear y reemplazar misión');
+    }
   };
 
   return (
@@ -98,20 +136,20 @@ const CreateMissionModal = () => {
                   onChange={(e) => {
                     handleChange(e);
                     const value = e.target.value;
-                    if (value === 'facil') {
+                    if (value === 'easy') {
                       setPoints(10);
                     } else if (value === 'normal') {
                       setPoints(20);
-                    } else {
+                    } else if (value === 'hard') {
                       setPoints(30);
                     }
                   }}
                   value={values.difficulty}
                   defaultValue={values.difficulty}
                 >
-                  <MenuItem value='dificil'>Dificil</MenuItem>
+                  <MenuItem value='hard'>Dificil</MenuItem>
                   <MenuItem value='normal'>Normal</MenuItem>
-                  <MenuItem value='facil'>Facil</MenuItem>
+                  <MenuItem value='easy'>Facil</MenuItem>
                 </TextField>
                 <TextField
                   size='small'
