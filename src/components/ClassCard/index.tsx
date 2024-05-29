@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const ClassCard: React.FC<{ classObj: ModifiedIClass }> = ({ classObj }) => {
   return (
-    <Link to={`cursos/${classObj.id}/tablero`}>
+    <Link to={`cursos/${classObj.id}/asignaturas/1/clases`}>
       <div className='class__level__card'>
         {classObj.current_adventure ? (
           <Box

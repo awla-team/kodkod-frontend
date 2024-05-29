@@ -30,10 +30,9 @@ const Board: React.FC = () => {
     if (user?.completed_onboarding) {
       localStorage.setItem('onboarding-data', user.completed_onboarding);
       rawOnboardingData = user.completed_onboarding;
-    } else {
-      rawOnboardingData = localStorage.getItem('onboarding-data') || '';
     }
-    if (rawOnboardingData !== null) {
+
+    if (rawOnboardingData !== null && rawOnboardingData !== '') {
       const onboardingData = JSON.parse(rawOnboardingData);
       setOnboardingDone(!!onboardingData?.tablero);
     } else {
