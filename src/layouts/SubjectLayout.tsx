@@ -1,7 +1,7 @@
 import { Outlet, NavLink } from 'react-router-dom';
 import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
-import FollowTheSignsOutlinedIcon from '@mui/icons-material/FollowTheSignsOutlined';
 import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
+import BarChartIcon from '@mui/icons-material/BarChart';
 
 const LINKS: Array<{
   label: string;
@@ -23,7 +23,7 @@ const LINKS: Array<{
   {
     label: 'Analisis',
     to: `seguimiento`,
-    icon: <FollowTheSignsOutlinedIcon fontSize='small' className='tw-mr-1' />,
+    icon: <BarChartIcon fontSize='small' className='tw-mr-1' />,
   },
 ];
 
