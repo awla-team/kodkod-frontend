@@ -44,7 +44,7 @@ const Sidebar: FC<SidebarProps> = ({ classes /* handleOpenModal */ }) => {
                   // FIXME: fix this ts error
                   // @ts-expect-error ts-error(2322)
                   linkTitle={teacherClass.alias}
-                  linkRoute={`cursos/${teacherClass.id}/tablero`}
+                  linkRoute={`cursos/${teacherClass.id}/asignaturas/1/clases`}
                 />
               ))}
             </LinkList>
