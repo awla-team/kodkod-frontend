@@ -47,9 +47,10 @@ const Class: React.FC = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { classDetails, students, levels } = useClassContext();
+
   return (
     <>
-      <NavTabsContainer sx={{ zIndex: 1 }}>
+      {/* <NavTabsContainer sx={{ zIndex: 1 }}>
         {tabs.map((tab, i) =>
           !tab.disabled ? (
             <Box
@@ -84,14 +85,11 @@ const Class: React.FC = () => {
             </Tooltip>
           )
         )}
-      </NavTabsContainer>
-      <Box
-        role='tabpanel'
-        className='w-100 overflow-auto'
-        sx={{ marginTop: 'calc(64px + 36px)', paddingBottom: '36px' }}
-      >
+      </NavTabsContainer> */}
+
+      <div className='tw-w-full'>
         <Outlet context={{ classDetails, students, levels }} />
-      </Box>
+      </div>
     </>
   );
 };
