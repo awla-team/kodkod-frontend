@@ -1,4 +1,4 @@
-import { Outlet, NavLink } from 'react-router-dom';
+import { Outlet, NavLink, useParams } from 'react-router-dom';
 import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
 import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
 import BarChartIcon from '@mui/icons-material/BarChart';
@@ -28,13 +28,15 @@ const LINKS: Array<{
 ];
 
 const SubjectLayout = () => {
+  const params = useParams();
+
   return (
     <div>
       <ul className='tw-flex tw-items-center tw-list-none tw-p-0 tw-gap-2'>
         {LINKS.map(({ label, to, icon }) => (
           <li key={label} className='tw-px-4 tw-py-4 tw-border'>
             <NavLink
-              to={`/app/cursos/1/asignaturas/1/${to}`}
+              to={`/app/cursos/${params.classId}/asignaturas/${params.id}/${to}`}
               className={({ isActive }: { isActive: boolean }) =>
                 isActive
                   ? 'tw-text-primary tw-font-semibold'
