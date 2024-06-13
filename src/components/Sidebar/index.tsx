@@ -15,7 +15,7 @@ const Sidebar: FC<SidebarProps> = ({ classes /* handleOpenModal */ }) => {
   const { user } = useAuth();
 
   return (
-    <SidebarContainer className='justify-content-between'>
+    <SidebarContainer className='justify-content-between tw-bg-white'>
       <div
         className='d-flex flex-column align-items-center'
         id='home-onboarding-5'
@@ -44,7 +44,7 @@ const Sidebar: FC<SidebarProps> = ({ classes /* handleOpenModal */ }) => {
                   // FIXME: fix this ts error
                   // @ts-expect-error ts-error(2322)
                   linkTitle={teacherClass.alias}
-                  linkRoute={`cursos/${teacherClass.id}/tablero`}
+                  linkRoute={`cursos/${teacherClass.id}/asignaturas/1/clases`}
                 />
               ))}
             </LinkList>
@@ -60,9 +60,6 @@ const Sidebar: FC<SidebarProps> = ({ classes /* handleOpenModal */ }) => {
         >
           <AddIcon />
         </RoundButton> */}
-      </div>
-      <div>
-        <UserInfo user={user} />
       </div>
     </SidebarContainer>
   );
