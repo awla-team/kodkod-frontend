@@ -235,7 +235,12 @@ const App: React.FC = () => {
               <div className='app-main-container d-flex flex-column flex-fill tw-py-4'>
                 <div className='app-content container' id='home-onboarding-4'>
                   <Outlet
-                    context={{ classes, handleOpenModal, getClassesData }}
+                    context={{
+                      classes,
+                      levels,
+                      handleOpenModal,
+                      getClassesData,
+                    }}
                   />
                 </div>
               </div>

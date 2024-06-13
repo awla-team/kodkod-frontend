@@ -1,7 +1,9 @@
-import { type IClass, type ModifiedIClass } from 'global/interfaces';
+import { type Levels } from 'components/Modals/CreateClassModal/interfaces';
+import { type IClass } from 'global/interfaces';
 
 export interface MyClassesProps {
-  classes: ModifiedIClass[];
+  classes: IClass[];
+  levels: Levels[];
   getClassesData: () => void;
 }
 
