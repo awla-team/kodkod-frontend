@@ -32,12 +32,11 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
   // FIXME: fix this ts error
   // @ts-expect-error ts-error(18047)
   return user.id ? (
-    <UserInfoContainer className='w-100'>
-      <Divider className='w-75 my-3' color='gray' />
+    <UserInfoContainer>
       <UserInfoButton
         role='button'
         tabIndex={0}
-        className='d-flex justify-content-center align-items-center'
+        className='tw-flex tw-justify-center tw-items-center'
         onClick={handleClick}
       >
         <img src={ImgAvatar} alt='avatar' />
@@ -49,9 +48,9 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
         open={!!anchorEl}
         onClose={handleClose}
         onClick={handleClose}
-        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-        anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-        sx={{ left: 36, top: -16 }}
+        transformOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+        anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+        sx={{ right: 36, top: 16 }}
       >
         <MenuItem divider disabled={loading}>
           <Avatar src={ImgAvatar} />{' '}

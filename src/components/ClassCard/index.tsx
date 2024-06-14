@@ -1,11 +1,22 @@
 import { Typography, Chip } from '@mui/material';
 import { Box } from '@mui/system';
 import { type ModifiedIClass } from 'global/interfaces';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useSubjectStore } from 'zustand/subject-store';
 
 const ClassCard: React.FC<{ classObj: ModifiedIClass }> = ({ classObj }) => {
+  const navigate = useNavigate();
+  const { setSubject } = useSubjectStore();
+
+  const goToClass = () => {
+    setSubject({
+      name: 'Lenguaje y Comunicacion',
+    });
+    navigate(`cursos/${classObj.id}/asignaturas/1/clases`);
+  };
+
   return (
-    <Link to={`cursos/${classObj.id}/tablero`}>
+    <div onClick={goToClass}>
       <div className='class__level__card'>
         {classObj.current_adventure ? (
           <Box
@@ -45,7 +56,7 @@ const ClassCard: React.FC<{ classObj: ModifiedIClass }> = ({ classObj }) => {
           </Typography>
         </div>
       </div>
-    </Link>
+    </div>
   );
 };
 

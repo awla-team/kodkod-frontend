@@ -22,6 +22,8 @@ import DoneIcon from '@mui/icons-material/Done';
 import { TourProvider } from '@reactour/tour';
 import { patchUserById } from 'services/users';
 import { ModalContextProvider } from 'contexts/ZustandContext/modal-context';
+import UserInfo from 'components/Sidebar/UserInfo';
+import { useSubjectStore } from 'zustand/subject-store';
 
 moment.locale('es');
 
@@ -34,6 +36,7 @@ const App: React.FC = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const { subject } = useSubjectStore();
 
   const getClassesData = () => {
     // FIXME: fix this ts error
@@ -211,11 +214,30 @@ const App: React.FC = () => {
             <Sidebar
               classes={classes} /* handleOpenModal={handleOpenModal} */
             />
-            <div className='app-main-container d-flex flex-column flex-fill'>
-              <div className='app-content container' id='home-onboarding-4'>
-                <Outlet
-                  context={{ classes, handleOpenModal, getClassesData }}
-                />
+            <div className='tw-flex tw-flex-col tw-w-full '>
+              <header
+                className={`tw-py-2 tw-flex tw-w-full tw-items-center ${
+                  subject && location.pathname !== '/app'
+                    ? 'tw-justify-between'
+                    : 'tw-justify-end'
+                } `}
+              >
+                {subject && location.pathname !== '/app' && (
+                  <div className='tw-pl-4'>
+                    <h4 className='tw-text-xs tw-mb-0'>Curso seleccionado:</h4>
+                    <span className='tw-font-semibold'>
+                      1.A - {subject.name}
+                    </span>
+                  </div>
+                )}
+                <UserInfo user={user} />
+              </header>
+              <div className='app-main-container d-flex flex-column flex-fill tw-py-4'>
+                <div className='app-content container' id='home-onboarding-4'>
+                  <Outlet
+                    context={{ classes, handleOpenModal, getClassesData }}
+                  />
+                </div>
               </div>
             </div>
             <CreateClassModal
