@@ -1,8 +1,18 @@
-import { type IStage } from 'global/interfaces';
+export interface IUnit {
+  id: number;
+  subject_id: number;
+  title: string;
+  learning_goals: LearningGoal[];
+}
+
+interface LearningGoal {
+  id: number;
+  unit_id: number;
+  description: string;
+}
 
 export interface ViewLearningGoalsDialogProps {
   open: boolean;
-  currentStage: IStage;
+  currentUnit?: IUnit;
   handleClose: () => void;
-  isLoading: boolean;
 }

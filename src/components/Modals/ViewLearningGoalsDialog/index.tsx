@@ -12,8 +12,7 @@ import {
 const ViewLearningGoalsDialog: FC<ViewLearningGoalsDialogProps> = ({
   open,
   handleClose,
-  isLoading,
-  currentStage,
+  currentUnit,
 }) => {
   return (
     <Dialog
@@ -22,17 +21,17 @@ const ViewLearningGoalsDialog: FC<ViewLearningGoalsDialogProps> = ({
       disableEscapeKeyDown
       onClose={handleClose}
     >
-      {currentStage ? (
+      {currentUnit ? (
         <div>
           <DialogTitle fontWeight='bold'>
-            Unidad {currentStage?._index}: {currentStage.title}
+            Unidad {currentUnit.title}
           </DialogTitle>
           <DialogContent dividers className='py-4'>
             <Typography textAlign='center' variant='h6' fontWeight='bold'>
               Objetivos de Aprendizaje
             </Typography>
-            {currentStage.learning_goals?.length ? (
-              currentStage.learning_goals?.map((learningGoal) => {
+            {currentUnit.learning_goals?.length ? (
+              currentUnit.learning_goals?.map((learningGoal) => {
                 return (
                   <Typography
                     key={learningGoal.id}
@@ -40,7 +39,7 @@ const ViewLearningGoalsDialog: FC<ViewLearningGoalsDialogProps> = ({
                     variant='body1'
                     className='mb-3'
                   >
-                    {'- ' + learningGoal.details}
+                    {'- ' + learningGoal.description}
                   </Typography>
                 );
               })
@@ -72,9 +71,6 @@ const ViewLearningGoalsDialog: FC<ViewLearningGoalsDialogProps> = ({
           <DialogActions className='d-flex align-items-center mt-3'>
             <Button variant='outlined' onClick={handleClose}>
               Cerrar
-            </Button>
-            <Button variant='contained' disabled={isLoading}>
-              Finalizar aventura
             </Button>
           </DialogActions>
         </div>

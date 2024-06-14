@@ -1,8 +1,16 @@
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import SortIcon from '@mui/icons-material/Sort';
+import { useContext, useState } from 'react';
+import ViewLearningGoalsDialog from 'components/Modals/ViewLearningGoalsDialog';
+import { type IUnit } from 'components/Modals/ViewLearningGoalsDialog/interfaces';
 
 const SubjectActivities = () => {
+  const [openLearningObjetives, setOpenLearningObjetives] =
+    useState<boolean>(false);
+  const [selectedUnit, setSelectedUnit] = useState<IUnit>();
+
   return (
     <div className='tw-space-y-6'>
       <div className='tw-flex tw-items-center tw-justify-between'>
@@ -38,9 +46,11 @@ const SubjectActivities = () => {
                   </div>
                 </div>
                 <button
+                  onClick={() => setOpenLearningObjetives(true)}
                   type='button'
-                  className='tw-text-sm tw-bg-transparent tw-font-semibold tw-text-indigo-600'
+                  className='tw-text-sm tw-bg-transparent tw-font-bold tw-text-indigo-600'
                 >
+                  <SortIcon className='tw-mr-2' />
                   Objetivos de aprendizaje
                 </button>
               </div>
@@ -79,6 +89,11 @@ const SubjectActivities = () => {
             </div>
           ))}
       </div>
+      <ViewLearningGoalsDialog
+        open={openLearningObjetives}
+        handleClose={() => setOpenLearningObjetives(false)}
+        currentUnit={selectedUnit}
+      />
     </div>
   );
 };

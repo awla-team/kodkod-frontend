@@ -203,12 +203,6 @@ const StageStepper: FC<{
               sortedStages[navigableStages.length] ? handleUnlock : handleFinish
             }
           />
-          <ViewLearningGoalsDialog
-            isLoading={loading}
-            open={openLearningObjetives}
-            currentStage={shownStage}
-            handleClose={() => setOpenLearningObjetives(false)}
-          />
         </div>
       ) : null}
     </div>
