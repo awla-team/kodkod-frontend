@@ -1,10 +1,16 @@
 import { Typography, Chip } from '@mui/material';
 import { Box } from '@mui/system';
-import { type IClass } from 'global/interfaces';
+import {
+  type ITeacherSubjectClassroomList,
+  type IClass,
+} from 'global/interfaces';
 import { useNavigate } from 'react-router-dom';
 import { useSubjectStore } from 'zustand/subject-store';
 
-const ClassCard: React.FC<{ classObj: IClass }> = ({ classObj }) => {
+const ClassCard: React.FC<{
+  classObj?: IClass;
+  classroom?: ITeacherSubjectClassroomList;
+}> = ({ classObj, classroom }) => {
   const navigate = useNavigate();
   const { setSubject } = useSubjectStore();
 
@@ -12,13 +18,13 @@ const ClassCard: React.FC<{ classObj: IClass }> = ({ classObj }) => {
     setSubject({
       name: 'Lenguaje y Comunicacion',
     });
-    navigate(`cursos/${classObj.id}/asignaturas/1/clases`);
+    navigate(`cursos/${classObj?.id}/asignaturas/1/clases`);
   };
 
   return (
     <div onClick={goToClass}>
       <div className='class__level__card'>
-        {classObj.current_adventure ? (
+        {classObj?.current_adventure ? (
           <Box
             className='d-flex justify-content-end p-2 class-img-container'
             sx={{
@@ -43,7 +49,7 @@ const ClassCard: React.FC<{ classObj: IClass }> = ({ classObj }) => {
             overflow='hidden'
             textOverflow='ellipsis'
           >
-            {classObj.alias}
+            {classObj?.alias}
           </Typography>
           <Typography
             component='span'
@@ -51,7 +57,9 @@ const ClassCard: React.FC<{ classObj: IClass }> = ({ classObj }) => {
             textAlign='center'
             fontWeight='bold'
           >
-            {'Lenguaje y literatura'}
+            {classroom?.subject.name
+              ? classroom?.subject.name
+              : 'Sin Informacion'}
           </Typography>
           <Typography
             className='tw-flex'
@@ -59,7 +67,9 @@ const ClassCard: React.FC<{ classObj: IClass }> = ({ classObj }) => {
             variant='h6'
             textAlign='center'
           >
-            {'0 Estudiantes'}
+            {classroom?.classroom.students.length
+              ? classroom?.classroom.students.length
+              : '0 Estudiantes'}
           </Typography>
         </div>
       </div>

@@ -2,7 +2,10 @@ import { type FC } from 'react';
 import WelcomePage from './WelcomePage';
 import MyClasses from './MyClasses';
 import { useOutletContext } from 'react-router-dom';
-import { type IClass } from 'global/interfaces';
+import {
+  type ITeacherSubjectClassroomList,
+  type IClass,
+} from 'global/interfaces';
 import { type Levels } from 'components/Modals/CreateClassModal/interfaces';
 
 const HomePage: FC = () => {
@@ -10,9 +13,10 @@ const HomePage: FC = () => {
   // const [onboardingDone, setOnboardingDone] = useState(true);
   // const { setNewAvailableTours } = useOnboarding();
   // const { setIsOpen, setSteps, setCurrentStep } = useTour();
-  const { classes, levels, handleOpenModal, getClassesData } =
+  const { classes, classrooms, levels, handleOpenModal, getClassesData } =
     useOutletContext() as {
       classes: IClass[];
+      classrooms: ITeacherSubjectClassroomList[];
       levels: Levels[];
       handleOpenModal: () => void;
       getClassesData: () => void;
@@ -64,6 +68,7 @@ const HomePage: FC = () => {
       ) : (
         <MyClasses
           classes={classes}
+          classrooms={classrooms}
           levels={levels}
           getClassesData={getClassesData}
         />

@@ -3,7 +3,10 @@ import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { Button, CircularProgress } from '@mui/material';
 import Sidebar from './components/Sidebar';
 import { getClassesByUser } from 'services/classes';
-import { type IClass } from 'global/interfaces';
+import {
+  type ITeacherSubjectClassroomList,
+  type IClass,
+} from 'global/interfaces';
 import { type AxiosResponse } from 'axios';
 import { FetchStatus } from 'global/enums';
 import { CreateClassModal } from './components/Modals';
@@ -24,11 +27,15 @@ import { patchUserById } from 'services/users';
 import { ModalContextProvider } from 'contexts/ZustandContext/modal-context';
 import UserInfo from 'components/Sidebar/UserInfo';
 import { useSubjectStore } from 'zustand/subject-store';
+import { getTeacherSubjectClassroomByTeacherId } from 'services/teacher_subject_classroom';
 
 moment.locale('es');
 
 const App: React.FC = () => {
   const [classes, setClasses] = useState<IClass[]>([]);
+  const [classrooms, setClassrooms] = useState<ITeacherSubjectClassroomList[]>(
+    []
+  );
   const [levels, setLevels] = useState<Levels[]>([]);
   const [fetching, setFetching] = useState<FetchStatus>(FetchStatus.Idle);
   const [createClassModalOpen, setCreateClassModalOpen] =
@@ -37,6 +44,27 @@ const App: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { subject } = useSubjectStore();
+
+  const getClassroomsData = () => {
+    try {
+      if (user?.id) {
+        getTeacherSubjectClassroomByTeacherId(user.id)
+          .then((response: ITeacherSubjectClassroomList[]) => {
+            return response;
+          })
+          .then((classroomsList: ITeacherSubjectClassroomList[]) => {
+            setClassrooms(classroomsList);
+            setFetching(FetchStatus.Success);
+          })
+          .catch((error) => {
+            setFetching(FetchStatus.Error);
+            console.error(error);
+          });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const getClassesData = () => {
     // FIXME: fix this ts error
@@ -139,6 +167,7 @@ const App: React.FC = () => {
     if (user) {
       setFetching(FetchStatus.Pending);
       getClassesData();
+      getClassroomsData();
       // FIXME: fix this eslint error
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
       getLevels();
@@ -237,6 +266,7 @@ const App: React.FC = () => {
                   <Outlet
                     context={{
                       classes,
+                      classrooms,
                       levels,
                       handleOpenModal,
                       getClassesData,
