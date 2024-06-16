@@ -2,19 +2,16 @@ import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'react-router-dom';
-import { getUnitsBySubject } from 'services/subjects';
 import { CircularProgress } from '@mui/material';
 
 const SubjectActivities = () => {
-  const params = useParams() as { classId: string; id: string };
-
   const { isLoading, data, isError } = useQuery({
-    queryKey: ['subject'],
-    queryFn: async () =>
-      await getUnitsBySubject({
-        subject_id: params.id,
-      }),
+    queryKey: ['activities'],
+    queryFn: () => ({
+      data: {
+        responseData: [{ title: 'Introduccion' }],
+      },
+    }),
   });
 
   if (isLoading)
