@@ -149,13 +149,6 @@ export interface IStage extends TemplateStages {
   active: boolean;
   next_img_url: string;
   narrative: string;
-  learning_goals?: ILearningGoal[];
-}
-
-export interface ILearningGoal {
-  id: number;
-  details: string;
-  unit_id: number;
 }
 
 export interface IMission {

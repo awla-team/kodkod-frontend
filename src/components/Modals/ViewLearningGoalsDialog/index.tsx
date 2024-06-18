@@ -1,4 +1,4 @@
-import { type FC } from 'react';
+import { useEffect, useState, type FC } from 'react';
 import { type ViewLearningGoalsDialogProps } from './interfaces';
 import {
   Button,
@@ -7,13 +7,58 @@ import {
   DialogActions,
   DialogContent,
   Dialog,
+  CircularProgress,
 } from '@mui/material';
+import { type ILearningGoal } from 'types/models/LearningGoal';
+import Toaster from 'utils/Toster';
+import { FetchStatus } from 'global/enums';
+import { getLearningGoalsByUnit } from 'services/learning_goals';
 
 const ViewLearningGoalsDialog: FC<ViewLearningGoalsDialogProps> = ({
   open,
   handleClose,
   currentUnit,
 }) => {
+  const [learningGoals, setLearningGoals] = useState<ILearningGoal[]>([]);
+  const [fetching, setFetching] = useState<FetchStatus>(FetchStatus.Idle);
+
+  const getLearningGoals = () => {
+    try {
+      if (currentUnit) {
+        getLearningGoalsByUnit(currentUnit?.id)
+          .then((response: ILearningGoal[]) => {
+            return response;
+          })
+          .then((learningGoalsList: ILearningGoal[]) => {
+            setLearningGoals(learningGoalsList);
+            setFetching(FetchStatus.Success);
+          })
+          .catch((error: Error) => {
+            setFetching(FetchStatus.Error);
+            console.error(error);
+          });
+      }
+    } catch (error) {
+      console.error(error);
+      Toaster('error', 'Hubo un error al cargar los objetivos de aprendizaje');
+    }
+  };
+
+  useEffect(() => {
+    if (currentUnit) {
+      getLearningGoals();
+    }
+  }, [currentUnit]);
+
+  if (fetching === FetchStatus.Idle || fetching === FetchStatus.Pending)
+    return (
+      <div className='app-container d-flex'>
+        <div className='d-flex w-100 h-100 justify-content-center align-items-center'>
+          <CircularProgress />
+        </div>
+      </div>
+    );
+
   return (
     <Dialog
       PaperProps={{ className: 'p-3' }}
@@ -30,8 +75,8 @@ const ViewLearningGoalsDialog: FC<ViewLearningGoalsDialogProps> = ({
             <Typography textAlign='center' variant='h6' fontWeight='bold'>
               Objetivos de Aprendizaje
             </Typography>
-            {currentUnit.learning_goals?.length ? (
-              currentUnit.learning_goals?.map((learningGoal) => {
+            {learningGoals?.length ? (
+              learningGoals?.map((learningGoal) => {
                 return (
                   <Typography
                     key={learningGoal.id}
