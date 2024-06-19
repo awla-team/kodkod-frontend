@@ -20,7 +20,7 @@ const ViewLearningGoalsDialog: FC<ViewLearningGoalsDialogProps> = ({
   currentUnit,
 }) => {
   const [learningGoals, setLearningGoals] = useState<ILearningGoal[]>([]);
-  const [fetching, setFetching] = useState<FetchStatus>(FetchStatus.Idle);
+  const [messageIsShown, setMessageIsShown] = useState<boolean>(true);
 
   const getLearningGoals = () => {
     try {
@@ -31,10 +31,8 @@ const ViewLearningGoalsDialog: FC<ViewLearningGoalsDialogProps> = ({
           })
           .then((learningGoalsList: ILearningGoal[]) => {
             setLearningGoals(learningGoalsList);
-            setFetching(FetchStatus.Success);
           })
           .catch((error: Error) => {
-            setFetching(FetchStatus.Error);
             console.error(error);
           });
       }
@@ -47,17 +45,12 @@ const ViewLearningGoalsDialog: FC<ViewLearningGoalsDialogProps> = ({
   useEffect(() => {
     if (currentUnit) {
       getLearningGoals();
+    } else {
+      setTimeout(() => {
+        setMessageIsShown(false);
+      }, 5000);
     }
   }, [currentUnit]);
-
-  if (fetching === FetchStatus.Idle || fetching === FetchStatus.Pending)
-    return (
-      <div className='app-container d-flex'>
-        <div className='d-flex w-100 h-100 justify-content-center align-items-center'>
-          <CircularProgress />
-        </div>
-      </div>
-    );
 
   return (
     <Dialog
@@ -106,10 +99,19 @@ const ViewLearningGoalsDialog: FC<ViewLearningGoalsDialogProps> = ({
           <DialogContent dividers className='py-4'>
             <div className='mb-3'>
               <div className='mb-4'>
-                <Typography component='span' variant='body1'>
+                <Typography
+                  component='span'
+                  variant='body1'
+                  hidden={messageIsShown}
+                  className='d-flex mb-4'
+                >
                   No se encontro informacion al respecto. Tal ves falta
                   ingresarla?
                 </Typography>
+
+                <div className='d-flex w-100 h-100 justify-content-center align-items-center'>
+                  <CircularProgress />
+                </div>
               </div>
             </div>
           </DialogContent>
