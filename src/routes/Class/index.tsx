@@ -47,6 +47,14 @@ const Class: React.FC = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { classDetails, students, levels } = useClassContext();
+
+  const downloadReport = () => {
+    const anchor = document.createElement('a');
+    anchor.href = '/Reporte.pdf';
+    anchor.download = 'reporte-demo.pdf';
+    anchor.click();
+  };
+
   return (
     <>
       <NavTabsContainer sx={{ zIndex: 1 }}>
@@ -67,21 +75,20 @@ const Class: React.FC = () => {
               </Typography>
             </Box>
           ) : (
-            <Tooltip key={`tab-${i}`} arrow title='¡Próximamente!'>
-              <Box
-                id={tab.id}
-                className={`nav__tab ${
-                  pathname.includes(tab.path) ? 'active' : ''
-                } ${tab.disabled ? 'disabled' : ''}`}
-                role='button'
-                onClick={() => {}}
-              >
-                {tab.svg}
-                <Typography fontWeight='bold' component='span' variant='body2'>
-                  {tab.title}
-                </Typography>
-              </Box>
-            </Tooltip>
+            <Box
+              key={`tab-${i}`}
+              id={tab.id}
+              className={`nav__tab ${
+                pathname.includes(tab.path) ? 'active' : ''
+              }`}
+              role='button'
+              onClick={downloadReport}
+            >
+              {tab.svg}
+              <Typography fontWeight='bold' component='span' variant='body2'>
+                {tab.title}
+              </Typography>
+            </Box>
           )
         )}
       </NavTabsContainer>
