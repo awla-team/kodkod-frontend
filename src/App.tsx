@@ -54,10 +54,8 @@ const App: React.FC = () => {
           })
           .then((classroomsList: ITeacherSubjectClassroomList[]) => {
             setClassrooms(classroomsList);
-            setFetching(FetchStatus.Success);
           })
           .catch((error) => {
-            setFetching(FetchStatus.Error);
             console.error(error);
           });
       }

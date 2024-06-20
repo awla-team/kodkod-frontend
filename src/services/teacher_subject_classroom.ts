@@ -5,6 +5,6 @@ export const getTeacherSubjectClassroomByTeacherId = async (
   teacherId: number | string
 ): Promise<ITeacherSubjectClassroomList[]> => {
   return await http.get(
-    '/teacher-subject-classroom/get-by-teacher-id/' + teacherId
+    `/teacher-subject-classroom/get-by-teacher-id/${teacherId}`
   );
 };
