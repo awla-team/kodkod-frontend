@@ -70,9 +70,11 @@ const SubjectActivities = () => {
                   </div>
                 </div>
                 <button
+                  onClick={() => setOpenLearningObjetives(true)}
                   type='button'
-                  className='tw-text-sm tw-bg-transparent tw-font-semibold tw-text-indigo-600'
+                  className='tw-text-sm tw-bg-transparent tw-font-bold tw-text-indigo-600'
                 >
+                  <SortIcon className='tw-mr-2' />
                   Objetivos de aprendizaje
                 </button>
               </div>
