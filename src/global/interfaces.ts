@@ -68,6 +68,33 @@ export interface IClassHasAdventure {
   date_stop?: string;
 }
 
+export interface ITeacherSubjectClassroom {
+  id: number;
+  teacher_id: number;
+  classroom_id: number;
+  subject_id: number;
+}
+
+export interface ITeacherSubjectClassroomList extends ITeacherSubjectClassroom {
+  classroom: IClassroomAbreviatedListResponse;
+  subject: ISubjectAbreviatedResponse;
+}
+export interface IStudentAbreviatedListResponse {
+  id: number;
+  first_name: string;
+  last_name: string;
+}
+export interface ISubjectAbreviatedResponse {
+  id: number;
+  name: string;
+}
+export interface IClassroomAbreviatedListResponse {
+  id: number;
+  level_id: number;
+  title: string;
+  students: IStudentAbreviatedListResponse[];
+}
+
 export interface IClass {
   id?: number;
   id_level?: number;
