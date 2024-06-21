@@ -5,11 +5,35 @@ import SortIcon from '@mui/icons-material/Sort';
 import { useContext, useState } from 'react';
 import ViewLearningGoalsDialog from 'components/Modals/ViewLearningGoalsDialog';
 import { type IUnit } from 'components/Modals/ViewLearningGoalsDialog/interfaces';
+import { useQuery } from '@tanstack/react-query';
+import { CircularProgress } from '@mui/material';
 
 const SubjectActivities = () => {
   const [openLearningObjetives, setOpenLearningObjetives] =
     useState<boolean>(false);
   const [selectedUnit, setSelectedUnit] = useState<IUnit>();
+
+  const { isLoading, data, isError } = useQuery({
+    queryKey: ['activities'],
+    queryFn: () => ({
+      data: {
+        responseData: [{ title: 'Introduccion' }],
+      },
+    }),
+  });
+
+  if (isLoading)
+    return (
+      <div className='tw-flex tw-justify-center tw-items-center'>
+        <CircularProgress />
+      </div>
+    );
+
+  if (isError || !data) return <p>error</p>;
+
+  const {
+    data: { responseData: units },
+  } = data;
 
   return (
     <div className='tw-space-y-6'>
@@ -46,11 +70,9 @@ const SubjectActivities = () => {
                   </div>
                 </div>
                 <button
-                  onClick={() => setOpenLearningObjetives(true)}
                   type='button'
-                  className='tw-text-sm tw-bg-transparent tw-font-bold tw-text-indigo-600'
+                  className='tw-text-sm tw-bg-transparent tw-font-semibold tw-text-indigo-600'
                 >
-                  <SortIcon className='tw-mr-2' />
                   Objetivos de aprendizaje
                 </button>
               </div>
