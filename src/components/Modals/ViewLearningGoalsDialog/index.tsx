@@ -1,5 +1,5 @@
 import { useEffect, useState, type FC } from 'react';
-import { type ViewLearningGoalsDialogProps } from './interfaces';
+import { type IUnit, type ViewLearningGoalsDialogProps } from './interfaces';
 import {
   Button,
   Typography,
@@ -11,7 +11,6 @@ import {
 } from '@mui/material';
 import { type ILearningGoal } from 'types/models/LearningGoal';
 import Toaster from 'utils/Toster';
-import { FetchStatus } from 'global/enums';
 import { getLearningGoalsByUnit } from 'services/learning_goals';
 
 const ViewLearningGoalsDialog: FC<ViewLearningGoalsDialogProps> = ({
@@ -19,7 +18,31 @@ const ViewLearningGoalsDialog: FC<ViewLearningGoalsDialogProps> = ({
   handleClose,
   currentUnit,
 }) => {
-  const [learningGoals, setLearningGoals] = useState<ILearningGoal[]>([]);
+  const [learningGoals, setLearningGoals] = useState<ILearningGoal[]>([
+    {
+      id: 1,
+      description:
+        'Llevar a cabo investigaciones académicas y redactar artículos de investigación.',
+      unit_id: 1,
+    },
+    {
+      id: 2,
+      description:
+        'Analizar críticamente textos literarios, filosóficos y científicos.',
+      unit_id: 1,
+    },
+    {
+      id: 3,
+      description:
+        'Desarrollar habilidades avanzadas de comunicación escrita y oral para diferentes audiencias.',
+      unit_id: 1,
+    },
+  ]);
+  const selectedUnit: IUnit = currentUnit || {
+    id: 1,
+    subject_id: 1,
+    title: '1: La libertad como tema literario',
+  };
   const [messageIsShown, setMessageIsShown] = useState<boolean>(true);
 
   const getLearningGoals = () => {
@@ -59,13 +82,18 @@ const ViewLearningGoalsDialog: FC<ViewLearningGoalsDialogProps> = ({
       disableEscapeKeyDown
       onClose={handleClose}
     >
-      {currentUnit ? (
+      {selectedUnit ? (
         <div>
-          <DialogTitle fontWeight='bold'>
-            Unidad {currentUnit.title}
+          <DialogTitle fontWeight='bold' className='mb-2'>
+            Unidad {selectedUnit.title}
           </DialogTitle>
-          <DialogContent dividers className='py-4'>
-            <Typography textAlign='center' variant='h6' fontWeight='bold'>
+          <DialogContent dividers className='mb-3'>
+            <Typography
+              textAlign='center'
+              variant='h6'
+              fontWeight='bold'
+              className='mb-3'
+            >
               Objetivos de Aprendizaje
             </Typography>
             {learningGoals?.length ? (
@@ -75,7 +103,6 @@ const ViewLearningGoalsDialog: FC<ViewLearningGoalsDialogProps> = ({
                     key={learningGoal.id}
                     component='p'
                     variant='body1'
-                    className='mb-3'
                   >
                     {'- ' + learningGoal.description}
                   </Typography>
@@ -105,8 +132,7 @@ const ViewLearningGoalsDialog: FC<ViewLearningGoalsDialogProps> = ({
                   hidden={messageIsShown}
                   className='d-flex mb-4'
                 >
-                  No se encontro informacion al respecto. Tal ves falta
-                  ingresarla?
+                  No se encontro informacion al respecto.
                 </Typography>
 
                 <div className='d-flex w-100 h-100 justify-content-center align-items-center'>

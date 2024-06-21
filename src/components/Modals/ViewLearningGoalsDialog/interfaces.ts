@@ -2,7 +2,7 @@ export interface IUnit {
   id: number;
   subject_id: number;
   title: string;
-  learning_goals: LearningGoal[];
+  learning_goals?: LearningGoal[];
 }
 
 interface LearningGoal {
