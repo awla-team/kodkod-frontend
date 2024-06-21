@@ -44,6 +44,7 @@ const ViewLearningGoalsDialog: FC<ViewLearningGoalsDialogProps> = ({
     title: '1: La libertad como tema literario',
   };
   const [messageIsShown, setMessageIsShown] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const getLearningGoals = () => {
     try {
@@ -67,12 +68,14 @@ const ViewLearningGoalsDialog: FC<ViewLearningGoalsDialogProps> = ({
 
   useEffect(() => {
     if (currentUnit) {
+      setIsLoading(true);
       getLearningGoals();
     } else {
       setTimeout(() => {
         setMessageIsShown(false);
       }, 5000);
     }
+    setIsLoading(false);
   }, [currentUnit]);
 
   return (
@@ -113,6 +116,9 @@ const ViewLearningGoalsDialog: FC<ViewLearningGoalsDialogProps> = ({
                 - No se establecieron Objetivos
               </Typography>
             )}
+            <div className='d-flex w-100 h-100 justify-content-center align-items-center'>
+              <CircularProgress hidden={!isLoading} />
+            </div>
           </DialogContent>
           <DialogActions className='d-flex align-items-center mt-3'>
             <Button variant='contained' onClick={handleClose}>
@@ -134,10 +140,6 @@ const ViewLearningGoalsDialog: FC<ViewLearningGoalsDialogProps> = ({
                 >
                   No se encontro informacion al respecto.
                 </Typography>
-
-                <div className='d-flex w-100 h-100 justify-content-center align-items-center'>
-                  <CircularProgress />
-                </div>
               </div>
             </div>
           </DialogContent>
