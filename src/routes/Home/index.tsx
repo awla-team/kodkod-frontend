@@ -2,18 +2,25 @@ import { type FC } from 'react';
 import WelcomePage from './WelcomePage';
 import MyClasses from './MyClasses';
 import { useOutletContext } from 'react-router-dom';
-import { type ModifiedIClass } from 'global/interfaces';
+import {
+  type ITeacherSubjectClassroomList,
+  type IClass,
+} from 'global/interfaces';
+import { type Levels } from 'components/Modals/CreateClassModal/interfaces';
 
 const HomePage: FC = () => {
   // const { user } = useAuth();
   // const [onboardingDone, setOnboardingDone] = useState(true);
   // const { setNewAvailableTours } = useOnboarding();
   // const { setIsOpen, setSteps, setCurrentStep } = useTour();
-  const { classes, handleOpenModal, getClassesData } = useOutletContext() as {
-    classes: ModifiedIClass[];
-    handleOpenModal: () => void;
-    getClassesData: () => void;
-  };
+  const { classes, classrooms, levels, handleOpenModal, getClassesData } =
+    useOutletContext() as {
+      classes: IClass[];
+      classrooms: ITeacherSubjectClassroomList[];
+      levels: Levels[];
+      handleOpenModal: () => void;
+      getClassesData: () => void;
+    };
 
   // useEffect(() => {
   //   let rawOnboardingData: string | null = '';
@@ -59,7 +66,12 @@ const HomePage: FC = () => {
       {!classes?.length ? (
         <WelcomePage handleOpenModal={handleOpenModal} />
       ) : (
-        <MyClasses classes={classes} getClassesData={getClassesData} />
+        <MyClasses
+          classes={classes}
+          classrooms={classrooms}
+          levels={levels}
+          getClassesData={getClassesData}
+        />
       )}
     </div>
   );
