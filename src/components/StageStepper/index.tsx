@@ -4,6 +4,7 @@ import { Step, Button, Typography, Tooltip } from '@mui/material';
 import { ClassHasAdventureContext } from '../../routes/Class/Adventures/Adventure/provider';
 import { type IStage } from 'global/interfaces';
 import { UnlockStageConfirmationDialog } from 'components/Modals';
+import ViewLearningGoalsDialog from 'components/Modals/ViewLearningGoalsDialog';
 import { unlockStage } from 'services/stages';
 import Toaster from 'utils/Toster';
 
@@ -20,6 +21,8 @@ const StageStepper: FC<{
   const [navigableStages, setNavigableStages] = useState<IStage[]>([]);
   const [activeStep, setActiveStep] = useState<number | undefined>(undefined);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
+  const [openLearningObjetives, setOpenLearningObjetives] =
+    useState<boolean>(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -110,61 +113,82 @@ const StageStepper: FC<{
       {sortedStages.length ? (
         <div>
           {sortedStages[navigableStages.length] ? (
-            <Tooltip
-              arrow
-              title={
-                <div className='p-1'>
-                  ¿Qué sucederá al desbloquear la siguiente etapa?
-                  <ul className='m-0'>
-                    <li>
-                      Verán nuevas misiones que les permitirán sumar más puntos
-                      y recompensas
-                    </li>
-                    <li>
-                      Las misiones de las etapas anteriores seguirán disponibles
-                      para quienes aún no las hayan completado.
-                    </li>
-                  </ul>
-                </div>
-              }
-            >
-              <Button
-                id='adventure-stage-unlock'
-                variant='contained'
-                onClick={() => setOpenDialog(true)}
-                disabled={navigableStages.length === sortedStages.length}
-                size='large'
+            <div className='d-flex flex-column gap-3'>
+              <Tooltip
+                arrow
+                title={
+                  <div className='d-flex flex-column p-1'>
+                    ¿Qué sucederá al desbloquear la siguiente etapa?
+                    <ul className='m-0'>
+                      <li>
+                        Verán nuevas misiones que les permitirán sumar más
+                        puntos y recompensas
+                      </li>
+                      <li>
+                        Las misiones de las etapas anteriores seguirán
+                        disponibles para quienes aún no las hayan completado.
+                      </li>
+                    </ul>
+                  </div>
+                }
               >
-                Desbloquear etapa {sortedStages[navigableStages.length]._index}
+                <Button
+                  id='adventure-stage-unlock'
+                  variant='contained'
+                  onClick={() => setOpenDialog(true)}
+                  disabled={navigableStages.length === sortedStages.length}
+                  size='large'
+                >
+                  Desbloquear etapa{' '}
+                  {sortedStages[navigableStages.length]._index}
+                </Button>
+              </Tooltip>
+              <Button
+                variant='contained'
+                onClick={() => setOpenLearningObjetives(true)}
+                size='large'
+                color='success'
+              >
+                Ver Objetivos de Aprendizaje
               </Button>
-            </Tooltip>
+            </div>
           ) : (
-            <Tooltip
-              arrow
-              title={
-                <div className='p-1'>
-                  ¿Qué sucederá al finalizar la aventura?
-                  <ul className='m-0'>
-                    <li>Los puntos de cada estudiante volverán a 0.</li>
-                    <li>
-                      No se podrán completar más misiones en esta aventura.
-                    </li>
-                    <li>
-                      Tus estudiantes mantendrán las recompensas que ya
-                      obtuvieron.
-                    </li>
-                  </ul>
-                </div>
-              }
-            >
+            <div className='d-flex flex-column gap-3'>
+              <Tooltip
+                arrow
+                title={
+                  <div className='p-1'>
+                    ¿Qué sucederá al finalizar la aventura?
+                    <ul className='m-0'>
+                      <li>Los puntos de cada estudiante volverán a 0.</li>
+                      <li>
+                        No se podrán completar más misiones en esta aventura.
+                      </li>
+                      <li>
+                        Tus estudiantes mantendrán las recompensas que ya
+                        obtuvieron.
+                      </li>
+                    </ul>
+                  </div>
+                }
+              >
+                <Button
+                  variant='contained'
+                  onClick={() => setOpenDialog(true)}
+                  size='large'
+                >
+                  ¡Completar etapa y finalizar aventura!
+                </Button>
+              </Tooltip>
               <Button
                 variant='contained'
-                onClick={() => setOpenDialog(true)}
+                onClick={() => setOpenLearningObjetives(true)}
                 size='large'
+                color='success'
               >
-                ¡Completar etapa y finalizar aventura!
+                Ver Objetivos de Aprendizaje
               </Button>
-            </Tooltip>
+            </div>
           )}
           <UnlockStageConfirmationDialog
             unlockableStageData={sortedStages[navigableStages.length]}
