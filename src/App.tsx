@@ -58,8 +58,6 @@ const App: React.FC = () => {
     } catch (error) {
       console.error(error);
     }
-
-    console.log(classrooms);
   };
 
   const updateOnboardingStatus = () => {
