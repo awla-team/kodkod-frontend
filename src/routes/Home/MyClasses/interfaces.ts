@@ -1,14 +1,10 @@
 import { type Levels } from 'components/Modals/CreateClassModal/interfaces';
-import {
-  type ITeacherSubjectClassroomList,
-  type IClass,
-} from 'global/interfaces';
+import { type ITeacherSubjectClassroom, type IClass } from 'global/interfaces';
 
 export interface MyClassesProps {
-  classes: IClass[];
-  classrooms: ITeacherSubjectClassroomList[];
+  classrooms: ITeacherSubjectClassroom[];
   levels: Levels[];
-  getClassesData: () => void;
+  getClassroomsData: () => void;
 }
 
 export interface ClassLevelData {

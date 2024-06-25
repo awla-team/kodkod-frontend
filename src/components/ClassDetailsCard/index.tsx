@@ -22,6 +22,7 @@ import YouTubeIcon from '@mui/icons-material/YouTube';
 
 const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
   classDetails,
+  classroomDetails,
   levels,
 }) => {
   const navigate = useNavigate();
@@ -260,7 +261,7 @@ const ClassDetailsCard: FC<ClassDetailsCardProps> = ({
         )}
       </div>
       <CreateClassModal
-        classDetails={classDetails}
+        classroomDetails={classroomDetails}
         open={open}
         onClose={handleClose}
         levels={levels}

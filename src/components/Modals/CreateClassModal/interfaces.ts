@@ -1,4 +1,4 @@
-import { type IClass } from 'global/interfaces';
+import { type ITeacherSubjectClassroom } from 'global/interfaces';
 
 export interface Levels {
   id: number | string;
@@ -10,11 +10,11 @@ export interface CreateClassModalProps {
   open: boolean;
   onClose: (
     reason: 'backdropClick' | 'escapeKeyDown' | 'success',
-    data?: IClass
+    data?: ITeacherSubjectClassroom
   ) => void;
   levels: Levels[];
 
-  classDetails?: IClass;
+  classroomDetails?: ITeacherSubjectClassroom;
 }
 
 export interface FormInitialState {

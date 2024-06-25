@@ -1,3 +1,5 @@
 export default interface Subject {
-  name: string;
+  id: number;
+  title: string;
+  level_id: number;
 }
