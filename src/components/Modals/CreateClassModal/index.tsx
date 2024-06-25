@@ -21,7 +21,7 @@ import * as Yup from 'yup';
 import { useEffect, useState } from 'react';
 import { createClass, updateClass } from 'services/classes';
 import Toaster from 'utils/Toster';
-import { type IClass } from 'global/interfaces';
+import { type ITeacherSubjectClassroom } from 'global/interfaces';
 import { useAuth } from 'contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { useTour } from '@reactour/tour';
@@ -30,7 +30,7 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
   open,
   onClose,
   levels,
-  classDetails,
+  classroomDetails,
 }) => {
   const { setCurrentStep } = useTour();
   const [initialState, setInitialState] = useState<FormInitialState>({
@@ -49,20 +49,20 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (classDetails) {
+    if (classroomDetails) {
       setInitialState({
         // FIXME: fix this ts error
         // @ts-expect-error ts-error(18048)
-        id_level: classDetails.level.id,
+        id_level: classroomDetails.level.id,
         // FIXME: fix this ts error
         // @ts-expect-error ts-error(2322)
-        code: classDetails.code,
+        code: classroomDetails.code,
         // FIXME: fix this ts error
         // @ts-expect-error ts-error(2322)
-        alias: classDetails.alias,
+        alias: classroomDetails.alias,
       });
     }
-  }, [classDetails]);
+  }, [classroomDetails]);
   // extract first char from string
   const handleAliasValue = (
     e: ChangeEvent,
@@ -93,12 +93,13 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
     formikHelpers: FormikHelpers<FormInitialState>
   ) => {
     try {
-      if (classDetails) {
-        const { data }: { data: { responseData: IClass } } = await updateClass({
-          ...values,
-          id_level: values.id_level as number,
-          id: classDetails.id,
-        });
+      if (classroomDetails) {
+        const { data }: { data: { responseData: ITeacherSubjectClassroom } } =
+          await updateClass({
+            ...values,
+            id_level: values.id_level as number,
+            id: classroomDetails.id,
+          });
         onClose('success', data.responseData);
         Toaster('success', `Curso editado exitosamente`);
         // TODO: remove this workarround
@@ -106,13 +107,14 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
           window.location.reload();
         }, 500);
       } else {
-        const { data }: { data: { responseData: IClass } } = await createClass({
-          ...values,
-          // FIXME: fix this ts error
-          // @ts-expect-error ts-error(18047)
-          id_user: user.id,
-          id_level: values.id_level as number,
-        });
+        const { data }: { data: { responseData: ITeacherSubjectClassroom } } =
+          await createClass({
+            ...values,
+            // FIXME: fix this ts error
+            // @ts-expect-error ts-error(18047)
+            id_user: user.id,
+            id_level: values.id_level as number,
+          });
 
         // navigate(`/app/cursos/${data.responseData.id}/tablero`);
         onClose('success', data.responseData);
@@ -132,7 +134,7 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
       PaperProps={{ className: 'p-3', id: 'home-onboarding-3' }}
     >
       <DialogTitle fontWeight='bold'>
-        {classDetails ? 'Editar curso' : 'Añade un nuevo curso'}
+        {classroomDetails ? 'Editar curso' : 'Añade un nuevo curso'}
       </DialogTitle>
       <Formik
         initialValues={initialState}
@@ -265,7 +267,9 @@ const CreateClassModal: FC<CreateClassModalProps> = ({
                   type='submit'
                   variant='contained'
                 >
-                  {classDetails ? 'Guardar cambios' : 'Añade un nuevo curso'}
+                  {classroomDetails
+                    ? 'Guardar cambios'
+                    : 'Añade un nuevo curso'}
                 </Button>
               </DialogActions>
             </Form>

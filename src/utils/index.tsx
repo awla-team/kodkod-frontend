@@ -1,4 +1,4 @@
-import { type IClass } from 'global/interfaces';
+import { type ITeacherSubjectClassroom } from 'global/interfaces';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { type IStage } from '../global/interfaces';
 import { generateAccessToken } from '../services/auth';
@@ -14,16 +14,14 @@ export const difficultyIcons = {
   hard: <SignalCellularAltIcon fontSize='small' />,
 };
 
-export const sortClasses = (classes?: IClass[]): IClass[] => {
-  if (classes && Array.isArray(classes)) {
-    return classes?.sort((a, b) => {
-      // FIXME: fix this ts error
-      // @ts-expect-error ts-error(18048)
-      if (a.alias < b.alias) {
+export const sortClassrooms = (
+  classrooms?: ITeacherSubjectClassroom[]
+): ITeacherSubjectClassroom[] => {
+  if (classrooms && Array.isArray(classrooms)) {
+    return classrooms?.sort((a, b) => {
+      if (a.classroom.title < b.classroom.title) {
         return -1;
-        // FIXME: fix this ts error
-        // @ts-expect-error ts-error(18048)
-      } else if (a.alias > b.alias) {
+      } else if (a.classroom.title > b.classroom.title) {
         return 1;
       } else {
         return 0;

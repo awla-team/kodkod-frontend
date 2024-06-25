@@ -2,10 +2,7 @@ import { type FC } from 'react';
 import WelcomePage from './WelcomePage';
 import MyClasses from './MyClasses';
 import { useOutletContext } from 'react-router-dom';
-import {
-  type ITeacherSubjectClassroomList,
-  type IClass,
-} from 'global/interfaces';
+import { type ITeacherSubjectClassroom, type IClass } from 'global/interfaces';
 import { type Levels } from 'components/Modals/CreateClassModal/interfaces';
 
 const HomePage: FC = () => {
@@ -13,13 +10,12 @@ const HomePage: FC = () => {
   // const [onboardingDone, setOnboardingDone] = useState(true);
   // const { setNewAvailableTours } = useOnboarding();
   // const { setIsOpen, setSteps, setCurrentStep } = useTour();
-  const { classes, classrooms, levels, handleOpenModal, getClassesData } =
+  const { classrooms, levels, handleOpenModal, getClassroomsData } =
     useOutletContext() as {
-      classes: IClass[];
-      classrooms: ITeacherSubjectClassroomList[];
+      classrooms: ITeacherSubjectClassroom[];
       levels: Levels[];
       handleOpenModal: () => void;
-      getClassesData: () => void;
+      getClassroomsData: () => void;
     };
 
   // useEffect(() => {
@@ -63,14 +59,13 @@ const HomePage: FC = () => {
 
   return (
     <div className='d-flex w-100'>
-      {!classes?.length ? (
+      {!classrooms?.length ? (
         <WelcomePage handleOpenModal={handleOpenModal} />
       ) : (
         <MyClasses
-          classes={classes}
           classrooms={classrooms}
           levels={levels}
-          getClassesData={getClassesData}
+          getClassroomsData={getClassroomsData}
         />
       )}
     </div>

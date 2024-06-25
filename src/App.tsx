@@ -3,14 +3,11 @@ import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { Button, CircularProgress } from '@mui/material';
 import Sidebar from './components/Sidebar';
 import { getClassesByUser } from 'services/classes';
-import {
-  type ITeacherSubjectClassroomList,
-  type IClass,
-} from 'global/interfaces';
+import { type ITeacherSubjectClassroom } from 'global/interfaces';
 import { type AxiosResponse } from 'axios';
 import { FetchStatus } from 'global/enums';
 import { CreateClassModal } from './components/Modals';
-import { sortClasses } from './utils';
+import { sortClassrooms } from './utils';
 import { getAllTheLevel } from './services/levels';
 import Toaster from './utils/Toster';
 import { type Levels } from './components/Modals/CreateClassModal/interfaces';
@@ -32,10 +29,7 @@ import { getTeacherSubjectClassroomByTeacherId } from 'services/teacher_subject_
 moment.locale('es');
 
 const App: React.FC = () => {
-  const [classes, setClasses] = useState<IClass[]>([]);
-  const [classrooms, setClassrooms] = useState<ITeacherSubjectClassroomList[]>(
-    []
-  );
+  const [classrooms, setClassrooms] = useState<ITeacherSubjectClassroom[]>([]);
   const [levels, setLevels] = useState<Levels[]>([]);
   const [fetching, setFetching] = useState<FetchStatus>(FetchStatus.Idle);
   const [createClassModalOpen, setCreateClassModalOpen] =
@@ -49,36 +43,23 @@ const App: React.FC = () => {
     try {
       if (user?.id) {
         getTeacherSubjectClassroomByTeacherId(user.id)
-          .then((response: ITeacherSubjectClassroomList[]) => {
-            return response;
+          .then((response: AxiosResponse) => {
+            return response?.data;
           })
-          .then((classroomsList: ITeacherSubjectClassroomList[]) => {
+          .then((classroomsList: ITeacherSubjectClassroom[]) => {
             setClassrooms(classroomsList);
+            setFetching(FetchStatus.Success);
           })
           .catch((error) => {
+            setFetching(FetchStatus.Error);
             console.error(error);
           });
       }
     } catch (error) {
       console.error(error);
     }
-  };
 
-  const getClassesData = () => {
-    // FIXME: fix this ts error
-    // @ts-expect-error ts-error(18047): 'user' is possibly 'null'
-    getClassesByUser(user.id)
-      .then((response: AxiosResponse) => {
-        return response?.data;
-      })
-      .then((classes: IClass[]) => {
-        setClasses(classes ? sortClasses(classes) : []);
-        setFetching(FetchStatus.Success);
-      })
-      .catch((error) => {
-        setFetching(FetchStatus.Error);
-        console.error(error);
-      });
+    console.log(classrooms);
   };
 
   const updateOnboardingStatus = () => {
@@ -114,13 +95,13 @@ const App: React.FC = () => {
 
   const handleClose = (
     reason: 'backdropClick' | 'escapeKeyDown' | 'success',
-    data?: IClass
+    data?: ITeacherSubjectClassroom
   ) => {
     if (reason !== 'backdropClick') setCreateClassModalOpen(false);
     if (reason === 'success') {
       if (data) {
-        setClasses((prevState) => {
-          return sortClasses([...prevState, data]);
+        setClassrooms((prevState) => {
+          return sortClassrooms([...prevState, data]);
         });
       }
     }
@@ -150,7 +131,7 @@ const App: React.FC = () => {
     if (location.state) {
       const { deletedClass } = location.state;
       if (deletedClass) {
-        setClasses((prevState) => {
+        setClassrooms((prevState) => {
           return prevState.filter((res) => res.id !== deletedClass);
         });
         navigate(location.pathname, {
@@ -164,11 +145,10 @@ const App: React.FC = () => {
   useEffect(() => {
     if (user) {
       setFetching(FetchStatus.Pending);
-      getClassesData();
-      getClassroomsData();
       // FIXME: fix this eslint error
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
       getLevels();
+      getClassroomsData();
     }
   }, [user]);
 
@@ -239,7 +219,7 @@ const App: React.FC = () => {
         <ModalContextProvider>
           <div className='app-container d-flex'>
             <Sidebar
-              classes={classes} /* handleOpenModal={handleOpenModal} */
+              classrooms={classrooms} /* handleOpenModal={handleOpenModal} */
             />
             <div className='tw-flex tw-flex-col tw-w-full '>
               <header
@@ -253,7 +233,7 @@ const App: React.FC = () => {
                   <div className='tw-pl-4'>
                     <h4 className='tw-text-xs tw-mb-0'>Curso seleccionado:</h4>
                     <span className='tw-font-semibold'>
-                      1.A - {subject.name}
+                      1.A - {subject.title}
                     </span>
                   </div>
                 )}
@@ -263,11 +243,10 @@ const App: React.FC = () => {
                 <div className='app-content container' id='home-onboarding-4'>
                   <Outlet
                     context={{
-                      classes,
                       classrooms,
                       levels,
                       handleOpenModal,
-                      getClassesData,
+                      getClassroomsData,
                     }}
                   />
                 </div>
