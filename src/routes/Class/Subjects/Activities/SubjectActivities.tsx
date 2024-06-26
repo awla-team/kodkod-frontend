@@ -7,10 +7,12 @@ import ViewLearningGoalsDialog from 'components/Modals/ViewLearningGoalsDialog';
 import { type IUnit } from 'components/Modals/ViewLearningGoalsDialog/interfaces';
 import { useQuery } from '@tanstack/react-query';
 import { CircularProgress } from '@mui/material';
+import { useSubjectStore } from 'zustand/subject-store';
 
 const SubjectActivities = () => {
   const [openLearningObjetives, setOpenLearningObjetives] =
     useState<boolean>(false);
+  const { subject } = useSubjectStore();
   const [selectedUnit, setSelectedUnit] = useState<IUnit>();
 
   const { isLoading, data, isError } = useQuery({

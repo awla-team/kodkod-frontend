@@ -1,4 +1,4 @@
-import { type IClass } from 'global/interfaces';
+import { type ITeacherSubjectClassroom } from 'global/interfaces';
 
 export interface Route {
   title: string;
@@ -7,6 +7,6 @@ export interface Route {
 }
 
 export interface SidebarProps {
-  classes?: IClass[];
+  classrooms?: ITeacherSubjectClassroom[];
   // handleOpenModal: () => void;
 }

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { DashboardContainer, DetailsCard } from './styled';
 import ClassDetailsCard from 'components/ClassDetailsCard';
-import { type IClass } from 'global/interfaces';
+import { type ITeacherSubjectClassroom, type IClass } from 'global/interfaces';
 import StudentsList from 'components/StudentsList';
 import { type StudentType } from 'components/StudentsList/interfaces';
 import EmotionalThermometer from 'components/EmotionalThermometer';
@@ -16,11 +16,13 @@ import { useAuth } from 'contexts/AuthContext';
 
 const Board: React.FC = () => {
   const { user } = useAuth();
-  const { classDetails, students, levels } = useOutletContext() as {
-    classDetails: IClass;
-    students: StudentType[];
-    levels: Levels[];
-  };
+  const { classDetails, classroomDetails, students, levels } =
+    useOutletContext() as {
+      classDetails: IClass;
+      classroomDetails: ITeacherSubjectClassroom;
+      students: StudentType[];
+      levels: Levels[];
+    };
   const [onboardingDone, setOnboardingDone] = useState(true);
   const { setIsOpen, setSteps, setCurrentStep } = useTour();
   const { setNewAvailableTours } = useOnboarding();
@@ -80,7 +82,11 @@ const Board: React.FC = () => {
       <div className='d-flex flex-column col-lg-6 col-12 pe-lg-3 pb-lg-0 pb-3 '>
         <DetailsCard className='mb-3' id='board-onboarding-1'>
           {classDetails && (
-            <ClassDetailsCard classDetails={classDetails} levels={levels} />
+            <ClassDetailsCard
+              classroomDetails={classroomDetails}
+              classDetails={classDetails}
+              levels={levels}
+            />
           )}
         </DetailsCard>
         <DetailsCard className='p-5' id='board-onboarding-3'>

@@ -1,8 +1,9 @@
-import { type IClass } from 'global/interfaces';
+import { type ITeacherSubjectClassroom, type IClass } from 'global/interfaces';
 import { type Levels } from '../Modals/CreateClassModal/interfaces';
 import React from 'react';
 
 export interface ClassDetailsCardProps {
+  classroomDetails: ITeacherSubjectClassroom;
   classDetails: IClass;
   levels: Levels[];
 }
