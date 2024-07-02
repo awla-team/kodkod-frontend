@@ -16,7 +16,6 @@ const ClassCard: React.FC<{
 
   const goToClass = () => {
     setClassroom(classroom?.classroom);
-    console.log(classroom);
 
     setSubject(
       /* {name: 'Lenguaje y Comunicacion',} */

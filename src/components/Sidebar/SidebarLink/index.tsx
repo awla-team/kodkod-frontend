@@ -17,7 +17,6 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({
 
   const setClassroomSelected = () => {
     setClassroom(classroom?.classroom);
-    console.log(classroom);
     setSubject(classroom?.subject);
   };
 
