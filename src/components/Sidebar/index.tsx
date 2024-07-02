@@ -3,7 +3,6 @@ import { type SidebarProps } from './interfaces';
 import logo from 'assets/images/logo.png';
 import { SidebarContainer, LinkList, LogoContainer } from './styled';
 import SidebarLink from './SidebarLink';
-import UserInfo from './UserInfo';
 import { Divider } from '@mui/material';
 import { type ITeacherSubjectClassroom } from 'global/interfaces';
 import { RoundButton } from './RoundButton/styled';
@@ -35,16 +34,23 @@ const Sidebar: FC<SidebarProps> = ({ classrooms /* handleOpenModal */ }) => {
           // @ts-expect-error ts-error(18048)
           classrooms.length ? (
             <LinkList>
-              {classrooms?.map?.(
-                (teacherClassroom: ITeacherSubjectClassroom, index) => (
-                  <SidebarLink
-                    key={`side-bar-${teacherClassroom.classroom_id}-${index}`}
-                    linkId={teacherClassroom.classroom_id}
-                    linkTitle={teacherClassroom.classroom.title}
-                    linkRoute={`cursos/${teacherClassroom.classroom_id}/asignaturas/${teacherClassroom.subject?.id}/clases`}
-                  />
-                )
-              )}
+              {classrooms
+                ?.sort((a, b) => {
+                  if (a.classroom.title > b.classroom.title) return 1;
+                  if (a.classroom.title < b.classroom.title) return -1;
+                  return 0;
+                })
+                .map?.((teacherClassroom: ITeacherSubjectClassroom, index) => (
+                  <div key={index}>
+                    <SidebarLink
+                      classroom={teacherClassroom}
+                      key={`side-bar-${teacherClassroom.classroom_id}`}
+                      linkId={teacherClassroom.classroom_id}
+                      linkTitle={teacherClassroom.classroom.title}
+                      linkRoute={`cursos/${teacherClassroom.classroom_id}/asignaturas/${teacherClassroom.subject?.id}/clases`}
+                    />
+                  </div>
+                ))}
             </LinkList>
           ) : null
         }
