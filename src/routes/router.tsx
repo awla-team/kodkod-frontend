@@ -90,7 +90,7 @@ export const router = createBrowserRouter([
                 element: <Subject />,
               },
               {
-                path: 'asignaturas/:id',
+                path: 'asignaturas/:subjectId',
                 element: <SubjectLayout />,
                 children: [
                   {

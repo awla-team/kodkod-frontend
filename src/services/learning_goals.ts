@@ -1,5 +1,5 @@
 import http from 'global/api';
-import { type ILearningGoal } from 'types/models/LearningGoal';
+import type ILearningGoal from 'types/models/LearningGoal';
 
 export const getLearningGoals = async () => {
   return await http.get('learning-goal');
