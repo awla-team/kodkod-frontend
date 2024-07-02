@@ -9,7 +9,7 @@ import {
   Dialog,
   CircularProgress,
 } from '@mui/material';
-import { type ILearningGoal } from 'types/models/LearningGoal';
+import type ILearningGoal from 'types/models/LearningGoal';
 import Toaster from 'utils/Toster';
 import { getLearningGoalsByUnit } from 'services/learning_goals';
 
