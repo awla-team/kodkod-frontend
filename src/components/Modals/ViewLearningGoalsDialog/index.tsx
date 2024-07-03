@@ -9,7 +9,7 @@ import {
   Dialog,
   CircularProgress,
 } from '@mui/material';
-import { type ILearningGoal } from 'types/models/LearningGoal';
+import type ILearningGoal from 'types/models/LearningGoal';
 import Toaster from 'utils/Toster';
 import { getLearningGoalsByUnit } from 'services/learning_goals';
 
@@ -78,6 +78,12 @@ const ViewLearningGoalsDialog: FC<ViewLearningGoalsDialogProps> = ({
     setIsLoading(false);
   }, [currentUnit]);
 
+  if (isLoading)
+    return (
+      <div className='d-flex w-100 align-items-center justify-content-center'>
+        <CircularProgress />
+      </div>
+    );
   return (
     <Dialog
       PaperProps={{ className: 'p-3' }}

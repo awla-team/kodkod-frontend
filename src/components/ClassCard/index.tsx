@@ -2,22 +2,27 @@ import { Typography, Chip } from '@mui/material';
 import { Box } from '@mui/system';
 import { type ITeacherSubjectClassroom } from 'global/interfaces';
 import { useNavigate } from 'react-router-dom';
+import { useClassContext } from 'routes/Class/context';
 import type Subject from 'types/models/Subject';
+import { useClassroomStore } from 'zustand/classroom-store';
 import { useSubjectStore } from 'zustand/subject-store';
 
 const ClassCard: React.FC<{
-  classroom?: ITeacherSubjectClassroom;
+  classroom: ITeacherSubjectClassroom;
 }> = ({ classroom }) => {
   const navigate = useNavigate();
   const { setSubject } = useSubjectStore();
+  const { setClassroom } = useClassroomStore();
 
   const goToClass = () => {
+    setClassroom(classroom?.classroom);
+
     setSubject(
       /* {name: 'Lenguaje y Comunicacion',} */
       classroom?.subject as Subject
     );
     navigate(
-      `cursos/${classroom?.id}/asignaturas/${classroom?.subject_id}/clases`
+      `cursos/${classroom?.classroom_id}/asignaturas/${classroom?.subject_id}/clases`
     );
   };
 

@@ -6,6 +6,10 @@ const ROOT_PATH = '/unit';
 
 const constructRoute = (path: string) => `${ROOT_PATH}${path}`;
 
-export const getUnitsBySubject = async (query: { subject_id: string }) => {
+/* export const getUnitsBySubject = async (query: { subject_id: string }) => {
   return await http.get<KodkodResponse<Unit[]>>(constructRoute(`/search`));
+}; */
+
+export const getUnitsBySubject = async (subjectId: number | string) => {
+  return await http.get(`/unit/get-by-subject-id/${subjectId}`);
 };

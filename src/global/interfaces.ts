@@ -77,22 +77,23 @@ export interface ITeacherSubjectClassroomData {
 
 export interface ITeacherSubjectClassroom extends ITeacherSubjectClassroomData {
   classroom: IClassroomAbreviatedListResponse;
-  subject: ISubjectAbreviatedResponse;
+  subject: ISubjectResponse;
 }
-export interface IStudentAbreviatedListResponse {
+export interface IStudent {
   id: number;
   first_name: string;
   last_name: string;
 }
-export interface ISubjectAbreviatedResponse {
+export interface ISubjectResponse {
   id: number;
   title: string;
+  level_id: number;
 }
 export interface IClassroomAbreviatedListResponse {
   id: number;
   level_id: number;
   title: string;
-  students?: IStudentAbreviatedListResponse[];
+  students?: IStudent[];
 }
 
 export interface IClass {
