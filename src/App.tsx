@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Outlet, useNavigate, useLocation } from 'react-router-dom';
+import { Outlet, useNavigate, useLocation, useParams } from 'react-router-dom';
 import { Button, CircularProgress } from '@mui/material';
 import Sidebar from './components/Sidebar';
-import { getClassesByUser } from 'services/classes';
 import { type ITeacherSubjectClassroom } from 'global/interfaces';
 import { type AxiosResponse } from 'axios';
 import { FetchStatus } from 'global/enums';
@@ -25,6 +24,7 @@ import { ModalContextProvider } from 'contexts/ZustandContext/modal-context';
 import UserInfo from 'components/Sidebar/UserInfo';
 import { useSubjectStore } from 'zustand/subject-store';
 import { getTeacherSubjectClassroomByTeacherId } from 'services/teacher_subject_classroom';
+import { useClassroomStore } from 'zustand/classroom-store';
 
 moment.locale('es');
 
@@ -37,7 +37,9 @@ const App: React.FC = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const { classId, subjectId } = useParams();
   const { subject } = useSubjectStore();
+  const { classroom } = useClassroomStore();
 
   const getClassroomsData = () => {
     try {
@@ -217,24 +219,31 @@ const App: React.FC = () => {
         <ModalContextProvider>
           <div className='app-container d-flex'>
             <Sidebar
-              classrooms={classrooms} /* handleOpenModal={handleOpenModal} */
+              classrooms={classrooms}
+              /* handleOpenModal={handleOpenModal} */
             />
             <div className='tw-flex tw-flex-col tw-w-full '>
               <header
                 className={`tw-py-2 tw-flex tw-w-full tw-items-center ${
-                  subject && location.pathname !== '/app'
+                  subject &&
+                  classroom &&
+                  location.pathname.includes(`classroom/${classId}`)
                     ? 'tw-justify-between'
                     : 'tw-justify-end'
                 } `}
               >
-                {subject && location.pathname !== '/app' && (
-                  <div className='tw-pl-4'>
-                    <h4 className='tw-text-xs tw-mb-0'>Curso seleccionado:</h4>
-                    <span className='tw-font-semibold'>
-                      1.A - {subject.title}
-                    </span>
-                  </div>
-                )}
+                {subject &&
+                  classroom &&
+                  location.pathname.includes(`classroom/${classId}`) && (
+                    <div className='tw-pl-4'>
+                      <h4 className='tw-text-xs tw-mb-0'>
+                        Curso seleccionado:
+                      </h4>
+                      <span className='tw-font-semibold'>
+                        {classroom.title || '?'}- {subject.title || '?'}
+                      </span>
+                    </div>
+                  )}
                 <UserInfo user={user} />
               </header>
               <div className='app-main-container d-flex flex-column flex-fill tw-py-4'>
