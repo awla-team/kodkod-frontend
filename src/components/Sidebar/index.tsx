@@ -8,11 +8,8 @@ import { type ITeacherSubjectClassroom } from 'global/interfaces';
 import { RoundButton } from './RoundButton/styled';
 import HomeIcon from '@mui/icons-material/Home';
 import { Link as RouterLink } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
 
 const Sidebar: FC<SidebarProps> = ({ classrooms /* handleOpenModal */ }) => {
-  const { user } = useAuth();
-
   return (
     <SidebarContainer className='justify-content-between tw-bg-white'>
       <div
@@ -44,10 +41,10 @@ const Sidebar: FC<SidebarProps> = ({ classrooms /* handleOpenModal */ }) => {
                   <div key={index}>
                     <SidebarLink
                       classroom={teacherClassroom}
-                      key={`side-bar-${teacherClassroom.classroom_id}`}
-                      linkId={teacherClassroom.classroom_id}
+                      key={`side-bar-${teacherClassroom.id}`}
+                      linkId={teacherClassroom.id}
                       linkTitle={teacherClassroom.classroom.title}
-                      linkRoute={`cursos/${teacherClassroom.classroom_id}/asignaturas/${teacherClassroom.subject?.id}/clases`}
+                      linkRoute={`classroom/${teacherClassroom.id}/lessons`}
                     />
                   </div>
                 ))}
