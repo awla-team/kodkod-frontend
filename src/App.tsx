@@ -227,16 +227,14 @@ const App: React.FC = () => {
                 className={`tw-py-2 tw-flex tw-w-full tw-items-center ${
                   subject &&
                   classroom &&
-                  location.pathname ===
-                    `/app/cursos/${classId}/asignaturas/${subjectId}/clases`
+                  location.pathname.includes(`classroom/${classId}`)
                     ? 'tw-justify-between'
                     : 'tw-justify-end'
                 } `}
               >
                 {subject &&
                   classroom &&
-                  location.pathname ===
-                    `/app/cursos/${classId}/asignaturas/${subjectId}/clases` && (
+                  location.pathname.includes(`classroom/${classId}`) && (
                     <div className='tw-pl-4'>
                       <h4 className='tw-text-xs tw-mb-0'>
                         Curso seleccionado:

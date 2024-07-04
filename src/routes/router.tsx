@@ -78,7 +78,7 @@ export const router = createBrowserRouter([
             path: 'perfil',
           },
           {
-            path: 'cursos/:classId',
+            path: 'classroom/:classId',
             element: (
               <ClassContextProvider>
                 <Class />
@@ -87,22 +87,18 @@ export const router = createBrowserRouter([
             children: [
               {
                 path: '',
-                element: <Subject />,
-              },
-              {
-                path: 'asignaturas/:subjectId',
                 element: <SubjectLayout />,
                 children: [
                   {
-                    path: 'clases',
+                    path: 'lessons',
                     element: <SubjectActivities />,
                   },
                   {
-                    path: 'seguimiento',
+                    path: 'analysis',
                     element: <p>seguimiento</p>,
                   },
                   {
-                    path: 'estudiantes',
+                    path: 'students',
                     element: <p>estudiantes</p>,
                   },
                 ],
