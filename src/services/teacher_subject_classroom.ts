@@ -7,3 +7,7 @@ export const getTeacherSubjectClassroomByTeacherId = async (
     `/teacher-subject-classroom/get-by-teacher-id/${teacherId}`
   );
 };
+
+export const getTeacherSubjectClassroomById = async (id: number | string) => {
+  return await http.get(`/teacher-subject-classroom/${id}`);
+};
