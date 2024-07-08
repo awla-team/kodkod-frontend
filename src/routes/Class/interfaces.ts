@@ -1,4 +1,8 @@
-import { type IClass, type IStage } from 'global/interfaces';
+import {
+  type ITeacherSubjectClassroomData,
+  type IClass,
+  type IStage,
+} from 'global/interfaces';
 import { type StudentType } from 'components/StudentsList/interfaces';
 import { type Levels } from 'components/Modals/CreateClassModal/interfaces';
 import type React from 'react';
@@ -9,6 +13,7 @@ export type TabPaths = Record<number, string>;
 export interface ClassContextType {
   getClassById: (id: number | string) => void;
   classDetails: IClass | undefined;
+  classroomDetails: ITeacherSubjectClassroomData | undefined;
   students: StudentType[];
   loadingClass: FetchStatus;
   getStudentsByClass: (id: number | string) => void;
