@@ -1,5 +1,5 @@
 import http from 'global/api';
-import TearcherSubjectClassroom from 'types/models/TeacherSubjectClassroom';
+import type TearcherSubjectClassroom from 'types/models/TeacherSubjectClassroom';
 
 export const getTeacherSubjectClassroomByTeacherId = async (
   teacherId: number | string

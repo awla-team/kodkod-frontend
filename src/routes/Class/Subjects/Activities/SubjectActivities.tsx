@@ -23,7 +23,7 @@ const SubjectActivities = () => {
     isError,
   } = useQuery({
     queryKey: ['activities'],
-    queryFn: () => getTeacherSubjectClassroomById(classId),
+    queryFn: async () => await getTeacherSubjectClassroomById(classId),
   });
 
   if (isLoading)

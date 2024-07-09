@@ -1,5 +1,5 @@
-import Subject from './Subject';
-import Unit from './Unit';
+import type Subject from './Subject';
+import type Unit from './Unit';
 
 export default interface TearcherSubjectClassroom {
   id: number;
