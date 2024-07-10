@@ -13,12 +13,12 @@ import { type AxiosResponse } from 'axios';
 import { useParams } from 'react-router-dom';
 import { getUnitsBySubject } from 'services/units';
 import LessonsIcon from 'assets/images/book.png';
+import { useClassContext } from 'routes/Class/context';
 
 const SubjectActivities: React.FC = () => {
   const [openLearningObjetives, setOpenLearningObjetives] =
     useState<boolean>(false);
-  const { subjectId } = useParams();
-  const { subject } = useSubjectStore();
+  const { classroomDetails } = useClassContext();
   const [selectedUnit, setSelectedUnit] = useState<IUnit>();
   const [units, setUnits] = useState<IUnit[]>();
   const [isLoading, setIsLoading] = useState(FetchStatus.Idle);
@@ -26,8 +26,8 @@ const SubjectActivities: React.FC = () => {
   const getUnitsData = () => {
     setIsLoading(FetchStatus.Pending);
     try {
-      if (subjectId) {
-        getUnitsBySubject(subjectId as string)
+      if (classroomDetails?.subject_id) {
+        getUnitsBySubject(classroomDetails.subject_id)
           .then((response: AxiosResponse) => {
             return response?.data;
           })
@@ -47,7 +47,7 @@ const SubjectActivities: React.FC = () => {
 
   useEffect(() => {
     getUnitsData();
-  }, []);
+  }, [classroomDetails]);
 
   if (isLoading === FetchStatus.Pending || isLoading === FetchStatus.Idle)
     return (
