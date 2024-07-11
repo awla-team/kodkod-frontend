@@ -6,7 +6,11 @@ import {
   useEffect,
   useState,
 } from 'react';
-import { type IClass, type IStage } from 'global/interfaces';
+import {
+  type IClass,
+  type IStage,
+  type ITeacherSubjectClassroom,
+} from 'global/interfaces';
 import { getClassByID } from 'services/classes';
 import Toaster from 'utils/Toster';
 import { studentsByClass } from 'services/students';
@@ -16,10 +20,13 @@ import { type ClassContextType } from './interfaces';
 import { type Levels } from 'components/Modals/CreateClassModal/interfaces';
 import { getAllTheLevel } from './../../services/levels';
 import { FetchStatus } from 'global/enums';
+import { type AxiosResponse } from 'axios';
+import { getTeacherSubjectClassroomById } from 'services/teacher_subject_classroom';
 
 const ClassContext = createContext<ClassContextType>({
   students: [],
   classDetails: undefined,
+  classroomDetails: undefined,
   getStudentsByClass: (id: number | string) => {},
   getClassById: (id: number | string) => {},
   updateStudentsData: (actionType, data) => {},
@@ -35,6 +42,9 @@ export const useClassContext = () => {
 
 const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const [classDetails, setClassDetails] = useState<IClass | undefined>();
+  const [classroomDetails, setClassroomDetails] = useState<
+    ITeacherSubjectClassroom | undefined
+  >();
   const [levels, setLevels] = useState<Levels[]>([]);
   const [students, setStudents] = useState<StudentType[]>([]);
   const [loadingClass, setLoadingClass] = useState(FetchStatus.Idle);
@@ -60,12 +70,7 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
 
   useEffect(() => {
     if (classId) {
-      // FIXME: fix this eslint error
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises, @typescript-eslint/no-unsafe-argument
-      getClassById(classId);
-      // FIXME: fix this eslint error
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises, @typescript-eslint/no-unsafe-argument
-      getStudentsByClass(classId);
+      getClassroomDetailsData();
       // FIXME: fix this eslint error
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
       getLevels();
@@ -82,6 +87,29 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
       console.error(error);
       Toaster('error', 'Hubo un error al cargar el curso');
       setLoadingClass(FetchStatus.Error);
+    }
+  };
+
+  const getClassroomDetailsData = () => {
+    setLoadingClass(FetchStatus.Pending);
+    try {
+      if (classId) {
+        getTeacherSubjectClassroomById(classId as string)
+          .then((response: AxiosResponse) => {
+            return response?.data;
+          })
+          .then((classroom: ITeacherSubjectClassroom) => {
+            setClassroomDetails(classroom);
+            setLoadingClass(FetchStatus.Success);
+          })
+          .catch((error) => {
+            setLoadingClass(FetchStatus.Error);
+            console.error(error);
+            Toaster('error', 'Hubo un error al cargar el curso');
+          });
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -190,6 +218,7 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
         getClassById,
         getStudentsByClass,
         classDetails,
+        classroomDetails,
         loadingClass,
         students,
         levels,
