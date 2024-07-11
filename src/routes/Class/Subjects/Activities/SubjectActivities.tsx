@@ -2,22 +2,21 @@ import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import SortIcon from '@mui/icons-material/Sort';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import ViewLearningGoalsDialog from 'components/Modals/ViewLearningGoalsDialog';
 import { type IUnit } from 'components/Modals/ViewLearningGoalsDialog/interfaces';
-import { useQuery } from '@tanstack/react-query';
 import { CircularProgress } from '@mui/material';
-import { useSubjectStore } from 'zustand/subject-store';
 import { FetchStatus } from 'global/enums';
 import { type AxiosResponse } from 'axios';
-import { useParams } from 'react-router-dom';
 import { getUnitsBySubject } from 'services/units';
 import LessonsIcon from 'assets/images/book.png';
 import { useClassContext } from 'routes/Class/context';
+import SaveLesson from '../SaveLesson';
 
 const SubjectActivities: React.FC = () => {
   const [openLearningObjetives, setOpenLearningObjetives] =
     useState<boolean>(false);
+  const [openSaveLesson, setOpenSaveLesson] = useState<boolean>(false);
   const { classroomDetails } = useClassContext();
   const [selectedUnit, setSelectedUnit] = useState<IUnit>();
   const [units, setUnits] = useState<IUnit[]>();
@@ -55,6 +54,16 @@ const SubjectActivities: React.FC = () => {
         <CircularProgress />
       </div>
     );
+
+  if (openSaveLesson && selectedUnit && classroomDetails) {
+    return (
+      <SaveLesson
+        classroomDetails={classroomDetails}
+        handleClose={() => setOpenSaveLesson(false)}
+        selectedUnit={selectedUnit}
+      />
+    );
+  }
 
   return (
     <div className='tw-space-y-6'>
@@ -129,7 +138,13 @@ const SubjectActivities: React.FC = () => {
                         </p>
                       </div>
                     ))}
-                  <div className='tw-border tw-border-dashed tw-rounded-md tw-h-40 tw-flex tw-justify-center tw-items-center tw-flex-col hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-indigo-100'>
+                  <div
+                    onClick={() => {
+                      setSelectedUnit(unit);
+                      setOpenSaveLesson(true);
+                    }}
+                    className='tw-border tw-border-dashed tw-rounded-md tw-h-40 tw-flex tw-justify-center tw-items-center tw-flex-col hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-indigo-100'
+                  >
                     <AddCircleOutlinedIcon />
                     <span className='tw-text-sm tw-font-semibold'>
                       Agregar una clase
