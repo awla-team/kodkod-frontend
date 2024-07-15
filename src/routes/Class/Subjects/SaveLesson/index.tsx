@@ -21,7 +21,6 @@ const SaveLesson: React.FC<{
   selectedUnit: IUnit;
   handleClose: () => void;
 }> = ({ classroomDetails, selectedUnit, handleClose }) => {
-  const [activities, setActivities] = useState<IActivity[]>();
   const [formValues] = useState<FormInput>({
     title: '',
     classroom_id: classroomDetails.classroom_id,
@@ -35,8 +34,6 @@ const SaveLesson: React.FC<{
         index: 1,
         classroom_id: values.classroom_id,
         unit_id: values.unit_id,
-        started_at: new Date().toDateString(),
-        ended_at: new Date().toDateString(),
       };
       const { status } = await saveLesson(lesson);
 
@@ -57,14 +54,9 @@ const SaveLesson: React.FC<{
       {({ values, handleChange, handleSubmit, isSubmitting }) => (
         <form onSubmit={handleSubmit}>
           <div className='tw-space-y-6'>
-            <div
-              className='tw-flex tw-items-center tw-justify-between'
-              onClick={handleClose}
-            >
-              <Link className='fw-bold tw-flex'>
-                {'< Volver a lista de clases'}
-              </Link>
-            </div>
+            <Link className='fw-bold tw-flex' onClick={handleClose}>
+              {'< Volver a lista de clases'}
+            </Link>
 
             <h5 className='tw-flex tw-gap-4'>
               {selectedUnit.title.includes('Unidad')

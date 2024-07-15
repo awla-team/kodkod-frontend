@@ -13,6 +13,4 @@ export interface ILessonSaved {
   classroom_id: number;
   index: number;
   unit_id: number;
-  started_at: string;
-  ended_at: string;
 }
