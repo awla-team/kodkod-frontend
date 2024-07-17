@@ -25,10 +25,10 @@ const SubjectActivities = () => {
     isError,
   } = useQuery({
     queryKey: ['lessons'],
-    queryFn: () =>
-      searchUnits({
-        subject_id: subject ? subject.id : 0,
-        classroom_id: classroomId,
+    queryFn: async () =>
+      await searchUnits({
+        subjectId: subject ? subject.id : 0,
+        classroomId: classroomId,
       }),
   });
 

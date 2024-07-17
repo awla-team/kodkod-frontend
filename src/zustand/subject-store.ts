@@ -13,7 +13,7 @@ interface Store {
 
 interface Action {
   setSubject: (subject: Subject) => void;
-  fetchSubject: (subjectId: string) => Promise<void>;
+  fetchSubject: (subjectId: string) => void;
   setClassroomId: (id: number) => void;
 }
 

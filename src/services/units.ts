@@ -7,13 +7,13 @@ const ROOT_PATH = '/units';
 const constructRoute = (path: string) => `${ROOT_PATH}${path}`;
 
 export const searchUnits = async ({
-  subject_id,
-  classroom_id,
+  subjectId,
+  classroomId,
 }: {
-  subject_id: number;
-  classroom_id: number;
+  subjectId: number;
+  classroomId: number;
 }) => {
   return await http.get<Unit[]>(`/unit/search`, {
-    params: { subject_id, classroom_id },
+    params: { subject_id: subjectId, classroom_id: classroomId },
   });
 };
