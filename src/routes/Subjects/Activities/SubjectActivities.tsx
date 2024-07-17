@@ -10,6 +10,7 @@ import { useSubjectStore } from 'zustand/subject-store';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { searchUnits } from 'services/units';
+import book from 'assets/images/book.png';
 
 const SubjectActivities = () => {
   const [openLearningObjetives, setOpenLearningObjetives] =
@@ -45,7 +46,11 @@ const SubjectActivities = () => {
   return (
     <div className='tw-space-y-6'>
       <div className='tw-flex tw-items-center tw-justify-between'>
-        <h3 className='tw-font-bold tw-text-2xl'>Clases</h3>
+        <div className='tw-flex tw-items-end tw-gap-2'>
+          <img src={book} alt='book' className='tw-w-10 tw-object-cover' />
+          <h3 className='tw-font-bold tw-text-2xl tw-mb-0'>Clases</h3>
+        </div>
+
         <button type='button' className='tw-text-sm tw-bg-indigo-600'>
           Añadir unidad
         </button>
