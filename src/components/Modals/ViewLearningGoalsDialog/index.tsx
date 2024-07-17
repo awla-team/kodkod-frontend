@@ -78,6 +78,12 @@ const ViewLearningGoalsDialog: FC<ViewLearningGoalsDialogProps> = ({
     setIsLoading(false);
   }, [currentUnit]);
 
+  if (isLoading)
+    return (
+      <div className='d-flex w-100 align-items-center justify-content-center'>
+        <CircularProgress />
+      </div>
+    );
   return (
     <Dialog
       PaperProps={{ className: 'p-3' }}

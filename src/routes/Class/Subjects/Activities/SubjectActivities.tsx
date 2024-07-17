@@ -2,7 +2,7 @@ import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import SortIcon from '@mui/icons-material/Sort';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import ViewLearningGoalsDialog from 'components/Modals/ViewLearningGoalsDialog';
 import { type IUnit } from 'components/Modals/ViewLearningGoalsDialog/interfaces';
 import { useQuery } from '@tanstack/react-query';
@@ -11,7 +11,7 @@ import { useSubjectStore } from 'zustand/subject-store';
 import { getTeacherSubjectClassroomById } from 'services/teacher_subject_classroom';
 import { useParams } from 'react-router-dom';
 
-const SubjectActivities = () => {
+const SubjectActivities: React.FC = () => {
   const [openLearningObjetives, setOpenLearningObjetives] =
     useState<boolean>(false);
 
@@ -26,7 +26,7 @@ const SubjectActivities = () => {
     queryFn: async () => await getTeacherSubjectClassroomById(classId),
   });
 
-  if (isLoading)
+  if (isLoading === FetchStatus.Pending || isLoading === FetchStatus.Idle)
     return (
       <div className='tw-flex tw-justify-center tw-items-center'>
         <CircularProgress />
@@ -41,7 +41,10 @@ const SubjectActivities = () => {
   return (
     <div className='tw-space-y-6'>
       <div className='tw-flex tw-items-center tw-justify-between'>
-        <h3 className='tw-font-bold tw-text-2xl'>Clases</h3>
+        <h3 className='fw-bold tw-flex'>
+          <img className='tw-mr-4' src={LessonsIcon} alt='icon' />
+          Clases
+        </h3>
         <button type='button' className='tw-text-sm tw-bg-indigo-600'>
           Añadir unidad
         </button>

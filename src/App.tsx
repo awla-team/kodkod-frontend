@@ -38,7 +38,7 @@ const App: React.FC = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const { classId, subjectId } = useParams();
+  const { classId } = useParams();
   const { subject } = useSubjectStore();
   const { classroom } = useClassroomStore();
 
