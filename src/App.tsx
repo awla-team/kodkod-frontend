@@ -25,6 +25,7 @@ import UserInfo from 'components/Sidebar/UserInfo';
 import { useSubjectStore } from 'zustand/subject-store';
 import { getTeacherSubjectClassroomByTeacherId } from 'services/teacher_subject_classroom';
 import { useClassroomStore } from 'zustand/classroom-store';
+import Subject from 'types/models/Subject';
 
 moment.locale('es');
 
@@ -226,21 +227,22 @@ const App: React.FC = () => {
               <header
                 className={`tw-py-2 tw-flex tw-w-full tw-items-center ${
                   subject &&
-                  classroom &&
+                  // classroom &&
                   location.pathname.includes(`classroom/${classId}`)
                     ? 'tw-justify-between'
                     : 'tw-justify-end'
                 } `}
               >
+                {/* TODO: agregar classroom logic when reload page */}
                 {subject &&
-                  classroom &&
                   location.pathname.includes(`classroom/${classId}`) && (
+                    // classroom &&
                     <div className='tw-pl-4'>
                       <h4 className='tw-text-xs tw-mb-0'>
                         Curso seleccionado:
                       </h4>
                       <span className='tw-font-semibold'>
-                        {classroom.title || '?'}- {subject.title || '?'}
+                        test- {subject.title || '?'}
                       </span>
                     </div>
                   )}

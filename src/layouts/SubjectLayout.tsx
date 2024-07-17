@@ -2,6 +2,9 @@ import { Outlet, NavLink } from 'react-router-dom';
 import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
 import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
 import BarChartIcon from '@mui/icons-material/BarChart';
+import { useEffect } from 'react';
+import { useSubjectStore } from 'zustand/subject-store';
+import { useParams } from 'react-router-dom';
 
 const LINKS: Array<{
   label: string;
@@ -28,6 +31,15 @@ const LINKS: Array<{
 ];
 
 const SubjectLayout = () => {
+  const { fetchSubject, isLoading } = useSubjectStore();
+  const { classId } = useParams() as { classId: string };
+
+  useEffect(() => {
+    fetchSubject(classId);
+  }, []);
+
+  if (isLoading) return <></>;
+
   return (
     <div>
       <ul className='tw-flex tw-items-center tw-list-none tw-p-0 tw-gap-2'>

@@ -21,8 +21,8 @@ import Rewards from 'routes/Class/Rewards';
 import VerifyEmail from './UserAuth/VerifyEmail';
 import AllCompletedAdventures from './Class/AllCompletedAdventures';
 import SubjectLayout from 'layouts/SubjectLayout';
-import SubjectActivities from './Class/Subjects/Activities/SubjectActivities';
-import Subject from './Class/Subjects/Subject';
+import SubjectActivities from './Subjects/Activities/SubjectActivities';
+import NewLesson from './Subjects/Lessons/NewLesson';
 
 const MainRouterComponent: FC = () => {
   // const { pathname } = useLocation();
@@ -91,7 +91,16 @@ export const router = createBrowserRouter([
                 children: [
                   {
                     path: 'lessons',
-                    element: <SubjectActivities />,
+                    children: [
+                      {
+                        path: '',
+                        element: <SubjectActivities />,
+                      },
+                      {
+                        path: 'new',
+                        element: <NewLesson />,
+                      },
+                    ],
                   },
                   {
                     path: 'analysis',
