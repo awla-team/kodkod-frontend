@@ -1,0 +1,20 @@
+import http from 'global/api';
+import type { ILessonSaved } from 'types/models/Lesson';
+
+export const getLessons = async () => {
+  return await http.get('lessons');
+};
+
+export const getLessonByID = async (id: number | string) => {
+  return await http.get('lessons/' + id);
+};
+
+export const getLessonsByUnit = async (
+  unitId: number | string
+): Promise<ILessonSaved[]> => {
+  return await http.get('lessons/get-by-unit-id/' + unitId);
+};
+
+export const saveLesson = async (lesson: ILessonSaved) => {
+  return await http.post('lessons', lesson);
+};
