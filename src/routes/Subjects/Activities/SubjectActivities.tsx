@@ -98,7 +98,7 @@ const SubjectActivities = () => {
                   >
                     <div className='tw-flex tw-justify-between'>
                       <span className='tw-text-sm tw-font-semibold'>
-                        Clase 1
+                        {lesson.title}
                       </span>
                       <div>
                         <AddCircleOutlinedIcon />
