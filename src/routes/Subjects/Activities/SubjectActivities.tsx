@@ -6,8 +6,6 @@ import ViewLearningGoalsDialog from 'components/Modals/ViewLearningGoalsDialog';
 import { type IUnit } from 'components/Modals/ViewLearningGoalsDialog/interfaces';
 import { useQuery } from '@tanstack/react-query';
 import { CircularProgress, Typography } from '@mui/material';
-import { useSubjectStore } from 'zustand/subject-store';
-import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { searchUnits } from 'services/units';
 import book from 'assets/images/book.png';
@@ -20,7 +18,6 @@ const SubjectActivities = () => {
   const [selectedUnit, setSelectedUnit] = useState<IUnit>();
   const [openSaveLesson, setOpenSaveLesson] = useState<boolean>(false);
   const { classroomDetails } = useClassContext();
-  const navigate = useNavigate();
 
   const {
     isLoading,
