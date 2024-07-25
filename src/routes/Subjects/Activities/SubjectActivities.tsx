@@ -5,18 +5,20 @@ import SortIcon from '@mui/icons-material/Sort';
 import ViewLearningGoalsDialog from 'components/Modals/ViewLearningGoalsDialog';
 import { type IUnit } from 'components/Modals/ViewLearningGoalsDialog/interfaces';
 import { useQuery } from '@tanstack/react-query';
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, Typography } from '@mui/material';
 import { useSubjectStore } from 'zustand/subject-store';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { searchUnits } from 'services/units';
 import book from 'assets/images/book.png';
+import { useClassContext } from 'routes/Class/context';
 
 const SubjectActivities = () => {
   const [openLearningObjetives, setOpenLearningObjetives] =
     useState<boolean>(false);
-  const { subject, classroomId } = useSubjectStore();
   const [selectedUnit, setSelectedUnit] = useState<IUnit>();
+  const [openSaveLesson, setOpenSaveLesson] = useState<boolean>(false);
+  const { classroomDetails } = useClassContext();
   const navigate = useNavigate();
 
   const {
@@ -27,8 +29,8 @@ const SubjectActivities = () => {
     queryKey: ['lessons'],
     queryFn: async () =>
       await searchUnits({
-        subjectId: subject ? subject.id : 0,
-        classroomId: classroomId,
+        subjectId: classroomDetails?.subject_id || 0,
+        classroomId: classroomDetails?.classroom_id || 0,
       }),
   });
 
@@ -39,7 +41,20 @@ const SubjectActivities = () => {
       </div>
     );
 
-  if (isError || !result || result.data.length === 0) return <p>error</p>;
+  if (isError || !result)
+    return (
+      <Typography component='h1' variant='h5' className='text-center'>
+        Hubo un error al cargar los datos. Inténtalo de nuevo recargando la
+        página.
+      </Typography>
+    );
+
+  if (result.data.length === 0)
+    return (
+      <Typography component='h1' variant='h5' className='text-center'>
+        No hay datos disponibles. Inténtalo de nuevo recargando la página.
+      </Typography>
+    );
 
   const { data: units } = result;
 
@@ -112,15 +127,18 @@ const SubjectActivities = () => {
                     </p>
                   </div>
                 ))}
-                <button
-                  className='tw-border tw-border-dashed tw-rounded-md tw-h-40 tw-flex tw-justify-center tw-items-center tw-flex-col hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-indigo-100 tw-text-black tw-border-black'
-                  onClick={() => navigate('/app/classroom/1/lessons/new')}
+                <div
+                  onClick={() => {
+                    setSelectedUnit(unit);
+                    setOpenSaveLesson(true);
+                  }}
+                  className='tw-border tw-border-dashed tw-rounded-md tw-h-40 tw-flex tw-justify-center tw-items-center tw-flex-col hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-indigo-100'
                 >
                   <AddCircleOutlinedIcon />
                   <span className='tw-text-sm tw-font-semibold'>
                     Agregar una clase
                   </span>
-                </button>
+                </div>
               </div>
             )}
           </div>
