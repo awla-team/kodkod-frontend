@@ -12,6 +12,7 @@ import { useState } from 'react';
 import { searchUnits } from 'services/units';
 import book from 'assets/images/book.png';
 import { useClassContext } from 'routes/Class/context';
+import SaveLesson from 'routes/Class/Subjects/SaveLesson';
 
 const SubjectActivities = () => {
   const [openLearningObjetives, setOpenLearningObjetives] =
@@ -55,6 +56,16 @@ const SubjectActivities = () => {
         No hay datos disponibles. Inténtalo de nuevo recargando la página.
       </Typography>
     );
+
+  if (openSaveLesson && selectedUnit && classroomDetails) {
+    return (
+      <SaveLesson
+        classroomDetails={classroomDetails}
+        handleClose={() => setOpenSaveLesson(false)}
+        selectedUnit={selectedUnit}
+      />
+    );
+  }
 
   const { data: units } = result;
 
