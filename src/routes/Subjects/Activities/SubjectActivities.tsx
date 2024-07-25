@@ -24,7 +24,7 @@ const SubjectActivities = () => {
     data: result,
     isError,
   } = useQuery({
-    queryKey: ['lessons'],
+    queryKey: [classroomDetails?.subject_id, classroomDetails?.classroom_id],
     queryFn: async () =>
       await searchUnits({
         subjectId: classroomDetails?.subject_id || 0,
