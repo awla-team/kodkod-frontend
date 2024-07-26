@@ -113,7 +113,7 @@ const ViewSaveActivityDialog: FC<ViewSaveActivityDialogProps> = ({
                       )}
                     </div>
                     <div className=''>
-                      <TextField
+                      <TextareaAutosize
                         className='tw-w-full tw-bg-white'
                         value={values.description}
                         onChange={handleChange}
