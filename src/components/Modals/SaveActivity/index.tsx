@@ -13,6 +13,7 @@ import Toaster from 'utils/Toster';
 import { type FormInput, type ViewSaveActivityDialogProps } from './interfaces';
 import { saveActivity } from 'services/activities';
 import { type IActivitySaved } from 'types/models/Activity';
+import { CreateActivitySchema } from 'types/validations/activity';
 
 const ViewSaveActivityDialog: FC<ViewSaveActivityDialogProps> = ({
   open,
@@ -74,8 +75,18 @@ const ViewSaveActivityDialog: FC<ViewSaveActivityDialogProps> = ({
             {'Guardar Nueva Actividad'}
           </DialogTitle>
           <DialogContent dividers className='mb-3'>
-            <Formik initialValues={formValues} onSubmit={onSubmit}>
-              {({ values, handleChange, handleSubmit, isSubmitting }) => (
+            <Formik
+              initialValues={formValues}
+              onSubmit={onSubmit}
+              validationSchema={CreateActivitySchema}
+            >
+              {({
+                values,
+                handleChange,
+                handleSubmit,
+                isSubmitting,
+                errors,
+              }) => (
                 <form onSubmit={handleSubmit}>
                   <div className='tw-space-y-6'>
                     <Link className='fw-bold tw-flex' onClick={handleClose}>
@@ -86,17 +97,23 @@ const ViewSaveActivityDialog: FC<ViewSaveActivityDialogProps> = ({
                       {currentLesson.title || 'Clase Test'}
                     </h5>
 
-                    <TextField
-                      className=''
-                      value={values.title}
-                      onChange={handleChange}
-                      name='title'
-                      variant='standard'
-                      placeholder='Inserte el título de la actividad'
-                      fullWidth
-                    />
+                    <div>
+                      <TextField
+                        className=''
+                        value={values.title}
+                        onChange={handleChange}
+                        name='title'
+                        placeholder='Inserte el título de la actividad'
+                        fullWidth
+                      />
+                      {errors.title && (
+                        <p className='tw-text-red-500 tw-text-sm'>
+                          {errors.title}
+                        </p>
+                      )}
+                    </div>
                     <div className=''>
-                      <TextareaAutosize
+                      <TextField
                         className='tw-w-full tw-bg-white'
                         value={values.description}
                         onChange={handleChange}
