@@ -28,7 +28,7 @@ const SaveLesson: React.FC<{
     unit_id: selectedUnit.id,
   });
   const [openSaveActivity, setOpenSaveActivity] = useState<boolean>(false);
-
+  const [selectedType, setSelectedType] = useState<string>('');
   const onSubmit = async (values: FormInput) => {
     try {
       const lesson: ILessonSaved = {
@@ -81,7 +81,10 @@ const SaveLesson: React.FC<{
                 1. Tus estudiantes completan al menos 2 desafíos de la clase
               </h5>
               <div
-                onClick={() => setOpenSaveActivity(true)}
+                onClick={() => {
+                  setOpenSaveActivity(true);
+                  setSelectedType('Inicio');
+                }}
                 className='tw-border tw-border-dashed tw-rounded-md tw-h-40 tw-flex tw-justify-between tw-items-center hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-indigo-100'
               >
                 <div className='tw-justify-center tw-items-center tw-w-[100px] tw-h-full tw-py-0 tw-px-6 tw-flex tw-flex-col tw-gap-1tw-flex tw-bg-[#0E8A1A] tw-text-white tw-rounded-l-md tw-border-y-2 tw-border-transparent'>
@@ -97,7 +100,10 @@ const SaveLesson: React.FC<{
                 <div />
               </div>
               <div
-                onClick={() => setOpenSaveActivity(true)}
+                onClick={() => {
+                  setOpenSaveActivity(true);
+                  setSelectedType('Desarrollo');
+                }}
                 className='tw-border tw-border-dashed tw-rounded-md tw-h-40 tw-flex tw-justify-between tw-items-center hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-indigo-100'
               >
                 <div className='tw-justify-center tw-items-center tw-w-[100px] tw-h-full tw-py-0 tw-px-6 tw-flex tw-flex-col tw-gap-1tw-flex tw-bg-[#0E138A] tw-text-white tw-rounded-l-md tw-border-y-2 tw-border-transparent'>
@@ -113,7 +119,10 @@ const SaveLesson: React.FC<{
                 <div />
               </div>
               <div
-                onClick={() => setOpenSaveActivity(true)}
+                onClick={() => {
+                  setOpenSaveActivity(true);
+                  setSelectedType('Cierre');
+                }}
                 className='tw-border tw-border-dashed tw-rounded-md tw-h-40 tw-flex tw-justify-between tw-items-center hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-indigo-100'
               >
                 <div className='tw-justify-center tw-items-center tw-w-[100px] tw-h-full tw-py-0 tw-px-6 tw-flex tw-flex-col tw-gap-1tw-flex tw-bg-[#8A0E0E] tw-text-white tw-rounded-l-md tw-border-y-2 tw-border-transparent'>
@@ -174,7 +183,7 @@ const SaveLesson: React.FC<{
                 <button
                   type='submit'
                   className='tw-bg-gray-500'
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || values.title === ''}
                 >
                   Guardar
                 </button>
@@ -185,6 +194,7 @@ const SaveLesson: React.FC<{
       </Formik>
       <ViewSaveActivityDialog
         open={openSaveActivity}
+        currentType={selectedType}
         currentLesson={{
           id: 1,
           title: formValues.title,

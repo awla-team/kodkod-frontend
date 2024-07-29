@@ -18,12 +18,13 @@ const ViewSaveActivityDialog: FC<ViewSaveActivityDialogProps> = ({
   open,
   handleClose,
   currentLesson,
+  currentType,
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [formValues] = useState<FormInput>({
     title: '',
     lesson_id: currentLesson.id,
-    type: 'test',
+    type: currentType,
     description: '',
   });
 
@@ -71,17 +72,13 @@ const ViewSaveActivityDialog: FC<ViewSaveActivityDialogProps> = ({
       {currentLesson ? (
         <div>
           <DialogTitle fontWeight='bold' className='mb-2'>
-            {'Guardar Nueva Actividad'}
+            {'Guardar Nueva Actividad de' + currentType}
           </DialogTitle>
           <DialogContent dividers className='mb-3'>
             <Formik initialValues={formValues} onSubmit={onSubmit}>
               {({ values, handleChange, handleSubmit, isSubmitting }) => (
                 <form onSubmit={handleSubmit}>
                   <div className='tw-space-y-6'>
-                    <Link className='fw-bold tw-flex' onClick={handleClose}>
-                      {'< Volver a la clase'}
-                    </Link>
-
                     <h5 className='tw-flex tw-gap-4'>
                       {currentLesson.title || 'Clase Test'}
                     </h5>

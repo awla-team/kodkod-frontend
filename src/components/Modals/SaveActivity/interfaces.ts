@@ -10,5 +10,6 @@ export interface FormInput {
 export interface ViewSaveActivityDialogProps {
   open: boolean;
   currentLesson: ILesson;
+  currentType: string;
   handleClose: () => void;
 }
