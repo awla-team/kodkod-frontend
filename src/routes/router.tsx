@@ -21,8 +21,7 @@ import Rewards from 'routes/Class/Rewards';
 import VerifyEmail from './UserAuth/VerifyEmail';
 import AllCompletedAdventures from './Class/AllCompletedAdventures';
 import SubjectLayout from 'layouts/SubjectLayout';
-import SubjectActivities from './Class/Subjects/Activities/SubjectActivities';
-import Subject from './Class/Subjects/Subject';
+import SubjectActivities from './Subjects/Activities/SubjectActivities';
 
 const MainRouterComponent: FC = () => {
   // const { pathname } = useLocation();

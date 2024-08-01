@@ -232,9 +232,10 @@ const App: React.FC = () => {
                     : 'tw-justify-end'
                 } `}
               >
+                {/* TODO: agregar classroom logic when reload page */}
                 {subject &&
-                  classroom &&
-                  location.pathname.includes(`classroom/${classId}`) && (
+                  location.pathname.includes(`classroom/${classId}`) &&
+                  classroom && (
                     <div className='tw-pl-4'>
                       <h4 className='tw-text-xs tw-mb-0'>
                         Curso seleccionado:
