@@ -11,6 +11,6 @@ export const getLearningGoalByID = async (id: number | string) => {
 
 export const getLearningGoalsByUnit = async (
   unitId: number | string
-): Promise<ILearningGoal[]> => {
+) => {
   return await http.get('learning-goal/get-by-unit-id/' + unitId);
 };
