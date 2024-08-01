@@ -73,7 +73,7 @@ const ViewSaveActivityDialog: FC<ViewSaveActivityDialogProps> = ({
       {currentLesson ? (
         <div>
           <DialogTitle fontWeight='bold' className='mb-2'>
-            {'Guardar Nueva Actividad de' + currentType}
+            {'Guardar Nueva Actividad de ' + currentType}
           </DialogTitle>
           <DialogContent dividers className='mb-3'>
             <Formik
@@ -91,7 +91,7 @@ const ViewSaveActivityDialog: FC<ViewSaveActivityDialogProps> = ({
                 <form onSubmit={handleSubmit}>
                   <div className='tw-space-y-6'>
                     <h5 className='tw-flex tw-gap-4'>
-                      {currentLesson.title || 'Clase Test'}
+                      {currentLesson.title || 'Clase sin nombre'}
                     </h5>
 
                     <div>
@@ -112,12 +112,21 @@ const ViewSaveActivityDialog: FC<ViewSaveActivityDialogProps> = ({
                     </div>
                     <div className=''>
                       <TextareaAutosize
-                        className='tw-w-full tw-bg-white'
+                        className={`tw-w-full p-2 border rounded bg-white text-black ${
+                          errors.description
+                            ? 'tw-border-red-500 tw-outline-none tw-ring-red-500'
+                            : ''
+                        } rounded-md`}
                         value={values.description}
                         onChange={handleChange}
                         name='description'
                         placeholder='Inserte la descripcion de la actividad'
                       />
+                      {errors.description && (
+                        <p className='tw-text-red-500 tw-text-sm'>
+                          {errors.description}
+                        </p>
+                      )}
                     </div>
                     <div className='tw-flex tw-items-center tw-justify-end tw-mx-6'>
                       <button
@@ -142,7 +151,7 @@ const ViewSaveActivityDialog: FC<ViewSaveActivityDialogProps> = ({
           </DialogContent>
         </div>
       ) : (
-        <div>Test</div>
+        <div>Sin Datos</div>
       )}
     </Dialog>
   );
