@@ -105,6 +105,7 @@ const ViewSaveActivityDialog: FC<ViewSaveActivityDialogProps> = ({
                         name='title'
                         placeholder='Inserte el título de la actividad'
                         fullWidth
+                        error={!!errors.title}
                       />
                       {errors.title && (
                         <p className='tw-text-red-500 tw-text-sm'>
