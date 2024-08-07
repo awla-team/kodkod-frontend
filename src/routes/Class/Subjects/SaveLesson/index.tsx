@@ -16,12 +16,15 @@ import { Formik } from 'formik';
 import { saveLesson } from 'services/lessons';
 import Toaster from 'utils/Toster';
 import ViewSaveActivityDialog from 'components/Modals/SaveActivity';
+import { useModalStore } from 'contexts/ZustandContext/modal-context';
+import CreateRewardModal from 'components/Modals/CreateRewardModal/CreateRewardModal';
 
 const SaveLesson: React.FC<{
   classroomDetails: ITeacherSubjectClassroomData;
   selectedUnit: IUnit;
   handleClose: () => void;
 }> = ({ classroomDetails, selectedUnit, handleClose }) => {
+  const { openModal } = useModalStore();
   const [formValues] = useState<FormInput>({
     title: '',
     classroom_id: classroomDetails.classroom_id,
@@ -142,25 +145,26 @@ const SaveLesson: React.FC<{
                 <h5 className='tw-flex tw-mx-4 tw-my-4'>
                   2. Al completarlos, ¡pueden elegir una recompensa!
                 </h5>
-                <div className='tw-grid tw-grid-cols-3 tw-gap-20'>
-                  <div className='tw-border tw-mx-6 tw-border-dashed tw-rounded-md tw-h-80 tw-w-60 tw-flex tw-justify-center tw-items-center tw-flex-col hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-indigo-100'>
-                    <AddCircleOutlinedIcon />
-                    <span className='tw-text-sm tw-font-semibold'>
-                      Añade una recompensa
-                    </span>
-                  </div>
-                  <div className='tw-border tw-border-dashed tw-rounded-md tw-h-80 tw-w-60 tw-flex tw-justify-center tw-items-center tw-flex-col hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-indigo-100'>
-                    <AddCircleOutlinedIcon />
-                    <span className='tw-text-sm tw-font-semibold'>
-                      Añade una recompensa
-                    </span>
-                  </div>
-                  <div className='tw-border tw-border-dashed tw-rounded-md tw-h-80 tw-w-60 tw-flex tw-justify-center tw-items-center tw-flex-col hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-indigo-100'>
-                    <AddCircleOutlinedIcon />
-                    <span className='tw-text-sm tw-font-semibold'>
-                      Añade una recompensa
-                    </span>
-                  </div>
+                <div className='tw-grid tw-grid-cols-3 tw-gap-10'>
+                  {Array.from({ length: 3 }).map((_, index) => (
+                    <div
+                      key={index}
+                      className='tw-border tw-mx-6 tw-border-dashed tw-rounded-md tw-h-80 tw-flex tw-justify-center tw-items-center tw-flex-col hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-indigo-100'
+                      onClick={() =>
+                        openModal({
+                          title: 'Ingresar recompensas',
+                          content: <CreateRewardModal />,
+                          maxWidth: 'sm',
+                          withActions: false,
+                        })
+                      }
+                    >
+                      <AddCircleOutlinedIcon />
+                      <span className='tw-text-sm tw-font-semibold'>
+                        Añade una recompensa
+                      </span>
+                    </div>
+                  ))}
                 </div>
                 <div hidden>
                   <StaticRewardCard
