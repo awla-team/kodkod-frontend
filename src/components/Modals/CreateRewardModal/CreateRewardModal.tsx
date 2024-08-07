@@ -3,7 +3,7 @@ import { Formik } from 'formik';
 import { TextField, TextareaAutosize } from '@mui/material';
 import { useModalStore } from 'contexts/ZustandContext/modal-context';
 import {
-  CreateRewardFormValues,
+  type CreateRewardFormValues,
   CreateRewardSchema,
 } from 'types/validations/activity';
 import { cn } from 'utils/methods';
