@@ -16,6 +16,7 @@ import { Formik } from 'formik';
 import { saveLesson } from 'services/lessons';
 import Toaster from 'utils/Toster';
 import ViewSaveActivityDialog from 'components/Modals/SaveActivity';
+import { useCreateLesson } from 'zustand/create-lesson-store';
 
 const SaveLesson: React.FC<{
   classroomDetails: ITeacherSubjectClassroomData;
@@ -29,6 +30,9 @@ const SaveLesson: React.FC<{
   });
   const [openSaveActivity, setOpenSaveActivity] = useState<boolean>(false);
   const [selectedType, setSelectedType] = useState<string>('');
+  const { initialActivity, secondActivity, finalActivity, clearActivity } =
+    useCreateLesson();
+
   const onSubmit = async (values: FormInput) => {
     try {
       const lesson: ILessonSaved = {
@@ -51,6 +55,11 @@ const SaveLesson: React.FC<{
 
   useEffect(() => {});
 
+  const goBack = () => {
+    clearActivity();
+    handleClose();
+  };
+
   return (
     <div>
       <Formik initialValues={formValues} onSubmit={onSubmit}>
@@ -58,7 +67,7 @@ const SaveLesson: React.FC<{
           <>
             <form onSubmit={handleSubmit}>
               <div className='tw-space-y-6'>
-                <Link className='fw-bold tw-flex' onClick={handleClose}>
+                <Link className='fw-bold tw-flex' onClick={goBack}>
                   {'< Volver a lista de clases'}
                 </Link>
 
@@ -81,61 +90,88 @@ const SaveLesson: React.FC<{
                 <h5 className='tw-flex tw-mx-4 tw-my-4'>
                   1. Tus estudiantes completan al menos 2 desafíos de la clase
                 </h5>
-                <div
-                  onClick={() => {
-                    setOpenSaveActivity(true);
-                    setSelectedType('Inicio');
-                  }}
-                  className='tw-border tw-border-dashed tw-rounded-md tw-h-40 tw-flex tw-justify-between tw-items-center hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-indigo-100'
-                >
+                <div className='tw-border tw-border-dashed tw-rounded-md tw-h-40 tw-flex tw-justify-between tw-items-center hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-indigo-100'>
                   <div className='tw-justify-center tw-items-center tw-w-[100px] tw-h-full tw-py-0 tw-px-6 tw-flex tw-flex-col tw-gap-1tw-flex tw-bg-[#0E8A1A] tw-text-white tw-rounded-l-md tw-border-y-2 tw-border-transparent'>
                     <BoltIcon />
                     Inicio
                   </div>
-                  <div className='tw-flex tw-justify-center tw-items-center '>
-                    <AddCircleOutlinedIcon />
-                    <span className='tw-text-sm tw-mx-2 tw-font-semibold'>
-                      Añade una actividad de inicio
-                    </span>
-                  </div>
+                  {initialActivity ? (
+                    <div className='tw-flex tw-flex-col tw-justify-center tw-items-center tw-w-full tw-bg-green-100 tw-h-full'>
+                      <h5>{initialActivity.title}</h5>
+                      <p className='tw-text-sm tw-mx-2 tw-font-semibold'>
+                        {initialActivity.description}
+                      </p>
+                    </div>
+                  ) : (
+                    <div
+                      className='tw-flex tw-justify-center tw-items-center tw-w-full tw-h-full'
+                      onClick={() => {
+                        setOpenSaveActivity(true);
+                        setSelectedType('Inicio');
+                      }}
+                    >
+                      <AddCircleOutlinedIcon />
+                      <span className='tw-text-sm tw-mx-2 tw-font-semibold'>
+                        Añade una actividad de inicio
+                      </span>
+                    </div>
+                  )}
                   <div />
                 </div>
-                <div
-                  onClick={() => {
-                    setOpenSaveActivity(true);
-                    setSelectedType('Desarrollo');
-                  }}
-                  className='tw-border tw-border-dashed tw-rounded-md tw-h-40 tw-flex tw-justify-between tw-items-center hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-indigo-100'
-                >
+                <div className='tw-border tw-border-dashed tw-rounded-md tw-h-40 tw-flex tw-justify-between tw-items-center hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-indigo-100'>
                   <div className='tw-justify-center tw-items-center tw-w-[100px] tw-h-full tw-py-0 tw-px-6 tw-flex tw-flex-col tw-gap-1tw-flex tw-bg-[#0E138A] tw-text-white tw-rounded-l-md tw-border-y-2 tw-border-transparent'>
                     <PsychologyIcon />
                     Desarrollo
                   </div>
-                  <div className='tw-flex tw-justify-center tw-items-center'>
-                    <AddCircleOutlinedIcon />
-                    <span className='tw-text-sm tw-mx-2 tw-font-semibold'>
-                      Añade una actividad de desarrollo
-                    </span>
-                  </div>
+                  {secondActivity ? (
+                    <div className='tw-flex tw-flex-col tw-justify-center tw-items-center tw-w-full tw-bg-[#0E138A]/10 tw-h-full'>
+                      <h5>{secondActivity.title}</h5>
+                      <p className='tw-text-sm tw-mx-2 tw-font-semibold'>
+                        {secondActivity.description}
+                      </p>
+                    </div>
+                  ) : (
+                    <div
+                      className='tw-flex tw-justify-center tw-items-center tw-w-full tw-h-full'
+                      onClick={() => {
+                        setOpenSaveActivity(true);
+                        setSelectedType('Desarrollo');
+                      }}
+                    >
+                      <AddCircleOutlinedIcon />
+                      <span className='tw-text-sm tw-mx-2 tw-font-semibold'>
+                        Añade una actividad de desarrollo
+                      </span>
+                    </div>
+                  )}
                   <div />
                 </div>
-                <div
-                  onClick={() => {
-                    setOpenSaveActivity(true);
-                    setSelectedType('Cierre');
-                  }}
-                  className='tw-border tw-border-dashed tw-rounded-md tw-h-40 tw-flex tw-justify-between tw-items-center hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-indigo-100'
-                >
+                <div className='tw-border tw-border-dashed tw-rounded-md tw-h-40 tw-flex tw-justify-between tw-items-center hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-indigo-100'>
                   <div className='tw-justify-center tw-items-center tw-w-[100px] tw-h-full tw-py-0 tw-px-6 tw-flex tw-flex-col tw-gap-1tw-flex tw-bg-[#8A0E0E] tw-text-white tw-rounded-l-md tw-border-y-2 tw-border-transparent'>
                     <WaterIcon />
                     Cierre
                   </div>
-                  <div className='tw-flex tw-justify-center tw-items-center'>
-                    <AddCircleOutlinedIcon />
-                    <span className='tw-text-sm tw-mx-2 tw-font-semibold'>
-                      Añade una actividad de cierre
-                    </span>
-                  </div>
+                  {finalActivity ? (
+                    <div className='tw-flex tw-flex-col tw-justify-center tw-items-center tw-w-full tw-bg-red-100 tw-h-full'>
+                      <h5>{finalActivity.title}</h5>
+                      <p className='tw-text-sm tw-mx-2 tw-font-semibold'>
+                        {finalActivity.description}
+                      </p>
+                    </div>
+                  ) : (
+                    <div
+                      className='tw-flex tw-justify-center tw-items-center tw-w-full tw-h-full'
+                      onClick={() => {
+                        setOpenSaveActivity(true);
+                        setSelectedType('Cierre');
+                      }}
+                    >
+                      <AddCircleOutlinedIcon />
+                      <span className='tw-text-sm tw-mx-2 tw-font-semibold'>
+                        Añade una actividad de cierre
+                      </span>
+                    </div>
+                  )}
                   <div />
                 </div>
 
