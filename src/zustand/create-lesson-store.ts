@@ -1,4 +1,4 @@
-import { IActivitySaved } from 'types/models/Activity';
+import { type IActivitySaved } from 'types/models/Activity';
 import { create } from 'zustand';
 
 interface State {
