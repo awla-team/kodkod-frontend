@@ -33,9 +33,9 @@ const SubjectActivities = () => {
       }),
   });
 
-  const reloadSubjectActivities = () => {
+  const reloadSubjectActivities = async () => {
     setOpenSaveLesson(false);
-    reloadUnits();
+    await reloadUnits();
   };
 
   if (isLoading)
