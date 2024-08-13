@@ -23,6 +23,7 @@ const SubjectActivities = () => {
     isLoading,
     data: result,
     isError,
+    refetch: reloadUnits,
   } = useQuery({
     queryKey: [classroomDetails?.subject_id, classroomDetails?.classroom_id],
     queryFn: async () =>
@@ -31,6 +32,11 @@ const SubjectActivities = () => {
         classroomId: classroomDetails?.classroom_id || 0,
       }),
   });
+
+  const reloadSubjectActivities = () => {
+    setOpenSaveLesson(false);
+    reloadUnits();
+  };
 
   if (isLoading)
     return (
@@ -58,7 +64,7 @@ const SubjectActivities = () => {
     return (
       <SaveLesson
         classroomDetails={classroomDetails}
-        handleClose={() => setOpenSaveLesson(false)}
+        handleClose={reloadSubjectActivities}
         selectedUnit={selectedUnit}
       />
     );

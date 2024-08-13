@@ -17,6 +17,8 @@ import { saveLesson } from 'services/lessons';
 import Toaster from 'utils/Toster';
 import ViewSaveActivityDialog from 'components/Modals/SaveActivity';
 import { useCreateLesson } from 'zustand/create-lesson-store';
+import { saveActivity } from 'services/activities';
+import { CreateLessonSchema } from 'types/validations/lesson';
 
 const SaveLesson: React.FC<{
   classroomDetails: ITeacherSubjectClassroomData;
@@ -35,6 +37,11 @@ const SaveLesson: React.FC<{
 
   const onSubmit = async (values: FormInput) => {
     try {
+      if (!initialActivity || !secondActivity || !finalActivity) {
+        Toaster('error', 'Falta una actividad');
+        return;
+      }
+
       const lesson: ILessonSaved = {
         title: values.title,
         index: 1,
@@ -44,8 +51,24 @@ const SaveLesson: React.FC<{
       const { status } = await saveLesson(lesson);
 
       if (status === 200) {
-        Toaster('success', 'Clase creada');
-        handleClose();
+        const [firstResponse, secondResponse, thirdResponse] =
+          await Promise.all([
+            saveActivity(initialActivity),
+            saveActivity(secondActivity),
+            saveActivity(finalActivity),
+          ]);
+
+        if (
+          firstResponse.status === 201 &&
+          secondResponse.status === 201 &&
+          thirdResponse.status === 201
+        ) {
+          Toaster('success', 'Clase creada con éxito');
+          clearActivity();
+          handleClose();
+        } else {
+          Toaster('error', 'Error al crear clase');
+        }
       }
     } catch (e) {
       console.log(e);
@@ -62,8 +85,12 @@ const SaveLesson: React.FC<{
 
   return (
     <div>
-      <Formik initialValues={formValues} onSubmit={onSubmit}>
-        {({ values, handleChange, handleSubmit, isSubmitting }) => (
+      <Formik
+        initialValues={formValues}
+        onSubmit={onSubmit}
+        validationSchema={CreateLessonSchema}
+      >
+        {({ values, handleChange, handleSubmit, isSubmitting, errors }) => (
           <>
             <form onSubmit={handleSubmit}>
               <div className='tw-space-y-6'>
@@ -85,7 +112,13 @@ const SaveLesson: React.FC<{
                   variant='standard'
                   placeholder='Inserte el título de la clase'
                   fullWidth
+                  error={!!errors.title}
                 />
+                {errors.title && (
+                  <span className='tw-text-xs tw-text-red-500'>
+                    {errors.title}
+                  </span>
+                )}
 
                 <h5 className='tw-flex tw-mx-4 tw-my-4'>
                   1. Tus estudiantes completan al menos 2 desafíos de la clase
@@ -219,8 +252,8 @@ const SaveLesson: React.FC<{
                   </button>
                   <button
                     type='submit'
-                    className='tw-bg-gray-500'
-                    disabled={isSubmitting || values.title === ''}
+                    className='tw-bg-primary'
+                    disabled={isSubmitting}
                   >
                     Guardar
                   </button>
