@@ -14,6 +14,7 @@ import { type FormInput, type ViewSaveActivityDialogProps } from './interfaces';
 import { saveActivity } from 'services/activities';
 import { type IActivitySaved } from 'types/models/Activity';
 import { CreateActivitySchema } from 'types/validations/activity';
+import { useCreateLesson } from 'zustand/create-lesson-store';
 
 const ViewSaveActivityDialog: FC<ViewSaveActivityDialogProps> = ({
   open,
@@ -21,7 +22,6 @@ const ViewSaveActivityDialog: FC<ViewSaveActivityDialogProps> = ({
   currentLesson,
   currentType,
 }) => {
-  console.log(currentType);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [formValues] = useState<FormInput>({
     title: '',
@@ -29,6 +29,7 @@ const ViewSaveActivityDialog: FC<ViewSaveActivityDialogProps> = ({
     type: currentType,
     description: '',
   });
+  const { setActivity } = useCreateLesson();
 
   const onSubmit = async (values: FormInput) => {
     try {
@@ -38,12 +39,9 @@ const ViewSaveActivityDialog: FC<ViewSaveActivityDialogProps> = ({
         type: currentType,
         description: values.description,
       };
-      const { status } = await saveActivity(activity);
-
-      if (status === 201) {
-        Toaster('success', 'Actividad creada');
-        handleClose();
-      }
+      setActivity(activity);
+      handleClose();
+      Toaster('success', `Actividad de ${currentType} agregada`);
     } catch (e) {
       console.log(e);
       Toaster('error', 'Error al crear actividad');

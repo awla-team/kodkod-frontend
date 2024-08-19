@@ -12,3 +12,5 @@ export interface IActivitySaved {
   type: string;
   description: string;
 }
+
+export type ActivityType = 'Inicio' | 'Desarrollo' | 'Cierre';

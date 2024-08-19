@@ -1,5 +1,6 @@
 import http from 'global/api';
 import type { ILessonSaved } from 'types/models/Lesson';
+import type ILesson from 'types/models/Lesson';
 
 export const getLessons = async () => {
   return await http.get('lessons');
@@ -16,5 +17,5 @@ export const getLessonsByUnit = async (
 };
 
 export const saveLesson = async (lesson: ILessonSaved) => {
-  return await http.post('lessons', lesson);
+  return await http.post<ILesson>('lessons', lesson);
 };
