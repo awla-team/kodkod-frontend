@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { type IActivitySaved } from 'types/models/Activity';
-import { CreateReward } from 'types/validations/reward';
+import { type CreateReward } from 'types/validations/reward';
 
 interface State {
   initialActivity: IActivitySaved | null;
