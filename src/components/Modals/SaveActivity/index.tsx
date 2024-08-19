@@ -14,6 +14,7 @@ import { type FormInput, type ViewSaveActivityDialogProps } from './interfaces';
 import { saveActivity } from 'services/activities';
 import { type IActivitySaved } from 'types/models/Activity';
 import { CreateActivitySchema } from 'types/validations/activity';
+import { useCreateLesson } from 'zustand/create-lesson-store';
 
 const ViewSaveActivityDialog: FC<ViewSaveActivityDialogProps> = ({
   open,
@@ -28,21 +29,19 @@ const ViewSaveActivityDialog: FC<ViewSaveActivityDialogProps> = ({
     type: currentType,
     description: '',
   });
+  const { setActivity } = useCreateLesson();
 
   const onSubmit = async (values: FormInput) => {
     try {
       const activity: IActivitySaved = {
         title: values.title,
         lesson_id: currentLesson.id,
-        type: values.type,
+        type: currentType,
         description: values.description,
       };
-      const { status } = await saveActivity(activity);
-
-      if (status === 200) {
-        Toaster('success', 'Actividad creada');
-        handleClose();
-      }
+      setActivity(activity);
+      handleClose();
+      Toaster('success', `Actividad de ${currentType} agregada`);
     } catch (e) {
       console.log(e);
       Toaster('error', 'Error al crear actividad');
@@ -128,17 +127,17 @@ const ViewSaveActivityDialog: FC<ViewSaveActivityDialogProps> = ({
                         </p>
                       )}
                     </div>
-                    <div className='tw-flex tw-items-center tw-justify-end tw-mx-6'>
+                    <div className='tw-flex tw-items-center tw-gap-1'>
                       <button
                         onClick={handleClose}
                         type='button'
-                        className='tw-mx-6 tw-bg-gray-200 text-black'
+                        className=' tw-bg-gray-200 text-black tw-w-full'
                       >
                         Cancelar
                       </button>
                       <button
                         type='submit'
-                        className='tw-bg-gray-500'
+                        className='tw-bg-primary tw-w-full'
                         disabled={isSubmitting}
                       >
                         Guardar
