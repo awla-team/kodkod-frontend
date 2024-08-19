@@ -1,11 +1,15 @@
 import { type IReward } from 'global/interfaces';
 import http from '../global/api';
 import { generateQueryParamsFromObject } from '../utils';
+import { CreateReward } from 'types/validations/reward';
 
 export interface GetRewardsFilter {
   id_adventure?: number | string;
   id_class?: number | string;
 }
+
+export const createReward = async (body: CreateReward) =>
+  await http.post('reward', body);
 
 export const getRewardsByAdventure = async (
   adventureId: number | string,

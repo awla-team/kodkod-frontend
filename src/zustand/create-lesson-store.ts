@@ -1,21 +1,27 @@
-import { type IActivitySaved } from 'types/models/Activity';
 import { create } from 'zustand';
+import { type IActivitySaved } from 'types/models/Activity';
+import { CreateReward } from 'types/validations/reward';
 
 interface State {
   initialActivity: IActivitySaved | null;
   secondActivity: IActivitySaved | null;
   finalActivity: IActivitySaved | null;
+
+  // rewards list
+  rewards: CreateReward[];
 }
 
 interface Action {
   setActivity: (activity: IActivitySaved) => void;
   clearActivity: () => void;
+  addReward: (reward: CreateReward) => void;
 }
 
 const createLessonStore = create<State & Action>((set) => ({
   initialActivity: null,
   secondActivity: null,
   finalActivity: null,
+  rewards: [],
 
   setActivity: (activity) => {
     if (activity.type === 'Inicio') {
@@ -28,6 +34,8 @@ const createLessonStore = create<State & Action>((set) => ({
   },
   clearActivity: () =>
     set({ initialActivity: null, secondActivity: null, finalActivity: null }),
+  addReward: (reward) =>
+    set((state) => ({ rewards: [...state.rewards, reward] })),
 }));
 
 export const useCreateLesson = createLessonStore;

@@ -21,6 +21,7 @@ import { saveActivity } from 'services/activities';
 import { CreateLessonSchema } from 'types/validations/lesson';
 import { useModalStore } from 'contexts/ZustandContext/modal-context';
 import CreateRewardModal from 'components/Modals/CreateRewardModal/CreateRewardModal';
+import RewardCard from 'components/CreateReward/RewardCard';
 
 const SaveLesson: React.FC<{
   classroomDetails: ITeacherSubjectClassroomData;
@@ -35,8 +36,13 @@ const SaveLesson: React.FC<{
   });
   const [openSaveActivity, setOpenSaveActivity] = useState<boolean>(false);
   const [selectedType, setSelectedType] = useState<string>('');
-  const { initialActivity, secondActivity, finalActivity, clearActivity } =
-    useCreateLesson();
+  const {
+    initialActivity,
+    secondActivity,
+    finalActivity,
+    clearActivity,
+    rewards,
+  } = useCreateLesson();
 
   const onSubmit = async (values: FormInput) => {
     try {
@@ -51,14 +57,29 @@ const SaveLesson: React.FC<{
         classroom_id: values.classroom_id,
         unit_id: values.unit_id,
       };
-      const { status } = await saveLesson(lesson);
+      const { status, data: newLesson } = await saveLesson(lesson);
 
       if (status === 200) {
         const [firstResponse, secondResponse, thirdResponse] =
           await Promise.all([
-            saveActivity(initialActivity),
-            saveActivity(secondActivity),
-            saveActivity(finalActivity),
+            saveActivity({
+              type: initialActivity.type,
+              title: initialActivity.title,
+              description: initialActivity.description,
+              lesson_id: newLesson.id,
+            }),
+            saveActivity({
+              type: secondActivity.type,
+              title: secondActivity.title,
+              description: secondActivity.description,
+              lesson_id: newLesson.id,
+            }),
+            saveActivity({
+              type: finalActivity.type,
+              title: finalActivity.title,
+              description: finalActivity.description,
+              lesson_id: newLesson.id,
+            }),
           ]);
 
         if (
@@ -215,25 +236,31 @@ const SaveLesson: React.FC<{
                   2. Al completarlos, ¡pueden elegir una recompensa!
                 </h5>
                 <div className='tw-grid tw-grid-cols-3 tw-gap-10'>
-                  {Array.from({ length: 3 }).map((_, index) => (
-                    <div
-                      key={index}
-                      className='tw-border tw-mx-6 tw-border-dashed tw-rounded-md tw-h-80 tw-flex tw-justify-center tw-items-center tw-flex-col hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-indigo-100'
-                      onClick={() =>
-                        openModal({
-                          title: 'Ingresar recompensas',
-                          content: <CreateRewardModal />,
-                          maxWidth: 'sm',
-                          withActions: false,
-                        })
-                      }
-                    >
-                      <AddCircleOutlinedIcon />
-                      <span className='tw-text-sm tw-font-semibold'>
-                        Añade una recompensa
-                      </span>
-                    </div>
-                  ))}
+                  {Array.from({ length: 3 }).map((_, index) => {
+                    const reward = rewards[index];
+
+                    return !reward ? (
+                      <div
+                        key={index}
+                        className='tw-border tw-mx-6 tw-border-dashed tw-rounded-md tw-h-80 tw-flex tw-justify-center tw-items-center tw-flex-col hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-indigo-100'
+                        onClick={() =>
+                          openModal({
+                            title: 'Ingresar recompensas',
+                            content: <CreateRewardModal />,
+                            maxWidth: 'sm',
+                            withActions: false,
+                          })
+                        }
+                      >
+                        <AddCircleOutlinedIcon />
+                        <span className='tw-text-sm tw-font-semibold'>
+                          Añade una recompensa
+                        </span>
+                      </div>
+                    ) : (
+                      <RewardCard reward={reward} />
+                    );
+                  })}
                 </div>
                 <div hidden>
                   <StaticRewardCard

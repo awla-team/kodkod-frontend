@@ -3,18 +3,20 @@ import { Formik } from 'formik';
 import { TextField, TextareaAutosize } from '@mui/material';
 import { useModalStore } from 'contexts/ZustandContext/modal-context';
 import {
-  type CreateRewardFormValues,
+  type CreateReward,
   CreateRewardSchema,
-} from 'types/validations/activity';
+} from 'types/validations/reward';
 import { cn } from 'utils/methods';
+import { useCreateLesson } from 'zustand/create-lesson-store';
 
 export default function CreateRewardModal() {
-  const [formValues] = useState<CreateRewardFormValues>({
+  const [formValues] = useState<CreateReward>({
     name: '',
     description: '',
   });
   const [numberOfActivities, setNumberOfActivities] = useState<number>(1);
   const { closeModal } = useModalStore();
+  const { addReward } = useCreateLesson();
 
   const increment = () => {
     setNumberOfActivities((prev) => prev + 1);
@@ -26,13 +28,14 @@ export default function CreateRewardModal() {
     }
   };
 
-  const onSubmit = (values: CreateRewardFormValues) => {
+  const onSubmit = (values: CreateReward) => {
     const data = {
       ...values,
       numberOfActivities,
     };
-    console.log(data);
-    // TODO: Save the reward
+
+    addReward(data);
+    closeModal();
   };
 
   return (
@@ -87,15 +90,16 @@ export default function CreateRewardModal() {
               Ingrese el número de actividades que el estudiante debe completar
               para esta recompensa
             </p>
-            <div className='tw-flex tw-items-center tw-gap-2'>
-              <button onClick={increment} className='tw-bg-white tw-text-black'>
-                +
+            <div className='tw-flex tw-items-center tw-justify-center tw-gap-2'>
+              <button onClick={decrement} className='tw-bg-white tw-text-black'>
+                -
               </button>
               <div className='tw-p-4 border tw-w-10 tw-h-10 tw-flex tw-items-center tw-justify-center'>
                 {numberOfActivities}
               </div>
-              <button onClick={decrement} className='tw-bg-white tw-text-black'>
-                -
+
+              <button onClick={increment} className='tw-bg-white tw-text-black'>
+                +
               </button>
             </div>
           </div>
