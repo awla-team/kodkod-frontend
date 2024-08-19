@@ -12,32 +12,14 @@ import {
 import type ILearningGoal from 'types/models/LearningGoal';
 import Toaster from 'utils/Toster';
 import { getLearningGoalsByUnit } from 'services/learning_goals';
+import { type AxiosResponse } from 'axios';
 
 const ViewLearningGoalsDialog: FC<ViewLearningGoalsDialogProps> = ({
   open,
   handleClose,
   currentUnit,
 }) => {
-  const [learningGoals, setLearningGoals] = useState<ILearningGoal[]>([
-    {
-      id: 1,
-      description:
-        'Llevar a cabo investigaciones académicas y redactar artículos de investigación.',
-      unit_id: 1,
-    },
-    {
-      id: 2,
-      description:
-        'Analizar críticamente textos literarios, filosóficos y científicos.',
-      unit_id: 1,
-    },
-    {
-      id: 3,
-      description:
-        'Desarrollar habilidades avanzadas de comunicación escrita y oral para diferentes audiencias.',
-      unit_id: 1,
-    },
-  ]);
+  const [learningGoals, setLearningGoals] = useState<ILearningGoal[]>([]);
   const selectedUnit: IUnit = currentUnit || {
     id: 1,
     subject_id: 1,
@@ -50,8 +32,8 @@ const ViewLearningGoalsDialog: FC<ViewLearningGoalsDialogProps> = ({
     try {
       if (currentUnit) {
         getLearningGoalsByUnit(currentUnit?.id)
-          .then((response: ILearningGoal[]) => {
-            return response;
+          .then((response: AxiosResponse) => {
+            return response.data;
           })
           .then((learningGoalsList: ILearningGoal[]) => {
             setLearningGoals(learningGoalsList);
