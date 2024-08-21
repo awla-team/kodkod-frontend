@@ -156,7 +156,7 @@ const SaveLesson: React.FC<{
                     Inicio
                   </div>
                   {initialActivity ? (
-                    <div className='tw-flex tw-flex-row tw-items-center tw-justify-between tw-bg-green-100 tw-w-full tw-h-full'>
+                    <div className='tw-flex tw-flex-row tw-justify-between tw-bg-green-100 tw-w-full tw-h-full'>
                       <div />
                       <div className='tw-flex tw-flex-col tw-justify-center tw-items-center'>
                         <h5>{initialActivity.title}</h5>
@@ -165,16 +165,13 @@ const SaveLesson: React.FC<{
                         </p>
                       </div>
 
-                      <button
-                        type='button'
-                        className=' tw-h-full'
+                      <EditNoteIcon
+                        className='tw-flex tw-justify-start tw-items-start tw-m-8 hover:tw-cursor-pointer tw-ease-in-out hover:tw-bg-indigo-100 hover:tw-border hover:tw-border-solid tw-rounded tw-transition-all tw-duration-200'
                         onClick={() => {
                           setSelectedType('Inicio');
                           setOpenEditActivity(true);
                         }}
-                      >
-                        <EditNoteIcon className='' />
-                      </button>
+                      />
                     </div>
                   ) : (
                     <div
@@ -198,7 +195,7 @@ const SaveLesson: React.FC<{
                     Desarrollo
                   </div>
                   {secondActivity ? (
-                    <div className='tw-flex tw-flex-row tw-items-center tw-justify-between tw-w-full tw-bg-[#0E138A]/10 tw-h-full'>
+                    <div className='tw-flex tw-flex-row tw-justify-between tw-w-full tw-bg-[#0E138A]/10 tw-h-full'>
                       <div />
                       <div className='tw-flex tw-flex-col tw-justify-center tw-items-center'>
                         <h5>{secondActivity.title}</h5>
@@ -206,17 +203,13 @@ const SaveLesson: React.FC<{
                           {secondActivity.description}
                         </p>
                       </div>
-
-                      <button
-                        type='button'
-                        className=' tw-h-full'
+                      <EditNoteIcon
+                        className='tw-flex tw-justify-start tw-items-start tw-m-8 hover:tw-cursor-pointer tw-ease-in-out hover:tw-bg-indigo-100 hover:tw-border hover:tw-border-solid tw-rounded tw-transition-all tw-duration-200'
                         onClick={() => {
                           setOpenEditActivity(true);
                           setSelectedType('Desarrollo');
                         }}
-                      >
-                        <EditNoteIcon className='' />
-                      </button>
+                      />
                     </div>
                   ) : (
                     <div
@@ -240,7 +233,7 @@ const SaveLesson: React.FC<{
                     Cierre
                   </div>
                   {finalActivity ? (
-                    <div className='tw-flex tw-flex-row tw-items-center tw-justify-between tw-w-full tw-bg-red-100 tw-h-full'>
+                    <div className='tw-flex tw-flex-row tw-justify-between tw-w-full tw-bg-red-100 tw-h-full'>
                       <div />
                       <div className='tw-flex tw-flex-col tw-justify-center tw-items-center tw-w-full tw-bg-red-100 tw-h-full'>
                         <h5>{finalActivity.title}</h5>
@@ -249,16 +242,13 @@ const SaveLesson: React.FC<{
                         </p>
                       </div>
 
-                      <button
-                        type='button'
-                        className=' tw-h-full'
+                      <EditNoteIcon
+                        className='tw-flex tw-justify-start tw-items-start tw-m-8 hover:tw-cursor-pointer tw-ease-in-out hover:tw-bg-indigo-100 hover:tw-border hover:tw-border-solid tw-rounded tw-transition-all tw-duration-200'
                         onClick={() => {
                           setOpenEditActivity(true);
                           setSelectedType('Cierre');
                         }}
-                      >
-                        <EditNoteIcon className='' />
-                      </button>
+                      />
                     </div>
                   ) : (
                     <div
