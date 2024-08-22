@@ -3,14 +3,14 @@ import { Formik } from 'formik';
 import { TextField, TextareaAutosize } from '@mui/material';
 import { useModalStore } from 'contexts/ZustandContext/modal-context';
 import {
-  type CreateReward,
+  type CreateRewardForm,
   CreateRewardSchema,
 } from 'types/validations/reward';
 import { cn } from 'utils/methods';
 import { useCreateLesson } from 'zustand/create-lesson-store';
 
 export default function CreateRewardModal() {
-  const [formValues] = useState<CreateReward>({
+  const [formValues] = useState<CreateRewardForm>({
     name: '',
     description: '',
   });
@@ -28,7 +28,7 @@ export default function CreateRewardModal() {
     }
   };
 
-  const onSubmit = (values: CreateReward) => {
+  const onSubmit = (values: CreateRewardForm) => {
     const data = {
       ...values,
       numberOfActivities,
@@ -91,14 +91,22 @@ export default function CreateRewardModal() {
               para esta recompensa
             </p>
             <div className='tw-flex tw-items-center tw-justify-center tw-gap-2'>
-              <button onClick={decrement} className='tw-bg-white tw-text-black'>
+              <button
+                type='button'
+                onClick={decrement}
+                className='tw-bg-white tw-text-black'
+              >
                 -
               </button>
               <div className='tw-p-4 border tw-w-10 tw-h-10 tw-flex tw-items-center tw-justify-center'>
                 {numberOfActivities}
               </div>
 
-              <button onClick={increment} className='tw-bg-white tw-text-black'>
+              <button
+                type='button'
+                onClick={increment}
+                className='tw-bg-white tw-text-black'
+              >
                 +
               </button>
             </div>

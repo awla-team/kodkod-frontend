@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-export interface CreateReward {
+export interface CreateRewardForm {
   name: string;
   description: string;
 }

@@ -258,7 +258,7 @@ const SaveLesson: React.FC<{
                         </span>
                       </div>
                     ) : (
-                      <RewardCard reward={reward} />
+                      <RewardCard key={index} reward={reward} />
                     );
                   })}
                 </div>
