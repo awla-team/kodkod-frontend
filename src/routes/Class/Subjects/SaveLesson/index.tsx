@@ -22,6 +22,7 @@ import { CreateLessonSchema } from 'types/validations/lesson';
 import { useModalStore } from 'contexts/ZustandContext/modal-context';
 import CreateRewardModal from 'components/Modals/CreateRewardModal/CreateRewardModal';
 import RewardCard from 'components/CreateReward/RewardCard';
+import EditRewardModal from 'components/Modals/EditRewardModal';
 
 const SaveLesson: React.FC<{
   classroomDetails: ITeacherSubjectClassroomData;
@@ -258,7 +259,20 @@ const SaveLesson: React.FC<{
                         </span>
                       </div>
                     ) : (
-                      <RewardCard reward={reward} />
+                      <RewardCard
+                        reward={reward}
+                        editable={true}
+                        onClick={() =>
+                          openModal({
+                            title: 'Editar recompensa',
+                            content: (
+                              <EditRewardModal reward={reward} index={index} />
+                            ),
+                            maxWidth: 'sm',
+                            withActions: false,
+                          })
+                        }
+                      />
                     );
                   })}
                 </div>
