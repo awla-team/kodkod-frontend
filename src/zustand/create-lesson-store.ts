@@ -37,7 +37,12 @@ const createLessonStore = create<State & Action>((set) => ({
     }
   },
   clearActivity: () =>
-    set({ initialActivity: null, secondActivity: null, finalActivity: null }),
+    set({
+      initialActivity: null,
+      secondActivity: null,
+      finalActivity: null,
+      rewards: [],
+    }),
   addReward: (reward) =>
     set((state) => ({ rewards: [...state.rewards, reward] })),
 }));
