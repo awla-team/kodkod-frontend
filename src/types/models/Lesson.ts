@@ -4,8 +4,8 @@ export default interface ILesson {
   index: number;
   classroom_id: number;
   unit_id: number;
-  started_at: Date;
-  ended_at: Date;
+  started_at?: Date;
+  ended_at?: Date;
 }
 
 export interface ILessonSaved {
