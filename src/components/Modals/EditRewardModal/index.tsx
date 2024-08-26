@@ -3,14 +3,14 @@ import { Formik } from 'formik';
 import { TextField, TextareaAutosize } from '@mui/material';
 import { useModalStore } from 'contexts/ZustandContext/modal-context';
 import {
-  type CreateReward,
+  type CreateRewardForm,
   CreateRewardSchema,
 } from 'types/validations/reward';
 import { cn } from 'utils/methods';
 import { useCreateLesson } from 'zustand/create-lesson-store';
 
 interface EditRewardModalProps {
-  reward: CreateReward;
+  reward: CreateRewardForm;
   index: number;
 }
 
@@ -18,7 +18,7 @@ export default function EditRewardModal({
   reward,
   index,
 }: EditRewardModalProps) {
-  const [formValues] = useState<CreateReward>({
+  const [formValues] = useState<CreateRewardForm>({
     name: reward.name,
     description: reward.description,
   });
@@ -36,7 +36,7 @@ export default function EditRewardModal({
     }
   };
 
-  const onSubmit = (values: CreateReward) => {
+  const onSubmit = (values: CreateRewardForm) => {
     const data = {
       ...values,
       numberOfActivities,
