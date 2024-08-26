@@ -23,6 +23,7 @@ import { useModalStore } from 'contexts/ZustandContext/modal-context';
 import CreateRewardModal from 'components/Modals/CreateRewardModal/CreateRewardModal';
 import RewardCard from 'components/CreateReward/RewardCard';
 import EditRewardModal from 'components/Modals/EditRewardModal';
+import { createRewards } from 'services/rewards';
 
 const SaveLesson: React.FC<{
   classroomDetails: ITeacherSubjectClassroomData;
@@ -83,7 +84,17 @@ const SaveLesson: React.FC<{
             }),
           ]);
 
+        const rewardsData = rewards.map((reward) => ({
+          title: reward.name,
+          description: reward.description,
+          n_required: reward.numberOfActivities,
+          lesson_id: newLesson.id,
+        }));
+
+        const rewardsResponse = await createRewards(rewardsData);
+
         if (
+          rewardsResponse.status === 201 &&
           firstResponse.status === 201 &&
           secondResponse.status === 201 &&
           thirdResponse.status === 201
@@ -260,6 +271,7 @@ const SaveLesson: React.FC<{
                       </div>
                     ) : (
                       <RewardCard
+                        key={index}
                         reward={reward}
                         editable={true}
                         onClick={() =>
