@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import kodkod from 'assets/images/kodcoin.png';
 
+import EditNoteIcon from '@mui/icons-material/EditNote';
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import { type IUnit } from 'components/Modals/ViewLearningGoalsDialog/interfaces';
 import StaticRewardCard from 'components/RewardCard/StaticRewardCard';
@@ -22,6 +23,7 @@ import { CreateLessonSchema } from 'types/validations/lesson';
 import { useModalStore } from 'contexts/ZustandContext/modal-context';
 import CreateRewardModal from 'components/Modals/CreateRewardModal/CreateRewardModal';
 import RewardCard from 'components/CreateReward/RewardCard';
+import ViewEditActivityDialog from 'components/Modals/EditActivity';
 
 const SaveLesson: React.FC<{
   classroomDetails: ITeacherSubjectClassroomData;
@@ -35,6 +37,7 @@ const SaveLesson: React.FC<{
     unit_id: selectedUnit.id,
   });
   const [openSaveActivity, setOpenSaveActivity] = useState<boolean>(false);
+  const [openEditActivity, setOpenEditActivity] = useState<boolean>(false);
   const [selectedType, setSelectedType] = useState<string>('');
   const {
     initialActivity,
@@ -153,11 +156,22 @@ const SaveLesson: React.FC<{
                     Inicio
                   </div>
                   {initialActivity ? (
-                    <div className='tw-flex tw-flex-col tw-justify-center tw-items-center tw-w-full tw-bg-green-100 tw-h-full'>
-                      <h5>{initialActivity.title}</h5>
-                      <p className='tw-text-sm tw-mx-2 tw-font-semibold'>
-                        {initialActivity.description}
-                      </p>
+                    <div className='tw-flex tw-flex-row tw-justify-between tw-bg-green-100 tw-w-full tw-h-full'>
+                      <div />
+                      <div className='tw-flex tw-flex-col tw-justify-center tw-items-center'>
+                        <h5>{initialActivity.title}</h5>
+                        <p className='tw-text-sm tw-mx-2 tw-font-semibold'>
+                          {initialActivity.description}
+                        </p>
+                      </div>
+
+                      <EditNoteIcon
+                        className='tw-flex tw-justify-start tw-items-start tw-m-8 hover:tw-cursor-pointer tw-ease-in-out hover:tw-bg-indigo-100 hover:tw-border hover:tw-border-solid tw-rounded tw-transition-all tw-duration-200'
+                        onClick={() => {
+                          setSelectedType('Inicio');
+                          setOpenEditActivity(true);
+                        }}
+                      />
                     </div>
                   ) : (
                     <div
@@ -181,11 +195,21 @@ const SaveLesson: React.FC<{
                     Desarrollo
                   </div>
                   {secondActivity ? (
-                    <div className='tw-flex tw-flex-col tw-justify-center tw-items-center tw-w-full tw-bg-[#0E138A]/10 tw-h-full'>
-                      <h5>{secondActivity.title}</h5>
-                      <p className='tw-text-sm tw-mx-2 tw-font-semibold'>
-                        {secondActivity.description}
-                      </p>
+                    <div className='tw-flex tw-flex-row tw-justify-between tw-w-full tw-bg-[#0E138A]/10 tw-h-full'>
+                      <div />
+                      <div className='tw-flex tw-flex-col tw-justify-center tw-items-center'>
+                        <h5>{secondActivity.title}</h5>
+                        <p className='tw-text-sm tw-mx-2 tw-font-semibold'>
+                          {secondActivity.description}
+                        </p>
+                      </div>
+                      <EditNoteIcon
+                        className='tw-flex tw-justify-start tw-items-start tw-m-8 hover:tw-cursor-pointer tw-ease-in-out hover:tw-bg-indigo-100 hover:tw-border hover:tw-border-solid tw-rounded tw-transition-all tw-duration-200'
+                        onClick={() => {
+                          setOpenEditActivity(true);
+                          setSelectedType('Desarrollo');
+                        }}
+                      />
                     </div>
                   ) : (
                     <div
@@ -209,11 +233,22 @@ const SaveLesson: React.FC<{
                     Cierre
                   </div>
                   {finalActivity ? (
-                    <div className='tw-flex tw-flex-col tw-justify-center tw-items-center tw-w-full tw-bg-red-100 tw-h-full'>
-                      <h5>{finalActivity.title}</h5>
-                      <p className='tw-text-sm tw-mx-2 tw-font-semibold'>
-                        {finalActivity.description}
-                      </p>
+                    <div className='tw-flex tw-flex-row tw-justify-between tw-w-full tw-bg-red-100 tw-h-full'>
+                      <div />
+                      <div className='tw-flex tw-flex-col tw-justify-center tw-items-center tw-w-full tw-bg-red-100 tw-h-full'>
+                        <h5>{finalActivity.title}</h5>
+                        <p className='tw-text-sm tw-mx-2 tw-font-semibold'>
+                          {finalActivity.description}
+                        </p>
+                      </div>
+
+                      <EditNoteIcon
+                        className='tw-flex tw-justify-start tw-items-start tw-m-8 hover:tw-cursor-pointer tw-ease-in-out hover:tw-bg-indigo-100 hover:tw-border hover:tw-border-solid tw-rounded tw-transition-all tw-duration-200'
+                        onClick={() => {
+                          setOpenEditActivity(true);
+                          setSelectedType('Cierre');
+                        }}
+                      />
                     </div>
                   ) : (
                     <div
@@ -301,7 +336,23 @@ const SaveLesson: React.FC<{
                 classroom_id: values.classroom_id,
                 unit_id: values.unit_id,
               }}
-              handleClose={() => setOpenSaveActivity(false)}
+              handleClose={() => {
+                setOpenSaveActivity(false);
+              }}
+            />
+            <ViewEditActivityDialog
+              open={openEditActivity}
+              currentType={selectedType}
+              currentLesson={{
+                id: 1,
+                title: values.title,
+                index: 1,
+                classroom_id: values.classroom_id,
+                unit_id: values.unit_id,
+              }}
+              handleClose={() => {
+                setOpenEditActivity(false);
+              }}
             />
           </>
         )}
