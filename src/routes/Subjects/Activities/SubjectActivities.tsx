@@ -109,7 +109,10 @@ const SubjectActivities = () => {
                 </div>
               </div>
               <button
-                onClick={() => setOpenLearningObjetives(true)}
+                onClick={() => {
+                  setSelectedUnit(unit);
+                  setOpenLearningObjetives(true);
+                }}
                 type='button'
                 className='tw-text-sm tw-bg-transparent tw-font-bold tw-text-indigo-600'
               >

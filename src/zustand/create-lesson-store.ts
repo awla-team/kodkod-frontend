@@ -19,6 +19,12 @@ interface Action {
       numberOfActivities: number;
     }
   ) => void;
+  editReward: (
+    reward: CreateRewardForm & {
+      numberOfActivities: number;
+    },
+    index: number
+  ) => void;
 }
 
 const createLessonStore = create<State & Action>((set) => ({
@@ -45,6 +51,12 @@ const createLessonStore = create<State & Action>((set) => ({
     }),
   addReward: (reward) =>
     set((state) => ({ rewards: [...state.rewards, reward] })),
+  editReward: (reward, index) =>
+    set((state) => ({
+      rewards: state.rewards.map((mapReward, innerIndex) =>
+        innerIndex === index ? reward : mapReward
+      ),
+    })),
 }));
 
 export const useCreateLesson = createLessonStore;
