@@ -9,14 +9,22 @@ import {
 import { cn } from 'utils/methods';
 import { useCreateLesson } from 'zustand/create-lesson-store';
 
-export default function CreateRewardModal() {
+interface EditRewardModalProps {
+  reward: CreateRewardForm;
+  index: number;
+}
+
+export default function EditRewardModal({
+  reward,
+  index,
+}: EditRewardModalProps) {
   const [formValues] = useState<CreateRewardForm>({
-    name: '',
-    description: '',
+    name: reward.name,
+    description: reward.description,
   });
   const [numberOfActivities, setNumberOfActivities] = useState<number>(1);
   const { closeModal } = useModalStore();
-  const { addReward } = useCreateLesson();
+  const { editReward } = useCreateLesson();
 
   const increment = () => {
     setNumberOfActivities((prev) => prev + 1);
@@ -34,7 +42,7 @@ export default function CreateRewardModal() {
       numberOfActivities,
     };
 
-    addReward(data);
+    editReward(data, index);
     closeModal();
   };
 

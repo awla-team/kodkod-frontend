@@ -1,15 +1,28 @@
 import { type IReward } from 'global/interfaces';
 import http from '../global/api';
 import { generateQueryParamsFromObject } from '../utils';
-import { type CreateReward } from 'types/validations/reward';
+import { type CreateRewardForm } from 'types/validations/reward';
 
 export interface GetRewardsFilter {
   id_adventure?: number | string;
   id_class?: number | string;
 }
 
-export const createReward = async (body: CreateReward) =>
-  await http.post('reward', body);
+export const createReward = async (
+  body: CreateRewardForm & {
+    n_required: number;
+    lesson_id: number;
+  }
+) => await http.post('reward', body);
+
+export const createRewards = async (
+  body: Array<{
+    title: string;
+    description: string;
+    n_required: number;
+    lesson_id: number;
+  }>
+) => await http.post('reward/list', body);
 
 export const getRewardsByAdventure = async (
   adventureId: number | string,
