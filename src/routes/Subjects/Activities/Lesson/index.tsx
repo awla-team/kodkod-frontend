@@ -79,13 +79,8 @@ const LessonDetails: React.FC<{
 
   if (fetching === FetchStatus.Idle || fetching === FetchStatus.Pending)
     return (
-      <div className='app-container d-flex'>
-        <div className='d-flex w-100 h-100 justify-content-center align-items-center'>
-          <CircularProgress />
-          {FetchStatus.Error
-            ? 'Se ha encontrado un error al cargar la informacion'
-            : ''}
-        </div>
+      <div className='app-container d-flex justify-content-center align-items-center'>
+        <CircularProgress />
       </div>
     );
 
@@ -110,37 +105,53 @@ const LessonDetails: React.FC<{
       <h4 className='tw-flex tw-my-4'>
         L@s estudiantes deben completar las siguientes actividades
       </h4>
-      {activities.map((activity, index) => {
-        return (
-          <div
-            key={index}
-            className='tw-border tw-bg-gradient-to-r tw-from-blue-600 tw-to-cyan-500 tw-rounded-md tw-h-40 tw-flex tw-justify-between tw-items-center'
-          >
-            <div className='tw-flex tw-flex-row tw-justify-between tw-w-full tw-h-full'>
-              <div className='tw-ml-8' />
-              <div className='tw-flex tw-flex-col tw-justify-center tw-items-center'>
-                <h5 className='tw-font-bold tw-text-white'>
-                  {activity.description}
+      {activities.length > 0 ? (
+        activities.map((activity, index) => {
+          return (
+            <div
+              key={index}
+              className='tw-border tw-bg-gradient-to-r tw-from-blue-600 tw-to-cyan-500 tw-rounded-md tw-h-40 tw-flex tw-justify-between tw-items-center'
+            >
+              <div className='tw-flex tw-flex-row tw-justify-between tw-w-full tw-h-full'>
+                <div className='tw-ml-8' />
+                <div className='tw-flex tw-flex-col tw-justify-center tw-items-center'>
+                  <h5 className='tw-font-bold tw-text-white'>
+                    {activity.description}
+                  </h5>
+                </div>
+                <h5 className='tw-text-white tw-m-8 tw-font-bold'>
+                  <EmojiPeopleIcon /> 0
                 </h5>
               </div>
-              <h5 className='tw-text-white tw-m-8 tw-font-bold'>
-                <EmojiPeopleIcon /> 0
-              </h5>
             </div>
-          </div>
-        );
-      })}
+          );
+        })
+      ) : (
+        <div>
+          <h5 className='tw-flex tw-justify-center tw-m-4 tw-font-semibold'>
+            No hay actividades disponibles para esta clase
+          </h5>
+        </div>
+      )}
       <h4 className='tw-flex tw-my-4'>
         Al completar actividades, pueden obtener las siguientes recompensas
       </h4>
       <div className='tw-flex tw-justify-center tw-flex-cols-3'>
-        {rewards.map((reward, index) => {
-          return (
-            <div key={index}>
-              <LessonRewardCard reward={reward} />
-            </div>
-          );
-        })}
+        {rewards.length > 0 ? (
+          rewards.map((reward, index) => {
+            return (
+              <div key={index}>
+                <LessonRewardCard reward={reward} />
+              </div>
+            );
+          })
+        ) : (
+          <div>
+            <h5 className='tw-flex tw-justify-center tw-m-4 tw-font-semibold'>
+              No hay recompensas disponibles para esta clase
+            </h5>
+          </div>
+        )}
       </div>
       <h5 className='tw-flex tw-my-4'>
         El profesor escogerá el momento de la clase para hacer uso de las
