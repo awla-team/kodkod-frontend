@@ -33,6 +33,10 @@ export const getRewards = async (filterQuery: GetRewardsFilter) => {
   return await http.get('reward' + generateQueryParamsFromObject(filterQuery));
 };
 
+export const getRewardsByLessonId = async (lessonId: number) => {
+  return await http.get(`reward?lesson_id=${lessonId}`);
+};
+
 export const studentUseRewards = async (userId: number, rewards: number[]) => {
   return await http.post(`user-use-rewards/${userId}`, rewards);
 };

@@ -11,12 +11,16 @@ import { searchUnits } from 'services/units';
 import book from 'assets/images/book.png';
 import { useClassContext } from 'routes/Class/context';
 import SaveLesson from 'routes/Class/Subjects/SaveLesson';
+import LessonDetails from './Lesson';
+import type ILesson from 'types/models/Lesson';
 
 const SubjectActivities = () => {
   const [openLearningObjetives, setOpenLearningObjetives] =
     useState<boolean>(false);
   const [selectedUnit, setSelectedUnit] = useState<IUnit>();
+  const [selectedLesson, setSelectedLesson] = useState<ILesson>();
   const [openSaveLesson, setOpenSaveLesson] = useState<boolean>(false);
+  const [openLesson, setOpenLesson] = useState<boolean>(false);
   const { classroomDetails } = useClassContext();
 
   const {
@@ -35,6 +39,11 @@ const SubjectActivities = () => {
 
   const reloadSubjectActivities = async () => {
     setOpenSaveLesson(false);
+    await reloadUnits();
+  };
+
+  const closeLessonDetails = async () => {
+    setOpenLesson(false);
     await reloadUnits();
   };
 
@@ -66,6 +75,15 @@ const SubjectActivities = () => {
         classroomDetails={classroomDetails}
         handleClose={reloadSubjectActivities}
         selectedUnit={selectedUnit}
+      />
+    );
+  }
+
+  if (openLesson && selectedLesson && classroomDetails) {
+    return (
+      <LessonDetails
+        handleClose={closeLessonDetails}
+        selectedLesson={selectedLesson}
       />
     );
   }
@@ -127,6 +145,11 @@ const SubjectActivities = () => {
                   <div
                     key={index}
                     className='tw-border tw-shadow tw-rounded-md tw-flex tw-h-40 tw-flex-col hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-indigo-100 tw-p-4 tw-gap-2'
+                    onClick={() => {
+                      setSelectedUnit(unit);
+                      setSelectedLesson(lesson);
+                      setOpenLesson(true);
+                    }}
                   >
                     <div className='tw-flex tw-justify-between'>
                       <span className='tw-text-sm tw-font-semibold'>
