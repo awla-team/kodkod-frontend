@@ -1,30 +1,31 @@
-import { CircularProgress } from '@mui/material';
-import PsychologyIcon from '@mui/icons-material/Psychology';
+import { CircularProgress, Drawer } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import kodkod from 'assets/images/kodcoin.png';
 import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 import EditNoteIcon from '@mui/icons-material/EditNote';
-import StaticRewardCard from 'components/RewardCard/StaticRewardCard';
 import type ILesson from 'types/models/Lesson';
 import { getActivityByLessonId } from 'services/activities';
-import { useModalStore } from 'contexts/ZustandContext/modal-context';
 import type IActivity from 'types/models/Activity';
 import { type AxiosResponse } from 'axios';
 import { FetchStatus } from 'global/enums';
 import LessonRewardCard from 'components/LessonRewardCard';
 import type IReward from 'types/models/Reward';
 import { getRewardsByLessonId } from 'services/rewards';
+import ActivityStudentsDrawer from 'components/drawers/ActivityStudentsDrawer';
 
 const LessonDetails: React.FC<{
   selectedLesson: ILesson;
   handleClose: () => void;
 }> = ({ selectedLesson, handleClose }) => {
-  const { openModal } = useModalStore();
+  const [openActivitiesDrawer, setOpenActivitiesDrawer] =
+    useState<boolean>(false);
   const [fetching, setFetching] = useState<FetchStatus>(FetchStatus.Idle);
 
   const [activities, setActivities] = useState<IActivity[]>([]);
   const [rewards, setRewards] = useState<IReward[]>([]);
+  const [selectedActivity, setSelectedActivity] = useState<IActivity | null>(
+    null
+  );
 
   const getLessonData = () => {
     try {
@@ -77,6 +78,19 @@ const LessonDetails: React.FC<{
     handleClose();
   };
 
+  const toggleActivitiesDrawer = (value: boolean) => () => {
+    setOpenActivitiesDrawer(value);
+  };
+
+  const openActivityDrawer = (activity: IActivity) => {
+    setSelectedActivity(activity);
+    setOpenActivitiesDrawer(true);
+  };
+
+  const closeActivityDrawer = () => {
+    setOpenActivitiesDrawer(false);
+  };
+
   if (fetching === FetchStatus.Idle || fetching === FetchStatus.Pending)
     return (
       <div className='app-container d-flex justify-content-center align-items-center'>
@@ -110,7 +124,8 @@ const LessonDetails: React.FC<{
           return (
             <div
               key={index}
-              className='tw-border tw-bg-gradient-to-r tw-from-blue-600 tw-to-cyan-500 tw-rounded-md tw-h-40 tw-flex tw-justify-between tw-items-center'
+              className='tw-border tw-bg-gradient-to-r tw-from-blue-600 tw-to-cyan-500 tw-rounded-md tw-h-40 tw-flex tw-justify-between tw-items-center hover:tw-cursor-pointer'
+              onClick={() => openActivityDrawer(activity)}
             >
               <div className='tw-flex tw-flex-row tw-justify-between tw-w-full tw-h-full'>
                 <div className='tw-ml-8' />
@@ -133,6 +148,18 @@ const LessonDetails: React.FC<{
           </h5>
         </div>
       )}
+      <Drawer
+        open={openActivitiesDrawer}
+        onClose={toggleActivitiesDrawer(false)}
+        anchor='left'
+      >
+        {selectedActivity && (
+          <ActivityStudentsDrawer
+            activity={selectedActivity}
+            closeDrawer={closeActivityDrawer}
+          />
+        )}
+      </Drawer>
       <h4 className='tw-flex tw-my-4'>
         Al completar actividades, pueden obtener las siguientes recompensas
       </h4>

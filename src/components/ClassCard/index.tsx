@@ -3,7 +3,7 @@ import { Box } from '@mui/system';
 import { type ITeacherSubjectClassroom } from 'global/interfaces';
 import { useNavigate } from 'react-router-dom';
 import type Subject from 'types/models/Subject';
-import { useClassroomStore } from 'zustand/classroom-store';
+import { useClassroom } from 'zustand/classroom-store';
 import { useSubjectStore } from 'zustand/subject-store';
 
 const ClassCard: React.FC<{
@@ -11,7 +11,7 @@ const ClassCard: React.FC<{
 }> = ({ classroom }) => {
   const navigate = useNavigate();
   const { setSubject } = useSubjectStore();
-  const { setClassroom } = useClassroomStore();
+  const { setClassroom } = useClassroom();
 
   const goToClass = () => {
     setClassroom(classroom?.classroom);
