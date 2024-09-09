@@ -128,17 +128,22 @@ const ActivityStudentsDrawer: React.FC<Props> = ({ activity, closeDrawer }) => {
             </form>
 
             <div>
-              <FormGroup>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={selectAllStudents}
-                      onChange={handleSelectAllStudents}
-                    />
-                  }
-                  label='Seleccionar a todos'
-                />
-              </FormGroup>
+              <div className='tw-flex tw-items-center tw-justify-between'>
+                <FormGroup>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={selectAllStudents}
+                        onChange={handleSelectAllStudents}
+                      />
+                    }
+                    label='Seleccionar a todos'
+                  />
+                </FormGroup>
+                <span className='tw-text-xs'>
+                  {selectedStudents.length}/{students.length}
+                </span>
+              </div>
               <FormGroup className='tw-space-y-2'>
                 {filteredStudents.map((student, index) => (
                   <FormControlLabel
