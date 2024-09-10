@@ -7,6 +7,7 @@ import {
   useState,
 } from 'react';
 import {
+  type ITeacherSubjectClassroomData,
   type IClass,
   type IStage,
   type ITeacherSubjectClassroom,
@@ -22,6 +23,8 @@ import { getAllTheLevel } from './../../services/levels';
 import { FetchStatus } from 'global/enums';
 import { type AxiosResponse } from 'axios';
 import { getTeacherSubjectClassroomById } from 'services/teacher_subject_classroom';
+import { useClassroom } from 'zustand/classroom-store';
+import { useSubjectStore } from 'zustand/subject-store';
 
 const ClassContext = createContext<ClassContextType>({
   students: [],
@@ -43,11 +46,13 @@ export const useClassContext = () => {
 const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const [classDetails, setClassDetails] = useState<IClass | undefined>();
   const [classroomDetails, setClassroomDetails] = useState<
-    ITeacherSubjectClassroom | undefined
+    ITeacherSubjectClassroomData | undefined
   >();
   const [levels, setLevels] = useState<Levels[]>([]);
   const [students, setStudents] = useState<StudentType[]>([]);
   const [loadingClass, setLoadingClass] = useState(FetchStatus.Idle);
+  const { setClassroom } = useClassroom();
+  const { setSubject } = useSubjectStore();
 
   const { classId } = useParams();
 
@@ -98,8 +103,10 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
           .then((response: AxiosResponse) => {
             return response?.data;
           })
-          .then((classroom: ITeacherSubjectClassroom) => {
-            setClassroomDetails(classroom);
+          .then((techerClassroom: ITeacherSubjectClassroom) => {
+            setClassroom(techerClassroom.classroom);
+            setSubject(techerClassroom.subject);
+            setClassroomDetails(techerClassroom);
             setLoadingClass(FetchStatus.Success);
           })
           .catch((error) => {
