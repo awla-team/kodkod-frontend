@@ -7,14 +7,13 @@ import {
 } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import type IActivity from 'types/models/Activity';
-import classroomService from 'services/classroom';
 import { useEffect, useState } from 'react';
-import type Student from 'types/models/Student';
 import { Search } from '@mui/icons-material';
 import { useClassroom } from 'zustand/classroom-store';
 import studentActivity from 'services/student_activity';
 import { type CreateStudentActivity } from 'types/validations/student-activity';
 import Toaster from 'utils/Toster';
+import type { StudentCompleteActivity } from 'types/models/StudentActivity';
 
 interface Props {
   activity: IActivity;
@@ -22,8 +21,10 @@ interface Props {
 }
 
 const ActivityStudentsDrawer: React.FC<Props> = ({ activity, closeDrawer }) => {
-  const [students, setStudents] = useState<Student[]>([]);
-  const [filteredStudents, setFilteredStudents] = useState<Student[]>([]);
+  const [registers, setRegisters] = useState<StudentCompleteActivity[]>([]);
+  const [filteredRegisters, setFilteredRegisters] = useState<
+    StudentCompleteActivity[]
+  >([]);
   const [searchStudentInput, setSearchStudentInput] = useState<string>('');
   const [selectAllStudents, setSelectAllStudents] = useState<boolean>(false);
   const [selectedStudents, setSelectedStudents] = useState<number[]>([]);
@@ -31,13 +32,16 @@ const ActivityStudentsDrawer: React.FC<Props> = ({ activity, closeDrawer }) => {
 
   const { mutate: getStudentsByClassroom, isPending } = useMutation({
     mutationFn: async () =>
-      await classroomService.getStudentsByClassroom(
-        classroom ? classroom.id : 0
-      ),
+      await studentActivity.getStudentsCompletedActivity(activity.id, {
+        classroom_id: classroom ? classroom.id : 0,
+      }),
     onSuccess: (response) => {
       if (response) {
-        setStudents(response.data);
-        setFilteredStudents(response.data);
+        setRegisters(response.data);
+        setFilteredRegisters(response.data);
+        const selected = response.data.filter((register) => register.completed);
+        const selectedIds = selected.map((register) => register.student.id);
+        setSelectedStudents(selectedIds);
       }
     },
   });
@@ -50,14 +54,16 @@ const ActivityStudentsDrawer: React.FC<Props> = ({ activity, closeDrawer }) => {
     const value = e.target.value;
     setSearchStudentInput(value);
 
-    const filter = students.filter((student) => {
+    const filter = registers.filter((register) => {
       return (
-        student.first_name.toLowerCase().includes(value.toLowerCase()) ||
-        student.last_name.toLowerCase().includes(value.toLowerCase())
+        register.student.first_name
+          .toLowerCase()
+          .includes(value.toLowerCase()) ||
+        register.student.last_name.toLowerCase().includes(value.toLowerCase())
       );
     });
-    setFilteredStudents(
-      filter.length === 0 || value === '' ? students : filter
+    setFilteredRegisters(
+      filter.length === 0 || value === '' ? registers : filter
     );
   };
 
@@ -66,7 +72,9 @@ const ActivityStudentsDrawer: React.FC<Props> = ({ activity, closeDrawer }) => {
     setSelectAllStudents(isChecked);
 
     if (isChecked) {
-      const studentsIds = filteredStudents.map((student) => student.id);
+      const studentsIds = filteredRegisters.map(
+        (register) => register.student.id
+      );
       setSelectedStudents(studentsIds);
     } else {
       setSelectedStudents([]);
@@ -85,14 +93,16 @@ const ActivityStudentsDrawer: React.FC<Props> = ({ activity, closeDrawer }) => {
 
   const saveActivityStudents = async () => {
     try {
-      const data: CreateStudentActivity[] = selectedStudents.map(
-        (studentId) => ({
-          student_id: studentId,
+      const removeRegisterData: CreateStudentActivity[] = registers.map(
+        (register) => ({
+          student_id: register.student.id,
           activity_id: activity.id,
+          isNew: selectedStudents.includes(register.student.id),
         })
       );
-      console.log(data);
-      const { status } = await studentActivity.createWithList(data);
+
+      const { status } =
+        await studentActivity.createWithList(removeRegisterData);
       if (status === 201) {
         Toaster('success', 'Los estudiantes han finalizado la actividad');
         closeDrawer();
@@ -114,7 +124,7 @@ const ActivityStudentsDrawer: React.FC<Props> = ({ activity, closeDrawer }) => {
         <h3 className='tw-font-semibold tw-text-xl'>Actividad Cumplida</h3>
         <p>Selecciona los estudiantes que han completado la actividad</p>
 
-        {students.length > 0 ? (
+        {registers.length > 0 ? (
           <>
             <form className='tw-border tw-border-zinc-400 tw-rounded-lg tw-flex tw-items-center tw-bg-zinc-100 tw-py-1.5 tw-px-2 tw-gap-2'>
               <Search />
@@ -141,27 +151,30 @@ const ActivityStudentsDrawer: React.FC<Props> = ({ activity, closeDrawer }) => {
                   />
                 </FormGroup>
                 <span className='tw-text-xs'>
-                  {selectedStudents.length}/{students.length}
+                  {selectedStudents.length}/{registers.length}
                 </span>
               </div>
               <FormGroup className='tw-space-y-2'>
-                {filteredStudents.map((student, index) => (
+                {filteredRegisters.map((register, index) => (
                   <FormControlLabel
                     key={index}
                     control={
                       <Checkbox
-                        checked={selectedStudents.includes(student.id)}
-                        onChange={() => handleStudentSelected(student.id)}
+                        checked={selectedStudents.includes(register.student.id)}
+                        onChange={() =>
+                          handleStudentSelected(register.student.id)
+                        }
                       />
                     }
                     label={
                       <div className='tw-flex tw-items-center tw-gap-2'>
                         <Avatar className='tw-bg-primary tw-text-sm'>
-                          {student.first_name[0]}
-                          {student.last_name[0]}
+                          {register.student.first_name[0]}
+                          {register.student.last_name[0]}
                         </Avatar>
                         <p className='tw-m-0'>
-                          {student.first_name} {student.last_name}
+                          {register.student.first_name}{' '}
+                          {register.student.last_name}
                         </p>
                       </div>
                     }
