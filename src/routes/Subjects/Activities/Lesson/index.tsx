@@ -149,9 +149,9 @@ const LessonDetails: React.FC<{
         </div>
       )}
       {selectedActivity && openActivitiesDrawer && (
-        <div className='tw-fixed tw-top-1/2 tw-left-1/4 w-full tw-bg-gradient-to-r tw-from-blue-600 tw-to-cyan-500 p-4 tw-w-96 tw-rounded-md tw-z-[9999] '>
-          <div className='tw-relative tw-w-full'>
-            <p className='tw-text-white tw-mb-0 tw-font-semibold tw-text-lg tw-pt-4'>
+        <div className='tw-fixed tw-top-1/3 tw-left-1/4 w-full tw-bg-gradient-to-r tw-from-blue-600 tw-to-cyan-500 p-4 tw-rounded-md tw-z-[9999]'>
+          <div className='tw-relative tw-w-[640px]'>
+            <p className='tw-text-white tw-mb-0 tw-font-semibold tw-text-2xl tw-pt-6'>
               {selectedActivity.description}
             </p>
             <div className='tw-absolute tw-top-0 tw-right-0'>
