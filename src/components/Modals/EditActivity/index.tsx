@@ -8,10 +8,9 @@ import {
   DialogContent,
 } from '@mui/material';
 import { Formik } from 'formik';
-import { Link } from 'react-router-dom';
 import Toaster from 'utils/Toster';
 import { type FormInput, type ViewEditActivityDialogProps } from './interfaces';
-import { saveActivity } from 'services/activities';
+import type IActivity from 'types/models/Activity';
 import { type IActivitySaved } from 'types/models/Activity';
 import { CreateActivitySchema } from 'types/validations/activity';
 import { useCreateLesson } from 'zustand/create-lesson-store';
@@ -20,29 +19,43 @@ const ViewEditActivityDialog: FC<ViewEditActivityDialogProps> = ({
   open,
   handleClose,
   currentLesson,
-  currentType,
+  editedActivity,
+  newActivity,
+  index,
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [formValues, setFormValues] = useState<FormInput>({
-    title: '',
-    lesson_id: currentLesson.id,
-    type: currentType,
-    description: '',
-  });
-  const { setActivity, initialActivity, secondActivity, finalActivity } =
-    useCreateLesson();
+  const [formValues, setFormValues] = useState<FormInput>();
+  const { editActivity, modifyEditLessonActivity } = useCreateLesson();
 
   const onSubmit = async (values: FormInput) => {
     try {
-      const activity: IActivitySaved = {
-        title: values.title,
-        lesson_id: currentLesson.id,
-        type: currentType,
-        description: values.description,
-      };
-      setActivity(activity);
-      handleClose();
-      Toaster('success', `Actividad de ${currentType} agregada`);
+      if (newActivity) {
+        const activity: IActivitySaved = {
+          title: values.title,
+          lesson_id: currentLesson.id,
+          type: values.type,
+          description: values.description,
+        };
+
+        editActivity(activity, index);
+
+        handleClose();
+        Toaster('success', `Actividad agregada`);
+      }
+      if (editedActivity) {
+        const activity: IActivity = {
+          id: editedActivity.id,
+          title: values.title,
+          lesson_id: currentLesson.id,
+          type: values.type,
+          description: values.description,
+        };
+
+        modifyEditLessonActivity(activity, index);
+
+        handleClose();
+        Toaster('success', `Actividad agregada`);
+      }
     } catch (e) {
       console.log(e);
       Toaster('error', 'Error al crear actividad');
@@ -50,53 +63,40 @@ const ViewEditActivityDialog: FC<ViewEditActivityDialogProps> = ({
   };
 
   useEffect(() => {
-    if (!currentLesson) {
+    if (newActivity) {
       setIsLoading(true);
-    }
-    switch (currentType) {
-      case 'Inicio':
-        if (initialActivity) {
-          setFormValues({
-            title: initialActivity?.title,
-            lesson_id: currentLesson.id,
-            type: currentType,
-            description: initialActivity?.description,
-          });
-        }
-        break;
-      case 'Desarrollo':
-        if (secondActivity) {
-          setFormValues({
-            title: secondActivity?.title,
-            lesson_id: currentLesson.id,
-            type: currentType,
-            description: secondActivity?.description,
-          });
-        }
-        break;
-      case 'Cierre':
-        if (finalActivity) {
-          setFormValues({
-            title: finalActivity?.title,
-            lesson_id: currentLesson.id,
-            type: currentType,
-            description: finalActivity?.description,
-          });
-        }
-        break;
-      default:
-        break;
+      setFormValues({
+        title: newActivity?.title,
+        lesson_id: currentLesson.id,
+        type: newActivity.type,
+        description: newActivity?.description,
+      });
+    } else if (editedActivity) {
+      setIsLoading(true);
+      setFormValues({
+        title: editedActivity?.title,
+        lesson_id: currentLesson.id,
+        type: editedActivity.type,
+        description: editedActivity?.description,
+      });
+    } else {
+      setFormValues({
+        title: '',
+        lesson_id: currentLesson.id,
+        type: 'Sin Tipo',
+        description: '',
+      });
     }
     setIsLoading(false);
-  }, [currentLesson]);
+  }, [currentLesson, newActivity, editedActivity]);
 
-  if (isLoading)
+  if (isLoading) {
     return (
       <div className='d-flex w-100 align-items-center justify-content-center'>
         <CircularProgress />
       </div>
     );
-
+  }
   return (
     <Dialog
       PaperProps={{ className: 'p-3' }}
@@ -104,10 +104,10 @@ const ViewEditActivityDialog: FC<ViewEditActivityDialogProps> = ({
       disableEscapeKeyDown
       onClose={handleClose}
     >
-      {currentLesson ? (
+      {currentLesson && formValues ? (
         <div>
           <DialogTitle fontWeight='bold' className='mb-2'>
-            {'Editar Actividad de ' + currentType}
+            Editar Actividad
           </DialogTitle>
           <DialogContent dividers className='mb-3'>
             <Formik

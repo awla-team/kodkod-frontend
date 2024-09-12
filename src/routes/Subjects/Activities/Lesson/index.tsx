@@ -15,18 +15,20 @@ import { FetchStatus } from 'global/enums';
 import LessonRewardCard from 'components/LessonRewardCard';
 import type IReward from 'types/models/Reward';
 import { getRewardsByLessonId } from 'services/rewards';
+import EditLesson from './EditLesson';
 
 const LessonDetails: React.FC<{
   selectedLesson: ILesson;
   handleClose: () => void;
 }> = ({ selectedLesson, handleClose }) => {
   const { openModal } = useModalStore();
+  const [openEditLesson, setOpenEditLesson] = useState<boolean>(false);
   const [fetching, setFetching] = useState<FetchStatus>(FetchStatus.Idle);
 
   const [activities, setActivities] = useState<IActivity[]>([]);
   const [rewards, setRewards] = useState<IReward[]>([]);
 
-  const getLessonData = () => {
+  const getActivitiesData = () => {
     try {
       if (selectedLesson?.id) {
         getActivityByLessonId(selectedLesson.id)
@@ -67,14 +69,22 @@ const LessonDetails: React.FC<{
     }
   };
 
-  useEffect(() => {
+  const loadData = () => {
     setFetching(FetchStatus.Pending);
     getRewardsData();
-    getLessonData();
+    getActivitiesData();
+  };
+
+  useEffect(() => {
+    loadData();
   }, [selectedLesson]);
 
   const goBack = () => {
     handleClose();
+  };
+
+  const handleEditLesson = () => {
+    setOpenEditLesson(true);
   };
 
   if (fetching === FetchStatus.Idle || fetching === FetchStatus.Pending)
@@ -84,22 +94,36 @@ const LessonDetails: React.FC<{
       </div>
     );
 
+  if (openEditLesson && selectedLesson) {
+    return (
+      <EditLesson
+        handleClose={() => {
+          setOpenEditLesson(false);
+          loadData();
+        }}
+        lessonActivities={activities}
+        lessonRewards={rewards}
+        selectedLesson={selectedLesson}
+      />
+    );
+  }
+
   return (
     <div className='tw-space-y-6'>
       <div className='tw-flex tw-justify-between'>
         <Link className='fw-bold tw-flex' onClick={goBack}>
           <h5 className='tw-font-semibold'>{'< Volver a mis clases'}</h5>
         </Link>
-        <Link className='fw-bold tw-flex' onClick={goBack}>
+        <Link className='fw-bold tw-flex' onClick={handleEditLesson}>
           <h5 className='tw-font-semibold'>
             <EditNoteIcon /> {' Editar clase'}
           </h5>
         </Link>
       </div>
 
-      <h2 className='tw-flex tw-gap-4'>
+      <h2 className='tw-flex'>
         Clase:
-        <h2 className='tw-font-bold'>{selectedLesson.title}</h2>
+        <b className='tw-flex tw-ml-2'>{'' + selectedLesson.title}</b>
       </h2>
 
       <h4 className='tw-flex tw-my-4'>
