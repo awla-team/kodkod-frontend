@@ -148,10 +148,25 @@ const LessonDetails: React.FC<{
           </h5>
         </div>
       )}
+      {selectedActivity && openActivitiesDrawer && (
+        <div className='tw-fixed tw-top-1/2 tw-left-1/4 w-full tw-bg-gradient-to-r tw-from-blue-600 tw-to-cyan-500 p-4 tw-w-96 tw-rounded-md tw-z-[9999] '>
+          <div className='tw-relative tw-w-full'>
+            <p className='tw-text-white tw-mb-0 tw-font-semibold tw-text-lg tw-pt-4'>
+              {selectedActivity.description}
+            </p>
+            <div className='tw-absolute tw-top-0 tw-right-0'>
+              <h5 className='tw-text-white tw-font-bold tw-m-0 tw-text-sm'>
+                <EmojiPeopleIcon /> 0
+              </h5>
+            </div>
+          </div>
+        </div>
+      )}
       <Drawer
         open={openActivitiesDrawer}
         onClose={toggleActivitiesDrawer(false)}
         anchor='left'
+        style={{ zIndex: 1000 }}
       >
         {selectedActivity && (
           <ActivityStudentsDrawer
@@ -160,6 +175,7 @@ const LessonDetails: React.FC<{
           />
         )}
       </Drawer>
+
       <h4 className='tw-flex tw-my-4'>
         Al completar actividades, pueden obtener las siguientes recompensas
       </h4>
