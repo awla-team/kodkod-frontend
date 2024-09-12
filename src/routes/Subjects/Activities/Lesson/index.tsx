@@ -165,7 +165,7 @@ const LessonDetails: React.FC<{
       <Drawer
         open={openActivitiesDrawer}
         onClose={toggleActivitiesDrawer(false)}
-        anchor='left'
+        anchor='right'
         style={{ zIndex: 1000 }}
       >
         {selectedActivity && (

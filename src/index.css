@@ -145,4 +145,8 @@
     font-style: normal;
     font-display: swap;
   }
+
+  #hubspot-messages-iframe-container {
+    z-index: 999 !important;
+  }
 }
