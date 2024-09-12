@@ -149,7 +149,7 @@ const LessonDetails: React.FC<{
         </div>
       )}
       {selectedActivity && openActivitiesDrawer && (
-        <div className='tw-fixed tw-top-1/3 tw-left-1/4 w-full tw-bg-gradient-to-r tw-from-blue-600 tw-to-cyan-500 p-4 tw-rounded-md tw-z-[9999]'>
+        <div className='tw-fixed tw-top-1/3 tw-right-1/3 w-full tw-bg-gradient-to-r tw-from-blue-600 tw-to-cyan-500 p-4 tw-rounded-md tw-z-[9999]'>
           <div className='tw-relative tw-w-[640px]'>
             <p className='tw-text-white tw-mb-0 tw-font-semibold tw-text-2xl tw-pt-6'>
               {selectedActivity.description}
