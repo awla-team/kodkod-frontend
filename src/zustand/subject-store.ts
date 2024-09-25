@@ -1,7 +1,5 @@
-import http from 'global/api';
 import { getSubjectById } from 'services/subject';
 import { getTeacherSubjectClassroomById } from 'services/teacher_subject_classroom';
-import IClassroom from 'types/models/Classroom';
 import type Subject from 'types/models/Subject';
 import { create } from 'zustand';
 
