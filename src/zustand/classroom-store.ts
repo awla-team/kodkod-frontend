@@ -9,9 +9,9 @@ interface Action {
   setClassroom: (classroom: IClassroom) => void;
 }
 
-const ClassroomStore = create<Store & Action>((set) => ({
+const classroomStore = create<Store & Action>((set) => ({
   classroom: null,
   setClassroom: (classroom) => set({ classroom }),
 }));
 
-export const useClassroomStore = ClassroomStore;
+export const useClassroom = classroomStore;

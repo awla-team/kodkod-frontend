@@ -2,7 +2,7 @@ import { Tooltip } from '@mui/material';
 import { Link, useParams } from 'react-router-dom';
 import { type SidebarLinkProps } from './interfaces';
 import { SidebarLinkContainer } from './styled';
-import { useClassroomStore } from 'zustand/classroom-store';
+import { useClassroom } from 'zustand/classroom-store';
 import { useSubjectStore } from 'zustand/subject-store';
 
 const SidebarLink: React.FC<SidebarLinkProps> = ({
@@ -13,7 +13,7 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({
 }) => {
   const { classId } = useParams();
   const { setSubject } = useSubjectStore();
-  const { setClassroom } = useClassroomStore();
+  const { setClassroom } = useClassroom();
 
   const setClassroomSelected = () => {
     setClassroom(classroom?.classroom);

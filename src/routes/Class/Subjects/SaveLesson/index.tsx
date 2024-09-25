@@ -169,7 +169,7 @@ const SaveLesson: React.FC<{
                           </div>
 
                           <div className=' tw-mx-8'>
-                            <h5 className='tw-font-bold tw-text-white'>
+                            <h5 className='tw-font-bold tw-text-white tw-scroll-auto tw-overflow-y-auto'>
                               {activity.description}
                             </h5>
                           </div>
@@ -243,7 +243,7 @@ const SaveLesson: React.FC<{
                     );
                   })}
                   <div
-                    className={`tw-border tw-w-auto tw-border-dashed tw-rounded-md ${
+                    className={`tw-border tw-w-auto tw-text-center tw-border-dashed tw-rounded-md ${
                       rewards.length > 0 ? 'tw-h-auto' : 'tw-h-96'
                     } tw-flex tw-justify-center tw-items-center tw-flex-col hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-indigo-100`}
                     onClick={() =>
