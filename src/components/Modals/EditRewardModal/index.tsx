@@ -10,6 +10,7 @@ import {
 import { cn } from 'utils/methods';
 import { useCreateLesson } from 'zustand/create-lesson-store';
 import type IReward from 'types/models/Reward';
+import Toaster from 'utils/Toster';
 
 interface EditRewardModalProps {
   newReward?: CreateRewardForm;
@@ -50,6 +51,7 @@ export default function EditRewardModal({
 
     editReward(data, index);
     closeModal();
+    Toaster('success', `Recompensa editada`);
   };
 
   const onSubmitEdit = (values: IReward) => {
