@@ -1,14 +1,10 @@
 import { CircularProgress } from '@mui/material';
-import PsychologyIcon from '@mui/icons-material/Psychology';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import kodkod from 'assets/images/kodcoin.png';
+import { useLocation, useNavigate } from 'react-router-dom';
 import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 import EditNoteIcon from '@mui/icons-material/EditNote';
-import StaticRewardCard from 'components/RewardCard/StaticRewardCard';
 import type ILesson from 'types/models/Lesson';
 import { getActivityByLessonId } from 'services/activities';
-import { useModalStore } from 'contexts/ZustandContext/modal-context';
 import type IActivity from 'types/models/Activity';
 import { type AxiosResponse } from 'axios';
 import { FetchStatus } from 'global/enums';
@@ -20,9 +16,9 @@ const LessonDetails: React.FC<{
   selectedLesson: ILesson;
   handleClose: () => void;
 }> = ({ selectedLesson, handleClose }) => {
-  const { openModal } = useModalStore();
   const [fetching, setFetching] = useState<FetchStatus>(FetchStatus.Idle);
-
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
   const [activities, setActivities] = useState<IActivity[]>([]);
   const [rewards, setRewards] = useState<IReward[]>([]);
 
@@ -87,14 +83,22 @@ const LessonDetails: React.FC<{
   return (
     <div className='tw-space-y-6'>
       <div className='tw-flex tw-justify-between'>
-        <Link className='fw-bold tw-flex' onClick={goBack}>
+        <button
+          type='button'
+          className='tw-flex tw-bg-transparent tw-text-primary tw-border-none hover:tw-underline'
+          onClick={goBack}
+        >
           <h5 className='tw-font-semibold'>{'< Volver a mis clases'}</h5>
-        </Link>
-        <Link className='fw-bold tw-flex' onClick={goBack}>
+        </button>
+        <button
+          type='button'
+          className='tw-flex tw-bg-transparent tw-text-primary tw-border-none'
+          onClick={goBack}
+        >
           <h5 className='tw-font-semibold'>
             <EditNoteIcon /> {' Editar clase'}
           </h5>
-        </Link>
+        </button>
       </div>
 
       <h2 className='tw-flex tw-gap-4'>
@@ -158,8 +162,12 @@ const LessonDetails: React.FC<{
         recompensas. ¡Buena suerte!
       </h5>
       <div>
-        <button type='button' className='tw-bg-blue-800 tw-w-full'>
-          <h5 className='tw-font-bold'> Mostrar recompensas obtenidas</h5>
+        <button
+          type='button'
+          className='tw-bg-blue-800 tw-w-full tw-font-bold'
+          onClick={() => navigate(`${pathname}/2/review`)}
+        >
+          Mostrar recompensas obtenidas
         </button>
       </div>
     </div>
