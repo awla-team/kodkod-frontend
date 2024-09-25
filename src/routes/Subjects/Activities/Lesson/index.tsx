@@ -17,14 +17,17 @@ const LessonDetails: React.FC<{
   selectedLesson: ILesson;
   handleClose: () => void;
 }> = ({ selectedLesson, handleClose }) => {
+  const [openActivitiesDrawer, setOpenActivitiesDrawer] =
+    useState<boolean>(false);
   const [fetching, setFetching] = useState<FetchStatus>(FetchStatus.Idle);
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
+
   const [activities, setActivities] = useState<IActivity[]>([]);
   const [rewards, setRewards] = useState<IReward[]>([]);
   const [selectedActivity, setSelectedActivity] = useState<IActivity | null>(
     null
   );
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const getLessonData = () => {
     try {
@@ -210,10 +213,10 @@ const LessonDetails: React.FC<{
       <div>
         <button
           type='button'
-          className='tw-bg-blue-800 tw-w-full tw-font-bold'
+          className='tw-bg-blue-800 tw-w-full'
           onClick={() => navigate(`${pathname}/2/review`)}
         >
-          Mostrar recompensas obtenidas
+          <h5 className='tw-font-bold'> Mostrar recompensas obtenidas</h5>
         </button>
       </div>
     </div>
