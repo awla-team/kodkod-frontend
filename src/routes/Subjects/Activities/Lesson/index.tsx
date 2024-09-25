@@ -1,4 +1,4 @@
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, Drawer } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
@@ -11,6 +11,7 @@ import { FetchStatus } from 'global/enums';
 import LessonRewardCard from 'components/LessonRewardCard';
 import type IReward from 'types/models/Reward';
 import { getRewardsByLessonId } from 'services/rewards';
+import ActivityStudentsDrawer from 'components/drawers/ActivityStudentsDrawer';
 
 const LessonDetails: React.FC<{
   selectedLesson: ILesson;
@@ -21,6 +22,9 @@ const LessonDetails: React.FC<{
   const { pathname } = useLocation();
   const [activities, setActivities] = useState<IActivity[]>([]);
   const [rewards, setRewards] = useState<IReward[]>([]);
+  const [selectedActivity, setSelectedActivity] = useState<IActivity | null>(
+    null
+  );
 
   const getLessonData = () => {
     try {
@@ -73,6 +77,19 @@ const LessonDetails: React.FC<{
     handleClose();
   };
 
+  const toggleActivitiesDrawer = (value: boolean) => () => {
+    setOpenActivitiesDrawer(value);
+  };
+
+  const openActivityDrawer = (activity: IActivity) => {
+    setSelectedActivity(activity);
+    setOpenActivitiesDrawer(true);
+  };
+
+  const closeActivityDrawer = () => {
+    setOpenActivitiesDrawer(false);
+  };
+
   if (fetching === FetchStatus.Idle || fetching === FetchStatus.Pending)
     return (
       <div className='app-container d-flex justify-content-center align-items-center'>
@@ -114,7 +131,8 @@ const LessonDetails: React.FC<{
           return (
             <div
               key={index}
-              className='tw-border tw-bg-gradient-to-r tw-from-blue-600 tw-to-cyan-500 tw-rounded-md tw-h-40 tw-flex tw-justify-between tw-items-center'
+              className='tw-border tw-bg-gradient-to-r tw-from-blue-600 tw-to-cyan-500 tw-rounded-md tw-h-40 tw-flex tw-justify-between tw-items-center hover:tw-cursor-pointer'
+              onClick={() => openActivityDrawer(activity)}
             >
               <div className='tw-flex tw-flex-row tw-justify-between tw-w-full tw-h-full'>
                 <div className='tw-ml-8' />
@@ -137,6 +155,34 @@ const LessonDetails: React.FC<{
           </h5>
         </div>
       )}
+      {selectedActivity && openActivitiesDrawer && (
+        <div className='tw-fixed tw-top-1/3 tw-right-1/3 w-full tw-bg-gradient-to-r tw-from-blue-600 tw-to-cyan-500 p-4 tw-rounded-md tw-z-[9999]'>
+          <div className='tw-relative tw-w-[640px]'>
+            <p className='tw-text-white tw-mb-0 tw-font-semibold tw-text-2xl tw-pt-6'>
+              {selectedActivity.description}
+            </p>
+            <div className='tw-absolute tw-top-0 tw-right-0'>
+              <h5 className='tw-text-white tw-font-bold tw-m-0 tw-text-sm'>
+                <EmojiPeopleIcon /> 0
+              </h5>
+            </div>
+          </div>
+        </div>
+      )}
+      <Drawer
+        open={openActivitiesDrawer}
+        onClose={toggleActivitiesDrawer(false)}
+        anchor='right'
+        style={{ zIndex: 1000 }}
+      >
+        {selectedActivity && (
+          <ActivityStudentsDrawer
+            activity={selectedActivity}
+            closeDrawer={closeActivityDrawer}
+          />
+        )}
+      </Drawer>
+
       <h4 className='tw-flex tw-my-4'>
         Al completar actividades, pueden obtener las siguientes recompensas
       </h4>

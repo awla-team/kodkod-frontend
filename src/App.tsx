@@ -24,7 +24,7 @@ import { ModalContextProvider } from 'contexts/ZustandContext/modal-context';
 import UserInfo from 'components/Sidebar/UserInfo';
 import { useSubjectStore } from 'zustand/subject-store';
 import { getTeacherSubjectClassroomByTeacherId } from 'services/teacher_subject_classroom';
-import { useClassroomStore } from 'zustand/classroom-store';
+import { useClassroom } from 'zustand/classroom-store';
 
 moment.locale('es');
 
@@ -39,7 +39,7 @@ const App: React.FC = () => {
   const location = useLocation();
   const { classId } = useParams();
   const { subject } = useSubjectStore();
-  const { classroom } = useClassroomStore();
+  const { classroom } = useClassroom();
 
   const getClassroomsData = () => {
     try {
