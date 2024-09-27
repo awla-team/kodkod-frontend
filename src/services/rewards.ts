@@ -1,4 +1,4 @@
-import { type IReward } from 'global/interfaces';
+import type IReward from 'types/models/Reward';
 import http from '../global/api';
 import { generateQueryParamsFromObject } from '../utils';
 import { type CreateRewardForm } from 'types/validations/reward';
@@ -34,7 +34,7 @@ export const getRewards = async (filterQuery: GetRewardsFilter) => {
 };
 
 export const getRewardsByLessonId = async (lessonId: number) => {
-  return await http.get(`reward?lesson_id=${lessonId}`);
+  return await http.get<IReward[]>(`reward?lesson_id=${lessonId}`);
 };
 
 export const studentUseRewards = async (userId: number, rewards: number[]) => {
@@ -48,5 +48,5 @@ export const studentsRedeemReward = async (
 
 export const updateReward = async (
   rewardId: number | string,
-  body: Partial<IReward>
+  body: Partial<IReward[]>
 ) => await http.put(`reward/${rewardId}`, body);

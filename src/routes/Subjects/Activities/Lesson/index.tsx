@@ -214,7 +214,7 @@ const LessonDetails: React.FC<{
         <button
           type='button'
           className='tw-bg-blue-800 tw-w-full'
-          onClick={() => navigate(`${pathname}/2/review`)}
+          onClick={() => navigate(`${pathname}/${selectedLesson.id}/review`)}
         >
           <h5 className='tw-font-bold'> Mostrar recompensas obtenidas</h5>
         </button>
