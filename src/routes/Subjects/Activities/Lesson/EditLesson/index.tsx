@@ -342,7 +342,7 @@ const EditLesson: React.FC<{
                   2. Ingresa las <b className='tw-mx-1'>{' recompensas '}</b> de
                   la clase
                 </h5>
-                <div className='tw-grid tw-grid-flow-col auto-cols-max tw-gap-5 tw-scroll-auto tw-overflow-x-auto tw-p-3'>
+                <div className='tw-flex tw-gap-5 tw-scroll-auto tw-overflow-x-auto tw-p-3'>
                   {editLessonRewards && editLessonRewards.length > 0 ? (
                     editLessonRewards.map((reward, index) => {
                       return (
@@ -428,7 +428,7 @@ const EditLesson: React.FC<{
                     <p />
                   )}
                   <div
-                    className='tw-border tw-w-full tw-text-center tw-border-dashed tw-rounded-md tw-h-full tw-flex tw-justify-center tw-items-center tw-flex-col hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-indigo-100'
+                    className='tw-min-w-72 tw-border tw-text-center tw-border-dashed tw-rounded-md tw-flex tw-justify-center tw-items-center tw-flex-col hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-indigo-100'
                     onClick={() =>
                       openModal({
                         title: 'Ingresar recompensas',
