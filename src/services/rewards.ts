@@ -2,7 +2,7 @@ import type IReward from 'types/models/Reward';
 import http from '../global/api';
 import { generateQueryParamsFromObject } from '../utils';
 import { type CreateRewardForm } from 'types/validations/reward';
-import IStudent from 'types/models/Student';
+import type IStudent from 'types/models/Student';
 
 /**
  * Represents the filter options for retrieving rewards.
@@ -96,7 +96,7 @@ export const studentsRedeemReward = async (
  */
 export const updateReward = async (
   rewardId: number | string,
-  body: Partial<IReward[]>
+  body: Partial<IReward>
 ) => await http.put(`reward/${rewardId}`, body);
 
 /**
@@ -105,5 +105,5 @@ export const updateReward = async (
  * @returns A promise that resolves to the students who have completed the reward.
  */
 export const getStudentsCompletedReward = async (rewardId: number) => {
-  return await http.get<IStudent[]>(`reward/${rewardId}/completed`);
+  return await http.get<IStudent[]>(`reward/${rewardId}/students`);
 };
