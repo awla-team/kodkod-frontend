@@ -2,11 +2,15 @@ import { useEffect, useState } from 'react';
 import { ChevronLeft } from '@mui/icons-material';
 import { useNavigate, useParams } from 'react-router-dom';
 import LessonRewardCard from 'components/LessonRewardCard';
-import { cn } from 'utils/methods';
+import { stringAvatar } from 'utils/methods';
 import type IStudent from 'types/models/Student';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { getRewardsByLessonId } from 'services/rewards';
+import { useMutation } from '@tanstack/react-query';
+import {
+  getRewardsByLessonId,
+  getStudentsCompletedReward,
+} from 'services/rewards';
 import type IReward from 'types/models/Reward';
+import { Avatar } from '@mui/material';
 
 const LessonReview = () => {
   const navigate = useNavigate();
@@ -25,6 +29,14 @@ const LessonReview = () => {
       }
     },
   });
+  const { mutate: mutateGetStudentsCompletedReward } = useMutation({
+    mutationFn: async (id: number) => await getStudentsCompletedReward(id),
+    onSuccess: (response) => {
+      if (response) {
+        setCompletedRewardStudents(response.data);
+      }
+    },
+  });
 
   useEffect(() => {
     mutateGetRewardsByLessonId();
@@ -32,19 +44,6 @@ const LessonReview = () => {
 
   const goBack = () => {
     navigate(-1);
-  };
-
-  const getStudentsCompletedReward = (rewardId: number) => {
-    try {
-      setIsLoading(true);
-      setSelectedRewardId(rewardId);
-
-      // TODO: Fetch students that completed the reward
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setIsLoading(false);
-    }
   };
 
   return (
@@ -86,11 +85,14 @@ const LessonReview = () => {
                   style={{
                     cursor: 'pointer',
                     border:
-                      selectedRewardId === index + 1
+                      selectedRewardId === reward.id
                         ? '2px solid #3B82F6'
                         : '2px solid transparent',
                   }}
-                  onClick={() => getStudentsCompletedReward(index + 1)}
+                  onClick={() => {
+                    setSelectedRewardId(reward.id);
+                    mutateGetStudentsCompletedReward(reward.id);
+                  }}
                 >
                   <LessonRewardCard reward={reward} />
                 </div>
@@ -104,28 +106,24 @@ const LessonReview = () => {
         <p>
           {selectedRewardId === 0
             ? 'Seleccione una recompensa para ver los estudiantes que la completaron'
-            : 'Esta recompensa ha sido obtenida por los siguientes estudiantes'}
+            : completedRewardStudents.length === 0
+              ? 'La recompensa no tiene estudiantes que la obtuvieran'
+              : 'Esta recompensa ha sido obtenida por los siguientes estudiantes'}
         </p>
 
-        <div>
+        <div className='tw-grid tw-grid-cols-3 tw-gap-4'>
           {completedRewardStudents.map((student, index) => (
-            <div
-              key={index}
-              className={cn(
-                'tw-flex tw-justify-between tw-items-center tw-p-4 tw-mb-4 tw-rounded-md tw-shadow-md',
-                index % 2 === 0 ? 'tw-bg-gray-100' : 'tw-bg-gray-200'
-              )}
-            >
-              <div className='tw-flex tw-items-center'>
-                <img
-                  src='https://randomuser.me/api/portraits'
-                  alt='student'
-                  className='tw-w-12 tw-h-12 tw-rounded-full tw-mr-4'
-                />
-                <h5 className='tw-text-lg tw-font-semibold'>
-                  {student.first_name} {student.last_name}
-                </h5>
-              </div>
+            <div key={index} className='tw-flex tw-items-center tw-gap-2'>
+              <Avatar
+                {...stringAvatar(`${student.first_name} ${student.last_name}`)}
+                sx={{
+                  background: '#646cff',
+                  fontSize: '1rem',
+                }}
+              />
+              <h5 className='tw-text-sm tw-font-semibold tw-m-0'>
+                {student.first_name} {student.last_name}
+              </h5>
             </div>
           ))}
         </div>
