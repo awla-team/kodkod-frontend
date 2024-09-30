@@ -1,4 +1,4 @@
-import type IReward from 'types/models/Reward';
+import { type IReward } from 'global/interfaces';
 import http from '../global/api';
 import { generateQueryParamsFromObject } from '../utils';
 import { type CreateRewardForm } from 'types/validations/reward';

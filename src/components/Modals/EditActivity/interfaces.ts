@@ -1,3 +1,5 @@
+import type IActivity from 'types/models/Activity';
+import { type IActivitySaved } from 'types/models/Activity';
 import type ILesson from 'types/models/Lesson';
 
 export interface FormInput {
@@ -10,6 +12,8 @@ export interface FormInput {
 export interface ViewEditActivityDialogProps {
   open: boolean;
   currentLesson: ILesson;
-  currentType: string;
   handleClose: () => void;
+  newActivity?: IActivitySaved;
+  editedActivity?: IActivity;
+  index: number;
 }

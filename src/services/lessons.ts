@@ -21,6 +21,10 @@ export const saveLesson = async (lesson: ILessonSaved) => {
   return await http.post<ILesson>('lessons', lesson);
 };
 
+export const editLesson = async (lesson: ILessonSaved, lessonId: number) => {
+  return await http.patch(`lessons/${lessonId}`, lesson);
+};
+
 export const finishLesson = async (
   lessonId: number,
   data: {

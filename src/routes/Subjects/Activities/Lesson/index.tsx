@@ -11,12 +11,16 @@ import { FetchStatus } from 'global/enums';
 import LessonRewardCard from 'components/LessonRewardCard';
 import type IReward from 'types/models/Reward';
 import { getRewardsByLessonId } from 'services/rewards';
+import EditLesson from './EditLesson';
 import ActivityStudentsDrawer from 'components/drawers/ActivityStudentsDrawer';
+import { useModalStore } from 'contexts/ZustandContext/modal-context';
 
 const LessonDetails: React.FC<{
   selectedLesson: ILesson;
   handleClose: () => void;
 }> = ({ selectedLesson, handleClose }) => {
+  const { openModal } = useModalStore();
+  const [openEditLesson, setOpenEditLesson] = useState<boolean>(false);
   const [openActivitiesDrawer, setOpenActivitiesDrawer] =
     useState<boolean>(false);
   const [fetching, setFetching] = useState<FetchStatus>(FetchStatus.Idle);
@@ -29,7 +33,7 @@ const LessonDetails: React.FC<{
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  const getLessonData = () => {
+  const getActivitiesData = () => {
     try {
       if (selectedLesson?.id) {
         getActivityByLessonId(selectedLesson.id)
@@ -70,16 +74,23 @@ const LessonDetails: React.FC<{
     }
   };
 
-  useEffect(() => {
+  const loadData = () => {
     setFetching(FetchStatus.Pending);
     getRewardsData();
-    getLessonData();
+    getActivitiesData();
+  };
+
+  useEffect(() => {
+    loadData();
   }, [selectedLesson]);
 
   const goBack = () => {
     handleClose();
   };
 
+  const handleEditLesson = () => {
+    setOpenEditLesson(true);
+  };
   const toggleActivitiesDrawer = (value: boolean) => () => {
     setOpenActivitiesDrawer(value);
   };
@@ -100,6 +111,20 @@ const LessonDetails: React.FC<{
       </div>
     );
 
+  if (openEditLesson && selectedLesson) {
+    return (
+      <EditLesson
+        handleClose={() => {
+          setOpenEditLesson(false);
+          loadData();
+        }}
+        lessonActivities={activities}
+        lessonRewards={rewards}
+        selectedLesson={selectedLesson}
+      />
+    );
+  }
+
   return (
     <div className='tw-space-y-6'>
       <div className='tw-flex tw-justify-between'>
@@ -113,7 +138,7 @@ const LessonDetails: React.FC<{
         <button
           type='button'
           className='tw-flex tw-bg-transparent tw-text-primary tw-border-none'
-          onClick={goBack}
+          onClick={handleEditLesson}
         >
           <h5 className='tw-font-semibold'>
             <EditNoteIcon /> {' Editar clase'}
@@ -121,9 +146,9 @@ const LessonDetails: React.FC<{
         </button>
       </div>
 
-      <h2 className='tw-flex tw-gap-4'>
+      <h2 className='tw-flex'>
         Clase:
-        <h2 className='tw-font-bold'>{selectedLesson.title}</h2>
+        <b className='tw-flex tw-ml-2'>{'' + selectedLesson.title}</b>
       </h2>
 
       <h4 className='tw-flex tw-my-4'>
