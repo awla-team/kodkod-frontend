@@ -1,8 +1,8 @@
-import { type IReward } from 'global/interfaces';
 import http from '../global/api';
 import { generateQueryParamsFromObject } from '../utils';
 import { type CreateRewardForm } from 'types/validations/reward';
 import type IStudent from 'types/models/Student';
+import type IReward from 'types/models/Reward';
 
 /**
  * Represents the filter options for retrieving rewards.
