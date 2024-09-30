@@ -1,4 +1,4 @@
-import { type IReward } from 'global/interfaces';
+import type IReward from 'types/models/Reward';
 import http from '../global/api';
 import { generateQueryParamsFromObject } from '../utils';
 import { type CreateRewardForm } from 'types/validations/reward';
@@ -49,4 +49,4 @@ export const studentsRedeemReward = async (
 export const updateReward = async (
   rewardId: number | string,
   body: Partial<IReward>
-) => await http.put(`reward/${rewardId}`, body);
+) => await http.patch(`reward/${rewardId}`, body);

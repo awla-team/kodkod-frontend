@@ -8,6 +8,7 @@ import {
 } from 'types/validations/reward';
 import { cn } from 'utils/methods';
 import { useCreateLesson } from 'zustand/create-lesson-store';
+import Toaster from 'utils/Toster';
 
 export default function CreateRewardModal() {
   const [formValues] = useState<CreateRewardForm>({
@@ -36,6 +37,7 @@ export default function CreateRewardModal() {
 
     addReward(data);
     closeModal();
+    Toaster('success', `Recompensa agregada`);
   };
 
   return (

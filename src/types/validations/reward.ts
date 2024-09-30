@@ -12,3 +12,11 @@ export const CreateRewardSchema = Yup.object().shape({
     .required('El nombre es requerido'),
   description: Yup.string().required('La descripción es requerida'),
 });
+
+export const EditRewardSchema = Yup.object().shape({
+  title: Yup.string()
+    .min(1, 'El nombre es requerido')
+    .max(255, 'El nombre es demasiado largo')
+    .required('El nombre es requerido'),
+  description: Yup.string().required('La descripción es requerida'),
+});

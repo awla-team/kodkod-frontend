@@ -20,28 +20,27 @@ const ViewSaveActivityDialog: FC<ViewSaveActivityDialogProps> = ({
   open,
   handleClose,
   currentLesson,
-  currentType,
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [formValues] = useState<FormInput>({
     title: '',
     lesson_id: currentLesson.id,
-    type: currentType,
+    type: 'Sin Tipo',
     description: '',
   });
-  const { setActivity } = useCreateLesson();
+  const { addActivity } = useCreateLesson();
 
   const onSubmit = async (values: FormInput) => {
     try {
       const activity: IActivitySaved = {
         title: values.title,
         lesson_id: currentLesson.id,
-        type: currentType,
+        type: values.type,
         description: values.description,
       };
-      setActivity(activity);
+      addActivity(activity);
       handleClose();
-      Toaster('success', `Actividad de ${currentType} agregada`);
+      Toaster('success', `Actividad agregada`);
     } catch (e) {
       console.log(e);
       Toaster('error', 'Error al crear actividad');
@@ -72,7 +71,7 @@ const ViewSaveActivityDialog: FC<ViewSaveActivityDialogProps> = ({
       {currentLesson ? (
         <div>
           <DialogTitle fontWeight='bold' className='mb-2'>
-            {'Guardar Nueva Actividad de ' + currentType}
+            Guardar Nueva Actividad
           </DialogTitle>
           <DialogContent dividers className='mb-3'>
             <Formik

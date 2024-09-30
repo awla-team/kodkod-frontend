@@ -1,3 +1,4 @@
+import type IActivity from './../types/models/Activity';
 import { type IActivitySaved } from './../types/models/Activity';
 import http from 'global/api';
 
@@ -7,4 +8,11 @@ export const getActivityByLessonId = async (lessonId: number) => {
 
 export const saveActivity = async (activity: IActivitySaved) => {
   return await http.post('activity', activity);
+};
+
+export const editActivity = async (
+  activity: IActivitySaved,
+  activityId: number
+) => {
+  return await http.patch(`activity/${activityId}`, activity);
 };
