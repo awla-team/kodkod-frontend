@@ -6,19 +6,69 @@ import ViewLearningGoalsDialog from 'components/Modals/ViewLearningGoalsDialog';
 import { type IUnit } from 'components/Modals/ViewLearningGoalsDialog/interfaces';
 import { useQuery } from '@tanstack/react-query';
 import { CircularProgress, Typography } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { searchUnits } from 'services/units';
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
+import { getLessonsByTeacherSubjectClassroomId } from 'services/lessons';
 import book from 'assets/images/book.png';
 import { useClassContext } from 'routes/Class/context';
 import SaveLesson from 'routes/Class/Subjects/SaveLesson';
 import LessonDetails from './Lesson';
 import type ILesson from 'types/models/Lesson';
+import { type AxiosResponse } from 'axios';
+import { FetchStatus } from 'global/enums';
+import { getTeacherSubjectClassroomById } from 'services/teacher_subject_classroom';
+import Toaster from 'utils/Toster';
 
 const SubjectActivities = () => {
   const [openLearningObjetives, setOpenLearningObjetives] =
     useState<boolean>(false);
-  const [selectedUnit, setSelectedUnit] = useState<IUnit>();
   const [selectedLesson, setSelectedLesson] = useState<ILesson>();
+  const [lessons, setLessons] = useState<ILesson[]>([
+    {
+      id: 10,
+      classroom_id: 2,
+      index: 1,
+      title: 'Textos Literarios',
+      // teacher_subject_classroom_id: 1,
+    },
+    {
+      id: 1,
+      classroom_id: 1,
+      index: 1,
+      title: 'Textos Literarios',
+      // teacher_subject_classroom_id: 1,
+    },
+    {
+      id: 1,
+      classroom_id: 1,
+      index: 1,
+      title: 'Textos Literarios',
+      // teacher_subject_classroom_id: 1,
+    },
+    {
+      id: 1,
+      classroom_id: 1,
+      index: 1,
+      title: 'Textos Literarios',
+      // teacher_subject_classroom_id: 1,
+    },
+    {
+      id: 1,
+      classroom_id: 1,
+      index: 1,
+      title: 'Textos Literarios',
+      // teacher_subject_classroom_id: 1,
+    },
+    {
+      id: 2,
+      classroom_id: 1,
+      index: 1,
+      title: 'Introduccion a los textos argumentativos',
+      ended_at: new Date(),
+      // teacher_subject_classroom_id: 1,
+    },
+  ]);
   const [openSaveLesson, setOpenSaveLesson] = useState<boolean>(false);
   const [openLesson, setOpenLesson] = useState<boolean>(false);
   const { classroomDetails } = useClassContext();
@@ -37,14 +87,33 @@ const SubjectActivities = () => {
       }),
   });
 
+  const loadClasroomUnits = async () => {
+    try {
+      if (classroomDetails?.id) {
+        const lessonsList = await getLessonsByTeacherSubjectClassroomId(
+          classroomDetails.id
+        );
+        setLessons(lessonsList);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    void loadClasroomUnits();
+  });
+
   const reloadSubjectActivities = async () => {
     setOpenSaveLesson(false);
     await reloadUnits();
+    await loadClasroomUnits();
   };
 
   const closeLessonDetails = async () => {
     setOpenLesson(false);
     await reloadUnits();
+    await loadClasroomUnits();
   };
 
   if (isLoading)
@@ -62,19 +131,18 @@ const SubjectActivities = () => {
       </Typography>
     );
 
-  if (result.data.length === 0)
+  /* if (lessons.length === 0)
     return (
       <Typography component='h1' variant='h5' className='text-center'>
         No hay datos disponibles. Inténtalo de nuevo recargando la página.
       </Typography>
-    );
+    ); */
 
-  if (openSaveLesson && selectedUnit && classroomDetails) {
+  if (openSaveLesson && classroomDetails) {
     return (
       <SaveLesson
         classroomDetails={classroomDetails}
         handleClose={reloadSubjectActivities}
-        selectedUnit={selectedUnit}
       />
     );
   }
@@ -91,104 +159,95 @@ const SubjectActivities = () => {
   const { data: units } = result;
 
   return (
-    <div className='tw-space-y-6'>
+    <div className='tw-space-y-20'>
       <div className='tw-flex tw-items-center tw-justify-between'>
         <div className='tw-flex tw-items-end tw-gap-2'>
           <img src={book} alt='book' className='tw-w-10 tw-object-cover' />
-          <h3 className='tw-font-bold tw-text-2xl tw-mb-0'>Clases</h3>
+          <h2 className='tw-font-bold tw-mb-0'>Mis clases</h2>
         </div>
-
-        <button type='button' className='tw-text-sm tw-bg-indigo-600'>
-          Añadir unidad
-        </button>
       </div>
 
-      <div className='tw-flex tw-flex-col tw-gap-8'>
-        {units.map((unit, index) => (
-          <div key={index} className='tw-flex tw-flex-col'>
-            <div className='tw-flex tw-justify-between tw-items-center'>
-              <div className='tw-flex tw-items-center tw-gap-2 tw-px-0 tw-py-0 hover:tw-border-transparent'>
-                <h4 className='tw-text-lg tw-font-semibold'>
-                  Unidad 1 {unit.title}
-                </h4>
+      {lessons && lessons.length > 0 ? (
+        <div className='tw-h-auto tw-flex tw-flex-col tw-mx-3'>
+          {lessons.map((lesson, index) => (
+            <div
+              key={index}
+              className='tw-rounded-md tw-flex tw-h-auto tw-flex-col'
+            >
+              <div className='tw-flex tw-justify-between tw-items-center tw-mx-4'>
+                <div>
+                  <h4 className='tw-flex tw-items-center tw-font-semibold tw-mb-4 tw-gap-4'>
+                    {lesson.title}{' '}
+                    {lesson.ended_at ? (
+                      <div className='tw-border tw-rounded-full tw-bg-[#0E8A1A]'>
+                        <h5 className='tw-mx-3 tw-my-2 tw-text-white'>
+                          <b>Clase finalizada</b>
+                        </h5>
+                      </div>
+                    ) : (
+                      ''
+                    )}
+                  </h4>
+                  <h5>
+                    {lesson.ended_at
+                      ? `Finalizado el ${lesson.ended_at.toLocaleDateString()}`
+                      : 'En progreso'}
+                  </h5>
+                </div>
                 <div>
                   <button
-                    type='button'
-                    className='tw-bg-transparent text-sm tw-text-gray-800'
-                  >
-                    <EditNoteIcon />
-                  </button>
-                  <button
-                    type='button'
-                    className='tw-bg-transparent text-sm tw-text-gray-800'
-                  >
-                    <DeleteOutlineIcon />
-                  </button>
-                </div>
-              </div>
-              <button
-                onClick={() => {
-                  setSelectedUnit(unit);
-                  setOpenLearningObjetives(true);
-                }}
-                type='button'
-                className='tw-text-sm tw-bg-transparent tw-font-bold tw-text-indigo-600'
-              >
-                <SortIcon className='tw-mr-2' />
-                Objetivos de aprendizaje
-              </button>
-            </div>
-            <hr />
-            {unit.lessons && (
-              <div className='tw-grid tw-grid-cols-4 tw-gap-4'>
-                {unit.lessons.map((lesson, index) => (
-                  <div
-                    key={index}
-                    className='tw-border tw-shadow tw-rounded-md tw-flex tw-h-40 tw-flex-col hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-indigo-100 tw-p-4 tw-gap-2'
                     onClick={() => {
-                      setSelectedUnit(unit);
                       setSelectedLesson(lesson);
                       setOpenLesson(true);
                     }}
+                    type='button'
+                    className='tw-bg-white tw-text-black tw-boder-solid tw-border-black hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-indigo-100'
                   >
-                    <div className='tw-flex tw-justify-between'>
-                      <span className='tw-text-sm tw-font-semibold'>
-                        {lesson.title}
-                      </span>
-                      <div>
-                        <AddCircleOutlinedIcon />
-                      </div>
-                    </div>
-                    <p className='tw-line-clamp-3 tw-text-sm'>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                      Enim exercitationem porro quasi, nesciunt, hic nihil
-                      saepe, illum ex tempora quae est! Ipsum porro suscipit
-                      accusamus doloremque ut, dolores optio id.
-                    </p>
-                  </div>
-                ))}
-                <div
-                  onClick={() => {
-                    setSelectedUnit(unit);
-                    setOpenSaveLesson(true);
-                  }}
-                  className='tw-border tw-border-dashed tw-rounded-md tw-h-40 tw-flex tw-justify-center tw-items-center tw-flex-col hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-indigo-100'
-                >
-                  <AddCircleOutlinedIcon />
-                  <span className='tw-text-sm tw-font-semibold'>
-                    Agregar una clase
-                  </span>
+                    <b> {'Ver Clase '}</b>
+                  </button>
                 </div>
               </div>
-            )}
+
+              {index + 1 === lessons.length ? '' : <hr />}
+            </div>
+          ))}
+
+          <div className='tw-flex tw-justify-end tw-mt-20'>
+            <button
+              onClick={() => {
+                setOpenSaveLesson(true);
+              }}
+              type='button'
+              className='tw-border tw-rounded-full tw-bg-[#003CAF]'
+            >
+              <h4 className='tw-flex tw-flex-row tw-items-center tw-justify-center'>
+                <b className='tw-flex tw-flex-row tw-items-center tw-justify-center tw-mr-2'>
+                  <AddOutlinedIcon fontSize='large' />
+                  Nueva clase
+                </b>
+              </h4>
+            </button>
           </div>
-        ))}
-      </div>
-      <ViewLearningGoalsDialog
-        open={openLearningObjetives}
-        handleClose={() => setOpenLearningObjetives(false)}
-        currentUnit={selectedUnit}
-      />
+        </div>
+      ) : (
+        <div className='tw-flex tw-justify-center tw-items-center tw-flex-col tw-gap-2'>
+          <h2>
+            <b className='tw-text-gray-500'>Crea una clase para empezar</b>
+          </h2>
+          <button
+            onClick={() => {
+              setOpenSaveLesson(true);
+            }}
+            type='button'
+            className='tw-border tw-rounded-full tw-bg-[#003CAF]'
+          >
+            <b className='tw-flex tw-flex-row tw-items-center tw-justify-center'>
+              <AddOutlinedIcon fontSize='large' />
+              Nueva clase
+            </b>
+          </button>
+        </div>
+      )}
     </div>
   );
 };

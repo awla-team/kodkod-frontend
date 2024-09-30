@@ -28,14 +28,12 @@ import { type IActivitySaved } from 'types/models/Activity';
 
 const SaveLesson: React.FC<{
   classroomDetails: ITeacherSubjectClassroomData;
-  selectedUnit: IUnit;
   handleClose: () => void;
-}> = ({ classroomDetails, selectedUnit, handleClose }) => {
+}> = ({ classroomDetails, handleClose }) => {
   const { openModal } = useModalStore();
   const [formValues] = useState<FormInput>({
     title: '',
     classroom_id: classroomDetails.classroom_id,
-    unit_id: selectedUnit.id,
   });
   const [openSaveActivity, setOpenSaveActivity] = useState<boolean>(false);
   const [openEditActivity, setOpenEditActivity] = useState<boolean>(false);
@@ -49,7 +47,6 @@ const SaveLesson: React.FC<{
         title: values.title,
         index: 1,
         classroom_id: values.classroom_id,
-        unit_id: values.unit_id,
       };
       const { status, data: newLesson } = await saveLesson(lesson);
 
@@ -112,14 +109,6 @@ const SaveLesson: React.FC<{
                     <b>{'< Volver a lista de clases'}</b>
                   </h5>
                 </Link>
-
-                <h4 className='tw-flex tw-gap-4'>
-                  <b>
-                    {selectedUnit.title.includes('Unidad')
-                      ? selectedUnit.title
-                      : 'Unidad ' + selectedUnit.title}
-                  </b>
-                </h4>
 
                 <TextField
                   className=''
@@ -294,7 +283,6 @@ const SaveLesson: React.FC<{
                   title: values.title,
                   index: 1,
                   classroom_id: values.classroom_id,
-                  unit_id: values.unit_id,
                 }}
                 handleClose={() => {
                   setOpenEditActivity(false);
@@ -308,7 +296,6 @@ const SaveLesson: React.FC<{
                 title: values.title,
                 index: 1,
                 classroom_id: values.classroom_id,
-                unit_id: values.unit_id,
               }}
               handleClose={() => {
                 setOpenSaveActivity(false);
