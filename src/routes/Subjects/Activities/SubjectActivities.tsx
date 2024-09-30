@@ -24,76 +24,30 @@ const SubjectActivities = () => {
   const [openLearningObjetives, setOpenLearningObjetives] =
     useState<boolean>(false);
   const [selectedLesson, setSelectedLesson] = useState<ILesson>();
-  const [lessons, setLessons] = useState<ILesson[]>([
-    {
-      id: 10,
-      classroom_id: 2,
-      index: 1,
-      title: 'Textos Literarios',
-      // teacher_subject_classroom_id: 1,
-    },
-    {
-      id: 1,
-      classroom_id: 1,
-      index: 1,
-      title: 'Textos Literarios',
-      // teacher_subject_classroom_id: 1,
-    },
-    {
-      id: 1,
-      classroom_id: 1,
-      index: 1,
-      title: 'Textos Literarios',
-      // teacher_subject_classroom_id: 1,
-    },
-    {
-      id: 1,
-      classroom_id: 1,
-      index: 1,
-      title: 'Textos Literarios',
-      // teacher_subject_classroom_id: 1,
-    },
-    {
-      id: 1,
-      classroom_id: 1,
-      index: 1,
-      title: 'Textos Literarios',
-      // teacher_subject_classroom_id: 1,
-    },
-    {
-      id: 2,
-      classroom_id: 1,
-      index: 1,
-      title: 'Introduccion a los textos argumentativos',
-      ended_at: new Date(),
-      // teacher_subject_classroom_id: 1,
-    },
-  ]);
+  const [lessons, setLessons] = useState<ILesson[]>();
   const [openSaveLesson, setOpenSaveLesson] = useState<boolean>(false);
   const [openLesson, setOpenLesson] = useState<boolean>(false);
   const { classroomDetails } = useClassContext();
+  const [isLoading, setIsLoading] = useState(FetchStatus.Idle);
 
-  const {
-    isLoading,
-    data: result,
-    isError,
-    refetch: reloadUnits,
-  } = useQuery({
-    queryKey: [classroomDetails?.subject_id, classroomDetails?.classroom_id],
-    queryFn: async () =>
-      await searchUnits({
-        subjectId: classroomDetails?.subject_id || 0,
-        classroomId: classroomDetails?.classroom_id || 0,
-      }),
-  });
-
-  const loadClasroomUnits = async () => {
+  const loadClasroomUnits = () => {
+    setIsLoading(FetchStatus.Pending);
     try {
+      setIsLoading(FetchStatus.Pending);
       if (classroomDetails?.id) {
-        const lessonsList = await getLessonsByTeacherSubjectClassroomId(
-          classroomDetails.id
-        );
-        setLessons(lessonsList);
+        getLessonsByTeacherSubjectClassroomId(classroomDetails.id)
+          .then((response: AxiosResponse) => {
+            return response?.data;
+          })
+          .then((lessonsList: ILesson[]) => {
+            setLessons(lessonsList);
+            setIsLoading(FetchStatus.Success);
+          })
+          .catch((error) => {
+            setIsLoading(FetchStatus.Error);
+            console.error(error);
+            Toaster('error', 'Hubo un error al cargar el listado de clases');
+          });
       }
     } catch (error) {
       console.error(error);
@@ -101,29 +55,29 @@ const SubjectActivities = () => {
   };
 
   useEffect(() => {
-    void loadClasroomUnits();
-  });
+    setIsLoading(FetchStatus.Pending);
+    loadClasroomUnits();
+    setIsLoading(FetchStatus.Success);
+  }, [classroomDetails?.id]);
 
   const reloadSubjectActivities = async () => {
     setOpenSaveLesson(false);
-    await reloadUnits();
-    await loadClasroomUnits();
+    loadClasroomUnits();
   };
 
   const closeLessonDetails = async () => {
     setOpenLesson(false);
-    await reloadUnits();
-    await loadClasroomUnits();
+    loadClasroomUnits();
   };
 
-  if (isLoading)
+  if (isLoading === FetchStatus.Idle || isLoading === FetchStatus.Pending)
     return (
       <div className='tw-flex tw-justify-center tw-items-center'>
         <CircularProgress />
       </div>
     );
 
-  if (isError || !result)
+  if (isLoading === FetchStatus.Error)
     return (
       <Typography component='h1' variant='h5' className='text-center'>
         Hubo un error al cargar los datos. Inténtalo de nuevo recargando la
@@ -131,13 +85,12 @@ const SubjectActivities = () => {
       </Typography>
     );
 
-  /* if (lessons.length === 0)
+  if (lessons && lessons.length === 0)
     return (
       <Typography component='h1' variant='h5' className='text-center'>
         No hay datos disponibles. Inténtalo de nuevo recargando la página.
       </Typography>
-    ); */
-
+    );
   if (openSaveLesson && classroomDetails) {
     return (
       <SaveLesson
@@ -155,8 +108,6 @@ const SubjectActivities = () => {
       />
     );
   }
-
-  const { data: units } = result;
 
   return (
     <div className='tw-space-y-20'>
@@ -190,7 +141,9 @@ const SubjectActivities = () => {
                   </h4>
                   <h5>
                     {lesson.ended_at
-                      ? `Finalizado el ${lesson.ended_at.toLocaleDateString()}`
+                      ? `Finalizado el ${new Date(
+                          lesson.ended_at
+                        ).toLocaleDateString()}`
                       : 'En progreso'}
                   </h5>
                 </div>

@@ -340,7 +340,7 @@ const EditLesson: React.FC<{
                   2. Ingresa las <b className='tw-mx-1'>{' recompensas '}</b> de
                   la clase
                 </h5>
-                <div className='tw-grid tw-grid-flow-col auto-cols-max tw-gap-5 tw-scroll-auto tw-overflow-x-auto tw-p-3'>
+                <div className='tw-flex tw-gap-5 tw-scroll-auto tw-overflow-x-auto tw-p-3'>
                   {editLessonRewards &&
                     editLessonRewards.length > 0 &&
                     editLessonRewards.map((reward, index) => {
