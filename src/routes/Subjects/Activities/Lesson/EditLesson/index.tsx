@@ -422,7 +422,7 @@ const EditLesson: React.FC<{
                       );
                     })}
                   <div
-                    className='tw-border tw-w-full tw-text-center tw-border-dashed tw-rounded-md tw-h-full tw-flex tw-justify-center tw-items-center tw-flex-col hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-indigo-100'
+                    className='tw-min-w-72 tw-border tw-text-center tw-border-dashed tw-rounded-md tw-flex tw-justify-center tw-items-center tw-flex-col hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-indigo-100'
                     onClick={() =>
                       openModal({
                         title: 'Ingresar recompensas',

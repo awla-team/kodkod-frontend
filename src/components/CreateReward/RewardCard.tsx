@@ -13,7 +13,7 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
 
 const RewardCard: FC<Props> = ({ reward, editEffect, deleteEffect }) => {
   return (
-    <div className='tw-flex tw-justify-center tw-items-center tw-flex-col tw-rounded-md'>
+    <div className='tw-flex tw-justify-center tw-items-center tw-flex-col tw-rounded-md tw-min-w-72 tw-max-w-72'>
       <div className='tw-flex tw-justify-center tw-text-white tw-items-center tw-h-12 tw-bg-fuchsia-800 tw-w-full tw-rounded-t-md'>
         <div
           onClick={editEffect}
@@ -37,7 +37,7 @@ const RewardCard: FC<Props> = ({ reward, editEffect, deleteEffect }) => {
           alt='star'
           className='tw-w-16 tw-h-16 tw-object-cover tw-mb-4'
         />
-        <h3 className='tw-text tw-text-center tw-scroll-auto tw-overflow-y-auto'>
+        <h3 className='tw-text tw-text-center tw-scroll-auto tw-overflow-y-auto tw-hyphens-auto'>
           {reward.description}
         </h3>
         <span className='tw-text-fuchsia-800 tw-text-center tw-font-medium'>
