@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import { useEffect, useState } from 'react';
 import { ChevronLeft } from '@mui/icons-material';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -183,10 +184,12 @@ const LessonReview = () => {
         type='button'
         className='tw-bg-primary tw-h-12 tw-flex tw-justify-center tw-items-center'
         onClick={onSubmit}
-        disabled={isLoading}
+        disabled={isLoading || lesson.ended_at !== null}
       >
         {isLoading ? (
           <CircularProgress color='info' size='1rem' />
+        ) : lesson.ended_at ? (
+          'Clase finalizada'
         ) : (
           'Finalizar clase'
         )}
