@@ -46,7 +46,7 @@ export const useClassContext = () => {
 const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const [classDetails, setClassDetails] = useState<IClass | undefined>();
   const [classroomDetails, setClassroomDetails] = useState<
-    ITeacherSubjectClassroomData | undefined
+    ITeacherSubjectClassroom | undefined
   >();
   const [levels, setLevels] = useState<Levels[]>([]);
   const [students, setStudents] = useState<StudentType[]>([]);
