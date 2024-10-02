@@ -22,6 +22,7 @@ import VerifyEmail from './UserAuth/VerifyEmail';
 import AllCompletedAdventures from './Class/AllCompletedAdventures';
 import SubjectLayout from 'layouts/SubjectLayout';
 import SubjectActivities from './Subjects/Activities/SubjectActivities';
+import Students from './Subjects/Students';
 
 const MainRouterComponent: FC = () => {
   // const { pathname } = useLocation();
@@ -98,7 +99,7 @@ export const router = createBrowserRouter([
                   },
                   {
                     path: 'students',
-                    element: <p>estudiantes</p>,
+                    element: <Students />,
                   },
                 ],
               },
