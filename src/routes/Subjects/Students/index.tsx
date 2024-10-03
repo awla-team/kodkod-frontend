@@ -1,5 +1,4 @@
 import {
-  CircularProgress,
   Table,
   TableBody,
   TableCell,
@@ -9,15 +8,11 @@ import {
   TableRow,
   TableSortLabel,
   Tooltip,
-  Typography,
 } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import studentsIcon from 'assets/images/students_1.png';
 import { useClassContext } from 'routes/Class/context';
-import type ILesson from 'types/models/Lesson';
-import { type AxiosResponse } from 'axios';
-import { FetchStatus } from 'global/enums';
 import Toaster from 'utils/Toster';
 import { useClassroom } from 'zustand/classroom-store';
 import { useSubjectStore } from 'zustand/subject-store';
@@ -162,7 +157,7 @@ const Students = () => {
                 </TableCell>
                 <TableCell>
                   <h5 className='tw-text-[#003CAF]'>
-                    <b></b>
+                    <b />
                   </h5>
                 </TableCell>
               </TableRow>
