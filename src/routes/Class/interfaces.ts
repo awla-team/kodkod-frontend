@@ -1,5 +1,5 @@
 import {
-  type ITeacherSubjectClassroom,
+  type ITeacherSubjectClassroomData,
   type IClass,
   type IStage,
 } from 'global/interfaces';
@@ -13,7 +13,7 @@ export type TabPaths = Record<number, string>;
 export interface ClassContextType {
   getClassById: (id: number | string) => void;
   classDetails: IClass | undefined;
-  classroomDetails: ITeacherSubjectClassroom | undefined;
+  classroomDetails: ITeacherSubjectClassroomData | undefined;
   students: StudentType[];
   loadingClass: FetchStatus;
   getStudentsByClass: (id: number | string) => void;
