@@ -104,6 +104,13 @@ export const updateReward = async (
  * @param rewardId - The ID of the reward.
  * @returns A promise that resolves to the students who have completed the reward.
  */
-export const getStudentsCompletedReward = async (rewardId: number) => {
-  return await http.get<IStudent[]>(`reward/${rewardId}/students`);
+export const getStudentsCompletedReward = async (
+  rewardId: number,
+  query: {
+    t_classroom_id: number;
+  }
+) => {
+  return await http.get<IStudent[]>(`reward/${rewardId}/students`, {
+    params: query,
+  });
 };
