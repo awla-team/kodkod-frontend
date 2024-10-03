@@ -191,13 +191,13 @@ const Students = () => {
                       </h5>
                     </TableCell>
                     <TableCell>
-                      <h6>
+                      <h5>
                         <b>
                           {student.last_name.split(' ').length > 1
                             ? student.last_name.split(' ').at(1)
                             : ''}
                         </b>
-                      </h6>
+                      </h5>
                     </TableCell>
                     <TableCell>
                       <h5>
