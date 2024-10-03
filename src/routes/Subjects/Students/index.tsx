@@ -12,7 +12,6 @@ import {
   Typography,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { getLessonsByTeacherSubjectClassroomId } from 'services/lessons';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import studentsIcon from 'assets/images/students_1.png';
 import { useClassContext } from 'routes/Class/context';
@@ -26,11 +25,9 @@ import { ContentCopy } from '@mui/icons-material';
 import { type IStudent } from 'global/interfaces';
 
 const Students = () => {
-  const [lessons, setLessons] = useState<ILesson[]>();
   const { classroomDetails } = useClassContext();
   const { classroom } = useClassroom();
   const { subject } = useSubjectStore();
-  const [isLoading, setIsLoading] = useState(FetchStatus.Idle);
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<OrderBy>('last_name');
 
@@ -66,58 +63,6 @@ const Students = () => {
     }
     return 0;
   });
-
-  const loadClasroomUnits = () => {
-    setIsLoading(FetchStatus.Pending);
-    try {
-      setIsLoading(FetchStatus.Pending);
-      if (classroomDetails?.id) {
-        getLessonsByTeacherSubjectClassroomId(classroomDetails.id)
-          .then((response: AxiosResponse) => {
-            return response?.data;
-          })
-          .then((lessonsList: ILesson[]) => {
-            setLessons(lessonsList);
-            setIsLoading(FetchStatus.Success);
-          })
-          .catch((error) => {
-            setIsLoading(FetchStatus.Error);
-            console.error(error);
-            Toaster('error', 'Hubo un error al cargar el listado de clases');
-          });
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    setIsLoading(FetchStatus.Pending);
-    loadClasroomUnits();
-    setIsLoading(FetchStatus.Success);
-  }, [classroomDetails?.id]);
-
-  if (isLoading === FetchStatus.Idle || isLoading === FetchStatus.Pending)
-    return (
-      <div className='tw-flex tw-justify-center tw-items-center'>
-        <CircularProgress />
-      </div>
-    );
-
-  if (isLoading === FetchStatus.Error)
-    return (
-      <Typography component='h1' variant='h5' className='text-center'>
-        Hubo un error al cargar los datos. Inténtalo de nuevo recargando la
-        página.
-      </Typography>
-    );
-
-  if (lessons && lessons.length === 0)
-    return (
-      <Typography component='h1' variant='h5' className='text-center'>
-        No hay datos disponibles. Inténtalo de nuevo recargando la página.
-      </Typography>
-    );
 
   return (
     <div className='tw-space-y-10'>
