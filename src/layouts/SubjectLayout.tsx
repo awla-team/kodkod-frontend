@@ -60,7 +60,7 @@ const SubjectLayout = () => {
         ))}
       </ul>
 
-      <div className='tw-p-10 bg-white tw-rounded-md'>
+      <div className='tw-p-10 bg-white tw-rounded-md tw-mb-[80px]'>
         <Outlet />
       </div>
     </div>
