@@ -55,7 +55,7 @@ const ClassCard: React.FC<{
           </Typography>
           <Typography
             component='span'
-            variant='h5'
+            variant='h6'
             textAlign='center'
             fontWeight='bold'
           >
@@ -66,7 +66,6 @@ const ClassCard: React.FC<{
           <Typography
             className='tw-flex'
             component='span'
-            variant='h6'
             textAlign='center'
           >
             {classroom?.classroom.students?.length

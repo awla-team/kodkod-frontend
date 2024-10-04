@@ -2,7 +2,6 @@ import type { FC } from 'react';
 import {
   AccordionDetails,
   AccordionSummary,
-  Divider,
   Typography,
 } from '@mui/material';
 import { type MyClassesProps } from './interfaces';
@@ -19,7 +18,7 @@ const MyClasses: FC<MyClassesProps> = ({
 }: MyClassesProps) => {
   useEffect(() => {
     getClassroomsData();
-  }, []);
+  }, [getClassroomsData]);
 
   if (!classrooms || classrooms.length === 0) {
     return (
@@ -63,13 +62,12 @@ const MyClasses: FC<MyClassesProps> = ({
                 elevation={0}
                 key={id}
               >
-                <AccordionSummary expandIcon={<ExpandMore />}>
+                <AccordionSummary expandIcon={<ExpandMore />} className="tw-border-b tw-border-gray-300 tw-border-solid">
                   <Typography component='span' variant='h5' className=''>
                     {name}
                   </Typography>
                 </AccordionSummary>
-                <Divider variant='middle' color='black' className='mb-4' />
-                <AccordionDetails className='class__level__cards__container row'>
+                <AccordionDetails className='class__level__cards__container row tw-py-5'>
                   {classrooms
                     .filter(
                       (teacherClass, _index) =>
