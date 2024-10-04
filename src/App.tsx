@@ -224,7 +224,7 @@ const App: React.FC = () => {
             />
             <div className='tw-flex tw-flex-col tw-w-full '>
               <header
-                className={`tw-py-2 tw-flex tw-w-full tw-items-center ${
+                className={`tw-py-2 border-gray tw-bg-white tw-flex tw-w-full tw-items-center ${
                   subject &&
                   classroom &&
                   location.pathname.includes(`classroom/${classId}`)
