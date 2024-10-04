@@ -70,12 +70,7 @@ const SubjectLayout = () => {
         )}
       </ul>
 
-      <div
-        className='tw-p-10 bg-white tw-rounded-md'
-        style={{
-          border: '1px solid #E5E7EB',
-        }}
-      >
+      <div className='tw-p-10 bg-white tw-rounded-md tw-mb-[80px]'>
         <Outlet />
       </div>
     </div>

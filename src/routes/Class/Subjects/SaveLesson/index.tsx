@@ -5,7 +5,8 @@ import postCard from 'assets/images/postcard-heart 1.png';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
-import EditNoteIcon from '@mui/icons-material/EditNote';
+import EditIcon from '@mui/icons-material/Edit';
+import { type IUnit } from 'components/Modals/ViewLearningGoalsDialog/interfaces';
 import { type ILessonSaved } from 'types/models/Lesson';
 import { type ITeacherSubjectClassroomData } from 'global/interfaces';
 import { Formik } from 'formik';
@@ -149,7 +150,7 @@ const SaveLesson: React.FC<{
                                 setOpenEditActivity(true);
                               }}
                             >
-                              <EditNoteIcon />
+                              <EditIcon />
                               Editar
                             </h5>
 
@@ -260,11 +261,19 @@ const SaveLesson: React.FC<{
                   <b className='tw-mx-1'>{' Guardar Clase '}</b>y podrás empezar
                   a utilizarla.
                 </h5>
-                <div className='tw-flex tw-items-center tw-justify-end tw-mx-6'>
+              </div>
+              <div className='tw-fixed tw-bottom-0 tw-left-0 tw-w-full tw-flex tw-items-center tw-justify-between tw-bg-white tw-border-t tw-py-2 tw-px-5 border-gray'>
+                <div className='tw-flex tw-items-center tw-justify-center tw-gap-2 tw-ml-[83px]'>
+                  <EditIcon className='tw-w-5 tw-h-5' />
+                  <span>
+                    Estás en el <b>modo de edición</b>
+                  </span>
+                </div>
+                <div className='tw-flex tw-items-center tw-justify-end tw-gap-2'>
                   <button
                     onClick={goBack}
                     type='button'
-                    className='tw-mx-6 tw-bg-gray-200 text-black'
+                    className='tw-border-neutral-300 tw-bg-white tw-text-black'
                   >
                     Cancelar
                   </button>
@@ -273,7 +282,7 @@ const SaveLesson: React.FC<{
                     className='tw-bg-primary'
                     disabled={isSubmitting}
                   >
-                    Guardar Clase
+                    Guardar clase
                   </button>
                 </div>
               </div>
