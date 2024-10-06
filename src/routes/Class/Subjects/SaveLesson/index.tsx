@@ -6,7 +6,6 @@ import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined
 
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import EditNoteIcon from '@mui/icons-material/EditNote';
-import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import { type IUnit } from 'components/Modals/ViewLearningGoalsDialog/interfaces';
 import { type ILessonSaved } from 'types/models/Lesson';
 import { type ITeacherSubjectClassroomData } from 'global/interfaces';
@@ -72,7 +71,10 @@ const SaveLesson: React.FC<{
           lesson_id: newLesson.id,
         }));
 
-        const rewardsResponse = await createRewards(rewardsData);
+        const rewardsResponse =
+          rewardsData?.length > 0
+            ? await createRewards(rewardsData)
+            : { status: 201 };
 
         if (
           activitiesResponse.every((response) => response.status === 201) &&
