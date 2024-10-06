@@ -113,14 +113,6 @@ const SaveLesson: React.FC<{
                   </h5>
                 </Link>
 
-                <h4 className='tw-flex tw-gap-4'>
-                  <b>
-                    {selectedUnit.title.includes('Unidad')
-                      ? selectedUnit.title
-                      : 'Unidad ' + selectedUnit.title}
-                  </b>
-                </h4>
-
                 <TextField
                   className=''
                   value={values.title}
