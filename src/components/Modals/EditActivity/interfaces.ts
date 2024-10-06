@@ -11,7 +11,7 @@ export interface FormInput {
 
 export interface ViewEditActivityDialogProps {
   open: boolean;
-  currentLesson: ILesson;
+  currentLesson: Omit<ILesson, 'teacher_subject_classroom_id'>;
   handleClose: () => void;
   newActivity?: IActivitySaved;
   editedActivity?: IActivity;
