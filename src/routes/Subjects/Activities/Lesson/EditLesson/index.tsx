@@ -35,7 +35,7 @@ const EditLesson: React.FC<{
   const [formValues] = useState<FormInput>({
     title: selectedLesson.title,
     classroom_id: selectedLesson.classroom_id,
-    unit_id: selectedLesson.unit_id,
+    teacher_subject_classroom_id: selectedLesson.teacher_subject_classroom_id,
   });
   const [openSaveActivity, setOpenSaveActivity] = useState<boolean>(false);
   const [openEditNewActivity, setOpenEditNewActivity] =
@@ -68,7 +68,7 @@ const EditLesson: React.FC<{
         title: values.title,
         index: 1,
         classroom_id: values.classroom_id,
-        unit_id: values.unit_id,
+        teacher_subject_classroom_id: values.teacher_subject_classroom_id,
       };
       const { status } = await editLesson(lesson, selectedLesson.id);
 
@@ -343,7 +343,8 @@ const EditLesson: React.FC<{
                   la clase
                 </h5>
                 <div className='tw-flex tw-gap-5 tw-scroll-auto tw-overflow-x-auto tw-p-3'>
-                  {editLessonRewards && editLessonRewards.length > 0 ? (
+                  {editLessonRewards &&
+                    editLessonRewards.length > 0 &&
                     editLessonRewards.map((reward, index) => {
                       return (
                         <RewardCard
@@ -381,11 +382,9 @@ const EditLesson: React.FC<{
                           }}
                         />
                       );
-                    })
-                  ) : (
-                    <div />
-                  )}
-                  {rewards && rewards.length > 0 ? (
+                    })}
+                  {rewards &&
+                    rewards.length > 0 &&
                     rewards.map((reward, index) => {
                       return (
                         <RewardCard
@@ -423,10 +422,7 @@ const EditLesson: React.FC<{
                           }}
                         />
                       );
-                    })
-                  ) : (
-                    <p />
-                  )}
+                    })}
                   <div
                     className='tw-min-w-72 tw-border tw-text-center tw-border-dashed tw-rounded-md tw-flex tw-justify-center tw-items-center tw-flex-col hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-indigo-100'
                     onClick={() =>
@@ -474,7 +470,6 @@ const EditLesson: React.FC<{
                 title: values.title,
                 index: 1,
                 classroom_id: values.classroom_id,
-                unit_id: values.unit_id,
               }}
               handleClose={() => {
                 setOpenSaveActivity(false);
@@ -491,7 +486,6 @@ const EditLesson: React.FC<{
                   title: values.title,
                   index: 1,
                   classroom_id: values.classroom_id,
-                  unit_id: values.unit_id,
                 }}
                 handleClose={() => {
                   setOpenEditActivity(false);
@@ -509,7 +503,6 @@ const EditLesson: React.FC<{
                   title: values.title,
                   index: 1,
                   classroom_id: values.classroom_id,
-                  unit_id: values.unit_id,
                 }}
                 handleClose={() => {
                   setOpenEditNewActivity(false);

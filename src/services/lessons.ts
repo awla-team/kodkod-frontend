@@ -17,6 +17,14 @@ export const getLessonsByUnit = async (
   return await http.get('lessons/get-by-unit-id/' + unitId);
 };
 
+export const getLessonsByTeacherSubjectClassroomId = async (
+  teacherSubjectClassroomId: number
+) => {
+  return await http.get(`/lessons/search`, {
+    params: { teacher_subject_classroom_id: teacherSubjectClassroomId },
+  });
+};
+
 export const saveLesson = async (lesson: ILessonSaved) => {
   return await http.post<ILesson>('lessons', lesson);
 };

@@ -9,6 +9,6 @@ export interface FormInput {
 
 export interface ViewSaveActivityDialogProps {
   open: boolean;
-  currentLesson: ILesson;
+  currentLesson: Omit<ILesson, 'teacher_subject_classroom_id'>;
   handleClose: () => void;
 }
