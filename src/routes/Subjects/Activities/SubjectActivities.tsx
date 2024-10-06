@@ -1,13 +1,5 @@
-import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
-import EditNoteIcon from '@mui/icons-material/EditNote';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import SortIcon from '@mui/icons-material/Sort';
-import ViewLearningGoalsDialog from 'components/Modals/ViewLearningGoalsDialog';
-import { type IUnit } from 'components/Modals/ViewLearningGoalsDialog/interfaces';
-import { useQuery } from '@tanstack/react-query';
 import { CircularProgress, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { searchUnits } from 'services/units';
+import { useCallback, useEffect, useState } from 'react';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import { getLessonsByTeacherSubjectClassroomId } from 'services/lessons';
 import book from 'assets/images/book.png';
@@ -17,12 +9,9 @@ import LessonDetails from './Lesson';
 import type ILesson from 'types/models/Lesson';
 import { type AxiosResponse } from 'axios';
 import { FetchStatus } from 'global/enums';
-import { getTeacherSubjectClassroomById } from 'services/teacher_subject_classroom';
 import Toaster from 'utils/Toster';
 
 const SubjectActivities = () => {
-  const [openLearningObjetives, setOpenLearningObjetives] =
-    useState<boolean>(false);
   const [selectedLesson, setSelectedLesson] = useState<ILesson>();
   const [lessons, setLessons] = useState<ILesson[]>();
   const [openSaveLesson, setOpenSaveLesson] = useState<boolean>(false);
@@ -30,7 +19,7 @@ const SubjectActivities = () => {
   const { classroomDetails } = useClassContext();
   const [isLoading, setIsLoading] = useState(FetchStatus.Idle);
 
-  const loadClasroomUnits = () => {
+  const loadClasroomUnits = useCallback(() => {
     setIsLoading(FetchStatus.Pending);
     try {
       setIsLoading(FetchStatus.Pending);
@@ -52,13 +41,13 @@ const SubjectActivities = () => {
     } catch (error) {
       console.error(error);
     }
-  };
+  }, [classroomDetails?.id]);
 
   useEffect(() => {
     setIsLoading(FetchStatus.Pending);
     loadClasroomUnits();
     setIsLoading(FetchStatus.Success);
-  }, [classroomDetails?.id]);
+  }, [classroomDetails?.id, loadClasroomUnits]);
 
   const reloadSubjectActivities = async () => {
     setOpenSaveLesson(false);
