@@ -23,6 +23,7 @@ import AllCompletedAdventures from './Class/AllCompletedAdventures';
 import SubjectLayout from 'layouts/SubjectLayout';
 import SubjectActivities from './Subjects/Activities/SubjectActivities';
 import Students from './Subjects/Students';
+import LessonReview from './Subjects/Activities/Lesson/LessonReview';
 
 const MainRouterComponent: FC = () => {
   // const { pathname } = useLocation();
@@ -91,7 +92,16 @@ export const router = createBrowserRouter([
                 children: [
                   {
                     path: 'lessons',
-                    element: <SubjectActivities />,
+                    children: [
+                      {
+                        path: '',
+                        element: <SubjectActivities />,
+                      },
+                      {
+                        path: ':lessonId/review',
+                        element: <LessonReview />,
+                      },
+                    ],
                   },
                   {
                     path: 'analysis',
