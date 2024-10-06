@@ -35,6 +35,7 @@ const EditLesson: React.FC<{
   const [formValues] = useState<FormInput>({
     title: selectedLesson.title,
     classroom_id: selectedLesson.classroom_id,
+    teacher_subject_classroom_id: selectedLesson.teacher_subject_classroom_id,
   });
   const [openSaveActivity, setOpenSaveActivity] = useState<boolean>(false);
   const [openEditNewActivity, setOpenEditNewActivity] =
@@ -67,6 +68,7 @@ const EditLesson: React.FC<{
         title: values.title,
         index: 1,
         classroom_id: values.classroom_id,
+        teacher_subject_classroom_id: values.teacher_subject_classroom_id,
       };
       const { status } = await editLesson(lesson, selectedLesson.id);
 
