@@ -159,12 +159,15 @@ const LessonDetails: React.FC<{
           return (
             <div
               key={index}
-              className='tw-border tw-bg-gradient-to-r tw-from-blue-600 tw-to-cyan-500 tw-rounded-md tw-h-40 tw-flex tw-justify-between tw-items-center hover:tw-cursor-pointer'
+              className='tw-border tw-bg-gradient-to-r tw-from-blue-600 tw-to-cyan-500 tw-rounded-md tw-min-h-40 tw-flex tw-justify-between tw-items-center hover:tw-cursor-pointer'
               onClick={() => openActivityDrawer(activity)}
             >
               <div className='tw-flex tw-flex-row tw-justify-between tw-w-full tw-h-full'>
                 <div className='tw-ml-8' />
                 <div className='tw-flex tw-flex-col tw-justify-center tw-items-center'>
+                  <h3 className='tw-font-bold tw-text-white'>
+                    {activity.title}
+                  </h3>
                   <h5 className='tw-font-bold tw-text-white'>
                     {activity.description}
                   </h5>
@@ -186,9 +189,12 @@ const LessonDetails: React.FC<{
       {selectedActivity && openActivitiesDrawer && (
         <div className='tw-fixed tw-top-1/3 tw-right-1/3 w-full tw-bg-gradient-to-r tw-from-blue-600 tw-to-cyan-500 p-4 tw-rounded-md tw-z-[9999]'>
           <div className='tw-relative tw-w-[640px]'>
-            <p className='tw-text-white tw-mb-0 tw-font-semibold tw-text-2xl tw-pt-6'>
+            <h3 className='tw-font-bold tw-text-white'>
+              {selectedActivity.title}
+            </h3>
+            <h5 className='tw-font-bold tw-text-white tw-break-all tw-mb-4'>
               {selectedActivity.description}
-            </p>
+            </h5>
             <div className='tw-absolute tw-top-0 tw-right-0'>
               <h5 className='tw-text-white tw-font-bold tw-m-0 tw-text-sm'>
                 <EmojiPeopleIcon /> 0
