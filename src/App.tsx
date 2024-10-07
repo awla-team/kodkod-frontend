@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Outlet, useNavigate, useLocation, useParams } from 'react-router-dom';
+import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { Button, CircularProgress } from '@mui/material';
 import Sidebar from './components/Sidebar';
 import { type ITeacherSubjectClassroom } from 'global/interfaces';
@@ -21,10 +21,8 @@ import DoneIcon from '@mui/icons-material/Done';
 import { TourProvider } from '@reactour/tour';
 import { patchUserById } from 'services/users';
 import { ModalContextProvider } from 'contexts/ZustandContext/modal-context';
-import UserInfo from 'components/Sidebar/UserInfo';
-import { useSubjectStore } from 'zustand/subject-store';
 import { getTeacherSubjectClassroomByTeacherId } from 'services/teacher_subject_classroom';
-import { useClassroom } from 'zustand/classroom-store';
+import Header from 'components/Header';
 
 moment.locale('es');
 
@@ -37,9 +35,6 @@ const App: React.FC = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const { classId } = useParams();
-  const { subject } = useSubjectStore();
-  const { classroom } = useClassroom();
 
   const getClassroomsData = () => {
     try {
@@ -223,30 +218,7 @@ const App: React.FC = () => {
               /* handleOpenModal={handleOpenModal} */
             />
             <div className='tw-flex tw-flex-col tw-w-full '>
-              <header
-                className={`tw-py-2 border-gray tw-bg-white tw-flex tw-w-full tw-items-center ${
-                  subject &&
-                  classroom &&
-                  location.pathname.includes(`classroom/${classId}`)
-                    ? 'tw-justify-between'
-                    : 'tw-justify-end'
-                } `}
-              >
-                {/* TODO: agregar classroom logic when reload page */}
-                {subject &&
-                  location.pathname.includes(`classroom/${classId}`) &&
-                  classroom && (
-                    <div className='tw-pl-4'>
-                      <h4 className='tw-text-xs tw-mb-0'>
-                        Curso seleccionado:
-                      </h4>
-                      <span className='tw-font-semibold'>
-                        {classroom.title || '?'}- {subject.title || '?'}
-                      </span>
-                    </div>
-                  )}
-                <UserInfo user={user} />
-              </header>
+              <Header />
               <div className='app-main-container d-flex flex-column flex-fill tw-py-4'>
                 <div className='app-content container' id='home-onboarding-4'>
                   <Outlet
