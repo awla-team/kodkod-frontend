@@ -245,7 +245,7 @@ const EditLesson: React.FC<{
                       return (
                         <div
                           key={index}
-                          className='tw-border tw-bg-gradient-to-r tw-from-blue-600 tw-to-cyan-500 tw-rounded-md tw-min-h-40 tw-flex tw-flex-col tw-my-4'
+                          className='tw-border tw-bg-gradient-to-r tw-from-blue-600 tw-to-cyan-500 tw-rounded-md tw-h-40 tw-flex tw-flex-col tw-my-4'
                         >
                           <div className='tw-flex tw-mx-8 tw-mt-8 tw-w-24'>
                             <h5
@@ -267,10 +267,7 @@ const EditLesson: React.FC<{
                           </div>
 
                           <div className=' tw-mx-8'>
-                            <h3 className='tw-font-bold tw-text-white'>
-                              {activity.title}
-                            </h3>
-                            <h5 className='tw-font-bold tw-text-white tw-break-all tw-mb-4'>
+                            <h5 className='tw-font-bold tw-text-white tw-scroll-auto tw-overflow-y-auto'>
                               {activity.description}
                             </h5>
                           </div>

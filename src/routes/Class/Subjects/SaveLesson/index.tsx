@@ -138,7 +138,7 @@ const SaveLesson: React.FC<{
                       return (
                         <div
                           key={index}
-                          className='tw-border tw-bg-gradient-to-r tw-from-blue-600 tw-to-cyan-500 tw-rounded-md tw-min-h-40 tw-flex tw-my-3 tw-flex-col'
+                          className='tw-border tw-bg-gradient-to-r tw-from-blue-600 tw-to-cyan-500 tw-rounded-md tw-h-40 tw-flex tw-my-3 tw-flex-col'
                         >
                           <div className='tw-flex tw-mx-8 tw-mt-8 tw-w-24'>
                             <h5
@@ -160,10 +160,7 @@ const SaveLesson: React.FC<{
                           </div>
 
                           <div className=' tw-mx-8'>
-                            <h3 className='tw-font-bold tw-text-white'>
-                              {activity.title}
-                            </h3>
-                            <h5 className='tw-font-bold tw-text-white tw-break-all tw-mb-4'>
+                            <h5 className='tw-font-bold tw-text-white tw-scroll-auto tw-overflow-y-auto'>
                               {activity.description}
                             </h5>
                           </div>

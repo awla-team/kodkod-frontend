@@ -18,10 +18,8 @@ export default function RewardCard({ reward }: Props) {
           alt='book'
           className='tw-w-20 tw-object-cover tw-my-8'
         />
-        <h3 className='tw-text tw-text-center tw-break-all tw-font-bold tw-text-gray-700'>
-          {reward.title}
-        </h3>
-        <h5 className='tw-mb-8'>{reward.description}</h5>
+
+        <h3 className='tw-mb-8'>{reward.description}</h3>
         <div className='tw-text-fuchsia-800 tw-font-semibold'>
           {'Se obtiene completando'}
         </div>
