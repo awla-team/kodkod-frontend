@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+#hubspot-messages-iframe-container.widget-align-right {
+  z-index: 999 !important;
+  bottom: -80px !important;
+}
+
 @layer base {
   @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap');
 
@@ -148,9 +153,5 @@
     font-weight: normal;
     font-style: normal;
     font-display: swap;
-  }
-
-  #hubspot-messages-iframe-container {
-    z-index: 999 !important;
   }
 }
