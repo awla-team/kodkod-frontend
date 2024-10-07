@@ -78,11 +78,20 @@ export interface ITeacherSubjectClassroomData {
 export interface ITeacherSubjectClassroom extends ITeacherSubjectClassroomData {
   classroom: IClassroomAbreviatedListResponse;
   subject: ISubjectResponse;
+  teacher: ITeacherResponse;
 }
 export interface IStudent {
   id: number;
   first_name: string;
   last_name: string;
+  email: string;
+}
+
+export interface ITeacherResponse {
+  id: number;
+  first_name: string;
+  last_name: string;
+  email: string;
 }
 export interface ISubjectResponse {
   id: number;

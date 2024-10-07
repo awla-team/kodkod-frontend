@@ -1,7 +1,9 @@
 import { toast } from 'react-toastify';
 import type { ToastOptions } from 'react-toastify';
 
-const Toaster = (type = 'success', message = '', options = {}) => {
+type ToastType = 'success' | 'info' | 'warning' | 'error';
+
+const Toaster = (type: ToastType, message = '', options = {}) => {
   const _options = {
     position: 'top-right',
     autoClose: 3000,

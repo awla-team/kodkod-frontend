@@ -1,6 +1,6 @@
 import { CircularProgress, Drawer } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import type ILesson from 'types/models/Lesson';
@@ -30,6 +30,8 @@ const LessonDetails: React.FC<{
   const [selectedActivity, setSelectedActivity] = useState<IActivity | null>(
     null
   );
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const getActivitiesData = () => {
     try {
@@ -126,14 +128,22 @@ const LessonDetails: React.FC<{
   return (
     <div className='tw-space-y-6'>
       <div className='tw-flex tw-justify-between'>
-        <Link className='fw-bold tw-flex' onClick={goBack}>
+        <button
+          type='button'
+          className='tw-flex tw-bg-transparent tw-text-primary tw-border-none hover:tw-underline'
+          onClick={goBack}
+        >
           <h5 className='tw-font-semibold'>{'< Volver a mis clases'}</h5>
-        </Link>
-        <Link className='fw-bold tw-flex' onClick={handleEditLesson}>
+        </button>
+        <button
+          type='button'
+          className='tw-flex tw-bg-transparent tw-text-primary tw-border-none'
+          onClick={handleEditLesson}
+        >
           <h5 className='tw-font-semibold'>
             <EditNoteIcon /> {' Editar clase'}
           </h5>
-        </Link>
+        </button>
       </div>
 
       <h2 className='tw-flex'>
@@ -226,7 +236,11 @@ const LessonDetails: React.FC<{
         recompensas. ¡Buena suerte!
       </h5>
       <div>
-        <button type='button' className='tw-bg-blue-800 tw-w-full'>
+        <button
+          type='button'
+          className='tw-bg-blue-800 tw-w-full'
+          onClick={() => navigate(`${pathname}/${selectedLesson.id}/review`)}
+        >
           <h5 className='tw-font-bold'> Mostrar recompensas obtenidas</h5>
         </button>
       </div>

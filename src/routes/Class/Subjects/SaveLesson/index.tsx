@@ -6,8 +6,6 @@ import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined
 
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import EditNoteIcon from '@mui/icons-material/EditNote';
-import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
-import { type IUnit } from 'components/Modals/ViewLearningGoalsDialog/interfaces';
 import { type ILessonSaved } from 'types/models/Lesson';
 import { type ITeacherSubjectClassroomData } from 'global/interfaces';
 import { Formik } from 'formik';
@@ -28,14 +26,13 @@ import { type IActivitySaved } from 'types/models/Activity';
 
 const SaveLesson: React.FC<{
   classroomDetails: ITeacherSubjectClassroomData;
-  selectedUnit: IUnit;
   handleClose: () => void;
-}> = ({ classroomDetails, selectedUnit, handleClose }) => {
+}> = ({ classroomDetails, handleClose }) => {
   const { openModal } = useModalStore();
   const [formValues] = useState<FormInput>({
     title: '',
     classroom_id: classroomDetails.classroom_id,
-    unit_id: selectedUnit.id,
+    teacher_subject_classroom_id: classroomDetails.id,
   });
   const [openSaveActivity, setOpenSaveActivity] = useState<boolean>(false);
   const [openEditActivity, setOpenEditActivity] = useState<boolean>(false);
@@ -49,7 +46,7 @@ const SaveLesson: React.FC<{
         title: values.title,
         index: 1,
         classroom_id: values.classroom_id,
-        unit_id: values.unit_id,
+        teacher_subject_classroom_id: classroomDetails.id,
       };
       const { status, data: newLesson } = await saveLesson(lesson);
 
@@ -72,7 +69,9 @@ const SaveLesson: React.FC<{
           lesson_id: newLesson.id,
         }));
 
-        const rewardsResponse = await createRewards(rewardsData);
+        let rewardsResponse;
+        if (rewardsData?.length === 0) rewardsResponse = { status: 201 };
+        else rewardsResponse = await createRewards(rewardsData);
 
         if (
           activitiesResponse.every((response) => response.status === 201) &&
@@ -112,14 +111,6 @@ const SaveLesson: React.FC<{
                     <b>{'< Volver a lista de clases'}</b>
                   </h5>
                 </Link>
-
-                <h4 className='tw-flex tw-gap-4'>
-                  <b>
-                    {selectedUnit.title.includes('Unidad')
-                      ? selectedUnit.title
-                      : 'Unidad ' + selectedUnit.title}
-                  </b>
-                </h4>
 
                 <TextField
                   className=''
@@ -294,7 +285,6 @@ const SaveLesson: React.FC<{
                   title: values.title,
                   index: 1,
                   classroom_id: values.classroom_id,
-                  unit_id: values.unit_id,
                 }}
                 handleClose={() => {
                   setOpenEditActivity(false);
@@ -308,7 +298,6 @@ const SaveLesson: React.FC<{
                 title: values.title,
                 index: 1,
                 classroom_id: values.classroom_id,
-                unit_id: values.unit_id,
               }}
               handleClose={() => {
                 setOpenSaveActivity(false);
