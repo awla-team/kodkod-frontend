@@ -83,37 +83,6 @@ const SubjectActivities = () => {
     );
   }
 
-  if (lessons && lessons.length === 0)
-    return (
-      <div className='tw-space-y-20'>
-        <div className='tw-flex tw-items-center tw-justify-between'>
-          <div className='tw-flex tw-items-end tw-gap-2'>
-            <img src={book} alt='book' className='tw-w-10 tw-object-cover' />
-            <h2 className='tw-font-bold tw-mb-0'>Mis clases</h2>
-          </div>
-        </div>
-        <Typography component='h1' variant='h5' className='text-center'>
-          No hay clases disponibles
-        </Typography>
-        <div className='tw-flex tw-justify-end tw-mt-20'>
-          <button
-            onClick={() => {
-              setOpenSaveLesson(true);
-            }}
-            type='button'
-            className='tw-border tw-rounded-full tw-bg-[#003CAF]'
-          >
-            <h4 className='tw-flex tw-flex-row tw-items-center tw-justify-center'>
-              <b className='tw-flex tw-flex-row tw-items-center tw-justify-center tw-mr-2'>
-                <AddOutlinedIcon fontSize='large' />
-                Nueva clase
-              </b>
-            </h4>
-          </button>
-        </div>
-      </div>
-    );
-
   if (openLesson && selectedLesson && classroomDetails) {
     return (
       <LessonDetails
