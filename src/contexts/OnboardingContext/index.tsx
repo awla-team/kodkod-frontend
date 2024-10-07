@@ -6,12 +6,11 @@ import {
 } from 'react';
 import { type ITour } from './interfaces';
 import { Menu, MenuItem } from '@mui/material';
-import { TourFab } from './styled';
-import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import { type StepType, useTour } from '@reactour/tour';
 
 const OnboardingContext = createContext<{
   setNewAvailableTours?: (tours: ITour[]) => void;
+  openOnboardingMenu?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   handleFinish?: () => void;
   currentView?: string;
 }>({});
@@ -25,7 +24,7 @@ const OnboardingContextProvider: React.FC<PropsWithChildren> = ({
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { setIsOpen, setSteps, setCurrentStep } = useTour();
   const setNewAvailableTours = (tours: ITour[]) => setAvailableTours(tours);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) =>
+  const openOnboardingMenu = (event: React.MouseEvent<HTMLButtonElement>) =>
     setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
   const handleItemClick = (steps: StepType[]) => {
@@ -38,23 +37,15 @@ const OnboardingContextProvider: React.FC<PropsWithChildren> = ({
   };
 
   return (
-    <OnboardingContext.Provider value={{ setNewAvailableTours }}>
+    <OnboardingContext.Provider value={{ setNewAvailableTours, openOnboardingMenu }}>
       {children}
-      <TourFab
-        id='tour-fab-button'
-        color='primary'
-        onClick={handleClick}
-        className='tw-z-[999]'
-      >
-        <QuestionMarkIcon />
-      </TourFab>
       <Menu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
         onClose={handleClose}
-        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-        anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-        sx={{ right: 36, top: -64 }}
+        transformOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+        sx={{ right: 0, top: 42 }}
       >
         <MenuItem disabled>Tutoriales</MenuItem>
         {availableTours?.map((tour, i) => (
