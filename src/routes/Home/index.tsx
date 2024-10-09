@@ -10,12 +10,10 @@ const HomePage: FC = () => {
   // const [onboardingDone, setOnboardingDone] = useState(true);
   // const { setNewAvailableTours } = useOnboarding();
   // const { setIsOpen, setSteps, setCurrentStep } = useTour();
-  const { classrooms, levels, getClassroomsData } =
+  const { classrooms, levels } =
     useOutletContext() as {
       classrooms: ITeacherSubjectClassroom[];
       levels: Levels[];
-      handleOpenModal: () => void;
-      getClassroomsData: () => void;
     };
 
   // useEffect(() => {
@@ -65,7 +63,6 @@ const HomePage: FC = () => {
         <MyClasses
           classrooms={classrooms}
           levels={levels}
-          getClassroomsData={getClassroomsData}
         />
       )}
     </div>

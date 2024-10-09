@@ -19,7 +19,6 @@ export const MyClassesBox = styled(Box)`
   width: 100%;
   height: fit-content;
   background: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 8px;
 
   .class-img-container {

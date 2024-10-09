@@ -59,9 +59,9 @@ const SubjectLayout = () => {
                 to={to}
                 className={({ isActive }: { isActive: boolean }) =>
                   (isActive
-                    ? 'tw-text-primary-700 tw-relative before:tw-content-[""] before:tw-absolute before:tw-bottom-[-12px] before:tw-left-0 before:tw-w-full before:tw-h-[2px] before:tw-bg-primary-700'
+                    ? 'tw-text-primary-500 tw-relative before:tw-content-[""] before:tw-absolute before:tw-bottom-[-12px] before:tw-left-0 before:tw-w-full before:tw-h-[2px] before:tw-bg-primary-500'
                     : 'tw-text-gray-700')
-                    + ' tw-px-4'
+                    + ' tw-px-4 tw-flex tw-items-center tw-gap-1'
                 }
               >
                 {icon}
@@ -71,7 +71,7 @@ const SubjectLayout = () => {
           )
         )}
       </ul>
-      <div className='tw-p-10 bg-white tw-rounded-md tw-mb-[80px]'>
+      <div className='tw-p-10 bg-white tw-rounded-md tw-mb-[80px] tw-border tw-border-solid tw-border-gray-200'>
         <Outlet />
       </div>
     </div>

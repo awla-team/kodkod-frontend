@@ -57,7 +57,7 @@ const Header: React.FC = () => {
               Curso seleccionado:
             </h4>
             <span className='tw-font-semibold'>
-              {classroom.title || '?'}- {subject.title || '?'}
+              {classroom.title || '?'} - {subject.title || '?'}
             </span>
           </div>
         )}
