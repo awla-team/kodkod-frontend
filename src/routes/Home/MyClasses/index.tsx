@@ -8,7 +8,7 @@ import { type MyClassesProps } from './interfaces';
 import { useEffect } from 'react';
 import { ExpandMore } from '@mui/icons-material';
 import ClassCard from 'components/ClassCard';
-import { MyClassesBox, LevelAccordion, MyClassesContainer } from './styled';
+import { MyClassesBox, LevelAccordion } from './styled';
 import ClassroomIcon from 'assets/images/desk.png';
 
 const MyClasses: FC<MyClassesProps> = ({
@@ -21,7 +21,7 @@ const MyClasses: FC<MyClassesProps> = ({
   }, [getClassroomsData]);
 
   return (
-    <MyClassesContainer className='w-100'>
+    <div className='w-100'>
       <MyClassesBox className='p-5'>
         <Typography
           component='h1'
@@ -68,7 +68,7 @@ const MyClasses: FC<MyClassesProps> = ({
             );
           })}
       </MyClassesBox>
-    </MyClassesContainer>
+    </div>
   );
 };
 

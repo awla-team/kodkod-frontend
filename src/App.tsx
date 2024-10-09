@@ -219,8 +219,8 @@ const App: React.FC = () => {
             />
             <div className='tw-flex tw-flex-col tw-w-full '>
               <Header />
-              <div className='app-main-container d-flex flex-column flex-fill tw-py-4'>
-                <div className='app-content container' id='home-onboarding-4'>
+              <div className='app-main-container d-flex flex-column flex-fill'>
+                <div className='app-content container tw-py-10' id='home-onboarding-4'>
                   <Outlet
                     context={{
                       classrooms,
