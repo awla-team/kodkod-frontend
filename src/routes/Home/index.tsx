@@ -10,7 +10,7 @@ const HomePage: FC = () => {
   // const [onboardingDone, setOnboardingDone] = useState(true);
   // const { setNewAvailableTours } = useOnboarding();
   // const { setIsOpen, setSteps, setCurrentStep } = useTour();
-  const { classrooms, levels, handleOpenModal, getClassroomsData } =
+  const { classrooms, levels, getClassroomsData } =
     useOutletContext() as {
       classrooms: ITeacherSubjectClassroom[];
       levels: Levels[];
@@ -60,7 +60,7 @@ const HomePage: FC = () => {
   return (
     <div className='d-flex w-100'>
       {!classrooms?.length ? (
-        <WelcomePage handleOpenModal={handleOpenModal} />
+        <WelcomePage />
       ) : (
         <MyClasses
           classrooms={classrooms}
