@@ -20,31 +20,13 @@ const MyClasses: FC<MyClassesProps> = ({
     getClassroomsData();
   }, [getClassroomsData]);
 
-  if (!classrooms || classrooms.length === 0) {
-    return (
-      <MyClassesContainer className='w-100'>
-        <MyClassesBox className='p-5'>
-          <Typography
-            component='h1'
-            variant='h4'
-            className='fw-bold mb-1 tw-flex'
-            id='home-onboarding-4'
-          >
-            <img className='tw-w-10 tw-mr-4' src={ClassroomIcon} alt='icon' />
-            Cursos
-          </Typography>
-        </MyClassesBox>
-      </MyClassesContainer>
-    );
-  }
-
   return (
     <MyClassesContainer className='w-100'>
       <MyClassesBox className='p-5'>
         <Typography
           component='h1'
           variant='h4'
-          className='fw-bold mb-1 tw-flex'
+          className='fw-bold tw-mb-8 tw-flex'
           id='home-onboarding-4'
         >
           <img className='tw-w-10 tw-mr-4' src={ClassroomIcon} alt='icon' />
@@ -63,7 +45,7 @@ const MyClasses: FC<MyClassesProps> = ({
                 key={id}
               >
                 <AccordionSummary expandIcon={<ExpandMore />} className="tw-border-b tw-border-gray-300 tw-border-solid">
-                  <Typography component='span' variant='h5' className=''>
+                  <Typography component='span' variant='h6' className=''>
                     {name}
                   </Typography>
                 </AccordionSummary>
