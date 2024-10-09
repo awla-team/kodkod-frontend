@@ -1,6 +1,5 @@
 import { Outlet, NavLink, useParams } from 'react-router-dom';
-import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
-import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
+import CollectionsBookmarkOutlinedIcon from '@mui/icons-material/CollectionsBookmarkOutlined';import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import { useEffect } from 'react';
 import { useSubjectStore } from 'zustand/subject-store';
@@ -14,7 +13,7 @@ const LINKS: Array<{
     label: 'Clases',
     to: 'lessons',
     icon: (
-      <AccountBalanceWalletOutlinedIcon fontSize='small' className='tw-mr-1' />
+      <CollectionsBookmarkOutlinedIcon fontSize='small' className='tw-mr-1' />
     ),
   },
   {
@@ -71,7 +70,7 @@ const SubjectLayout = () => {
           )
         )}
       </ul>
-      <div className='tw-p-10 bg-white tw-rounded-md tw-mb-[80px] tw-border tw-border-solid tw-border-gray-200'>
+      <div className='tw-p-10 bg-white tw-rounded-md tw-border tw-border-solid tw-border-gray-200'>
         <Outlet />
       </div>
     </div>

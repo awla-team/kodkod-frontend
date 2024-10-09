@@ -16,7 +16,7 @@ const MyClasses: FC<MyClassesProps> = ({
 }) => {
   return (
     <div className='w-100'>
-      <MyClassesBox className='p-5 tw-border tw-border-solid tw-border-gray-200'>
+      <MyClassesBox className='tw-p-10 tw-border tw-border-solid tw-border-gray-200'>
         <div className='tw-flex tw-items-center tw-justify-between tw-mb-8'>
           <div className='tw-flex tw-items-end tw-gap-4'>
             <img src={ClassroomIcon} alt='Mis cursos' className='tw-w-10' />

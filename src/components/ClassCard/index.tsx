@@ -24,7 +24,7 @@ const ClassCard: React.FC<{
   };
 
   return (
-    <div onClick={goToClass}>
+    <div onClick={goToClass} className='tw-cursor-pointer'>
       <div className='class__level__card'>
         {classroom?.subject ? (
           <Box
