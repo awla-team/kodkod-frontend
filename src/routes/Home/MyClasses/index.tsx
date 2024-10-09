@@ -8,7 +8,7 @@ import { type MyClassesProps } from './interfaces';
 import { ExpandMore } from '@mui/icons-material';
 import ClassCard from 'components/ClassCard';
 import { MyClassesBox, LevelAccordion } from './styled';
-import ClassroomIcon from 'assets/images/desk.png';
+import ClassroomIcon from 'assets/images/blackboard.png';
 
 const MyClasses: FC<MyClassesProps> = ({
   classrooms,
@@ -17,15 +17,12 @@ const MyClasses: FC<MyClassesProps> = ({
   return (
     <div className='w-100'>
       <MyClassesBox className='p-5 tw-border tw-border-solid tw-border-gray-200'>
-        <Typography
-          component='h1'
-          variant='h4'
-          className='fw-bold tw-mb-8 tw-flex'
-          id='home-onboarding-4'
-        >
-          <img className='tw-w-10 tw-mr-4' src={ClassroomIcon} alt='icon' />
-          Cursos
-        </Typography>
+        <div className='tw-flex tw-items-center tw-justify-between tw-mb-8'>
+          <div className='tw-flex tw-items-end tw-gap-4'>
+            <img src={ClassroomIcon} alt='Mis cursos' className='tw-w-10' />
+            <h2 className='tw-font-bold tw-mb-0'>Mis cursos</h2>
+          </div>
+        </div>
         {levels
           .filter((level) =>
             classrooms.find((value) => value.classroom.level_id === level.id)
