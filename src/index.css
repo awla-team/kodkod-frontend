@@ -7,6 +7,10 @@
   bottom: -80px !important;
 }
 
+.hs-messages-mobile.hs-messages-widget-open #hubspot-messages-iframe-container.widget-align-right {
+  bottom: 0 !important;
+}
+
 @layer base {
   @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap');
 
