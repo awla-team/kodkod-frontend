@@ -10,14 +10,15 @@ import type ILesson from 'types/models/Lesson';
 import { type AxiosResponse } from 'axios';
 import { FetchStatus } from 'global/enums';
 import Toaster from 'utils/Toster';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const SubjectActivities = () => {
-  const [selectedLesson, setSelectedLesson] = useState<ILesson>();
   const [lessons, setLessons] = useState<ILesson[]>();
   const [openSaveLesson, setOpenSaveLesson] = useState<boolean>(false);
-  const [openLesson, setOpenLesson] = useState<boolean>(false);
   const { classroomDetails } = useClassContext();
   const [isLoading, setIsLoading] = useState(FetchStatus.Idle);
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const loadClasroomUnits = useCallback(() => {
     setIsLoading(FetchStatus.Pending);
@@ -51,11 +52,6 @@ const SubjectActivities = () => {
 
   const reloadSubjectActivities = async () => {
     setOpenSaveLesson(false);
-    loadClasroomUnits();
-  };
-
-  const closeLessonDetails = async () => {
-    setOpenLesson(false);
     loadClasroomUnits();
   };
 
@@ -114,15 +110,6 @@ const SubjectActivities = () => {
       </div>
     );
 
-  if (openLesson && selectedLesson && classroomDetails) {
-    return (
-      <LessonDetails
-        handleClose={closeLessonDetails}
-        selectedLesson={selectedLesson}
-      />
-    );
-  }
-
   return (
     <div className='tw-space-y-20'>
       <div className='tw-flex tw-items-center tw-justify-between'>
@@ -163,10 +150,7 @@ const SubjectActivities = () => {
                 </div>
                 <div>
                   <button
-                    onClick={() => {
-                      setSelectedLesson(lesson);
-                      setOpenLesson(true);
-                    }}
+                    onClick={() => navigate(`${pathname}/${lesson.id}/details`)}
                     type='button'
                     className='tw-bg-white tw-text-black tw-boder-solid tw-border-black hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-indigo-100'
                   >
