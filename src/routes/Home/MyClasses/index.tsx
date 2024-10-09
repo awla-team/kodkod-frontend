@@ -5,7 +5,6 @@ import {
   Typography,
 } from '@mui/material';
 import { type MyClassesProps } from './interfaces';
-import { useEffect } from 'react';
 import { ExpandMore } from '@mui/icons-material';
 import ClassCard from 'components/ClassCard';
 import { MyClassesBox, LevelAccordion } from './styled';
@@ -14,15 +13,10 @@ import ClassroomIcon from 'assets/images/desk.png';
 const MyClasses: FC<MyClassesProps> = ({
   classrooms,
   levels,
-  getClassroomsData,
-}: MyClassesProps) => {
-  useEffect(() => {
-    getClassroomsData();
-  }, [getClassroomsData]);
-
+}) => {
   return (
     <div className='w-100'>
-      <MyClassesBox className='p-5'>
+      <MyClassesBox className='p-5 tw-border tw-border-solid tw-border-gray-200'>
         <Typography
           component='h1'
           variant='h4'
