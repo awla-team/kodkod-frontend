@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import UserInfo from 'components/Sidebar/UserInfo';
 import { useParams, useLocation } from 'react-router-dom';
 import { useAuth } from 'contexts/AuthContext';
@@ -7,12 +7,19 @@ import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import { useSubjectStore } from 'zustand/subject-store';
 import { useClassroom } from 'zustand/classroom-store';
 import { useOnboarding } from 'contexts/OnboardingContext';
-import { IconButton, Button } from '@mui/material';
+import { IconButton } from '@mui/material';
 
+// Extend Window with Hubspot types
 declare global {
-  interface Window { HubSpotConversations: any; }
+  interface Window {
+    HubSpotConversations: {
+      widget: {
+        close: () => void;
+        open: () => void;
+      }
+    };
+  }
 }
-
 window.HubSpotConversations = window.HubSpotConversations || {};
 
 const Header: React.FC = () => {
@@ -22,16 +29,13 @@ const Header: React.FC = () => {
   const { user } = useAuth();
   const location = useLocation();
   const { openOnboardingMenu } = useOnboarding();
-  const [isChatOpen, setIsChatOpen] = useState(false);
   const { widget } = window.HubSpotConversations;
 
   const toggleChatWidget = () => {
-    if (isChatOpen) {
+    if (document.firstElementChild?.classList.contains('hs-messages-widget-open')) {
       widget.close();
-      setIsChatOpen(false);
     } else {
       widget.open();
-      setIsChatOpen(true);
     }
   };
 
