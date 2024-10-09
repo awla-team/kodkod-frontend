@@ -1,8 +1,8 @@
-import { Button, CircularProgress, Fab, Typography } from '@mui/material';
+import { CircularProgress, Fab, Typography } from '@mui/material';
 import { useCallback, useEffect, useState } from 'react';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import { getLessonsByTeacherSubjectClassroomId } from 'services/lessons';
-import book from 'assets/images/book.png';
+import MyLessonsIcon from 'assets/images/books.png';
 import { useClassContext } from 'routes/Class/context';
 import SaveLesson from 'routes/Class/Subjects/SaveLesson';
 import LessonDetails from './Lesson';
@@ -96,8 +96,8 @@ const SubjectActivities = () => {
   return (
     <div className='tw-space-y-20'>
       <div className='tw-flex tw-items-center tw-justify-between'>
-        <div className='tw-flex tw-items-end tw-gap-2'>
-          <img src={book} alt='book' className='tw-w-10 tw-object-cover' />
+        <div className='tw-flex tw-items-end tw-gap-4'>
+          <img src={MyLessonsIcon} alt='book' className='tw-w-10' />
           <h2 className='tw-font-bold tw-mb-0'>Mis clases</h2>
         </div>
       </div>
