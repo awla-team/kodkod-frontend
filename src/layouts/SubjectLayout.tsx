@@ -1,10 +1,9 @@
-import { Outlet, NavLink } from 'react-router-dom';
+import { Outlet, NavLink, useParams } from 'react-router-dom';
 import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
 import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import { useEffect } from 'react';
 import { useSubjectStore } from 'zustand/subject-store';
-import { useParams } from 'react-router-dom';
 
 const LINKS: Array<{
   label: string;
@@ -36,30 +35,33 @@ const SubjectLayout = () => {
 
   useEffect(() => {
     fetchSubject(classId);
-  }, []);
+  }, [fetchSubject, classId]);
 
-  if (isLoading) return <></>;
+  if (isLoading) return;
 
   return (
-    <div>
-      <ul className='tw-flex tw-items-center tw-list-none tw-p-0 tw-gap-2'>
+    <div className='tw-flex tw-flex-col tw-gap-4'>
+      <ul className='tw-flex tw-items-center tw-list-none tw-p-0'>
         {LINKS.map(({ label, to, icon }) =>
           label === 'Analisis' ? (
             <li
               key={label}
-              className='tw-px-4 tw-py-4 tw-border tw-text-gray-400 tw-font-semibold tw-cursor-default'
+              className='tw-border tw-text-gray-400 tw-cursor-default'
             >
-              {icon}
-              {label}
+              <span className='tw-px-4'>
+                {icon}
+                {label}
+              </span>
             </li>
           ) : (
-            <li key={label} className='tw-px-4 tw-py-4 tw-border'>
+            <li key={label} className='tw-border'>
               <NavLink
                 to={to}
                 className={({ isActive }: { isActive: boolean }) =>
-                  isActive
-                    ? 'tw-text-primary tw-font-semibold'
-                    : 'tw-text-gray-700 tw-font-semibold'
+                  (isActive
+                    ? 'tw-text-primary-700 tw-relative before:tw-content-[""] before:tw-absolute before:tw-bottom-[-12px] before:tw-left-0 before:tw-w-full before:tw-h-[2px] before:tw-bg-primary-700'
+                    : 'tw-text-gray-700')
+                    + ' tw-px-4'
                 }
               >
                 {icon}
@@ -69,7 +71,6 @@ const SubjectLayout = () => {
           )
         )}
       </ul>
-
       <div className='tw-p-10 bg-white tw-rounded-md tw-mb-[80px]'>
         <Outlet />
       </div>
