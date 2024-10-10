@@ -130,14 +130,16 @@ const LessonDetails: React.FC<{
       <div className='tw-flex tw-justify-between'>
         <button
           type='button'
-          className='tw-flex tw-bg-transparent tw-text-primary tw-border-none hover:tw-underline'
+          className='tw-flex tw-bg-transparent tw-text-primary-500 tw-border-none hover:tw-underline'
           onClick={goBack}
         >
-          <h5 className='tw-font-semibold'>{'< Volver a mis clases'}</h5>
+          <h5 className='tw-font-semibold tw-text-primary-500'>
+            {'< Volver a mis clases'}
+          </h5>
         </button>
         <button
           type='button'
-          className='tw-flex tw-bg-transparent tw-text-primary tw-border-none'
+          className='tw-flex tw-bg-transparent tw-text-primary-500 tw-border-none'
           onClick={handleEditLesson}
         >
           <h5 className='tw-font-semibold'>
