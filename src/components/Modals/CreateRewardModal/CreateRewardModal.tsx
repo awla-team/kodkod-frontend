@@ -127,7 +127,7 @@ export default function CreateRewardModal() {
                 'tw-w-full',
                 !!errors.name || !!errors.description
                   ? 'tw-bg-gray-200 tw-text-black'
-                  : 'tw-bg-primary tw-text-white'
+                  : 'tw-bg-primary-500 tw-text-white'
               )}
               disabled={isSubmitting || !!errors.name || !!errors.description}
             >

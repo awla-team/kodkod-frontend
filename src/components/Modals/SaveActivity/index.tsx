@@ -136,7 +136,7 @@ const ViewSaveActivityDialog: FC<ViewSaveActivityDialogProps> = ({
                       </button>
                       <button
                         type='submit'
-                        className='tw-bg-primary tw-w-full'
+                        className='tw-bg-primary-500 tw-w-full'
                         disabled={isSubmitting}
                       >
                         Guardar
