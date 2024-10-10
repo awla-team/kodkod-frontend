@@ -1,19 +1,12 @@
 import type { FC } from 'react';
-import {
-  AccordionDetails,
-  AccordionSummary,
-  Typography,
-} from '@mui/material';
+import { AccordionDetails, AccordionSummary, Typography } from '@mui/material';
 import { type MyClassesProps } from './interfaces';
 import { ExpandMore } from '@mui/icons-material';
 import ClassCard from 'components/ClassCard';
 import { MyClassesBox, LevelAccordion } from './styled';
 import ClassroomIcon from 'assets/images/blackboard.png';
 
-const MyClasses: FC<MyClassesProps> = ({
-  classrooms,
-  levels,
-}) => {
+const MyClasses: FC<MyClassesProps> = ({ classrooms, levels }) => {
   return (
     <div className='w-100'>
       <MyClassesBox className='tw-p-10 tw-border tw-border-solid tw-border-gray-200'>
@@ -35,7 +28,10 @@ const MyClasses: FC<MyClassesProps> = ({
                 elevation={0}
                 key={id}
               >
-                <AccordionSummary expandIcon={<ExpandMore />} className="tw-border-b tw-border-gray-300 tw-border-solid">
+                <AccordionSummary
+                  expandIcon={<ExpandMore />}
+                  className='tw-border-b tw-border-gray-300 tw-border-solid'
+                >
                   <Typography component='span' variant='h6' className=''>
                     {name}
                   </Typography>

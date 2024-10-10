@@ -1,5 +1,6 @@
 import { Outlet, NavLink, useParams } from 'react-router-dom';
-import CollectionsBookmarkOutlinedIcon from '@mui/icons-material/CollectionsBookmarkOutlined';import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
+import CollectionsBookmarkOutlinedIcon from '@mui/icons-material/CollectionsBookmarkOutlined';
+import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import { useEffect } from 'react';
 import { useSubjectStore } from 'zustand/subject-store';
@@ -59,8 +60,8 @@ const SubjectLayout = () => {
                 className={({ isActive }: { isActive: boolean }) =>
                   (isActive
                     ? 'tw-text-primary-500 tw-relative before:tw-content-[""] before:tw-absolute before:tw-bottom-[-12px] before:tw-left-0 before:tw-w-full before:tw-h-[2px] before:tw-bg-primary-500'
-                    : 'tw-text-gray-700')
-                    + ' tw-px-4 tw-flex tw-items-center tw-gap-1'
+                    : 'tw-text-gray-700') +
+                  ' tw-px-4 tw-flex tw-items-center tw-gap-1'
                 }
               >
                 {icon}

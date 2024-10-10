@@ -188,13 +188,14 @@ const App: React.FC = () => {
       <OnboardingContextProvider>
         <ModalContextProvider>
           <div className='app-container d-flex'>
-            <Sidebar
-              classrooms={classrooms}
-            />
+            <Sidebar classrooms={classrooms} />
             <div className='tw-flex tw-flex-col tw-w-full '>
               <Header />
               <div className='app-main-container d-flex flex-column flex-fill'>
-                <div className='app-content container tw-py-8' id='home-onboarding-4'>
+                <div
+                  className='app-content container tw-py-8'
+                  id='home-onboarding-4'
+                >
                   <Outlet
                     context={{
                       classrooms,

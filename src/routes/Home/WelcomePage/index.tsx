@@ -15,9 +15,14 @@ const WelcomePage: FC = () => {
           >
             ¡Bienvenid@ a Kodkod!
           </Typography>
-          <Typography component='div' variant='body1' className='tw-text-center tw-px-5 tw-mb-5'>
-            Parece que aún no tienes cursos asociados a tu cuenta. Contacta con el administrador 
-            de la plataforma en tu colegio para asociar tus cursos.
+          <Typography
+            component='div'
+            variant='body1'
+            className='tw-text-center tw-px-5 tw-mb-5'
+          >
+            Parece que aún no tienes cursos asociados a tu cuenta. Contacta con
+            el administrador de la plataforma en tu colegio para asociar tus
+            cursos.
           </Typography>
         </div>
       </div>
