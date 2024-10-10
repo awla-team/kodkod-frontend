@@ -4,6 +4,7 @@ import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import { useEffect } from 'react';
 import { useSubjectStore } from 'zustand/subject-store';
+import { CircularProgress } from '@mui/material';
 
 const LINKS: Array<{
   label: string;
@@ -37,7 +38,15 @@ const SubjectLayout = () => {
     fetchSubject(classId);
   }, [fetchSubject, classId]);
 
-  if (isLoading) return;
+  if (isLoading) {
+    return (
+      <div className='app-container d-flex'>
+        <div className='d-flex w-100 h-100 justify-content-center align-items-center'>
+          <CircularProgress />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className='tw-flex tw-flex-col tw-gap-4'>
