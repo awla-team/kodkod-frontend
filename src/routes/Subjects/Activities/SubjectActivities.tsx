@@ -70,7 +70,11 @@ const SubjectActivities = () => {
 
   if (isLoading === FetchStatus.Error)
     return (
-      <Typography component='h6' variant='h5' className='tw-w-full tw-text-center'>
+      <Typography
+        component='h6'
+        variant='h5'
+        className='tw-w-full tw-text-center'
+      >
         Hubo un error al cargar los datos. Inténtalo de nuevo recargando la
         página.
       </Typography>
@@ -110,20 +114,31 @@ const SubjectActivities = () => {
               key={index}
               className='tw-rounded-md tw-flex tw-h-auto tw-flex-col'
             >
-              <div className='tw-flex tw-justify-between tw-items-center tw-p-4 hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out hover:tw-bg-sky-50' onClick={() => {
+              <div
+                className='tw-flex tw-justify-between tw-items-center tw-p-4 hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out hover:tw-bg-sky-50'
+                onClick={() => {
                   setSelectedLesson(lesson);
                   setOpenLesson(true);
-                }}>
+                }}
+              >
                 <div className='tw-flex tw-flex-col tw-gap-2'>
                   <div className='tw-flex tw-items-center tw-gap-2'>
                     <span className='tw-flex tw-items-center tw-font-semibold tw-gap-4'>
                       {lesson.title}{' '}
                     </span>
-                    {lesson.ended_at && <Chip label='Clase finalizada' color='success' size='small'/>}
+                    {lesson.ended_at && (
+                      <Chip
+                        label='Clase finalizada'
+                        color='success'
+                        size='small'
+                      />
+                    )}
                   </div>
                   <span className='tw-text-sm tw-text-gray-500'>
                     {lesson.ended_at
-                      ? `Finalizado el ${moment(lesson.ended_at).format('DD/MM/YYYY')}`
+                      ? `Finalizado el ${moment(lesson.ended_at).format(
+                          'DD/MM/YYYY'
+                        )}`
                       : 'En progreso'}
                   </span>
                 </div>
@@ -141,18 +156,32 @@ const SubjectActivities = () => {
                 </div>
               </div>
 
-              {index + 1 === lessons.length ? '' : <hr className='tw-border-gray-500 tw-m-0'/>}
+              {index + 1 === lessons.length ? (
+                ''
+              ) : (
+                <hr className='tw-border-gray-500 tw-m-0' />
+              )}
             </div>
           ))}
         </div>
       ) : (
         <div>
-          <Typography component='h6' variant='h5' className='tw-w-full tw-text-center tw-text-gray-400 tw-py-20'>
+          <Typography
+            component='h6'
+            variant='h5'
+            className='tw-w-full tw-text-center tw-text-gray-400 tw-py-20'
+          >
             Crea tu primera clase para comenzar
           </Typography>
         </div>
       )}
-      <Fab size='large' onClick={() => setOpenSaveLesson(true)} variant='extended' color='primary' className='tw-fixed tw-bottom-6 tw-right-6 tw-gap-2 tw-z-0'>
+      <Fab
+        size='large'
+        onClick={() => setOpenSaveLesson(true)}
+        variant='extended'
+        color='primary'
+        className='tw-fixed tw-bottom-6 tw-right-6 tw-gap-2 tw-z-0'
+      >
         <AddOutlinedIcon />
         <span>Nueva clase</span>
       </Fab>

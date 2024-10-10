@@ -63,11 +63,7 @@ const ClassCard: React.FC<{
               ? classroom?.subject.title
               : 'Sin Informacion'}
           </Typography>
-          <Typography
-            className='tw-flex'
-            component='span'
-            textAlign='center'
-          >
+          <Typography className='tw-flex' component='span' textAlign='center'>
             {classroom?.classroom.students?.length
               ? classroom?.classroom.students.length + ' Estudiantes'
               : '0 Estudiantes'}

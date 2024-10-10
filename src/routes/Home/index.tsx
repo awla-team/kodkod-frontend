@@ -10,11 +10,10 @@ const HomePage: FC = () => {
   // const [onboardingDone, setOnboardingDone] = useState(true);
   // const { setNewAvailableTours } = useOnboarding();
   // const { setIsOpen, setSteps, setCurrentStep } = useTour();
-  const { classrooms, levels } =
-    useOutletContext() as {
-      classrooms: ITeacherSubjectClassroom[];
-      levels: Levels[];
-    };
+  const { classrooms, levels } = useOutletContext() as {
+    classrooms: ITeacherSubjectClassroom[];
+    levels: Levels[];
+  };
 
   // useEffect(() => {
   //   let rawOnboardingData: string | null = '';
@@ -60,10 +59,7 @@ const HomePage: FC = () => {
       {!classrooms?.length ? (
         <WelcomePage />
       ) : (
-        <MyClasses
-          classrooms={classrooms}
-          levels={levels}
-        />
+        <MyClasses classrooms={classrooms} levels={levels} />
       )}
     </div>
   );

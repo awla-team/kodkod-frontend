@@ -37,7 +37,9 @@ const OnboardingContextProvider: React.FC<PropsWithChildren> = ({
   };
 
   return (
-    <OnboardingContext.Provider value={{ setNewAvailableTours, openOnboardingMenu }}>
+    <OnboardingContext.Provider
+      value={{ setNewAvailableTours, openOnboardingMenu }}
+    >
       {children}
       <Menu
         anchorEl={anchorEl}

@@ -16,7 +16,7 @@ declare global {
       widget: {
         close: () => void;
         open: () => void;
-      }
+      };
     };
   }
 }
@@ -32,7 +32,9 @@ const Header: React.FC = () => {
   const { widget } = window.HubSpotConversations;
 
   const toggleChatWidget = () => {
-    if (document.firstElementChild?.classList.contains('hs-messages-widget-open')) {
+    if (
+      document.firstElementChild?.classList.contains('hs-messages-widget-open')
+    ) {
       widget.close();
     } else {
       widget.open();
@@ -53,19 +55,25 @@ const Header: React.FC = () => {
         location.pathname.includes(`classroom/${classId}`) &&
         classroom && (
           <div className='tw-pl-4'>
-            <h4 className='tw-text-xs tw-mb-0'>
-              Curso seleccionado:
-            </h4>
+            <h4 className='tw-text-xs tw-mb-0'>Curso seleccionado:</h4>
             <span className='tw-font-semibold'>
               {classroom.title || '?'} - {subject.title || '?'}
             </span>
           </div>
         )}
       <div className='tw-flex tw-items-center tw-gap-2'>
-        <IconButton onClick={toggleChatWidget} id='tour-fab-button' color='default'>
+        <IconButton
+          onClick={toggleChatWidget}
+          id='tour-fab-button'
+          color='default'
+        >
           <SupportAgentIcon />
         </IconButton>
-        <IconButton onClick={openOnboardingMenu} id='tour-fab-button' color='default'>
+        <IconButton
+          onClick={openOnboardingMenu}
+          id='tour-fab-button'
+          color='default'
+        >
           <QuestionMarkIcon />
         </IconButton>
         <UserInfo user={user} />
