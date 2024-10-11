@@ -40,7 +40,7 @@ const ViewEditActivityDialog: FC<ViewEditActivityDialogProps> = ({
         editActivity(activity, index);
 
         handleClose();
-        Toaster('success', `Actividad agregada`);
+        Toaster('success', `Actividad editada`);
       }
       if (editedActivity) {
         const activity: IActivity = {
@@ -54,11 +54,11 @@ const ViewEditActivityDialog: FC<ViewEditActivityDialogProps> = ({
         modifyEditLessonActivity(activity, index);
 
         handleClose();
-        Toaster('success', `Actividad agregada`);
+        Toaster('success', `Actividad editada`);
       }
     } catch (e) {
       console.log(e);
-      Toaster('error', 'Error al crear actividad');
+      Toaster('error', 'Error al editar actividad');
     }
   };
 

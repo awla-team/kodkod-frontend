@@ -24,6 +24,7 @@ interface Action {
   clearNewLessonData: () => void;
   addEditLessonActivity: (activity: IActivity) => void;
   modifyEditLessonActivity: (activity: IActivity, index: number) => void;
+  deleteEditLessonActivity: (index: number) => void;
   addEditLessonReward: (reward: IReward) => void;
   modifyEditLessonReward: (reward: IReward, index: number) => void;
   deleteEditLessonReward: (index: number) => void;
@@ -87,6 +88,12 @@ const createLessonStore = create<State & Action>((set) => ({
           innerIndex === index ? activity : mapActivity
       ),
     })),
+  deleteEditLessonActivity: (index) =>
+    set((state) => ({
+      editLessonActivities: state.editLessonActivities.filter(
+        (_, i) => i !== index
+      ),
+    })),
   addEditLessonReward: (reward) =>
     set((state) => ({
       editLessonRewards: [...state.editLessonRewards, reward],
@@ -99,7 +106,7 @@ const createLessonStore = create<State & Action>((set) => ({
     })),
   deleteEditLessonReward: (index) =>
     set((state) => ({
-      editLessonRewards: state.editLessonRewards.splice(index, 1),
+      editLessonRewards: state.editLessonRewards.filter((_, i) => i !== index),
     })),
 
   addActivity: (activity) =>
@@ -112,7 +119,7 @@ const createLessonStore = create<State & Action>((set) => ({
     })),
   deleteActivity: (index) =>
     set((state) => ({
-      activities: state.activities.splice(index, 1),
+      activities: state.activities.filter((_, i) => i !== index),
     })),
 
   addReward: (reward) =>
@@ -125,7 +132,7 @@ const createLessonStore = create<State & Action>((set) => ({
     })),
   deleteReward: (index) =>
     set((state) => ({
-      rewards: state.rewards.splice(index, 1),
+      rewards: state.rewards.filter((_, i) => i !== index),
     })),
 }));
 

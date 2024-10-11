@@ -5,9 +5,11 @@ import { useCreateLesson } from 'zustand/create-lesson-store';
 export default function DeleteRewardModalDialog({
   editedReward,
   index,
+  rewardDeleteListAdd,
 }: {
   editedReward: boolean;
   index: number;
+  rewardDeleteListAdd?: () => void;
 }) {
   const { closeModal } = useModalStore();
   const { deleteReward, deleteEditLessonReward } = useCreateLesson();
@@ -19,6 +21,9 @@ export default function DeleteRewardModalDialog({
 
   const confirmDeleteEdited = () => {
     deleteEditLessonReward(index);
+    if (rewardDeleteListAdd) {
+      rewardDeleteListAdd();
+    }
     closeModal();
   };
 
