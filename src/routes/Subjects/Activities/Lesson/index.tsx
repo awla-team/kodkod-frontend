@@ -34,7 +34,7 @@ const LessonDetails: React.FC<{
     refetch: reloadActivities,
   } = useQuery({
     queryKey: ['activities', selectedLesson?.id],
-    queryFn: () => getActivityByLessonId(selectedLesson.id),
+    queryFn: async () => await getActivityByLessonId(selectedLesson.id),
     enabled: !!selectedLesson?.id,
   });
 
@@ -44,7 +44,7 @@ const LessonDetails: React.FC<{
     refetch: reloadRewards,
   } = useQuery({
     queryKey: ['rewards', selectedLesson?.id],
-    queryFn: () => getRewardsByLessonId(selectedLesson.id),
+    queryFn: async () => await getRewardsByLessonId(selectedLesson.id),
     enabled: !!selectedLesson?.id,
   });
 
@@ -92,10 +92,10 @@ const LessonDetails: React.FC<{
   if (openEditLesson && selectedLesson) {
     return (
       <EditLesson
-        handleClose={() => {
+        handleClose={async () => {
           setOpenEditLesson(false);
-          reloadActivities();
-          reloadRewards();
+          await reloadActivities();
+          await reloadRewards();
         }}
         lessonActivities={activities}
         lessonRewards={rewards}
