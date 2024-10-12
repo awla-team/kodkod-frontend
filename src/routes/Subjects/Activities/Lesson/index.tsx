@@ -1,88 +1,52 @@
+import { useState } from 'react';
 import { CircularProgress, Drawer } from '@mui/material';
-import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import type ILesson from 'types/models/Lesson';
 import { getActivityByLessonId } from 'services/activities';
 import type IActivity from 'types/models/Activity';
-import { type AxiosResponse } from 'axios';
-import { FetchStatus } from 'global/enums';
 import LessonRewardCard from 'components/LessonRewardCard';
-import type IReward from 'types/models/Reward';
 import { getRewardsByLessonId } from 'services/rewards';
 import EditLesson from './EditLesson';
 import ActivityStudentsDrawer from 'components/drawers/ActivityStudentsDrawer';
-import { useModalStore } from 'contexts/ZustandContext/modal-context';
+import { useQuery } from '@tanstack/react-query';
 
 const LessonDetails: React.FC<{
   selectedLesson: ILesson;
   handleClose: () => void;
 }> = ({ selectedLesson, handleClose }) => {
-  const { openModal } = useModalStore();
   const [openEditLesson, setOpenEditLesson] = useState<boolean>(false);
   const [openActivitiesDrawer, setOpenActivitiesDrawer] =
     useState<boolean>(false);
-  const [fetching, setFetching] = useState<FetchStatus>(FetchStatus.Idle);
-
-  const [activities, setActivities] = useState<IActivity[]>([]);
-  const [rewards, setRewards] = useState<IReward[]>([]);
-  const [selectedActivity, setSelectedActivity] = useState<IActivity | null>(
-    null
-  );
+  const [selectedActivity, setSelectedActivity] = useState<
+    | (IActivity & {
+        studentsCompletedActivity: number;
+      })
+    | null
+  >(null);
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  const getActivitiesData = () => {
-    try {
-      if (selectedLesson?.id) {
-        getActivityByLessonId(selectedLesson.id)
-          .then((response: AxiosResponse) => {
-            return response?.data;
-          })
-          .then((activityList: IActivity[]) => {
-            setActivities(activityList);
-            setFetching(FetchStatus.Success);
-          })
-          .catch((error) => {
-            setFetching(FetchStatus.Error);
-            console.error(error);
-          });
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const {
+    data: activitiesResponse,
+    isPending: isPendingActivities,
+    refetch: reloadActivities,
+  } = useQuery({
+    queryKey: ['activities', selectedLesson?.id],
+    queryFn: () => getActivityByLessonId(selectedLesson.id),
+    enabled: !!selectedLesson?.id,
+  });
 
-  const getRewardsData = () => {
-    try {
-      if (selectedLesson?.id) {
-        getRewardsByLessonId(selectedLesson.id)
-          .then((response: AxiosResponse) => {
-            return response?.data;
-          })
-          .then((rewardList: IReward[]) => {
-            setRewards(rewardList);
-          })
-          .catch((error) => {
-            setFetching(FetchStatus.Error);
-            console.error(error);
-          });
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const loadData = () => {
-    setFetching(FetchStatus.Pending);
-    getRewardsData();
-    getActivitiesData();
-  };
-
-  useEffect(() => {
-    loadData();
-  }, [selectedLesson]);
+  const {
+    data: rewardsResponse,
+    isPending: isPendingRewards,
+    refetch: reloadRewards,
+  } = useQuery({
+    queryKey: ['rewards', selectedLesson?.id],
+    queryFn: () => getRewardsByLessonId(selectedLesson.id),
+    enabled: !!selectedLesson?.id,
+  });
 
   const goBack = () => {
     handleClose();
@@ -95,7 +59,11 @@ const LessonDetails: React.FC<{
     setOpenActivitiesDrawer(value);
   };
 
-  const openActivityDrawer = (activity: IActivity) => {
+  const openActivityDrawer = (
+    activity: IActivity & {
+      studentsCompletedActivity: number;
+    }
+  ) => {
     setSelectedActivity(activity);
     setOpenActivitiesDrawer(true);
   };
@@ -104,19 +72,30 @@ const LessonDetails: React.FC<{
     setOpenActivitiesDrawer(false);
   };
 
-  if (fetching === FetchStatus.Idle || fetching === FetchStatus.Pending)
+  if (isPendingRewards || isPendingActivities)
     return (
-      <div className='app-container d-flex justify-content-center align-items-center'>
+      <div className='d-flex justify-content-center align-items-center'>
         <CircularProgress />
       </div>
     );
+
+  if (!activitiesResponse || !rewardsResponse)
+    return (
+      <div>
+        <h5>No hay actividades disponibles para esta clase</h5>
+      </div>
+    );
+
+  const { data: activities } = activitiesResponse;
+  const { data: rewards } = rewardsResponse;
 
   if (openEditLesson && selectedLesson) {
     return (
       <EditLesson
         handleClose={() => {
           setOpenEditLesson(false);
-          loadData();
+          reloadActivities();
+          reloadRewards();
         }}
         lessonActivities={activities}
         lessonRewards={rewards}
@@ -173,7 +152,7 @@ const LessonDetails: React.FC<{
                   </h5>
                 </div>
                 <h5 className='tw-text-white tw-m-8 tw-font-bold'>
-                  <EmojiPeopleIcon /> 0
+                  <EmojiPeopleIcon /> {activity.studentsCompletedActivity}
                 </h5>
               </div>
             </div>
@@ -197,7 +176,7 @@ const LessonDetails: React.FC<{
             </h5>
             <div className='tw-absolute tw-top-0 tw-right-0'>
               <h5 className='tw-text-white tw-font-bold tw-m-0 tw-text-sm'>
-                <EmojiPeopleIcon /> 0
+                <EmojiPeopleIcon /> {selectedActivity.studentsCompletedActivity}
               </h5>
             </div>
           </div>
@@ -213,6 +192,7 @@ const LessonDetails: React.FC<{
           <ActivityStudentsDrawer
             activity={selectedActivity}
             closeDrawer={closeActivityDrawer}
+            reloadActivities={reloadActivities}
           />
         )}
       </Drawer>

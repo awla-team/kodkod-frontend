@@ -3,7 +3,13 @@ import { type IActivitySaved } from './../types/models/Activity';
 import http from 'global/api';
 
 export const getActivityByLessonId = async (lessonId: number) => {
-  return await http.get(`activity?lesson_id=${lessonId}`);
+  return await http.get<
+    Array<
+      IActivity & {
+        studentsCompletedActivity: number;
+      }
+    >
+  >(`activity?lesson_id=${lessonId}`);
 };
 
 export const saveActivity = async (activity: IActivitySaved) => {

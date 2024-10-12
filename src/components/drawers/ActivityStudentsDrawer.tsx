@@ -19,9 +19,14 @@ import type { StudentCompleteActivity } from 'types/models/StudentActivity';
 interface Props {
   activity: IActivity;
   closeDrawer: () => void;
+  reloadActivities: () => void;
 }
 
-const ActivityStudentsDrawer: React.FC<Props> = ({ activity, closeDrawer }) => {
+const ActivityStudentsDrawer: React.FC<Props> = ({
+  activity,
+  closeDrawer,
+  reloadActivities,
+}) => {
   const [registers, setRegisters] = useState<StudentCompleteActivity[]>([]);
   const [filteredRegisters, setFilteredRegisters] = useState<
     StudentCompleteActivity[]
@@ -106,6 +111,7 @@ const ActivityStudentsDrawer: React.FC<Props> = ({ activity, closeDrawer }) => {
         await studentActivity.createWithList(removeRegisterData);
       if (status === 201) {
         Toaster('success', 'Los estudiantes han finalizado la actividad');
+        reloadActivities();
         closeDrawer();
       }
     } catch (e) {
