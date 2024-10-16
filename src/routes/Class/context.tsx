@@ -2,6 +2,7 @@ import {
   createContext,
   type FC,
   type PropsWithChildren,
+  useCallback,
   useContext,
   useEffect,
   useState,
@@ -56,46 +57,7 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const { classId } = useParams();
 
-  const getLevels = async () => {
-    try {
-      const { data }: { data: { responseData: Levels[] } } =
-        await getAllTheLevel();
-      setLevels(
-        data.responseData.sort((a, b) => {
-          if (a.name > b.name) return 1;
-          if (a.name < b.name) return -1;
-          return 0;
-        })
-      );
-    } catch (error: any) {
-      console.error(error);
-      Toaster('error', 'Hubo un error al cargar los niveles');
-    }
-  };
-
-  useEffect(() => {
-    if (classId) {
-      getClassroomDetailsData();
-      // FIXME: fix this eslint error
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      getLevels();
-    }
-  }, [classId]);
-
-  const getClassById = async (id: number | string) => {
-    setLoadingClass(FetchStatus.Pending);
-    try {
-      const { data }: { data: IClass } = await getClassByID(id);
-      setClassDetails(data);
-      setLoadingClass(FetchStatus.Success);
-    } catch (error: any) {
-      console.error(error);
-      Toaster('error', 'Hubo un error al cargar el curso');
-      setLoadingClass(FetchStatus.Error);
-    }
-  };
-
-  const getClassroomDetailsData = () => {
+  const getClassroomDetailsData = useCallback(() => {
     setLoadingClass(FetchStatus.Pending);
     try {
       if (classId) {
@@ -117,6 +79,43 @@ const ClassContextProvider: FC<PropsWithChildren> = ({ children }) => {
       }
     } catch (error) {
       console.error(error);
+    }
+  }, [classId, setClassroom, setSubject]);
+
+  const getLevels = useCallback(async () => {
+    try {
+      const { data }: { data: { responseData: Levels[] } } =
+        await getAllTheLevel();
+      setLevels(
+        data.responseData.sort((a, b) => {
+          if (a.name > b.name) return 1;
+          if (a.name < b.name) return -1;
+          return 0;
+        })
+      );
+    } catch (error: any) {
+      console.error(error);
+      Toaster('error', 'Hubo un error al cargar los niveles');
+    }
+  }, []);
+
+  useEffect(() => {
+    if (classId) {
+      getClassroomDetailsData();
+      void getLevels();
+    }
+  }, [classId, getClassroomDetailsData, getLevels]);
+
+  const getClassById = async (id: number | string) => {
+    setLoadingClass(FetchStatus.Pending);
+    try {
+      const { data }: { data: IClass } = await getClassByID(id);
+      setClassDetails(data);
+      setLoadingClass(FetchStatus.Success);
+    } catch (error: any) {
+      console.error(error);
+      Toaster('error', 'Hubo un error al cargar el curso');
+      setLoadingClass(FetchStatus.Error);
     }
   };
 

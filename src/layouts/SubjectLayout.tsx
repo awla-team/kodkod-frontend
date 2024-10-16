@@ -1,10 +1,7 @@
-import { Outlet, NavLink, useParams } from 'react-router-dom';
+import { Outlet, NavLink } from 'react-router-dom';
 import CollectionsBookmarkOutlinedIcon from '@mui/icons-material/CollectionsBookmarkOutlined';
 import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
 import BarChartIcon from '@mui/icons-material/BarChart';
-import { useEffect } from 'react';
-import { useSubjectStore } from 'zustand/subject-store';
-import { CircularProgress } from '@mui/material';
 
 const LINKS: Array<{
   label: string;
@@ -31,23 +28,6 @@ const LINKS: Array<{
 ];
 
 const SubjectLayout = () => {
-  const { fetchSubject, isLoading } = useSubjectStore();
-  const { classId } = useParams() as { classId: string };
-
-  useEffect(() => {
-    fetchSubject(classId);
-  }, [fetchSubject, classId]);
-
-  if (isLoading) {
-    return (
-      <div className='app-container d-flex'>
-        <div className='d-flex w-100 h-100 justify-content-center align-items-center'>
-          <CircularProgress />
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className='tw-flex tw-flex-col tw-gap-4'>
       <ul className='tw-flex tw-items-center tw-list-none tw-p-0'>
