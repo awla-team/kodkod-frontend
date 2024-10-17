@@ -49,20 +49,20 @@ const ViewDeleteActivityDialog: FC<ViewDeleteActivityDialogProps> = ({
         <DialogContent dividers className='mb-3'>
           <div className='tw-space-y-6'>
             <h5 className='tw-flex tw-justify-center tw-mb-8'>
-              <b>Quiere eliminar esta recompensa?</b>
+              <b>Quiere eliminar esta actividad?</b>
             </h5>
-            <div className='tw-flex tw-items-center tw-gap-1'>
+            <div className='tw-flex tw-justify-center tw-items-center tw-gap-6'>
               <button
                 onClick={handleClose}
                 type='button'
-                className=' tw-bg-gray-200 text-black tw-w-full'
+                className=' tw-bg-white tw-border-black text-black'
               >
                 Cancelar
               </button>
               <button
                 type='submit'
                 onClick={onSubmit}
-                className='tw-bg-danger tw-w-full'
+                className='tw-bg-red-500'
               >
                 Confirmar
               </button>
