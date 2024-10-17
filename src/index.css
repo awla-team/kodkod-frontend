@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+#hubspot-messages-iframe-container.widget-align-right {
+  z-index: 999 !important;
+  bottom: -80px !important;
+}
+
+.hs-messages-mobile.hs-messages-widget-open
+  #hubspot-messages-iframe-container.widget-align-right {
+  bottom: 0 !important;
+}
+
 @layer base {
   @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap');
 
@@ -31,6 +41,10 @@
 
   .reactour__popover .reactour__close-button svg {
     color: #000;
+  }
+
+  .border-gray {
+    border: 1px solid rgba(0, 0, 0, 0.08);
   }
 
   a {
@@ -144,9 +158,5 @@
     font-weight: normal;
     font-style: normal;
     font-display: swap;
-  }
-
-  #hubspot-messages-iframe-container {
-    z-index: 999 !important;
   }
 }

@@ -1,56 +1,21 @@
 import type { FC } from 'react';
-import {
-  AccordionDetails,
-  AccordionSummary,
-  Divider,
-  Typography,
-} from '@mui/material';
+import { AccordionDetails, AccordionSummary, Typography } from '@mui/material';
 import { type MyClassesProps } from './interfaces';
-import { useEffect } from 'react';
 import { ExpandMore } from '@mui/icons-material';
 import ClassCard from 'components/ClassCard';
-import { MyClassesBox, LevelAccordion, MyClassesContainer } from './styled';
-import ClassroomIcon from 'assets/images/desk.png';
+import { MyClassesBox, LevelAccordion } from './styled';
+import ClassroomIcon from 'assets/images/blackboard.png';
 
-const MyClasses: FC<MyClassesProps> = ({
-  classrooms,
-  levels,
-  getClassroomsData,
-}: MyClassesProps) => {
-  useEffect(() => {
-    getClassroomsData();
-  }, []);
-
-  if (!classrooms || classrooms.length === 0) {
-    return (
-      <MyClassesContainer className='w-100'>
-        <MyClassesBox className='p-5'>
-          <Typography
-            component='h1'
-            variant='h4'
-            className='fw-bold mb-1 tw-flex'
-            id='home-onboarding-4'
-          >
-            <img className='tw-w-10 tw-mr-4' src={ClassroomIcon} alt='icon' />
-            Cursos
-          </Typography>
-        </MyClassesBox>
-      </MyClassesContainer>
-    );
-  }
-
+const MyClasses: FC<MyClassesProps> = ({ classrooms, levels }) => {
   return (
-    <MyClassesContainer className='w-100'>
-      <MyClassesBox className='p-5'>
-        <Typography
-          component='h1'
-          variant='h4'
-          className='fw-bold mb-1 tw-flex'
-          id='home-onboarding-4'
-        >
-          <img className='tw-w-10 tw-mr-4' src={ClassroomIcon} alt='icon' />
-          Cursos
-        </Typography>
+    <div className='w-100'>
+      <MyClassesBox className='tw-p-10 tw-border tw-border-solid tw-border-gray-200'>
+        <div className='tw-flex tw-items-center tw-justify-between tw-mb-8'>
+          <div className='tw-flex tw-items-end tw-gap-4'>
+            <img src={ClassroomIcon} alt='Mis cursos' className='tw-w-10' />
+            <h2 className='tw-font-bold tw-mb-0'>Mis cursos</h2>
+          </div>
+        </div>
         {levels
           .filter((level) =>
             classrooms.find((value) => value.classroom.level_id === level.id)
@@ -63,13 +28,15 @@ const MyClasses: FC<MyClassesProps> = ({
                 elevation={0}
                 key={id}
               >
-                <AccordionSummary expandIcon={<ExpandMore />}>
-                  <Typography component='span' variant='h5' className=''>
+                <AccordionSummary
+                  expandIcon={<ExpandMore />}
+                  className='tw-border-b tw-border-gray-300 tw-border-solid'
+                >
+                  <Typography component='span' variant='h6' className=''>
                     {name}
                   </Typography>
                 </AccordionSummary>
-                <Divider variant='middle' color='black' className='mb-4' />
-                <AccordionDetails className='class__level__cards__container row'>
+                <AccordionDetails className='class__level__cards__container row tw-py-5'>
                   {classrooms
                     .filter(
                       (teacherClass, _index) =>
@@ -88,7 +55,7 @@ const MyClasses: FC<MyClassesProps> = ({
             );
           })}
       </MyClassesBox>
-    </MyClassesContainer>
+    </div>
   );
 };
 

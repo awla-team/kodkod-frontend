@@ -1,8 +1,8 @@
-import { CircularProgress, Typography } from '@mui/material';
+import { Button, Chip, CircularProgress, Fab, Typography } from '@mui/material';
 import { useCallback, useEffect, useState } from 'react';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import { getLessonsByTeacherSubjectClassroomId } from 'services/lessons';
-import book from 'assets/images/book.png';
+import MyLessonsIcon from 'assets/images/books.png';
 import { useClassContext } from 'routes/Class/context';
 import SaveLesson from 'routes/Class/Subjects/SaveLesson';
 import LessonDetails from './Lesson';
@@ -10,6 +10,7 @@ import type ILesson from 'types/models/Lesson';
 import { type AxiosResponse } from 'axios';
 import { FetchStatus } from 'global/enums';
 import Toaster from 'utils/Toster';
+import moment from 'moment';
 
 const SubjectActivities = () => {
   const [selectedLesson, setSelectedLesson] = useState<ILesson>();
@@ -59,16 +60,21 @@ const SubjectActivities = () => {
     loadClasroomUnits();
   };
 
-  if (isLoading === FetchStatus.Idle || isLoading === FetchStatus.Pending)
+  if (isLoading === FetchStatus.Idle || isLoading === FetchStatus.Pending) {
     return (
       <div className='tw-flex tw-justify-center tw-items-center'>
         <CircularProgress />
       </div>
     );
+  }
 
   if (isLoading === FetchStatus.Error)
     return (
-      <Typography component='h1' variant='h5' className='text-center'>
+      <Typography
+        component='h6'
+        variant='h5'
+        className='tw-w-full tw-text-center'
+      >
         Hubo un error al cargar los datos. Inténtalo de nuevo recargando la
         página.
       </Typography>
@@ -83,37 +89,6 @@ const SubjectActivities = () => {
     );
   }
 
-  if (lessons && lessons.length === 0)
-    return (
-      <div className='tw-space-y-20'>
-        <div className='tw-flex tw-items-center tw-justify-between'>
-          <div className='tw-flex tw-items-end tw-gap-2'>
-            <img src={book} alt='book' className='tw-w-10 tw-object-cover' />
-            <h2 className='tw-font-bold tw-mb-0'>Mis clases</h2>
-          </div>
-        </div>
-        <Typography component='h1' variant='h5' className='text-center'>
-          No hay clases disponibles
-        </Typography>
-        <div className='tw-flex tw-justify-end tw-mt-20'>
-          <button
-            onClick={() => {
-              setOpenSaveLesson(true);
-            }}
-            type='button'
-            className='tw-border tw-rounded-full tw-bg-[#003CAF]'
-          >
-            <h4 className='tw-flex tw-flex-row tw-items-center tw-justify-center'>
-              <b className='tw-flex tw-flex-row tw-items-center tw-justify-center tw-mr-2'>
-                <AddOutlinedIcon fontSize='large' />
-                Nueva clase
-              </b>
-            </h4>
-          </button>
-        </div>
-      </div>
-    );
-
   if (openLesson && selectedLesson && classroomDetails) {
     return (
       <LessonDetails
@@ -124,97 +99,92 @@ const SubjectActivities = () => {
   }
 
   return (
-    <div className='tw-space-y-20'>
-      <div className='tw-flex tw-items-center tw-justify-between'>
-        <div className='tw-flex tw-items-end tw-gap-2'>
-          <img src={book} alt='book' className='tw-w-10 tw-object-cover' />
+    <div>
+      <div className='tw-flex tw-items-center tw-justify-between tw-mb-8'>
+        <div className='tw-flex tw-items-end tw-gap-4'>
+          <img src={MyLessonsIcon} alt='book' className='tw-w-10' />
           <h2 className='tw-font-bold tw-mb-0'>Mis clases</h2>
         </div>
       </div>
 
       {lessons && lessons.length > 0 ? (
-        <div className='tw-h-auto tw-flex tw-flex-col tw-mx-3'>
+        <div className='tw-flex tw-flex-col'>
           {lessons.map((lesson, index) => (
             <div
               key={index}
               className='tw-rounded-md tw-flex tw-h-auto tw-flex-col'
             >
-              <div className='tw-flex tw-justify-between tw-items-center tw-mx-4'>
-                <div>
-                  <h4 className='tw-flex tw-items-center tw-font-semibold tw-mb-4 tw-gap-4'>
-                    {lesson.title}{' '}
-                    {lesson.ended_at ? (
-                      <div className='tw-border tw-rounded-full tw-bg-[#0E8A1A]'>
-                        <h5 className='tw-mx-3 tw-my-2 tw-text-white'>
-                          <b>Clase finalizada</b>
-                        </h5>
-                      </div>
-                    ) : (
-                      ''
+              <div
+                className='tw-flex tw-justify-between tw-items-center tw-p-4 hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out hover:tw-bg-sky-50'
+                onClick={() => {
+                  setSelectedLesson(lesson);
+                  setOpenLesson(true);
+                }}
+              >
+                <div className='tw-flex tw-flex-col tw-gap-2'>
+                  <div className='tw-flex tw-items-center tw-gap-2'>
+                    <span className='tw-flex tw-items-center tw-font-semibold tw-gap-4'>
+                      {lesson.title}{' '}
+                    </span>
+                    {lesson.ended_at && (
+                      <Chip
+                        label='Clase finalizada'
+                        color='success'
+                        size='small'
+                      />
                     )}
-                  </h4>
-                  <h5>
+                  </div>
+                  <span className='tw-text-sm tw-text-gray-500'>
                     {lesson.ended_at
-                      ? `Finalizado el ${new Date(
-                          lesson.ended_at
-                        ).toLocaleDateString()}`
+                      ? `Finalizado el ${moment(lesson.ended_at).format(
+                          'DD/MM/YYYY'
+                        )}`
                       : 'En progreso'}
-                  </h5>
+                  </span>
                 </div>
                 <div>
-                  <button
+                  <Button
                     onClick={() => {
                       setSelectedLesson(lesson);
                       setOpenLesson(true);
                     }}
-                    type='button'
-                    className='tw-bg-white tw-text-black tw-boder-solid tw-border-black hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-indigo-100'
+                    variant='outlined'
+                    color='primary'
                   >
                     <b> {'Ver Clase '}</b>
-                  </button>
+                  </Button>
                 </div>
               </div>
 
-              {index + 1 === lessons.length ? '' : <hr />}
+              {index + 1 === lessons.length ? (
+                ''
+              ) : (
+                <hr className='tw-border-gray-500 tw-m-0' />
+              )}
             </div>
           ))}
-
-          <div className='tw-flex tw-justify-end tw-mt-20'>
-            <button
-              onClick={() => {
-                setOpenSaveLesson(true);
-              }}
-              type='button'
-              className='tw-border tw-rounded-full tw-bg-[#003CAF]'
-            >
-              <h4 className='tw-flex tw-flex-row tw-items-center tw-justify-center'>
-                <b className='tw-flex tw-flex-row tw-items-center tw-justify-center tw-mr-2'>
-                  <AddOutlinedIcon fontSize='large' />
-                  Nueva clase
-                </b>
-              </h4>
-            </button>
-          </div>
         </div>
       ) : (
-        <div className='tw-flex tw-justify-center tw-items-center tw-flex-col tw-gap-2'>
-          <h2>
-            <b className='tw-text-gray-500'>Crea una clase para empezar</b>
-          </h2>
-          <button
-            onClick={() => {
-              setOpenSaveLesson(true);
-            }}
-            type='button'
-            className='tw-border tw-rounded-full tw-bg-[#003CAF]'
+        <div>
+          <Typography
+            component='h6'
+            variant='h5'
+            className='tw-w-full tw-text-center tw-text-gray-400 tw-py-20'
           >
-            <b className='tw-flex tw-flex-row tw-items-center tw-justify-center'>
-              <AddOutlinedIcon fontSize='large' />
-              Nueva clase
-            </b>
-          </button>
+            Crea tu primera clase para comenzar
+          </Typography>
         </div>
       )}
+      <Fab
+        size='large'
+        onClick={() => setOpenSaveLesson(true)}
+        variant='extended'
+        color='primary'
+        className='tw-fixed tw-bottom-6 tw-right-6 tw-gap-2 tw-z-0'
+      >
+        <AddOutlinedIcon />
+        <span>Nueva clase</span>
+      </Fab>
     </div>
   );
 };
