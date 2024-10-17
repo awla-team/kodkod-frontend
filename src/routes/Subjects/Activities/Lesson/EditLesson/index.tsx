@@ -213,7 +213,10 @@ const EditLesson: React.FC<{
           <>
             <form onSubmit={handleSubmit}>
               <div className='tw-space-y-6'>
-                <Link className='fw-bold tw-flex' onClick={goBack}>
+                <Link
+                  className='fw-bold tw-flex tw-text-primary-500'
+                  onClick={goBack}
+                >
                   <h5>
                     <b>{'< Volver a la clase'}</b>
                   </h5>
@@ -458,7 +461,7 @@ const EditLesson: React.FC<{
                   </button>
                   <button
                     type='submit'
-                    className='tw-bg-primary'
+                    className='tw-bg-primary-500'
                     disabled={isSubmitting}
                   >
                     Guardar Clase

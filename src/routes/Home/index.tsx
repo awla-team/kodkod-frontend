@@ -10,13 +10,10 @@ const HomePage: FC = () => {
   // const [onboardingDone, setOnboardingDone] = useState(true);
   // const { setNewAvailableTours } = useOnboarding();
   // const { setIsOpen, setSteps, setCurrentStep } = useTour();
-  const { classrooms, levels, handleOpenModal, getClassroomsData } =
-    useOutletContext() as {
-      classrooms: ITeacherSubjectClassroom[];
-      levels: Levels[];
-      handleOpenModal: () => void;
-      getClassroomsData: () => void;
-    };
+  const { classrooms, levels } = useOutletContext() as {
+    classrooms: ITeacherSubjectClassroom[];
+    levels: Levels[];
+  };
 
   // useEffect(() => {
   //   let rawOnboardingData: string | null = '';
@@ -60,13 +57,9 @@ const HomePage: FC = () => {
   return (
     <div className='d-flex w-100'>
       {!classrooms?.length ? (
-        <WelcomePage handleOpenModal={handleOpenModal} />
+        <WelcomePage />
       ) : (
-        <MyClasses
-          classrooms={classrooms}
-          levels={levels}
-          getClassroomsData={getClassroomsData}
-        />
+        <MyClasses classrooms={classrooms} levels={levels} />
       )}
     </div>
   );
