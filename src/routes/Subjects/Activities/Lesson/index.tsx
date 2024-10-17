@@ -222,7 +222,7 @@ const LessonDetails: React.FC<{
       <h4 className='tw-flex tw-my-4'>
         Al completar actividades, pueden obtener las siguientes recompensas
       </h4>
-      <div className='tw-flex tw-justify-center tw-flex-cols-3'>
+      <div className='tw-flex tw-justify-center tw-flex-cols-3 tw-gap-4'>
         {rewards.length > 0 ? (
           rewards.map((reward, index) => {
             return (
@@ -232,11 +232,9 @@ const LessonDetails: React.FC<{
             );
           })
         ) : (
-          <div>
-            <h5 className='tw-flex tw-justify-center tw-m-4 tw-font-semibold'>
-              No hay recompensas disponibles para esta clase
-            </h5>
-          </div>
+          <h5 className='tw-flex tw-justify-center tw-m-4 tw-font-semibold'>
+            No hay recompensas disponibles para esta clase
+          </h5>
         )}
       </div>
       <h5 className='tw-flex tw-my-4'>
