@@ -175,7 +175,7 @@ const ActivityStudentsDrawer: React.FC<Props> = ({ activity, closeDrawer }) => {
                     }
                     label={
                       <div className='tw-flex tw-items-center tw-gap-2'>
-                        <Avatar className='tw-bg-primary tw-text-sm'>
+                        <Avatar className='tw-bg-primary-500 tw-text-sm'>
                           {register.student.first_name[0]}
                           {register.student.last_name[0]}
                         </Avatar>

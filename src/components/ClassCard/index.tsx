@@ -24,7 +24,7 @@ const ClassCard: React.FC<{
   };
 
   return (
-    <div onClick={goToClass}>
+    <div onClick={goToClass} className='tw-cursor-pointer'>
       <div className='class__level__card'>
         {classroom?.subject ? (
           <Box
@@ -55,7 +55,7 @@ const ClassCard: React.FC<{
           </Typography>
           <Typography
             component='span'
-            variant='h5'
+            variant='h6'
             textAlign='center'
             fontWeight='bold'
           >
@@ -63,12 +63,7 @@ const ClassCard: React.FC<{
               ? classroom?.subject.title
               : 'Sin Informacion'}
           </Typography>
-          <Typography
-            className='tw-flex'
-            component='span'
-            variant='h6'
-            textAlign='center'
-          >
+          <Typography className='tw-flex' component='span' textAlign='center'>
             {classroom?.classroom.students?.length
               ? classroom?.classroom.students.length + ' Estudiantes'
               : '0 Estudiantes'}

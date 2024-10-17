@@ -130,14 +130,16 @@ const LessonDetails: React.FC<{
       <div className='tw-flex tw-justify-between'>
         <button
           type='button'
-          className='tw-flex tw-bg-transparent tw-text-primary tw-border-none hover:tw-underline'
+          className='tw-flex tw-bg-transparent tw-text-primary-500 tw-border-none hover:tw-underline'
           onClick={goBack}
         >
-          <h5 className='tw-font-semibold'>{'< Volver a mis clases'}</h5>
+          <h5 className='tw-font-semibold tw-text-primary-500'>
+            {'< Volver a mis clases'}
+          </h5>
         </button>
         <button
           type='button'
-          className='tw-flex tw-bg-transparent tw-text-primary tw-border-none'
+          className='tw-flex tw-bg-transparent tw-text-primary-500 tw-border-none'
           onClick={handleEditLesson}
         >
           <h5 className='tw-font-semibold'>
@@ -220,7 +222,7 @@ const LessonDetails: React.FC<{
       <h4 className='tw-flex tw-my-4'>
         Al completar actividades, pueden obtener las siguientes recompensas
       </h4>
-      <div className='tw-flex tw-justify-center tw-flex-cols-3'>
+      <div className='tw-flex tw-justify-center tw-flex-cols-3 tw-gap-4'>
         {rewards.length > 0 ? (
           rewards.map((reward, index) => {
             return (
@@ -230,11 +232,9 @@ const LessonDetails: React.FC<{
             );
           })
         ) : (
-          <div>
-            <h5 className='tw-flex tw-justify-center tw-m-4 tw-font-semibold'>
-              No hay recompensas disponibles para esta clase
-            </h5>
-          </div>
+          <h5 className='tw-flex tw-justify-center tw-m-4 tw-font-semibold'>
+            No hay recompensas disponibles para esta clase
+          </h5>
         )}
       </div>
       <h5 className='tw-flex tw-my-4'>
