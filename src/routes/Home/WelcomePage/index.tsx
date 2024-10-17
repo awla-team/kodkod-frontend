@@ -1,54 +1,32 @@
 import type { FC } from 'react';
-import { Box, Button, Typography } from '@mui/material';
-import styled from 'styled-components';
-import { type WelcomePageProps } from './interfaces';
+import { Typography } from '@mui/material';
 import noClassesImg from 'assets/images/no-classes.png';
 
-const WelcomePage: FC<WelcomePageProps> = ({
-  handleOpenModal,
-}: WelcomePageProps) => {
+const WelcomePage: FC = () => {
   return (
-    <div className='w-100 d-flex align-items-center justify-content-center p-5'>
-      <WelcomePageContainer className='p-5'>
-        <img className='mb-3' src={noClassesImg} />
-        <div>
+    <div className='tw-w-full tw-flex tw-items-center tw-justify-center tw-p-5'>
+      <div className='tw-flex tw-flex-col tw-items-center tw-justify-center tw-bg-white tw-p-5 tw-rounded-lg tw-border tw-border-gray-300 tw-w-[380px]'>
+        <img className='tw-w-[300px] tw-mb-3' src={noClassesImg} />
+        <div className='tw-text-justify'>
           <Typography
             component='h1'
             variant='h5'
-            className='fw-bold text-center mb-3'
+            className='tw-font-bold tw-text-center tw-mb-3'
           >
-            ¡Vamos a añadir tus cursos!
+            ¡Bienvenid@ a Kodkod!
           </Typography>
-          <Typography component='div' variant='body1' className='mb-4'>
-            En tus cursos, podrás escoger divertidas aventuras para trabajar en
-            el desarrollo socioemocional de tus estudiantes.
-          </Typography>
-          <Button
-            onClick={handleOpenModal}
-            variant='contained'
-            className='w-100'
+          <Typography
+            component='div'
+            variant='body1'
+            className='tw-text-center tw-px-5 tw-mb-5'
           >
-            Añade tu primer curso
-          </Button>
+            Parece que aún no tienes cursos asociados a tu cuenta. Contacta con
+            el administrador de la plataforma en tu colegio para asociar tus
+            cursos.
+          </Typography>
         </div>
-      </WelcomePageContainer>
+      </div>
     </div>
   );
 };
 export default WelcomePage;
-
-const WelcomePageContainer = styled(Box)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  background-color: #fff;
-  border-radius: 8px;
-  width: 420px;
-  text-align: center;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-
-  img {
-    height: 300px;
-  }
-`;

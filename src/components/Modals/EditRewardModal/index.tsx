@@ -151,7 +151,7 @@ export default function EditRewardModal({
                   'tw-w-full',
                   !!errors.title || !!errors.description
                     ? 'tw-bg-gray-200 tw-text-black'
-                    : 'tw-bg-primary tw-text-white'
+                    : 'tw-bg-primary-500 tw-text-white'
                 )}
                 disabled={
                   isSubmitting || !!errors.title || !!errors.description
@@ -256,7 +256,7 @@ export default function EditRewardModal({
                   'tw-w-full',
                   !!errors.name || !!errors.description
                     ? 'tw-bg-gray-200 tw-text-black'
-                    : 'tw-bg-primary tw-text-white'
+                    : 'tw-bg-primary-500 tw-text-white'
                 )}
                 disabled={isSubmitting || !!errors.name || !!errors.description}
               >
