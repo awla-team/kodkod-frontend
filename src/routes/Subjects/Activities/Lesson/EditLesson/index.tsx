@@ -453,7 +453,7 @@ const EditLesson: React.FC<{
                 </h5>
                 <div className='tw-flex tw-items-center tw-justify-end tw-mx-6'>
                   <button
-                    onClick={handleClose}
+                    onClick={goBack}
                     type='button'
                     className='tw-mx-6 tw-bg-gray-200 text-black'
                   >
