@@ -238,6 +238,7 @@ const LessonDetails: React.FC = () => {
           <ActivityStudentsDrawer
             activity={selectedActivity}
             closeDrawer={closeActivityDrawer}
+            lesson={lesson}
           />
         )}
       </Drawer>
