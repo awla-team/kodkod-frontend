@@ -246,11 +246,11 @@ const LessonDetails: React.FC = () => {
       <h4 className='tw-flex tw-my-4'>
         Al completar actividades, pueden obtener las siguientes recompensas
       </h4>
-      <div className='tw-flex tw-justify-center tw-flex-cols-3 tw-gap-4'>
+      <div className='tw-flex tw-gap-5 tw-scroll-auto tw-overflow-x-auto tw-p-3 tw-flex-nowrap'>
         {rewards.length > 0 ? (
           rewards.map((reward, index) => {
             return (
-              <div key={index}>
+              <div key={index} className='tw-w-72 tw-min-w-72'>
                 <LessonRewardCard reward={reward} />
               </div>
             );
