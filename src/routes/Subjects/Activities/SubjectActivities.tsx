@@ -5,7 +5,6 @@ import { getLessonsByTeacherSubjectClassroomId } from 'services/lessons';
 import MyLessonsIcon from 'assets/images/books.png';
 import { useClassContext } from 'routes/Class/context';
 import SaveLesson from 'routes/Class/Subjects/SaveLesson';
-import LessonDetails from './Lesson';
 import type ILesson from 'types/models/Lesson';
 import { type AxiosResponse } from 'axios';
 import { FetchStatus } from 'global/enums';
@@ -56,10 +55,6 @@ const SubjectActivities = () => {
     loadClasroomUnits();
   };
 
-  const closeLessonDetails = async () => {
-    loadClasroomUnits();
-  };
-
   if (isLoading === FetchStatus.Idle || isLoading === FetchStatus.Pending) {
     return (
       <div className='tw-flex tw-justify-center tw-items-center'>
@@ -88,41 +83,6 @@ const SubjectActivities = () => {
       />
     );
   }
-
-  if (lessons && lessons.length === 0)
-    return (
-      <div className='tw-space-y-20'>
-        <div className='tw-flex tw-items-center tw-justify-between'>
-          <div className='tw-flex tw-items-end tw-gap-2'>
-            <img
-              src={MyLessonsIcon}
-              alt='book'
-              className='tw-w-10 tw-object-cover'
-            />
-            <h2 className='tw-font-bold tw-mb-0'>Mis clases</h2>
-          </div>
-        </div>
-        <Typography component='h1' variant='h5' className='text-center'>
-          No hay clases disponibles
-        </Typography>
-        <div className='tw-flex tw-justify-end tw-mt-20'>
-          <button
-            onClick={() => {
-              setOpenSaveLesson(true);
-            }}
-            type='button'
-            className='tw-border tw-rounded-full tw-bg-[#003CAF]'
-          >
-            <h4 className='tw-flex tw-flex-row tw-items-center tw-justify-center'>
-              <b className='tw-flex tw-flex-row tw-items-center tw-justify-center tw-mr-2'>
-                <AddOutlinedIcon fontSize='large' />
-                Nueva clase
-              </b>
-            </h4>
-          </button>
-        </div>
-      </div>
-    );
 
   return (
     <div>
