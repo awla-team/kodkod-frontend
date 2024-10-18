@@ -10,15 +10,16 @@ import type ILesson from 'types/models/Lesson';
 import { type AxiosResponse } from 'axios';
 import { FetchStatus } from 'global/enums';
 import Toaster from 'utils/Toster';
+import { useNavigate, useLocation } from 'react-router-dom';
 import moment from 'moment';
 
 const SubjectActivities = () => {
-  const [selectedLesson, setSelectedLesson] = useState<ILesson>();
   const [lessons, setLessons] = useState<ILesson[]>();
   const [openSaveLesson, setOpenSaveLesson] = useState<boolean>(false);
-  const [openLesson, setOpenLesson] = useState<boolean>(false);
   const { classroomDetails } = useClassContext();
   const [isLoading, setIsLoading] = useState(FetchStatus.Idle);
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const loadClasroomUnits = useCallback(() => {
     setIsLoading(FetchStatus.Pending);
@@ -56,7 +57,6 @@ const SubjectActivities = () => {
   };
 
   const closeLessonDetails = async () => {
-    setOpenLesson(false);
     loadClasroomUnits();
   };
 
@@ -89,14 +89,40 @@ const SubjectActivities = () => {
     );
   }
 
-  if (openLesson && selectedLesson && classroomDetails) {
+  if (lessons && lessons.length === 0)
     return (
-      <LessonDetails
-        handleClose={closeLessonDetails}
-        selectedLesson={selectedLesson}
-      />
+      <div className='tw-space-y-20'>
+        <div className='tw-flex tw-items-center tw-justify-between'>
+          <div className='tw-flex tw-items-end tw-gap-2'>
+            <img
+              src={MyLessonsIcon}
+              alt='book'
+              className='tw-w-10 tw-object-cover'
+            />
+            <h2 className='tw-font-bold tw-mb-0'>Mis clases</h2>
+          </div>
+        </div>
+        <Typography component='h1' variant='h5' className='text-center'>
+          No hay clases disponibles
+        </Typography>
+        <div className='tw-flex tw-justify-end tw-mt-20'>
+          <button
+            onClick={() => {
+              setOpenSaveLesson(true);
+            }}
+            type='button'
+            className='tw-border tw-rounded-full tw-bg-[#003CAF]'
+          >
+            <h4 className='tw-flex tw-flex-row tw-items-center tw-justify-center'>
+              <b className='tw-flex tw-flex-row tw-items-center tw-justify-center tw-mr-2'>
+                <AddOutlinedIcon fontSize='large' />
+                Nueva clase
+              </b>
+            </h4>
+          </button>
+        </div>
+      </div>
     );
-  }
 
   return (
     <div>
@@ -117,8 +143,7 @@ const SubjectActivities = () => {
               <div
                 className='tw-flex tw-justify-between tw-items-center tw-p-4 hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out hover:tw-bg-sky-50'
                 onClick={() => {
-                  setSelectedLesson(lesson);
-                  setOpenLesson(true);
+                  navigate(`${pathname}/${lesson.id}/details`);
                 }}
               >
                 <div className='tw-flex tw-flex-col tw-gap-2'>
@@ -145,8 +170,7 @@ const SubjectActivities = () => {
                 <div>
                   <Button
                     onClick={() => {
-                      setSelectedLesson(lesson);
-                      setOpenLesson(true);
+                      navigate(`${pathname}/${lesson.id}/details`);
                     }}
                     variant='outlined'
                     color='primary'

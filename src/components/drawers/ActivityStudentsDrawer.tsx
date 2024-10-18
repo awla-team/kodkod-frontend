@@ -15,13 +15,19 @@ import studentActivity from 'services/student_activity';
 import { type CreateStudentActivity } from 'types/validations/student-activity';
 import Toaster from 'utils/Toster';
 import type { StudentCompleteActivity } from 'types/models/StudentActivity';
+import type ILesson from 'types/models/Lesson';
 
 interface Props {
   activity: IActivity;
+  lesson?: ILesson;
   closeDrawer: () => void;
 }
 
-const ActivityStudentsDrawer: React.FC<Props> = ({ activity, closeDrawer }) => {
+const ActivityStudentsDrawer: React.FC<Props> = ({
+  activity,
+  closeDrawer,
+  lesson,
+}) => {
   const [registers, setRegisters] = useState<StudentCompleteActivity[]>([]);
   const [filteredRegisters, setFilteredRegisters] = useState<
     StudentCompleteActivity[]
@@ -129,7 +135,11 @@ const ActivityStudentsDrawer: React.FC<Props> = ({ activity, closeDrawer }) => {
             ¡Actividad Cumplida!
           </h3>
         </div>
-        <p>Selecciona los estudiantes que han completado la actividad</p>
+        {lesson?.ended_at ? (
+          <p>Estos son los estudiantes que han completado la actividad</p>
+        ) : (
+          <p>Selecciona los estudiantes que han completado la actividad</p>
+        )}
 
         {registers.length > 0 ? (
           <>
@@ -145,48 +155,68 @@ const ActivityStudentsDrawer: React.FC<Props> = ({ activity, closeDrawer }) => {
             </form>
 
             <div>
-              <div className='tw-flex tw-items-center tw-justify-between'>
-                <FormGroup>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={selectAllStudents}
-                        onChange={handleSelectAllStudents}
-                      />
-                    }
-                    label='Seleccionar a todos'
-                  />
-                </FormGroup>
-                <span className='tw-text-xs'>
-                  {selectedStudents.length}/{registers.length}
-                </span>
-              </div>
+              {!lesson?.ended_at && (
+                <div className='tw-flex tw-items-center tw-justify-between'>
+                  <FormGroup>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={selectAllStudents}
+                          onChange={handleSelectAllStudents}
+                        />
+                      }
+                      label='Seleccionar a todos'
+                    />
+                  </FormGroup>
+                  <span className='tw-text-xs'>
+                    {selectedStudents.length}/{registers.length}
+                  </span>
+                </div>
+              )}
               <FormGroup className='tw-space-y-2'>
-                {filteredRegisters.map((register, index) => (
-                  <FormControlLabel
-                    key={index}
-                    control={
-                      <Checkbox
-                        checked={selectedStudents.includes(register.student.id)}
-                        onChange={() =>
-                          handleStudentSelected(register.student.id)
-                        }
-                      />
-                    }
-                    label={
-                      <div className='tw-flex tw-items-center tw-gap-2'>
-                        <Avatar className='tw-bg-primary-500 tw-text-sm'>
-                          {register.student.first_name[0]}
-                          {register.student.last_name[0]}
-                        </Avatar>
-                        <p className='tw-m-0'>
-                          {register.student.first_name}{' '}
-                          {register.student.last_name}
-                        </p>
-                      </div>
-                    }
-                  />
-                ))}
+                {filteredRegisters.map((register, index) =>
+                  !lesson?.ended_at ? (
+                    <FormControlLabel
+                      key={index}
+                      control={
+                        <Checkbox
+                          checked={selectedStudents.includes(
+                            register.student.id
+                          )}
+                          onChange={() =>
+                            handleStudentSelected(register.student.id)
+                          }
+                        />
+                      }
+                      label={
+                        <div className='tw-flex tw-items-center tw-gap-2'>
+                          <Avatar className='tw-bg-primary-500 tw-text-sm'>
+                            {register.student.first_name[0]}
+                            {register.student.last_name[0]}
+                          </Avatar>
+                          <p className='tw-m-0'>
+                            {register.student.first_name}{' '}
+                            {register.student.last_name}
+                          </p>
+                        </div>
+                      }
+                    />
+                  ) : (
+                    <div
+                      key={index}
+                      className='tw-flex tw-items-center tw-gap-2'
+                    >
+                      <Avatar className='tw-bg-primary-500 tw-text-sm'>
+                        {register.student.first_name[0]}
+                        {register.student.last_name[0]}
+                      </Avatar>
+                      <p className='tw-m-0'>
+                        {register.student.first_name}{' '}
+                        {register.student.last_name}
+                      </p>
+                    </div>
+                  )
+                )}
               </FormGroup>
             </div>
           </>
@@ -199,13 +229,15 @@ const ActivityStudentsDrawer: React.FC<Props> = ({ activity, closeDrawer }) => {
         <Button className='tw-w-full' type='button' onClick={closeDrawer}>
           Cancelar
         </Button>
-        <Button
-          className='tw-w-full'
-          variant='contained'
-          onClick={saveActivityStudents}
-        >
-          Guardar
-        </Button>
+        {!lesson?.ended_at && (
+          <Button
+            className='tw-w-full'
+            variant='contained'
+            onClick={saveActivityStudents}
+          >
+            Guardar
+          </Button>
+        )}
       </div>
     </div>
   );
