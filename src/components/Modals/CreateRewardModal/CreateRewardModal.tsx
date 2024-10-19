@@ -99,10 +99,7 @@ export default function CreateRewardModal() {
               </div>
             </div>
             <DialogActions>
-              <Button
-                variant='outlined'
-                onClick={closeModal}
-              >
+              <Button variant='outlined' onClick={closeModal}>
                 Cancelar
               </Button>
               <Button

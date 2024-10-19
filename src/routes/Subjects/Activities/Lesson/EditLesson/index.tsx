@@ -267,7 +267,9 @@ const EditLesson: React.FC<{
                   esta clase
                 </span>
                 <div className='tw-flex tw-flex-col tw-gap-2 tw-scroll-auto tw-overflow-y-auto'>
-                  {editLessonActivities && editLessonActivities.length > 0 && editLessonActivities.map((activity, index) => {
+                  {editLessonActivities &&
+                    editLessonActivities.length > 0 &&
+                    editLessonActivities.map((activity, index) => {
                       return (
                         <div
                           key={index}
@@ -281,7 +283,9 @@ const EditLesson: React.FC<{
                               <Button
                                 color='secondary'
                                 variant='outlined'
-                                startIcon={<EditIcon className='tw-w-5 tw-h-5'/>}
+                                startIcon={
+                                  <EditIcon className='tw-w-5 tw-h-5' />
+                                }
                                 onClick={() => {
                                   setSelectedActivityIndex(index);
                                   setSelectedEditedActivity(activity);
@@ -298,7 +302,9 @@ const EditLesson: React.FC<{
                                   setSelectedEditedActivity(activity);
                                   setOpenDeleteActivity(true);
                                 }}
-                                startIcon={<DeleteForeverOutlinedIcon className='tw-w-5 tw-h-5'/>}
+                                startIcon={
+                                  <DeleteForeverOutlinedIcon className='tw-w-5 tw-h-5' />
+                                }
                               >
                                 Eliminar
                               </Button>
@@ -309,8 +315,7 @@ const EditLesson: React.FC<{
                           </h4>
                         </div>
                       );
-                    })
-                  }
+                    })}
                   {activities &&
                     activities.length > 0 &&
                     activities.map((activity, index) => {
@@ -327,7 +332,9 @@ const EditLesson: React.FC<{
                               <Button
                                 color='secondary'
                                 variant='outlined'
-                                startIcon={<EditIcon className='tw-w-5 tw-h-5'/>}
+                                startIcon={
+                                  <EditIcon className='tw-w-5 tw-h-5' />
+                                }
                                 onClick={() => {
                                   setSelectedActivityIndex(index);
                                   setSelectedNewActivity(activity);
@@ -344,7 +351,9 @@ const EditLesson: React.FC<{
                                   setSelectedNewActivity(activity);
                                   setOpenDeleteNewActivity(true);
                                 }}
-                                startIcon={<DeleteForeverOutlinedIcon className='tw-w-5 tw-h-5'/>}
+                                startIcon={
+                                  <DeleteForeverOutlinedIcon className='tw-w-5 tw-h-5' />
+                                }
                               >
                                 Eliminar
                               </Button>
@@ -355,7 +364,7 @@ const EditLesson: React.FC<{
                           </h4>
                         </div>
                       );
-                  })}
+                    })}
                   <div className='border-dashed tw-rounded-md tw-h-40 tw-flex hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-sky-50'>
                     <div
                       className='tw-flex tw-justify-center tw-items-center tw-w-full tw-h-full tw-gap-2'
@@ -363,18 +372,22 @@ const EditLesson: React.FC<{
                         setOpenSaveActivity(true);
                       }}
                     >
-                      <img src={PostcardIcon} alt='Postcard' className='tw-w-5' />
-                      <span className='tw-text-lg'>Ingresar nueva actividad</span>
+                      <img
+                        src={PostcardIcon}
+                        alt='Postcard'
+                        className='tw-w-5'
+                      />
+                      <span className='tw-text-lg'>
+                        Ingresar nueva actividad
+                      </span>
                     </div>
                   </div>
                 </div>
               </div>
               <div className='tw-flex tw-flex-col tw-gap-4'>
                 <span className='tw-block tw-mt-6'>
-                  2. Ingresa las <b>recompensas</b> de
-                  la clase <i className='tw-text-xs tw-text-gray-500'>
-                    (opcional)
-                  </i>
+                  2. Ingresa las <b>recompensas</b> de la clase{' '}
+                  <i className='tw-text-xs tw-text-gray-500'>(opcional)</i>
                 </span>
                 <div className='tw-flex tw-gap-5 tw-scroll-auto tw-overflow-x-auto tw-justify-center'>
                   {editLessonRewards &&
@@ -464,7 +477,11 @@ const EditLesson: React.FC<{
                       );
                     })}
                   <div
-                    className={`${(rewards.length + editLessonRewards.length > 0) ? 'tw-m-0' : 'tw-m-auto'} tw-flex tw-flex-col tw-gap-2 tw-rounded-md tw-items-center tw-justify-center border-dashed tw-max-h-[400px] tw-h-[400px] tw-min-w-[260px] tw-w-[260px] hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-sky-50`}
+                    className={`${
+                      rewards.length + editLessonRewards.length > 0
+                        ? 'tw-m-0'
+                        : 'tw-m-auto'
+                    } tw-flex tw-flex-col tw-gap-2 tw-rounded-md tw-items-center tw-justify-center border-dashed tw-max-h-[400px] tw-h-[400px] tw-min-w-[260px] tw-w-[260px] hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-sky-50`}
                     onClick={() =>
                       openModal({
                         title: 'Ingresar recompensas',
@@ -474,13 +491,20 @@ const EditLesson: React.FC<{
                       })
                     }
                   >
-                    <img src={BookmarkStarIcon} alt='Postcard' className='tw-w-5' />
-                    <span className='tw-text-lg'>Ingresar nueva recompensa</span>
+                    <img
+                      src={BookmarkStarIcon}
+                      alt='Postcard'
+                      className='tw-w-5'
+                    />
+                    <span className='tw-text-lg'>
+                      Ingresar nueva recompensa
+                    </span>
                   </div>
                 </div>
               </div>
               <span className='tw-block tw-mt-6'>
-                3. Cuando tengas todo listo, haz click en <b>Guardar clase</b> y podrás empezar a utilizarla.
+                3. Cuando tengas todo listo, haz click en <b>Guardar clase</b> y
+                podrás empezar a utilizarla.
               </span>
             </div>
             <div className='tw-fixed tw-bottom-0 tw-left-0 tw-w-full tw-flex tw-items-center tw-justify-between tw-bg-white tw-border-t tw-py-2 tw-px-5 border-gray'>
@@ -491,18 +515,18 @@ const EditLesson: React.FC<{
                 </span>
               </div>
               <div className='tw-flex tw-items-center tw-justify-end tw-gap-2'>
-                <Button
-                  onClick={goBack}
-                  variant='outlined'
-                  size='large'
-                >
+                <Button onClick={goBack} variant='outlined' size='large'>
                   Cancelar
                 </Button>
                 <Button
                   type='submit'
                   variant='contained'
                   size='large'
-                  disabled={isSubmitting || !values.title || !(activities.length + editLessonActivities.length > 0)}
+                  disabled={
+                    isSubmitting ||
+                    !values.title ||
+                    !(activities.length + editLessonActivities.length > 0)
+                  }
                 >
                   Guardar clase
                 </Button>
