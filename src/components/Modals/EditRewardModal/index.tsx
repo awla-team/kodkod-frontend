@@ -121,10 +121,7 @@ export default function EditRewardModal({
                 </div>
               </div>
               <DialogActions>
-                <Button
-                  variant='outlined'
-                  onClick={closeModal}
-                >
+                <Button variant='outlined' onClick={closeModal}>
                   Cancelar
                 </Button>
                 <Button
@@ -205,10 +202,7 @@ export default function EditRewardModal({
                 </div>
               </div>
               <DialogActions>
-                <Button
-                  variant='outlined'
-                  onClick={closeModal}
-                >
+                <Button variant='outlined' onClick={closeModal}>
                   Cancelar
                 </Button>
                 <Button

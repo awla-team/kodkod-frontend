@@ -75,7 +75,6 @@ const LessonReview = () => {
       if (status === 200) {
         Toaster('success', 'Clase finalizada con éxito');
         navigate(`/app/classroom/${t_classroom_id}/lessons`);
-
       }
     } catch (e) {
       Toaster('error', 'Error al finalizar la clase');

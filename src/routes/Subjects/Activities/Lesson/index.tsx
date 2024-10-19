@@ -157,9 +157,7 @@ const LessonDetails: React.FC = () => {
         >
           Volver a lista de clases
         </Button>
-        {lesson?.ended_at ? (
-          null
-        ) : (
+        {lesson?.ended_at ? null : (
           <Button
             variant='outlined'
             size='large'
@@ -188,7 +186,8 @@ const LessonDetails: React.FC = () => {
           Tus estudiantes deben completar las siguientes actividades
         </span>
         <div className='tw-flex tw-flex-col tw-gap-2 tw-scroll-auto tw-overflow-y-auto'>
-          {activities.length > 0 && activities.map((activity, index) => {
+          {activities.length > 0 &&
+            activities.map((activity, index) => {
               return (
                 <div
                   key={index}
@@ -205,8 +204,7 @@ const LessonDetails: React.FC = () => {
                   </h4>
                 </div>
               );
-            })
-          }
+            })}
         </div>
       </div>
       {/* selectedActivity && openActivitiesDrawer && (

@@ -99,12 +99,7 @@ const ViewEditActivityDialog: FC<ViewEditActivityDialogProps> = ({
     );
   }
   return (
-    <Dialog
-      fullWidth
-      open={open}
-      disableEscapeKeyDown
-      onClose={handleClose}
-    >
+    <Dialog fullWidth open={open} disableEscapeKeyDown onClose={handleClose}>
       {currentLesson && formValues ? (
         <div>
           <DialogTitle className='tw-flex tw-items-center tw-gap-3'>
@@ -153,16 +148,15 @@ const ViewEditActivityDialog: FC<ViewEditActivityDialogProps> = ({
                     </div>
                     <DialogActions>
                       <div className='tw-flex tw-items-center tw-gap-2'>
-                        <Button
-                          variant='outlined'
-                          onClick={handleClose}
-                        >
+                        <Button variant='outlined' onClick={handleClose}>
                           Cancelar
                         </Button>
                         <Button
                           variant='contained'
                           type='submit'
-                          disabled={isSubmitting || !values.title || !values.description}
+                          disabled={
+                            isSubmitting || !values.title || !values.description
+                          }
                         >
                           Guardar actividad
                         </Button>
