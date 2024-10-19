@@ -376,7 +376,7 @@ const EditLesson: React.FC<{
                     (opcional)
                   </i>
                 </span>
-                <div className='tw-flex tw-gap-5 tw-scroll-auto tw-overflow-x-auto'>
+                <div className='tw-flex tw-gap-5 tw-scroll-auto tw-overflow-x-auto tw-justify-center'>
                   {editLessonRewards &&
                     editLessonRewards.length > 0 &&
                     editLessonRewards.map((reward, index) => {
