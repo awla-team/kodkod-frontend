@@ -5,7 +5,8 @@ import postCard from 'assets/images/postcard-heart 1.png';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
-import EditNoteIcon from '@mui/icons-material/EditNote';
+import EditIcon from '@mui/icons-material/Edit';
+import { type IUnit } from 'components/Modals/ViewLearningGoalsDialog/interfaces';
 import { type ILessonSaved } from 'types/models/Lesson';
 import { type ITeacherSubjectClassroomData } from 'global/interfaces';
 import { Formik } from 'formik';
@@ -23,6 +24,7 @@ import { createRewards } from 'services/rewards';
 import ViewEditActivityDialog from 'components/Modals/EditActivity';
 import DeleteRewardModalDialog from 'components/Modals/DeleteRewardModal';
 import { type IActivitySaved } from 'types/models/Activity';
+import ViewDeleteActivityDialog from 'components/Modals/DeleteActivity';
 
 const SaveLesson: React.FC<{
   classroomDetails: ITeacherSubjectClassroomData;
@@ -36,6 +38,7 @@ const SaveLesson: React.FC<{
   });
   const [openSaveActivity, setOpenSaveActivity] = useState<boolean>(false);
   const [openEditActivity, setOpenEditActivity] = useState<boolean>(false);
+  const [openDeleteActivity, setOpenDeleteActivity] = useState<boolean>(false);
   const [selectedActivity, setSelectedActivity] = useState<IActivitySaved>();
   const [selectedActivityIndex, setSelectedActivityIndex] = useState<number>(0);
   const { activities, clearNewLessonData, rewards } = useCreateLesson();
@@ -106,7 +109,10 @@ const SaveLesson: React.FC<{
           <>
             <form onSubmit={handleSubmit}>
               <div className='tw-space-y-6'>
-                <Link className='fw-bold tw-flex' onClick={goBack}>
+                <Link
+                  className='fw-bold tw-flex tw-text-primary-500'
+                  onClick={goBack}
+                >
                   <h5>
                     <b>{'< Volver a lista de clases'}</b>
                   </h5>
@@ -149,11 +155,18 @@ const SaveLesson: React.FC<{
                                 setOpenEditActivity(true);
                               }}
                             >
-                              <EditNoteIcon />
+                              <EditIcon />
                               Editar
                             </h5>
 
-                            <h5 className='tw-flex tw-justify-center tw-text-white tw-border tw-border-none hover:tw-cursor-pointer tw-ease-in-out hover:tw-bg-indigo-300 hover:tw-border tw-rounded tw-transition-all tw-duration-200'>
+                            <h5
+                              onClick={() => {
+                                setSelectedActivityIndex(index);
+                                setSelectedActivity(activity);
+                                setOpenDeleteActivity(true);
+                              }}
+                              className='tw-flex tw-justify-center tw-text-white tw-border tw-border-none hover:tw-cursor-pointer tw-ease-in-out hover:tw-bg-indigo-300 hover:tw-border tw-rounded tw-transition-all tw-duration-200'
+                            >
                               <DeleteForeverOutlinedIcon className='' />
                               Eliminar
                             </h5>
@@ -171,13 +184,9 @@ const SaveLesson: React.FC<{
                       );
                     })
                   ) : (
-                    <div>
-                      <h5 className='tw-flex tw-justify-center tw-m-4 tw-font-semibold'>
-                        No hay actividades para esta clase
-                      </h5>
-                    </div>
+                    <div />
                   )}
-                  <div className='tw-border tw-border-dashed tw-rounded-md tw-h-40 tw-flex tw-justify-between tw-items-center hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-indigo-100'>
+                  <div className='tw-border tw-border-dashed tw-rounded-md tw-h-40 tw-flex tw-items-center hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-indigo-100'>
                     <div
                       className='tw-flex tw-justify-center tw-items-center tw-w-full tw-h-full'
                       onClick={() => {
@@ -201,7 +210,7 @@ const SaveLesson: React.FC<{
                   2. Ingresa las <b className='tw-mx-1'>{' recompensas '}</b> de
                   la clase
                 </h5>
-                <div className='tw-grid tw-grid-flow-col auto-cols-max tw-gap-5 tw-scroll-auto tw-overflow-x-auto tw-p-3'>
+                <div className='tw-flex tw-justify-center tw-gap-5 tw-scroll-auto tw-overflow-x-auto tw-p-3'>
                   {rewards.map((reward, index) => {
                     return (
                       <RewardCard
@@ -260,20 +269,28 @@ const SaveLesson: React.FC<{
                   <b className='tw-mx-1'>{' Guardar Clase '}</b>y podrás empezar
                   a utilizarla.
                 </h5>
-                <div className='tw-flex tw-items-center tw-justify-end tw-mx-6'>
+              </div>
+              <div className='tw-fixed tw-bottom-0 tw-left-0 tw-w-full tw-flex tw-items-center tw-justify-between tw-bg-white tw-border-t tw-py-2 tw-px-5 border-gray'>
+                <div className='tw-flex tw-items-center tw-justify-center tw-gap-2 tw-ml-[83px]'>
+                  <EditIcon className='tw-w-5 tw-h-5' />
+                  <span>
+                    Estás en el <b>modo de edición</b>
+                  </span>
+                </div>
+                <div className='tw-flex tw-items-center tw-justify-end tw-gap-2'>
                   <button
                     onClick={goBack}
                     type='button'
-                    className='tw-mx-6 tw-bg-gray-200 text-black'
+                    className='tw-border-neutral-300 tw-bg-white tw-text-black'
                   >
                     Cancelar
                   </button>
                   <button
                     type='submit'
-                    className='tw-bg-primary'
+                    className='tw-bg-primary-500'
                     disabled={isSubmitting}
                   >
-                    Guardar Clase
+                    Guardar clase
                   </button>
                 </div>
               </div>
@@ -302,6 +319,13 @@ const SaveLesson: React.FC<{
                 index: 1,
                 classroom_id: values.classroom_id,
               }}
+              handleClose={() => {
+                setOpenSaveActivity(false);
+              }}
+            />{' '}
+            <ViewDeleteActivityDialog
+              open={openDeleteActivity}
+              index={selectedActivityIndex}
               handleClose={() => {
                 setOpenSaveActivity(false);
               }}

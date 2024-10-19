@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { Outlet, useNavigate, useLocation, useParams } from 'react-router-dom';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { Button, CircularProgress } from '@mui/material';
 import Sidebar from './components/Sidebar';
 import { type ITeacherSubjectClassroom } from 'global/interfaces';
 import { type AxiosResponse } from 'axios';
 import { FetchStatus } from 'global/enums';
-import { CreateClassModal } from './components/Modals';
-import { sortClassrooms } from './utils';
 import { getAllTheLevel } from './services/levels';
 import Toaster from './utils/Toster';
 import { type Levels } from './components/Modals/CreateClassModal/interfaces';
@@ -21,10 +19,8 @@ import DoneIcon from '@mui/icons-material/Done';
 import { TourProvider } from '@reactour/tour';
 import { patchUserById } from 'services/users';
 import { ModalContextProvider } from 'contexts/ZustandContext/modal-context';
-import UserInfo from 'components/Sidebar/UserInfo';
-import { useSubjectStore } from 'zustand/subject-store';
 import { getTeacherSubjectClassroomByTeacherId } from 'services/teacher_subject_classroom';
-import { useClassroom } from 'zustand/classroom-store';
+import Header from 'components/Header';
 
 moment.locale('es');
 
@@ -32,35 +28,23 @@ const App: React.FC = () => {
   const [classrooms, setClassrooms] = useState<ITeacherSubjectClassroom[]>([]);
   const [levels, setLevels] = useState<Levels[]>([]);
   const [fetching, setFetching] = useState<FetchStatus>(FetchStatus.Idle);
-  const [createClassModalOpen, setCreateClassModalOpen] =
-    useState<boolean>(false);
   const { user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const { classId } = useParams();
-  const { subject } = useSubjectStore();
-  const { classroom } = useClassroom();
 
-  const getClassroomsData = () => {
+  const getClassroomsData = useCallback(async () => {
     try {
       if (user?.id) {
-        getTeacherSubjectClassroomByTeacherId(user.id)
-          .then((response: AxiosResponse) => {
-            return response?.data;
-          })
-          .then((classroomsList: ITeacherSubjectClassroom[]) => {
-            setClassrooms(classroomsList);
-            setFetching(FetchStatus.Success);
-          })
-          .catch((error) => {
-            setFetching(FetchStatus.Error);
-            console.error(error);
-          });
+        const response = await getTeacherSubjectClassroomByTeacherId(user.id);
+        const classroomsList = response?.data;
+        setClassrooms(classroomsList as ITeacherSubjectClassroom[]);
+        setFetching(FetchStatus.Success);
       }
     } catch (error) {
       console.error(error);
+      Toaster('error', 'Hubo un error al cargar las clases');
     }
-  };
+  }, [user]);
 
   const updateOnboardingStatus = () => {
     const completed_onboarding = localStorage.getItem('onboarding-data') || '';
@@ -76,7 +60,7 @@ const App: React.FC = () => {
     }
   };
 
-  const getLevels = async () => {
+  const getLevels = useCallback(async () => {
     try {
       const { data }: { data: { responseData: Levels[] } } =
         await getAllTheLevel();
@@ -87,29 +71,15 @@ const App: React.FC = () => {
           return 0;
         })
       );
-    } catch (error: any) {
-      console.error(error);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error(error.message);
+      } else {
+        console.error(String(error));
+      }
       Toaster('error', 'Hubo un error al cargar los niveles');
     }
-  };
-
-  const handleClose = (
-    reason: 'backdropClick' | 'escapeKeyDown' | 'success',
-    data?: ITeacherSubjectClassroom
-  ) => {
-    if (reason !== 'backdropClick') setCreateClassModalOpen(false);
-    if (reason === 'success') {
-      if (data) {
-        setClassrooms((prevState) => {
-          return sortClassrooms([...prevState, data]);
-        });
-      }
-    }
-  };
-
-  const handleOpenModal = () => {
-    setCreateClassModalOpen(true);
-  };
+  }, []);
 
   const handleFinish = () => {
     let currentView = location.pathname.match(/\/([^/]+)$/)[1];
@@ -143,14 +113,14 @@ const App: React.FC = () => {
   }, [navigate, location]);
 
   useEffect(() => {
-    if (user) {
-      setFetching(FetchStatus.Pending);
-      // FIXME: fix this eslint error
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      getLevels();
-      getClassroomsData();
-    }
-  }, [user]);
+    const fetchData = async () => {
+      if (user && getLevels && getClassroomsData) {
+        setFetching(FetchStatus.Pending);
+        await Promise.all([getLevels(), getClassroomsData()]);
+      }
+    };
+    void fetchData();
+  }, [user, getLevels, getClassroomsData]);
 
   if (fetching === FetchStatus.Idle || fetching === FetchStatus.Pending)
     return (
@@ -218,53 +188,23 @@ const App: React.FC = () => {
       <OnboardingContextProvider>
         <ModalContextProvider>
           <div className='app-container d-flex'>
-            <Sidebar
-              classrooms={classrooms}
-              /* handleOpenModal={handleOpenModal} */
-            />
+            <Sidebar classrooms={classrooms} />
             <div className='tw-flex tw-flex-col tw-w-full '>
-              <header
-                className={`tw-py-2 tw-flex tw-w-full tw-items-center ${
-                  subject &&
-                  classroom &&
-                  location.pathname.includes(`classroom/${classId}`)
-                    ? 'tw-justify-between'
-                    : 'tw-justify-end'
-                } `}
-              >
-                {/* TODO: agregar classroom logic when reload page */}
-                {subject &&
-                  location.pathname.includes(`classroom/${classId}`) &&
-                  classroom && (
-                    <div className='tw-pl-4'>
-                      <h4 className='tw-text-xs tw-mb-0'>
-                        Curso seleccionado:
-                      </h4>
-                      <span className='tw-font-semibold'>
-                        {classroom.title || '?'}- {subject.title || '?'}
-                      </span>
-                    </div>
-                  )}
-                <UserInfo user={user} />
-              </header>
-              <div className='app-main-container d-flex flex-column flex-fill tw-py-4'>
-                <div className='app-content container' id='home-onboarding-4'>
+              <Header />
+              <div className='app-main-container d-flex flex-column flex-fill'>
+                <div
+                  className='app-content container tw-py-8'
+                  id='home-onboarding-4'
+                >
                   <Outlet
                     context={{
                       classrooms,
                       levels,
-                      handleOpenModal,
-                      getClassroomsData,
                     }}
                   />
                 </div>
               </div>
             </div>
-            <CreateClassModal
-              open={createClassModalOpen}
-              onClose={handleClose}
-              levels={levels}
-            />
           </div>
         </ModalContextProvider>
       </OnboardingContextProvider>

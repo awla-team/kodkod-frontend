@@ -97,7 +97,7 @@ const LessonReview = () => {
       <div className='tw-flex tw-flex-col'>
         <button
           type='button'
-          className='tw-flex tw-items-center tw-font-semibold tw-bg-transparent tw-text-primary tw-border-none hover:tw-underline tw-text-lg tw-px-0'
+          className='tw-flex tw-items-center tw-font-semibold tw-bg-transparent tw-text-primary-500 tw-border-none hover:tw-underline tw-text-lg tw-px-0'
           onClick={goBack}
         >
           <ChevronLeft />
@@ -110,7 +110,7 @@ const LessonReview = () => {
         </h3>
       </div>
 
-      <h2 className='tw-text-center tw-text-primary tw-font-extrabold tw-text-6xl'>
+      <h2 className='tw-text-center tw-text-primary-500 tw-font-extrabold tw-text-6xl'>
         ¡BUEN TRABAJO!
       </h2>
 
@@ -185,7 +185,7 @@ const LessonReview = () => {
 
       <button
         type='button'
-        className='tw-bg-primary tw-h-12 tw-flex tw-justify-center tw-items-center'
+        className='tw-bg-primary-500 tw-h-12 tw-flex tw-justify-center tw-items-center'
         onClick={onSubmit}
         disabled={isLoading || lesson.ended_at !== null}
       >

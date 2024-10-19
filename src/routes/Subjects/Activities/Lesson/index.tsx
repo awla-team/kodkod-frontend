@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { CircularProgress, Drawer } from '@mui/material';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 import EditNoteIcon from '@mui/icons-material/EditNote';
@@ -11,14 +12,20 @@ import { getRewardsByLessonId } from 'services/rewards';
 import EditLesson from './EditLesson';
 import ActivityStudentsDrawer from 'components/drawers/ActivityStudentsDrawer';
 import { useQuery } from '@tanstack/react-query';
+import { getLessonByID } from 'services/lessons';
 
-const LessonDetails: React.FC<{
-  selectedLesson: ILesson;
-  handleClose: () => void;
-}> = ({ selectedLesson, handleClose }) => {
+const LessonDetails: React.FC = () => {
+  const { openModal } = useModalStore();
   const [openEditLesson, setOpenEditLesson] = useState<boolean>(false);
   const [openActivitiesDrawer, setOpenActivitiesDrawer] =
     useState<boolean>(false);
+  const [fetching, setFetching] = useState<FetchStatus>(FetchStatus.Idle);
+  const [lesson, setLesson] = useState<ILesson>();
+  const [activities, setActivities] = useState<IActivity[]>([]);
+  const [rewards, setRewards] = useState<IReward[]>([]);
+  const [selectedActivity, setSelectedActivity] = useState<IActivity | null>(
+    null
+  );
   const [selectedActivity, setSelectedActivity] = useState<
     | (IActivity & {
         studentsCompletedActivity: number;
@@ -28,28 +35,59 @@ const LessonDetails: React.FC<{
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  const {
-    data: activitiesResponse,
-    isPending: isPendingActivities,
-    refetch: reloadActivities,
-  } = useQuery({
-    queryKey: ['activities', selectedLesson?.id],
-    queryFn: async () => await getActivityByLessonId(selectedLesson.id),
-    enabled: !!selectedLesson?.id,
-  });
+  const getActivitiesData = () => {
+    try {
+      if (selectedLesson?.id) {
+        getActivityByLessonId(selectedLesson.id)
+          .then((response: AxiosResponse) => {
+            return response?.data;
+          })
+          .then((activityList: IActivity[]) => {
+            setActivities(activityList);
+            setFetching(FetchStatus.Success);
+          })
+          .catch((error) => {
+            setFetching(FetchStatus.Error);
+            console.error(error);
+          });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-  const {
-    data: rewardsResponse,
-    isPending: isPendingRewards,
-    refetch: reloadRewards,
-  } = useQuery({
-    queryKey: ['rewards', selectedLesson?.id],
-    queryFn: async () => await getRewardsByLessonId(selectedLesson.id),
-    enabled: !!selectedLesson?.id,
-  });
+  const getRewardsData = () => {
+    try {
+      if (selectedLesson?.id) {
+        getRewardsByLessonId(selectedLesson.id)
+          .then((response: AxiosResponse) => {
+            return response?.data;
+          })
+          .then((rewardList: IReward[]) => {
+            setRewards(rewardList);
+          })
+          .catch((error) => {
+            setFetching(FetchStatus.Error);
+            console.error(error);
+          });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const loadData = () => {
+    setFetching(FetchStatus.Pending);
+    getRewardsData();
+    getActivitiesData();
+  };
+
+  useEffect(() => {
+    loadData();
+  }, [selectedLesson]);
 
   const goBack = () => {
-    handleClose();
+    navigate(-1);
   };
 
   const handleEditLesson = () => {
@@ -92,14 +130,13 @@ const LessonDetails: React.FC<{
   if (openEditLesson && selectedLesson) {
     return (
       <EditLesson
-        handleClose={async () => {
+        handleClose={() => {
           setOpenEditLesson(false);
-          await reloadActivities();
-          await reloadRewards();
+          loadData();
         }}
         lessonActivities={activities}
         lessonRewards={rewards}
-        selectedLesson={selectedLesson}
+        selectedLesson={lesson}
       />
     );
   }
@@ -109,25 +146,31 @@ const LessonDetails: React.FC<{
       <div className='tw-flex tw-justify-between'>
         <button
           type='button'
-          className='tw-flex tw-bg-transparent tw-text-primary tw-border-none hover:tw-underline'
+          className='tw-flex tw-bg-transparent tw-text-primary-500 tw-border-none hover:tw-underline'
           onClick={goBack}
         >
-          <h5 className='tw-font-semibold'>{'< Volver a mis clases'}</h5>
-        </button>
-        <button
-          type='button'
-          className='tw-flex tw-bg-transparent tw-text-primary tw-border-none'
-          onClick={handleEditLesson}
-        >
-          <h5 className='tw-font-semibold'>
-            <EditNoteIcon /> {' Editar clase'}
+          <h5 className='tw-font-semibold tw-text-primary-500'>
+            {'< Volver a mis clases'}
           </h5>
         </button>
+        {lesson?.ended_at ? (
+          <> </>
+        ) : (
+          <button
+            type='button'
+            className='tw-flex tw-bg-transparent tw-text-primary-500 tw-border-none'
+            onClick={handleEditLesson}
+          >
+            <h5 className='tw-font-semibold'>
+              <EditNoteIcon /> {' Editar clase'}
+            </h5>
+          </button>
+        )}
       </div>
 
       <h2 className='tw-flex'>
         Clase:
-        <b className='tw-flex tw-ml-2'>{'' + selectedLesson.title}</b>
+        <b className='tw-flex tw-ml-2'>{'' + lesson?.title || '?'}</b>
       </h2>
 
       <h4 className='tw-flex tw-my-4'>
@@ -192,6 +235,7 @@ const LessonDetails: React.FC<{
           <ActivityStudentsDrawer
             activity={selectedActivity}
             closeDrawer={closeActivityDrawer}
+            lesson={lesson}
             reloadActivities={reloadActivities}
           />
         )}
@@ -200,21 +244,19 @@ const LessonDetails: React.FC<{
       <h4 className='tw-flex tw-my-4'>
         Al completar actividades, pueden obtener las siguientes recompensas
       </h4>
-      <div className='tw-flex tw-justify-center tw-flex-cols-3'>
+      <div className='tw-flex tw-gap-5 tw-scroll-auto tw-overflow-x-auto tw-p-3 tw-flex-nowrap'>
         {rewards.length > 0 ? (
           rewards.map((reward, index) => {
             return (
-              <div key={index}>
+              <div key={index} className='tw-w-72 tw-min-w-72'>
                 <LessonRewardCard reward={reward} />
               </div>
             );
           })
         ) : (
-          <div>
-            <h5 className='tw-flex tw-justify-center tw-m-4 tw-font-semibold'>
-              No hay recompensas disponibles para esta clase
-            </h5>
-          </div>
+          <h5 className='tw-flex tw-justify-center tw-m-4 tw-font-semibold'>
+            No hay recompensas disponibles para esta clase
+          </h5>
         )}
       </div>
       <h5 className='tw-flex tw-my-4'>
@@ -225,7 +267,7 @@ const LessonDetails: React.FC<{
         <button
           type='button'
           className='tw-bg-blue-800 tw-w-full'
-          onClick={() => navigate(`${pathname}/${selectedLesson.id}/review`)}
+          onClick={() => navigate(`../${lessonId}/review`)}
         >
           <h5 className='tw-font-bold'> Mostrar recompensas obtenidas</h5>
         </button>

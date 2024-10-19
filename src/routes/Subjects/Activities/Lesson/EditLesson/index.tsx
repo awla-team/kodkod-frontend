@@ -11,19 +11,24 @@ import { editLesson } from 'services/lessons';
 import Toaster from 'utils/Toster';
 import ViewSaveActivityDialog from 'components/Modals/SaveActivity';
 import { useCreateLesson } from 'zustand/create-lesson-store';
-import { editActivity, saveActivity } from 'services/activities';
+import {
+  deleteActivity,
+  editActivity,
+  saveActivity,
+} from 'services/activities';
 import { CreateLessonSchema } from 'types/validations/lesson';
 import { useModalStore } from 'contexts/ZustandContext/modal-context';
 import CreateRewardModal from 'components/Modals/CreateRewardModal/CreateRewardModal';
 import RewardCard from 'components/CreateReward/RewardCard';
 import EditRewardModal from 'components/Modals/EditRewardModal';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
-import { createRewards, updateReward } from 'services/rewards';
+import { createRewards, deleteReward, updateReward } from 'services/rewards';
 import ViewEditActivityDialog from 'components/Modals/EditActivity';
 import type IActivity from 'types/models/Activity';
 import type IReward from 'types/models/Reward';
 import DeleteRewardModalDialog from 'components/Modals/DeleteRewardModal';
 import { type IActivitySaved } from 'types/models/Activity';
+import ViewDeleteActivityDialog from 'components/Modals/DeleteActivity';
 
 const EditLesson: React.FC<{
   selectedLesson: ILesson;
@@ -40,12 +45,19 @@ const EditLesson: React.FC<{
   const [openSaveActivity, setOpenSaveActivity] = useState<boolean>(false);
   const [openEditNewActivity, setOpenEditNewActivity] =
     useState<boolean>(false);
+  const [openDeleteActivity, setOpenDeleteActivity] = useState<boolean>(false);
+  const [openDeleteNewActivity, setOpenDeleteNewActivity] =
+    useState<boolean>(false);
   const [openEditActivity, setOpenEditActivity] = useState<boolean>(false);
   const [selectedEditedActivity, setSelectedEditedActivity] =
     useState<IActivity>();
   const [selectedNewActivity, setSelectedNewActivity] =
     useState<IActivitySaved>();
   const [selectedActivityIndex, setSelectedActivityIndex] = useState<number>(0);
+  const [activitiesDeleteList, setActivitiesDeleteList] = useState<number[]>(
+    []
+  );
+  const [rewardsDeleteList, setRewardsDeleteList] = useState<number[]>([]);
   const {
     clearEditLessonData,
     clearNewLessonData,
@@ -59,6 +71,15 @@ const EditLesson: React.FC<{
   const loadLessonData = () => {
     if (lessonActivities && lessonRewards) {
       setEditLessonData(lessonActivities, lessonRewards);
+    }
+  };
+
+  const activitiesListAdd = () => {
+    if (selectedEditedActivity && activitiesDeleteList) {
+      setActivitiesDeleteList([
+        selectedEditedActivity.id,
+        ...activitiesDeleteList,
+      ]);
     }
   };
 
@@ -96,6 +117,21 @@ const EditLesson: React.FC<{
             return await updateReward(reward.id, editedReward);
           })
         );
+
+        if (activitiesDeleteList && activitiesDeleteList.length > 0) {
+          const deleteActivityResponse = await Promise.all(
+            activitiesDeleteList.map(
+              async (activityId) => await deleteActivity(activityId)
+            )
+          );
+        }
+        if (rewardsDeleteList && rewardsDeleteList.length > 0) {
+          const deletRewardResponse = await Promise.all(
+            rewardsDeleteList.map(
+              async (rewardId) => await deleteReward(rewardId)
+            )
+          );
+        }
 
         if (rewards.length > 0 && activities.length > 0) {
           const rewardsData = rewards.map((reward) => ({
@@ -213,7 +249,10 @@ const EditLesson: React.FC<{
           <>
             <form onSubmit={handleSubmit}>
               <div className='tw-space-y-6'>
-                <Link className='fw-bold tw-flex' onClick={goBack}>
+                <Link
+                  className='fw-bold tw-flex tw-text-primary-500'
+                  onClick={goBack}
+                >
                   <h5>
                     <b>{'< Volver a la clase'}</b>
                   </h5>
@@ -260,7 +299,14 @@ const EditLesson: React.FC<{
                               Editar
                             </h5>
 
-                            <h5 className='tw-flex tw-justify-center tw-text-white tw-border tw-border-none hover:tw-cursor-pointer tw-ease-in-out hover:tw-bg-indigo-300 hover:tw-border tw-rounded tw-transition-all tw-duration-200'>
+                            <h5
+                              onClick={() => {
+                                setSelectedActivityIndex(index);
+                                setSelectedEditedActivity(activity);
+                                setOpenDeleteActivity(true);
+                              }}
+                              className='tw-flex tw-justify-center tw-text-white tw-border tw-border-none hover:tw-cursor-pointer tw-ease-in-out hover:tw-bg-indigo-300 hover:tw-border tw-rounded tw-transition-all tw-duration-200'
+                            >
                               <DeleteForeverOutlinedIcon className='' />
                               Eliminar
                             </h5>
@@ -284,7 +330,8 @@ const EditLesson: React.FC<{
                       </h5>
                     </div>
                   )}
-                  {activities && activities.length > 0 ? (
+                  {activities &&
+                    activities.length > 0 &&
                     activities.map((activity, index) => {
                       return (
                         <div
@@ -304,23 +351,30 @@ const EditLesson: React.FC<{
                               Editar
                             </h5>
 
-                            <h5 className='tw-flex tw-justify-center tw-text-white tw-border tw-border-none hover:tw-cursor-pointer tw-ease-in-out hover:tw-bg-indigo-300 hover:tw-border tw-rounded tw-transition-all tw-duration-200'>
+                            <h5
+                              onClick={() => {
+                                setSelectedActivityIndex(index);
+                                setSelectedNewActivity(activity);
+                                setOpenDeleteNewActivity(true);
+                              }}
+                              className='tw-flex tw-justify-center tw-text-white tw-border tw-border-none hover:tw-cursor-pointer tw-ease-in-out hover:tw-bg-indigo-300 hover:tw-border tw-rounded tw-transition-all tw-duration-200'
+                            >
                               <DeleteForeverOutlinedIcon className='' />
                               Eliminar
                             </h5>
                           </div>
 
                           <div className=' tw-mx-8'>
-                            <h5 className='tw-font-bold tw-text-white tw-scroll-auto tw-overflow-y-auto'>
+                            <h3 className='tw-font-bold tw-text-white'>
+                              {activity.title}
+                            </h3>
+                            <h5 className='tw-font-bold tw-text-white tw-break-all tw-mb-4'>
                               {activity.description}
                             </h5>
                           </div>
                         </div>
                       );
-                    })
-                  ) : (
-                    <div />
-                  )}
+                    })}
                   <div className='tw-border tw-border-dashed tw-rounded-md tw-h-40 tw-flex tw-justify-between tw-items-center hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-indigo-100'>
                     <div
                       className='tw-flex tw-justify-center tw-items-center tw-w-full tw-h-full'
@@ -377,6 +431,12 @@ const EditLesson: React.FC<{
                                 <DeleteRewardModalDialog
                                   editedReward={true}
                                   index={index}
+                                  rewardDeleteListAdd={() => {
+                                    setRewardsDeleteList([
+                                      ...(rewardsDeleteList || []),
+                                      reward.id,
+                                    ]);
+                                  }}
                                 />
                               ),
                               maxWidth: 'sm',
@@ -415,7 +475,7 @@ const EditLesson: React.FC<{
                               title: 'Eliminar recompensa',
                               content: (
                                 <DeleteRewardModalDialog
-                                  editedReward={false}
+                                  editedReward={true}
                                   index={index}
                                 />
                               ),
@@ -450,7 +510,7 @@ const EditLesson: React.FC<{
                 </h5>
                 <div className='tw-flex tw-items-center tw-justify-end tw-mx-6'>
                   <button
-                    onClick={handleClose}
+                    onClick={goBack}
                     type='button'
                     className='tw-mx-6 tw-bg-gray-200 text-black'
                   >
@@ -458,7 +518,7 @@ const EditLesson: React.FC<{
                   </button>
                   <button
                     type='submit'
-                    className='tw-bg-primary'
+                    className='tw-bg-primary-500'
                     disabled={isSubmitting}
                   >
                     Guardar Clase
@@ -495,6 +555,17 @@ const EditLesson: React.FC<{
                 }}
               />
             )}
+            {openDeleteActivity && selectedEditedActivity && (
+              <ViewDeleteActivityDialog
+                open={openDeleteActivity}
+                index={selectedActivityIndex}
+                editedActivity={selectedEditedActivity}
+                handleClose={() => {
+                  setOpenDeleteActivity(false);
+                }}
+                activityDeleteListAdd={activitiesListAdd}
+              />
+            )}
             {/* For new activities */}
             {openEditNewActivity && selectedNewActivity && (
               <ViewEditActivityDialog
@@ -509,6 +580,16 @@ const EditLesson: React.FC<{
                 }}
                 handleClose={() => {
                   setOpenEditNewActivity(false);
+                }}
+              />
+            )}
+            {openDeleteNewActivity && selectedNewActivity && (
+              <ViewDeleteActivityDialog
+                open={openDeleteNewActivity}
+                index={selectedActivityIndex}
+                newActivity={selectedNewActivity}
+                handleClose={() => {
+                  setOpenDeleteNewActivity(false);
                 }}
               />
             )}
