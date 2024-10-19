@@ -21,11 +21,13 @@ interface Props {
   activity: IActivity;
   lesson?: ILesson;
   closeDrawer: () => void;
+  reloadActivities: () => void;
 }
 
 const ActivityStudentsDrawer: React.FC<Props> = ({
   activity,
   closeDrawer,
+  reloadActivities,
   lesson,
 }) => {
   const [registers, setRegisters] = useState<StudentCompleteActivity[]>([]);
@@ -112,6 +114,7 @@ const ActivityStudentsDrawer: React.FC<Props> = ({
         await studentActivity.createWithList(removeRegisterData);
       if (status === 201) {
         Toaster('success', 'Los estudiantes han finalizado la actividad');
+        reloadActivities();
         closeDrawer();
       }
     } catch (e) {

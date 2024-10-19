@@ -15,6 +15,7 @@ import EditLesson from './EditLesson';
 import ActivityStudentsDrawer from 'components/drawers/ActivityStudentsDrawer';
 import { useModalStore } from 'contexts/ZustandContext/modal-context';
 import { getLessonByID } from 'services/lessons';
+import { useQuery } from '@tanstack/react-query';
 
 const LessonDetails: React.FC = () => {
   const { openModal } = useModalStore();
@@ -23,24 +24,31 @@ const LessonDetails: React.FC = () => {
     useState<boolean>(false);
   const [fetching, setFetching] = useState<FetchStatus>(FetchStatus.Idle);
   const [lesson, setLesson] = useState<ILesson>();
-  const [activities, setActivities] = useState<IActivity[]>([]);
-  const [rewards, setRewards] = useState<IReward[]>([]);
-  const [selectedActivity, setSelectedActivity] = useState<IActivity | null>(
-    null
-  );
+  const [selectedActivity, setSelectedActivity] = useState<
+    | (IActivity & {
+        studentsCompletedActivity: number;
+      })
+    | null
+  >(null);
   const navigate = useNavigate();
-  const { lessonId } = useParams();
+  const { lessonId } = useParams() as { lessonId: string };
 
   const getLessonData = () => {
     try {
       if (lessonId) {
-        getLessonByID(lessonId as number)
+        getLessonByID(lessonId)
           .then((response: AxiosResponse) => {
             return response?.data;
           })
-          .then((lesson: ILesson) => {
-            setLesson(lesson);
-          })
+          .then(
+            (
+              lesson: ILesson & {
+                studentsCompletedActivities: number;
+              }
+            ) => {
+              setLesson(lesson);
+            }
+          )
           .catch((error) => {
             setFetching(FetchStatus.Error);
             console.error(error);
@@ -51,52 +59,29 @@ const LessonDetails: React.FC = () => {
     }
   };
 
-  const getActivitiesData = () => {
-    try {
-      if (lessonId) {
-        getActivityByLessonId(lessonId as number)
-          .then((response: AxiosResponse) => {
-            return response?.data;
-          })
-          .then((activityList: IActivity[]) => {
-            setActivities(activityList);
-            setFetching(FetchStatus.Success);
-          })
-          .catch((error) => {
-            setFetching(FetchStatus.Error);
-            console.error(error);
-          });
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const {
+    data: activitiesResponse,
+    isPending: isPendingActivities,
+    refetch: reloadActivities,
+  } = useQuery({
+    queryKey: ['activities', lessonId],
+    queryFn: async () => await getActivityByLessonId(lessonId),
+    enabled: !!lessonId,
+  });
 
-  const getRewardsData = () => {
-    try {
-      if (lessonId) {
-        getRewardsByLessonId(lessonId as number)
-          .then((response: AxiosResponse) => {
-            return response?.data;
-          })
-          .then((rewardList: IReward[]) => {
-            setRewards(rewardList);
-          })
-          .catch((error) => {
-            setFetching(FetchStatus.Error);
-            console.error(error);
-          });
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const {
+    data: rewardsResponse,
+    isPending: isPendingRewards,
+    refetch: reloadRewards,
+  } = useQuery({
+    queryKey: ['rewards', lessonId],
+    queryFn: async () => await getRewardsByLessonId(lessonId),
+    enabled: !!lessonId,
+  });
 
   const loadData = () => {
     setFetching(FetchStatus.Pending);
     getLessonData();
-    getRewardsData();
-    getActivitiesData();
   };
 
   useEffect(() => {
@@ -114,7 +99,11 @@ const LessonDetails: React.FC = () => {
     setOpenActivitiesDrawer(value);
   };
 
-  const openActivityDrawer = (activity: IActivity) => {
+  const openActivityDrawer = (
+    activity: IActivity & {
+      studentsCompletedActivity: number;
+    }
+  ) => {
     setSelectedActivity(activity);
     setOpenActivitiesDrawer(true);
   };
@@ -123,19 +112,31 @@ const LessonDetails: React.FC = () => {
     setOpenActivitiesDrawer(false);
   };
 
-  if (fetching === FetchStatus.Idle || fetching === FetchStatus.Pending)
+  if (isPendingActivities || isPendingRewards)
     return (
       <div className='app-container d-flex justify-content-center align-items-center'>
         <CircularProgress />
       </div>
     );
 
+  if (!activitiesResponse || !rewardsResponse)
+    return (
+      <div>
+        <h5>No hay actividades disponibles para esta clase</h5>
+      </div>
+    );
+
+  const { data: activities } = activitiesResponse;
+  const { data: rewards } = rewardsResponse;
+
   if (openEditLesson && lesson) {
     return (
       <EditLesson
-        handleClose={() => {
+        handleClose={async () => {
           setOpenEditLesson(false);
           loadData();
+          await reloadActivities();
+          await reloadRewards();
         }}
         lessonActivities={activities}
         lessonRewards={rewards}
@@ -198,7 +199,7 @@ const LessonDetails: React.FC = () => {
                   </h5>
                 </div>
                 <h5 className='tw-text-white tw-m-8 tw-font-bold'>
-                  <EmojiPeopleIcon /> 0
+                  <EmojiPeopleIcon /> {activity.studentsCompletedActivity}
                 </h5>
               </div>
             </div>
@@ -222,7 +223,7 @@ const LessonDetails: React.FC = () => {
             </h5>
             <div className='tw-absolute tw-top-0 tw-right-0'>
               <h5 className='tw-text-white tw-font-bold tw-m-0 tw-text-sm'>
-                <EmojiPeopleIcon /> 0
+                <EmojiPeopleIcon /> {selectedActivity.studentsCompletedActivity}
               </h5>
             </div>
           </div>
@@ -239,6 +240,7 @@ const LessonDetails: React.FC = () => {
             activity={selectedActivity}
             closeDrawer={closeActivityDrawer}
             lesson={lesson}
+            reloadActivities={reloadActivities}
           />
         )}
       </Drawer>
