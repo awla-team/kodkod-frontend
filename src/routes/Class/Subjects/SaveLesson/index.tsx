@@ -307,14 +307,14 @@ const SaveLesson: React.FC<{
             handleClose={() => {
               setOpenSaveActivity(false);
             }}
-            />{' '}
-            <ViewDeleteActivityDialog
-              open={openDeleteActivity}
-              index={selectedActivityIndex}
-              newActivity={selectedActivity}
-              handleClose={() => {
-                setOpenDeleteActivity(false);
-              }}
+          />{' '}
+          <ViewDeleteActivityDialog
+            open={openDeleteActivity}
+            index={selectedActivityIndex}
+            newActivity={selectedActivity}
+            handleClose={() => {
+              setOpenDeleteActivity(false);
+            }}
           />
         </>
       )}
