@@ -12,7 +12,7 @@ const RewardCard = ({ reward }: Props) => {
     <div className='tw-flex tw-justify-center tw-items-center tw-flex-col tw-rounded-md tw-w-full '>
       <div className='tw-h-12 tw-bg-fuchsia-800 tw-w-full tw-rounded-t-md' />
 
-      <div className='tw-flex tw-h-[44vh] tw-w-full tw-py-4 tw-flex-col tw-grow tw-items-center tw-bg-gradient-to-br tw-from-purple-100 tw-to-cyan-100 tw-px-4 tw-justify-center tw-rounded-b-md'>
+      <div className='tw-flex tw-min-h-[54vh] tw-w-full tw-py-4 tw-flex-col tw-grow tw-items-center tw-bg-gradient-to-br tw-from-purple-100 tw-to-cyan-100 tw-px-4 tw-justify-center tw-rounded-b-md'>
         <img
           src={favStar}
           alt='book'
