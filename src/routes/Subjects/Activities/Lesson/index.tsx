@@ -1,18 +1,21 @@
-import { useState } from 'react';
 import { CircularProgress, Drawer } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import type ILesson from 'types/models/Lesson';
 import { getActivityByLessonId } from 'services/activities';
 import type IActivity from 'types/models/Activity';
+import { type AxiosResponse } from 'axios';
+import { FetchStatus } from 'global/enums';
 import LessonRewardCard from 'components/LessonRewardCard';
+import type IReward from 'types/models/Reward';
 import { getRewardsByLessonId } from 'services/rewards';
 import EditLesson from './EditLesson';
 import ActivityStudentsDrawer from 'components/drawers/ActivityStudentsDrawer';
-import { useQuery } from '@tanstack/react-query';
+import { useModalStore } from 'contexts/ZustandContext/modal-context';
 import { getLessonByID } from 'services/lessons';
+import { useQuery } from '@tanstack/react-query';
 
 const LessonDetails: React.FC = () => {
   const { openModal } = useModalStore();
@@ -21,11 +24,6 @@ const LessonDetails: React.FC = () => {
     useState<boolean>(false);
   const [fetching, setFetching] = useState<FetchStatus>(FetchStatus.Idle);
   const [lesson, setLesson] = useState<ILesson>();
-  const [activities, setActivities] = useState<IActivity[]>([]);
-  const [rewards, setRewards] = useState<IReward[]>([]);
-  const [selectedActivity, setSelectedActivity] = useState<IActivity | null>(
-    null
-  );
   const [selectedActivity, setSelectedActivity] = useState<
     | (IActivity & {
         studentsCompletedActivity: number;
@@ -33,19 +31,24 @@ const LessonDetails: React.FC = () => {
     | null
   >(null);
   const navigate = useNavigate();
-  const { pathname } = useLocation();
+  const { lessonId } = useParams();
 
-  const getActivitiesData = () => {
+  const getLessonData = () => {
     try {
-      if (selectedLesson?.id) {
-        getActivityByLessonId(selectedLesson.id)
+      if (lessonId) {
+        getLessonByID(lessonId as number)
           .then((response: AxiosResponse) => {
             return response?.data;
           })
-          .then((activityList: IActivity[]) => {
-            setActivities(activityList);
-            setFetching(FetchStatus.Success);
-          })
+          .then(
+            (
+              lesson: ILesson & {
+                studentsCompletedActivities: number;
+              }
+            ) => {
+              setLesson(lesson);
+            }
+          )
           .catch((error) => {
             setFetching(FetchStatus.Error);
             console.error(error);
@@ -56,35 +59,34 @@ const LessonDetails: React.FC = () => {
     }
   };
 
-  const getRewardsData = () => {
-    try {
-      if (selectedLesson?.id) {
-        getRewardsByLessonId(selectedLesson.id)
-          .then((response: AxiosResponse) => {
-            return response?.data;
-          })
-          .then((rewardList: IReward[]) => {
-            setRewards(rewardList);
-          })
-          .catch((error) => {
-            setFetching(FetchStatus.Error);
-            console.error(error);
-          });
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const {
+    data: activitiesResponse,
+    isPending: isPendingActivities,
+    refetch: reloadActivities,
+  } = useQuery({
+    queryKey: ['activities', lessonId],
+    queryFn: async () => await getActivityByLessonId(lessonId),
+    enabled: !!lessonId,
+  });
+
+  const {
+    data: rewardsResponse,
+    isPending: isPendingRewards,
+    refetch: reloadRewards,
+  } = useQuery({
+    queryKey: ['rewards', lessonId],
+    queryFn: async () => await getRewardsByLessonId(lessonId),
+    enabled: !!lessonId,
+  });
 
   const loadData = () => {
     setFetching(FetchStatus.Pending);
-    getRewardsData();
-    getActivitiesData();
+    getLessonData();
   };
 
   useEffect(() => {
     loadData();
-  }, [selectedLesson]);
+  }, [lessonId]);
 
   const goBack = () => {
     navigate(-1);
@@ -110,9 +112,9 @@ const LessonDetails: React.FC = () => {
     setOpenActivitiesDrawer(false);
   };
 
-  if (isPendingRewards || isPendingActivities)
+  if (isPendingActivities || isPendingRewards)
     return (
-      <div className='d-flex justify-content-center align-items-center'>
+      <div className='app-container d-flex justify-content-center align-items-center'>
         <CircularProgress />
       </div>
     );
@@ -127,12 +129,14 @@ const LessonDetails: React.FC = () => {
   const { data: activities } = activitiesResponse;
   const { data: rewards } = rewardsResponse;
 
-  if (openEditLesson && selectedLesson) {
+  if (openEditLesson && lesson) {
     return (
       <EditLesson
-        handleClose={() => {
+        handleClose={async () => {
           setOpenEditLesson(false);
           loadData();
+          await reloadActivities();
+          await reloadRewards();
         }}
         lessonActivities={activities}
         lessonRewards={rewards}
