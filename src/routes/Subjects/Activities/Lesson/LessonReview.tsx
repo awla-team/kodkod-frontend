@@ -11,7 +11,7 @@ import {
   getStudentsCompletedReward,
 } from 'services/rewards';
 import type IReward from 'types/models/Reward';
-import { Avatar, CircularProgress } from '@mui/material';
+import { Avatar, Button, Chip, CircularProgress } from '@mui/material';
 import { finishLesson, getLessonByID } from 'services/lessons';
 import Toaster from 'utils/Toster';
 
@@ -74,7 +74,8 @@ const LessonReview = () => {
       });
       if (status === 200) {
         Toaster('success', 'Clase finalizada con éxito');
-        navigate(-1);
+        navigate(`/app/classroom/${t_classroom_id}/lessons`);
+
       }
     } catch (e) {
       Toaster('error', 'Error al finalizar la clase');
@@ -98,22 +99,33 @@ const LessonReview = () => {
   return (
     <div className='tw-flex tw-flex-col tw-gap-6'>
       <div className='tw-flex tw-flex-col'>
-        <button
-          type='button'
-          className='tw-flex tw-items-center tw-font-semibold tw-bg-transparent tw-text-primary-500 tw-border-none hover:tw-underline tw-text-lg tw-px-0'
-          onClick={goBack}
-        >
-          <ChevronLeft />
-          Volver a la clase
-        </button>
+        <div className='tw-flex tw-justify-between tw-mb-4'>
+          <Button
+            variant='text'
+            size='large'
+            startIcon={<ChevronLeft />}
+            onClick={goBack}
+          >
+            Volver a la clase en curso
+          </Button>
+        </div>
 
-        <h3 className='tw-flex tw-gap-4'>
-          Clase:
-          <span className='tw-font-bold'>{lesson.title}</span>
-        </h3>
+        <div className='tw-flex tw-items-center tw-gap-2'>
+          <h4 className='tw-flex tw-m-0'>
+            Clase: <b className='tw-ml-2'>{lesson?.title}</b>
+          </h4>
+          {lesson.ended_at && (
+            <Chip
+              className='tw-ml-2'
+              label='Clase finalizada'
+              color='success'
+              size='medium'
+            />
+          )}
+        </div>
       </div>
 
-      <h2 className='tw-text-center tw-text-primary-500 tw-font-extrabold tw-text-6xl'>
+      <h2 className='tw-text-center tw-text-primary-500 tw-font-extrabold tw-text-7xl tw-py-10'>
         ¡BUEN TRABAJO!
       </h2>
 
@@ -130,9 +142,8 @@ const LessonReview = () => {
               {rewards.map((reward) => (
                 <div
                   key={reward.id}
-                  className='tw-w-64 tw-rounded-lg tw-transition-all tw-duration-200 tw-ease-in-out hover:tw-shadow'
+                  className='tw-rounded-lg tw-transition-all tw-duration-200 tw-ease-in-out tw-cursor-pointer'
                   style={{
-                    cursor: 'pointer',
                     border:
                       selectedRewardId === reward.id
                         ? '2px solid #3B82F6'
@@ -155,9 +166,7 @@ const LessonReview = () => {
         <p>
           {selectedRewardId === 0
             ? 'Seleccione una recompensa para ver los estudiantes que la completaron'
-            : completedRewardStudents.length === 0
-              ? 'La recompensa no tiene estudiantes que la obtuvieran'
-              : 'Esta recompensa ha sido obtenida por los siguientes estudiantes'}
+            : 'Esta recompensa ha sido obtenida por los siguientes estudiantes'}
         </p>
 
         {isPendingStudentsCompletedReward ? (
@@ -186,9 +195,11 @@ const LessonReview = () => {
         )}
       </div>
 
-      <button
-        type='button'
-        className='tw-bg-primary-500 tw-h-12 tw-flex tw-justify-center tw-items-center'
+      <Button
+        variant='contained'
+        color='primary'
+        size='large'
+        fullWidth
         onClick={onSubmit}
         disabled={isLoading || lesson.ended_at !== null}
       >
@@ -199,7 +210,7 @@ const LessonReview = () => {
         ) : (
           'Finalizar clase'
         )}
-      </button>
+      </Button>
     </div>
   );
 };

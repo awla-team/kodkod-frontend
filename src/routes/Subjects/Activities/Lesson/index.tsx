@@ -1,4 +1,4 @@
-import { Button, CircularProgress, Drawer } from '@mui/material';
+import { Button, Chip, CircularProgress, Drawer } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
@@ -170,9 +170,19 @@ const LessonDetails: React.FC = () => {
           </Button>
         )}
       </div>
-      <h4 className='tw-flex'>
-        Clase: <b className='tw-ml-2'>{lesson?.title}</b>
-      </h4>
+      <div className='tw-flex tw-items-center tw-gap-2'>
+        <h4 className='tw-flex tw-m-0'>
+          Clase: <b className='tw-ml-2'>{lesson?.title}</b>
+        </h4>
+        {lesson?.ended_at && (
+          <Chip
+            className='tw-ml-2'
+            label='Clase finalizada'
+            color='success'
+            size='medium'
+          />
+        )}
+      </div>
       <div className='tw-flex tw-flex-col tw-gap-4'>
         <span className='tw-block tw-mt-8'>
           Tus estudiantes deben completar las siguientes actividades
