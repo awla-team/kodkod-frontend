@@ -17,7 +17,10 @@ import Toaster from 'utils/Toster';
 
 const LessonReview = () => {
   const navigate = useNavigate();
-  const { classId: t_classroom_id, lessonId } = useParams();
+  const { classId: t_classroom_id, lessonId } = useParams() as {
+    classId: string;
+    lessonId: string;
+  };
   const [selectedRewardId, setSelectedRewardId] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [rewards, setRewards] = useState<IReward[]>([]);
@@ -33,7 +36,7 @@ const LessonReview = () => {
     queryFn: async () => await getLessonByID(Number(lessonId)),
   });
   const { mutate: mutateGetRewardsByLessonId, isPending } = useMutation({
-    mutationFn: async () => await getRewardsByLessonId(Number(lessonId)),
+    mutationFn: async () => await getRewardsByLessonId(lessonId),
     onSuccess: (response) => {
       if (response) {
         setRewards(response.data);
@@ -46,7 +49,7 @@ const LessonReview = () => {
   } = useMutation({
     mutationFn: async (id: number) =>
       await getStudentsCompletedReward(id, {
-        t_classroom_id,
+        t_classroom_id: Number(t_classroom_id),
       }),
     onSuccess: (response) => {
       if (response) {

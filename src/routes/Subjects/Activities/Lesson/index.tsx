@@ -31,12 +31,12 @@ const LessonDetails: React.FC = () => {
     | null
   >(null);
   const navigate = useNavigate();
-  const { lessonId } = useParams();
+  const { lessonId } = useParams() as { lessonId: string };
 
   const getLessonData = () => {
     try {
       if (lessonId) {
-        getLessonByID(lessonId as number)
+        getLessonByID(lessonId)
           .then((response: AxiosResponse) => {
             return response?.data;
           })

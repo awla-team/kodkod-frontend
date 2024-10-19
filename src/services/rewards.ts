@@ -63,7 +63,7 @@ export const getRewards = async (filterQuery: GetRewardsFilter) => {
  * @param lessonId - The ID of the lesson.
  * @returns A promise that resolves to the retrieved rewards.
  */
-export const getRewardsByLessonId = async (lessonId: number) => {
+export const getRewardsByLessonId = async (lessonId: string) => {
   return await http.get<IReward[]>(`reward?lesson_id=${lessonId}`);
 };
 
