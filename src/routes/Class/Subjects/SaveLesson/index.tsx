@@ -188,7 +188,7 @@ const SaveLesson: React.FC<{
                     (opcional)
                   </i>
                 </span>
-                <div className='tw-flex tw-items-center tw-justify-center tw-gap-5 tw-scroll-auto tw-overflow-x-auto'>
+                <div className='tw-flex tw-gap-5 tw-scroll-auto tw-overflow-x-auto'>
                   {rewards.map((reward, index) => {
                     return (
                       <RewardCard
@@ -224,7 +224,7 @@ const SaveLesson: React.FC<{
                     );
                   })}
                   <div
-                    className='tw-flex tw-flex-col tw-gap-2 tw-rounded-md tw-items-center tw-justify-center border-dashed tw-max-h-[400px] tw-h-[400px] tw-max-w-[300px] tw-w-[300px] hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-sky-50'
+                    className={`${rewards.length ? 'tw-m-0' : 'tw-m-auto'} tw-flex tw-flex-col tw-gap-2 tw-rounded-md tw-items-center tw-justify-center border-dashed tw-max-h-[400px] tw-h-[400px] tw-min-w-[260px] tw-w-[260px] hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-sky-50`}
                     onClick={() =>
                       openModal({
                         title: 'Ingresar recompensas',
