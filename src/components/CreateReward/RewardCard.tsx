@@ -8,7 +8,7 @@ import EditNoteIcon from '@mui/icons-material/EditNote';
 interface Props extends HTMLAttributes<HTMLDivElement> {
   reward: CreateRewardForm & { numberOfActivities: number };
   editEffect: () => void;
-  deleteEffect: () => void;
+  deleteEffect?: () => void;
 }
 
 const RewardCard: FC<Props> = ({ reward, editEffect, deleteEffect }) => {
@@ -22,13 +22,15 @@ const RewardCard: FC<Props> = ({ reward, editEffect, deleteEffect }) => {
           <EditNoteIcon className='' />
           Editar
         </div>
-        <div
-          onClick={deleteEffect}
-          className='tw-flex hover:tw-cursor-pointer tw-ease-in-out hover:tw-bg-indigo-300 hover:tw-border tw-rounded tw-transition-all tw-duration-200'
-        >
-          <DeleteForeverOutlinedIcon className='' />
-          Eliminar
-        </div>
+        {deleteEffect && (
+          <div
+            onClick={deleteEffect}
+            className='tw-flex hover:tw-cursor-pointer tw-ease-in-out hover:tw-bg-indigo-300 hover:tw-border tw-rounded tw-transition-all tw-duration-200'
+          >
+            <DeleteForeverOutlinedIcon className='' />
+            Eliminar
+          </div>
+        )}
       </div>
 
       <div className='tw-flex tw-w-full tw-mx-8 tw-h-96 tw-py-4 tw-flex-col tw-grow tw-items-center tw-bg-gradient-to-r tw-from-purple-100 tw-to-cyan-100 tw-px-4 tw-justify-center tw-rounded-b-md'>
