@@ -229,7 +229,7 @@ const ActivityStudentsDrawer: React.FC<Props> = ({
       </div>
 
       <div className='tw-px-6 tw-flex tw-items-center tw-gap-2'>
-        <Button className='tw-w-full' type='button' onClick={closeDrawer}>
+        <Button className='tw-w-full' variant='outlined' onClick={closeDrawer}>
           Cancelar
         </Button>
         {!lesson?.ended_at && (

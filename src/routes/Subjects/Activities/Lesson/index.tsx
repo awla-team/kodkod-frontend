@@ -1,7 +1,7 @@
 import { Button, Chip, CircularProgress, Drawer } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
+import Groups2Icon from '@mui/icons-material/Groups2';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import EditIcon from '@mui/icons-material/Edit';
 import type ILesson from 'types/models/Lesson';
@@ -198,6 +198,10 @@ const LessonDetails: React.FC = () => {
                     <h4 className='tw-text-white tw-font-bold tw-mb-0'>
                       {activity.title}
                     </h4>
+                    <div className='tw-text-white tw-font-bold tw-m-0 tw-text-md tw-flex tw-items-center tw-gap-2'>
+                      <Groups2Icon />
+                      <span>{activity.studentsCompletedActivity || 0}</span>
+                    </div>
                   </div>
                   <h4 className='tw-text-white tw-flex-1 tw-mb-0 tw-flex tw-text-justify'>
                     {activity.description}
