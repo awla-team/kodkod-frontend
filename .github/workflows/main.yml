@@ -62,21 +62,21 @@ jobs:
 
       - name: Building for sandbox
         if: github.ref_name == 'sandbox'
-        env:
-          VITE_API_BASE_URL: api-sandbox.kodkod.cl
         run: yarn build
+        env:
+          VITE_API_BASE_URL: https://api-sandbox.kodkod.cl
 
       - name: Building for staging
         if: startsWith(github.head_ref, 'release/') || startsWith(github.head_ref, 'hotfix/')
-        env:
-          VITE_API_BASE_URL: api-dev.kodkod.cl
         run: yarn build
+        env:
+          VITE_API_BASE_URL: https://api-dev.kodkod.cl
 
       - name: Building for production
         if: ${{ github.event_name == 'release' && ! github.event.release.prerelease }}
-        env:
-          VITE_API_BASE_URL: api.kodkod.cl
         run: yarn build
+        env:
+          VITE_API_BASE_URL: https://api.kodkod.cl
 
       - name: Upload build as artifact
         uses: actions/upload-artifact@v4
