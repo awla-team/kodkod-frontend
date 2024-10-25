@@ -110,7 +110,7 @@ jobs:
 
   deploy-staging:
     if: startsWith(github.head_ref, 'release/') || startsWith(github.head_ref, 'hotfix/')
-    name: app-staging.kodkod.cl
+    name: app-dev.kodkod.cl
     needs: build
     runs-on: ubuntu-latest
     steps:
