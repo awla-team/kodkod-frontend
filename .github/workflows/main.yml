@@ -78,7 +78,7 @@ jobs:
           name: build
           path: dist
 
-  deploy-dev:
+  deploy-staging:
     if: startsWith(github.head_ref, 'release/') || startsWith(github.head_ref, 'hotfix/')
     name: app-dev.kodkod.cl
     needs: build
