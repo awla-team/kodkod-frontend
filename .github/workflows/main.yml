@@ -13,7 +13,7 @@ on:
     types: [released]
 
 env:
-  NODE_VERSION: 20.11.0
+  NODE_VERSION: 20.17.0
   CACHE_PACKAGE_MANAGER: 'yarn'
 
 jobs:
@@ -43,7 +43,7 @@ jobs:
         run: yarn ts-check
 
   build:
-    if: ${{ github.ref_name == 'develop' || startsWith(github.head_ref, 'release/v') || (github.event_name == 'release' && ! github.event.release.prerelease) }}
+    if: ${{ github.ref_name == 'sandbox' || startsWith(github.head_ref, 'release/') || startsWith(github.head_ref, 'hotfix/') || (github.event_name == 'release' && ! github.event.release.prerelease) }}
     name: Build
     needs: lint
     runs-on: ubuntu-latest
@@ -60,17 +60,23 @@ jobs:
       - name: Installing dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Building for development
-        if: github.ref_name == 'develop' || startsWith(github.head_ref, 'release/v')
-        run: |
-          echo VITE_API_BASE_URL=${{ vars.DEV_API_BASE_URL }} >> .env.staging
-          yarn build --mode staging
+      - name: Building for sandbox
+        if: github.ref_name == 'sandbox'
+        run: yarn build
+        env:
+          VITE_API_BASE_URL: https://api-sandbox.kodkod.cl
+
+      - name: Building for staging
+        if: startsWith(github.head_ref, 'release/') || startsWith(github.head_ref, 'hotfix/')
+        run: yarn build
+        env:
+          VITE_API_BASE_URL: https://api-dev.kodkod.cl
 
       - name: Building for production
         if: ${{ github.event_name == 'release' && ! github.event.release.prerelease }}
-        run: |
-          echo VITE_API_BASE_URL=${{ vars.PROD_API_BASE_URL }} >> .env.production
-          yarn build
+        run: yarn build
+        env:
+          VITE_API_BASE_URL: https://api.kodkod.cl
 
       - name: Upload build as artifact
         uses: actions/upload-artifact@v4
@@ -78,8 +84,32 @@ jobs:
           name: build
           path: dist
 
-  deploy-dev:
-    if: github.ref_name == 'develop' || startsWith(github.head_ref, 'release/v')
+  deploy-sandbox:
+    if: github.ref_name == 'sandbox'
+    name: app-sandbox.kodkod.cl
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download build
+        uses: actions/download-artifact@v4
+        with:
+          name: build
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-southeast-1
+
+      - name: Deploy to S3 bucket
+        run: aws s3 sync ./ s3://app-sandbox.kodkod.cl
+
+      - name: Clear distribution cache
+        run: aws cloudfront create-invalidation --distribution-id E3IZXGHAA3XFIZ --paths "/*"
+
+  deploy-staging:
+    if: startsWith(github.head_ref, 'release/') || startsWith(github.head_ref, 'hotfix/')
     name: app-dev.kodkod.cl
     needs: build
     runs-on: ubuntu-latest
@@ -97,10 +127,10 @@ jobs:
           aws-region: ap-southeast-1
 
       - name: Deploy to S3 bucket
-        run: aws s3 sync ./ s3://${{ secrets.DEVELOPMENT_DNS }}
+        run: aws s3 sync ./ s3://app-dev.kodkod.cl
 
       - name: Clear distribution cache
-        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.DEV_DISTRIBUTION_ID }} --paths "/*"
+        run: aws cloudfront create-invalidation --distribution-id E2FNOGEEANDGM7 --paths "/*"
 
   deploy-prod:
     if: ${{ github.event_name == 'release' && ! github.event.release.prerelease }}
