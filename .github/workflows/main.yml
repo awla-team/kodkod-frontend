@@ -13,7 +13,7 @@ on:
     types: [released]
 
 env:
-  NODE_VERSION: 20.11.0
+  NODE_VERSION: 20.17.0
   CACHE_PACKAGE_MANAGER: 'yarn'
 
 jobs:
