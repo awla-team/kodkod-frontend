@@ -186,7 +186,7 @@ const LessonDetails: React.FC = () => {
           Tus estudiantes deben completar las siguientes actividades
         </span>
         <div className='tw-flex tw-flex-col tw-gap-2 tw-scroll-auto tw-overflow-y-auto'>
-          {activities.length > 0 &&
+          {activities.length > 0 ? (
             activities.map((activity, index) => {
               return (
                 <div
@@ -208,7 +208,12 @@ const LessonDetails: React.FC = () => {
                   </h4>
                 </div>
               );
-            })}
+            })
+          ) : (
+            <h5 className='tw-flex tw-justify-center tw-m-4 tw-font-semibold'>
+              No hay actividades disponibles para esta clase
+            </h5>
+          )}
         </div>
       </div>
       {/* selectedActivity && openActivitiesDrawer && (
@@ -245,7 +250,11 @@ const LessonDetails: React.FC = () => {
         <span className='tw-block tw-mt-8'>
           Al completar actividades, pueden obtener las siguientes recompensas
         </span>
-        <div className='tw-flex tw-gap-5 tw-scroll-auto tw-overflow-x-auto tw-justify-center'>
+        <div
+          className={`tw-flex tw-gap-5 tw-scroll-auto tw-overflow-x-auto ${
+            rewards.length > 0 ? '' : 'tw-justify-center'
+          }`}
+        >
           {rewards.length > 0 ? (
             rewards.map((reward, index) => {
               return (

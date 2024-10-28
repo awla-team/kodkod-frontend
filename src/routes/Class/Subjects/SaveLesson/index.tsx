@@ -194,7 +194,11 @@ const SaveLesson: React.FC<{
                   2. Ingresa las <b>recompensas</b> de la clase{' '}
                   <i className='tw-text-xs tw-text-gray-500'>(opcional)</i>
                 </span>
-                <div className='tw-flex tw-gap-5 tw-scroll-auto tw-overflow-x-auto tw-justify-center'>
+                <div
+                  className={`tw-flex tw-gap-5 tw-scroll-auto tw-overflow-x-auto ${
+                    rewards.length > 0 ? '' : 'tw-justify-center'
+                  }`}
+                >
                   {rewards.map((reward, index) => {
                     return (
                       <RewardCard
@@ -273,7 +277,7 @@ const SaveLesson: React.FC<{
                   type='submit'
                   variant='contained'
                   size='large'
-                  disabled={isSubmitting || !values.title || !activities.length}
+                  disabled={isSubmitting || !values.title}
                 >
                   Guardar clase
                 </Button>
