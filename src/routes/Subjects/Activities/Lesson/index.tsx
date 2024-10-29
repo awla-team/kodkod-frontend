@@ -16,6 +16,7 @@ import ActivityStudentsDrawer from 'components/drawers/ActivityStudentsDrawer';
 import { useModalStore } from 'contexts/ZustandContext/modal-context';
 import { getLessonByID } from 'services/lessons';
 import { useQuery } from '@tanstack/react-query';
+import RewardCard from 'components/RewardCard';
 
 const LessonDetails: React.FC = () => {
   const { openModal } = useModalStore();
@@ -253,7 +254,7 @@ const LessonDetails: React.FC = () => {
           rewards.map((reward, index) => {
             return (
               <div key={index} className='tw-w-72 tw-min-w-72'>
-                <LessonRewardCard reward={reward} />
+                <RewardCard reward={reward} />
               </div>
             );
           })

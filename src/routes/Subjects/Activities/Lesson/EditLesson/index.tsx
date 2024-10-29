@@ -19,7 +19,6 @@ import {
 import { CreateLessonSchema } from 'types/validations/lesson';
 import { useModalStore } from 'contexts/ZustandContext/modal-context';
 import CreateRewardModal from 'components/Modals/CreateRewardModal/CreateRewardModal';
-import RewardCard from 'components/CreateReward/RewardCard';
 import EditRewardModal from 'components/Modals/EditRewardModal';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import { createRewards, deleteReward, updateReward } from 'services/rewards';
@@ -29,6 +28,7 @@ import type IReward from 'types/models/Reward';
 import DeleteRewardModalDialog from 'components/Modals/DeleteRewardModal';
 import { type IActivitySaved } from 'types/models/Activity';
 import ViewDeleteActivityDialog from 'components/Modals/DeleteActivity';
+import RewardCard from 'components/RewardCard';
 
 const EditLesson: React.FC<{
   selectedLesson: ILesson;
@@ -406,11 +406,7 @@ const EditLesson: React.FC<{
                       return (
                         <RewardCard
                           key={index}
-                          reward={{
-                            name: reward.title,
-                            description: reward.description,
-                            numberOfActivities: reward.n_required,
-                          }}
+                          reward={reward}
                           editEffect={() =>
                             openModal({
                               title: 'Editar recompensa',
@@ -452,7 +448,7 @@ const EditLesson: React.FC<{
                       return (
                         <RewardCard
                           key={index}
-                          reward={{
+                          newReward={{
                             name: reward.name,
                             description: reward.description,
                             numberOfActivities: reward.numberOfActivities,
