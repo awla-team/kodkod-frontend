@@ -212,17 +212,14 @@ const Rewards = () => {
           {rewards.map((reward, index) => {
             return (
               <RewardCard
-                id={index}
-                onSave={handleEditReward}
-                key={`${reward.id}-${reward.title}`}
-                rewardId={reward.id}
-                title={reward.title}
-                description={reward.description}
-                icon={reward.icon}
-                requiredPoints={reward.required_points}
-                type={reward.type}
-                order={index + 1}
-                usedCount={reward.usedCount}
+                key={index}
+                reward={{
+                  id: reward.id,
+                  description: reward.description,
+                  lesson_id: reward.adventureId,
+                  n_required: reward.required_points,
+                  title: reward.title,
+                }}
               />
             );
           })}
