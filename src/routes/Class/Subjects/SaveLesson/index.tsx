@@ -6,13 +6,11 @@ import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined
 
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import EditIcon from '@mui/icons-material/Edit';
-import { type IUnit } from 'components/Modals/ViewLearningGoalsDialog/interfaces';
 import { type ILessonSaved } from 'types/models/Lesson';
 import { type ITeacherSubjectClassroomData } from 'global/interfaces';
 import { Formik } from 'formik';
 import { saveLesson } from 'services/lessons';
 import Toaster from 'utils/Toster';
-import ViewSaveActivityDialog from 'components/Modals/SaveActivity';
 import { useCreateLesson } from 'zustand/create-lesson-store';
 import { saveActivity } from 'services/activities';
 import { CreateLessonSchema } from 'types/validations/lesson';
@@ -21,10 +19,10 @@ import CreateRewardModal from 'components/Modals/CreateRewardModal/CreateRewardM
 import RewardCard from 'components/CreateReward/RewardCard';
 import EditRewardModal from 'components/Modals/EditRewardModal';
 import { createRewards } from 'services/rewards';
-import ViewEditActivityDialog from 'components/Modals/EditActivity';
 import DeleteRewardModalDialog from 'components/Modals/DeleteRewardModal';
 import { type IActivitySaved } from 'types/models/Activity';
 import ViewDeleteActivityDialog from 'components/Modals/DeleteActivity';
+import ActivityForm from 'components/ActivityForm';
 
 const SaveLesson: React.FC<{
   classroomDetails: ITeacherSubjectClassroomData;
@@ -296,7 +294,7 @@ const SaveLesson: React.FC<{
               </div>
             </form>
             {openEditActivity && selectedActivity && (
-              <ViewEditActivityDialog
+              <ActivityForm
                 open={openEditActivity}
                 newActivity={selectedActivity}
                 index={selectedActivityIndex}
@@ -311,7 +309,7 @@ const SaveLesson: React.FC<{
                 }}
               />
             )}
-            <ViewSaveActivityDialog
+            <ActivityForm
               open={openSaveActivity}
               currentLesson={{
                 id: 1,
