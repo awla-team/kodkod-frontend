@@ -1,12 +1,7 @@
-import { TextField } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import postCard from 'assets/images/postcard-heart 1.png';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
-
-import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import EditIcon from '@mui/icons-material/Edit';
-import { type IUnit } from 'components/Modals/ViewLearningGoalsDialog/interfaces';
 import { type ILessonSaved } from 'types/models/Lesson';
 import { type ITeacherSubjectClassroomData } from 'global/interfaces';
 import { Formik } from 'formik';
@@ -23,6 +18,8 @@ import EditRewardModal from 'components/Modals/EditRewardModal';
 import { createRewards } from 'services/rewards';
 import ViewEditActivityDialog from 'components/Modals/EditActivity';
 import DeleteRewardModalDialog from 'components/Modals/DeleteRewardModal';
+import PostcardIcon from 'assets/images/postcard-heart.svg';
+import BookmarkStarIcon from 'assets/images/bookmark-star.svg';
 import { type IActivitySaved } from 'types/models/Activity';
 import ViewDeleteActivityDialog from 'components/Modals/DeleteActivity';
 
@@ -99,118 +96,109 @@ const SaveLesson: React.FC<{
   };
 
   return (
-    <div>
-      <Formik
-        initialValues={formValues}
-        onSubmit={onSubmit}
-        validationSchema={CreateLessonSchema}
-      >
-        {({ values, handleChange, handleSubmit, isSubmitting, errors }) => (
-          <>
-            <form onSubmit={handleSubmit}>
-              <div className='tw-space-y-6'>
-                <Link
-                  className='fw-bold tw-flex tw-text-primary-500'
-                  onClick={goBack}
-                >
-                  <h5>
-                    <b>{'< Volver a lista de clases'}</b>
-                  </h5>
-                </Link>
-
-                <TextField
-                  className=''
-                  value={values.title}
-                  onChange={handleChange}
-                  name='title'
-                  variant='standard'
-                  placeholder='Inserte el título de la clase'
-                  fullWidth
-                  error={!!errors.title}
-                />
-                {errors.title && (
-                  <span className='tw-text-xs tw-text-red-500'>
-                    {errors.title}
-                  </span>
-                )}
-
-                <h5 className='tw-flex tw-mx-4 tw-my-4'>
-                  1. Ingresa las <b className='tw-mx-1'> {' actividades '}</b>{' '}
-                  que quieras desarrollar en esta clase
-                </h5>
-                <div className='tw-scroll-auto tw-overflow-y-auto tw-px-2 tw-pb-2 tw-max-h-[550px]'>
-                  {activities && activities.length > 0 ? (
-                    activities.map((activity, index) => {
-                      return (
-                        <div
-                          key={index}
-                          className='tw-border tw-bg-gradient-to-r tw-from-blue-600 tw-to-cyan-500 tw-rounded-md tw-min-h-40 tw-flex tw-my-3 tw-flex-col'
-                        >
-                          <div className='tw-flex tw-mx-8 tw-mt-8 tw-w-24'>
-                            <h5
-                              className='tw-flex tw-mr-4 tw-justify-center tw-text-white tw-border tw-border-none hover:tw-cursor-pointer tw-ease-in-out hover:tw-bg-indigo-300 hover:tw-border tw-rounded tw-transition-all tw-duration-200'
+    <Formik
+      initialValues={formValues}
+      onSubmit={onSubmit}
+      validationSchema={CreateLessonSchema}
+    >
+      {({ values, handleChange, handleSubmit, isSubmitting, errors }) => (
+        <>
+          <form onSubmit={handleSubmit}>
+            <div>
+              <TextField
+                value={values.title}
+                sx={{
+                  '& .MuiInputBase-input': {
+                    fontSize: '24px',
+                  },
+                }}
+                onChange={handleChange}
+                name='title'
+                variant='standard'
+                placeholder='Ingresa el tema de la clase'
+                fullWidth
+                error={!!errors.title}
+              />
+              <div className='tw-flex tw-flex-col tw-gap-4'>
+                <span className='tw-block tw-mt-8'>
+                  1. Ingresa las <b>actividades</b> que quieras desarrollar en
+                  esta clase
+                </span>
+                <div className='tw-flex tw-flex-col tw-gap-2 tw-scroll-auto tw-overflow-y-auto'>
+                  {activities?.map((activity, index) => {
+                    return (
+                      <div
+                        key={index}
+                        className='tw-border tw-bg-gradient-to-r tw-from-blue-600 tw-to-blue-800 tw-rounded-md tw-min-h-40 tw-flex tw-flex-col tw-gap-3 tw-p-4'
+                      >
+                        <div className='tw-flex tw-justify-between tw-items-center'>
+                          <h4 className='tw-text-white tw-font-bold tw-mb-0'>
+                            {activity.title}
+                          </h4>
+                          <div className='tw-flex tw-gap-2'>
+                            <Button
+                              color='secondary'
+                              variant='outlined'
+                              startIcon={<EditIcon className='tw-w-5 tw-h-5' />}
                               onClick={() => {
                                 setSelectedActivityIndex(index);
                                 setSelectedActivity(activity);
                                 setOpenEditActivity(true);
                               }}
                             >
-                              <EditIcon />
                               Editar
-                            </h5>
-
-                            <h5
+                            </Button>
+                            <Button
+                              color='secondary'
+                              variant='outlined'
                               onClick={() => {
                                 setSelectedActivityIndex(index);
                                 setSelectedActivity(activity);
                                 setOpenDeleteActivity(true);
                               }}
-                              className='tw-flex tw-justify-center tw-text-white tw-border tw-border-none hover:tw-cursor-pointer tw-ease-in-out hover:tw-bg-indigo-300 hover:tw-border tw-rounded tw-transition-all tw-duration-200'
+                              startIcon={
+                                <DeleteForeverOutlinedIcon className='tw-w-5 tw-h-5' />
+                              }
                             >
-                              <DeleteForeverOutlinedIcon className='' />
                               Eliminar
-                            </h5>
-                          </div>
-
-                          <div className=' tw-mx-8'>
-                            <h3 className='tw-font-bold tw-text-white'>
-                              {activity.title}
-                            </h3>
-                            <h5 className='tw-font-bold tw-text-white tw-break-all tw-mb-4'>
-                              {activity.description}
-                            </h5>
+                            </Button>
                           </div>
                         </div>
-                      );
-                    })
-                  ) : (
-                    <div />
-                  )}
-                  <div className='tw-border tw-border-dashed tw-rounded-md tw-h-40 tw-flex tw-items-center hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-indigo-100'>
+                        <h4 className='tw-text-white tw-flex-1 tw-mb-0 tw-flex tw-text-justify'>
+                          {activity.description}
+                        </h4>
+                      </div>
+                    );
+                  })}
+                  <div className='border-dashed tw-rounded-md tw-h-40 tw-flex hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-sky-50'>
                     <div
-                      className='tw-flex tw-justify-center tw-items-center tw-w-full tw-h-full'
+                      className='tw-flex tw-justify-center tw-items-center tw-w-full tw-h-full tw-gap-2'
                       onClick={() => {
                         setOpenSaveActivity(true);
                       }}
                     >
-                      <span className=' tw-mx-2 tw-font-semibold'>
-                        <h5>
-                          <img
-                            src={postCard}
-                            alt='book'
-                            className='tw-w-6 tw-object-cover tw-mr-2'
-                          />
-                          <b> Ingresar nueva actividad</b>
-                        </h5>
+                      <img
+                        src={PostcardIcon}
+                        alt='Postcard'
+                        className='tw-w-5'
+                      />
+                      <span className='tw-text-lg'>
+                        Ingresar nueva actividad
                       </span>
                     </div>
                   </div>
                 </div>
-                <h5 className='tw-flex tw-mx-4 tw-my-4'>
-                  2. Ingresa las <b className='tw-mx-1'>{' recompensas '}</b> de
-                  la clase
-                </h5>
-                <div className='tw-flex tw-justify-center tw-gap-5 tw-scroll-auto tw-overflow-x-auto tw-p-3'>
+              </div>
+              <div className='tw-flex tw-flex-col tw-gap-4'>
+                <span className='tw-block tw-mt-6'>
+                  2. Ingresa las <b>recompensas</b> de la clase{' '}
+                  <i className='tw-text-xs tw-text-gray-500'>(opcional)</i>
+                </span>
+                <div
+                  className={`tw-flex tw-gap-5 tw-scroll-auto tw-overflow-x-auto ${
+                    rewards.length > 0 ? '' : 'tw-justify-center'
+                  }`}
+                >
                   {rewards.map((reward, index) => {
                     return (
                       <RewardCard
@@ -246,9 +234,9 @@ const SaveLesson: React.FC<{
                     );
                   })}
                   <div
-                    className={`tw-border tw-w-auto tw-text-center tw-border-dashed tw-rounded-md ${
-                      rewards.length > 0 ? 'tw-h-auto' : 'tw-h-96'
-                    } tw-flex tw-justify-center tw-items-center tw-flex-col hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-indigo-100`}
+                    className={`${
+                      rewards.length ? 'tw-m-0' : 'tw-m-auto'
+                    } tw-flex tw-flex-col tw-gap-2 tw-rounded-md tw-items-center tw-justify-center border-dashed tw-max-h-[400px] tw-h-[400px] tw-min-w-[260px] tw-w-[260px] hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-sky-50`}
                     onClick={() =>
                       openModal({
                         title: 'Ingresar recompensas',
@@ -258,61 +246,49 @@ const SaveLesson: React.FC<{
                       })
                     }
                   >
-                    <AddBoxOutlinedIcon />
-                    <span className='tw-text-sm tw-mx-12 tw-font-semibold'>
-                      Añade una recompensa
+                    <img
+                      src={BookmarkStarIcon}
+                      alt='Postcard'
+                      className='tw-w-5'
+                    />
+                    <span className='tw-text-lg'>
+                      Ingresar nueva recompensa
                     </span>
                   </div>
                 </div>
-                <h5 className='tw-flex tw-mx-4 tw-my-4'>
-                  3. Cuando tengas todo listo, haz click en
-                  <b className='tw-mx-1'>{' Guardar Clase '}</b>y podrás empezar
-                  a utilizarla.
-                </h5>
               </div>
-              <div className='tw-fixed tw-bottom-0 tw-left-0 tw-w-full tw-flex tw-items-center tw-justify-between tw-bg-white tw-border-t tw-py-2 tw-px-5 border-gray'>
-                <div className='tw-flex tw-items-center tw-justify-center tw-gap-2 tw-ml-[83px]'>
-                  <EditIcon className='tw-w-5 tw-h-5' />
-                  <span>
-                    Estás en el <b>modo de edición</b>
-                  </span>
-                </div>
-                <div className='tw-flex tw-items-center tw-justify-end tw-gap-2'>
-                  <button
-                    onClick={goBack}
-                    type='button'
-                    className='tw-border-neutral-300 tw-bg-white tw-text-black'
-                  >
-                    Cancelar
-                  </button>
-                  <button
-                    type='submit'
-                    className='tw-bg-primary-500'
-                    disabled={isSubmitting}
-                  >
-                    Guardar clase
-                  </button>
-                </div>
+              <span className='tw-block tw-mt-6'>
+                3. Cuando tengas todo listo, haz click en <b>Guardar clase</b> y
+                podrás empezar a utilizarla.
+              </span>
+            </div>
+            <div className='tw-fixed tw-bottom-0 tw-left-0 tw-w-full tw-flex tw-items-center tw-justify-between tw-bg-white tw-border-t tw-py-2 tw-px-5 border-gray'>
+              <div className='tw-flex tw-items-center tw-justify-center tw-gap-2 tw-ml-[83px]'>
+                <EditIcon className='tw-w-5 tw-h-5' />
+                <span>
+                  Estás en el <b>modo de edición</b>
+                </span>
               </div>
-            </form>
-            {openEditActivity && selectedActivity && (
-              <ViewEditActivityDialog
-                open={openEditActivity}
-                newActivity={selectedActivity}
-                index={selectedActivityIndex}
-                currentLesson={{
-                  id: 1,
-                  title: values.title,
-                  index: 1,
-                  classroom_id: values.classroom_id,
-                }}
-                handleClose={() => {
-                  setOpenEditActivity(false);
-                }}
-              />
-            )}
-            <ViewSaveActivityDialog
-              open={openSaveActivity}
+              <div className='tw-flex tw-items-center tw-justify-end tw-gap-2'>
+                <Button onClick={goBack} variant='outlined' size='large'>
+                  Cancelar
+                </Button>
+                <Button
+                  type='submit'
+                  variant='contained'
+                  size='large'
+                  disabled={isSubmitting || !values.title}
+                >
+                  Guardar clase
+                </Button>
+              </div>
+            </div>
+          </form>
+          {openEditActivity && selectedActivity && (
+            <ViewEditActivityDialog
+              open={openEditActivity}
+              newActivity={selectedActivity}
+              index={selectedActivityIndex}
               currentLesson={{
                 id: 1,
                 title: values.title,
@@ -320,21 +296,33 @@ const SaveLesson: React.FC<{
                 classroom_id: values.classroom_id,
               }}
               handleClose={() => {
-                setOpenSaveActivity(false);
-              }}
-            />{' '}
-            <ViewDeleteActivityDialog
-              open={openDeleteActivity}
-              index={selectedActivityIndex}
-              newActivity={selectedActivity}
-              handleClose={() => {
-                setOpenDeleteActivity(false);
+                setOpenEditActivity(false);
               }}
             />
-          </>
-        )}
-      </Formik>
-    </div>
+          )}
+          <ViewSaveActivityDialog
+            open={openSaveActivity}
+            currentLesson={{
+              id: 1,
+              title: values.title,
+              index: 1,
+              classroom_id: values.classroom_id,
+            }}
+            handleClose={() => {
+              setOpenSaveActivity(false);
+            }}
+          />{' '}
+          <ViewDeleteActivityDialog
+            open={openDeleteActivity}
+            index={selectedActivityIndex}
+            newActivity={selectedActivity}
+            handleClose={() => {
+              setOpenDeleteActivity(false);
+            }}
+          />
+        </>
+      )}
+    </Formik>
   );
 };
 
