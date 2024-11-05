@@ -5,7 +5,6 @@ import { getLessonsByTeacherSubjectClassroomId } from 'services/lessons';
 import MyLessonsIcon from 'assets/images/books.png';
 import { useClassContext } from 'routes/Class/context';
 import SaveLesson from 'routes/Class/Subjects/SaveLesson';
-import LessonDetails from './Lesson';
 import type ILesson from 'types/models/Lesson';
 import { type AxiosResponse } from 'axios';
 import { FetchStatus } from 'global/enums';
@@ -53,10 +52,6 @@ const SubjectActivities = () => {
 
   const reloadSubjectActivities = async () => {
     setOpenSaveLesson(false);
-    loadClasroomUnits();
-  };
-
-  const closeLessonDetails = async () => {
     loadClasroomUnits();
   };
 
