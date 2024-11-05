@@ -9,13 +9,13 @@ import type IActivity from 'types/models/Activity';
 import { type AxiosResponse } from 'axios';
 import { FetchStatus } from 'global/enums';
 import LessonRewardCard from 'components/LessonRewardCard';
-import type IReward from 'types/models/Reward';
 import { getRewardsByLessonId } from 'services/rewards';
 import EditLesson from './EditLesson';
 import ActivityStudentsDrawer from 'components/drawers/ActivityStudentsDrawer';
 import { useModalStore } from 'contexts/ZustandContext/modal-context';
 import { getLessonByID } from 'services/lessons';
 import { useQuery } from '@tanstack/react-query';
+import ActivityCard from 'components/ActivityCard';
 
 const LessonDetails: React.FC = () => {
   const { openModal } = useModalStore();
@@ -182,27 +182,27 @@ const LessonDetails: React.FC = () => {
       </h4>
       {activities.length > 0 ? (
         activities.map((activity, index) => {
+          const {
+            description,
+            title,
+            studentsCompletedActivity,
+            lesson_id: lessonId,
+            type,
+          } = activity;
+
           return (
-            <div
+            <ActivityCard
               key={index}
-              className='tw-border tw-bg-gradient-to-r tw-from-blue-600 tw-to-cyan-500 tw-rounded-md tw-min-h-40 tw-flex tw-justify-between tw-items-center hover:tw-cursor-pointer'
-              onClick={() => openActivityDrawer(activity)}
-            >
-              <div className='tw-flex tw-flex-row tw-justify-between tw-w-full tw-h-full'>
-                <div className='tw-ml-8' />
-                <div className='tw-flex tw-flex-col tw-justify-center tw-items-center'>
-                  <h3 className='tw-font-bold tw-text-white'>
-                    {activity.title}
-                  </h3>
-                  <h5 className='tw-font-bold tw-text-white'>
-                    {activity.description}
-                  </h5>
-                </div>
-                <h5 className='tw-text-white tw-m-8 tw-font-bold'>
-                  <EmojiPeopleIcon /> {activity.studentsCompletedActivity}
-                </h5>
-              </div>
-            </div>
+              index={index}
+              handleClick={() => openActivityDrawer(activity)}
+              activity={{
+                title,
+                description,
+                studentsCompletedActivity,
+                lesson_id: lessonId,
+                type,
+              }}
+            />
           );
         })
       ) : (

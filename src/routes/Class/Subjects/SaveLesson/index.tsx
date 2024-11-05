@@ -25,6 +25,7 @@ import ViewEditActivityDialog from 'components/Modals/EditActivity';
 import DeleteRewardModalDialog from 'components/Modals/DeleteRewardModal';
 import { type IActivitySaved } from 'types/models/Activity';
 import ViewDeleteActivityDialog from 'components/Modals/DeleteActivity';
+import ActivityCard from 'components/ActivityCard';
 
 const SaveLesson: React.FC<{
   classroomDetails: ITeacherSubjectClassroomData;
@@ -140,49 +141,24 @@ const SaveLesson: React.FC<{
                 </h5>
                 <div className='tw-scroll-auto tw-overflow-y-auto tw-px-2 tw-pb-2 tw-max-h-[550px]'>
                   {activities && activities.length > 0 ? (
-                    activities.map((activity, index) => {
-                      return (
-                        <div
+                    activities.map(
+                      (
+                        { type, description, lesson_id: lessonId, title },
+                        index
+                      ) => (
+                        <ActivityCard
                           key={index}
-                          className='tw-border tw-bg-gradient-to-r tw-from-blue-600 tw-to-cyan-500 tw-rounded-md tw-min-h-40 tw-flex tw-my-3 tw-flex-col'
-                        >
-                          <div className='tw-flex tw-mx-8 tw-mt-8 tw-w-24'>
-                            <h5
-                              className='tw-flex tw-mr-4 tw-justify-center tw-text-white tw-border tw-border-none hover:tw-cursor-pointer tw-ease-in-out hover:tw-bg-indigo-300 hover:tw-border tw-rounded tw-transition-all tw-duration-200'
-                              onClick={() => {
-                                setSelectedActivityIndex(index);
-                                setSelectedActivity(activity);
-                                setOpenEditActivity(true);
-                              }}
-                            >
-                              <EditIcon />
-                              Editar
-                            </h5>
-
-                            <h5
-                              onClick={() => {
-                                setSelectedActivityIndex(index);
-                                setSelectedActivity(activity);
-                                setOpenDeleteActivity(true);
-                              }}
-                              className='tw-flex tw-justify-center tw-text-white tw-border tw-border-none hover:tw-cursor-pointer tw-ease-in-out hover:tw-bg-indigo-300 hover:tw-border tw-rounded tw-transition-all tw-duration-200'
-                            >
-                              <DeleteForeverOutlinedIcon className='' />
-                              Eliminar
-                            </h5>
-                          </div>
-
-                          <div className=' tw-mx-8'>
-                            <h3 className='tw-font-bold tw-text-white'>
-                              {activity.title}
-                            </h3>
-                            <h5 className='tw-font-bold tw-text-white tw-break-all tw-mb-4'>
-                              {activity.description}
-                            </h5>
-                          </div>
-                        </div>
-                      );
-                    })
+                          index={index}
+                          activity={{
+                            title,
+                            description,
+                            lesson_id: lessonId,
+                            type,
+                            studentsCompletedActivity: 0,
+                          }}
+                        />
+                      )
+                    )
                   ) : (
                     <div />
                   )}

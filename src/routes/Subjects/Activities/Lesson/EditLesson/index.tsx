@@ -29,6 +29,7 @@ import type IReward from 'types/models/Reward';
 import DeleteRewardModalDialog from 'components/Modals/DeleteRewardModal';
 import { type IActivitySaved } from 'types/models/Activity';
 import ViewDeleteActivityDialog from 'components/Modals/DeleteActivity';
+import ActivityCard, { ActiviyCardEditRender } from 'components/ActivityCard';
 
 const EditLesson: React.FC<{
   selectedLesson: ILesson;
@@ -238,6 +239,18 @@ const EditLesson: React.FC<{
     handleClose();
   };
 
+  const handleEditActivity = (index: number, activity: IActivity) => {
+    setSelectedActivityIndex(index);
+    setSelectedEditedActivity(activity);
+    setOpenEditActivity(true);
+  };
+
+  const handleDeleteActivity = (index: number, activity: IActivity) => {
+    setSelectedActivityIndex(index);
+    setSelectedEditedActivity(activity);
+    setOpenDeleteActivity(true);
+  };
+
   return (
     <div>
       <Formik
@@ -280,49 +293,25 @@ const EditLesson: React.FC<{
                 </h5>
                 <div className='tw-scroll-auto tw-overflow-y-auto tw-px-2 tw-pb-2 tw-max-h-[550px]'>
                   {editLessonActivities && editLessonActivities.length > 0 ? (
-                    editLessonActivities.map((activity, index) => {
-                      return (
-                        <div
-                          key={index}
-                          className='tw-border tw-bg-gradient-to-r tw-from-blue-600 tw-to-cyan-500 tw-rounded-md tw-min-h-40 tw-flex tw-flex-col tw-my-4'
-                        >
-                          <div className='tw-flex tw-mx-8 tw-mt-8 tw-w-24'>
-                            <h5
-                              className='tw-flex tw-mr-4 tw-justify-center tw-text-white tw-border tw-border-none hover:tw-cursor-pointer tw-ease-in-out hover:tw-bg-indigo-300 hover:tw-border tw-rounded tw-transition-all tw-duration-200'
-                              onClick={async () => {
-                                setSelectedActivityIndex(index);
-                                setSelectedEditedActivity(activity);
-                                setOpenEditActivity(true);
-                              }}
-                            >
-                              <EditNoteIcon />
-                              Editar
-                            </h5>
-
-                            <h5
-                              onClick={() => {
-                                setSelectedActivityIndex(index);
-                                setSelectedEditedActivity(activity);
-                                setOpenDeleteActivity(true);
-                              }}
-                              className='tw-flex tw-justify-center tw-text-white tw-border tw-border-none hover:tw-cursor-pointer tw-ease-in-out hover:tw-bg-indigo-300 hover:tw-border tw-rounded tw-transition-all tw-duration-200'
-                            >
-                              <DeleteForeverOutlinedIcon className='' />
-                              Eliminar
-                            </h5>
-                          </div>
-
-                          <div className=' tw-mx-8'>
-                            <h3 className='tw-font-bold tw-text-white'>
-                              {activity.title}
-                            </h3>
-                            <h5 className='tw-font-bold tw-text-white tw-break-all tw-mb-4'>
-                              {activity.description}
-                            </h5>
-                          </div>
-                        </div>
-                      );
-                    })
+                    editLessonActivities.map((activity, index) => (
+                      <ActivityCard
+                        key={index}
+                        index={index}
+                        activity={{
+                          title: activity.title,
+                          description: activity.description,
+                          studentsCompletedActivity: 0,
+                          lesson_id: selectedLesson.id,
+                          type: activity.type,
+                        }}
+                        editRender={
+                          <ActiviyCardEditRender
+                            edit={() => handleEditActivity(index, activity)}
+                            delete={() => handleDeleteActivity(index, activity)}
+                          />
+                        }
+                      />
+                    ))
                   ) : (
                     <div className='tw-border tw-border-dashed tw-rounded-md tw-h-40 tw-flex tw-justify-between tw-items-center hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-indigo-100'>
                       <h5 className='tw-flex tw-justify-center tw-m-4 tw-font-semibold'>
