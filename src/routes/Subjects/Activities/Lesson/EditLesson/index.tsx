@@ -284,49 +284,25 @@ const EditLesson: React.FC<{
                     editLessonActivities.length > 0 &&
                     editLessonActivities.map((activity, index) => {
                       return (
-                        <div
+                        <ActivityCard
                           key={index}
-                          className='tw-border tw-bg-gradient-to-r tw-from-blue-600 tw-to-blue-800 tw-rounded-md tw-min-h-40 tw-flex tw-flex-col tw-gap-3 tw-p-4'
-                        >
-                          <div className='tw-flex tw-justify-between tw-items-center'>
-                            <h4 className='tw-text-white tw-font-bold tw-mb-0'>
-                              {activity.title}
-                            </h4>
-                            <div className='tw-flex tw-gap-2'>
-                              <Button
-                                color='secondary'
-                                variant='outlined'
-                                startIcon={
-                                  <EditIcon className='tw-w-5 tw-h-5' />
-                                }
-                                onClick={() => {
-                                  setSelectedActivityIndex(index);
-                                  setSelectedEditedActivity(activity);
-                                  setOpenEditActivity(true);
-                                }}
-                              >
-                                Editar
-                              </Button>
-                              <Button
-                                color='secondary'
-                                variant='outlined'
-                                onClick={() => {
-                                  setSelectedActivityIndex(index);
-                                  setSelectedEditedActivity(activity);
-                                  setOpenDeleteActivity(true);
-                                }}
-                                startIcon={
-                                  <DeleteForeverOutlinedIcon className='tw-w-5 tw-h-5' />
-                                }
-                              >
-                                Eliminar
-                              </Button>
-                            </div>
-                          </div>
-                          <h4 className='tw-text-white tw-flex-1 tw-mb-0 tw-flex tw-text-justify'>
-                            {activity.description}
-                          </h4>
-                        </div>
+                          index={index}
+                          activity={{
+                            title: activity.title,
+                            description: activity.description,
+                            studentsCompletedActivity: 0,
+                            lesson_id: selectedLesson.id,
+                            type: activity.type,
+                          }}
+                          editRender={
+                            <ActiviyCardEditRender
+                              edit={() => handleEditActivity(index, activity)}
+                              delete={() =>
+                                handleDeleteActivity(index, activity)
+                              }
+                            />
+                          }
+                        />
                       );
                     })}
                   {activities &&
