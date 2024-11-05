@@ -128,7 +128,7 @@ const ActivityStudentsDrawer: React.FC<Props> = ({
     <div className='tw-w-[400px] tw-h-full tw-flex tw-flex-col tw-gap-4 tw-pb-4'>
       <div className='tw-w-full tw-bg-gradient-to-r tw-from-blue-600 tw-to-cyan-500 p-4 tw-flex'>
         <p className='tw-text-white tw-mb-0 tw-font-semibold'>
-          {activity.description}
+          {activity.title}
         </p>
       </div>
       <div className='tw-grow tw-px-6 tw-space-y-2'>
@@ -229,7 +229,7 @@ const ActivityStudentsDrawer: React.FC<Props> = ({
       </div>
 
       <div className='tw-px-6 tw-flex tw-items-center tw-gap-2'>
-        <Button className='tw-w-full' type='button' onClick={closeDrawer}>
+        <Button className='tw-w-full' variant='outlined' onClick={closeDrawer}>
           Cancelar
         </Button>
         {!lesson?.ended_at && (
