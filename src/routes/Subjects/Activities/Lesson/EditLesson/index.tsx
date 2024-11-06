@@ -91,7 +91,7 @@ const EditLesson: React.FC<{
       };
       const { status } = await editLesson(lesson, selectedLesson.id);
 
-      if (status === 200 && editLessonActivities) {
+      if (status === 200) {
         const editActivitiesResponse = await Promise.all(
           editLessonActivities.map(async (activity) => {
             const editedActivity = {
@@ -536,6 +536,7 @@ const EditLesson: React.FC<{
           </form>
           <ActivityForm
             open={openSaveActivity}
+            activity={null}
             currentLesson={{
               id: selectedLesson.id,
               title: values.title,
@@ -551,7 +552,7 @@ const EditLesson: React.FC<{
             <ActivityForm
               open={openEditActivity}
               index={selectedActivityIndex}
-              editedActivity={selectedEditedActivity}
+              activity={selectedEditedActivity}
               currentLesson={{
                 id: selectedLesson.id,
                 title: values.title,
@@ -579,7 +580,7 @@ const EditLesson: React.FC<{
             <ActivityForm
               open={openEditNewActivity}
               index={selectedActivityIndex}
-              newActivity={selectedNewActivity}
+              activity={selectedNewActivity as IActivity}
               currentLesson={{
                 id: selectedLesson.id,
                 title: values.title,

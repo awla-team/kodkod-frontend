@@ -13,7 +13,6 @@ export interface ActivityFormProps {
   open: boolean;
   currentLesson: Omit<ILesson, 'teacher_subject_classroom_id'>;
   handleClose: () => void;
-  newActivity?: IActivitySaved;
-  editedActivity?: IActivity;
+  activity: IActivity | null;
   index?: number;
 }

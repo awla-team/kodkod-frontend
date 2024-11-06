@@ -19,8 +19,7 @@ const ActivityForm: FC<ActivityFormProps> = ({
   open,
   handleClose,
   currentLesson,
-  editedActivity,
-  newActivity,
+  activity,
   index,
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -28,35 +27,45 @@ const ActivityForm: FC<ActivityFormProps> = ({
   const { editActivity, modifyEditLessonActivity, addActivity } =
     useCreateLesson();
 
-  const onSubmit = async (values: FormInput) => {
+  const onSubmitEdit = async (values: FormInput) => {
     try {
-      if (newActivity && index) {
-        const activity: IActivitySaved = {
-          title: values.title,
-          lesson_id: currentLesson.id,
-          type: values.type,
-          description: values.description,
-        };
+      if (activity != null) {
+        if (typeof activity.id === 'number' && index != null) {
+          const editedActivity: IActivity = {
+            id: activity.id,
+            title: values.title,
+            lesson_id: currentLesson.id,
+            type: values.type,
+            description: values.description,
+          };
 
-        editActivity(activity, index);
+          modifyEditLessonActivity(editedActivity, index);
 
-        handleClose();
-        Toaster('success', `Actividad editada`);
+          handleClose();
+          Toaster('success', `Actividad editada`);
+        } else if (index != null) {
+          const newActivity: IActivitySaved = {
+            title: values.title,
+            lesson_id: currentLesson.id,
+            type: values.type,
+            description: values.description,
+          };
+
+          editActivity(newActivity, index);
+
+          handleClose();
+          Toaster('success', `Actividad editada`);
+        }
       }
-      if (editedActivity && index) {
-        const activity: IActivity = {
-          id: editedActivity.id,
-          title: values.title,
-          lesson_id: currentLesson.id,
-          type: values.type,
-          description: values.description,
-        };
+    } catch (e) {
+      console.log(e);
+      Toaster('error', 'Error al editar actividad');
+    }
+  };
 
-        modifyEditLessonActivity(activity, index);
-
-        handleClose();
-        Toaster('success', `Actividad editada`);
-      } else {
+  const onSubmit = (values: FormInput) => {
+    try {
+      if (activity == null) {
         const activity: IActivitySaved = {
           title: values.title,
           lesson_id: currentLesson.id,
@@ -68,32 +77,19 @@ const ActivityForm: FC<ActivityFormProps> = ({
         Toaster('success', `Actividad agregada`);
       }
     } catch (e) {
-      if (editedActivity || newActivity) {
-        console.log(e);
-        Toaster('error', 'Error al editar actividad');
-      } else {
-        console.log(e);
-        Toaster('error', 'Error al crear actividad');
-      }
+      console.log(e);
+      Toaster('error', 'Error al crear actividad');
     }
   };
 
   useEffect(() => {
-    if (newActivity) {
+    if (activity != null) {
       setIsLoading(true);
       setFormValues({
-        title: newActivity?.title,
+        title: activity.title,
         lesson_id: currentLesson.id,
-        type: newActivity.type,
-        description: newActivity?.description,
-      });
-    } else if (editedActivity) {
-      setIsLoading(true);
-      setFormValues({
-        title: editedActivity?.title,
-        lesson_id: currentLesson.id,
-        type: editedActivity.type,
-        description: editedActivity?.description,
+        type: activity.type,
+        description: activity.description,
       });
     } else {
       setFormValues({
@@ -104,7 +100,7 @@ const ActivityForm: FC<ActivityFormProps> = ({
       });
     }
     setIsLoading(false);
-  }, [currentLesson, newActivity, editedActivity]);
+  }, [currentLesson, activity]);
 
   if (isLoading) {
     return (
@@ -120,8 +116,7 @@ const ActivityForm: FC<ActivityFormProps> = ({
       disableEscapeKeyDown
       onClose={handleClose}
     >
-      {(currentLesson && formValues && editedActivity) ||
-      (currentLesson && formValues && newActivity) ? (
+      {currentLesson && formValues && activity != null ? (
         <div>
           <DialogTitle fontWeight='bold' className='mb-2'>
             Editar Actividad
@@ -129,7 +124,7 @@ const ActivityForm: FC<ActivityFormProps> = ({
           <DialogContent dividers className='mb-3'>
             <Formik
               initialValues={formValues}
-              onSubmit={onSubmit}
+              onSubmit={onSubmitEdit}
               validationSchema={CreateActivitySchema}
             >
               {({

@@ -18,6 +18,7 @@ import { createRewards } from 'services/rewards';
 import DeleteRewardModalDialog from 'components/Modals/DeleteRewardModal';
 import PostcardIcon from 'assets/images/postcard-heart.svg';
 import BookmarkStarIcon from 'assets/images/bookmark-star.svg';
+import type IActivity from 'types/models/Activity';
 import { type IActivitySaved } from 'types/models/Activity';
 import ViewDeleteActivityDialog from 'components/Modals/DeleteActivity';
 import ActivityForm from 'components/ActivityForm';
@@ -286,7 +287,7 @@ const SaveLesson: React.FC<{
           {openEditActivity && selectedActivity && (
             <ActivityForm
               open={openEditActivity}
-              newActivity={selectedActivity}
+              activity={selectedActivity as IActivity}
               index={selectedActivityIndex}
               currentLesson={{
                 id: 1,
@@ -301,6 +302,7 @@ const SaveLesson: React.FC<{
           )}
           <ActivityForm
             open={openSaveActivity}
+            activity={null}
             currentLesson={{
               id: 1,
               title: values.title,
