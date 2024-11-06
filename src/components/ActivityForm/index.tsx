@@ -3,9 +3,10 @@ import {
   Dialog,
   CircularProgress,
   TextField,
-  TextareaAutosize,
   DialogTitle,
   DialogContent,
+  DialogActions,
+  Button,
 } from '@mui/material';
 import { Formik } from 'formik';
 import Toaster from 'utils/Toster';
@@ -15,6 +16,7 @@ import { type IActivitySaved } from 'types/models/Activity';
 import { CreateActivitySchema } from 'types/validations/activity';
 import { useCreateLesson } from 'zustand/create-lesson-store';
 
+import PostcardIcon from 'assets/images/postcard-heart.svg';
 const ActivityForm: FC<ActivityFormProps> = ({
   open,
   handleClose,
@@ -110,18 +112,14 @@ const ActivityForm: FC<ActivityFormProps> = ({
     );
   }
   return (
-    <Dialog
-      PaperProps={{ className: 'p-3' }}
-      open={open}
-      disableEscapeKeyDown
-      onClose={handleClose}
-    >
+    <Dialog fullWidth open={open} disableEscapeKeyDown onClose={handleClose}>
       {currentLesson && formValues && activity != null ? (
         <div>
-          <DialogTitle fontWeight='bold' className='mb-2'>
-            Editar Actividad
+          <DialogTitle className='tw-flex tw-items-center tw-gap-3'>
+            <img src={PostcardIcon} alt='Postcard' className='tw-w-6' />
+            Editar actividad
           </DialogTitle>
-          <DialogContent dividers className='mb-3'>
+          <DialogContent dividers>
             <Formik
               initialValues={formValues}
               onSubmit={onSubmitEdit}
@@ -135,61 +133,48 @@ const ActivityForm: FC<ActivityFormProps> = ({
                 errors,
               }) => (
                 <form onSubmit={handleSubmit}>
-                  <div className='tw-space-y-6'>
-                    <h5 className='tw-flex tw-gap-4'>
-                      {currentLesson.title || 'Clase sin nombre'}
-                    </h5>
-
+                  <div className='tw-flex tw-flex-col tw-gap-4'>
                     <div>
                       <TextField
-                        className=''
                         value={values.title}
                         onChange={handleChange}
                         name='title'
-                        placeholder='Inserte el título de la actividad'
+                        label='Título'
+                        variant='outlined'
+                        placeholder='Título de la actividad'
                         fullWidth
                         error={!!errors.title}
                       />
-                      {errors.title && (
-                        <p className='tw-text-red-500 tw-text-sm'>
-                          {errors.title}
-                        </p>
-                      )}
                     </div>
-                    <div className=''>
-                      <TextareaAutosize
-                        className={`tw-w-full p-2 border rounded bg-white text-black ${
-                          errors.description
-                            ? 'tw-border-red-500 tw-outline-none tw-ring-red-500'
-                            : ''
-                        } rounded-md`}
+                    <div>
+                      <TextField
+                        multiline
+                        rows={4}
+                        fullWidth
+                        label='Descripción'
                         value={values.description}
                         onChange={handleChange}
                         name='description'
-                        placeholder='Inserte la descripcion de la actividad'
+                        placeholder='Descripcion de la actividad'
+                        error={!!errors.description}
                       />
-                      {errors.description && (
-                        <p className='tw-text-red-500 tw-text-sm'>
-                          {errors.description}
-                        </p>
-                      )}
                     </div>
-                    <div className='tw-flex tw-items-center tw-gap-1'>
-                      <button
-                        onClick={handleClose}
-                        type='button'
-                        className=' tw-bg-gray-200 text-black tw-w-full'
-                      >
-                        Cancelar
-                      </button>
-                      <button
-                        type='submit'
-                        className='tw-bg-primary-500 tw-w-full'
-                        disabled={isSubmitting}
-                      >
-                        Guardar
-                      </button>
-                    </div>
+                    <DialogActions>
+                      <div className='tw-flex tw-items-center tw-gap-2'>
+                        <Button variant='outlined' onClick={handleClose}>
+                          Cancelar
+                        </Button>
+                        <Button
+                          variant='contained'
+                          type='submit'
+                          disabled={
+                            isSubmitting || !values.title || !values.description
+                          }
+                        >
+                          Guardar actividad
+                        </Button>
+                      </div>
+                    </DialogActions>
                   </div>
                 </form>
               )}
@@ -199,14 +184,15 @@ const ActivityForm: FC<ActivityFormProps> = ({
       ) : (
         <div>
           {currentLesson && formValues ? (
-            <>
-              <DialogTitle fontWeight='bold' className='mb-2'>
-                Guardar Nueva Actividad
+            <div>
+              <DialogTitle className='tw-flex tw-items-center tw-gap-3'>
+                <img src={PostcardIcon} alt='Postcard' className='tw-w-6' />
+                Guardar nueva actividad
               </DialogTitle>
-              <DialogContent dividers className='mb-3'>
+              <DialogContent dividers>
                 <Formik
                   initialValues={formValues}
-                  onSubmit={onSubmit}
+                  onSubmit={onSubmitEdit}
                   validationSchema={CreateActivitySchema}
                 >
                   {({
@@ -217,67 +203,56 @@ const ActivityForm: FC<ActivityFormProps> = ({
                     errors,
                   }) => (
                     <form onSubmit={handleSubmit}>
-                      <div className='tw-space-y-6'>
-                        <h5 className='tw-flex tw-gap-4'>
-                          {currentLesson.title || 'Clase sin nombre'}
-                        </h5>
-
+                      <div className='tw-flex tw-flex-col tw-gap-4'>
                         <div>
                           <TextField
-                            className=''
                             value={values.title}
                             onChange={handleChange}
                             name='title'
-                            placeholder='Inserte el título de la actividad'
+                            label='Título'
+                            variant='outlined'
+                            placeholder='Título de la actividad'
                             fullWidth
                             error={!!errors.title}
                           />
-                          {errors.title && (
-                            <p className='tw-text-red-500 tw-text-sm'>
-                              {errors.title}
-                            </p>
-                          )}
                         </div>
-                        <div className=''>
-                          <TextareaAutosize
-                            className={`tw-w-full p-2 border rounded bg-white text-black ${
-                              errors.description
-                                ? 'tw-border-red-500 tw-outline-none tw-ring-red-500'
-                                : ''
-                            } rounded-md`}
+                        <div>
+                          <TextField
+                            multiline
+                            rows={4}
+                            fullWidth
+                            label='Descripción'
                             value={values.description}
                             onChange={handleChange}
                             name='description'
-                            placeholder='Inserte la descripcion de la actividad'
+                            placeholder='Descripcion de la actividad'
+                            error={!!errors.description}
                           />
-                          {errors.description && (
-                            <p className='tw-text-red-500 tw-text-sm'>
-                              {errors.description}
-                            </p>
-                          )}
                         </div>
-                        <div className='tw-flex tw-items-center tw-gap-1'>
-                          <button
-                            onClick={handleClose}
-                            type='button'
-                            className=' tw-bg-gray-200 text-black tw-w-full'
-                          >
-                            Cancelar
-                          </button>
-                          <button
-                            type='submit'
-                            className='tw-bg-primary-500 tw-w-full'
-                            disabled={isSubmitting}
-                          >
-                            Guardar
-                          </button>
-                        </div>
+                        <DialogActions>
+                          <div className='tw-flex tw-items-center tw-gap-2'>
+                            <Button variant='outlined' onClick={handleClose}>
+                              Cancelar
+                            </Button>
+                            <Button
+                              variant='contained'
+                              type='submit'
+                              disabled={
+                                isSubmitting ||
+                                !values.title ||
+                                !values.description
+                              }
+                            >
+                              Guardar actividad
+                            </Button>
+                          </div>
+                        </DialogActions>
                       </div>
                     </form>
                   )}
                 </Formik>
               </DialogContent>
-            </>
+            </div>
           ) : (
             <>Sin Datos</>
           )}
