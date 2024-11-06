@@ -9,8 +9,6 @@ import { getActivityByLessonId } from 'services/activities';
 import type IActivity from 'types/models/Activity';
 import { type AxiosResponse } from 'axios';
 import { FetchStatus } from 'global/enums';
-import LessonRewardCard from 'components/LessonRewardCard';
-import type IReward from 'types/models/Reward';
 import { getRewardsByLessonId } from 'services/rewards';
 import EditLesson from './EditLesson';
 import ActivityStudentsDrawer from 'components/drawers/ActivityStudentsDrawer';
