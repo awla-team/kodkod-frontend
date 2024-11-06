@@ -1,14 +1,12 @@
-import { type HTMLAttributes, type FC } from 'react';
+import { type FC } from 'react';
 import { type CreateRewardForm } from 'types/validations/reward';
-import starIcon from 'assets/images/star.png';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
-import rewardIcon from 'assets/images/reward2.png';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import postCard from 'assets/images/post-card.png';
 import favStar from 'assets/images/fav-star.png';
 import type IReward from 'types/models/Reward';
 
-interface Props extends HTMLAttributes<HTMLDivElement> {
+interface Props {
   newReward?: CreateRewardForm & { numberOfActivities: number };
   reward?: IReward;
   editEffect?: () => void;
