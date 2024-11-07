@@ -17,9 +17,7 @@ import {
 } from 'services/activities';
 import { CreateLessonSchema } from 'types/validations/lesson';
 import { useModalStore } from 'contexts/ZustandContext/modal-context';
-import CreateRewardModal from 'components/Modals/CreateRewardModal/CreateRewardModal';
 import RewardCard from 'components/CreateReward/RewardCard';
-import EditRewardModal from 'components/Modals/EditRewardModal';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import { createRewards, deleteReward, updateReward } from 'services/rewards';
 import ViewEditActivityDialog from 'components/Modals/EditActivity';
@@ -28,6 +26,7 @@ import type IReward from 'types/models/Reward';
 import DeleteRewardModalDialog from 'components/Modals/DeleteRewardModal';
 import { type IActivitySaved } from 'types/models/Activity';
 import ViewDeleteActivityDialog from 'components/Modals/DeleteActivity';
+import RewardForm from 'components/RewardForm';
 
 const EditLesson: React.FC<{
   selectedLesson: ILesson;
@@ -411,10 +410,7 @@ const EditLesson: React.FC<{
                             openModal({
                               title: 'Editar recompensa',
                               content: (
-                                <EditRewardModal
-                                  editedReward={reward}
-                                  index={index}
-                                />
+                                <RewardForm index={index} reward={reward} />
                               ),
                               maxWidth: 'sm',
                               withActions: false,
@@ -457,9 +453,12 @@ const EditLesson: React.FC<{
                             openModal({
                               title: 'Editar recompensa',
                               content: (
-                                <EditRewardModal
-                                  newReward={reward}
+                                <RewardForm
                                   index={index}
+                                  reward={{
+                                    title: reward.name,
+                                    description: reward.description,
+                                  }}
                                 />
                               ),
                               maxWidth: 'sm',
@@ -491,7 +490,7 @@ const EditLesson: React.FC<{
                     onClick={() =>
                       openModal({
                         title: 'Ingresar recompensas',
-                        content: <CreateRewardModal />,
+                        content: <RewardForm index={0} />,
                         maxWidth: 'sm',
                         withActions: false,
                       })
