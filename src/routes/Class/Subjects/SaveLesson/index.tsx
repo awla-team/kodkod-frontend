@@ -20,8 +20,9 @@ import ViewEditActivityDialog from 'components/Modals/EditActivity';
 import DeleteRewardModalDialog from 'components/Modals/DeleteRewardModal';
 import PostcardIcon from 'assets/images/postcard-heart.svg';
 import BookmarkStarIcon from 'assets/images/bookmark-star.svg';
-import { type IActivitySaved } from 'types/models/Activity';
+import IActivity, { type IActivitySaved } from 'types/models/Activity';
 import ViewDeleteActivityDialog from 'components/Modals/DeleteActivity';
+import ConfirmationForm from 'components/ConfirmationForm';
 
 const SaveLesson: React.FC<{
   classroomDetails: ITeacherSubjectClassroomData;
@@ -36,9 +37,17 @@ const SaveLesson: React.FC<{
   const [openSaveActivity, setOpenSaveActivity] = useState<boolean>(false);
   const [openEditActivity, setOpenEditActivity] = useState<boolean>(false);
   const [openDeleteActivity, setOpenDeleteActivity] = useState<boolean>(false);
+  const [openDeleteReward, setOpenDeleteReward] = useState<boolean>(false);
   const [selectedActivity, setSelectedActivity] = useState<IActivitySaved>();
   const [selectedActivityIndex, setSelectedActivityIndex] = useState<number>(0);
-  const { activities, clearNewLessonData, rewards } = useCreateLesson();
+  const [selectedRewardIndex, setSelectedRewardIndex] = useState<number>(0);
+  const {
+    activities,
+    clearNewLessonData,
+    rewards,
+    deleteActivity,
+    deleteReward,
+  } = useCreateLesson();
 
   const onSubmit = async (values: FormInput) => {
     try {
@@ -87,6 +96,28 @@ const SaveLesson: React.FC<{
     } catch (e) {
       console.log(e);
       Toaster('error', 'Error al crear clase');
+    }
+  };
+
+  const submitDeleteActivity = (index: number) => {
+    try {
+      deleteActivity(index);
+      Toaster('success', `Actividad eliminada`);
+    } catch (e) {
+      console.log(e);
+      Toaster('error', 'Error al eliminar actividad');
+    }
+  };
+
+  const submitDeleteReward = (index: number) => {
+    try {
+      deleteReward(index);
+
+      Toaster('success', `Recompensa eliminada`);
+    } catch (error) {
+      console.error(error);
+
+      Toaster('error', `Error al eliminar recompensa`);
     }
   };
 
@@ -152,8 +183,6 @@ const SaveLesson: React.FC<{
                               color='secondary'
                               variant='outlined'
                               onClick={() => {
-                                setSelectedActivityIndex(index);
-                                setSelectedActivity(activity);
                                 setOpenDeleteActivity(true);
                               }}
                               startIcon={
@@ -218,17 +247,8 @@ const SaveLesson: React.FC<{
                           })
                         }
                         deleteEffect={() => {
-                          openModal({
-                            title: 'Eliminar recompensa',
-                            content: (
-                              <DeleteRewardModalDialog
-                                editedReward={false}
-                                index={index}
-                              />
-                            ),
-                            maxWidth: 'sm',
-                            withActions: false,
-                          });
+                          setSelectedRewardIndex(index);
+                          setOpenDeleteReward(true);
                         }}
                       />
                     );
@@ -284,6 +304,7 @@ const SaveLesson: React.FC<{
               </div>
             </div>
           </form>
+          {/* Activity Section */}
           {openEditActivity && selectedActivity && (
             <ViewEditActivityDialog
               open={openEditActivity}
@@ -311,14 +332,25 @@ const SaveLesson: React.FC<{
             handleClose={() => {
               setOpenSaveActivity(false);
             }}
-          />{' '}
-          <ViewDeleteActivityDialog
+          />
+          <ConfirmationForm
             open={openDeleteActivity}
-            index={selectedActivityIndex}
-            newActivity={selectedActivity}
-            handleClose={() => {
-              setOpenDeleteActivity(false);
+            title='Eliminar actividad'
+            description='Desea eliminar esta actividad?'
+            onSubmit={() => {
+              submitDeleteActivity(selectedActivityIndex);
             }}
+            onClose={() => setOpenDeleteActivity(false)}
+          />
+          {/* Rewards Section */}
+          <ConfirmationForm
+            open={openDeleteReward}
+            title='Eliminar recompensa'
+            description='Desea eliminar esta recompensa?'
+            onSubmit={() => {
+              submitDeleteReward(selectedRewardIndex);
+            }}
+            onClose={() => setOpenDeleteReward(false)}
           />
         </>
       )}

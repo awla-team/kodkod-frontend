@@ -81,7 +81,7 @@ const modalStore = create<Store & Action>((set) => ({
     set({
       confirmAction: { title, callback },
     }),
-  isDisabledConfirmBtn: true,
+  isDisabledConfirmBtn: false,
   setIsDisabledCofirmBtn: (isDisabled) =>
     set({ isDisabledConfirmBtn: isDisabled }),
 }));
@@ -108,11 +108,13 @@ export const ModalContextProvider: React.FC<PropsWithChildren> = ({
     <>
       {children}
       <Dialog open={isOpen} onClose={closeModal} maxWidth={maxWidth} fullWidth>
-        <DialogTitle className='tw-flex tw-items-center tw-gap-3'>
-          {title}
-        </DialogTitle>
+        {title && (
+          <DialogTitle className='tw-flex tw-items-center tw-gap-3'>
+            {title}
+          </DialogTitle>
+        )}
 
-        <DialogContent dividers>{content}</DialogContent>
+        <DialogContent dividers={!!title}>{content}</DialogContent>
 
         {withActions && (
           <DialogActions>
