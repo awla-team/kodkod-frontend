@@ -146,7 +146,6 @@ const SaveLesson: React.FC<{
                       return (
                         <ActivityCard
                           key={index}
-                          index={index}
                           activity={{
                             title,
                             description,

@@ -1,7 +1,6 @@
 import { Button, Chip, CircularProgress, Drawer } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import Groups2Icon from '@mui/icons-material/Groups2';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import EditIcon from '@mui/icons-material/Edit';
 import type ILesson from 'types/models/Lesson';
@@ -13,13 +12,11 @@ import LessonRewardCard from 'components/LessonRewardCard';
 import { getRewardsByLessonId } from 'services/rewards';
 import EditLesson from './EditLesson';
 import ActivityStudentsDrawer from 'components/drawers/ActivityStudentsDrawer';
-import { useModalStore } from 'contexts/ZustandContext/modal-context';
 import { getLessonByID } from 'services/lessons';
 import { useQuery } from '@tanstack/react-query';
 import ActivityCard from 'components/ActivityCard';
 
 const LessonDetails: React.FC = () => {
-  const { openModal } = useModalStore();
   const [openEditLesson, setOpenEditLesson] = useState<boolean>(false);
   const [openActivitiesDrawer, setOpenActivitiesDrawer] =
     useState<boolean>(false);
@@ -188,26 +185,7 @@ const LessonDetails: React.FC = () => {
         <div className='tw-flex tw-flex-col tw-gap-2 tw-scroll-auto tw-overflow-y-auto'>
           {activities.length > 0 ? (
             activities.map((activity, index) => {
-              return (
-                <div
-                  key={index}
-                  onClick={() => openActivityDrawer(activity)}
-                  className='tw-cursor-pointer tw-border tw-bg-gradient-to-r tw-from-blue-600 tw-to-blue-800 tw-rounded-md tw-min-h-40 tw-flex tw-flex-col tw-gap-3 tw-p-4'
-                >
-                  <div className='tw-flex tw-justify-between tw-items-center'>
-                    <h4 className='tw-text-white tw-font-bold tw-mb-0'>
-                      {activity.title}
-                    </h4>
-                    <div className='tw-text-white tw-font-bold tw-m-0 tw-text-md tw-flex tw-items-center tw-gap-2'>
-                      <Groups2Icon />
-                      <span>{activity.studentsCompletedActivity || 0}</span>
-                    </div>
-                  </div>
-                  <h4 className='tw-text-white tw-flex-1 tw-mb-0 tw-flex tw-text-justify'>
-                    {activity.description}
-                  </h4>
-                </div>
-              );
+              return <ActivityCard key={index} activity={activity} />;
             })
           ) : (
             <h5 className='tw-flex tw-justify-center tw-m-4 tw-font-semibold'>
