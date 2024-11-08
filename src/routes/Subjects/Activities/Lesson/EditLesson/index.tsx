@@ -38,7 +38,6 @@ const EditLesson: React.FC<{
   const { openModal } = useModalStore();
   const [formValues] = useState<FormInput>({
     title: selectedLesson.title,
-    classroom_id: selectedLesson.classroom_id,
     teacher_subject_classroom_id: selectedLesson.teacher_subject_classroom_id,
   });
   const [openSaveActivity, setOpenSaveActivity] = useState<boolean>(false);
@@ -87,7 +86,6 @@ const EditLesson: React.FC<{
       const lesson: ILessonSaved = {
         title: values.title,
         index: 1,
-        classroom_id: values.classroom_id,
         teacher_subject_classroom_id: values.teacher_subject_classroom_id,
       };
       const { status } = await editLesson(lesson, selectedLesson.id);
@@ -537,7 +535,6 @@ const EditLesson: React.FC<{
               id: selectedLesson.id,
               title: values.title,
               index: 1,
-              classroom_id: values.classroom_id,
             }}
             handleClose={() => {
               setOpenSaveActivity(false);
@@ -553,7 +550,6 @@ const EditLesson: React.FC<{
                 id: selectedLesson.id,
                 title: values.title,
                 index: 1,
-                classroom_id: values.classroom_id,
               }}
               handleClose={() => {
                 setOpenEditActivity(false);
@@ -581,7 +577,6 @@ const EditLesson: React.FC<{
                 id: selectedLesson.id,
                 title: values.title,
                 index: 1,
-                classroom_id: values.classroom_id,
               }}
               handleClose={() => {
                 setOpenEditNewActivity(false);
