@@ -7,7 +7,6 @@ import { type ITeacherSubjectClassroomData } from 'global/interfaces';
 import { Formik } from 'formik';
 import { saveLesson } from 'services/lessons';
 import Toaster from 'utils/Toster';
-import ViewSaveActivityDialog from 'components/Modals/SaveActivity';
 import { useCreateLesson } from 'zustand/create-lesson-store';
 import { saveActivity } from 'services/activities';
 import { CreateLessonSchema } from 'types/validations/lesson';
@@ -16,11 +15,12 @@ import CreateRewardModal from 'components/Modals/CreateRewardModal/CreateRewardM
 import RewardCard from 'components/CreateReward/RewardCard';
 import EditRewardModal from 'components/Modals/EditRewardModal';
 import { createRewards } from 'services/rewards';
-import ViewEditActivityDialog from 'components/Modals/EditActivity';
 import PostcardIcon from 'assets/images/postcard-heart.svg';
 import BookmarkStarIcon from 'assets/images/bookmark-star.svg';
+import type IActivity from 'types/models/Activity';
 import { type IActivitySaved } from 'types/models/Activity';
 import ConfirmationForm from 'components/ConfirmationForm';
+import ActivityForm from 'components/ActivityForm';
 
 const SaveLesson: React.FC<{
   classroomDetails: ITeacherSubjectClassroomData;
@@ -303,9 +303,9 @@ const SaveLesson: React.FC<{
           </form>
           {/* Activity Section */}
           {openEditActivity && selectedActivity && (
-            <ViewEditActivityDialog
+            <ActivityForm
               open={openEditActivity}
-              newActivity={selectedActivity}
+              activity={selectedActivity as IActivity}
               index={selectedActivityIndex}
               currentLesson={{
                 id: 1,
@@ -317,8 +317,9 @@ const SaveLesson: React.FC<{
               }}
             />
           )}
-          <ViewSaveActivityDialog
+          <ActivityForm
             open={openSaveActivity}
+            activity={null}
             currentLesson={{
               id: 1,
               title: values.title,
