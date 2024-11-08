@@ -52,7 +52,6 @@ const SaveLesson: React.FC<{
       const lesson: ILessonSaved = {
         title: values.title,
         index: 1,
-        classroom_id: values.classroom_id,
         teacher_subject_classroom_id: classroomDetails.id,
       };
       const { status, data: newLesson } = await saveLesson(lesson);
@@ -312,7 +311,6 @@ const SaveLesson: React.FC<{
                 id: 1,
                 title: values.title,
                 index: 1,
-                classroom_id: values.classroom_id,
               }}
               handleClose={() => {
                 setOpenEditActivity(false);
@@ -325,7 +323,6 @@ const SaveLesson: React.FC<{
               id: 1,
               title: values.title,
               index: 1,
-              classroom_id: values.classroom_id,
             }}
             handleClose={() => {
               setOpenSaveActivity(false);
