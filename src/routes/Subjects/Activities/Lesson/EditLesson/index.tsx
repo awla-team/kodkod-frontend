@@ -8,7 +8,6 @@ import { type ILessonSaved } from 'types/models/Lesson';
 import { Formik } from 'formik';
 import { editLesson } from 'services/lessons';
 import Toaster from 'utils/Toster';
-import ViewSaveActivityDialog from 'components/Modals/SaveActivity';
 import { useCreateLesson } from 'zustand/create-lesson-store';
 import {
   deleteActivity,
@@ -22,12 +21,12 @@ import RewardCard from 'components/CreateReward/RewardCard';
 import EditRewardModal from 'components/Modals/EditRewardModal';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import { createRewards, deleteReward, updateReward } from 'services/rewards';
-import ViewEditActivityDialog from 'components/Modals/EditActivity';
 import type IActivity from 'types/models/Activity';
 import type IReward from 'types/models/Reward';
 import DeleteRewardModalDialog from 'components/Modals/DeleteRewardModal';
 import { type IActivitySaved } from 'types/models/Activity';
 import ViewDeleteActivityDialog from 'components/Modals/DeleteActivity';
+import ActivityForm from 'components/ActivityForm';
 
 const EditLesson: React.FC<{
   selectedLesson: ILesson;
@@ -90,7 +89,7 @@ const EditLesson: React.FC<{
       };
       const { status } = await editLesson(lesson, selectedLesson.id);
 
-      if (status === 200 && editLessonActivities) {
+      if (status === 200) {
         const editActivitiesResponse = await Promise.all(
           editLessonActivities.map(async (activity) => {
             const editedActivity = {
@@ -533,8 +532,9 @@ const EditLesson: React.FC<{
               </div>
             </div>
           </form>
-          <ViewSaveActivityDialog
+          <ActivityForm
             open={openSaveActivity}
+            activity={null}
             currentLesson={{
               id: selectedLesson.id,
               title: values.title,
@@ -546,10 +546,10 @@ const EditLesson: React.FC<{
           />
           {/* For already saved activities */}
           {openEditActivity && selectedEditedActivity && (
-            <ViewEditActivityDialog
+            <ActivityForm
               open={openEditActivity}
               index={selectedActivityIndex}
-              editedActivity={selectedEditedActivity}
+              activity={selectedEditedActivity}
               currentLesson={{
                 id: selectedLesson.id,
                 title: values.title,
@@ -573,10 +573,10 @@ const EditLesson: React.FC<{
           )}
           {/* For new activities */}
           {openEditNewActivity && selectedNewActivity && (
-            <ViewEditActivityDialog
+            <ActivityForm
               open={openEditNewActivity}
               index={selectedActivityIndex}
-              newActivity={selectedNewActivity}
+              activity={selectedNewActivity as IActivity}
               currentLesson={{
                 id: selectedLesson.id,
                 title: values.title,
