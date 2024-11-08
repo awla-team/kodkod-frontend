@@ -21,9 +21,7 @@ import { createRewards, eraseReward, updateReward } from 'services/rewards';
 import ViewEditActivityDialog from 'components/Modals/EditActivity';
 import type IActivity from 'types/models/Activity';
 import type IReward from 'types/models/Reward';
-import DeleteRewardModalDialog from 'components/Modals/DeleteRewardModal';
 import { type IActivitySaved } from 'types/models/Activity';
-import ViewDeleteActivityDialog from 'components/Modals/DeleteActivity';
 import ConfirmationForm from 'components/ConfirmationForm';
 
 const EditLesson: React.FC<{

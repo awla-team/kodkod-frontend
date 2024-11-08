@@ -30,11 +30,7 @@ const ConfirmationForm: FC<ConfirmationFormProps> = ({
           )}
           <DialogActions>
             <div className='tw-flex tw-justify-center tw-items-center tw-gap-2'>
-              <Button
-                variant='outlined'
-                onClick={onClose}
-                type='button'
-              >
+              <Button variant='outlined' onClick={onClose} type='button'>
                 Cancelar
               </Button>
               <Button

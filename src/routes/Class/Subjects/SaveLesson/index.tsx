@@ -17,11 +17,9 @@ import RewardCard from 'components/CreateReward/RewardCard';
 import EditRewardModal from 'components/Modals/EditRewardModal';
 import { createRewards } from 'services/rewards';
 import ViewEditActivityDialog from 'components/Modals/EditActivity';
-import DeleteRewardModalDialog from 'components/Modals/DeleteRewardModal';
 import PostcardIcon from 'assets/images/postcard-heart.svg';
 import BookmarkStarIcon from 'assets/images/bookmark-star.svg';
-import IActivity, { type IActivitySaved } from 'types/models/Activity';
-import ViewDeleteActivityDialog from 'components/Modals/DeleteActivity';
+import { type IActivitySaved } from 'types/models/Activity';
 import ConfirmationForm from 'components/ConfirmationForm';
 
 const SaveLesson: React.FC<{
