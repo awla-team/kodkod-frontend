@@ -192,7 +192,7 @@ const ActivityForm: FC<ActivityFormProps> = ({
               <DialogContent dividers>
                 <Formik
                   initialValues={formValues}
-                  onSubmit={onSubmitEdit}
+                  onSubmit={onSubmit}
                   validationSchema={CreateActivitySchema}
                 >
                   {({
