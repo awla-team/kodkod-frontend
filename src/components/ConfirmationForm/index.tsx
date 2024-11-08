@@ -34,7 +34,6 @@ const ConfirmationForm: FC<ConfirmationFormProps> = ({
                 variant='outlined'
                 onClick={onClose}
                 type='button'
-                className=' tw-bg-white tw-border-black text-black'
               >
                 Cancelar
               </Button>
