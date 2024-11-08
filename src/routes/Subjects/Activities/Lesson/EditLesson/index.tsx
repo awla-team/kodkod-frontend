@@ -117,14 +117,16 @@ const EditLesson: React.FC<{
 
         if (activitiesDeleteList && activitiesDeleteList.length > 0) {
           const deleteActivityResponse = await Promise.all(
-            activitiesDeleteList.map(async (activityId) =>
-              deleteActivity(activityId)
+            activitiesDeleteList.map(
+              async (activityId) => await deleteActivity(activityId)
             )
           );
         }
         if (rewardsDeleteList && rewardsDeleteList.length > 0) {
           const deletRewardResponse = await Promise.all(
-            rewardsDeleteList.map(async (rewardId) => deleteReward(rewardId))
+            rewardsDeleteList.map(
+              async (rewardId) => await deleteReward(rewardId)
+            )
           );
         }
 
