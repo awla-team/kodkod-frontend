@@ -23,6 +23,6 @@ export const editActivity = async (
   return await http.patch(`activity/${activityId}`, activity);
 };
 
-export const deleteActivity = async (activityId: number) => {
+export const eraseActivity = async (activityId: number) => {
   return await http.delete(`activity/${activityId}`);
 };

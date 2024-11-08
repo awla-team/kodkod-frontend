@@ -115,6 +115,6 @@ export const getStudentsCompletedReward = async (
   });
 };
 
-export const deleteReward = async (rewardId: number) => {
+export const eraseReward = async (rewardId: number) => {
   return await http.delete(`reward/${rewardId}`);
 };
