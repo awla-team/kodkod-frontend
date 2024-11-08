@@ -9,23 +9,18 @@ import { Formik } from 'formik';
 import { editLesson } from 'services/lessons';
 import Toaster from 'utils/Toster';
 import { useCreateLesson } from 'zustand/create-lesson-store';
-import {
-  deleteActivity,
-  editActivity,
-  saveActivity,
-} from 'services/activities';
+import { eraseActivity, editActivity, saveActivity } from 'services/activities';
 import { CreateLessonSchema } from 'types/validations/lesson';
 import { useModalStore } from 'contexts/ZustandContext/modal-context';
 import CreateRewardModal from 'components/Modals/CreateRewardModal/CreateRewardModal';
 import RewardCard from 'components/CreateReward/RewardCard';
 import EditRewardModal from 'components/Modals/EditRewardModal';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
-import { createRewards, deleteReward, updateReward } from 'services/rewards';
+import { createRewards, eraseReward, updateReward } from 'services/rewards';
 import type IActivity from 'types/models/Activity';
 import type IReward from 'types/models/Reward';
-import DeleteRewardModalDialog from 'components/Modals/DeleteRewardModal';
 import { type IActivitySaved } from 'types/models/Activity';
-import ViewDeleteActivityDialog from 'components/Modals/DeleteActivity';
+import ConfirmationForm from 'components/ConfirmationForm';
 import ActivityForm from 'components/ActivityForm';
 
 const EditLesson: React.FC<{
@@ -46,11 +41,14 @@ const EditLesson: React.FC<{
   const [openDeleteNewActivity, setOpenDeleteNewActivity] =
     useState<boolean>(false);
   const [openEditActivity, setOpenEditActivity] = useState<boolean>(false);
+  const [openDeleteReward, setOpenDeleteReward] = useState<boolean>(false);
   const [selectedEditedActivity, setSelectedEditedActivity] =
     useState<IActivity>();
   const [selectedNewActivity, setSelectedNewActivity] =
     useState<IActivitySaved>();
+  const [selectedReward, setSelectedReward] = useState<IReward>();
   const [selectedActivityIndex, setSelectedActivityIndex] = useState<number>(0);
+  const [selectedRewardIndex, setSelectedRewardIndex] = useState<number>(0);
   const [activitiesDeleteList, setActivitiesDeleteList] = useState<number[]>(
     []
   );
@@ -59,6 +57,10 @@ const EditLesson: React.FC<{
     clearEditLessonData,
     clearNewLessonData,
     setEditLessonData,
+    deleteActivity,
+    deleteEditLessonActivity,
+    deleteEditLessonReward,
+    deleteReward,
     editLessonActivities,
     editLessonRewards,
     rewards,
@@ -71,12 +73,44 @@ const EditLesson: React.FC<{
     }
   };
 
-  const activitiesListAdd = () => {
-    if (selectedEditedActivity && activitiesDeleteList) {
-      setActivitiesDeleteList([
-        selectedEditedActivity.id,
-        ...activitiesDeleteList,
-      ]);
+  const activitiesListAdd = (activity: IActivity) => {
+    if (activity && activitiesDeleteList) {
+      setActivitiesDeleteList([activity.id, ...activitiesDeleteList]);
+    }
+  };
+
+  const submitDeleteActivity = (activity: IActivity, index: number) => {
+    try {
+      if (activity.id != null) {
+        deleteEditLessonActivity(index);
+        activitiesListAdd(activity);
+        Toaster('success', `Actividad eliminada`);
+      } else {
+        deleteActivity(index);
+
+        Toaster('success', `Actividad eliminada`);
+      }
+    } catch (e) {
+      console.log(e);
+      Toaster('error', 'Error al eliminar actividad');
+    }
+  };
+
+  const submitDeleteReward = (index: number, reward: IReward) => {
+    try {
+      if (reward.id != null) {
+        deleteEditLessonReward(index);
+        setRewardsDeleteList([...(rewardsDeleteList || []), reward.id]);
+
+        Toaster('success', `Recompensa eliminada`);
+      } else {
+        deleteReward(index);
+        Toaster('success', `Recompensa eliminada`);
+      }
+    } catch (error) {
+      console.error(error);
+
+      Toaster('error', `Error al eliminar recompensa`);
     }
   };
 
@@ -117,14 +151,14 @@ const EditLesson: React.FC<{
         if (activitiesDeleteList && activitiesDeleteList.length > 0) {
           const deleteActivityResponse = await Promise.all(
             activitiesDeleteList.map(
-              async (activityId) => await deleteActivity(activityId)
+              async (activityId) => await eraseActivity(activityId)
             )
           );
         }
         if (rewardsDeleteList && rewardsDeleteList.length > 0) {
           const deletRewardResponse = await Promise.all(
             rewardsDeleteList.map(
-              async (rewardId) => await deleteReward(rewardId)
+              async (rewardId) => await eraseReward(rewardId)
             )
           );
         }
@@ -418,23 +452,9 @@ const EditLesson: React.FC<{
                             })
                           }
                           deleteEffect={() => {
-                            openModal({
-                              title: 'Eliminar recompensa',
-                              content: (
-                                <DeleteRewardModalDialog
-                                  editedReward={true}
-                                  index={index}
-                                  rewardDeleteListAdd={() => {
-                                    setRewardsDeleteList([
-                                      ...(rewardsDeleteList || []),
-                                      reward.id,
-                                    ]);
-                                  }}
-                                />
-                              ),
-                              maxWidth: 'sm',
-                              withActions: false,
-                            });
+                            setSelectedRewardIndex(index);
+                            setSelectedReward(reward);
+                            setOpenDeleteReward(true);
                           }}
                         />
                       );
@@ -464,17 +484,14 @@ const EditLesson: React.FC<{
                             })
                           }
                           deleteEffect={() => {
-                            openModal({
-                              title: 'Eliminar recompensa',
-                              content: (
-                                <DeleteRewardModalDialog
-                                  editedReward={true}
-                                  index={index}
-                                />
-                              ),
-                              maxWidth: 'sm',
-                              withActions: false,
-                            });
+                            setSelectedRewardIndex(index);
+                            const innerReward = {
+                              title: reward.name,
+                              description: reward.description,
+                              n_required: reward.numberOfActivities,
+                            };
+                            setSelectedReward(innerReward as IReward);
+                            setOpenDeleteReward(true);
                           }}
                         />
                       );
@@ -561,14 +578,17 @@ const EditLesson: React.FC<{
             />
           )}
           {openDeleteActivity && selectedEditedActivity && (
-            <ViewDeleteActivityDialog
+            <ConfirmationForm
               open={openDeleteActivity}
-              index={selectedActivityIndex}
-              editedActivity={selectedEditedActivity}
-              handleClose={() => {
-                setOpenDeleteActivity(false);
+              title='Eliminar actividad'
+              description='Desea eliminar esta actividad?'
+              onSubmit={() => {
+                submitDeleteActivity(
+                  selectedEditedActivity,
+                  selectedActivityIndex
+                );
               }}
-              activityDeleteListAdd={activitiesListAdd}
+              onClose={() => setOpenDeleteActivity(false)}
             />
           )}
           {/* For new activities */}
@@ -588,13 +608,29 @@ const EditLesson: React.FC<{
             />
           )}
           {openDeleteNewActivity && selectedNewActivity && (
-            <ViewDeleteActivityDialog
+            <ConfirmationForm
               open={openDeleteNewActivity}
-              index={selectedActivityIndex}
-              newActivity={selectedNewActivity}
-              handleClose={() => {
-                setOpenDeleteNewActivity(false);
+              title='Eliminar actividad'
+              description='Desea eliminar esta actividad?'
+              onSubmit={() => {
+                submitDeleteActivity(
+                  selectedNewActivity as IActivity,
+                  selectedActivityIndex
+                );
               }}
+              onClose={() => setOpenDeleteNewActivity(false)}
+            />
+          )}
+          {/* Rewards Section */}
+          {openDeleteReward && selectedReward && (
+            <ConfirmationForm
+              open={openDeleteReward}
+              title='Eliminar recompensa'
+              description='Desea eliminar esta recompensa?'
+              onSubmit={() => {
+                submitDeleteReward(selectedRewardIndex, selectedReward);
+              }}
+              onClose={() => setOpenDeleteReward(false)}
             />
           )}
         </>
