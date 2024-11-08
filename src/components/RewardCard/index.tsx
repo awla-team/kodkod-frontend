@@ -1,69 +1,82 @@
 import { type FC } from 'react';
-import { type CreateRewardForm } from 'types/validations/reward';
+import starIcon from 'assets/images/star.png';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
-import EditNoteIcon from '@mui/icons-material/EditNote';
-import postCard from 'assets/images/post-card.png';
-import favStar from 'assets/images/fav-star.png';
+import EditIcon from '@mui/icons-material/Edit';
+import { Button } from '@mui/material';
 import type IReward from 'types/models/Reward';
-
 interface Props {
-  newReward?: CreateRewardForm & { numberOfActivities: number };
-  reward?: IReward;
+  reward: IReward;
   editEffect?: () => void;
   deleteEffect?: () => void;
 }
 
-const RewardCard: FC<Props> = ({
-  newReward,
-  reward,
-  editEffect,
-  deleteEffect,
-}) => {
+const RewardCard: FC<Props> = ({ reward, editEffect, deleteEffect }) => {
   return (
-    <div className='tw-flex tw-justify-center tw-items-center tw-flex-col tw-rounded-md tw-min-w-72 tw-max-w-72'>
-      <div className='tw-flex tw-justify-center tw-text-white tw-items-center tw-h-12 tw-bg-fuchsia-800 tw-w-full tw-rounded-t-md'>
+    <div className='tw-flex tw-justify-center tw-items-center tw-flex-col tw-rounded-md tw-min-w-[260px] tw-w-[260px] tw-max-w-[260px] tw-min-h-[400px] tw-h-[400px]'>
+      <div
+        className={`tw-flex tw-justify-center tw-items-center tw-bg-fuchsia-800 tw-w-full tw-rounded-t-md ${
+          editEffect || deleteEffect ? 'tw-p-2' : 'tw-p-6'
+        } tw-gap-2`}
+      >
         {editEffect && (
-          <div
+          <Button
+            startIcon={<EditIcon />}
+            color='secondary'
+            variant='outlined'
             onClick={editEffect}
-            className='tw-flex tw-mr-3 hover:tw-cursor-pointer tw-ease-in-out hover:tw-bg-indigo-300 hover:tw-border tw-rounded tw-transition-all tw-duration-200'
           >
-            <EditNoteIcon className='' />
             Editar
-          </div>
+          </Button>
         )}
         {deleteEffect && (
-          <div
+          <Button
             onClick={deleteEffect}
-            className='tw-flex hover:tw-cursor-pointer tw-ease-in-out hover:tw-bg-indigo-300 hover:tw-border tw-rounded tw-transition-all tw-duration-200'
+            color='secondary'
+            variant='outlined'
+            startIcon={<DeleteForeverOutlinedIcon />}
           >
-            <DeleteForeverOutlinedIcon className='' />
             Eliminar
-          </div>
+          </Button>
         )}
       </div>
-      <div className='tw-flex tw-min-h-[54vh] tw-w-full tw-py-4 tw-flex-col tw-grow tw-items-center tw-bg-gradient-to-br tw-from-purple-100 tw-to-cyan-100 tw-px-4 tw-justify-center tw-rounded-b-md'>
-        <img
-          src={favStar}
-          alt='book'
-          className='tw-w-20 tw-object-cover tw-my-8'
-        />
-        <h3 className='tw-text tw-text-center tw-break-all tw-font-bold tw-text-gray-700'>
-          {reward?.title || newReward?.name}
-        </h3>
-        <h5 className='tw-mb-8 tw-text-center'>
-          {reward?.description || newReward?.description}
-        </h5>
-        <div className='tw-text-fuchsia-800 tw-font-semibold'>
-          Se obtiene completando
-        </div>
-        <h2 className='tw-text-fuchsia-800 tw-font-semibold tw-mb-8'>
-          {reward?.n_required || newReward?.numberOfActivities}
+      <div className='tw-flex tw-w-full tw-flex-col tw-grow tw-items-center tw-bg-gradient-to-r tw-from-purple-100 tw-to-cyan-100 tw-px-4 tw-py-8 tw-justify-between tw-rounded-b-md'>
+        <div className='tw-flex tw-flex-col tw-items-center tw-justify-center'>
           <img
-            src={postCard}
-            alt='book'
-            className='tw-w-10 tw-object-cover tw-ml-2'
+            src={starIcon}
+            alt='star'
+            className='tw-w-12 tw-h-12 tw-object-cover tw-mb-4'
           />
-        </h2>
+          <h4 className='tw-text tw-text-center tw-break-all tw-font-bold tw-text-gray-900'>
+            {reward.title}
+          </h4>
+          <h5 className='tw-text tw-text-center tw-scroll-auto tw-overflow-y-auto tw-hyphens-auto'>
+            {reward.description}
+          </h5>
+        </div>
+        <div className='tw-flex tw-flex-col tw-items-center tw-justify-center'>
+          <span className='tw-text-fuchsia-800 tw-text-center tw-font-medium'>
+            Se obtiene completando
+          </span>
+          <div className='tw-flex tw-items-baseline tw-justify-center tw-gap-2 tw-text-fuchsia-800'>
+            <span className='tw-text-4xl tw-font-semibold tw-text-fuchsia-800'>
+              {reward.n_required}
+            </span>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              width='24'
+              height='24'
+              fill='currentColor'
+              className='bi bi-postcard-heart'
+              viewBox='0 0 16 16'
+            >
+              <path d='M8 4.5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0zm3.5.878c1.482-1.42 4.795 1.392 0 4.622-4.795-3.23-1.482-6.043 0-4.622M2.5 5a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1zm0 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1zm0 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1z' />
+              <path
+                fillRule='evenodd'
+                d='M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1z'
+              />
+            </svg>
+          </div>
+        </div>
       </div>
     </div>
   );

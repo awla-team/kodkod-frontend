@@ -117,16 +117,14 @@ const EditLesson: React.FC<{
 
         if (activitiesDeleteList && activitiesDeleteList.length > 0) {
           const deleteActivityResponse = await Promise.all(
-            activitiesDeleteList.map(
-              async (activityId) => await deleteActivity(activityId)
+            activitiesDeleteList.map(async (activityId) =>
+              deleteActivity(activityId)
             )
           );
         }
         if (rewardsDeleteList && rewardsDeleteList.length > 0) {
           const deletRewardResponse = await Promise.all(
-            rewardsDeleteList.map(
-              async (rewardId) => await deleteReward(rewardId)
-            )
+            rewardsDeleteList.map(async (rewardId) => deleteReward(rewardId))
           );
         }
 
@@ -442,10 +440,12 @@ const EditLesson: React.FC<{
                       return (
                         <RewardCard
                           key={index}
-                          newReward={{
-                            name: reward.name,
+                          reward={{
+                            id: 0,
+                            lesson_id: 0,
+                            title: reward.name,
                             description: reward.description,
-                            numberOfActivities: reward.numberOfActivities,
+                            n_required: reward.numberOfActivities,
                           }}
                           editEffect={() =>
                             openModal({
@@ -465,7 +465,7 @@ const EditLesson: React.FC<{
                               title: 'Eliminar recompensa',
                               content: (
                                 <DeleteRewardModalDialog
-                                  editedReward={true}
+                                  editedReward={false}
                                   index={index}
                                 />
                               ),

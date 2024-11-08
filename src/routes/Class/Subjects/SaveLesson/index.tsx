@@ -202,7 +202,13 @@ const SaveLesson: React.FC<{
                     return (
                       <RewardCard
                         key={index}
-                        newReward={reward}
+                        reward={{
+                          id: 0,
+                          lesson_id: 0,
+                          title: reward.name,
+                          description: reward.description,
+                          n_required: reward.numberOfActivities,
+                        }}
                         editEffect={() =>
                           openModal({
                             title: 'Editar recompensa',
