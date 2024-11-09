@@ -12,7 +12,6 @@ import { saveActivity } from 'services/activities';
 import { CreateLessonSchema } from 'types/validations/lesson';
 import { useModalStore } from 'contexts/ZustandContext/modal-context';
 import CreateRewardModal from 'components/Modals/CreateRewardModal/CreateRewardModal';
-import RewardCard from 'components/CreateReward/RewardCard';
 import EditRewardModal from 'components/Modals/EditRewardModal';
 import { createRewards } from 'services/rewards';
 import PostcardIcon from 'assets/images/postcard-heart.svg';
@@ -21,6 +20,7 @@ import type IActivity from 'types/models/Activity';
 import { type IActivitySaved } from 'types/models/Activity';
 import ConfirmationForm from 'components/ConfirmationForm';
 import ActivityForm from 'components/ActivityForm';
+import RewardCard from 'components/RewardCard';
 
 const SaveLesson: React.FC<{
   classroomDetails: ITeacherSubjectClassroomData;
@@ -229,7 +229,13 @@ const SaveLesson: React.FC<{
                     return (
                       <RewardCard
                         key={index}
-                        reward={reward}
+                        reward={{
+                          id: 0,
+                          lesson_id: 0,
+                          title: reward.name,
+                          description: reward.description,
+                          n_required: reward.numberOfActivities,
+                        }}
                         editEffect={() =>
                           openModal({
                             title: 'Editar recompensa',

@@ -13,7 +13,6 @@ import { eraseActivity, editActivity, saveActivity } from 'services/activities';
 import { CreateLessonSchema } from 'types/validations/lesson';
 import { useModalStore } from 'contexts/ZustandContext/modal-context';
 import CreateRewardModal from 'components/Modals/CreateRewardModal/CreateRewardModal';
-import RewardCard from 'components/CreateReward/RewardCard';
 import EditRewardModal from 'components/Modals/EditRewardModal';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import { createRewards, eraseReward, updateReward } from 'services/rewards';
@@ -22,6 +21,7 @@ import type IReward from 'types/models/Reward';
 import { type IActivitySaved } from 'types/models/Activity';
 import ConfirmationForm from 'components/ConfirmationForm';
 import ActivityForm from 'components/ActivityForm';
+import RewardCard from 'components/RewardCard';
 
 const EditLesson: React.FC<{
   selectedLesson: ILesson;
@@ -433,11 +433,7 @@ const EditLesson: React.FC<{
                       return (
                         <RewardCard
                           key={index}
-                          reward={{
-                            name: reward.title,
-                            description: reward.description,
-                            numberOfActivities: reward.n_required,
-                          }}
+                          reward={reward}
                           editEffect={() =>
                             openModal({
                               title: 'Editar recompensa',
@@ -466,9 +462,11 @@ const EditLesson: React.FC<{
                         <RewardCard
                           key={index}
                           reward={{
-                            name: reward.name,
+                            id: 0,
+                            lesson_id: 0,
+                            title: reward.name,
                             description: reward.description,
-                            numberOfActivities: reward.numberOfActivities,
+                            n_required: reward.numberOfActivities,
                           }}
                           editEffect={() =>
                             openModal({

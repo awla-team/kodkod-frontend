@@ -91,7 +91,7 @@ const Students = () => {
             </b>
             <Tooltip className='' title='Copiar correo'>
               <EmailOutlinedIcon
-                className='tw-text-[#003CAF] tw-ml-3 tw-mt-1'
+                className='tw-text-[#003CAF] tw-ml-3 tw-mt-1 hover:tw-cursor-pointer'
                 onClick={async () =>
                   await copyToClipboard(classroomDetails?.teacher.email || '?')
                 }
@@ -202,7 +202,7 @@ const Students = () => {
                     <TableCell>
                       <Tooltip title='Copiar correo'>
                         <EmailOutlinedIcon
-                          className='tw-text-[#003CAF]'
+                          className='tw-text-[#003CAF] hover:tw-cursor-pointer'
                           onClick={async () =>
                             await copyToClipboard(student.email)
                           }
