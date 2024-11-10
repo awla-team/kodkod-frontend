@@ -9,14 +9,13 @@ import { getActivityByLessonId } from 'services/activities';
 import type IActivity from 'types/models/Activity';
 import { type AxiosResponse } from 'axios';
 import { FetchStatus } from 'global/enums';
-import LessonRewardCard from 'components/LessonRewardCard';
-import type IReward from 'types/models/Reward';
 import { getRewardsByLessonId } from 'services/rewards';
 import EditLesson from './EditLesson';
 import ActivityStudentsDrawer from 'components/drawers/ActivityStudentsDrawer';
 import { useModalStore } from 'contexts/ZustandContext/modal-context';
 import { getLessonByID } from 'services/lessons';
 import { useQuery } from '@tanstack/react-query';
+import RewardCard from 'components/RewardCard';
 
 const LessonDetails: React.FC = () => {
   const { openModal } = useModalStore();
@@ -246,29 +245,23 @@ const LessonDetails: React.FC = () => {
         )}
       </Drawer>
 
-      <div className='tw-flex tw-flex-col tw-gap-4'>
-        <span className='tw-block tw-mt-8'>
-          Al completar actividades, pueden obtener las siguientes recompensas
-        </span>
-        <div
-          className={`tw-flex tw-gap-5 tw-scroll-auto tw-overflow-x-auto ${
-            rewards.length > 0 ? '' : 'tw-justify-center'
-          }`}
-        >
-          {rewards.length > 0 ? (
-            rewards.map((reward, index) => {
-              return (
-                <div key={index}>
-                  <LessonRewardCard reward={reward} />
-                </div>
-              );
-            })
-          ) : (
-            <h5 className='tw-flex tw-justify-center tw-m-4 tw-font-semibold'>
-              No hay recompensas disponibles para esta clase
-            </h5>
-          )}
-        </div>
+      <h4 className='tw-flex tw-my-4'>
+        Al completar actividades, pueden obtener las siguientes recompensas
+      </h4>
+      <div className='tw-flex tw-gap-5 tw-scroll-auto tw-overflow-x-auto tw-p-3 tw-flex-nowrap'>
+        {rewards.length > 0 ? (
+          rewards.map((reward, index) => {
+            return (
+              <div key={index} className='tw-w-72 tw-min-w-72'>
+                <RewardCard reward={reward} />
+              </div>
+            );
+          })
+        ) : (
+          <h5 className='tw-flex tw-justify-center tw-m-4 tw-font-semibold'>
+            No hay recompensas disponibles para esta clase
+          </h5>
+        )}
       </div>
       <span className='tw-block tw-my-8'>
         El profesor escogerá el momento de la clase para hacer uso de las

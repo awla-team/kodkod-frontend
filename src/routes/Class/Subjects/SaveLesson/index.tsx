@@ -7,19 +7,18 @@ import { type ITeacherSubjectClassroomData } from 'global/interfaces';
 import { Formik } from 'formik';
 import { saveLesson } from 'services/lessons';
 import Toaster from 'utils/Toster';
-import ViewSaveActivityDialog from 'components/Modals/SaveActivity';
 import { useCreateLesson } from 'zustand/create-lesson-store';
 import { saveActivity } from 'services/activities';
 import { CreateLessonSchema } from 'types/validations/lesson';
 import { useModalStore } from 'contexts/ZustandContext/modal-context';
-import RewardCard from 'components/CreateReward/RewardCard';
 import { createRewards } from 'services/rewards';
-import ViewEditActivityDialog from 'components/Modals/EditActivity';
-import DeleteRewardModalDialog from 'components/Modals/DeleteRewardModal';
 import PostcardIcon from 'assets/images/postcard-heart.svg';
 import BookmarkStarIcon from 'assets/images/bookmark-star.svg';
+import type IActivity from 'types/models/Activity';
 import { type IActivitySaved } from 'types/models/Activity';
-import ViewDeleteActivityDialog from 'components/Modals/DeleteActivity';
+import ConfirmationForm from 'components/ConfirmationForm';
+import ActivityForm from 'components/ActivityForm';
+import RewardCard from 'components/RewardCard';
 import RewardForm from 'components/RewardForm';
 
 const SaveLesson: React.FC<{
@@ -35,16 +34,23 @@ const SaveLesson: React.FC<{
   const [openSaveActivity, setOpenSaveActivity] = useState<boolean>(false);
   const [openEditActivity, setOpenEditActivity] = useState<boolean>(false);
   const [openDeleteActivity, setOpenDeleteActivity] = useState<boolean>(false);
+  const [openDeleteReward, setOpenDeleteReward] = useState<boolean>(false);
   const [selectedActivity, setSelectedActivity] = useState<IActivitySaved>();
   const [selectedActivityIndex, setSelectedActivityIndex] = useState<number>(0);
-  const { activities, clearNewLessonData, rewards } = useCreateLesson();
+  const [selectedRewardIndex, setSelectedRewardIndex] = useState<number>(0);
+  const {
+    activities,
+    clearNewLessonData,
+    rewards,
+    deleteActivity,
+    deleteReward,
+  } = useCreateLesson();
 
   const onSubmit = async (values: FormInput) => {
     try {
       const lesson: ILessonSaved = {
         title: values.title,
         index: 1,
-        classroom_id: values.classroom_id,
         teacher_subject_classroom_id: classroomDetails.id,
       };
       const { status, data: newLesson } = await saveLesson(lesson);
@@ -86,6 +92,28 @@ const SaveLesson: React.FC<{
     } catch (e) {
       console.log(e);
       Toaster('error', 'Error al crear clase');
+    }
+  };
+
+  const submitDeleteActivity = (index: number) => {
+    try {
+      deleteActivity(index);
+      Toaster('success', `Actividad eliminada`);
+    } catch (e) {
+      console.log(e);
+      Toaster('error', 'Error al eliminar actividad');
+    }
+  };
+
+  const submitDeleteReward = (index: number) => {
+    try {
+      deleteReward(index);
+
+      Toaster('success', `Recompensa eliminada`);
+    } catch (error) {
+      console.error(error);
+
+      Toaster('error', `Error al eliminar recompensa`);
     }
   };
 
@@ -151,8 +179,6 @@ const SaveLesson: React.FC<{
                               color='secondary'
                               variant='outlined'
                               onClick={() => {
-                                setSelectedActivityIndex(index);
-                                setSelectedActivity(activity);
                                 setOpenDeleteActivity(true);
                               }}
                               startIcon={
@@ -202,7 +228,13 @@ const SaveLesson: React.FC<{
                     return (
                       <RewardCard
                         key={index}
-                        reward={reward}
+                        reward={{
+                          id: 0,
+                          lesson_id: 0,
+                          title: reward.name,
+                          description: reward.description,
+                          n_required: reward.numberOfActivities,
+                        }}
                         editEffect={() =>
                           openModal({
                             title: 'Editar recompensa',
@@ -220,17 +252,8 @@ const SaveLesson: React.FC<{
                           })
                         }
                         deleteEffect={() => {
-                          openModal({
-                            title: 'Eliminar recompensa',
-                            content: (
-                              <DeleteRewardModalDialog
-                                editedReward={false}
-                                index={index}
-                              />
-                            ),
-                            maxWidth: 'sm',
-                            withActions: false,
-                          });
+                          setSelectedRewardIndex(index);
+                          setOpenDeleteReward(true);
                         }}
                       />
                     );
@@ -286,41 +309,52 @@ const SaveLesson: React.FC<{
               </div>
             </div>
           </form>
+          {/* Activity Section */}
           {openEditActivity && selectedActivity && (
-            <ViewEditActivityDialog
+            <ActivityForm
               open={openEditActivity}
-              newActivity={selectedActivity}
+              activity={selectedActivity as IActivity}
               index={selectedActivityIndex}
               currentLesson={{
                 id: 1,
                 title: values.title,
                 index: 1,
-                classroom_id: values.classroom_id,
               }}
               handleClose={() => {
                 setOpenEditActivity(false);
               }}
             />
           )}
-          <ViewSaveActivityDialog
+          <ActivityForm
             open={openSaveActivity}
+            activity={null}
             currentLesson={{
               id: 1,
               title: values.title,
               index: 1,
-              classroom_id: values.classroom_id,
             }}
             handleClose={() => {
               setOpenSaveActivity(false);
             }}
-          />{' '}
-          <ViewDeleteActivityDialog
+          />
+          <ConfirmationForm
             open={openDeleteActivity}
-            index={selectedActivityIndex}
-            newActivity={selectedActivity}
-            handleClose={() => {
-              setOpenDeleteActivity(false);
+            title='Eliminar actividad'
+            description='Desea eliminar esta actividad?'
+            onSubmit={() => {
+              submitDeleteActivity(selectedActivityIndex);
             }}
+            onClose={() => setOpenDeleteActivity(false)}
+          />
+          {/* Rewards Section */}
+          <ConfirmationForm
+            open={openDeleteReward}
+            title='Eliminar recompensa'
+            description='Desea eliminar esta recompensa?'
+            onSubmit={() => {
+              submitDeleteReward(selectedRewardIndex);
+            }}
+            onClose={() => setOpenDeleteReward(false)}
           />
         </>
       )}

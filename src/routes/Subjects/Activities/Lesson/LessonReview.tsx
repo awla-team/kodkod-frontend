@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react';
 import { ChevronLeft } from '@mui/icons-material';
 import { useNavigate, useParams } from 'react-router-dom';
-import LessonRewardCard from 'components/LessonRewardCard';
 import { stringAvatar } from 'utils/methods';
 import type IStudent from 'types/models/Student';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -14,6 +13,7 @@ import type IReward from 'types/models/Reward';
 import { Avatar, Button, Chip, CircularProgress } from '@mui/material';
 import { finishLesson, getLessonByID } from 'services/lessons';
 import Toaster from 'utils/Toster';
+import RewardCard from 'components/RewardCard';
 
 const LessonReview = () => {
   const navigate = useNavigate();
@@ -153,7 +153,7 @@ const LessonReview = () => {
                     mutateGetStudentsCompletedReward(reward.id);
                   }}
                 >
-                  <LessonRewardCard reward={reward} />
+                  <RewardCard reward={reward} />
                 </div>
               ))}
             </div>

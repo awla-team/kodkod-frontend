@@ -1,210 +1,84 @@
-import { useState } from 'react';
-import { Typography, TextField } from '@mui/material';
-import { type IRewardCardProps } from './interfaces';
-import {
-  EditRewardActionsContainer,
-  EditRewardButton,
-  RewardCardContainer,
-  RewardCardContent,
-  RewardCardHeader,
-  RewardDescriptionInput,
-  RewardImg,
-} from './styled';
-import CloseIcon from '@mui/icons-material/Close';
-import CheckIcon from '@mui/icons-material/Check';
+import { type FC } from 'react';
+import starIcon from 'assets/images/star.png';
+import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import EditIcon from '@mui/icons-material/Edit';
-import RewardPoints from './RewardPoints';
-import { AxiosError, AxiosResponse } from 'axios';
-import UsedRewardCount from './UsedRewardCount';
-import RedeemRewardDrawer from './RedeemRewardDrawer';
-import Toaster from 'utils/Toster';
+import { Button } from '@mui/material';
+import type IReward from 'types/models/Reward';
+interface Props {
+  reward: IReward;
+  editEffect?: () => void;
+  deleteEffect?: () => void;
+}
 
-const RewardCard: React.FC<IRewardCardProps> = ({
-  id,
-  onSave,
-  rewardId,
-  title,
-  icon,
-  description,
-  requiredPoints,
-  order,
-  usedCount,
-}: IRewardCardProps) => {
-  const [editMode, setEditMode] = useState(false);
-  const [newTitle, setNewTitle] = useState(title);
-  const [newDescription, setNewDescription] = useState(description);
-  const [openDrawer, setOpenDrawer] = useState(false);
-  const [newPoints, setNewPoints] = useState<number>(requiredPoints as number);
-
-  const cancelEditMode = () => {
-    setNewTitle(title);
-    setNewDescription(description);
-    setEditMode(false);
-  };
-
-  const activateEditMode = () => {
-    setEditMode(true);
-  };
-
-  const onCloseDrawer = () => setOpenDrawer(false);
-
+const RewardCard: FC<Props> = ({ reward, editEffect, deleteEffect }) => {
   return (
-    <>
-      <RewardCardContainer variant='outlined'>
-        <EditRewardActionsContainer>
-          {editMode && (
-            <>
-              <EditRewardButton
-                color='inherit'
-                variant='contained'
-                onClick={() => {
-                  onSave(rewardId, {
-                    title: newTitle,
-                    description: newDescription,
-                    required_points: newPoints,
-                  })
-                    .then(() => {
-                      setEditMode(false);
-                    })
-                    .catch((e) => {
-                      console.log(e);
-                      Toaster('error', 'Ha ocurrido un error');
-                    });
-                }}
-                startIcon={<CheckIcon />}
-              >
-                Guardar
-              </EditRewardButton>
-              <EditRewardButton
-                color='inherit'
-                variant='contained'
-                onClick={cancelEditMode}
-                startIcon={<CloseIcon />}
-              >
-                Cancelar
-              </EditRewardButton>
-            </>
-          )}
-          {!editMode && !!rewardId && (
-            <EditRewardButton
-              id={`reward-card-edit-${id}`}
-              color='inherit'
-              variant='contained'
-              onClick={activateEditMode}
-              startIcon={<EditIcon />}
-            >
-              Editar
-            </EditRewardButton>
-          )}
-        </EditRewardActionsContainer>
-        <div
-          id={`reward-card-${id}`}
-          className={`d-flex flex-column flex-fill ${
-            editMode ? 'no-hover' : ''
-          }`}
-          onClick={() => {
-            if (!editMode) setOpenDrawer(true);
-          }}
-        >
-          <RewardCardHeader>
-            <div id={`reward-card-indicator-${id}`}>
-              <UsedRewardCount
-                // FIXME: fix this ts error
-                // @ts-expect-error ts-error(2322)
-                count={usedCount}
-              />
-            </div>
-            {!!order && (
-              <Typography
-                color='white'
-                variant='body1'
-                fontWeight='bold'
-                fontSize='32px'
-              >
-                {order}
-              </Typography>
-            )}
-          </RewardCardHeader>
-          <RewardCardContent>
-            <RewardImg src={icon} alt='' />
-            <div className='d-flex flex-column align-items-center justify-content-end'>
-              <div className='d-flex flex-column align-items-center'>
-                {editMode ? (
-                  <TextField
-                    className='mb-1'
-                    size='small'
-                    type='text'
-                    value={newTitle}
-                    placeholder={title}
-                    color='primary'
-                    sx={{
-                      input: { padding: '4px' },
-                    }}
-                    onChange={(event) => {
-                      setNewTitle(event.target.value);
-                    }}
-                  />
-                ) : (
-                  <Typography
-                    className='mb-1'
-                    variant='body1'
-                    fontWeight='bold'
-                    fontSize='20px'
-                    textAlign='center'
-                    sx={{
-                      marginBottom: '8px',
-                    }}
-                  >
-                    {title}
-                  </Typography>
-                )}
-                {editMode ? (
-                  <RewardDescriptionInput
-                    minRows={2}
-                    maxRows={4}
-                    value={newDescription}
-                    placeholder={description}
-                    onChange={(event) => {
-                      setNewDescription(event.target.value);
-                    }}
-                  />
-                ) : (
-                  <Typography
-                    variant='body2'
-                    textAlign='center'
-                    fontSize='16px'
-                    sx={{
-                      padding: '8px',
-                    }}
-                  >
-                    {description}
-                  </Typography>
-                )}
-              </div>
-              <RewardPoints
-                id={`reward-card-points-${id}`}
-                points={requiredPoints as number}
-                editMode={editMode}
-                newPoints={newPoints}
-                onChangeNewPoints={(value: number) => {
-                  setNewPoints(value);
-                }}
-              />
-            </div>
-          </RewardCardContent>
+    <div className='tw-flex tw-justify-center tw-items-center tw-flex-col tw-rounded-md tw-min-w-[260px] tw-w-[260px] tw-max-w-[260px] tw-min-h-[400px] tw-h-[400px]'>
+      <div
+        className={`tw-flex tw-justify-center tw-items-center tw-bg-fuchsia-800 tw-w-full tw-rounded-t-md ${
+          editEffect || deleteEffect ? 'tw-p-2' : 'tw-p-6'
+        } tw-gap-2`}
+      >
+        {editEffect && (
+          <Button
+            startIcon={<EditIcon />}
+            color='secondary'
+            variant='outlined'
+            onClick={editEffect}
+          >
+            Editar
+          </Button>
+        )}
+        {deleteEffect && (
+          <Button
+            onClick={deleteEffect}
+            color='secondary'
+            variant='outlined'
+            startIcon={<DeleteForeverOutlinedIcon />}
+          >
+            Eliminar
+          </Button>
+        )}
+      </div>
+      <div className='tw-flex tw-w-full tw-flex-col tw-grow tw-items-center tw-bg-gradient-to-r tw-from-purple-100 tw-to-cyan-100 tw-px-4 tw-py-8 tw-justify-between tw-rounded-b-md'>
+        <div className='tw-flex tw-flex-col tw-items-center tw-justify-center'>
+          <img
+            src={starIcon}
+            alt='star'
+            className='tw-w-12 tw-h-12 tw-object-cover tw-mb-4'
+          />
+          <h4 className='tw-text tw-text-center tw-break-all tw-font-bold tw-text-gray-900'>
+            {reward.title}
+          </h4>
+          <h5 className='tw-text tw-text-center tw-scroll-auto tw-overflow-y-auto tw-hyphens-auto'>
+            {reward.description}
+          </h5>
         </div>
-      </RewardCardContainer>
-      <RedeemRewardDrawer
-        openDrawer={openDrawer}
-        onCloseDrawer={onCloseDrawer}
-        rewardId={rewardId}
-        icon={icon}
-        title={title}
-        description={description}
-        order={order}
-      />
-    </>
+        <div className='tw-flex tw-flex-col tw-items-center tw-justify-center'>
+          <span className='tw-text-fuchsia-800 tw-text-center tw-font-medium'>
+            Se obtiene completando
+          </span>
+          <div className='tw-flex tw-items-baseline tw-justify-center tw-gap-2 tw-text-fuchsia-800'>
+            <span className='tw-text-4xl tw-font-semibold tw-text-fuchsia-800'>
+              {reward.n_required}
+            </span>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              width='24'
+              height='24'
+              fill='currentColor'
+              className='bi bi-postcard-heart'
+              viewBox='0 0 16 16'
+            >
+              <path d='M8 4.5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0zm3.5.878c1.482-1.42 4.795 1.392 0 4.622-4.795-3.23-1.482-6.043 0-4.622M2.5 5a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1zm0 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1zm0 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1z' />
+              <path
+                fillRule='evenodd'
+                d='M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1z'
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
-
 export default RewardCard;
