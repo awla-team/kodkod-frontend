@@ -11,8 +11,6 @@ import { useCreateLesson } from 'zustand/create-lesson-store';
 import { saveActivity } from 'services/activities';
 import { CreateLessonSchema } from 'types/validations/lesson';
 import { useModalStore } from 'contexts/ZustandContext/modal-context';
-import CreateRewardModal from 'components/Modals/CreateRewardModal/CreateRewardModal';
-import EditRewardModal from 'components/Modals/EditRewardModal';
 import { createRewards } from 'services/rewards';
 import PostcardIcon from 'assets/images/postcard-heart.svg';
 import BookmarkStarIcon from 'assets/images/bookmark-star.svg';
@@ -21,6 +19,7 @@ import { type IActivitySaved } from 'types/models/Activity';
 import ConfirmationForm from 'components/ConfirmationForm';
 import ActivityForm from 'components/ActivityForm';
 import RewardCard from 'components/RewardCard';
+import RewardForm from 'components/RewardForm';
 
 const SaveLesson: React.FC<{
   classroomDetails: ITeacherSubjectClassroomData;
@@ -240,8 +239,11 @@ const SaveLesson: React.FC<{
                           openModal({
                             title: 'Editar recompensa',
                             content: (
-                              <EditRewardModal
-                                newReward={reward}
+                              <RewardForm
+                                reward={{
+                                  title: reward.name,
+                                  description: reward.description,
+                                }}
                                 index={index}
                               />
                             ),
@@ -263,7 +265,7 @@ const SaveLesson: React.FC<{
                     onClick={() =>
                       openModal({
                         title: 'Ingresar recompensas',
-                        content: <CreateRewardModal />,
+                        content: <RewardForm index={0} />,
                         maxWidth: 'sm',
                         withActions: false,
                       })
