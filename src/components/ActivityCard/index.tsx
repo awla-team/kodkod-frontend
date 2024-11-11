@@ -19,22 +19,24 @@ const ActivityCard: React.FC<Props> = ({
 }) => {
   return (
     <div
-      className='tw-relative tw-border tw-bg-gradient-to-r tw-from-blue-600 tw-to-blue-800 tw-rounded-md tw-min-h-40 tw-flex tw-flex-row tw-justify-between tw-items-center tw-gap-3 tw-p-4'
+      className='tw-relative tw-border tw-bg-gradient-to-r tw-from-blue-600 tw-to-blue-800 tw-rounded-md tw-min-h-40 tw-flex tw-flex-col tw-justify-start tw-items-start tw-gap-3 tw-p-6'
       onClick={handleClick}
     >
       {editRender && editRender}
-      <div className='tw-mx-8'>
-        <h3 className='tw-font-bold tw-text-white'>{activity.title}</h3>
-        <h5 className='tw-font-bold tw-text-white tw-break-all tw-mb-4'>
-          {activity.description}
-        </h5>
-      </div>
+      <div className='tw-flex tw-justify-between tw-w-full'>
+        <div className='tw-flex tw-flex-col'>
+          <h3 className='tw-font-bold tw-text-white'>{activity.title}</h3>
+          <h5 className='tw-font-bold tw-text-white tw-break-all '>
+            {activity.description}
+          </h5>
+        </div>
 
-      {!editRender && (
-        <h5 className='tw-text-white tw-m-8 tw-font-bold'>
-          <EmojiPeopleIcon /> {activity.studentsCompletedActivity}
-        </h5>
-      )}
+        {!editRender && (
+          <h5 className='tw-text-white tw-font-bold'>
+            <EmojiPeopleIcon /> {activity.studentsCompletedActivity}
+          </h5>
+        )}
+      </div>
     </div>
   );
 };
