@@ -1,3 +1,5 @@
+import plugin from 'tailwindcss/plugin';
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
@@ -20,7 +22,16 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(({ addComponents }) => {
+      addComponents({
+        '.motivation-full-gradient': {
+          background:
+            'linear-gradient(90deg, #FFFFFF 0%, #FDFFA2 19.11%, #FF0000 96.53%)',
+        },
+      });
+    }),
+  ],
   prefix: 'tw-',
   important: true,
   corePlugins: {
