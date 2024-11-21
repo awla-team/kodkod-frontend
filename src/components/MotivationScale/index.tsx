@@ -3,6 +3,8 @@ import fire20 from 'assets/images/fire-20.png';
 import fire40 from 'assets/images/fire-40.png';
 import fire60 from 'assets/images/fire-60.png';
 import fire80 from 'assets/images/fire-80.png';
+import passion from 'assets/images/passion.png';
+import InfoIcon from '@mui/icons-material/Info';
 
 import { cn } from 'utils/methods';
 
@@ -53,9 +55,21 @@ const MotivationScale: React.FC<Props> = ({ motivationLevel }) => {
 
   return (
     <div className='tw-flex tw-justify-between tw-items-center tw-gap-2'>
-      <div>
-        <span>Motivación del curso</span>
-        <h4 className='tw-font-bold tw-text-2xl'>{activeScale?.label}</h4>
+      <div className='tw-flex tw-items-center tw-gap-2'>
+        <img
+          alt='fire'
+          src={passion}
+          className='tw-h-16 tw-w-16 tw-object-contain'
+        />
+        <div className='tw-flex tw-flex-col'>
+          <div className='tw-flex tw-items-center tw-gap-2'>
+            <span>Motivación del curso</span>
+            <InfoIcon fontSize='small' className='tw-text-zinc-500' />
+          </div>
+          <h4 className='tw-font-bold tw-text-3xl tw-my-0'>
+            {activeScale?.label}
+          </h4>
+        </div>
       </div>
 
       <div className='tw-grow tw-flex tw-justify-end'>
