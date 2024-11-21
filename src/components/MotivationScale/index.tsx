@@ -17,10 +17,10 @@ const SCALES = [
 ];
 
 const ICONS = [
-  { icon: fire20, value: 20, position: 16 },
-  { icon: fire40, value: 40, position: 36 },
-  { icon: fire60, value: 60, position: 56 },
-  { icon: fire80, value: 80, position: 76 },
+  { icon: fire20, position: 16 },
+  { icon: fire40, position: 36 },
+  { icon: fire60, position: 56 },
+  { icon: fire80, position: 76 },
 ];
 
 interface Props {
@@ -75,19 +75,16 @@ const MotivationScale: React.FC<Props> = ({ motivationLevel }) => {
       <div className='tw-grow tw-flex tw-justify-end'>
         <div className='tw-h-10 tw-bg-zinc-100 tw-rounded-full tw-py-2.5 tw-px-3 tw-w-2/3 tw-relative'>
           <div className='tw-relative tw-rounded-full tw-h-full tw-flex tw-items-center tw-motivation-full-gradient px-2'>
-            <div className='tw-h-[1px] tw-w-full tw-bg-white' />
+            <div className='tw-h-[1px] tw-w-full tw-bg-white tw-z-20' />
 
             {/* Iconos posicionados */}
-            {ICONS.map(({ icon, value, position }, index) => (
+            {ICONS.map(({ icon, position }, index) => (
               <img
                 key={index}
                 src={icon}
                 alt={`icon-${index}`}
                 className={cn(
-                  'tw-h-10 tw-object-contain tw-absolute -tw-top-4 tw-z-20',
-                  {
-                    'tw-hidden': value > motivationLevel,
-                  }
+                  'tw-h-10 tw-object-contain tw-absolute -tw-top-4 tw-z-20'
                 )}
                 style={{ left: `${position}%` }}
               />

@@ -113,7 +113,7 @@ export const router = createBrowserRouter([
                     path: 'analysis',
                     element: (
                       <div>
-                        <MotivationScale motivationLevel={100} />
+                        <MotivationScale motivationLevel={10} />
                       </div>
                     ),
                   },
