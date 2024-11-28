@@ -25,6 +25,7 @@ import SubjectActivities from './Subjects/Activities/SubjectActivities';
 import Students from './Subjects/Students';
 import LessonReview from './Subjects/Activities/Lesson/LessonReview';
 import LessonDetails from './Subjects/Activities/Lesson';
+import Analysis from './Subjects/Analysis';
 
 const MainRouterComponent: FC = () => {
   // const { pathname } = useLocation();
@@ -110,7 +111,7 @@ export const router = createBrowserRouter([
                   },
                   {
                     path: 'analysis',
-                    element: <p>seguimiento</p>,
+                    element: <Analysis />,
                   },
                   {
                     path: 'students',
