@@ -15,10 +15,9 @@ const KpiBox: FC<Props> = ({ icon, helperText, title, value }) => {
       <div className='tw-flex tw-p-[24px] tw-gap-[24px]'>
         <div className='tw-flex tw-justify-center tw-items-center'>{icon}</div>
         <div className='tw-flex tw-flex-col tw-w-full'>
-          <div>
-            <b>{value}</b>
-          </div>
-          <div>{title}</div>
+          <span className='tw-font-bold'>{value}</span>
+          <span>{title}</span>
+        </div>
         </div>
       </div>
       <div className='tw-flex tw-m-2'>
