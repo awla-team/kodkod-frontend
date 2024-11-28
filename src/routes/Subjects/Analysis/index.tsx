@@ -1,9 +1,9 @@
-import { Button, Tooltip } from '@mui/material';
-import KpiBox from 'components/KpiBox';
+import { Button } from '@mui/material';
 import { useState } from 'react';
+import KpiBox from 'components/KpiBox';
 import { useClassContext } from 'routes/Class/context';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
-
+import StudentAnalysisList from 'components/StudentAnalysisList';
 const Analysis = () => {
   const { classroomDetails } = useClassContext();
   const [buttonActive, setButtonActive] = useState<number>(1);
@@ -102,7 +102,13 @@ const Analysis = () => {
         />
       </div>
       {/** Table Section */}
-      <div>Table</div>
+      <div>
+        {classroomDetails?.classroom.students && (
+          <StudentAnalysisList
+            students={classroomDetails?.classroom.students}
+          />
+        )}
+      </div>
     </div>
   );
 };
