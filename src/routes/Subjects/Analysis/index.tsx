@@ -3,6 +3,7 @@ import KpiBox from 'components/KpiBox';
 import { useState } from 'react';
 import { useClassContext } from 'routes/Class/context';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+
 const Analysis = () => {
   const { classroomDetails } = useClassContext();
   const [buttonActive, setButtonActive] = useState<number>(1);
@@ -86,24 +87,18 @@ const Analysis = () => {
         <div>Motivation Graph</div>
       </div>
       {/** KpiBox Section */}
-      <div className='tw-flex tw-flex-row tw-w-full tw-gap-6'>
-        <KpiBox
-          title='test'
-          value='500'
-          icon={<img alt='Test Icon' />}
-          helperText={null}
-        />
+      <div className='tw-flex tw-flex-col tw-w-full tw-gap-6 lg:tw-flex-row'>
+        <KpiBox title='test' value='500' icon={<img alt='Test Icon' />} />
         <KpiBox
           title='Analisis cualitativo'
-          value={'15' + ' Estudiantes'}
+          value='15 Estudiantes'
           icon={<img alt='Test Icon' />}
-          helperText={'Test'}
+          helperText='Test'
         />
         <KpiBox
           title='lorem ipsum'
           value='30%'
           icon={<img alt='Test Icon' />}
-          helperText={null}
         />
       </div>
       {/** Table Section */}
