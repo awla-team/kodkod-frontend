@@ -25,7 +25,7 @@ import SubjectActivities from './Subjects/Activities/SubjectActivities';
 import Students from './Subjects/Students';
 import LessonReview from './Subjects/Activities/Lesson/LessonReview';
 import LessonDetails from './Subjects/Activities/Lesson';
-import MotivationScale from 'components/MotivationScale';
+import Analysis from './Subjects/Analysis';
 
 const MainRouterComponent: FC = () => {
   // const { pathname } = useLocation();
@@ -111,11 +111,7 @@ export const router = createBrowserRouter([
                   },
                   {
                     path: 'analysis',
-                    element: (
-                      <div>
-                        <MotivationScale motivationLevel={10} />
-                      </div>
-                    ),
+                    element: <Analysis />,
                   },
                   {
                     path: 'students',
