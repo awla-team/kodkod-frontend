@@ -304,6 +304,7 @@ const EditLesson: React.FC<{
                 variant='outlined'
                 fullWidth
                 placeholder='Objetivo de la clase'
+                error={!!errors.goal}
               />
               <div className='tw-flex tw-flex-col tw-gap-4'>
                 <span className='tw-block tw-mt-8'>
