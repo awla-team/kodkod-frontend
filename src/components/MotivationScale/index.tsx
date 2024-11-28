@@ -54,7 +54,7 @@ const MotivationScale: React.FC<Props> = ({ motivationLevel }) => {
   }, [motivationLevel]);
 
   return (
-    <div className='tw-flex tw-justify-between tw-items-center tw-gap-2'>
+    <div className='tw-flex tw-justify-between tw-items-center tw-gap-2 tw-flex-wrap'>
       <div className='tw-flex tw-items-center tw-gap-2'>
         <img
           alt='fire'
@@ -71,32 +71,27 @@ const MotivationScale: React.FC<Props> = ({ motivationLevel }) => {
           </h4>
         </div>
       </div>
-
-      <div className='tw-grow tw-flex tw-justify-end'>
-        <div className='tw-h-10 tw-bg-zinc-100 tw-rounded-full tw-py-2.5 tw-px-3 tw-w-2/3 tw-relative'>
-          <div className='tw-relative tw-rounded-full tw-h-full tw-flex tw-items-center tw-motivation-full-gradient px-2'>
-            <div className='tw-h-[1px] tw-w-full tw-bg-white tw-z-20' />
-
-            {/* Iconos posicionados */}
-            {ICONS.map(({ icon, position }, index) => (
-              <img
-                key={index}
-                src={icon}
-                alt={`icon-${index}`}
-                className={cn(
-                  'tw-h-10 tw-object-contain tw-absolute -tw-top-4 tw-z-20'
-                )}
-                style={{ left: `${position}%` }}
-              />
-            ))}
-
-            {/* Progreso oculto */}
-            <div className='tw-w-full tw-h-full tw-absolute tw-top-0 tw-left-0 tw-z-10 tw-flex tw-justify-end'>
-              <div
-                className='tw-h-full tw-bg-zinc-100'
-                style={{ width: `${hiddenPercentage}%` }}
-              />
-            </div>
+      <div className='tw-h-10 tw-bg-zinc-100 tw-rounded-full tw-py-2.5 tw-px-3 tw-w-full tw-relative tw-mt-4 md:tw-w-1/2 md:tw-mt-0'>
+        <div className='tw-relative tw-rounded-full tw-h-full tw-flex tw-items-center tw-motivation-full-gradient px-2'>
+          <div className='tw-h-[1px] tw-w-full tw-bg-white tw-z-20' />
+          {/* Iconos posicionados */}
+          {ICONS.map(({ icon, position }, index) => (
+            <img
+              key={index}
+              src={icon}
+              alt={`icon-${index}`}
+              className={cn(
+                'tw-h-10 tw-object-contain tw-absolute -tw-top-4 tw-z-20'
+              )}
+              style={{ left: `${position}%` }}
+            />
+          ))}
+          {/* Progreso oculto */}
+          <div className='tw-w-full tw-h-full tw-absolute tw-top-0 tw-left-0 tw-z-10 tw-flex tw-justify-end'>
+            <div
+              className='tw-h-full tw-bg-zinc-100'
+              style={{ width: `${hiddenPercentage}%` }}
+            />
           </div>
         </div>
       </div>
