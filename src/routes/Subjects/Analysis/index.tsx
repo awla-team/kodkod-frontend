@@ -1,5 +1,6 @@
-import { Button, Tooltip } from '@mui/material';
+import { Button } from '@mui/material';
 import { useState } from 'react';
+import KpiBox from 'components/KpiBox';
 import { useClassContext } from 'routes/Class/context';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import StudentAnalysisList from 'components/StudentAnalysisList';
@@ -86,10 +87,19 @@ const Analysis = () => {
         <div>Motivation Graph</div>
       </div>
       {/** KpiBox Section */}
-      <div className='tw-flex tw-flex-row tw-w-full tw-gap-6'>
-        <div>KPI</div>
-        <div>KPI</div>
-        <div>KPI</div>
+      <div className='tw-flex tw-flex-col tw-w-full tw-gap-6 lg:tw-flex-row'>
+        <KpiBox title='test' value='500' icon={<img alt='Test Icon' />} />
+        <KpiBox
+          title='Analisis cualitativo'
+          value='15 Estudiantes'
+          icon={<img alt='Test Icon' />}
+          helperText='Test'
+        />
+        <KpiBox
+          title='lorem ipsum'
+          value='30%'
+          icon={<img alt='Test Icon' />}
+        />
       </div>
       {/** Table Section */}
       <div>
