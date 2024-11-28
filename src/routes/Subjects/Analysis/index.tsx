@@ -4,6 +4,7 @@ import KpiBox from 'components/KpiBox';
 import { useClassContext } from 'routes/Class/context';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import StudentAnalysisList from 'components/StudentAnalysisList';
+import MotivationScale from 'components/MotivationScale';
 const Analysis = () => {
   const { classroomDetails } = useClassContext();
   const [buttonActive, setButtonActive] = useState<number>(1);
@@ -82,10 +83,7 @@ const Analysis = () => {
         </div>
       </div>
       {/** Motivation Section */}
-      <div className='tw-flex tw-justify-between'>
-        <div>Motivacion Text</div>
-        <div>Motivation Graph</div>
-      </div>
+      <MotivationScale motivationLevel={20} />
       {/** KpiBox Section */}
       <div className='tw-flex tw-flex-col tw-w-full tw-gap-6 lg:tw-flex-row'>
         <KpiBox title='test' value='500' icon={<img alt='Test Icon' />} />
