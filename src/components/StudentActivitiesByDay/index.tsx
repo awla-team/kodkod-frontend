@@ -45,7 +45,11 @@ const StudentActivitiesByDay: React.FC<StudentActivitiesByDayProps> = ({
     const xAxis = chart.xAxes.push(
       am5xy.CategoryAxis.new(root, {
         categoryField: 'date',
-        renderer: am5xy.AxisRendererX.new(root, {}),
+        renderer: am5xy.AxisRendererX.new(root, {
+          cellStartLocation: 0.2,
+          cellEndLocation: 0.8,
+          minGridDistance: 50,
+        }),
         tooltip: am5.Tooltip.new(root, {}),
       })
     );
@@ -60,8 +64,8 @@ const StudentActivitiesByDay: React.FC<StudentActivitiesByDayProps> = ({
     const series = chart.series.push(
       am5xy.ColumnSeries.new(root, {
         name: 'Actividades',
-        xAxis: xAxis,
-        yAxis: yAxis,
+        xAxis,
+        yAxis,
         valueYField: 'activities',
         categoryXField: 'date',
         tooltip: am5.Tooltip.new(root, {
@@ -72,13 +76,35 @@ const StudentActivitiesByDay: React.FC<StudentActivitiesByDayProps> = ({
 
     series.columns.template.setAll({
       tooltipText: '{categoryX}: {valueY}',
-      width: am5.percent(50),
-      fillOpacity: 0.8,
+      width: am5.percent(100),
+      fill: am5.color('#1e90ff'),
+      stroke: am5.color('#1e90ff'),
+    });
+
+    const avgSeries = chart.series.push(
+      am5xy.ColumnSeries.new(root, {
+        name: 'Actividades promedio del curso',
+        xAxis,
+        yAxis,
+        valueYField: 'average',
+        categoryXField: 'date',
+        tooltip: am5.Tooltip.new(root, {
+          labelText: '{valueY}',
+        }),
+      })
+    );
+
+    avgSeries.columns.template.setAll({
+      tooltipText: '{categoryX}: {valueY}',
+      width: am5.percent(100),
+      fill: am5.color('#adadad'),
+      stroke: am5.color('#adadad'),
     });
 
     // Pasar datos al gráfico
     xAxis.data.setAll(data);
     series.data.setAll(data);
+    avgSeries.data.setAll(data);
 
     // Aparecer el gráfico con animación y manejar la promesa
     chart

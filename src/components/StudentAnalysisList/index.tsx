@@ -18,6 +18,9 @@ interface Props {
   students: IStudent[];
 }
 
+type Order = 'asc' | 'desc';
+type OrderBy = keyof IStudent;
+
 const StudentAnalysisList: FC<Props> = ({ students }) => {
   /* Inicio Gestion de tabla */
   const [order, setOrder] = useState<Order>('asc');
@@ -26,47 +29,33 @@ const StudentAnalysisList: FC<Props> = ({ students }) => {
   const [page, setPage] = useState(0);
   const rowsPerPage = 10;
 
-  type Order = 'asc' | 'desc';
-  type OrderBy = keyof IStudent;
-
   const mockData = [
-    { date: 'Nov 12', activities: 3 },
-    { date: 'Nov 13', activities: 5 },
-    { date: 'Nov 14', activities: 7 },
-    { date: 'Nov 15', activities: 3 },
-    { date: 'Nov 16', activities: 5 },
-    { date: 'Nov 17', activities: 7 },
-    { date: 'Nov 18', activities: 3 },
-    { date: 'Nov 19', activities: 5 },
-    { date: 'Nov 20', activities: 7 },
-    { date: 'Nov 21', activities: 4 },
-    { date: 'Nov 22', activities: 8 },
-    { date: 'Nov 23', activities: 1 },
-    { date: 'Nov 24', activities: 3 },
-    { date: 'Nov 25', activities: 1 },
-    { date: 'Nov 26', activities: 5 },
-    { date: 'Nov 27', activities: 1 },
-    { date: 'Nov 28', activities: 2 },
-    { date: 'Nov 29', activities: 1 },
-    { date: 'Nov 30', activities: 4 },
-    { date: 'Nov 31', activities: 1 },
+    { date: 'Nov 12', activities: 3, average: 5 },
+    { date: 'Nov 13', activities: 5, average: 5 },
+    { date: 'Nov 14', activities: 7, average: 5 },
+    { date: 'Nov 15', activities: 3, average: 5 },
+    { date: 'Nov 16', activities: 5, average: 5 },
+    { date: 'Nov 17', activities: 7, average: 5 },
+    { date: 'Nov 18', activities: 3, average: 5 },
+    { date: 'Nov 19', activities: 5, average: 5 },
+    { date: 'Nov 20', activities: 7, average: 5 },
+    { date: 'Nov 21', activities: 4, average: 5 },
+    { date: 'Nov 22', activities: 8, average: 5 },
+    { date: 'Nov 23', activities: 1, average: 5 },
+    { date: 'Nov 24', activities: 3, average: 5 },
+    { date: 'Nov 25', activities: 1, average: 5 },
+    { date: 'Nov 26', activities: 5, average: 5 },
+    { date: 'Nov 27', activities: 1, average: 5 },
+    { date: 'Nov 28', activities: 2, average: 5 },
+    { date: 'Nov 29', activities: 1, average: 5 },
+    { date: 'Nov 30', activities: 4, average: 5 },
+    { date: 'Nov 31', activities: 1, average: 5 },
   ];
 
-  const mockData2 = [
-    { date: '2024-11-12', activities: 3 },
-    { date: '2024-11-13', activities: 5 },
-    { date: '2024-11-14', activities: 7 },
-    { date: '2024-11-15', activities: 3 },
-    { date: '2024-11-16', activities: 5 },
-    { date: '2024-11-17', activities: 7 },
-    { date: '2024-11-18', activities: 3 },
-    { date: '2024-11-19', activities: 5 },
-    { date: '2024-11-20', activities: 7 },
-  ];
   const mockData3 = [
-    { date: 'Nov 12', activities: 3 },
-    { date: 'Nov 13', activities: 5 },
-    { date: 'Nov 14', activities: 7 },
+    { date: 'Nov 12', activities: 3, average: 5 },
+    { date: 'Nov 13', activities: 5, average: 5 },
+    { date: 'Nov 14', activities: 7, average: 5 },
   ];
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
