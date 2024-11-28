@@ -20,6 +20,7 @@ import ConfirmationForm from 'components/ConfirmationForm';
 import ActivityForm from 'components/ActivityForm';
 import RewardCard from 'components/RewardCard';
 import RewardForm from 'components/RewardForm';
+import ActivityCard, { ActiviyCardEditRender } from 'components/ActivityCard';
 
 const SaveLesson: React.FC<{
   classroomDetails: ITeacherSubjectClassroomData;
@@ -122,6 +123,18 @@ const SaveLesson: React.FC<{
     handleClose();
   };
 
+  const handleEditActivity = (index: number, activity: IActivitySaved) => {
+    setSelectedActivityIndex(index);
+    setSelectedActivity(activity);
+    setOpenEditActivity(true);
+  };
+
+  const handleDeleteActivity = (index: number, activity: IActivitySaved) => {
+    setSelectedActivityIndex(index);
+    setSelectedActivity(activity);
+    setOpenDeleteActivity(true);
+  };
+
   return (
     <Formik
       initialValues={formValues}
@@ -152,49 +165,45 @@ const SaveLesson: React.FC<{
                   esta clase
                 </span>
                 <div className='tw-flex tw-flex-col tw-gap-2 tw-scroll-auto tw-overflow-y-auto'>
-                  {activities?.map((activity, index) => {
-                    return (
-                      <div
-                        key={index}
-                        className='tw-border tw-bg-gradient-to-r tw-from-blue-600 tw-to-blue-800 tw-rounded-md tw-min-h-40 tw-flex tw-flex-col tw-gap-3 tw-p-4'
-                      >
-                        <div className='tw-flex tw-justify-between tw-items-center'>
-                          <h4 className='tw-text-white tw-font-bold tw-mb-0'>
-                            {activity.title}
-                          </h4>
-                          <div className='tw-flex tw-gap-2'>
-                            <Button
-                              color='secondary'
-                              variant='outlined'
-                              startIcon={<EditIcon className='tw-w-5 tw-h-5' />}
-                              onClick={() => {
-                                setSelectedActivityIndex(index);
-                                setSelectedActivity(activity);
-                                setOpenEditActivity(true);
-                              }}
-                            >
-                              Editar
-                            </Button>
-                            <Button
-                              color='secondary'
-                              variant='outlined'
-                              onClick={() => {
-                                setOpenDeleteActivity(true);
-                              }}
-                              startIcon={
-                                <DeleteForeverOutlinedIcon className='tw-w-5 tw-h-5' />
+                  {activities?.map(
+                    (
+                      { title, description, lesson_id: lessonId, type },
+                      index
+                    ) => {
+                      return (
+                        <ActivityCard
+                          key={index}
+                          activity={{
+                            title,
+                            description,
+                            lesson_id: lessonId,
+                            type,
+                            studentsCompletedActivity: 0,
+                          }}
+                          editRender={
+                            <ActiviyCardEditRender
+                              edit={() =>
+                                handleEditActivity(index, {
+                                  title,
+                                  description,
+                                  lesson_id: lessonId,
+                                  type,
+                                })
                               }
-                            >
-                              Eliminar
-                            </Button>
-                          </div>
-                        </div>
-                        <h4 className='tw-text-white tw-flex-1 tw-mb-0 tw-flex tw-text-justify'>
-                          {activity.description}
-                        </h4>
-                      </div>
-                    );
-                  })}
+                              delete={() =>
+                                handleDeleteActivity(index, {
+                                  title,
+                                  description,
+                                  lesson_id: lessonId,
+                                  type,
+                                })
+                              }
+                            />
+                          }
+                        />
+                      );
+                    }
+                  )}
                   <div className='border-dashed tw-rounded-md tw-h-40 tw-flex hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-sky-50'>
                     <div
                       className='tw-flex tw-justify-center tw-items-center tw-w-full tw-h-full tw-gap-2'
