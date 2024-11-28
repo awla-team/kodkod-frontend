@@ -185,7 +185,13 @@ const LessonDetails: React.FC = () => {
         <div className='tw-flex tw-flex-col tw-gap-2 tw-scroll-auto tw-overflow-y-auto'>
           {activities.length > 0 ? (
             activities.map((activity, index) => {
-              return <ActivityCard key={index} activity={activity} />;
+              return (
+                <ActivityCard
+                  key={index}
+                  activity={activity}
+                  handleClick={() => openActivityDrawer(activity)}
+                />
+              );
             })
           ) : (
             <h5 className='tw-flex tw-justify-center tw-m-4 tw-font-semibold'>

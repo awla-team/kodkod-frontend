@@ -12,6 +12,17 @@ interface Props {
   editRender?: React.ReactNode;
 }
 
+/**
+ * `ActivityCard` is a React functional component that displays an activity card with a title, description,
+ * and optionally an edit render component. It also shows the number of students who have completed the activity.
+ *
+ * @component
+ * @param {Props} props - The props for the component.
+ * @param {Object} props.activity - The activity object containing details to be displayed.
+ * @param {React.ReactNode} [props.editRender] - Optional render component for edit mode.
+ *
+ * @returns {JSX.Element} The rendered activity card component.
+ */
 const ActivityCard: React.FC<Props> = ({
   activity,
   handleClick,
@@ -19,7 +30,7 @@ const ActivityCard: React.FC<Props> = ({
 }) => {
   return (
     <div
-      className='tw-relative tw-border tw-bg-gradient-to-r tw-from-blue-600 tw-to-blue-800 tw-rounded-md tw-min-h-40 tw-flex tw-flex-col tw-justify-start tw-items-start tw-gap-3 tw-p-6'
+      className='tw-relative tw-border tw-bg-gradient-to-r tw-from-blue-600 tw-to-blue-800 tw-rounded-md tw-min-h-40 tw-flex tw-flex-col tw-justify-start tw-items-start tw-gap-3 tw-p-6 hover:tw-cursor-pointer'
       onClick={handleClick}
     >
       {editRender && editRender}
