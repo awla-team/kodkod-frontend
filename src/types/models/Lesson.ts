@@ -12,4 +12,5 @@ export interface ILessonSaved {
   title: string;
   index: number;
   teacher_subject_classroom_id: number;
+  goal?: string;
 }

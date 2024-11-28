@@ -185,7 +185,7 @@ const LessonDetails: React.FC = () => {
         </div>
         <p
           className={cn(
-            lesson?.goal ? 'tw-text-base' : 'tw-text-sm tw-text-zinc-400'
+            lesson?.goal ? 'tw-text-base' : 'tw-text-base tw-text-zinc-500'
           )}
         >
           {lesson?.goal || 'Objetivo no establecido'}
