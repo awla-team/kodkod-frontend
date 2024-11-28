@@ -11,8 +11,8 @@ interface Props {
 
 const KpiBox: FC<Props> = ({ icon, helperText, title, value }) => {
   return (
-    <div className='tw-flex tw-justify-between tw-w-full tw-h-[100px] tw-border-solid tw-rounded-lg tw-border-2 tw-border-zinc-300 tw-relative'>
-      <div className='tw-flex tw-p-[24px] tw-gap-[24px] tw-w-full'>
+    <div className='tw-flex tw-justify-between tw-items-center tw-w-full tw-min-h-[100px] tw-border-solid tw-rounded-lg tw-border-2 tw-border-zinc-300 tw-relative'>
+      <div className='tw-flex tw-p-[24px] tw-gap-[24px] tw-w-full tw-items-center'>
         <div className='tw-flex tw-justify-center tw-items-center'>{icon}</div>
         <div className='tw-flex tw-flex-col tw-w-full'>
           <span className='tw-font-bold'>{value}</span>
