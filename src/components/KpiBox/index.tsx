@@ -6,30 +6,27 @@ interface Props {
   icon: ReactNode;
   title: string;
   value: string;
-  helperText: string | null;
+  helperText?: string | null;
 }
 
 const KpiBox: FC<Props> = ({ icon, helperText, title, value }) => {
   return (
-    <div className='tw-flex tw-justify-between tw-w-full tw-h-[100px] tw-border-solid tw-rounded-lg tw-border-2 tw-border-zinc-300'>
-      <div className='tw-flex tw-p-[24px] tw-gap-[24px]'>
+    <div className='tw-flex tw-justify-between tw-w-full tw-h-[100px] tw-border-solid tw-rounded-lg tw-border-2 tw-border-zinc-300 tw-relative'>
+      <div className='tw-flex tw-p-[24px] tw-gap-[24px] tw-w-full'>
         <div className='tw-flex tw-justify-center tw-items-center'>{icon}</div>
         <div className='tw-flex tw-flex-col tw-w-full'>
           <span className='tw-font-bold'>{value}</span>
           <span>{title}</span>
         </div>
-        </div>
       </div>
-      <div className='tw-flex tw-m-2'>
-        {helperText != null && (
-          <Tooltip className='' title={helperText}>
-            <HelpIcon
-              fontSize='small'
-              className='tw-text-gray-500 tw-ml-3 tw-mt-1 hover:tw-cursor-pointer'
-            />
-          </Tooltip>
-        )}
-      </div>
+      {!!helperText && (
+        <Tooltip className='tw-absolute tw-top-4 tw-right-4' title={helperText}>
+          <HelpIcon
+            fontSize='small'
+            className='tw-text-gray-500 hover:tw-cursor-pointer'
+          />
+        </Tooltip>
+      )}
     </div>
   );
 };
