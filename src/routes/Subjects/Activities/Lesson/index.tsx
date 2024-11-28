@@ -16,6 +16,7 @@ import { useModalStore } from 'contexts/ZustandContext/modal-context';
 import { getLessonByID } from 'services/lessons';
 import { useQuery } from '@tanstack/react-query';
 import RewardCard from 'components/RewardCard';
+import { cn } from 'utils/methods';
 
 const LessonDetails: React.FC = () => {
   const { openModal } = useModalStore();
@@ -167,18 +168,28 @@ const LessonDetails: React.FC = () => {
           </Button>
         )}
       </div>
-      <div className='tw-flex tw-items-center tw-gap-2'>
-        <h4 className='tw-flex tw-m-0'>
-          Clase: <b className='tw-ml-2'>{lesson?.title}</b>
-        </h4>
-        {lesson?.ended_at && (
-          <Chip
-            className='tw-ml-2'
-            label='Clase finalizada'
-            color='success'
-            size='medium'
-          />
-        )}
+      <div className='tw-flex tw-flex-col'>
+        <div className='tw-flex tw-items-center tw-gap-2'>
+          <h4 className='tw-flex tw-m-0'>
+            Clase: <b className='tw-ml-2'>{lesson?.title}</b>
+          </h4>
+
+          {lesson?.ended_at && (
+            <Chip
+              className='tw-ml-2'
+              label='Clase finalizada'
+              color='success'
+              size='medium'
+            />
+          )}
+        </div>
+        <p
+          className={cn(
+            lesson?.goal ? 'tw-text-base' : 'tw-text-sm tw-text-zinc-400'
+          )}
+        >
+          {lesson?.goal || 'Objetivo no establecido'}
+        </p>
       </div>
       <div className='tw-flex tw-flex-col tw-gap-4'>
         <span className='tw-block tw-mt-8'>

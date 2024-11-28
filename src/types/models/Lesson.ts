@@ -5,6 +5,7 @@ export default interface ILesson {
   teacher_subject_classroom_id: number;
   started_at?: Date;
   ended_at?: Date;
+  goal?: string;
 }
 
 export interface ILessonSaved {
