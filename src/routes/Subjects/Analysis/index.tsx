@@ -5,17 +5,23 @@ import { useClassContext } from 'routes/Class/context';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import StudentAnalysisList from 'components/StudentAnalysisList';
 import MotivationScale from 'components/MotivationScale';
+import analytics from 'assets/images/analytics_1.png';
+import highFive from 'assets/images/high-five.png';
+import studentGroup from 'assets/images/student_group.png';
+import warning from 'assets/images/warning.png';
+
 const Analysis = () => {
   const { classroomDetails } = useClassContext();
   const [buttonActive, setButtonActive] = useState<number>(1);
 
-  // Replace with actual KPI values
+  // TODO: fetch data when date range changes
+
   return (
     <div className='tw-space-y-10'>
       <div className='tw-flex tw-items-center tw-justify-between'>
-        <div className='tw-flex tw-items-end tw-gap-2'>
+        <div className='tw-flex tw-items-center tw-gap-2'>
           <img
-            // src={studentsIcon}
+            src={analytics}
             alt='analysis'
             className='tw-w-10 tw-object-cover'
           />
@@ -23,7 +29,7 @@ const Analysis = () => {
         </div>
       </div>
       {/* Información del curso y profesor */}
-      <div className='tw-flex tw-justify-between '>
+      <div className='tw-flex tw-gap-10'>
         <h4 className='tw-flex'>
           <h4 className='tw-mr-2'>Curso: </h4>
           <b>{classroomDetails?.classroom.title}</b>
@@ -86,17 +92,23 @@ const Analysis = () => {
       <MotivationScale motivationLevel={20} />
       {/** KpiBox Section */}
       <div className='tw-flex tw-flex-col tw-w-full tw-gap-6 lg:tw-flex-row'>
-        <KpiBox title='test' value='500' icon={<img alt='Test Icon' />} />
         <KpiBox
-          title='Analisis cualitativo'
+          title='desafios completados'
+          value='500'
+          icon={<img src={highFive} alt='high-five' className='w-5 h-5' />}
+        />
+        <KpiBox
+          title='nivel de participación'
           value='15 Estudiantes'
-          icon={<img alt='Test Icon' />}
+          icon={
+            <img src={studentGroup} alt='student-group' className='w-5 h-5' />
+          }
           helperText='Test'
         />
         <KpiBox
-          title='lorem ipsum'
+          title='requieren atención'
           value='30%'
-          icon={<img alt='Test Icon' />}
+          icon={<img src={warning} alt='warning' className='w-5 h-5' />}
         />
       </div>
       {/** Table Section */}
