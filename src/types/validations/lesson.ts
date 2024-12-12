@@ -2,6 +2,9 @@ import * as Yup from 'yup';
 
 export const CreateLessonSchema = Yup.object().shape({
   title: Yup.string().required(),
+  goal: Yup.string().optional().max(65535, {
+    message: 'Haz superado el límite de caracteres',
+  }),
 });
 
 export const UpdateLessonSchema = Yup.object().shape({
