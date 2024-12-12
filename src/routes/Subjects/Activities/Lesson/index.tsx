@@ -184,7 +184,8 @@ const LessonDetails: React.FC = () => {
         </div>
         <p
           className={cn(
-            lesson?.goal ? 'tw-text-base' : 'tw-text-base tw-text-zinc-500'
+            lesson?.goal ? 'tw-text-base' : 'tw-text-base tw-text-zinc-500',
+            'tw-break-words'
           )}
           dangerouslySetInnerHTML={{
             __html: lesson?.goal
