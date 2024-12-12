@@ -171,6 +171,9 @@ const SaveLesson: React.FC<{
                 fullWidth
                 placeholder='Objetivo de la clase'
                 error={!!errors.goal}
+                helperText={
+                  errors.goal ? 'El texto es demasiado largo' : undefined
+                }
               />
               <div className='tw-flex tw-flex-col tw-gap-4'>
                 <span className='tw-block tw-mt-8'>
