@@ -53,6 +53,7 @@ const SaveLesson: React.FC<{
         title: values.title,
         index: 1,
         teacher_subject_classroom_id: classroomDetails.id,
+        goal: values.goal ?? '',
       };
       const { status, data: newLesson } = await saveLesson(lesson);
 
@@ -144,7 +145,7 @@ const SaveLesson: React.FC<{
       {({ values, handleChange, handleSubmit, isSubmitting, errors }) => (
         <>
           <form onSubmit={handleSubmit}>
-            <div>
+            <div className='tw-flex tw-flex-col tw-gap-y-4'>
               <TextField
                 value={values.title}
                 sx={{
@@ -158,6 +159,21 @@ const SaveLesson: React.FC<{
                 placeholder='Ingresa el tema de la clase'
                 fullWidth
                 error={!!errors.title}
+              />
+              <TextField
+                name='goal'
+                value={values.goal}
+                onChange={handleChange}
+                size='small'
+                multiline
+                maxRows={4}
+                variant='outlined'
+                fullWidth
+                placeholder='Objetivo de la clase'
+                error={!!errors.goal}
+                helperText={
+                  errors.goal ? 'El texto es demasiado largo' : undefined
+                }
               />
               <div className='tw-flex tw-flex-col tw-gap-4'>
                 <span className='tw-block tw-mt-8'>

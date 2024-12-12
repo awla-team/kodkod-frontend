@@ -15,6 +15,8 @@ import { getLessonByID } from 'services/lessons';
 import { useQuery } from '@tanstack/react-query';
 import ActivityCard from 'components/ActivityCard';
 import RewardCard from 'components/RewardCard';
+import { cn } from 'utils/methods';
+import DOMPurify from 'dompurify';
 
 const LessonDetails: React.FC = () => {
   const [openEditLesson, setOpenEditLesson] = useState<boolean>(false);
@@ -165,23 +167,37 @@ const LessonDetails: React.FC = () => {
           </Button>
         )}
       </div>
-      <div className='tw-flex tw-items-center tw-gap-2'>
-        <h4 className='tw-flex tw-m-0'>
-          Clase: <b className='tw-ml-2'>{lesson?.title}</b>
-        </h4>
-        {lesson?.ended_at && (
-          <Chip
-            className='tw-ml-2'
-            label='Clase finalizada'
-            color='success'
-            size='medium'
-          />
-        )}
+      <div className='tw-flex tw-flex-col'>
+        <div className='tw-flex tw-items-center tw-gap-2'>
+          <h4 className='tw-flex tw-m-0'>
+            Clase: <b className='tw-ml-2'>{lesson?.title}</b>
+          </h4>
+
+          {lesson?.ended_at && (
+            <Chip
+              className='tw-ml-2'
+              label='Clase finalizada'
+              color='success'
+              size='medium'
+            />
+          )}
+        </div>
+        <p
+          className={cn(
+            lesson?.goal ? 'tw-text-base' : 'tw-text-base tw-text-zinc-500',
+            'tw-break-words'
+          )}
+          dangerouslySetInnerHTML={{
+            __html: lesson?.goal
+              ? DOMPurify.sanitize(lesson.goal).replace(/\n/g, '<br />')
+              : 'Objetivo no establecido',
+          }}
+        />
       </div>
       <div className='tw-flex tw-flex-col tw-gap-4'>
-        <span className='tw-block tw-mt-8'>
+        <h4 className='tw-flex tw-my-4'>
           Tus estudiantes deben completar las siguientes actividades
-        </span>
+        </h4>
         <div className='tw-flex tw-flex-col tw-gap-2 tw-scroll-auto tw-overflow-y-auto'>
           {activities.length > 0 ? (
             activities.map((activity, index) => {

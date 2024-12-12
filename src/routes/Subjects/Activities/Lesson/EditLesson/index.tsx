@@ -29,10 +29,12 @@ const EditLesson: React.FC<{
   lessonRewards?: IReward[];
   handleClose: () => void;
 }> = ({ selectedLesson, lessonActivities, lessonRewards, handleClose }) => {
+  console.log(selectedLesson);
   const { openModal } = useModalStore();
   const [formValues] = useState<FormInput>({
     title: selectedLesson.title,
     teacher_subject_classroom_id: selectedLesson.teacher_subject_classroom_id,
+    goal: selectedLesson.goal,
   });
   const [openSaveActivity, setOpenSaveActivity] = useState<boolean>(false);
   const [openEditNewActivity, setOpenEditNewActivity] =
@@ -118,6 +120,7 @@ const EditLesson: React.FC<{
     try {
       const lesson: ILessonSaved = {
         title: values.title,
+        goal: values.goal ?? '',
         index: 1,
         teacher_subject_classroom_id: values.teacher_subject_classroom_id,
       };
@@ -289,7 +292,7 @@ const EditLesson: React.FC<{
       {({ values, handleChange, handleSubmit, isSubmitting, errors }) => (
         <>
           <form onSubmit={handleSubmit}>
-            <div>
+            <div className='tw-flex tw-flex-col tw-gap-y-4'>
               <TextField
                 value={values.title}
                 sx={{
@@ -303,6 +306,21 @@ const EditLesson: React.FC<{
                 placeholder='Ingresa el tema de la clase'
                 fullWidth
                 error={!!errors.title}
+              />
+              <TextField
+                name='goal'
+                value={values.goal}
+                onChange={handleChange}
+                size='small'
+                multiline
+                maxRows={4}
+                variant='outlined'
+                fullWidth
+                placeholder='Objetivo de la clase'
+                error={!!errors.goal}
+                helperText={
+                  errors.goal ? 'El texto es demasiado largo' : undefined
+                }
               />
               <div className='tw-flex tw-flex-col tw-gap-4'>
                 <span className='tw-block tw-mt-8'>
