@@ -198,9 +198,9 @@ const LessonDetails: React.FC = () => {
         />
       </div>
       <div className='tw-flex tw-flex-col tw-gap-4'>
-        <span className='tw-block tw-mt-8'>
+        <h4 className='tw-flex tw-my-4'>
           Tus estudiantes deben completar las siguientes actividades
-        </span>
+        </h4>
         <div className='tw-flex tw-flex-col tw-gap-2 tw-scroll-auto tw-overflow-y-auto'>
           {activities.length > 0 ? (
             activities.map((activity, index) => {
