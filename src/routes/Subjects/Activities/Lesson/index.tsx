@@ -189,10 +189,7 @@ const LessonDetails: React.FC = () => {
           )}
           dangerouslySetInnerHTML={{
             __html: lesson?.goal
-              ? DOMPurify.sanitize(lesson.goal as string).replace(
-                  /\n/g,
-                  '<br />'
-                )
+              ? DOMPurify.sanitize(lesson.goal).replace(/\n/g, '<br />')
               : 'Objetivo no establecido',
           }}
         />
