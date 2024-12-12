@@ -16,6 +16,7 @@ import { useQuery } from '@tanstack/react-query';
 import ActivityCard from 'components/ActivityCard';
 import RewardCard from 'components/RewardCard';
 import { cn } from 'utils/methods';
+import DOMPurify from 'dompurify';
 
 const LessonDetails: React.FC = () => {
   const [openEditLesson, setOpenEditLesson] = useState<boolean>(false);
@@ -185,9 +186,15 @@ const LessonDetails: React.FC = () => {
           className={cn(
             lesson?.goal ? 'tw-text-base' : 'tw-text-base tw-text-zinc-500'
           )}
-        >
-          {lesson?.goal || 'Objetivo no establecido'}
-        </p>
+          dangerouslySetInnerHTML={{
+            __html: lesson?.goal
+              ? DOMPurify.sanitize(lesson.goal as string).replace(
+                  /\n/g,
+                  '<br />'
+                )
+              : 'Objetivo no establecido',
+          }}
+        />
       </div>
       <div className='tw-flex tw-flex-col tw-gap-4'>
         <span className='tw-block tw-mt-8'>
