@@ -10,16 +10,17 @@ import {
   Tooltip,
 } from '@mui/material';
 import StudentActivitiesByDay from 'components/StudentActivitiesByDay';
-import { type IStudent } from 'global/interfaces';
 import { useState, type FC } from 'react';
 import HelpIcon from '@mui/icons-material/Help';
+import type { StudenDataI } from 'types/api/analysis-data';
+import moment from 'moment';
 
 interface Props {
-  students: IStudent[];
+  students: StudenDataI[];
 }
 
 type Order = 'asc' | 'desc';
-type OrderBy = keyof IStudent;
+type OrderBy = keyof StudenDataI;
 
 const StudentAnalysisList: FC<Props> = ({ students }) => {
   /* Inicio Gestion de tabla */
@@ -29,36 +30,24 @@ const StudentAnalysisList: FC<Props> = ({ students }) => {
   const [page, setPage] = useState(0);
   const rowsPerPage = 10;
 
-  const mockData = [
-    { date: 'Nov 12', activities: 3, average: 5 },
-    { date: 'Nov 13', activities: 5, average: 5 },
-    { date: 'Nov 14', activities: 7, average: 5 },
-    { date: 'Nov 15', activities: 3, average: 5 },
-    { date: 'Nov 16', activities: 5, average: 5 },
-    { date: 'Nov 17', activities: 7, average: 5 },
-    { date: 'Nov 18', activities: 3, average: 5 },
-    { date: 'Nov 19', activities: 5, average: 5 },
-    { date: 'Nov 20', activities: 7, average: 5 },
-    { date: 'Nov 21', activities: 4, average: 5 },
-    { date: 'Nov 22', activities: 8, average: 5 },
-    { date: 'Nov 23', activities: 1, average: 5 },
-    { date: 'Nov 24', activities: 3, average: 5 },
-    { date: 'Nov 25', activities: 1, average: 5 },
-    { date: 'Nov 26', activities: 5, average: 5 },
-    { date: 'Nov 27', activities: 1, average: 5 },
-    { date: 'Nov 28', activities: 2, average: 5 },
-    { date: 'Nov 29', activities: 1, average: 5 },
-    { date: 'Nov 30', activities: 4, average: 5 },
-    { date: 'Nov 31', activities: 1, average: 5 },
-  ];
-
-  const mockData3 = [
-    { date: 'Nov 12', activities: 3, average: 5 },
-    { date: 'Nov 13', activities: 5, average: 5 },
-    { date: 'Nov 14', activities: 7, average: 5 },
-  ];
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
+  };
+
+  const calculateAverageActivitiesByDate = (date: string) => {
+    const totalActivities = students.reduce((acc, student) => {
+      const activitiesOnDate = student.dailyActivities.find(
+        (activity) => activity.date === date
+      );
+      return (
+        acc + (activitiesOnDate ? activitiesOnDate.activities_completed : 0)
+      );
+    }, 0);
+
+    const numberOfStudents = students.length;
+    return Math.floor(
+      numberOfStudents ? totalActivities / numberOfStudents : 0
+    );
   };
 
   // Manejador para cambiar la columna de orden y la dirección
@@ -123,9 +112,9 @@ const StudentAnalysisList: FC<Props> = ({ students }) => {
               </TableCell>
               <TableCell className='tw-justify-center tw-flex'>
                 <TableSortLabel
-                  active={orderBy === 'email'}
-                  direction={orderBy === 'email' ? order : 'asc'}
-                  onClick={() => handleRequestSort('email')}
+                  active={orderBy === 'last_name'}
+                  direction={orderBy === 'last_name' ? order : 'asc'}
+                  onClick={() => handleRequestSort('last_name')}
                 >
                   <h5 className='tw-text-[#003CAF]'>
                     <b>Actividades por dia</b>{' '}
@@ -146,7 +135,7 @@ const StudentAnalysisList: FC<Props> = ({ students }) => {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((student, index) => (
                 <TableRow
-                  key={student.id}
+                  key={student.student_id}
                   className={index % 2 !== 0 ? '' : 'tw-bg-[#7D92FF14]'}
                 >
                   <TableCell>
@@ -183,10 +172,20 @@ const StudentAnalysisList: FC<Props> = ({ students }) => {
                       </b>
                     </h5>
                   </TableCell>
-                  <TableCell className='tw-w-[500px] tw-justify-center tw-flex'>
-                    <StudentActivitiesByDay
-                      data={index % 2 === 0 ? mockData : mockData3}
-                    />
+                  <TableCell className='tw-w-[500px] tw-text-center'>
+                    {student.dailyActivities.length ? (
+                      <StudentActivitiesByDay
+                        data={student.dailyActivities.map((activity) => ({
+                          date: moment(activity.date).format('DD/MM/YYYY'),
+                          activities_completed: activity.activities_completed,
+                          average: calculateAverageActivitiesByDate(
+                            activity.date
+                          ),
+                        }))}
+                      />
+                    ) : (
+                      <span>Sin actividades</span>
+                    )}
                   </TableCell>
                 </TableRow>
               ))}

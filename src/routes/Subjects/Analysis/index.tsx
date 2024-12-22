@@ -185,10 +185,8 @@ const Analysis = () => {
           </div>
           {/** Table Section */}
           <div>
-            {classroomDetails?.classroom.students && (
-              <StudentAnalysisList
-                students={classroomDetails?.classroom.students}
-              />
+            {response?.data.studentsData && (
+              <StudentAnalysisList students={response?.data.studentsData} />
             )}
           </div>
         </>

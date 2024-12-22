@@ -2,10 +2,10 @@ import React, { useEffect, useRef } from 'react';
 import * as am5 from '@amcharts/amcharts5';
 import * as am5xy from '@amcharts/amcharts5/xy';
 import am5themesAnimated from '@amcharts/amcharts5/themes/Animated';
+import type { DailyActivitiesI } from 'types/api/analysis-data';
 
-export interface ActivityData {
-  date: string;
-  activities: number;
+export interface ActivityData extends DailyActivitiesI {
+  average: number;
 }
 
 interface StudentActivitiesByDayProps {
@@ -66,10 +66,10 @@ const StudentActivitiesByDay: React.FC<StudentActivitiesByDayProps> = ({
         name: 'Actividades',
         xAxis,
         yAxis,
-        valueYField: 'activities',
+        valueYField: 'activities_completed',
         categoryXField: 'date',
         tooltip: am5.Tooltip.new(root, {
-          labelText: '{valueY}',
+          labelText: 'Actividades del estudiante: {valueY}',
         }),
       })
     );
@@ -89,7 +89,7 @@ const StudentActivitiesByDay: React.FC<StudentActivitiesByDayProps> = ({
         valueYField: 'average',
         categoryXField: 'date',
         tooltip: am5.Tooltip.new(root, {
-          labelText: '{valueY}',
+          labelText: 'Promedio del curso: {valueY}',
         }),
       })
     );

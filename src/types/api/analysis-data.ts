@@ -6,10 +6,17 @@ export default interface AnalysisData {
     kpi_alerts_level: number;
     kpi_motivation_level: number;
   };
-  studentsData: Array<{
-    student_id: number;
-    first_name: string;
-    last_name: string;
-    dailyActivities: [];
-  }>;
+  studentsData: StudenDataI[];
+}
+
+export interface StudenDataI {
+  student_id: number;
+  first_name: string;
+  last_name: string;
+  dailyActivities: DailyActivitiesI[];
+}
+
+export interface DailyActivitiesI {
+  date: string;
+  activities_completed: number;
 }
