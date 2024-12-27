@@ -53,6 +53,11 @@ const Analysis = () => {
     getAnalysis({ startDate, endDate });
   };
 
+  const handlePrint = () => {
+    window.print();
+  };
+
+  // Replace with actual KPI values
   return (
     <div className='tw-space-y-10'>
       <div className='tw-flex tw-items-center tw-justify-between'>
@@ -87,7 +92,10 @@ const Analysis = () => {
       {/** Buttons Section */}
       <div className='tw-flex tw-justify-between'>
         <div>
-          <Button className='tw-border tw-border-solid tw-gap-1'>
+          <Button
+            onClick={handlePrint}
+            className='tw-border tw-border-solid tw-gap-1'
+          >
             <PictureAsPdfIcon />
             <b>Descargar Informe</b>
           </Button>
