@@ -1,7 +1,6 @@
 import { Button, Chip, CircularProgress, Drawer } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import Groups2Icon from '@mui/icons-material/Groups2';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import EditIcon from '@mui/icons-material/Edit';
 import type ILesson from 'types/models/Lesson';
@@ -12,13 +11,14 @@ import { FetchStatus } from 'global/enums';
 import { getRewardsByLessonId } from 'services/rewards';
 import EditLesson from './EditLesson';
 import ActivityStudentsDrawer from 'components/drawers/ActivityStudentsDrawer';
-import { useModalStore } from 'contexts/ZustandContext/modal-context';
 import { getLessonByID } from 'services/lessons';
 import { useQuery } from '@tanstack/react-query';
+import ActivityCard from 'components/ActivityCard';
 import RewardCard from 'components/RewardCard';
+import { cn } from 'utils/methods';
+import DOMPurify from 'dompurify';
 
 const LessonDetails: React.FC = () => {
-  const { openModal } = useModalStore();
   const [openEditLesson, setOpenEditLesson] = useState<boolean>(false);
   const [openActivitiesDrawer, setOpenActivitiesDrawer] =
     useState<boolean>(false);
@@ -167,45 +167,46 @@ const LessonDetails: React.FC = () => {
           </Button>
         )}
       </div>
-      <div className='tw-flex tw-items-center tw-gap-2'>
-        <h4 className='tw-flex tw-m-0'>
-          Clase: <b className='tw-ml-2'>{lesson?.title}</b>
-        </h4>
-        {lesson?.ended_at && (
-          <Chip
-            className='tw-ml-2'
-            label='Clase finalizada'
-            color='success'
-            size='medium'
-          />
-        )}
+      <div className='tw-flex tw-flex-col'>
+        <div className='tw-flex tw-items-center tw-gap-2'>
+          <h4 className='tw-flex tw-m-0'>
+            Clase: <b className='tw-ml-2'>{lesson?.title}</b>
+          </h4>
+
+          {lesson?.ended_at && (
+            <Chip
+              className='tw-ml-2'
+              label='Clase finalizada'
+              color='success'
+              size='medium'
+            />
+          )}
+        </div>
+        <p
+          className={cn(
+            lesson?.goal ? 'tw-text-base' : 'tw-text-base tw-text-zinc-500',
+            'tw-break-words'
+          )}
+          dangerouslySetInnerHTML={{
+            __html: lesson?.goal
+              ? DOMPurify.sanitize(lesson.goal).replace(/\n/g, '<br />')
+              : 'Objetivo no establecido',
+          }}
+        />
       </div>
       <div className='tw-flex tw-flex-col tw-gap-4'>
-        <span className='tw-block tw-mt-8'>
+        <h4 className='tw-flex tw-my-4'>
           Tus estudiantes deben completar las siguientes actividades
-        </span>
+        </h4>
         <div className='tw-flex tw-flex-col tw-gap-2 tw-scroll-auto tw-overflow-y-auto'>
           {activities.length > 0 ? (
             activities.map((activity, index) => {
               return (
-                <div
+                <ActivityCard
                   key={index}
-                  onClick={() => openActivityDrawer(activity)}
-                  className='tw-cursor-pointer tw-border tw-bg-gradient-to-r tw-from-blue-600 tw-to-blue-800 tw-rounded-md tw-min-h-40 tw-flex tw-flex-col tw-gap-3 tw-p-4'
-                >
-                  <div className='tw-flex tw-justify-between tw-items-center'>
-                    <h4 className='tw-text-white tw-font-bold tw-mb-0'>
-                      {activity.title}
-                    </h4>
-                    <div className='tw-text-white tw-font-bold tw-m-0 tw-text-md tw-flex tw-items-center tw-gap-2'>
-                      <Groups2Icon />
-                      <span>{activity.studentsCompletedActivity || 0}</span>
-                    </div>
-                  </div>
-                  <h4 className='tw-text-white tw-flex-1 tw-mb-0 tw-flex tw-text-justify'>
-                    {activity.description}
-                  </h4>
-                </div>
+                  activity={activity}
+                  handleClick={() => openActivityDrawer(activity)}
+                />
               );
             })
           ) : (

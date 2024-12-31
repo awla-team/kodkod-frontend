@@ -32,7 +32,7 @@ const SubjectLayout = () => {
     <div className='tw-flex tw-flex-col tw-gap-4 tw-pb-[60px]'>
       <ul className='tw-flex tw-items-center tw-list-none tw-p-0'>
         {LINKS.map(({ label, to, icon }) =>
-          label === 'Analisis' ? (
+          label === '' ? (
             <li
               key={label}
               className='tw-border tw-text-gray-400 tw-cursor-default'

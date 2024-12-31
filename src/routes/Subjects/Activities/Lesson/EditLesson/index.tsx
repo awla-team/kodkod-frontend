@@ -12,8 +12,6 @@ import { useCreateLesson } from 'zustand/create-lesson-store';
 import { eraseActivity, editActivity, saveActivity } from 'services/activities';
 import { CreateLessonSchema } from 'types/validations/lesson';
 import { useModalStore } from 'contexts/ZustandContext/modal-context';
-import CreateRewardModal from 'components/Modals/CreateRewardModal/CreateRewardModal';
-import EditRewardModal from 'components/Modals/EditRewardModal';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import { createRewards, eraseReward, updateReward } from 'services/rewards';
 import type IActivity from 'types/models/Activity';
@@ -22,6 +20,8 @@ import { type IActivitySaved } from 'types/models/Activity';
 import ConfirmationForm from 'components/ConfirmationForm';
 import ActivityForm from 'components/ActivityForm';
 import RewardCard from 'components/RewardCard';
+import RewardForm from 'components/RewardForm';
+import ActivityCard, { ActiviyCardEditRender } from 'components/ActivityCard';
 
 const EditLesson: React.FC<{
   selectedLesson: ILesson;
@@ -29,10 +29,12 @@ const EditLesson: React.FC<{
   lessonRewards?: IReward[];
   handleClose: () => void;
 }> = ({ selectedLesson, lessonActivities, lessonRewards, handleClose }) => {
+  console.log(selectedLesson);
   const { openModal } = useModalStore();
   const [formValues] = useState<FormInput>({
     title: selectedLesson.title,
     teacher_subject_classroom_id: selectedLesson.teacher_subject_classroom_id,
+    goal: selectedLesson.goal,
   });
   const [openSaveActivity, setOpenSaveActivity] = useState<boolean>(false);
   const [openEditNewActivity, setOpenEditNewActivity] =
@@ -118,6 +120,7 @@ const EditLesson: React.FC<{
     try {
       const lesson: ILessonSaved = {
         title: values.title,
+        goal: values.goal ?? '',
         index: 1,
         teacher_subject_classroom_id: values.teacher_subject_classroom_id,
       };
@@ -268,6 +271,18 @@ const EditLesson: React.FC<{
     handleClose();
   };
 
+  const handleEditActivity = (index: number, activity: IActivity) => {
+    setSelectedActivityIndex(index);
+    setSelectedEditedActivity(activity);
+    setOpenEditActivity(true);
+  };
+
+  const handleDeleteActivity = (index: number, activity: IActivity) => {
+    setSelectedActivityIndex(index);
+    setSelectedEditedActivity(activity);
+    setOpenDeleteActivity(true);
+  };
+
   return (
     <Formik
       initialValues={formValues}
@@ -277,7 +292,7 @@ const EditLesson: React.FC<{
       {({ values, handleChange, handleSubmit, isSubmitting, errors }) => (
         <>
           <form onSubmit={handleSubmit}>
-            <div>
+            <div className='tw-flex tw-flex-col tw-gap-y-4'>
               <TextField
                 value={values.title}
                 sx={{
@@ -292,6 +307,21 @@ const EditLesson: React.FC<{
                 fullWidth
                 error={!!errors.title}
               />
+              <TextField
+                name='goal'
+                value={values.goal}
+                onChange={handleChange}
+                size='small'
+                multiline
+                maxRows={4}
+                variant='outlined'
+                fullWidth
+                placeholder='Objetivo de la clase'
+                error={!!errors.goal}
+                helperText={
+                  errors.goal ? 'El texto es demasiado largo' : undefined
+                }
+              />
               <div className='tw-flex tw-flex-col tw-gap-4'>
                 <span className='tw-block tw-mt-8'>
                   1. Ingresa las <b>actividades</b> que quieras desarrollar en
@@ -302,98 +332,54 @@ const EditLesson: React.FC<{
                     editLessonActivities.length > 0 &&
                     editLessonActivities.map((activity, index) => {
                       return (
-                        <div
+                        <ActivityCard
                           key={index}
-                          className='tw-border tw-bg-gradient-to-r tw-from-blue-600 tw-to-blue-800 tw-rounded-md tw-min-h-40 tw-flex tw-flex-col tw-gap-3 tw-p-4'
-                        >
-                          <div className='tw-flex tw-justify-between tw-items-center'>
-                            <h4 className='tw-text-white tw-font-bold tw-mb-0'>
-                              {activity.title}
-                            </h4>
-                            <div className='tw-flex tw-gap-2'>
-                              <Button
-                                color='secondary'
-                                variant='outlined'
-                                startIcon={
-                                  <EditIcon className='tw-w-5 tw-h-5' />
-                                }
-                                onClick={() => {
-                                  setSelectedActivityIndex(index);
-                                  setSelectedEditedActivity(activity);
-                                  setOpenEditActivity(true);
-                                }}
-                              >
-                                Editar
-                              </Button>
-                              <Button
-                                color='secondary'
-                                variant='outlined'
-                                onClick={() => {
-                                  setSelectedActivityIndex(index);
-                                  setSelectedEditedActivity(activity);
-                                  setOpenDeleteActivity(true);
-                                }}
-                                startIcon={
-                                  <DeleteForeverOutlinedIcon className='tw-w-5 tw-h-5' />
-                                }
-                              >
-                                Eliminar
-                              </Button>
-                            </div>
-                          </div>
-                          <h4 className='tw-text-white tw-flex-1 tw-mb-0 tw-flex tw-text-justify'>
-                            {activity.description}
-                          </h4>
-                        </div>
+                          activity={{
+                            title: activity.title,
+                            description: activity.description,
+                            studentsCompletedActivity: 0,
+                            lesson_id: selectedLesson.id,
+                            type: activity.type,
+                          }}
+                          editRender={
+                            <ActiviyCardEditRender
+                              edit={() => handleEditActivity(index, activity)}
+                              delete={() =>
+                                handleDeleteActivity(index, activity)
+                              }
+                            />
+                          }
+                        />
                       );
                     })}
                   {activities &&
                     activities.length > 0 &&
                     activities.map((activity, index) => {
                       return (
-                        <div
+                        <ActivityCard
                           key={index}
-                          className='tw-border tw-bg-gradient-to-r tw-from-blue-600 tw-to-blue-800 tw-rounded-md tw-min-h-40 tw-flex tw-flex-col tw-gap-3 tw-p-4'
-                        >
-                          <div className='tw-flex tw-justify-between tw-items-center'>
-                            <h4 className='tw-text-white tw-font-bold tw-mb-0'>
-                              {activity.title}
-                            </h4>
-                            <div className='tw-flex tw-gap-2'>
-                              <Button
-                                color='secondary'
-                                variant='outlined'
-                                startIcon={
-                                  <EditIcon className='tw-w-5 tw-h-5' />
-                                }
-                                onClick={() => {
-                                  setSelectedActivityIndex(index);
-                                  setSelectedNewActivity(activity);
-                                  setOpenEditNewActivity(true);
-                                }}
-                              >
-                                Editar
-                              </Button>
-                              <Button
-                                color='secondary'
-                                variant='outlined'
-                                onClick={() => {
-                                  setSelectedActivityIndex(index);
-                                  setSelectedNewActivity(activity);
-                                  setOpenDeleteNewActivity(true);
-                                }}
-                                startIcon={
-                                  <DeleteForeverOutlinedIcon className='tw-w-5 tw-h-5' />
-                                }
-                              >
-                                Eliminar
-                              </Button>
-                            </div>
-                          </div>
-                          <h4 className='tw-text-white tw-flex-1 tw-mb-0 tw-flex tw-text-justify'>
-                            {activity.description}
-                          </h4>
-                        </div>
+                          activity={{
+                            title: activity.title,
+                            description: activity.description,
+                            studentsCompletedActivity: 0,
+                            lesson_id: selectedLesson.id,
+                            type: activity.type,
+                          }}
+                          editRender={
+                            <ActiviyCardEditRender
+                              edit={() => {
+                                setSelectedActivityIndex(index);
+                                setSelectedNewActivity(activity);
+                                setOpenEditNewActivity(true);
+                              }}
+                              delete={() => {
+                                setSelectedActivityIndex(index);
+                                setSelectedNewActivity(activity);
+                                setOpenDeleteNewActivity(true);
+                              }}
+                            />
+                          }
+                        />
                       );
                     })}
                   <div className='border-dashed tw-rounded-md tw-h-40 tw-flex hover:tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out tw-bg-transparent hover:tw-bg-sky-50'>
@@ -438,10 +424,7 @@ const EditLesson: React.FC<{
                             openModal({
                               title: 'Editar recompensa',
                               content: (
-                                <EditRewardModal
-                                  editedReward={reward}
-                                  index={index}
-                                />
+                                <RewardForm index={index} reward={reward} />
                               ),
                               maxWidth: 'sm',
                               withActions: false,
@@ -472,9 +455,12 @@ const EditLesson: React.FC<{
                             openModal({
                               title: 'Editar recompensa',
                               content: (
-                                <EditRewardModal
-                                  newReward={reward}
+                                <RewardForm
                                   index={index}
+                                  reward={{
+                                    title: reward.name,
+                                    description: reward.description,
+                                  }}
                                 />
                               ),
                               maxWidth: 'sm',
@@ -503,7 +489,7 @@ const EditLesson: React.FC<{
                     onClick={() =>
                       openModal({
                         title: 'Ingresar recompensas',
-                        content: <CreateRewardModal />,
+                        content: <RewardForm index={0} />,
                         maxWidth: 'sm',
                         withActions: false,
                       })
