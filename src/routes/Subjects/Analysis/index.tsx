@@ -41,7 +41,10 @@ const Analysis = () => {
   });
 
   useEffect(() => {
-    getAnalysis({ startDate: '2021-10-01', endDate: '2021-10-31' });
+    getAnalysis({
+      startDate: moment().subtract(1, 'week').toISOString(),
+      endDate: moment().toISOString(),
+    });
   }, [getAnalysis]);
 
   const onChagenDateRange = (
@@ -105,8 +108,8 @@ const Analysis = () => {
             onClick={() =>
               onChagenDateRange(
                 1,
-                moment().subtract(7, 'days').format('YYYY-MM-DD'),
-                moment().format('YYYY-MM-DD')
+                moment().subtract(1, 'week').toISOString(),
+                moment().toISOString()
               )
             }
             className={`tw-border tw-rounded-none tw-px-4 tw-py-1 ${
@@ -121,8 +124,8 @@ const Analysis = () => {
             onClick={() =>
               onChagenDateRange(
                 2,
-                moment().subtract(30, 'days').format('YYYY-MM-DD'),
-                moment().format('YYYY-MM-DD')
+                moment().subtract(1, 'month').toISOString(),
+                moment().toISOString()
               )
             }
             className={` tw-border-solid tw-rounded-none tw-px-4 tw-py-1 ${
@@ -137,8 +140,8 @@ const Analysis = () => {
             onClick={() =>
               onChagenDateRange(
                 3,
-                moment().subtract(6, 'months').format('YYYY-MM-DD'),
-                moment().format('YYYY-MM-DD')
+                moment().subtract(6, 'months').toISOString(),
+                moment().toISOString()
               )
             }
             className={`tw-border-solid tw-rounded-none tw-px-4 tw-py-1 ${
